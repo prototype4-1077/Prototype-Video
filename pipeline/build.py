@@ -169,6 +169,7 @@ def main(bd):
         r = sh([py, os.path.join(HERE, "prep.py"), bd])
         if r.returncode != 0:
             err(f"prep failed: {r.stderr[-300:]}", "rerun; if fonts missing delete fonts/ and rerun")
+        print(r.stdout.strip())
         out("RUN AGAIN (captions + title + music ready)")
 
     # 4. render segments
@@ -207,6 +208,13 @@ def main(bd):
         if r.returncode != 0: err(f"concat: {r.stderr[-300:]}", "rerun")
         total = sum(x["duration"] for x in s["scenes"])
         music = s.get("music", "music.wav")
+        if not os.path.exists(f"{bd}/{music}"):  # self-heal: regenerate the bed
+            print(f"note: {music} missing at mix time; regenerating. dir: {sorted(os.listdir(bd))[:8]}...")
+            r = sh([py, os.path.join(HERE, "music.py"), f"{bd}/music.wav", str(total + 2)]
+                   + ([f"{bd}/vo.mp3"] if os.path.exists(f"{bd}/vo.mp3") else []))
+            if r.returncode != 0:
+                err(f"music regen: {r.stderr[-200:]}", "rerun")
+            music = "music.wav"
         af = ("[1:a]acompressor=threshold=-18dB:ratio=3:attack=15:release=180:makeup=4,"
               "adelay=400|400,apad[voz];"
               f"[2:a]volume=0.21,afade=t=out:st={total-3}:d=3[mz];"
