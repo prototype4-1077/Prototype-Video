@@ -71,7 +71,7 @@ def main(bd, target=58.0):
     raw = os.path.join(tmp, "raw.mp4")
     af = ("[1:a]acompressor=threshold=-18dB:ratio=3:attack=15:release=180:makeup=4,"
           "adelay=250|250,apad[voz];"
-          f"[2:a]volume=0.21,afade=t=out:st={max(total-3,0)}:d=3[mz];"
+          f"[2:a]volume=0.26,afade=t=out:st={max(total-3,0)}:d=3[mz];"
           "[voz][mz]amix=inputs=2:duration=first:dropout_transition=0[a]")
     run(["ffmpeg", "-v", "error", "-y", "-i", noa, "-i", vos, "-i", mus,
          "-filter_complex", af, "-map", "0:v", "-map", "[a]",

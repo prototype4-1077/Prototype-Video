@@ -217,7 +217,7 @@ def main(bd):
             music = "music.wav"
         af = ("[1:a]acompressor=threshold=-18dB:ratio=3:attack=15:release=180:makeup=4,"
               "adelay=400|400,apad[voz];"
-              f"[2:a]volume=0.21,afade=t=out:st={total-3}:d=3[mz];"
+              f"[2:a]volume=0.26,afade=t=out:st={total-3}:d=3[mz];"
               "[voz][mz]amix=inputs=2:duration=first:dropout_transition=0[a]")
         raw = os.path.join(tmp, "raw.mp4")
         r = sh(["ffmpeg", "-v", "error", "-y", "-i", noa, "-i", f"{bd}/vo.mp3",
