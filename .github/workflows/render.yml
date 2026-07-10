@@ -48,7 +48,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.inputs.slug }}
-          path: build/${{ github.event.inputs.slug }}/final.mp4
+          path: build/${{ github.event.inputs.slug }}/final*.mp4
 
       - name: Commit updated memory + script timings
         run: |

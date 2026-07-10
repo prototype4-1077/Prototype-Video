@@ -125,6 +125,17 @@ def fetch_scene(bd, s, i, used_ids):
     if os.path.exists(out) and os.path.getsize(out) > 100_000:
         sc["clip"] = out
         return
+    if sc.get("pexels_id"):  # reproducible re-runs: fetch the exact clip already chosen
+        try:
+            v = api(f"https://api.pexels.com/videos/videos/{sc['pexels_id']}")
+            f = pick_file(v)
+            urllib.request.urlretrieve(f["link"], out + ".part")
+            os.replace(out + ".part", out)
+            sc["clip"] = out
+            print(f"scene {i}: re-fetched pexels {sc['pexels_id']}")
+            return
+        except Exception as e:
+            print(f"scene {i}: re-fetch failed ({e}); searching fresh")
     vids = search(sc.get("query") or random.choice(MYSTICAL))
     vids = [v for v in vids if v["id"] not in avoid]
     if not vids:
