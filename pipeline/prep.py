@@ -16,7 +16,8 @@ def prep(bd):
             caption_png(sc["text"], sc.get("keywords", []), f"{bd}/cap_{i:02d}.png")
     json.dump(s, open(f"{bd}/script.json", "w"), indent=1, ensure_ascii=False)
     title_png(s["title"], f"{bd}/title.png")
-    if not s.get("music"):
+    if not s.get("music") or not os.path.exists(os.path.join(bd, s["music"])):
+        s.pop("music", None)
         total = sum(sc.get("duration", 8) for sc in s["scenes"])
         subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         "music.py"), f"{bd}/music.wav", str(total + 2)] +
