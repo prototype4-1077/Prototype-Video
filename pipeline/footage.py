@@ -18,6 +18,15 @@ def memory():
     try: return json.load(open(MEM))
     except Exception: return {"used_ids": [], "banned_ids": [], "query_weights": {}}
 
+DMT = [  # genre "dmt": vivid first-person visionary imagery (saturation is GOOD here)
+    "kaleidoscope pattern animation", "fractal zoom psychedelic", "colorful nebula space",
+    "plasma light abstract", "ink in water rainbow colors", "neon light tunnel abstract",
+    "sacred geometry animation", "aurora borealis vivid night", "liquid light abstract macro",
+    "mandala pattern colorful", "prism light refraction rainbow", "glowing jellyfish deep sea",
+    "bioluminescence ocean night", "crystal macro colorful light", "smoke colorful backlit",
+    "particle explosion colorful slow motion", "galaxy stars colorful timelapse",
+]
+
 MYSTICAL = [
     "surreal fog silhouette", "nebula space stars", "underwater sun rays dark",
     "silhouette tunnel light end", "fog city aerial dark", "smoke swirl black background",
@@ -41,8 +50,9 @@ def get_thumb(video, w=224):
     return Image.open(io.BytesIO(urllib.request.urlopen(u, timeout=20).read())).convert("RGB")
 
 
-def mood_score(video, im=None, need=None):
-    """Score a candidate by its preview thumbnail: dark + muted wins. Higher = better."""
+def mood_score(video, im=None, need=None, genre=None):
+    """Score a candidate thumbnail. Default: lit-but-moody, muted.
+    genre="dmt": vivid saturated visionary imagery wins instead."""
     try:
         from PIL import ImageStat
         if im is None:
@@ -53,11 +63,16 @@ def mood_score(video, im=None, need=None):
     except Exception:
         return 0.0
     score = 100.0
-    if luma > 140: score -= (luma - 140) * 1.2      # too bright = off-style
-    elif luma > 115: score -= (luma - 115) * 0.4
-    if luma < 45: score -= (45 - luma) * 1.0        # too dark: James wants visible lighting
-    if luma < 15: score -= (15 - luma) * 3          # near-black = nothing to see
-    if sat > 120: score -= (sat - 120) * 0.8        # garish colors
+    if genre == "dmt":  # psychedelic mode: reward vivid color, allow deep blacks behind it
+        if sat < 70: score -= (70 - sat) * 0.8      # too muted for a vision
+        if luma > 170: score -= (luma - 170) * 1.0  # blown out
+        if luma < 8: score -= (8 - luma) * 4        # pure black
+    else:
+        if luma > 140: score -= (luma - 140) * 1.2      # too bright = off-style
+        elif luma > 115: score -= (luma - 115) * 0.4
+        if luma < 45: score -= (45 - luma) * 1.0        # too dark: James wants visible lighting
+        if luma < 15: score -= (15 - luma) * 3          # near-black = nothing to see
+        if sat > 120: score -= (sat - 120) * 0.8        # garish colors
     d = video["duration"]
     if need:  # scene length known: clip must cover it without restarting
         if d < need: score -= (need - d) * 4
@@ -68,15 +83,16 @@ def mood_score(video, im=None, need=None):
     return score
 
 
-def bank_pick(m):
+def bank_pick(m, genre=None):
     """Prefer bank queries with the best track record (learned weights)."""
     w = m.get("query_weights", {})
-    pool = sorted(MYSTICAL, key=lambda q: w.get(q, 0), reverse=True)
+    bank = DMT if genre == "dmt" else MYSTICAL
+    pool = sorted(bank, key=lambda q: w.get(q, 0), reverse=True)
     k = max(3, len(pool) // 3)
     return random.choice(pool[:k])
 
 
-def rank(query, vids, need=None):
+def rank(query, vids, need=None, genre=None):
     """Rank candidates: mood (dark/muted) blended with CLIP semantic match if available."""
     thumbs = []
     for v in vids:
@@ -84,7 +100,7 @@ def rank(query, vids, need=None):
             thumbs.append(get_thumb(v))
         except Exception:
             thumbs.append(None)
-    moods = [mood_score(v, im, need) if im is not None else 0.0 for v, im in zip(vids, thumbs)]
+    moods = [mood_score(v, im, need, genre) if im is not None else 0.0 for v, im in zip(vids, thumbs)]
     sems = None
     try:
         import semantic
@@ -136,17 +152,18 @@ def fetch_scene(bd, s, i, used_ids):
             return
         except Exception as e:
             print(f"scene {i}: re-fetch failed ({e}); searching fresh")
-    vids = search(sc.get("query") or random.choice(MYSTICAL))
+    genre = s.get("genre")
+    vids = search(sc.get("query") or bank_pick(m, genre))
     vids = [v for v in vids if v["id"] not in avoid]
     if not vids:
-        vids = [v for v in search(bank_pick(m)) if v["id"] not in avoid]
+        vids = [v for v in search(bank_pick(m, genre)) if v["id"] not in avoid]
     if not vids:
         sys.exit(f"ERROR scene {i}: no results; edit its query in script.json and rerun")
-    scored = rank(sc.get("query", ""), vids, sc.get("duration"))
+    scored = rank(sc.get("query", ""), vids, sc.get("duration"), genre)
     best, v = scored[0]
     if best < 20 and sc.get("query"):  # everything off-style -> blend in bank term
-        alt = [x for x in search(bank_pick(m)) if x["id"] not in avoid]
-        scored2 = rank(sc.get("query", ""), alt, sc.get("duration")) if alt else []
+        alt = [x for x in search(bank_pick(m, genre)) if x["id"] not in avoid]
+        scored2 = rank(sc.get("query", ""), alt, sc.get("duration"), genre) if alt else []
         if scored2 and scored2[0][0] > best:
             best, v = scored2[0]
     used_ids.add(v["id"])

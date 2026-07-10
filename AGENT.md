@@ -74,3 +74,5 @@ Multiple AIs may work simultaneously, each on its OWN slug. Rules:
 - Record/note/swap (learn.py) immediately before pushing, then push promptly - memory
   is shared, last-writer-wins on notes is fine, but always pull-rebase first.
 - Tricky prop shots can be PINNED: set the scene's "pexels_id" to a curated clip id; the build fetches that exact clip.
+- DMT/visionary scripts: set "genre": "dmt" in script.json (see style_profile.md DMT
+  section). Footage scoring flips to vivid/saturated automatically.

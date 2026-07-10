@@ -101,3 +101,23 @@ Content structure (arc template #2, alongside the original hook->diagnosis->turn
    -> everything (ideas, government, religion, space)
 4. Practical micro-instruction: "So pause and notice the labels you use."
 5. Title echo as the final sentence.
+
+## DMT genre (v9 training, from "DMT: I Met An Alien" reference)
+Trigger: the idea/title involves DMT, ayahuasca, mushrooms, a trip, or a first-person
+visionary encounter. Set "genre": "dmt" at the top level of script.json.
+The video replicates what the NARRATOR SEES - not moody observation, but vivid vision:
+- PALETTE FLIPS: hyper-saturated kaleidoscopes, fractals, neon plasma, cosmic nebulae,
+  sacred geometry, bioluminescence - vivid color on deep black. (footage.py scores for
+  this automatically when genre is set; the muted lit-but-moody rule is suspended.)
+- NARRATOR ANCHOR: open on an ordinary person in an ordinary room (the narrator before
+  the dive). Return to that room 1-2 times mid-video and near the end (integration).
+  These anchor scenes stay realistic/muted - the contrast IS the story.
+- BUILD THE METAPHOR LITERALLY: whatever the narrator says they saw, find footage that
+  IS it ("life as translucent slides" -> filmstrip visuals; "scrolling through life" ->
+  a person leaving a blurred crowd in a white void). Pin curated clips when needed.
+- CADENCE INVERTS: long morphing holds (10-18s) during visionary passages - the footage
+  itself moves constantly, so cuts are rare. Quick cuts only at the dive-in moment and
+  emphasis beats. Split long visionary sentences less; let scenes run.
+- Face projections (patterns cast on the narrator's face) mark the transition between
+  the room and the vision.
+- Captions/title/music: unchanged from house style.
