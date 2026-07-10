@@ -84,18 +84,22 @@ def caption_png(text, keywords, out_path, kw_overlay_prefix=None):
     return result
 
 
-def title_png(title, out_path, font_size=95):
-    """Bold rounded ALL-CAPS title, white with shadow, centered over the footage band."""
+def title_png(title, out_path, font_size=190):
+    """Bold rounded ALL-CAPS title, white with shadow, centered over the footage band.
+    2x size (James, July 2026); wraps onto multiple lines and may extend past the
+    letterbox band onto the black canvas, but never into the caption zone."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     title = title.upper()
     font = _font(TITLE_FONT, font_size)
-    # wrap to max ~2-3 lines within 900px
+    # wrap within 940px wide and ~940px tall (stays clear of captions at ~y1430)
     while True:
         lines = _wrap([(w, False) for w in title.split()], font, d)
         widest = max(d.textlength(" ".join(w for w, _ in l), font=font) for l in lines)
-        if widest <= 900 or font_size <= 60: break
-        font_size -= 5
+        asc, desc = font.getmetrics()
+        total = int((asc + desc) * 0.98) * len(lines)
+        if (widest <= 940 and total <= 940) or font_size <= 100: break
+        font_size -= 8
         font = _font(TITLE_FONT, font_size)
     ascent, descent = font.getmetrics()
     line_h = int((ascent + descent) * 0.98)
