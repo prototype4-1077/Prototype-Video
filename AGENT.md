@@ -58,3 +58,10 @@ line, apply the FIX (usually edit script.json), push, re-dispatch.
 Duration ≈ VO length; 1080x1920; captions with yellow keywords in bottom band;
 bold rounded title on scene 0; majority of slides visibly lit; every clip matches
 its spoken line. If a scene misses, use the swap flow before delivering.
+
+## v7 additions
+- Deliver BOTH final.mp4 and final_short.mp4 (60s cut) when present in artifacts.
+- Scripts must echo ONE motif from memory.json "motifs" as a brief mid-video callback.
+- Retention feedback: python3 pipeline/learn.py retention build/<slug> "<t1,t2>" then push memory.
+- Zero-effort mode: open a GitHub issue labeled "video" with the idea; CI does everything
+  (requires ANTHROPIC_API_KEY secret). Comment on the issue = feedback; close = approve.

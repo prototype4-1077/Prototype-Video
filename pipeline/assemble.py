@@ -40,8 +40,7 @@ def render_scene(bd, i):
         t = sc.get("kw_times", {}).get(ov["kw"])
         rel = max(0.0, round(t - sc["start"], 3)) if t is not None else 0.0
         overlays.append((f"{bd}/{ov['png']}", rel))
-    if i == 0 and os.path.exists(f"{bd}/title.png"):
-        overlays.append((f"{bd}/title.png", None))
+    title = f"{bd}/title.png" if i == 0 and os.path.exists(f"{bd}/title.png") else None
     # geometry: letterbox 16:9 band on black 9:16 canvas (default) or fullbleed crop
     if s.get("layout") == "fullbleed":
         BW, BH, padf = WIDTH, HEIGHT, ""
@@ -49,8 +48,23 @@ def render_scene(bd, i):
         BW, BH, BY = 1080, 608, 656
         padf = f",pad={WIDTH}:{HEIGHT}:0:{BY}:black"
     geom = f"scale={BW}:{BH}:force_original_aspect_ratio=increase,crop={BW}:{BH}"
-    zoom = (f"fps={FPS},zoompan=z='min(1.0+0.0009*on,1.13)':x='iw/2-(iw/zoom/2)'"
-            f":y='ih/2-(ih/zoom/2)':d=1:s={BW}x{BH}:fps={FPS}{padf}")
+    # cinematic cohesion: unified grade (lifted blacks, teal shadows / warm highlights,
+    # slightly desaturated), gentle vignette on the footage, film grain on the full frame
+    grade = ("eq=saturation=0.88:contrast=1.05,"
+             "colorbalance=rs=-0.04:bs=0.06:rh=0.05:bh=-0.05,"
+             "curves=all='0/0.035 0.5/0.51 1/0.975',"
+             "vignette=angle=PI/6.5")
+    # camera motion varies per scene: zoom-in, zoom-out, or lateral drift
+    frames = max(int(dur * FPS), 1)
+    mv = i % 3
+    if mv == 0:   # slow push in
+        zexpr = "z='min(1.0+0.0009*on,1.13)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
+    elif mv == 1:  # slow pull out
+        zexpr = "z='max(1.13-0.0009*on,1.0)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
+    else:          # lateral drift at light zoom
+        zexpr = (f"z=1.08:x='(iw-iw/zoom)*on/{frames}':y='ih/2-(ih/zoom/2)'")
+    zoom = (f"fps={FPS},zoompan={zexpr}:d=1:s={BW}x{BH}:fps={FPS},{grade}{padf},"
+            f"noise=alls=5:allf=t+u")
     # timing: never restart/loop the clip mid-scene. If the clip is shorter than the
     # scene, stretch it (slow motion) or boomerang it (forward+reverse, seamless).
     cd = clip_duration(sc["clip"]) or dur
@@ -73,6 +87,17 @@ def render_scene(bd, i):
         opt = f":enable='gte(t,{en})'" if en else ""
         fc += f";[{last}][{j+1}:v]overlay=0:0{opt}[v{j+1}]"
         last = f"v{j+1}"
+    if title:
+        j = len(overlays) + 1
+        inputs += ["-loop", "1", "-t", str(dur), "-i", title]
+        fc += (f";[{j}:v]format=rgba,fade=t=in:st=0.3:d=0.8:alpha=1,"
+               f"fade=t=out:st={max(dur-0.7, 1.2):.2f}:d=0.6:alpha=1[tf]"
+               f";[{last}][tf]overlay=0:0[vt]")
+        last = "vt"
+    # dip-to-black at scene edges: soft filmic cuts instead of hard jumps
+    fc += (f";[{last}]fade=t=in:st=0:d=0.14,"
+           f"fade=t=out:st={max(dur-0.14, 0):.2f}:d=0.14[vf]")
+    last = "vf"
     run(["ffmpeg", "-v", "error", "-y"] + inputs +
         ["-filter_complex", fc, "-map", f"[{last}]", "-t", str(dur),
          "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "21",

@@ -119,3 +119,20 @@ Nothing to configure. For custom music set "music" in script.json as before.
   trigger the "Render video" workflow with a slug instead of running build.py locally:
   no time limits, CLIP on, memory.json auto-committed back. Prefer it for full renders
   when available; use local build.py for quick tests and single-scene fixes.
+
+## v7 upgrades
+- CINEMATIC COHESION (automatic): unified color grade + film grain + vignette, camera
+  motion alternates per scene (push-in / pull-out / drift), dip-to-black scene cuts,
+  title fades in/out. Nothing to configure.
+- 60s SHORT CUT (automatic for scripts >=16 scenes): build.py also writes final_short.mp4
+  from the strongest beats (hook + questions + ending). Deliver BOTH files to James.
+  Manual: python3 pipeline/shortcut.py build/<slug> [target_secs]
+- MYTHOLOGY: memory.json now holds "motifs" (one signature line per video). When
+  scriptwriting, echo exactly ONE earlier motif mid-video as a natural callback phrase.
+  After each approved video: python3 pipeline/learn.py motif <slug> "<name>" "<line>"
+- RETENTION LEARNING: when James shares TikTok retention drop-off timestamps:
+  python3 pipeline/learn.py retention build/<slug> "43,87,110"
+  It maps them to scenes and records the lesson; future scripts obey.
+- ISSUE STUDIO (GitHub): open an issue labeled "video" whose title/body is the idea.
+  CI writes the script (needs ANTHROPIC_API_KEY in repo secrets), renders, comments
+  the artifact link on the issue. Closing the issue = approval.

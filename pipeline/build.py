@@ -237,6 +237,15 @@ def main(bd):
         try: os.remove(final)
         except OSError: pass
         out("RUN AGAIN (final was incomplete, will redo)")
+    # 6. bonus 60s cut for longer scripts
+    short = f"{bd}/final_short.mp4"
+    if len(s["scenes"]) >= 16 and not (os.path.exists(short) and probe_ok(short)):
+        if left() < 20: out("RUN AGAIN (next: 60s short cut)")
+        r = sh([py, os.path.join(HERE, "shortcut.py"), bd])
+        if r.returncode != 0:
+            print(f"note: short cut failed ({r.stderr[-200:]}); full video is fine")
+        else:
+            print(r.stdout.strip())
     print(f"DONE -> {final}")
     print(f"After James approves: python3 {os.path.join(HERE, 'learn.py')} record {bd}")
     print(f"If he dislikes scene i's footage: python3 {os.path.join(HERE, 'learn.py')} swap {bd} <i>")
