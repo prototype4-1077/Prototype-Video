@@ -53,9 +53,10 @@ def mood_score(video, im=None):
     except Exception:
         return 0.0
     score = 100.0
-    if luma > 150: score -= (luma - 150) * 1.5      # too bright = off-style
-    elif luma > 110: score -= (luma - 110) * 0.6
-    if luma < 8: score -= (8 - luma) * 4            # pure black preview = nothing visible
+    if luma > 140: score -= (luma - 140) * 1.2      # too bright = off-style
+    elif luma > 115: score -= (luma - 115) * 0.4
+    if luma < 45: score -= (45 - luma) * 1.0        # too dark: James wants visible lighting
+    if luma < 15: score -= (15 - luma) * 3          # near-black = nothing to see
     if sat > 120: score -= (sat - 120) * 0.8        # garish colors
     d = video["duration"]
     score -= abs(d - 10) * 0.5                       # prefer ~10s clips
@@ -92,7 +93,7 @@ def rank(query, vids):
     except Exception:
         sems = None
     if sems is not None:
-        total = [0.55 * mo + 0.45 * se for mo, se in zip(moods, sems)]
+        total = [0.42 * mo + 0.58 * se for mo, se in zip(moods, sems)]
     else:
         total = moods
     return sorted(zip(total, vids), key=lambda t: -t[0])
