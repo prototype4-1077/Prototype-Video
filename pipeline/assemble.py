@@ -90,12 +90,19 @@ def render_scene(bd, i):
     if title:
         j = len(overlays) + 1
         inputs += ["-loop", "1", "-t", str(dur), "-i", title]
-        fc += (f";[{j}:v]format=rgba,fade=t=in:st=0.3:d=0.8:alpha=1,"
+        # Scene 0 doubles as the social thumbnail: show its title from frame one.
+        # Later scene behavior is unchanged; only the opening skips the fade-in.
+        title_fade = ("format=rgba," if i == 0 else
+                      "format=rgba,fade=t=in:st=0.3:d=0.8:alpha=1,")
+        fc += (f";[{j}:v]{title_fade}"
                f"fade=t=out:st={max(dur-0.7, 1.2):.2f}:d=0.6:alpha=1[tf]"
                f";[{last}][tf]overlay=0:0[vt]")
         last = "vt"
     # dip-to-black at scene edges: soft filmic cuts instead of hard jumps
-    fc += (f";[{last}]fade=t=in:st=0:d=0.14,"
+    # Do not fade scene 0 in: the first encoded frame must contain the opening
+    # picture and title so platforms cannot generate a blank thumbnail.
+    edge_fade = ("" if i == 0 else "fade=t=in:st=0:d=0.14,")
+    fc += (f";[{last}]{edge_fade}"
            f"fade=t=out:st={max(dur-0.14, 0):.2f}:d=0.14[vf]")
     last = "vf"
     run(["ffmpeg", "-v", "error", "-y"] + inputs +
