@@ -13,6 +13,15 @@ FPS = 30
 WIDTH, HEIGHT = 1080, 1920
 
 
+def clip_duration(f):
+    r = subprocess.run(["ffprobe", "-v", "error", "-show_entries", "format=duration",
+                        "-of", "csv=p=0", f], capture_output=True, text=True)
+    try:
+        return float(r.stdout.strip())
+    except ValueError:
+        return None
+
+
 def run(cmd):
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode != 0:
@@ -33,21 +42,31 @@ def render_scene(bd, i):
         overlays.append((f"{bd}/{ov['png']}", rel))
     if i == 0 and os.path.exists(f"{bd}/title.png"):
         overlays.append((f"{bd}/title.png", None))
-    # letterbox: 16:9 band (1080x608) centered on black 9:16 canvas, subtle slow zoom
-    BW, BH, BY = 1080, 608, 656
-    if s.get("layout") == "fullbleed":  # optional full-frame portrait crop
-        vf = (f"scale={WIDTH}:{HEIGHT}:force_original_aspect_ratio=increase,"
-              f"crop={WIDTH}:{HEIGHT},fps={FPS},"
-              f"zoompan=z='min(1.0+0.0009*on,1.13)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
-              f":d=1:s={WIDTH}x{HEIGHT}:fps={FPS}")
+    # geometry: letterbox 16:9 band on black 9:16 canvas (default) or fullbleed crop
+    if s.get("layout") == "fullbleed":
+        BW, BH, padf = WIDTH, HEIGHT, ""
     else:
-        vf = (f"scale={BW}:{BH}:force_original_aspect_ratio=increase,"
-              f"crop={BW}:{BH},fps={FPS},"
-              f"zoompan=z='min(1.0+0.0009*on,1.13)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
-              f":d=1:s={BW}x{BH}:fps={FPS},"
-              f"pad={WIDTH}:{HEIGHT}:0:{BY}:black")
-    inputs = ["-stream_loop", "-1", "-i", sc["clip"]]
-    fc = f"[0:v]{vf}[v0]"
+        BW, BH, BY = 1080, 608, 656
+        padf = f",pad={WIDTH}:{HEIGHT}:0:{BY}:black"
+    geom = f"scale={BW}:{BH}:force_original_aspect_ratio=increase,crop={BW}:{BH}"
+    zoom = (f"fps={FPS},zoompan=z='min(1.0+0.0009*on,1.13)':x='iw/2-(iw/zoom/2)'"
+            f":y='ih/2-(ih/zoom/2)':d=1:s={BW}x{BH}:fps={FPS}{padf}")
+    # timing: never restart/loop the clip mid-scene. If the clip is shorter than the
+    # scene, stretch it (slow motion) or boomerang it (forward+reverse, seamless).
+    cd = clip_duration(sc["clip"]) or dur
+    f = dur / max(cd, 0.1)
+    inputs = ["-i", sc["clip"]]
+    if f <= 1.02:
+        fc = f"[0:v]{geom},{zoom}[v0]"
+    elif f <= 2.2:  # slow the clip just enough to cover the scene
+        fc = f"[0:v]{geom},setpts={f:.4f}*PTS,{zoom}[v0]"
+    elif cd <= 12 and f <= 4.4:  # boomerang doubles length, then slow the rest
+        f2 = max(dur / (2 * cd), 1.0)
+        fc = (f"[0:v]{geom}[fw];[fw]split[fa][fb];[fb]reverse[rv];"
+              f"[fa][rv]concat=n=2:v=1:a=0,setpts={f2:.4f}*PTS,{zoom}[v0]")
+    else:  # extreme mismatch (rare): loop as last resort
+        inputs = ["-stream_loop", "-1", "-i", sc["clip"]]
+        fc = f"[0:v]{geom},{zoom}[v0]"
     last = "v0"
     for j, (ov, en) in enumerate(overlays):
         inputs += ["-i", ov]

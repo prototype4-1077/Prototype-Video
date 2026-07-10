@@ -41,7 +41,7 @@ def get_thumb(video, w=224):
     return Image.open(io.BytesIO(urllib.request.urlopen(u, timeout=20).read())).convert("RGB")
 
 
-def mood_score(video, im=None):
+def mood_score(video, im=None, need=None):
     """Score a candidate by its preview thumbnail: dark + muted wins. Higher = better."""
     try:
         from PIL import ImageStat
@@ -59,8 +59,12 @@ def mood_score(video, im=None):
     if luma < 15: score -= (15 - luma) * 3          # near-black = nothing to see
     if sat > 120: score -= (sat - 120) * 0.8        # garish colors
     d = video["duration"]
-    score -= abs(d - 10) * 0.5                       # prefer ~10s clips
-    if d < 5: score -= 25
+    if need:  # scene length known: clip must cover it without restarting
+        if d < need: score -= (need - d) * 4
+        else: score -= min((d - need) * 0.2, 10)
+    else:
+        score -= abs(d - 10) * 0.5
+        if d < 5: score -= 25
     return score
 
 
@@ -72,7 +76,7 @@ def bank_pick(m):
     return random.choice(pool[:k])
 
 
-def rank(query, vids):
+def rank(query, vids, need=None):
     """Rank candidates: mood (dark/muted) blended with CLIP semantic match if available."""
     thumbs = []
     for v in vids:
@@ -80,7 +84,7 @@ def rank(query, vids):
             thumbs.append(get_thumb(v))
         except Exception:
             thumbs.append(None)
-    moods = [mood_score(v, im) if im is not None else 0.0 for v, im in zip(vids, thumbs)]
+    moods = [mood_score(v, im, need) if im is not None else 0.0 for v, im in zip(vids, thumbs)]
     sems = None
     try:
         import semantic
@@ -127,11 +131,11 @@ def fetch_scene(bd, s, i, used_ids):
         vids = [v for v in search(bank_pick(m)) if v["id"] not in avoid]
     if not vids:
         sys.exit(f"ERROR scene {i}: no results; edit its query in script.json and rerun")
-    scored = rank(sc.get("query", ""), vids)
+    scored = rank(sc.get("query", ""), vids, sc.get("duration"))
     best, v = scored[0]
     if best < 20 and sc.get("query"):  # everything off-style -> blend in bank term
         alt = [x for x in search(bank_pick(m)) if x["id"] not in avoid]
-        scored2 = rank(sc.get("query", ""), alt) if alt else []
+        scored2 = rank(sc.get("query", ""), alt, sc.get("duration")) if alt else []
         if scored2 and scored2[0][0] > best:
             best, v = scored2[0]
     used_ids.add(v["id"])
