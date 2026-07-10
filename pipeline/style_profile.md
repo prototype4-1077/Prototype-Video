@@ -1,0 +1,72 @@
+# James's TikTok Style Profile
+Extracted from "The Collective Tilt" and "Field to Point Synchronization" (Dec 2025).
+
+## Format
+- 1080x1080 (1:1), 30fps, ~2:30 runtime, H.264 + AAC
+- Stock b-roll clips, one per sentence/beat (~6-9s each), scene cut on sentence boundary
+- Footage look: heavily defocused / shallow DOF / blurred motion; moody interiors, anonymous crowds,
+  abstract 3D renders (white figure + red question mark), minimal white scenes, dark tech/red-code frames.
+  Faces rarely in focus. Eerie-calm, liminal feel.
+
+## Title card
+- Handwritten marker-style font, white with soft black shadow, very large, stacked words
+  (e.g. "The / Collective / Tilt"), centered, shown over opening clip for first ~8s alongside first caption.
+
+## Captions
+- Sentence/phrase-level blocks (2-4 lines max, ~34 chars/line), not word-by-word pop
+- Thin geometric sans (Questrial/Century-Gothic-like), white, ~42px
+- Each line sits in its own semi-transparent dark gray box (#3a3a3a @ ~75%), centered, lower third (block center ~y=920)
+- 2-4 key words per sentence highlighted pale yellow (#e6e87e): the conceptual load-bearing words
+  (e.g. "collective", "plot twist", "habit", "inherited", "downloaded", "spell", "thinning")
+
+## Audio
+- Calm, measured, intimate voiceover; slow pace with deliberate pauses ("just... fail to convince.")
+- Ambient/atmospheric music bed underneath, low in the mix
+
+## Writing voice
+- Second-person philosophical monologue: consciousness, the collective, conditioning, awakening
+- Conversational hook opener: "You ever notice how..."
+- Software/tech metaphors throughout: "running code that isn't theirs", "programs you never wrote",
+  "reactions aren't personal — they're inherited. downloaded.", "the only thing that actually computes",
+  "running side by side without fully syncing", "You see frames."
+- Rhetorical questions as pivots: "Who taught me to fear this?" "Why does this reaction feel older than me?"
+- Quoted inner dialogue: '"No, that's too expensive. I'm not carrying that anymore."'
+- Short declaratives for punch: "The spell is thinning." "It's the field itself recalibrating."
+- Contrast pairs: "Not with a manifesto, but with a breath. Not with a protest, but with a choice."
+  "The personal becomes transparent. The impersonal becomes intimate."
+- Em-dashes and trailing builds; one-word caption beats for emphasis: "discernment." "downloaded."
+- Arc: hook (relatable observation) → diagnosis (old narratives/conditioning loosening) → mechanism
+  (inherited programs, the field) → turn (choice/awareness) → quiet revelation ending, often an identity
+  statement: "I AM the field experiencing a point of contact." / "one orientation. one you."
+
+## Reference script fragments (The Collective Tilt)
+"You ever notice how the collective feels like it just hit that moment in a movie where the plot twist
+isn't loud, it's obvious? Like everybody suddenly realizes the story they were defending was held
+together by habit, not clarity. That's the era we're standing in. Because something subtle but
+unmistakable is happening. The old narratives, the identities wrapped in fear and passed down like
+family heirlooms — they're starting to loosen. [...] It's like the collective walked back into the
+store of old beliefs, 'No, that's too expensive. I'm not carrying that anymore.' A certain kind of
+tired is spreading. [...] The fatigue that shows up when you finally recognize how much of your
+emotional bandwidth was being drained by programs you never wrote. And when people get tired of
+running code that isn't theirs, they stop performing the version of themselves that the past demanded.
+They start asking sharper questions. Who taught me to fear this? Why does this reaction feel older
+than me? See, this movement isn't about a particular group waking up. It's the field itself
+recalibrating. Like clarity diffusing through the room [...] People are beginning to recognize when
+their reactions aren't personal — they're inherited. downloaded. [...] you get to decide whether to
+keep running it. That's why the noise feels louder lately. It's not growing — The spell is thinning.
+And unity — not the kumbaya kind, the structural, lived, grounded kind — is starting to feel like the
+only thing that actually computes. And in that space between the old story and the new one not yet
+named — that's where the realignment happens. Not with a manifesto, but with a breath. Not with a
+protest, but with a choice. The next move isn't to build a new system. It's to remember you are the
+source. It's waiting for you to consciously meet it there."
+
+## v2 visual spec (July 2026, per "How Reality Works" reference)
+- Letterboxed: 16:9 footage band centered on black 1080x1080; captions live in the bottom black band.
+- Footage mood shifted from plain moody b-roll to surreal/mystical: floating orbs, fog monoliths,
+  keyhole/tunnel silhouettes, cosmos, glowing objects, mirror worlds. Still dark, muted, liminal.
+- Title: bold rounded ALL-CAPS (Baloo 2 ExtraBold), white w/ shadow, over the opening visual
+  (replaces handwritten Caveat, which was the v1 square-layout look).
+
+## v4 (July 2026): format is 1080x1920 (9:16 phone/TikTok full-screen)
+- Same letterbox grammar: 16:9 footage band vertically centered on black, title over the band,
+  captions ~y1430 (clear of TikTok UI). All future videos in 9:16.

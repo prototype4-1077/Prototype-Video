@@ -1,0 +1,59 @@
+name: Render video
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "Build slug (expects build/<slug>/script.json in the repo; optional vo.mp3 next to it)"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: System deps
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+
+      - name: Python deps
+        run: pip install -q -r pipeline/requirements.txt
+
+      - name: API keys from repo secrets
+        run: |
+          printf 'ELEVENLABS_API_KEY=%s\nPEXELS_API_KEY=%s\nELEVENLABS_VOICE_ID=%s\n' \
+            "${{ secrets.ELEVENLABS_API_KEY }}" "${{ secrets.PEXELS_API_KEY }}" \
+            "${{ secrets.ELEVENLABS_VOICE_ID || 'TX3LPaxmHKxFdv7VOQHJ' }}" > pipeline/.env
+
+      - name: Build until DONE (no sandbox time limits here)
+        env:
+          SEMANTIC_CLIP: "1"   # CLIP semantic footage matching ON in CI
+        run: |
+          for i in $(seq 1 200); do
+            out=$(python3 pipeline/build.py "build/${{ github.event.inputs.slug }}" 2>&1) || { echo "$out"; exit 1; }
+            echo "$out"
+            case "$out" in *DONE*) break;; esac
+          done
+          test -f "build/${{ github.event.inputs.slug }}/final.mp4"
+
+      - name: Upload final video
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.inputs.slug }}
+          path: build/${{ github.event.inputs.slug }}/final.mp4
+
+      - name: Commit updated memory + script timings
+        run: |
+          rm -f pipeline/.env
+          git config user.name "render-bot" && git config user.email "render@users.noreply.github.com"
+          git add pipeline/memory.json "build/${{ github.event.inputs.slug }}/script.json" || true
+          git commit -m "render ${{ github.event.inputs.slug }}: update memory + timings" || echo "nothing to commit"
+          git push || true
