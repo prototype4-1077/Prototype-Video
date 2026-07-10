@@ -70,3 +70,34 @@ source. It's waiting for you to consciously meet it there."
 ## v4 (July 2026): format is 1080x1920 (9:16 phone/TikTok full-screen)
 - Same letterbox grammar: 16:9 footage band vertically centered on black, title over the band,
   captions ~y1430 (clear of TikTok UI). All future videos in 9:16.
+
+## v8 training (from "We Don't See the Same Color" reference, July 2026)
+Cadence:
+- 131 wpm, ~16 words/sentence, 28 pauses >0.7s (one every ~6s). Write ellipses and
+  hard line breaks at pivots so the VO breathes; let big ideas LAND for 1.5s.
+- RHYTHM IS NOT UNIFORM: open with a rapid hook montage (2-4 beats of 1-3s under the
+  first sentence), then alternate medium beats (3-5s) with long contemplative holds
+  (8-14s) on the heaviest lines. Never a flat 6s-6s-6s pulse.
+- To get montage cuts today: split the hook sentence into 2-3 scene entries at natural
+  fragment points (alignment handles sub-sentence scenes fine).
+Slide selection:
+- ACCENT COLOR: pick one color tied to the core concept; the first 2-4 scenes all share
+  it as a monochrome motif (e.g., everything red for a video about seeing red).
+- WORD-LITERAL PROPS: show the exact noun/verb as an object - lens -> camera lens macro,
+  labels -> speech bubble / signs / multilingual words, deeper -> magnifying glass,
+  mind -> gears illustration. The prop IS the metaphor.
+- MEDIA VARIETY within cohesion: mix stock film with illustrations, 3D renders,
+  wireframes, thermal/x-ray imagery - especially for perception-flip beats
+  (thermal crowd = literally seeing the same scene in different colors).
+- HUMAN BEATS: 3-5 scenes may show people/faces - a thoughtful upward gaze, a person
+  pointing AT the camera on a direct-address line. Connection, not anonymity, on those beats.
+- CLOSER REFRAME: the final slide should visually reframe the whole premise
+  (the thermal crowd after a video about color perception), while the final line
+  echoes the title phrase word-for-word.
+Content structure (arc template #2, alongside the original hook->diagnosis->turn arc):
+1. Sensory thought experiment the viewer performs immediately ("If I open my eyes...")
+2. Direct guided-introspection commands: "Think about it." "Now go deeper into your thoughts."
+3. Escalation ladder: tiny concrete seed -> "what else could be perceived differently?"
+   -> everything (ideas, government, religion, space)
+4. Practical micro-instruction: "So pause and notice the labels you use."
+5. Title echo as the final sentence.
