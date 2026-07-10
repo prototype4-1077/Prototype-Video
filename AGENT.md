@@ -65,3 +65,11 @@ its spoken line. If a scene misses, use the swap flow before delivering.
 - Retention feedback: python3 pipeline/learn.py retention build/<slug> "<t1,t2>" then push memory.
 - Zero-effort mode: open a GitHub issue labeled "video" with the idea; CI does everything
   (requires ANTHROPIC_API_KEY secret). Comment on the issue = feedback; close = approve.
+
+## Parallel operators
+Multiple AIs may work simultaneously, each on its OWN slug. Rules:
+- Never touch another slug's build dir. Pick a fresh slug; check build/ first.
+- If your git push is rejected: git pull --rebase origin main, then push again (retry a few times).
+- CI enforces one run per slug at a time; different slugs render in parallel.
+- Record/note/swap (learn.py) immediately before pushing, then push promptly - memory
+  is shared, last-writer-wins on notes is fine, but always pull-rebase first.
