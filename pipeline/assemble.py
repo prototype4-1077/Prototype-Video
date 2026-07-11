@@ -90,7 +90,9 @@ def render_scene(bd, i):
     # The Pexels cover image often comes from inside a clip. For a long source,
     # begin slightly into it so the chosen semantic moment appears immediately.
     offset = 0.0
-    if mode == "eerie_museum" and cd > dur + 1.5:
+    if sc.get("trim_start") is not None:
+        offset = max(float(sc["trim_start"]), 0.0)
+    elif mode == "eerie_museum" and cd > dur + 1.5:
         offset = min(max((cd - dur) * 0.35, 0.0), 3.0)
     inputs = (["-ss", f"{offset:.3f}"] if offset else []) + ["-i", sc["clip"]]
     if f <= 1.02:
