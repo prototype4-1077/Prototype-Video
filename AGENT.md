@@ -76,3 +76,6 @@ Multiple AIs may work simultaneously, each on its OWN slug. Rules:
 - Tricky prop shots can be PINNED: set the scene's "pexels_id" to a curated clip id; the build fetches that exact clip.
 - DMT/visionary scripts: set "genre": "dmt" in script.json (see style_profile.md DMT
   section). Footage scoring flips to vivid/saturated automatically.
+- HERO SHOTS: scenes may set "hero": true + "image_prompt" - CI generates free AI
+  imagery (pollinations.ai) with a 2.5D parallax move instead of stock. Use for
+  impossible metaphors, the scene-0 thumbnail, and the closing reframe (2-4 per video).

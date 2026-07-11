@@ -162,6 +162,21 @@ def main(bd):
 
     s = json.load(open(f"{bd}/script.json"))
 
+    # 2a. hero shots: free AI-generated 2.5D imagery for flagged metaphor beats
+    for i, sc in enumerate(s["scenes"]):
+        if not sc.get("hero"):
+            continue
+        clip = f"{bd}/clip_{i:02d}.mp4"
+        if os.path.exists(clip) and os.path.getsize(clip) > 100_000:
+            continue
+        if left() < 25:
+            out(f"RUN AGAIN (next: hero shot {i})")
+        r = sh([py, os.path.join(HERE, "hero.py"), bd, str(i)])
+        if r.returncode != 0:
+            print(f"note: hero {i} failed ({r.stderr[-160:]}); falling back to stock footage")
+        else:
+            print(r.stdout.strip())
+
     # 2. footage (scene by scene, resumable)
     missing = [i for i in range(n)
                if not (os.path.exists(f"{bd}/clip_{i:02d}.mp4")

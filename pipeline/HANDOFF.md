@@ -136,3 +136,13 @@ Nothing to configure. For custom music set "music" in script.json as before.
 - ISSUE STUDIO (GitHub): open an issue labeled "video" whose title/body is the idea.
   CI writes the script (needs ANTHROPIC_API_KEY in repo secrets), renders, comments
   the artifact link on the issue. Closing the issue = approval.
+
+## v10: HERO SHOTS (free AI imagery, no API keys)
+For 2-4 metaphor beats per video that stock can never match, add to the scene:
+    "hero": true, "image_prompt": "exactly what the shot shows (no style words needed)"
+build.py generates the image (pollinations.ai, keyless), estimates depth locally
+(MiDaS ONNX), and renders a slow 2.5D parallax camera move as that scene's clip.
+Genre styling is automatic (moody film still vs vivid visionary for dmt).
+Use for: impossible metaphors (wall of doors, translucent slides), the title/thumbnail
+scene, and the closer reframe. Stock remains the default for ordinary beats.
+If generation fails the build falls back to stock via the scene's "query".
