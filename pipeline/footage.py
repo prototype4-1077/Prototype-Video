@@ -50,7 +50,7 @@ def get_thumb(video, w=224):
     return Image.open(io.BytesIO(urllib.request.urlopen(u, timeout=20).read())).convert("RGB")
 
 
-def mood_score(video, im=None, need=None, genre=None):
+def mood_score(video, im=None, need=None, genre=None, visual_mode=None):
     """Score a candidate thumbnail. Default: lit-but-moody, muted.
     genre="dmt": vivid saturated visionary imagery wins instead."""
     try:
@@ -70,7 +70,8 @@ def mood_score(video, im=None, need=None, genre=None):
     else:
         if luma > 140: score -= (luma - 140) * 1.2      # too bright = off-style
         elif luma > 115: score -= (luma - 115) * 0.4
-        if luma < 45: score -= (45 - luma) * 1.0        # too dark: James wants visible lighting
+        floor = 52 if visual_mode == "eerie_museum" else 45
+        if luma < floor: score -= (floor - luma) * 1.25 # eerie still needs readable detail
         if luma < 15: score -= (15 - luma) * 3          # near-black = nothing to see
         if sat > 120: score -= (sat - 120) * 0.8        # garish colors
     d = video["duration"]
@@ -92,7 +93,7 @@ def bank_pick(m, genre=None):
     return random.choice(pool[:k])
 
 
-def rank(query, vids, need=None, genre=None):
+def rank(query, vids, need=None, genre=None, visual_mode=None, strict=False):
     """Rank candidates: mood (dark/muted) blended with CLIP semantic match if available."""
     thumbs = []
     for v in vids:
@@ -100,7 +101,8 @@ def rank(query, vids, need=None, genre=None):
             thumbs.append(get_thumb(v))
         except Exception:
             thumbs.append(None)
-    moods = [mood_score(v, im, need, genre) if im is not None else 0.0 for v, im in zip(vids, thumbs)]
+    moods = [mood_score(v, im, need, genre, visual_mode) if im is not None else 0.0
+             for v, im in zip(vids, thumbs)]
     sems = None
     try:
         import semantic
@@ -113,15 +115,18 @@ def rank(query, vids, need=None, genre=None):
     except Exception:
         sems = None
     if sems is not None:
-        total = [0.42 * mo + 0.58 * se for mo, se in zip(moods, sems)]
+        # strict visuals are for narration-led films: literal meaning wins while
+        # the mood score remains a guardrail against flat/black/garish footage.
+        mw, sw = (0.28, 0.72) if strict else (0.42, 0.58)
+        total = [mw * mo + sw * se for mo, se in zip(moods, sems)]
     else:
         total = moods
     return sorted(zip(total, vids), key=lambda t: -t[0])
 
 
-def search(q):
+def search(q, per_page=15):
     q = urllib.parse.quote(q)
-    res = api(f"https://api.pexels.com/videos/search?query={q}&per_page=15&orientation=landscape")
+    res = api(f"https://api.pexels.com/videos/search?query={q}&per_page={per_page}&orientation=landscape")
     return res.get("videos") or []
 
 
@@ -153,17 +158,23 @@ def fetch_scene(bd, s, i, used_ids):
         except Exception as e:
             print(f"scene {i}: re-fetch failed ({e}); searching fresh")
     genre = s.get("genre")
-    vids = search(sc.get("query") or bank_pick(m, genre))
+    strict = bool(s.get("strict_visuals"))
+    visual_mode = s.get("visual_mode")
+    # More candidates gives CLIP enough room to prioritize the actual narrated
+    # object/action instead of settling for the first merely moody result.
+    vids = search(sc.get("query") or bank_pick(m, genre), 40 if strict else 15)
     vids = [v for v in vids if v["id"] not in avoid]
     if not vids:
         vids = [v for v in search(bank_pick(m, genre)) if v["id"] not in avoid]
     if not vids:
         sys.exit(f"ERROR scene {i}: no results; edit its query in script.json and rerun")
-    scored = rank(sc.get("query", ""), vids, sc.get("duration"), genre)
+    scored = rank(sc.get("query", ""), vids, sc.get("duration"), genre,
+                  visual_mode, strict)
     best, v = scored[0]
-    if best < 20 and sc.get("query"):  # everything off-style -> blend in bank term
+    if best < 20 and sc.get("query") and not strict:  # don't abandon literal narration in strict mode
         alt = [x for x in search(bank_pick(m, genre)) if x["id"] not in avoid]
-        scored2 = rank(sc.get("query", ""), alt, sc.get("duration"), genre) if alt else []
+        scored2 = rank(sc.get("query", ""), alt, sc.get("duration"), genre,
+                       visual_mode, strict) if alt else []
         if scored2 and scored2[0][0] > best:
             best, v = scored2[0]
     used_ids.add(v["id"])
