@@ -21,9 +21,15 @@ def prep(bd):
         total = sum(sc.get("duration", 8) for sc in s["scenes"])
         subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                         "music.py"), f"{bd}/music.wav", str(total + 2)] +
-                       ([f"{bd}/vo.mp3"] if os.path.exists(f"{bd}/vo.mp3") else []), check=True)
+                       ([f"{bd}/vo.mp3"] if os.path.exists(f"{bd}/vo.mp3") else ["-"]) +
+                       ([s["genre"]] if s.get("genre") else []), check=True)
         s["music"] = "music.wav"
         json.dump(s, open(f"{bd}/script.json", "w"), indent=1)
+        try:  # sound design: sub-drops, whooshes, riser baked into the bed
+            subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                            "sfx.py"), bd], check=True)
+        except Exception as e:
+            print(f"note: sfx skipped ({e})")
     print(f"prep done: {len(s['scenes'])} captions + title + music")
 
 

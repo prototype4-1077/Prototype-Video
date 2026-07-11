@@ -146,3 +146,11 @@ Genre styling is automatic (moody film still vs vivid visionary for dmt).
 Use for: impossible metaphors (wall of doors, translucent slides), the title/thumbnail
 scene, and the closer reframe. Stock remains the default for ordinary beats.
 If generation fails the build falls back to stock via the scene's "query".
+
+## v11: CINEMATIC SCORE + SOUND DESIGN (all synthesized, free, automatic)
+music.py v3 composes a real score per video: minor chord pads with synthetic reverb,
+deep drone, airy swells, heartbeat pulse (philosophy) or shimmering plucks (dmt genre),
+in true stereo - still VO-adaptive (recedes under speech, blooms in pauses, builds to
+the ending). sfx.py then bakes sound design into the bed from scene timings: a sub-drop
+under the title and the closing line, whooshes into cuts after long holds, and a riser
+into the final scene. Nothing to configure; genre is read from script.json.
