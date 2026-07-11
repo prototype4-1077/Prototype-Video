@@ -9,6 +9,7 @@ editorial choice while keeping the normal render path fully automatic.
 """
 import json
 import os
+import subprocess
 import sys
 
 from PIL import Image, ImageDraw, ImageFont, ImageOps
@@ -84,6 +85,31 @@ def sheet_for_scene(build_dir, script, i, out_dir):
     print(f"scene {i}: {len(meta)} candidates -> {stem}.jpg")
 
 
+def make_reel(out_dir, build_dir):
+    """Encode the sheets as final.mp4 so the existing render artifact uploads them."""
+    sheets = sorted(os.path.join(out_dir, x) for x in os.listdir(out_dir)
+                    if x.startswith("scene_") and x.endswith(".jpg"))
+    if not sheets:
+        raise RuntimeError("no curation sheets were created")
+    listing = os.path.join(out_dir, "reel.txt")
+    with open(listing, "w") as f:
+        for path in sheets:
+            f.write(f"file '{os.path.abspath(path)}'\n")
+            f.write("duration 5\n")
+        f.write(f"file '{os.path.abspath(sheets[-1])}'\n")
+    out = os.path.join(build_dir, "final.mp4")
+    r = subprocess.run([
+        "ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", listing,
+        "-vf", "scale=1600:880:force_original_aspect_ratio=decrease,"
+               "pad=1600:880:(ow-iw)/2:(oh-ih)/2:black,format=yuv420p",
+        "-r", "30", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+        "-movflags", "+faststart", out,
+    ], capture_output=True, text=True)
+    if r.returncode:
+        raise RuntimeError(f"curation reel ffmpeg failed: {r.stderr[-800:]}")
+    print(f"curation reel -> {out}")
+
+
 def main():
     if len(sys.argv) != 3:
         raise SystemExit("usage: curate.py build/<slug> 4,7,18")
@@ -96,6 +122,7 @@ def main():
         if not 0 <= i < len(script["scenes"]):
             raise SystemExit(f"scene index out of range: {i}")
         sheet_for_scene(build_dir, script, i, out_dir)
+    make_reel(out_dir, build_dir)
 
 
 if __name__ == "__main__":
