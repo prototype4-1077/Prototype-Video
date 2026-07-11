@@ -48,15 +48,33 @@ def render_scene(bd, i):
         BW, BH, BY = 1080, 608, 656
         padf = f",pad={WIDTH}:{HEIGHT}:0:{BY}:black"
     geom = f"scale={BW}:{BH}:force_original_aspect_ratio=increase,crop={BW}:{BH}"
-    # cinematic cohesion: unified grade (lifted blacks, teal shadows / warm highlights,
-    # slightly desaturated), gentle vignette on the footage, film grain on the full frame
-    grade = ("eq=saturation=0.88:contrast=1.05,"
-             "colorbalance=rs=-0.04:bs=0.06:rh=0.05:bh=-0.05,"
-             "curves=all='0/0.035 0.5/0.51 1/0.975',"
-             "vignette=angle=PI/6.5")
+    # cinematic cohesion: a narration-controlled color arc. Museum mode begins
+    # cold/uncanny, keeps blacks readable, then opens into warm gold at acceptance.
+    mode = s.get("visual_mode")
+    tone = sc.get("tone", "cold")
+    if mode == "eerie_museum":
+        grades = {
+            "cold": ("eq=brightness=0.018:saturation=0.76:contrast=1.10:gamma=1.04,"
+                     "colorbalance=rs=-0.07:bs=0.11:rh=0.035:bh=-0.035,"),
+            "neutral": ("eq=brightness=0.026:saturation=0.80:contrast=1.08:gamma=1.04,"
+                        "colorbalance=rs=-0.045:bs=0.075:rh=0.05:bh=-0.045,"),
+            "warm": ("eq=brightness=0.038:saturation=0.86:contrast=1.07:gamma=1.05,"
+                     "colorbalance=rs=-0.02:bs=0.045:rh=0.09:bh=-0.07,"),
+            "gold": ("eq=brightness=0.055:saturation=0.94:contrast=1.06:gamma=1.06,"
+                     "colorbalance=rs=0.00:bs=0.02:rh=0.14:bh=-0.10,"),
+        }
+        grade = (grades.get(tone, grades["cold"]) +
+                 "curves=all='0/0.045 0.48/0.515 1/0.985',vignette=angle=PI/7.5")
+        grain = 3
+    else:
+        grade = ("eq=saturation=0.88:contrast=1.05,"
+                 "colorbalance=rs=-0.04:bs=0.06:rh=0.05:bh=-0.05,"
+                 "curves=all='0/0.035 0.5/0.51 1/0.975',"
+                 "vignette=angle=PI/6.5")
+        grain = 5
     # camera motion varies per scene: zoom-in, zoom-out, or lateral drift
     frames = max(int(dur * FPS), 1)
-    mv = i % 3
+    mv = {"push": 0, "pull": 1, "drift": 2}.get(sc.get("motion"), i % 3)
     if mv == 0:   # slow push in
         zexpr = "z='min(1.0+0.0009*on,1.13)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
     elif mv == 1:  # slow pull out
@@ -64,12 +82,17 @@ def render_scene(bd, i):
     else:          # lateral drift at light zoom
         zexpr = (f"z=1.08:x='(iw-iw/zoom)*on/{frames}':y='ih/2-(ih/zoom/2)'")
     zoom = (f"fps={FPS},zoompan={zexpr}:d=1:s={BW}x{BH}:fps={FPS},{grade}{padf},"
-            f"noise=alls=5:allf=t+u")
+            f"noise=alls={grain}:allf=t+u")
     # timing: never restart/loop the clip mid-scene. If the clip is shorter than the
     # scene, stretch it (slow motion) or boomerang it (forward+reverse, seamless).
     cd = clip_duration(sc["clip"]) or dur
     f = dur / max(cd, 0.1)
-    inputs = ["-i", sc["clip"]]
+    # The Pexels cover image often comes from inside a clip. For a long source,
+    # begin slightly into it so the chosen semantic moment appears immediately.
+    offset = 0.0
+    if mode == "eerie_museum" and cd > dur + 1.5:
+        offset = min(max((cd - dur) * 0.35, 0.0), 3.0)
+    inputs = (["-ss", f"{offset:.3f}"] if offset else []) + ["-i", sc["clip"]]
     if f <= 1.02:
         fc = f"[0:v]{geom},{zoom}[v0]"
     elif f <= 2.2:  # slow the clip just enough to cover the scene
@@ -101,10 +124,16 @@ def render_scene(bd, i):
     # dip-to-black at scene edges: soft filmic cuts instead of hard jumps
     # Do not fade scene 0 in: the first encoded frame must contain the opening
     # picture and title so platforms cannot generate a blank thumbnail.
-    edge_fade = ("" if i == 0 else "fade=t=in:st=0:d=0.14,")
-    fc += (f";[{last}]{edge_fade}"
-           f"fade=t=out:st={max(dur-0.14, 0):.2f}:d=0.14[vf]")
-    last = "vf"
+    if mode == "eerie_museum":
+        # Clean editorial cuts preserve visible detail and avoid a black flash
+        # every few seconds. The narration itself supplies the scene boundary.
+        fc += f";[{last}]null[vf]"
+        last = "vf"
+    else:
+        edge_fade = ("" if i == 0 else "fade=t=in:st=0:d=0.14,")
+        fc += (f";[{last}]{edge_fade}"
+               f"fade=t=out:st={max(dur-0.14, 0):.2f}:d=0.14[vf]")
+        last = "vf"
     run(["ffmpeg", "-v", "error", "-y"] + inputs +
         ["-filter_complex", fc, "-map", f"[{last}]", "-t", str(dur),
          "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "21",
