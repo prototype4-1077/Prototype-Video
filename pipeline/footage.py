@@ -101,22 +101,34 @@ def rank(query, vids, need=None, genre=None):
         except Exception:
             thumbs.append(None)
     moods = [mood_score(v, im, need, genre) if im is not None else 0.0 for v, im in zip(vids, thumbs)]
-    sems = None
+    sems, embs_lut = None, {}
     try:
         import semantic
         if query and semantic.available():
             ok = [(v, im) for v, im in zip(vids, thumbs) if im is not None]
             if ok:
-                ss = semantic.scores(query, [im for _, im in ok])
+                ss, embs = semantic.scores_and_embs(query, [im for _, im in ok])
                 lut = {id(v): s for (v, _), s in zip(ok, ss)}
+                embs_lut = {id(v): e for (v, _), e in zip(ok, embs)}
                 sems = [lut.get(id(v), 0.0) for v in vids]
     except Exception:
         sems = None
     if sems is not None:
-        total = [0.42 * mo + 0.58 * se for mo, se in zip(moods, sems)]
+        try:  # learned taste vector: similarity to James's approved aesthetic
+            import taste
+            if taste.ready():
+                ts = {vid_id: t for vid_id, t in
+                      zip(embs_lut.keys(), taste.score(list(embs_lut.values())))}
+                total = [0.38 * mo + 0.47 * se + 0.15 * ts.get(id(v), 50.0)
+                         for mo, se, v in zip(moods, sems, vids)]
+            else:
+                total = [0.42 * mo + 0.58 * se for mo, se in zip(moods, sems)]
+        except Exception:
+            total = [0.42 * mo + 0.58 * se for mo, se in zip(moods, sems)]
     else:
         total = moods
-    return sorted(zip(total, vids, thumbs), key=lambda t: -t[0])
+    return sorted(zip(total, vids, thumbs,
+                      [embs_lut.get(id(v)) for v in vids]), key=lambda t: -t[0])
 
 
 def search(q, genre=None):
@@ -146,7 +158,7 @@ def save_alts(bd, i, chosen, scored):
         manifest = json.load(open(p)) if os.path.exists(p) else {}
         entries = []
         k = 0
-        for sc_score, v, im in scored:
+        for sc_score, v, im, _e in scored:
             if v["id"] == chosen["id"] or im is None:
                 continue
             safe = str(v["id"]).replace(":", "_")
@@ -194,14 +206,17 @@ def fetch_scene(bd, s, i, used_ids):
     if not vids:
         sys.exit(f"ERROR scene {i}: no results; edit its query in script.json and rerun")
     scored = rank(sc.get("query", ""), vids, sc.get("duration"), genre)
-    best, v, _ = scored[0]
+    best, v, _, emb = scored[0]
     if best < 20 and sc.get("query"):  # everything off-style -> blend in bank term
         alt = [x for x in search(bank_pick(m, genre), genre) if x["id"] not in avoid]
         scored2 = rank(sc.get("query", ""), alt, sc.get("duration"), genre) if alt else []
         if scored2 and scored2[0][0] > best:
-            best, v, _ = scored2[0]
+            best, v, _, emb = scored2[0]
             scored = scored2
     save_alts(bd, i, v, scored)
+    if emb is not None:  # feed the taste vector on approval/swap later
+        import numpy as _np
+        _np.save(f"{bd}/emb_{i:02d}.npy", _np.asarray(emb, _np.float32))
     used_ids.add(v["id"])
     f = pick_file(v)
     urllib.request.urlretrieve(f["link"], out + ".part")

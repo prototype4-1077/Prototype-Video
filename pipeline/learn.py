@@ -44,6 +44,14 @@ def record(bd):
     m["videos"].append({"slug": s.get("slug"), "title": s.get("title"),
                         "scenes": len(s["scenes"]), "clips": kept})
     save(m)
+    try:  # taste vector: this video's chosen-clip embeddings become "approved"
+        import glob as _g, numpy as _np, taste
+        vecs = [_np.load(f) for f in sorted(_g.glob(f"{bd}/emb_*.npy"))]
+        if vecs:
+            na, nr = taste.add("approved", _np.stack(vecs))
+            print(f"taste: +{len(vecs)} approved (now {na} approved / {nr} rejected)")
+    except Exception as e:
+        print(f"note: taste update skipped ({e})")
     print(f"recorded: {len(kept)} clips remembered, {len(m['videos'])} videos in memory")
 
 
@@ -58,6 +66,14 @@ def swap(bd, i):
     if q:
         m["query_weights"][q] = m["query_weights"].get(q, 0) - 2
     sc.pop("clip", None)
+    try:  # the rejected clip's embedding teaches the taste vector what to avoid
+        import numpy as _np, taste
+        ef = f"{bd}/emb_{i:02d}.npy"
+        if os.path.exists(ef):
+            taste.add("rejected", _np.load(ef)[None])
+            print("taste: +1 rejected")
+    except Exception:
+        pass
     for f in (f"{bd}/clip_{i:02d}.mp4", f"{bd}/seg_{i:02d}.mp4", f"{bd}/final.mp4"):
         if os.path.exists(f):
             try: os.remove(f)

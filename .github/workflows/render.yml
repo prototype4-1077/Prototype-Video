@@ -89,7 +89,7 @@ jobs:
         run: |
           rm -f pipeline/.env
           git config user.name "render-bot" && git config user.email "render@users.noreply.github.com"
-          for f in pipeline/memory.json "build/${{ inputs.slug }}/script.json" "build/${{ inputs.slug }}/alts.json"; do
+          for f in pipeline/memory.json "build/${{ inputs.slug }}/script.json" "build/${{ inputs.slug }}/alts.json" "build/${{ inputs.slug }}"/emb_*.npy; do
             git add "$f" 2>/dev/null || true
           done
           git commit -m "render ${{ inputs.slug }}: update memory + timings" || echo "nothing to commit"

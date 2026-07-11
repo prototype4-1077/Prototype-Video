@@ -174,3 +174,12 @@ into the final scene. Nothing to configure; genre is read from script.json.
 - BATCH: Actions -> "Render batch" -> comma-separated slugs renders them in parallel.
 - Issue studio is now FREE: idea_writer.py falls back to pollinations.ai text API when
   no ANTHROPIC_API_KEY secret exists.
+
+## v14: LEARNED TASTE VECTOR
+Every render stores the chosen clip's CLIP embedding (emb_XX.npy, committed back by CI).
+learn.py record -> those embeddings become "approved"; learn.py swap -> "rejected".
+Once >=8 approved exist (pipeline/taste.npz) the footage ranker blends a learned taste
+term (0.38 mood / 0.47 semantic / 0.15 taste) - the system scores candidates by
+similarity to James's actual approval history, learning aesthetics no rule captures.
+Nothing to configure. ALWAYS commit pipeline/taste.npz together with memory.json
+after record/swap. No backfill needed; it learns forward from every video.

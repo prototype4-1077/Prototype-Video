@@ -35,8 +35,8 @@ def _load():
     return _model, _pre, _tok
 
 
-def scores(query, images):
-    """images: list of PIL Images. Returns list of 0..100 semantic similarity scores."""
+def scores_and_embs(query, images):
+    """Returns ([0..100 semantic scores], [512-d image embeddings])."""
     import torch
     model, pre, tok = _load()
     with torch.no_grad():
@@ -46,5 +46,10 @@ def scores(query, images):
         imf = model.encode_image(batch)
         imf /= imf.norm(dim=-1, keepdim=True)
         sims = (imf @ tf.T).squeeze(1).tolist()
+    embs = [e.numpy() for e in imf]
     # typical CLIP cosine range ~0.10 (unrelated) .. 0.35 (spot-on) -> 0..100
-    return [max(0.0, min(100.0, (s - 0.10) * 400)) for s in sims]
+    return [max(0.0, min(100.0, (s - 0.10) * 400)) for s in sims], embs
+
+
+def scores(query, images):
+    return scores_and_embs(query, images)[0]
