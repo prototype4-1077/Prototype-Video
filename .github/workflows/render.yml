@@ -5,12 +5,17 @@ on:
       slug:
         description: "Build slug (expects build/<slug>/script.json in the repo; optional vo.mp3 next to it)"
         required: true
+  workflow_call:
+    inputs:
+      slug:
+        type: string
+        required: true
 
 permissions:
   contents: write
 
 concurrency:
-  group: render-${{ github.event.inputs.slug }}   # same slug never runs twice at once
+  group: render-${{ inputs.slug }}   # same slug never runs twice at once
   cancel-in-progress: false
 
 jobs:
@@ -24,6 +29,15 @@ jobs:
         with:
           python-version: "3.11"
           cache: pip
+
+      - name: Cache models (whisper, CLIP, depth)
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            /tmp/clipcache
+            /tmp/models
+          key: models-v1
 
       - name: System deps
         run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
@@ -42,24 +56,39 @@ jobs:
           SEMANTIC_CLIP: "1"   # CLIP semantic footage matching ON in CI
         run: |
           for i in $(seq 1 200); do
-            out=$(python3 pipeline/build.py "build/${{ github.event.inputs.slug }}" 2>&1) || { echo "$out"; exit 1; }
+            out=$(python3 pipeline/build.py "build/${{ inputs.slug }}" 2>&1) || { echo "$out"; exit 1; }
             echo "$out"
             case "$out" in *DONE*) break;; esac
           done
-          test -f "build/${{ github.event.inputs.slug }}/final.mp4"
+          test -f "build/${{ inputs.slug }}/final.mp4"
 
       - name: Upload final video
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ github.event.inputs.slug }}
+          name: ${{ inputs.slug }}
           path: |
-            build/${{ github.event.inputs.slug }}/final*.mp4
-            build/${{ github.event.inputs.slug }}/alts_sheet.jpg
+            build/${{ inputs.slug }}/final*.mp4
+            build/${{ inputs.slug }}/alts_sheet.jpg
+
+      - name: Publish permanent Release (artifacts expire after 90 days)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="video-${{ inputs.slug }}"
+          gh release view "$TAG" >/dev/null 2>&1 || \
+            gh release create "$TAG" --title "${{ inputs.slug }}" \
+              --notes "Rendered $(date -u +%F) by run ${{ github.run_id }}"
+          gh release upload "$TAG" \
+            "build/${{ inputs.slug }}/final.mp4#${{ inputs.slug }}.mp4" --clobber
+          test -f "build/${{ inputs.slug }}/final_short.mp4" && gh release upload "$TAG" \
+            "build/${{ inputs.slug }}/final_short.mp4#${{ inputs.slug }}-60s.mp4" --clobber || true
+          test -f "build/${{ inputs.slug }}/alts_sheet.jpg" && gh release upload "$TAG" \
+            "build/${{ inputs.slug }}/alts_sheet.jpg" --clobber || true
 
       - name: Commit updated memory + script timings
         run: |
           rm -f pipeline/.env
           git config user.name "render-bot" && git config user.email "render@users.noreply.github.com"
-          git add pipeline/memory.json "build/${{ github.event.inputs.slug }}/script.json" "build/${{ github.event.inputs.slug }}/alts.json" || true
-          git commit -m "render ${{ github.event.inputs.slug }}: update memory + timings" || echo "nothing to commit"
+          git add pipeline/memory.json "build/${{ inputs.slug }}/script.json" "build/${{ inputs.slug }}/alts.json" || true
+          git commit -m "render ${{ inputs.slug }}: update memory + timings" || echo "nothing to commit"
           for i in 1 2 3 4 5; do git push && break; git pull --rebase origin main; done

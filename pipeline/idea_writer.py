@@ -7,10 +7,31 @@ import json, os, re, sys, urllib.request
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
-def main(bd, idea):
+def _llm(prompt):
+    """Anthropic if a key exists; otherwise pollinations.ai text API (keyless, free)."""
     key = os.environ.get("ANTHROPIC_API_KEY")
-    if not key:
-        sys.exit("ERROR: ANTHROPIC_API_KEY not set | FIX: add it to repo Actions secrets")
+    if key:
+        req = urllib.request.Request("https://api.anthropic.com/v1/messages",
+            data=json.dumps({"model": "claude-sonnet-5", "max_tokens": 4000,
+                             "messages": [{"role": "user", "content": prompt}]}).encode(),
+            headers={"x-api-key": key, "anthropic-version": "2023-06-01",
+                     "content-type": "application/json"})
+        out = json.loads(urllib.request.urlopen(req, timeout=180).read())
+        return out["content"][0]["text"]
+    last = None
+    for _ in range(3):
+        try:
+            req = urllib.request.Request("https://text.pollinations.ai/",
+                data=json.dumps({"model": "openai", "messages":
+                                 [{"role": "user", "content": prompt}]}).encode(),
+                headers={"Content-Type": "application/json", "User-Agent": "Mozilla/5.0"})
+            return urllib.request.urlopen(req, timeout=180).read().decode()
+        except Exception as e:
+            last = e
+    sys.exit(f"ERROR: free LLM unavailable ({last}) | FIX: rerun, or add ANTHROPIC_API_KEY secret")
+
+
+def main(bd, idea):
     style = open(os.path.join(HERE, "style_profile.md")).read()
     mem = {}
     mp = os.path.join(HERE, "memory.json")
@@ -41,13 +62,7 @@ OUTPUT: pure JSON only, no markdown fences, exactly this shape:
 Rules: 18-26 scenes; 300-400 words total; second person; conversational hook opener;
 quiet powerful realization ending (never "you create everything"); queries favor
 window light, god rays, lamplight, golden hour, silhouettes; only a few dark scenes."""
-    req = urllib.request.Request("https://api.anthropic.com/v1/messages",
-        data=json.dumps({"model": "claude-sonnet-5", "max_tokens": 4000,
-                         "messages": [{"role": "user", "content": prompt}]}).encode(),
-        headers={"x-api-key": key, "anthropic-version": "2023-06-01",
-                 "content-type": "application/json"})
-    out = json.loads(urllib.request.urlopen(req, timeout=180).read())
-    text = out["content"][0]["text"].strip()
+    text = _llm(prompt).strip()
     text = re.sub(r"^```(json)?|```$", "", text, flags=re.M).strip()
     s = json.loads(text)
     os.makedirs(bd, exist_ok=True)

@@ -134,7 +134,7 @@ Nothing to configure. For custom music set "music" in script.json as before.
   python3 pipeline/learn.py retention build/<slug> "43,87,110"
   It maps them to scenes and records the lesson; future scripts obey.
 - ISSUE STUDIO (GitHub): open an issue labeled "video" whose title/body is the idea.
-  CI writes the script (needs ANTHROPIC_API_KEY in repo secrets), renders, comments
+  CI writes the script (free keyless LLM; ANTHROPIC_API_KEY secret optional for higher quality), renders, comments
   the artifact link on the issue. Closing the issue = approval.
 
 ## v10: HERO SHOTS (free AI imagery, no API keys)
@@ -165,3 +165,12 @@ into the final scene. Nothing to configure; genre is read from script.json.
 - Swapping is now surgical: python3 pipeline/learn.py pin build/<slug> <scene_i> <id>
   (any id from alts.json or manual curation), then rerun/re-dispatch. Pins re-fetch
   deterministically across all sources.
+
+## v13: PERMANENT ARCHIVE + SPEED + BATCH
+- Every successful render now publishes a GitHub RELEASE (tag video-<slug>) with the
+  final MP4s + review sheet attached - permanent, unlike artifacts which expire in 90 days.
+  Download from the repo's Releases page.
+- Whisper/CLIP/depth models are cached between CI runs (faster starts).
+- BATCH: Actions -> "Render batch" -> comma-separated slugs renders them in parallel.
+- Issue studio is now FREE: idea_writer.py falls back to pollinations.ai text API when
+  no ANTHROPIC_API_KEY secret exists.
