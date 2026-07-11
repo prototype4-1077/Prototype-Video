@@ -115,6 +115,19 @@ def main(bd):
     n = len(s["scenes"])
     py = sys.executable
 
+    # Editorial curation mode: use the existing, trusted render workflow to
+    # return ranked Pexels contact sheets as a temporary final.mp4 artifact.
+    # This avoids blind rerolls when a narration line needs a rare exact image.
+    if s.get("curate_scenes"):
+        indexes = s["curate_scenes"]
+        if isinstance(indexes, list):
+            indexes = ",".join(str(i) for i in indexes)
+        r = sh([py, os.path.join(HERE, "curate.py"), bd, str(indexes)])
+        if r.returncode != 0:
+            err(f"curation failed: {r.stderr[-500:]}", "refine the affected scene queries and rerun")
+        print(r.stdout.strip())
+        out(f"DONE -> {bd}/final.mp4 (curation reel)")
+
     # 1. voiceover (generate) or align (user-provided vo.mp3 without timings)
     if not os.path.exists(f"{bd}/vo.mp3"):
         r = sh([py, os.path.join(HERE, "tts.py"), bd])
