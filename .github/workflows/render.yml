@@ -89,6 +89,13 @@ jobs:
         run: |
           rm -f pipeline/.env
           git config user.name "render-bot" && git config user.email "render@users.noreply.github.com"
-          git add pipeline/memory.json "build/${{ inputs.slug }}/script.json" "build/${{ inputs.slug }}/alts.json" || true
+          for f in pipeline/memory.json "build/${{ inputs.slug }}/script.json" "build/${{ inputs.slug }}/alts.json"; do
+            git add "$f" 2>/dev/null || true
+          done
           git commit -m "render ${{ inputs.slug }}: update memory + timings" || echo "nothing to commit"
-          for i in 1 2 3 4 5; do git push && break; git pull --rebase origin main; done
+          for i in 1 2 3 4 5; do
+            git push && break
+            git stash --include-untracked || true
+            git pull --rebase origin main || git rebase --abort || true
+            git stash pop || true
+          done
