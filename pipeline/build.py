@@ -282,6 +282,11 @@ def main(bd):
             print(f"note: short cut failed ({r.stderr[-200:]}); full video is fine")
         else:
             print(r.stdout.strip())
+    sheet = f"{bd}/alts_sheet.jpg"
+    if not os.path.exists(sheet) and os.path.exists(f"{bd}/alts.json"):
+        if left() < 15: out("RUN AGAIN (next: review sheet)")
+        r = sh([py, os.path.join(HERE, "altsheet.py"), bd])
+        print(r.stdout.strip() if r.returncode == 0 else "note: review sheet failed")
     print(f"DONE -> {final}")
     print(f"After James approves: python3 {os.path.join(HERE, 'learn.py')} record {bd}")
     print(f"If he dislikes scene i's footage: python3 {os.path.join(HERE, 'learn.py')} swap {bd} <i>")

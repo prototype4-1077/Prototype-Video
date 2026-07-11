@@ -79,3 +79,6 @@ Multiple AIs may work simultaneously, each on its OWN slug. Rules:
 - HERO SHOTS: scenes may set "hero": true + "image_prompt" - CI generates free AI
   imagery (pollinations.ai) with a 2.5D parallax move instead of stock. Use for
   impossible metaphors, the scene-0 thumbnail, and the closing reframe (2-4 per video).
+- ALTERNATES: after a render, build/<slug>/alts.json lists runner-up clips per scene and
+  the run artifact alts_sheet.jpg shows them. Swap = learn.py pin build/<slug> <i> <id>,
+  then re-dispatch. Prefer pinning an alternate over re-rolling queries.

@@ -52,12 +52,14 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ github.event.inputs.slug }}
-          path: build/${{ github.event.inputs.slug }}/final*.mp4
+          path: |
+            build/${{ github.event.inputs.slug }}/final*.mp4
+            build/${{ github.event.inputs.slug }}/alts_sheet.jpg
 
       - name: Commit updated memory + script timings
         run: |
           rm -f pipeline/.env
           git config user.name "render-bot" && git config user.email "render@users.noreply.github.com"
-          git add pipeline/memory.json "build/${{ github.event.inputs.slug }}/script.json" || true
+          git add pipeline/memory.json "build/${{ github.event.inputs.slug }}/script.json" "build/${{ github.event.inputs.slug }}/alts.json" || true
           git commit -m "render ${{ github.event.inputs.slug }}: update memory + timings" || echo "nothing to commit"
           for i in 1 2 3 4 5; do git push && break; git pull --rebase origin main; done

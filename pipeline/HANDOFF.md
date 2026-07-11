@@ -154,3 +154,14 @@ in true stereo - still VO-adaptive (recedes under speech, blooms in pauses, buil
 the ending). sfx.py then bakes sound design into the bed from scene timings: a sub-drop
 under the title and the closing line, whooshes into cuts after long holds, and a riser
 into the final scene. Nothing to configure; genre is read from script.json.
+
+## v12: MULTI-SOURCE FOOTAGE + ALTERNATES (all keyless)
+- Footage now draws from Pexels + NASA (space queries -> real telescope/mission footage),
+  Internet Archive Prelinger (vintage film, auto-added for dmt genre), Wikimedia Commons
+  (fallback), and Pixabay if a free PIXABAY_API_KEY secret is ever added. Same scorer
+  ranks everything; ids are namespaced (nasa:..., ia:..., wm:...).
+- Every scene stores its top-3 runner-up candidates (alts.json + thumbnails). The build
+  produces alts_sheet.jpg (chosen frame + alternates per scene) in the run artifacts.
+- Swapping is now surgical: python3 pipeline/learn.py pin build/<slug> <scene_i> <id>
+  (any id from alts.json or manual curation), then rerun/re-dispatch. Pins re-fetch
+  deterministically across all sources.

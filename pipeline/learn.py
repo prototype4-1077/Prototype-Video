@@ -92,6 +92,21 @@ def retention(bd, stamps):
     print("Recorded. Future scripts should shorten/energize beats like these.")
 
 
+def pin(bd, i, vid):
+    """Pin scene i to a specific clip id (from alts.json or manual curation)."""
+    s = json.load(open(f"{bd}/script.json"))
+    sc = s["scenes"][i]
+    sc["pexels_id"] = int(vid) if str(vid).isdigit() else str(vid)
+    sc.pop("clip", None)
+    for f in (f"{bd}/clip_{i:02d}.mp4", f"{bd}/seg_{i:02d}.mp4", f"{bd}/final.mp4",
+              f"{bd}/final_short.mp4"):
+        if os.path.exists(f):
+            try: os.remove(f)
+            except OSError: pass
+    json.dump(s, open(f"{bd}/script.json", "w"), indent=1)
+    print(f"scene {i} pinned to {sc['pexels_id']}. Rerun build.py (or re-dispatch) to render.")
+
+
 def note(text):
     m = load()
     m["notes"].append(text)
@@ -117,6 +132,7 @@ if __name__ == "__main__":
     if cmd == "record": record(sys.argv[2])
     elif cmd == "swap": swap(sys.argv[2], int(sys.argv[3]))
     elif cmd == "note": note(sys.argv[2])
+    elif cmd == "pin": pin(sys.argv[2], int(sys.argv[3]), sys.argv[4])
     elif cmd == "motif": motif(sys.argv[2], sys.argv[3], sys.argv[4])
     elif cmd == "retention": retention(sys.argv[2], sys.argv[3].split(","))
     else: show()
