@@ -43,7 +43,7 @@ Everything else is one command run in a loop.
    thumbnail for mood (dark, muted) and picks the best. Bad queries fall back to this bank.
 
    JUNE OXLEY EXCEPTION: use literal, lived-in Southern details before abstract mysticism:
-   wooden porch, older Black man, old pickup, cornfield, barking dog, small-town traffic,
+   wooden porch, old white man, old pickup, cornfield, barking dog, small-town traffic,
    kitchen-table bills, country church fan, fireplace, work boots, rural sunset. A few
    cosmic or impossible images should interrupt that ordinary world as deadpan contrast.
    Avoid cowboy costumes and glossy country-video clichés. The profile supplies its own

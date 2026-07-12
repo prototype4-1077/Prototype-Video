@@ -21,7 +21,7 @@ _ALIASES = {
 }
 
 _JUNE_ORDINARY = (
-    "older Black man sitting on wooden front porch daylight",
+    "old white man sitting on wooden front porch daylight",
     "hands steering old pickup truck rural road",
     "cornfield moving in wind warm daylight",
     "barking dog beside chain link fence backyard",
@@ -30,7 +30,7 @@ _JUNE_ORDINARY = (
     "fireplace rocking chair lived in old house",
     "small town traffic seen through windshield",
     "worn work boots walking dusty country road",
-    "older Black man smoking on porch golden hour",
+    "old white man smoking on porch golden hour",
     "unpaid bills spread across kitchen table",
     "deer staring at camera beside rural road",
     "sunset through tall grass in country field",
@@ -50,6 +50,16 @@ _VISION_WORDS = (
     "astral", "cosmic", "cosmos", "dmt", "dream", "fractal", "galaxy",
     "illusion", "infinite", "mystical", "psychedelic", "spirit", "universe",
     "vision", "wormhole",
+)
+
+_JUNE_HUMAN_CUES = (
+    "driver", "hands steering", "man ", " man", "narrator", "person ",
+    " person", "sitting", "smoking", "standing", "walking",
+)
+
+_OTHER_SUBJECTS = (
+    "boy", "child", "cousin", "crowd", "daughter", "dog", "girl", "neighbor",
+    "people", "woman", "wife",
 )
 
 
@@ -87,9 +97,27 @@ def is_visionary(text: str) -> bool:
     return any(word in t for word in _VISION_WORDS)
 
 
+def identity_query(text: str, profile: str | None) -> str:
+    """Keep June's recurring human subject correct without rewriting other characters."""
+    q = " ".join(str(text).split()).strip()
+    if profile != JUNE_OXLEY or not q:
+        return q
+    # Repair the exact stale identity that prompted this profile correction. More general
+    # race mentions may describe a neighbor or another character and remain untouched.
+    q = re.sub(r"\bold(?:er)?\s+black\s+(?:southern\s+)?man\b",
+               "old white Southern man", q, flags=re.I)
+    low = q.lower()
+    if re.search(r"\bwhite(?:\s+southern)?\s+man\b", low) or \
+            any(subject in low for subject in _OTHER_SUBJECTS):
+        return q
+    if any(cue in low for cue in _JUNE_HUMAN_CUES):
+        return f"{q} old white Southern man"
+    return q
+
+
 def query_variants(query: str, profile: str | None) -> list[str]:
     """Search literal meaning plus a light profile cue; never replace the literal query."""
-    q = " ".join(str(query).split()).strip()
+    q = identity_query(query, profile)
     if profile != JUNE_OXLEY or not q:
         return [q] if q else []
     if is_visionary(q):
@@ -100,7 +128,7 @@ def query_variants(query: str, profile: str | None) -> list[str]:
 
 
 def semantic_query(query: str, profile: str | None) -> str:
-    q = " ".join(str(query).split()).strip()
+    q = identity_query(query, profile)
     if profile != JUNE_OXLEY:
         return q
     if is_visionary(q):
@@ -125,11 +153,15 @@ def hero_style(profile: str | None, genre: str | None = None) -> str | None:
             "dry deadpan humor, unpolished realistic documentary film still")
 
 
+def hero_prompt(prompt: str, profile: str | None) -> str:
+    return identity_query(prompt, profile)
+
+
 def writer_context(profile: str | None) -> str:
     if profile != JUNE_OXLEY:
         return ""
     return """JUNE OXLEY PROFILE (apply only to this explicitly named video):
-- June is a retired older Black Southern man with a slow, raspy, half-distracted delivery.
+- June is a retired old white Southern man with a slow, raspy, half-distracted delivery.
 - His humor is dry, raw, and observant. Begin in mundane life, then let it wander naturally
   into consciousness or spiritual absurdity without losing the front-porch voice.
 - Visual queries should be literal and ordinary first: porch, old truck, small town, dog,

@@ -128,7 +128,7 @@ Trigger only when James explicitly names **June Oxley**. Set the top-level scrip
     "profile": "june_oxley"
 
 Identity and voice:
-- June is a retired older Black Southern man: slow, raspy, half-distracted, raw, and very funny.
+- June is a retired old white Southern man: slow, raspy, half-distracted, raw, and very funny.
 - His dry front-porch humor begins with ordinary aggravations—bills, neighbors, dogs, cousins,
   traffic, church fans—then wanders into consciousness or spiritual absurdity as though that
   turn were perfectly normal.

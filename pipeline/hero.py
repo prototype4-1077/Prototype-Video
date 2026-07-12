@@ -35,7 +35,7 @@ def gen_image(prompt, genre, out, profile=None):
     if os.path.exists(out) and os.path.getsize(out) > 20_000:
         return
     style = profiles.hero_style(profile, genre) or STYLE.get(genre, STYLE[None])
-    q = urllib.parse.quote(prompt + style)
+    q = urllib.parse.quote(profiles.hero_prompt(prompt, profile) + style)
     last = None
     for seed in (7, 77, 777):
         try:

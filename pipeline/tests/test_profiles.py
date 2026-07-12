@@ -49,7 +49,20 @@ class ProfileTests(unittest.TestCase):
         bank = profiles.fallback_queries(profiles.JUNE_OXLEY)
         self.assertGreaterEqual(len(bank), 16)
         self.assertTrue(any("front porch" in q for q in bank))
-        self.assertTrue(any("older Black man" in q for q in bank))
+        self.assertTrue(any("old white man" in q for q in bank))
+
+    def test_stale_june_identity_is_repaired(self):
+        variants = profiles.query_variants("older Black man sitting on porch",
+                                           profiles.JUNE_OXLEY)
+        self.assertTrue(all("Black man" not in q for q in variants))
+        self.assertTrue(all("old white Southern man" in q for q in variants))
+
+    def test_generic_june_human_shot_gets_character_identity(self):
+        variants = profiles.query_variants("man driving an old pickup",
+                                           profiles.JUNE_OXLEY)
+        self.assertIn("old white Southern man", variants[0])
+        self.assertNotIn("old white", profiles.query_variants(
+            "woman standing in a country church", profiles.JUNE_OXLEY)[0])
 
 
 if __name__ == "__main__":
