@@ -13,24 +13,32 @@ Commands:
 """
 import json, os, sys
 
+import profiles
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 MEM = os.path.join(HERE, "memory.json")
 
 
 def load():
     if os.path.exists(MEM):
-        return json.load(open(MEM))
+        with open(MEM) as f:
+            return json.load(f)
     return {"used_ids": [], "banned_ids": [], "query_weights": {},
             "notes": [], "videos": []}
 
 
 def save(m):
-    json.dump(m, open(MEM, "w"), indent=1)
+    with open(MEM, "w") as f:
+        json.dump(m, f, indent=1)
 
 
 def record(bd):
     m = load()
-    s = json.load(open(f"{bd}/script.json"))
+    with open(f"{bd}/script.json") as f:
+        s = json.load(f)
+    profile = profiles.resolve(s)
+    weights = (m.setdefault("profile_query_weights", {}).setdefault(profile, {})
+               if profile else m["query_weights"])
     kept = []
     for sc in s["scenes"]:
         pid = sc.get("pexels_id")
@@ -40,16 +48,21 @@ def record(bd):
                 m["used_ids"].append(pid)
         q = (sc.get("query") or "").strip().lower()
         if q:
-            m["query_weights"][q] = m["query_weights"].get(q, 0) + 1
-    m["videos"].append({"slug": s.get("slug"), "title": s.get("title"),
-                        "scenes": len(s["scenes"]), "clips": kept})
+            weights[q] = weights.get(q, 0) + 1
+    entry = {"slug": s.get("slug"), "title": s.get("title"),
+             "scenes": len(s["scenes"]), "clips": kept}
+    if profile:
+        entry["profile"] = profile
+    m["videos"].append(entry)
     save(m)
     try:  # taste vector: this video's chosen-clip embeddings become "approved"
         import glob as _g, numpy as _np, taste
         vecs = [_np.load(f) for f in sorted(_g.glob(f"{bd}/emb_*.npy"))]
         if vecs:
-            na, nr = taste.add("approved", _np.stack(vecs))
-            print(f"taste: +{len(vecs)} approved (now {na} approved / {nr} rejected)")
+            na, nr = taste.add("approved", _np.stack(vecs), profile)
+            label = profiles.display_name(profile)
+            print(f"taste [{label}]: +{len(vecs)} approved "
+                  f"(now {na} approved / {nr} rejected)")
     except Exception as e:
         print(f"note: taste update skipped ({e})")
     print(f"recorded: {len(kept)} clips remembered, {len(m['videos'])} videos in memory")
@@ -57,21 +70,25 @@ def record(bd):
 
 def swap(bd, i):
     m = load()
-    s = json.load(open(f"{bd}/script.json"))
+    with open(f"{bd}/script.json") as f:
+        s = json.load(f)
+    profile = profiles.resolve(s)
     sc = s["scenes"][i]
     pid = sc.pop("pexels_id", None)
     if pid and pid not in m["banned_ids"]:
         m["banned_ids"].append(pid)
     q = (sc.get("query") or "").strip().lower()
     if q:
-        m["query_weights"][q] = m["query_weights"].get(q, 0) - 2
+        weights = (m.setdefault("profile_query_weights", {}).setdefault(profile, {})
+                   if profile else m["query_weights"])
+        weights[q] = weights.get(q, 0) - 2
     sc.pop("clip", None)
     try:  # the rejected clip's embedding teaches the taste vector what to avoid
         import numpy as _np, taste
         ef = f"{bd}/emb_{i:02d}.npy"
         if os.path.exists(ef):
-            taste.add("rejected", _np.load(ef)[None])
-            print("taste: +1 rejected")
+            taste.add("rejected", _np.load(ef)[None], profile)
+            print(f"taste [{profiles.display_name(profile)}]: +1 rejected")
     except Exception:
         pass
     for f in (f"{bd}/clip_{i:02d}.mp4", f"{bd}/seg_{i:02d}.mp4", f"{bd}/final.mp4"):

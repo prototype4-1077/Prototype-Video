@@ -9,6 +9,8 @@ import json, os, subprocess, sys, urllib.parse, urllib.request
 
 import numpy as np
 
+import profiles
+
 W, H, FPS = 1344, 768, 30
 MODEL_URL = "https://github.com/isl-org/MiDaS/releases/download/v2_1/model-small.onnx"
 
@@ -29,10 +31,11 @@ def model_path():
     return p
 
 
-def gen_image(prompt, genre, out):
+def gen_image(prompt, genre, out, profile=None):
     if os.path.exists(out) and os.path.getsize(out) > 20_000:
         return
-    q = urllib.parse.quote(prompt + STYLE.get(genre, STYLE[None]))
+    style = profiles.hero_style(profile, genre) or STYLE.get(genre, STYLE[None])
+    q = urllib.parse.quote(prompt + style)
     last = None
     for seed in (7, 77, 777):
         try:
@@ -107,7 +110,7 @@ def main(bd, i):
         print(f"hero {i}: exists"); return
     prompt = sc.get("image_prompt") or sc["text"]
     img, dep = f"{bd}/hero_{i:02d}.jpg", f"{bd}/hero_{i:02d}_depth.npy"
-    gen_image(prompt, s.get("genre"), img)
+    gen_image(prompt, s.get("genre"), img, profiles.resolve(s))
     d = depth_map(img, dep)
     render(img, d, sc.get("duration", 8) + 0.5, out, mode=i)
     sc["clip"] = out

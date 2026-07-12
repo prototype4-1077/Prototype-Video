@@ -10,6 +10,8 @@ then advances the build as far as it can within a ~30s budget and exits with:
 Every step is resumable; running again never breaks anything."""
 import json, os, shutil, subprocess, sys, tempfile, time, urllib.request
 
+import profiles
+
 T0 = time.time()
 BUDGET = 30
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -80,6 +82,13 @@ def validate(bd):
         err(f"script.json is not valid JSON: {e}", "fix the JSON syntax")
     if not s.get("title") or not s.get("slug"):
         err("script.json missing title/slug", "add them")
+    try:
+        profile = profiles.resolve(s, strict=True)
+    except ValueError as e:
+        err(str(e), "remove the profile or use profile: june_oxley")
+    if profile and s.get("profile") != profile:
+        s["profile"] = profile
+        json.dump(s, open(p, "w"), indent=1, ensure_ascii=False)
     sc = s.get("scenes") or []
     user_vo = os.path.exists(f"{bd}/vo.mp3") and not any(x.get("start") is not None for x in sc[:1]) \
               or s.get("user_vo")
@@ -239,7 +248,8 @@ def main(bd):
         if not os.path.exists(f"{bd}/{music}"):  # self-heal: regenerate the bed
             print(f"note: {music} missing at mix time; regenerating. dir: {sorted(os.listdir(bd))[:8]}...")
             r = sh([py, os.path.join(HERE, "music.py"), f"{bd}/music.wav", str(total + 2)]
-                   + ([f"{bd}/vo.mp3"] if os.path.exists(f"{bd}/vo.mp3") else []))
+                   + [f"{bd}/vo.mp3" if os.path.exists(f"{bd}/vo.mp3") else "-",
+                      s.get("genre") or "-", profiles.resolve(s) or "-"])
             if r.returncode != 0:
                 err(f"music regen: {r.stderr[-200:]}", "rerun")
             music = "music.wav"

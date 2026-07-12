@@ -5,6 +5,8 @@ middle with the punchiest beats (questions, short declaratives), re-cuts the VO 
 sentence boundaries, lays a fresh music bed, masters to the same loudness."""
 import json, os, subprocess, sys, tempfile
 
+import profiles
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -67,7 +69,8 @@ def main(bd, target=58.0):
          "-filter_complex", fc, "-map", "[vo]", vos])
     # fresh music bed sized to the short cut
     mus = os.path.join(tmp, "music.wav")
-    run([sys.executable, os.path.join(HERE, "music.py"), mus, str(total + 1), vos])
+    run([sys.executable, os.path.join(HERE, "music.py"), mus, str(total + 1), vos,
+         s.get("genre") or "-", profiles.resolve(s) or "-"])
     raw = os.path.join(tmp, "raw.mp4")
     af = ("[1:a]acompressor=threshold=-18dB:ratio=3:attack=15:release=180:makeup=4,"
           "adelay=250|250,apad[voz];"

@@ -20,6 +20,9 @@ Everything else is one command run in a loop.
          "query": "pexels search - COPY OR ADAPT FROM THE QUERY BANK BELOW" }
      ] }
 
+   Optional character selector: when—and only when—James explicitly says **June Oxley**,
+   add `"profile": "june_oxley"` beside `slug`. Do not use it for ordinary videos.
+
    Rules (build.py enforces most of them and tells you what to fix):
    - 18-26 scenes, 300-400 words total, ~2:00-2:30 spoken
    - Second-person, poetic-direct, grounded-metaphysical. Hook opener. Quiet realization ending.
@@ -38,6 +41,13 @@ Everything else is one command run in a loop.
      rain window night bokeh | city lights bokeh night blur
    Don't worry about picking perfectly: footage.py auto-scores every candidate clip's
    thumbnail for mood (dark, muted) and picks the best. Bad queries fall back to this bank.
+
+   JUNE OXLEY EXCEPTION: use literal, lived-in Southern details before abstract mysticism:
+   wooden porch, older Black man, old pickup, cornfield, barking dog, small-town traffic,
+   kitchen-table bills, country church fan, fireplace, work boots, rural sunset. A few
+   cosmic or impossible images should interrupt that ordinary world as deadpan contrast.
+   Avoid cowboy costumes and glossy country-video clichés. The profile supplies its own
+   brighter warm scoring and fallback bank automatically.
 
 4. BUILD — run this ONE command, then run it again every time it says RUN AGAIN:
 
@@ -183,3 +193,15 @@ term (0.38 mood / 0.47 semantic / 0.15 taste) - the system scores candidates by
 similarity to James's actual approval history, learning aesthetics no rule captures.
 Nothing to configure. ALWAYS commit pipeline/taste.npz together with memory.json
 after record/swap. No backfill needed; it learns forward from every video.
+
+## v15: JUNE OXLEY CHARACTER PROFILE (explicit opt-in)
+Set `"profile": "june_oxley"` only when James names June Oxley. The profile:
+- expands literal footage searches toward candid Southern rural/small-town life;
+- favors warm, visibly lit frames and rejects near-black footage;
+- turns hero images into grounded Southern folk-surrealism instead of generic fantasy;
+- replaces the ambient cinematic bed with an 84 BPM front-porch shuffle made from
+  synthesized guitar/banjo twang, upright-style bass, soft brush, and wooden foot-stomps;
+- stores approved/rejected CLIP taste under June-specific arrays, isolated from house taste.
+All captions, scene-0 title behavior, 9:16 letterboxing, VO ducking, and the default style
+for every other video remain unchanged. `character: "June Oxley"` is accepted as an alias,
+but `profile: "june_oxley"` is the canonical field.

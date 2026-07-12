@@ -15,6 +15,7 @@ import sys
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 import footage
+import profiles
 
 
 COLS, ROWS = 4, 3
@@ -40,14 +41,14 @@ def wrap(draw, text, width):
 def sheet_for_scene(build_dir, script, i, out_dir):
     scene = script["scenes"][i]
     query = scene.get("query", "")
-    videos = footage.search(query, 32)
+    profile = profiles.resolve(script)
+    videos = footage.search(query, script.get("genre"), profile, per_page=32)
     ranked = footage.rank(
         query,
         videos,
         scene.get("duration"),
         script.get("genre"),
-        script.get("visual_mode"),
-        True,
+        profile,
     )[: COLS * ROWS]
     if not ranked:
         raise RuntimeError(f"scene {i}: no candidates for {query!r}")
@@ -63,11 +64,12 @@ def sheet_for_scene(build_dir, script, i, out_dir):
         y += 18
 
     meta = []
-    for n, (score, video) in enumerate(ranked):
+    for n, (score, video, thumb, _embedding) in enumerate(ranked):
         row, col = divmod(n, COLS)
         x, y = col * CELL_W, HEADER_H + row * CELL_H
         try:
-            thumb = ImageOps.fit(footage.get_thumb(video, 520), (CELL_W, CELL_H - 36),
+            source = thumb if thumb is not None else footage.get_thumb(video, 520)
+            thumb = ImageOps.fit(source, (CELL_W, CELL_H - 36),
                                  method=Image.Resampling.LANCZOS)
         except Exception:
             thumb = Image.new("RGB", (CELL_W, CELL_H - 36), (35, 35, 35))

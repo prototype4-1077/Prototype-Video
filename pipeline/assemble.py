@@ -9,6 +9,8 @@ build_dir contains script.json:
 """
 import json, os, subprocess, sys
 
+import profiles
+
 FPS = 30
 WIDTH, HEIGHT = 1080, 1920
 
@@ -29,7 +31,8 @@ def run(cmd):
 
 
 def render_scene(bd, i):
-    s = json.load(open(f"{bd}/script.json"))
+    with open(f"{bd}/script.json") as f:
+        s = json.load(f)
     sc = s["scenes"][i]
     seg = f"{bd}/seg_{i:02d}.mp4"
     if os.path.exists(seg):
@@ -51,8 +54,17 @@ def render_scene(bd, i):
     # cinematic cohesion: a narration-controlled color arc. Museum mode begins
     # cold/uncanny, keeps blacks readable, then opens into warm gold at acceptance.
     mode = s.get("visual_mode")
+    profile = profiles.resolve(s)
     tone = sc.get("tone", "cold")
-    if mode == "eerie_museum":
+    if profile == profiles.JUNE_OXLEY:
+        # Warm, readable documentary color: weathered rather than glossy, with enough
+        # daylight to preserve the reference video's everyday front-porch character.
+        grade = ("eq=brightness=0.036:saturation=0.96:contrast=1.025:gamma=1.055,"
+                 "colorbalance=rs=0.018:bs=-0.028:rh=0.075:bh=-0.055,"
+                 "curves=all='0/0.045 0.5/0.525 1/0.985',"
+                 "vignette=angle=PI/8.5")
+        grain = 3
+    elif mode == "eerie_museum":
         grades = {
             "cold": ("eq=brightness=0.018:saturation=0.76:contrast=1.10:gamma=1.04,"
                      "colorbalance=rs=-0.07:bs=0.11:rh=0.035:bh=-0.035,"),

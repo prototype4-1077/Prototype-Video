@@ -45,6 +45,9 @@ jobs:
       - name: Python deps
         run: pip install -q -r pipeline/requirements.txt
 
+      - name: Pipeline regression tests
+        run: python3 -m unittest discover -s pipeline/tests -v
+
       - name: API keys from repo secrets
         run: |
           printf 'ELEVENLABS_API_KEY=%s\nPEXELS_API_KEY=%s\nELEVENLABS_VOICE_ID=%s\n' \

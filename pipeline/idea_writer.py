@@ -4,6 +4,8 @@ Env: ANTHROPIC_API_KEY. Reads style_profile.md + memory.json (notes, motifs) so 
 script sounds like James and obeys his standing feedback."""
 import json, os, re, sys, urllib.request
 
+import profiles
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 
 
@@ -40,6 +42,10 @@ def main(bd, idea):
     motifs = "\n".join(f"- {m['name']}: \"{m['line']}\" (from {m['video']})"
                        for m in mem.get("motifs", []))
     notes = "\n".join(f"- {n}" for n in mem.get("notes", []))
+    profile = profiles.detect_from_text(idea)
+    profile_context = profiles.writer_context(profile) or (
+        "No character profile was explicitly named. Use the normal house style and do not "
+        "add a profile field.")
     prompt = f"""Write a script for a short philosophical TikTok video in James's voice.
 
 IDEA: {idea}
@@ -54,8 +60,11 @@ EARLIER MOTIFS (echo exactly ONE of these with a brief, natural callback phrase 
 do not explain it, just let returning viewers feel it):
 {motifs}
 
+CHARACTER PROFILE:
+{profile_context}
+
 OUTPUT: pure JSON only, no markdown fences, exactly this shape:
-{{"title": "Three Or Four Words", "slug": "short-dashed-title", "scenes": [
+{{"title": "Three Or Four Words", "slug": "short-dashed-title"{', "profile": "june_oxley"' if profile else ''}, "scenes": [
   {{"text": "One sentence or beat, max 25 words.",
     "keywords": ["2-4 words that literally appear in text"],
     "query": "pexels search, lit-but-moody, literal to the line"}} ]}}
@@ -65,6 +74,11 @@ window light, god rays, lamplight, golden hour, silhouettes; only a few dark sce
     text = _llm(prompt).strip()
     text = re.sub(r"^```(json)?|```$", "", text, flags=re.M).strip()
     s = json.loads(text)
+    if profile:
+        # Deterministic routing: the LLM cannot accidentally omit or misspell the selector.
+        s["profile"] = profile
+    elif s.get("profile"):
+        profiles.resolve(s, strict=True)
     os.makedirs(bd, exist_ok=True)
     json.dump(s, open(f"{bd}/script.json", "w"), indent=1, ensure_ascii=False)
     words = sum(len(x["text"].split()) for x in s["scenes"])

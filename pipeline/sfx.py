@@ -6,6 +6,8 @@ Reads script.json timings + music.wav, bakes events into the bed:
 import json, os, sys, wave
 import numpy as np
 
+import profiles
+
 SR = 44100
 
 
@@ -37,8 +39,27 @@ def _riser(dur=3.0, seed=2):
     return ((tone * 0.5 + noise) * e).astype(np.float32) * 0.35
 
 
+def _porch_stomp(dur=.38, seed=8):
+    """A soft wooden foot-stomp in place of June's cinematic sub-drop."""
+    rng = np.random.default_rng(seed)
+    n = int(dur * SR); t = np.arange(n) / SR
+    f = 105 - 36 * (t / dur)
+    tone = np.sin(2 * np.pi * np.cumsum(f) / SR)
+    knock = rng.standard_normal(n).astype(np.float32)
+    return ((tone * .72 + knock * .14) * np.exp(-t / .085)).astype(np.float32) * .34
+
+
+def _dry_brush(dur=.24, seed=9):
+    rng = np.random.default_rng(seed)
+    n = int(dur * SR); t = np.arange(n) / SR
+    x = rng.standard_normal(n).astype(np.float32)
+    x[1:] -= x[:-1] * .72
+    return x * np.exp(-t / .055) * .055
+
+
 def main(bd):
-    s = json.load(open(f"{bd}/script.json"))
+    with open(f"{bd}/script.json") as f:
+        s = json.load(f)
     mp = os.path.join(bd, s.get("music", "music.wav"))
     if not os.path.exists(mp):
         sys.exit(f"ERROR: {mp} missing | FIX: run prep first")
@@ -48,6 +69,7 @@ def main(bd):
     w.close()
     a = a.reshape(-1, nch)
     scenes = s["scenes"]
+    profile = profiles.resolve(s)
     events = []
 
     def add(x, at):
@@ -56,16 +78,25 @@ def main(bd):
         L = min(len(x), len(a) - i0)
         a[i0:i0 + L] += x[:L, None]
 
-    add(_subdrop(), scenes[0]["start"] + 0.25); events.append("subdrop@title")
     last = scenes[-1]
-    add(_subdrop(), last["start"]); events.append("subdrop@closer")
-    add(_riser(), max(last["start"] - 3.0, 0)); events.append("riser->closer")
+    if profile == profiles.JUNE_OXLEY:
+        add(_porch_stomp(seed=8), scenes[0]["start"] + .12); events.append("porch-stomp@title")
+        add(_porch_stomp(seed=18), last["start"]); events.append("porch-stomp@closer")
+    else:
+        add(_subdrop(), scenes[0]["start"] + 0.25); events.append("subdrop@title")
+        add(_subdrop(), last["start"]); events.append("subdrop@closer")
+        add(_riser(), max(last["start"] - 3.0, 0)); events.append("riser->closer")
     wh = 0
     for i in range(1, len(scenes) - 1):
         if scenes[i - 1]["duration"] >= 7.0 and wh < 6:
             st = scenes[i]["start"]
-            add(_whoosh(seed=i), max(st - 0.8, 0))
-            events.append(f"whoosh@{st:.0f}s"); wh += 1
+            if profile == profiles.JUNE_OXLEY:
+                add(_dry_brush(seed=i), max(st - .10, 0))
+                events.append(f"dry-brush@{st:.0f}s")
+            else:
+                add(_whoosh(seed=i), max(st - 0.8, 0))
+                events.append(f"whoosh@{st:.0f}s")
+            wh += 1
     a = np.clip(a, -1, 1)
     w = wave.open(mp, "wb")
     w.setnchannels(nch); w.setsampwidth(2); w.setframerate(sr)

@@ -28,6 +28,10 @@ If James supplies script text: split it into scenes VERBATIM (never rewrite), an
 If James supplies a voiceover mp3: also commit it as build/<slug>/vo.mp3 and put
 "user_vo": true at the top level. (vo.mp3 is gitignored — force-add it: git add -f,
 or use the contents API which ignores .gitignore.)
+If James explicitly says **June Oxley**, add top-level `"profile": "june_oxley"`.
+Never infer this profile for another video. It automatically changes only that video's
+footage search/ranking, warm rural grade, hero-shot styling, music, sound design, and
+separate taste learning. See the June Oxley section in `pipeline/style_profile.md`.
 Show James the script for approval before rendering unless he says skip.
 
 ## Step 2 — Commit
@@ -48,7 +52,8 @@ line, apply the FIX (usually edit script.json), push, re-dispatch.
 
 ## Step 5 — The learning loop (IMPORTANT — this keeps the videos improving)
 - James approves → in a checkout run: python3 pipeline/learn.py record build/<slug>
-  then commit+push pipeline/memory.json. (No shell? Skip; tell James it's unrecorded.)
+  then commit+push pipeline/memory.json and pipeline/taste.npz. Profiled taste is kept
+  separate automatically. (No shell? Skip; tell James it's unrecorded.)
 - James dislikes scene i's footage → python3 pipeline/learn.py swap build/<slug> <i>,
   improve that scene's "query", commit, re-dispatch.
 - James gives style feedback → python3 pipeline/learn.py note "<his feedback>",

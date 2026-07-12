@@ -3,10 +3,12 @@ Usage: python3 prep.py <build_dir>"""
 import json, os, subprocess, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from captions import caption_png, title_png
+import profiles
 
 
 def prep(bd):
-    s = json.load(open(f"{bd}/script.json"))
+    with open(f"{bd}/script.json") as f:
+        s = json.load(f)
     for i, sc in enumerate(s["scenes"]):
         if sc.get("kw_times"):  # word-synced: keywords ignite when spoken
             ovs = caption_png(sc["text"], sc.get("keywords", []), f"{bd}/cap_{i:02d}.png",
@@ -14,17 +16,19 @@ def prep(bd):
             sc["kw_overlays"] = [{"kw": k, "png": os.path.basename(p)} for k, p in ovs]
         else:
             caption_png(sc["text"], sc.get("keywords", []), f"{bd}/cap_{i:02d}.png")
-    json.dump(s, open(f"{bd}/script.json", "w"), indent=1, ensure_ascii=False)
+    with open(f"{bd}/script.json", "w") as f:
+        json.dump(s, f, indent=1, ensure_ascii=False)
     title_png(s["title"], f"{bd}/title.png")
     if not s.get("music") or not os.path.exists(os.path.join(bd, s["music"])):
         s.pop("music", None)
         total = sum(sc.get("duration", 8) for sc in s["scenes"])
         subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)),
-                        "music.py"), f"{bd}/music.wav", str(total + 2)] +
-                       ([f"{bd}/vo.mp3"] if os.path.exists(f"{bd}/vo.mp3") else ["-"]) +
-                       ([s["genre"]] if s.get("genre") else []), check=True)
+                        "music.py"), f"{bd}/music.wav", str(total + 2),
+                        f"{bd}/vo.mp3" if os.path.exists(f"{bd}/vo.mp3") else "-",
+                        s.get("genre") or "-", profiles.resolve(s) or "-"], check=True)
         s["music"] = "music.wav"
-        json.dump(s, open(f"{bd}/script.json", "w"), indent=1)
+        with open(f"{bd}/script.json", "w") as f:
+            json.dump(s, f, indent=1)
         try:  # sound design: sub-drops, whooshes, riser baked into the bed
             subprocess.run([sys.executable, os.path.join(os.path.dirname(os.path.abspath(__file__)),
                             "sfx.py"), bd], check=True)

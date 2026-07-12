@@ -121,3 +121,40 @@ The video replicates what the NARRATOR SEES - not moody observation, but vivid v
 - Face projections (patterns cast on the narrator's face) mark the transition between
   the room and the vision.
 - Captions/title/music: unchanged from house style.
+
+## June Oxley profile (v15, explicit opt-in)
+Trigger only when James explicitly names **June Oxley**. Set the top-level script field:
+
+    "profile": "june_oxley"
+
+Identity and voice:
+- June is a retired older Black Southern man: slow, raspy, half-distracted, raw, and very funny.
+- His dry front-porch humor begins with ordinary aggravations—bills, neighbors, dogs, cousins,
+  traffic, church fans—then wanders into consciousness or spiritual absurdity as though that
+  turn were perfectly normal.
+- The script can pivot atmosphere suddenly (deep truth to absurdity and back). Preserve any
+  supplied ElevenLabs chuckle/performance markers verbatim.
+
+Visual grammar learned from the approved reference:
+- Ordinary reality is the anchor: hands on an old steering wheel, GPS, cornfield, older people,
+  a barking dog, worn mirror, dim-but-readable old house, small church, fireplace, deer,
+  traffic, work boots, cigarettes, bills, rural sunrise or sunset.
+- Footage is literal to the spoken noun/action. It can be imperfect and slightly homespun;
+  authenticity and comic specificity matter more than glossy production value.
+- Most scenes are warm and visibly lit by daylight, window light, firelight, or sunset. Do not
+  turn June's world into the default pipeline's succession of dark cosmic shots.
+- Strange imagery appears only as contrast: an impossible eye, universe in a mirror, cosmic
+  interruption over an ordinary field. The everyday world should immediately return.
+- Avoid cowboy hats as shorthand, staged Western saloons, caricature costumes, luxury-country
+  music-video polish, or making every human shot a generic white stock actor.
+
+Audio grammar:
+- Use the profile's restrained 84 BPM front-porch shuffle: woody guitar/banjo twang,
+  upright-style root/fifth bass, a soft offbeat brush, and occasional wooden foot-stomp.
+- Keep the score VO-adaptive and low in the mix. June's voice and comic timing stay dominant.
+
+Isolation rule:
+- `genre` and `profile` are separate. A June DMT story may still use `genre: "dmt"`, but June's
+  rural anchors, warm grade, and porch score remain active.
+- June approvals and rejections train a separate taste vector. Never apply June's profile or
+  learned taste to a video where James did not name him.
