@@ -14,7 +14,9 @@ API BASE: https://api.github.com/repos/jameswatson1077/tiktok-videos
 - pipeline/memory.json      — READ "notes" (his standing feedback) and respect it.
   Current standing rules: slides must be LIT-but-moody (window light, god rays,
   lamplight, golden hour; only a few near-dark slides), footage must match the
-  spoken words (especially endings), 9:16, letterboxed, yellow keyword captions.
+  spoken words (especially endings), every new video defaults to 1080x1920 9:16
+  portrait, letterboxed, with yellow keyword captions. Titles must wrap and shrink
+  automatically when needed so they remain fully inside the portrait safe area.
 
 ## Step 1 — Write the script file
 Create build/<slug>/script.json  (slug = short-dashed-title):
@@ -60,8 +62,8 @@ line, apply the FIX (usually edit script.json), push, re-dispatch.
   commit memory.json. Never delete memory.json.
 
 ## Judgment checklist before delivering
-Duration ≈ VO length; 1080x1920; captions with yellow keywords in bottom band;
-bold rounded title on scene 0; majority of slides visibly lit; every clip matches
+Duration ≈ VO length; 1080x1920 (9:16 portrait); captions with yellow keywords in
+the bottom band; bold rounded title fully fitted on scene 0; majority of slides visibly lit; every clip matches
 its spoken line. If a scene misses, use the swap flow before delivering.
 
 ## v7 additions

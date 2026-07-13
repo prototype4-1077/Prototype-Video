@@ -3,6 +3,8 @@ Usage: python3 altsheet.py <build_dir>   -> writes <build_dir>/alts_sheet.jpg"""
 import glob, json, os, subprocess, sys
 from PIL import Image, ImageDraw
 
+from video_format import BAND_HEIGHT, BAND_WIDTH, BAND_Y
+
 
 def main(bd):
     s = json.load(open(f"{bd}/script.json"))
@@ -18,7 +20,8 @@ def main(bd):
         if os.path.exists(seg):
             subprocess.run(["ffmpeg", "-v", "error", "-y", "-ss", "1", "-i", seg,
                             "-frames:v", "1", "-vf",
-                            "crop=1080:608:0:656,scale=220:124", "/tmp/_alt.png"],
+                            f"crop={BAND_WIDTH}:{BAND_HEIGHT}:0:{BAND_Y},scale=220:124",
+                            "/tmp/_alt.png"],
                            capture_output=True)
             try:
                 sheet.paste(Image.open("/tmp/_alt.png"), (120, y))

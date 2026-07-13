@@ -71,10 +71,12 @@ Everything else is one command run in a loop.
 6. DELIVER: present final.mp4 to James with present_files. Done.
 
 ## Look spec (what "correct" looks like)
-- 1080x1920 (9:16 phone), 30fps. Footage is a 16:9 band (1080x608) vertically centered on black.
+- Every new video defaults to 1080x1920 (9:16 portrait), 30fps. Footage is a 16:9
+  band (1080x608) vertically centered on black.
 - Captions: Questrial 44px, white, in the bottom black band, subtle dark boxes,
   2-4 keywords per sentence in pale yellow (#e6e87e).
-- Title: Baloo2 ExtraBold ALL-CAPS white with shadow, centered over the footage band, scene 0.
+- Title: Baloo2 ExtraBold ALL-CAPS white with shadow, centered over the footage band,
+  scene 0. Long titles automatically wrap and shrink to remain inside the safe area.
 - Audio: ElevenLabs VO (voice id in .env; James's current pick is Liam) over a low ambient bed.
 
 ## Config

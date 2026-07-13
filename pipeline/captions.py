@@ -1,11 +1,14 @@
-"""Render caption + title overlay PNGs (1080x1080 transparent), reference letterbox style:
-footage band 1080x608 centered (y 236-844), captions in the bottom black band,
+"""Render caption + title overlays on the canonical 1080x1920 portrait canvas.
+
+The 16:9 footage band is vertically centered, captions sit in the lower black band,
 white text + pale-yellow keywords in subtle dark boxes, bold rounded all-caps title."""
 import os, re
 from PIL import Image, ImageDraw, ImageFont
 
-W, H = 1080, 1920                  # 9:16 phone canvas
-BAND_Y, BAND_H = 656, 608          # 16:9 footage band, vertically centered; used by assemble.py
+from video_format import BAND_HEIGHT, BAND_Y, HEIGHT, WIDTH
+
+W, H = WIDTH, HEIGHT               # 9:16 phone canvas
+BAND_H = BAND_HEIGHT                # 16:9 footage band, shared with assemble.py
 _F = os.path.join(os.path.dirname(os.path.abspath(__file__)), "fonts")
 CAPTION_FONT = os.environ.get("CAPTION_FONT", os.path.join(_F, "Questrial-Regular.ttf"))
 TITLE_FONT = os.environ.get("TITLE_FONT", os.path.join(_F, "Baloo2-ExtraBold.ttf"))
@@ -16,6 +19,10 @@ WHITE = (255, 255, 255, 255)
 YELLOW = (230, 232, 126, 255)
 BLOCK_CENTER_Y = 1430              # below the footage band, above TikTok UI zone
 MAX_LINE_W = 820
+TITLE_MAX_LINE_W = 940
+TITLE_MAX_BLOCK_H = 820             # stays above captions and TikTok UI
+TITLE_MIN_FONT_SIZE = 12
+TITLE_FONT_STEP = 6
 
 
 def _font(path, size):
@@ -25,11 +32,32 @@ def _font(path, size):
     return f
 
 
-def _wrap(words, font, draw):
+def _split_overlong_word(word, font, draw, max_line_w):
+    """Split a single unbroken token so it can never escape the safe width."""
+    text, marker = word
+    if draw.textlength(text, font=font) <= max_line_w:
+        return [word]
+    parts, cur = [], ""
+    for char in text:
+        if cur and draw.textlength(cur + char, font=font) > max_line_w:
+            parts.append((cur, marker))
+            cur = char
+        else:
+            cur += char
+    if cur:
+        parts.append((cur, marker))
+    return parts
+
+
+def _wrap(words, font, draw, max_line_w=MAX_LINE_W, split_overlong=True):
+    expanded = []
+    for word in words:
+        expanded.extend(_split_overlong_word(word, font, draw, max_line_w)
+                        if split_overlong else [word])
     lines, cur = [], []
-    for w in words:
+    for w in expanded:
         test = " ".join(x[0] for x in cur + [w])
-        if cur and draw.textlength(test, font=font) > MAX_LINE_W:
+        if cur and draw.textlength(test, font=font) > max_line_w:
             lines.append(cur); cur = [w]
         else:
             cur.append(w)
@@ -84,25 +112,39 @@ def caption_png(text, keywords, out_path, kw_overlay_prefix=None):
     return result
 
 
+def _fit_title(title, draw, font_size):
+    """Return a wrapped title layout guaranteed to fit the portrait safe area."""
+    words = [(w, False) for w in title.split()]
+    size = max(int(font_size), TITLE_MIN_FONT_SIZE)
+    while size >= TITLE_MIN_FONT_SIZE:
+        font = _font(TITLE_FONT, size)
+        lines = _wrap(words, font, draw, max_line_w=TITLE_MAX_LINE_W,
+                      split_overlong=False)
+        ascent, descent = font.getmetrics()
+        line_h = int((ascent + descent) * 0.98)
+        widest = max(draw.textlength(" ".join(w for w, _ in line), font=font)
+                     for line in lines)
+        total_h = line_h * len(lines)
+        if widest <= TITLE_MAX_LINE_W and total_h <= TITLE_MAX_BLOCK_H:
+            return font, lines, line_h
+        size -= TITLE_FONT_STEP
+    # TITLE_MIN_FONT_SIZE plus character-splitting makes this reachable only for
+    # pathological titles, but still return a deterministic in-bounds layout.
+    font = _font(TITLE_FONT, TITLE_MIN_FONT_SIZE)
+    lines = _wrap(words, font, draw, max_line_w=TITLE_MAX_LINE_W,
+                  split_overlong=True)
+    ascent, descent = font.getmetrics()
+    return font, lines, int((ascent + descent) * 0.98)
+
+
 def title_png(title, out_path, font_size=190):
     """Bold rounded ALL-CAPS title, white with shadow, centered over the footage band.
-    2x size (James, July 2026); wraps onto multiple lines and may extend past the
-    letterbox band onto the black canvas, but never into the caption zone."""
+    It automatically wraps, splits long tokens, and shrinks when necessary so
+    every title remains inside the 9:16 portrait safe area."""
     img = Image.new("RGBA", (W, H), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    title = title.upper()
-    font = _font(TITLE_FONT, font_size)
-    # wrap within 940px wide and ~940px tall (stays clear of captions at ~y1430)
-    while True:
-        lines = _wrap([(w, False) for w in title.split()], font, d)
-        widest = max(d.textlength(" ".join(w for w, _ in l), font=font) for l in lines)
-        asc, desc = font.getmetrics()
-        total = int((asc + desc) * 0.98) * len(lines)
-        if (widest <= 940 and total <= 940) or font_size <= 100: break
-        font_size -= 8
-        font = _font(TITLE_FONT, font_size)
-    ascent, descent = font.getmetrics()
-    line_h = int((ascent + descent) * 0.98)
+    title = " ".join(title.upper().split()) or "UNTITLED"
+    font, lines, line_h = _fit_title(title, d, font_size)
     total_h = line_h * len(lines)
     cy = BAND_Y + BAND_H // 2       # center of footage band
     y = cy - total_h // 2

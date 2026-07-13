@@ -2,7 +2,8 @@
 Extracted from "The Collective Tilt" and "Field to Point Synchronization" (Dec 2025).
 
 ## Format
-- 1080x1080 (1:1), 30fps, ~2:30 runtime, H.264 + AAC
+- Current default: 1080x1920 (9:16 portrait), 30fps, H.264 + AAC. The original
+  December 2025 reference videos were 1080x1080, but new renders are always portrait.
 - Stock b-roll clips, one per sentence/beat (~6-9s each), scene cut on sentence boundary
 - Footage look: heavily defocused / shallow DOF / blurred motion; moody interiors, anonymous crowds,
   abstract 3D renders (white figure + red question mark), minimal white scenes, dark tech/red-code frames.

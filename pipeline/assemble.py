@@ -10,9 +10,8 @@ build_dir contains script.json:
 import json, os, subprocess, sys
 
 import profiles
+from video_format import BAND_HEIGHT, BAND_WIDTH, BAND_Y, FPS, HEIGHT, WIDTH
 
-FPS = 30
-WIDTH, HEIGHT = 1080, 1920
 
 
 def clip_duration(f):
@@ -48,7 +47,7 @@ def render_scene(bd, i):
     if s.get("layout") == "fullbleed":
         BW, BH, padf = WIDTH, HEIGHT, ""
     else:
-        BW, BH, BY = 1080, 608, 656
+        BW, BH, BY = BAND_WIDTH, BAND_HEIGHT, BAND_Y
         padf = f",pad={WIDTH}:{HEIGHT}:0:{BY}:black"
     geom = f"scale={BW}:{BH}:force_original_aspect_ratio=increase,crop={BW}:{BH}"
     # cinematic cohesion: a narration-controlled color arc. Museum mode begins
