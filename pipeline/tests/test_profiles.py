@@ -6,6 +6,7 @@ HERE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, HERE)
 
 import profiles
+import hero
 
 
 class ProfileTests(unittest.TestCase):
@@ -13,6 +14,13 @@ class ProfileTests(unittest.TestCase):
         self.assertIsNone(profiles.resolve({"title": "Ordinary"}))
         self.assertEqual(profiles.query_variants("rain on window", None), ["rain on window"])
         self.assertEqual(profiles.semantic_query("rain on window", None), "rain on window")
+
+    def test_default_hero_style_is_natural_not_foggy(self):
+        style = hero.STYLE[None].lower()
+        self.assertIn("natural documentary photograph", style)
+        self.assertIn("true-to-life color", style)
+        self.assertNotIn("volumetric", style)
+        self.assertNotIn("golden", style)
 
     def test_june_aliases_canonicalize(self):
         for script in (

@@ -15,7 +15,10 @@ W, H, FPS = 1344, 768, 30
 MODEL_URL = "https://github.com/isl-org/MiDaS/releases/download/v2_1/model-small.onnx"
 
 STYLE = {
-    None:  ", cinematic film still, moody volumetric light, muted tones, shallow depth of field",
+    None:  (", natural documentary photograph, candid unstaged contemporary people, "
+            "neutral true-to-life color, soft diffused daylight, realistic skin texture, "
+            "practical lived-in location, ordinary clothing, clean clear air, subtle film grain, "
+            "no haze or fog, no silhouetted figures, no fantasy lighting, no surreal effects"),
     "dmt": ", visionary psychedelic art, hyperdetailed, vivid luminous colors on deep black, intricate sacred geometry",
 }
 

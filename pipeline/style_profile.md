@@ -71,6 +71,16 @@ source. It's waiting for you to consciously meet it there."
 - Same letterbox grammar: 16:9 footage band vertically centered on black, title over the band,
   captions ~y1430 (clear of TikTok UI). All future videos in 9:16.
 
+## v16 still-photo treatment (July 2026)
+- Default generated still/hero slides should look like natural documentary photographs that belong
+  beside the surrounding stock footage: candid contemporary people, practical locations, ordinary
+  clothing, realistic skin, neutral color, and soft readable daylight.
+- Do not use gold fog, volumetric haze, backlit silhouettes, visible auras, fantasy particles, or
+  stiff theatrical staging as the default visual shorthand. Reserve surreal treatment for an
+  explicitly visionary/DMT concept.
+- Convey inner states through believable posture, gaze, distance, and room geometry. Prefer a
+  medium or wide human moment over another generic extreme face close-up.
+
 ## v8 training (from "We Don't See the Same Color" reference, July 2026)
 Cadence:
 - 131 wpm, ~16 words/sentence, 28 pauses >0.7s (one every ~6s). Write ellipses and
