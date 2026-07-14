@@ -12,6 +12,7 @@ sys.path.insert(0, PIPELINE)
 
 import audio_variants
 import music
+import prep
 
 
 class MusicVariantTests(unittest.TestCase):
@@ -54,6 +55,21 @@ class MusicVariantTests(unittest.TestCase):
             with open(os.path.join(td, "music_variants.json")) as f:
                 loaded = json.load(f)
             self.assertEqual(3, loaded["minimum_choices"])
+
+    def test_first_generated_filename_remains_backward_compatible(self):
+        with tempfile.TemporaryDirectory() as td:
+            script = {
+                "title": "Compatibility",
+                "scenes": [{"text": "One.", "start": 0.0, "duration": 1.0}],
+            }
+            with open(os.path.join(td, "script.json"), "w") as f:
+                json.dump(script, f)
+            saved = prep.prepare_music(td, script)
+            self.assertEqual("music.wav", saved["music"])
+            self.assertEqual(
+                ["music.wav", "music_02.wav", "music_03.wav"],
+                [item["file"] for item in saved["music_variants"]],
+            )
 
 
 if __name__ == "__main__":

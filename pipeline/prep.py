@@ -45,7 +45,9 @@ def prepare_music(bd, s):
     generated = []
     while len(variants) < count:
         slot = len(variants) + 1
-        name = f"music_{slot:02d}.wav"
+        # Keep the long-standing first-bed filename so older scripts, tests,
+        # and manual tools still find choice 1 without knowing about variants.
+        name = "music.wav" if slot == 1 else f"music_{slot:02d}.wav"
         path = os.path.join(bd, name)
         variant = slot
         if not os.path.exists(path):

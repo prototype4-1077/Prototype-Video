@@ -1,3 +1,1 @@
-redo requested: 2026-07-14T21:50:00Z
-pipeline commit: 914a9cc9220c31256d504cffba621210ccd6189c
-audio sha256: 52fed903712b80f737717d88103d65ee2333f58cff771134597a45a7c88d899b
+retry 2 after backward-compatible music.wav fix: 2026-07-14T21:57:00Z
