@@ -16,6 +16,7 @@ from PIL import Image, ImageDraw, ImageFont, ImageOps
 
 import footage
 import profiles
+import visual_symbols
 
 
 COLS, ROWS = 4, 3
@@ -40,8 +41,8 @@ def wrap(draw, text, width):
 
 def sheet_for_scene(build_dir, script, i, out_dir):
     scene = script["scenes"][i]
-    query = scene.get("query", "")
     profile = profiles.resolve(script)
+    query = visual_symbols.effective_query(scene)
     videos = footage.search(query, script.get("genre"), profile, per_page=32)
     ranked = footage.rank(
         query,
@@ -117,6 +118,13 @@ def main():
         raise SystemExit("usage: curate.py build/<slug> 4,7,18")
     build_dir = sys.argv[1].rstrip("/")
     script = json.load(open(f"{build_dir}/script.json"))
+    profile = profiles.resolve(script)
+    if visual_symbols.apply_plan(script, profile):
+        json.dump(
+            script, open(f"{build_dir}/script.json", "w"),
+            indent=1, ensure_ascii=False,
+        )
+    visual_symbols.write_report(build_dir, script, profile)
     indexes = [int(x) for x in sys.argv[2].split(",") if x.strip()]
     out_dir = os.path.join(build_dir, "curation")
     os.makedirs(out_dir, exist_ok=True)

@@ -1,15 +1,18 @@
-"""Hero shots: free AI-generated imagery animated with 2.5D depth parallax.
-No paid APIs: images via pollinations.ai (keyless), depth via MiDaS-small ONNX (local).
+"""Hero shots: stock-frame-conditioned imagery with full still enhancement.
+No required paid APIs: images via Pollinations Kontext, depth via MiDaS-small ONNX.
 
 Usage: python3 hero.py <build_dir> <scene_index>
 Scene needs: "hero": true, "image_prompt": "what the shot shows"
 Writes clip_XX.mp4 (which footage.py then skips). Stages are cached and resumable:
 hero_XX.jpg -> hero_XX_depth.npy -> clip_XX.mp4 (atomic)."""
-import json, os, subprocess, sys, urllib.parse, urllib.request
+import io, json, os, sys, urllib.parse, urllib.request
 
 import numpy as np
+from PIL import Image
 
+import motion
 import profiles
+import still_reference
 
 W, H, FPS = 1344, 768, 30
 MODEL_URL = "https://github.com/isl-org/MiDaS/releases/download/v2_1/model-small.onnx"
@@ -34,29 +37,64 @@ def model_path():
     return p
 
 
-def gen_image(prompt, genre, out, profile=None):
-    if os.path.exists(out) and os.path.getsize(out) > 20_000:
+def generation_url(prompt, seed, reference_url=None):
+    params = {
+        "width": W,
+        "height": H,
+        "nologo": "true",
+        "enhance": "true",
+        "safe": "true",
+        "seed": int(seed),
+    }
+    if reference_url:
+        params.update({"model": "kontext", "image": reference_url})
+    key = os.environ.get("POLLINATIONS_API_KEY")
+    if key:
+        params["key"] = key
+    return (
+        f"https://image.pollinations.ai/prompt/{urllib.parse.quote(prompt)}?"
+        f"{urllib.parse.urlencode(params)}"
+    )
+
+
+def gen_image(prompt, genre, out, profile=None, reference_url=None, force=False):
+    if not force and os.path.exists(out) and os.path.getsize(out) > 20_000:
         return
     style = profiles.hero_style(profile, genre) or STYLE.get(genre, STYLE[None])
-    q = urllib.parse.quote(profiles.hero_prompt(prompt, profile) + style)
+    subject = profiles.hero_prompt(prompt, profile)
+    if reference_url:
+        subject = (
+            "Transform the supplied stock-video frame into a NEW natural still depicting: "
+            f"{subject}. Preserve the reference frame's documentary camera language, lens "
+            "perspective, readable exposure, practical lighting, spatial depth, palette, and "
+            "production realism. Replace its people, objects, and action wherever the new "
+            "subject requires it; do not preserve faces, logos, signage, or readable text. "
+            "Make the result look like another frame photographed for the same film"
+        )
+    full_prompt = subject + style
     last = None
     for seed in (7, 77, 777):
         try:
-            url = (f"https://image.pollinations.ai/prompt/{q}"
-                   f"?width={W}&height={H}&nologo=true&seed={seed}")
+            url = generation_url(full_prompt, seed, reference_url)
             req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            data = urllib.request.urlopen(req, timeout=90).read()
-            if len(data) > 20_000:
-                open(out, "wb").write(data)
+            data = urllib.request.urlopen(req, timeout=180).read()
+            image = Image.open(io.BytesIO(data)).convert("RGB")
+            if len(data) > 20_000 and image.width >= 512 and image.height >= 288:
+                partial = out + ".part.jpg"
+                image.save(partial, quality=95, subsampling=0)
+                os.replace(partial, out)
                 return
         except Exception as e:
             last = e
-    sys.exit(f"ERROR: image generation failed ({last}) | FIX: rerun; pollinations.ai may be busy")
+    sys.exit(
+        f"ERROR: reference-conditioned image generation failed ({last}) | "
+        "FIX: rerun; if the stock-frame URL remains unavailable, use stock footage for this beat"
+    )
 
 
-def depth_map(img_path, out):
+def depth_map(img_path, out, force=False):
     import cv2, onnxruntime as ort
-    if os.path.exists(out):
+    if os.path.exists(out) and not force:
         return np.load(out)
     img = cv2.imread(img_path)
     rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB).astype(np.float32) / 255.0
@@ -72,54 +110,46 @@ def depth_map(img_path, out):
     return d
 
 
-def render(img_path, depth, dur, out, mode=0):
-    """2.5D parallax: remap pixels by depth as a virtual camera drifts + slow dolly."""
-    import cv2
-    img = cv2.imread(img_path)
-    img = cv2.resize(img, (W, H), interpolation=cv2.INTER_LANCZOS4)  # normalize size (even dims)
-    depth = cv2.resize(depth, (W, H))
-    ih, iw = img.shape[:2]
-    n = max(int(dur * FPS), FPS)
-    gx, gy = np.meshgrid(np.arange(iw, dtype=np.float32), np.arange(ih, dtype=np.float32))
-    dc = depth - depth.mean()
-    amp = iw * 0.018                                          # parallax strength
-    tmp = out + ".part.mp4"
-    p = subprocess.Popen(["ffmpeg", "-v", "error", "-y", "-f", "rawvideo",
-                          "-pix_fmt", "bgr24", "-s", f"{iw}x{ih}", "-r", str(FPS), "-i", "-",
-                          "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
-                          "-pix_fmt", "yuv420p", tmp], stdin=subprocess.PIPE)
-    for f in range(n):
-        t = f / max(n - 1, 1)
-        e = t * t * (3 - 2 * t)                               # ease in-out
-        if mode % 3 == 0:   ox, oy = amp * (2 * e - 1), amp * 0.25 * (2 * e - 1)
-        elif mode % 3 == 1: ox, oy = amp * (1 - 2 * e), -amp * 0.2 * (2 * e - 1)
-        else:               ox, oy = amp * 0.3 * np.sin(e * np.pi), amp * (2 * e - 1) * 0.6
-        zoom = 1.06 + 0.05 * e                                # dolly-in, hides edge gaps
-        mx = (gx - iw / 2) / zoom + iw / 2 - dc * ox
-        my = (gy - ih / 2) / zoom + ih / 2 - dc * oy
-        frame = cv2.remap(img, mx, my, cv2.INTER_LINEAR, borderMode=cv2.BORDER_REPLICATE)
-        p.stdin.write(frame.tobytes())
-    p.stdin.close()
-    if p.wait() != 0:
-        sys.exit("ERROR: hero encode failed | FIX: rerun")
-    os.replace(tmp, out)
+def render(img_path, depth, dur, out, mode=0, recipe="atmosphere"):
+    """Depth-layered cinemagraph with background completion and local motion."""
+    motion.render_depth_animation(
+        img_path, depth, dur, out, recipe=recipe, strength=.78, seed=mode,
+    )
 
 
 def main(bd, i):
     s = json.load(open(f"{bd}/script.json"))
     sc = s["scenes"][i]
     out = f"{bd}/clip_{i:02d}.mp4"
-    if os.path.exists(out) and os.path.getsize(out) > 100_000:
+    if (os.path.exists(out) and os.path.getsize(out) > 100_000 and
+            still_reference.reference_is_current(bd, s, i)):
         print(f"hero {i}: exists"); return
     prompt = sc.get("image_prompt") or sc["text"]
+    reference = still_reference.bind_reference(bd, s, i)
+    raw = f"{bd}/hero_{i:02d}_raw.jpg"
     img, dep = f"{bd}/hero_{i:02d}.jpg", f"{bd}/hero_{i:02d}_depth.npy"
-    gen_image(prompt, s.get("genre"), img, profiles.resolve(s))
-    d = depth_map(img, dep)
-    render(img, d, sc.get("duration", 8) + 0.5, out, mode=i)
+    gen_image(
+        prompt, s.get("genre"), raw, profiles.resolve(s),
+        reference_url=reference["url"], force=True,
+    )
+    still_reference.enhance_generated_image(bd, s, i, raw, img)
+    d = depth_map(img, dep, force=True)
+    recipe = motion.infer_recipe(sc)
+    render(img, d, sc.get("duration", 8) + 0.5, out, mode=i, recipe=recipe)
     sc["clip"] = out
     sc["hero_generated"] = True
+    sc["motion_mode"] = "cinemagraph"
+    sc["motion_kind"] = motion.ANIMATED
+    sc["motion_recipe"] = recipe
+    sc["motion_compiled"] = True
+    sc["motion_source"] = "reference_conditioned_still"
+    sc["still_reference_generation_model"] = "pollinations_kontext"
+    still_reference.mark_motion_complete(sc)
     json.dump(s, open(f"{bd}/script.json", "w"), indent=1, ensure_ascii=False)
-    print(f"hero {i}: generated ({prompt[:60]}...)")
+    print(
+        f"hero {i}: generated from stock scene {reference['scene_index']} "
+        f"({prompt[:60]}...)"
+    )
 
 
 if __name__ == "__main__":

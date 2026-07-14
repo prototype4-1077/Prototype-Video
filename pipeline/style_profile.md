@@ -63,8 +63,10 @@ source. It's waiting for you to consciously meet it there."
 
 ## v2 visual spec (July 2026, per "How Reality Works" reference)
 - Letterboxed: 16:9 footage band centered on black 1080x1080; captions live in the bottom black band.
-- Footage mood shifted from plain moody b-roll to surreal/mystical: floating orbs, fog monoliths,
-  keyhole/tunnel silhouettes, cosmos, glowing objects, mirror worlds. Still dark, muted, liminal.
+- Footage shifted from plain mood b-roll to idea-bearing symbols: keyholes, printed truth, arrows,
+  eyes, doors, question marks, inverted worlds, letters, recursive rings, lenses, maps, crowds,
+  and human explorers. Surreal/mystical imagery remains available, but the symbol must explain
+  the spoken mechanism and the sequence must not collapse into one repeated visual shorthand.
 - Title: bold rounded ALL-CAPS (Baloo 2 ExtraBold), white w/ shadow, over the opening visual
   (replaces handwritten Caveat, which was the v1 square-layout look).
 
@@ -76,11 +78,28 @@ source. It's waiting for you to consciously meet it there."
 - Default generated still/hero slides should look like natural documentary photographs that belong
   beside the surrounding stock footage: candid contemporary people, practical locations, ordinary
   clothing, realistic skin, neutral color, and soft readable daylight.
+- Acquire and select the genuine stock-video scenes first. Before generating a still, choose the
+  closest related selected stock scene by spoken mechanism, symbol family, physical prop, and
+  timeline proximity. Save its public stock-video frame and use that exact frame as the
+  image-to-image reference—not merely as words appended to a prompt.
+- The reference transfers camera language, lens perspective, readable exposure, practical lighting,
+  palette, depth, and production realism. The requested subject/action still replaces the reference
+  content, faces, text, signage, and logos as needed. This creates continuity without cloning a shot.
+- Every permitted still receives the complete appropriate enhancement path: reference-conditioned
+  generation or reference harmonization, natural exposure/detail recovery, depth-separated layers,
+  occlusion/background completion, restrained recipe-specific internal motion, practical-light
+  movement, the film-wide grade, and subtle grain. Never leave a raw still or pan/zoom-only slide.
+- Supplied stills and keyframes are preserved; the pipeline creates enhanced derivatives. If a
+  generated still cannot obtain or use a valid stock frame, fall back to genuine stock footage.
+- `still_reference_report.json` records the selected reference scene/frame, semantic match score,
+  and every enhancement applied. Reference-conditioned stills remain fully counted inside the
+  35% still-source ceiling.
 - Do not use gold fog, volumetric haze, backlit silhouettes, visible auras, fantasy particles, or
   stiff theatrical staging as the default visual shorthand. Reserve surreal treatment for an
   explicitly visionary/DMT concept.
-- Convey inner states through believable posture, gaze, distance, and room geometry. Prefer a
-  medium or wide human moment over another generic extreme face close-up.
+- When the body itself carries the idea, convey inner states through believable posture, gaze,
+  distance, and room geometry. Otherwise choose a more exact object, spatial, language, natural,
+  or geometric symbol instead of another generic human reaction or extreme face close-up.
 
 ## v8 training (from "We Don't See the Same Color" reference, July 2026)
 Cadence:
@@ -132,6 +151,54 @@ The video replicates what the NARRATOR SEES - not moody observation, but vivid v
 - Face projections (patterns cast on the narrator's face) mark the transition between
   the room and the vision.
 - Captions/title/music: unchanged from house style.
+
+## Visual symbol grammar (standing rule, July 2026)
+- Match the mechanism of the spoken line, not merely its emotional mood. The scene should
+  remain conceptually legible even if the caption is hidden.
+- A person is one symbol among many, never the universal fallback. When a person appears,
+  give the body a job: observer, chooser, explorer, scale reference, collective, creator,
+  guardian, performer, or relationship. Avoid generic "thoughtful person looking away"
+  footage unless the physical act of looking is the subject.
+- Build each normal philosophical video from at least six symbol families: human,
+  collective, perception, language, architecture, pathway, identity, time/memory,
+  object/tool, nature, world-scale, geometry, transformation, and light/atmosphere.
+- Do not use one family for more than three consecutive beats. As a planning target, keep
+  human presence at roughly half the runtime or less. People are welcome; repetition is not.
+- Alternate four kinds of visual reasoning: literal anchors (printed truth, turning compass),
+  structural metaphors (door, wall, path), perspective disruptions (inverted city, recursive
+  eye), and human witnesses who provide scale, choice, or consequence.
+- Prefer one precise physical symbol over generic mystical filler. A choice can be arrows;
+  learned perception can be a gallery of eyes; language failure can be scattered letters;
+  a boundary can be nested rings; incomplete knowledge can be a map and compass.
+- Repeated primary props are audited across the whole film. If mirrors, doors, phones,
+  silhouettes, or any other shorthand dominate, change the symbol family rather than merely
+  searching for another version of the same image.
+- New scripts use top-level `"visual_policy": "diverse_symbols"`. The planner annotates
+  every scene with `semantic_anchor`, `visual_function`, `symbol_family`, `primary_symbol`,
+  and—when relevant—`human_role`. It writes `visual_symbol_report.json` before rendering.
+- This reference changes visual reasoning, not delivery format: output remains 1080x1920
+  9:16 portrait with the title and picture visible on frame zero.
+- June Oxley remains an explicit profile. Keep his literal Southern story world; apply the
+  diversity lesson without replacing his concrete character actions with abstract imagery.
+
+## Motion grammar (standing rule, July 2026)
+- No more than 35% of the finished runtime may come from still images. Measure seconds,
+  not scene count. Static and animated-still durations are added together.
+- At least 65% must be genuine temporal footage in which people, objects, light, or the
+  recorded environment actually changes—not a camera move across one photograph.
+- A crop, pan, push, pull, or Ken Burns move does not change a still's classification.
+- An animated still must contain depth-separated or internal subject/environment motion,
+  or a visible evolution through controlled keyframes.
+- Use 4-8 second moving micro-scenes for complex AI motion; cut before anatomy, identity,
+  or background drift becomes visible.
+- Preserve quietness through restrained movement rather than absence of movement: breath,
+  changing practical light, reflections, curtains, dust, leaves, handwriting, development,
+  or literal transformation can carry contemplative scenes.
+- Track `static`, `animated_still`, and `video` separately in the render report. Enforce
+  the 35% ceiling against `static + animated_still`; animation improves the permitted
+  stills but never relabels their source as footage.
+- A static/pan/zoom authoring hint is automatically upgraded to the full still-enhancement path.
+  This improves the image but does not change its `animated_still` provenance or budget cost.
 
 ## June Oxley profile (v15, explicit opt-in)
 Trigger only when James explicitly names **June Oxley**. Set the top-level script field:

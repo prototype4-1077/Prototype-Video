@@ -5,6 +5,7 @@ script sounds like James and obeys his standing feedback."""
 import json, os, re, sys, urllib.request
 
 import profiles
+import visual_symbols
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -64,13 +65,23 @@ CHARACTER PROFILE:
 {profile_context}
 
 OUTPUT: pure JSON only, no markdown fences, exactly this shape:
-{{"title": "Three Or Four Words", "slug": "short-dashed-title"{', "profile": "june_oxley"' if profile else ''}, "scenes": [
+{{"title": "Three Or Four Words", "slug": "short-dashed-title", "visual_policy": "diverse_symbols"{', "profile": "june_oxley"' if profile else ''}, "scenes": [
   {{"text": "One sentence or beat, max 25 words.",
     "keywords": ["2-4 words that literally appear in text"],
-    "query": "pexels search, lit-but-moody, literal to the line"}} ]}}
+    "semantic_anchor": "the one load-bearing idea",
+    "visual_function": "literal_anchor|mechanism|choice|boundary|perspective_shift|transformation|recursion|contrast|scale_shift",
+    "symbol_family": "human|collective|perception|language|architecture|pathway|identity|time_memory|object_tool|nature|world_scale|geometry|transformation|light_atmosphere",
+    "human_role": "only when a person appears: observer|chooser|explorer|scale_reference|collective|creator|guardian|performer|relationship",
+    "query": "searchable physical action, lit-but-moody, literal to the line"}} ]}}
 Rules: 18-26 scenes; 300-400 words total; second person; conversational hook opener;
 quiet powerful realization ending (never "you create everything"); queries favor
-window light, god rays, lamplight, golden hour, silhouettes; only a few dark scenes."""
+window light, god rays, lamplight, golden hour; only a few dark scenes.
+VISUAL SYMBOL RULES: illustrate the mechanism of each sentence, not only its mood. Use at
+least six symbol families. Do not repeat one family for more than three consecutive scenes.
+People may appear in no more than about half the scenes and must have a named symbolic role,
+never merely "a thoughtful person looking away." Alternate human witnesses with objects,
+architecture, language, perception, nature, geometry, world-scale images, and visible
+transformations. Prefer one strong physical symbol over generic mystical filler."""
     text = _llm(prompt).strip()
     text = re.sub(r"^```(json)?|```$", "", text, flags=re.M).strip()
     s = json.loads(text)
@@ -79,8 +90,20 @@ window light, god rays, lamplight, golden hour, silhouettes; only a few dark sce
         s["profile"] = profile
     elif s.get("profile"):
         profiles.resolve(s, strict=True)
+    # New autonomous scripts use the learned policy even if the language model
+    # omitted or misspelled it.  The deterministic planner can replace weak
+    # human filler before the strict audit runs in build.py.
+    s["visual_policy"] = visual_symbols.POLICY_NAME
+    visual_symbols.apply_plan(s, profile)
     os.makedirs(bd, exist_ok=True)
     json.dump(s, open(f"{bd}/script.json", "w"), indent=1, ensure_ascii=False)
+    report = visual_symbols.write_report(bd, s, profile)
+    if report["violations"]:
+        sys.exit(
+            "ERROR: generated visual plan lacks symbol diversity ("
+            + "; ".join(report["violations"])
+            + ") | FIX: regenerate with more object, architecture, language, nature, and geometry beats"
+        )
     words = sum(len(x["text"].split()) for x in s["scenes"])
     print(f"script written: '{s['title']}' — {len(s['scenes'])} scenes, {words} words")
 

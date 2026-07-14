@@ -5,6 +5,7 @@ middle with the punchiest beats (questions, short declaratives), re-cuts the VO 
 sentence boundaries, lays a fresh music bed, masters to the same loudness."""
 import json, os, subprocess, sys, tempfile
 
+import motion
 import profiles
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -17,7 +18,7 @@ def run(cmd):
     return r
 
 
-def pick(scenes, target):
+def pick(scenes, target, max_still_source_ratio=.35):
     def score(i, sc):
         t, n = sc["text"], len(sc["text"].split())
         s = 0.0
@@ -37,6 +38,38 @@ def pick(scenes, target):
         if d <= budget:
             chosen.add(i)
             budget -= d
+    def still_ratio(indexes):
+        total = sum(scenes[i]["duration"] for i in indexes)
+        still = sum(
+            scenes[i]["duration"] for i in indexes
+            if motion.motion_kind(scenes[i]) != motion.VIDEO
+        )
+        return still / total if total else 0.0
+
+    # Preserve hook and ending, then exchange the weakest still-derived middle
+    # beats for the strongest available true-motion beats until the same 35/65
+    # source rule holds in the short cut as well as the full film.
+    while still_ratio(chosen) > max_still_source_ratio + 1e-9:
+        removable = [
+            i for i in chosen if i not in {first, last}
+            and motion.motion_kind(scenes[i]) != motion.VIDEO
+        ]
+        if removable:
+            drop = min(removable, key=lambda i: score(i, scenes[i]))
+            chosen.remove(drop)
+            budget += scenes[drop]["duration"]
+        additions = [
+            i for i in ranked if i not in chosen
+            and motion.motion_kind(scenes[i]) == motion.VIDEO
+            and scenes[i]["duration"] <= budget
+        ]
+        if not additions:
+            if not removable:
+                raise ValueError("short cut cannot satisfy the still-source cap")
+            continue
+        add = additions[0]
+        chosen.add(add)
+        budget -= scenes[add]["duration"]
     return sorted(chosen)
 
 
@@ -45,7 +78,8 @@ def main(bd, target=58.0):
     scenes = s["scenes"]
     if any(not os.path.exists(f"{bd}/seg_{i:02d}.mp4") for i in range(len(scenes))):
         sys.exit("ERROR: segs missing; run build.py to completion first")
-    idx = pick(scenes, target)
+    cap = float(s.get("max_still_source_ratio", .35))
+    idx = pick(scenes, target, cap)
     total = sum(scenes[i]["duration"] for i in idx)
     tmp = tempfile.mkdtemp()
     # video: concat the chosen segments (dip-to-black edges make these cuts clean)
@@ -92,6 +126,16 @@ def main(bd, target=58.0):
     run(["ffmpeg", "-v", "error", "-y", "-i", raw, "-af", ln, "-map", "0:v", "-map", "0:a",
          "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart",
          f"{bd}/final_short.mp4"])
+    short_script = {
+        "max_still_source_ratio": cap,
+        "scenes": [scenes[i] for i in idx],
+    }
+    short_report = motion.validate_budget(short_script).as_dict()
+    motion.validate_video_evidence(short_script)
+    short_report["selected_indexes"] = idx
+    json.dump(
+        short_report, open(f"{bd}/motion_report_short.json", "w"), indent=2
+    )
     print(f"final_short.mp4 done: {total:.1f}s from {len(idx)}/{len(scenes)} scenes "
           f"(kept: {idx})")
 

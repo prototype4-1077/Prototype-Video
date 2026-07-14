@@ -4,7 +4,7 @@ Each returns Pexels-shaped candidates:
   "video_files": [{"link":..., "width":..., "height":...}] }
 Every provider is wrapped: slow or broken sources return [] and never stall a build.
 Optional: set PIXABAY_API_KEY (free account) to add Pixabay as a fourth source."""
-import json, os, urllib.parse, urllib.request
+import html, json, os, re, urllib.parse, urllib.request
 
 UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
 
@@ -12,6 +12,175 @@ UA = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
 def _get(url, timeout=12):
     req = urllib.request.Request(url, headers=UA)
     return json.load(urllib.request.urlopen(req, timeout=timeout))
+
+
+def _text(url, timeout=18):
+    req = urllib.request.Request(url, headers=UA)
+    return urllib.request.urlopen(req, timeout=timeout).read().decode(
+        "utf-8", errors="replace"
+    )
+
+
+MIXKIT_TAG_RULES = (
+    ("video-call", ("video call", "live video", "call faces")),
+    ("road", ("arrow", "arrows", "crossroad", "fork in road", "pathway", "signpost", "direction")),
+    ("abstract", ("nested ring", "illuminated ring", "recursive", "geometry", "geometric", "spectrum", "wavelength")),
+    ("city", ("city", "civilization", "public square", "urban", "globe reflected")),
+    ("travel", ("compass", "folded map", "route", "territory")),
+    ("vintage", ("record needle", "vinyl record", "old photograph", "photo album", "film projector")),
+    ("selfie", ("selfie", "retakes", "posed photo")),
+    ("pregnancy", ("pregnant", "expectant", "mother", "belly")),
+    ("surveillance", ("surveillance", "security camera", "cctv")),
+    ("meeting", ("meeting", "coworker", "office", "raises hand")),
+    ("crowd", ("crowd", "plaza", "many people", "public square")),
+    ("dancing", ("dance", "dancing")),
+    ("greenhouse", ("greenhouse",)),
+    ("gardening", ("garden", "gardener", "seedling", "soil")),
+    ("painting", ("canvas", "easel", "painting", "artist")),
+    ("shopping", ("store", "shop", "shelf", "merchandise")),
+    ("door", ("door", "doorway")),
+    ("sunrise", ("sunrise", "dawn")),
+    ("performance", ("perform", "stage", "rehearse", "speaking")),
+    ("mirror", ("mirror", "jacket", "clothing", "magnifying lens", "magnifying glass", "reflection")),
+    ("smartphone", ("smartphone", "phone", "social media", "screen")),
+    ("writing", ("write", "writing", "notebook", "sentence", "paper")),
+    ("home", ("room", "home", "living room", "bedroom")),
+)
+
+COVERR_TAG_FALLBACKS = {
+    "greenhouse": "farmer",
+    "gardening": "farmer",
+    "meeting": "business",
+    "sunrise": "nature",
+    "performance": "performance",
+    "surveillance": "security",
+    "painting": "canvas",
+    "pregnancy": "pregnant",
+    "crowd": "people",
+    "video-call": "video-call",
+}
+
+
+def _mixkit_tag(query):
+    lowered = query.lower()
+    for tag, phrases in MIXKIT_TAG_RULES:
+        if any(phrase in lowered for phrase in phrases):
+            return tag
+    return "people"
+
+
+def mixkit(query, limit=12, tag=None):
+    """Mixkit free-license stock footage, scraped from public discover pages.
+
+    Mixkit does not require an API credential for its public catalog or 720p
+    downloads.  Discover pages expose stable item IDs and direct preview assets;
+    those IDs are persisted as ``mixkit:<id>`` for reproducible rebuilds.
+    """
+    try:
+        tag = tag or _mixkit_tag(query)
+        page = _text(f"https://mixkit.co/free-stock-video/discover/{tag}/")
+        matches = re.findall(
+            r'href="(/free-stock-video/([a-z0-9-]+)-(\d+)/)"[^>]*>'
+            r'\s*([^<]+?)\s*</a>',
+            page,
+            flags=re.IGNORECASE,
+        )
+        out, seen = [], set()
+        for path, _slug, raw_id, title in matches:
+            if raw_id in seen:
+                continue
+            seen.add(raw_id)
+            title = " ".join(html.unescape(title).split())
+            out.append({
+                "id": f"mixkit:{raw_id}",
+                "duration": 10,
+                "image": (
+                    f"https://assets.mixkit.co/videos/{raw_id}/"
+                    f"{raw_id}-thumb-360-0.jpg"
+                ),
+                "source": "mixkit",
+                "title": title,
+                "description": title,
+                "url": f"https://mixkit.co{path}",
+                "video_files": [
+                    {
+                        "link": (
+                            f"https://assets.mixkit.co/videos/{raw_id}/"
+                            f"{raw_id}-720.mp4"
+                        ),
+                        "width": 1280,
+                        "height": 720,
+                    },
+                    {
+                        "link": (
+                            f"https://assets.mixkit.co/videos/{raw_id}/"
+                            f"{raw_id}-360.mp4"
+                        ),
+                        "width": 640,
+                        "height": 360,
+                    },
+                ],
+            })
+            if len(out) >= limit:
+                break
+        return out
+    except Exception:
+        return []
+
+
+def coverr(query, limit=16, tag=None):
+    """Coverr free stock via public topic pages and direct HD renditions."""
+    try:
+        raw_tag = tag or _mixkit_tag(query)
+        tag = COVERR_TAG_FALLBACKS.get(raw_tag, raw_tag)
+        page = _text(f"https://coverr.co/stock-video-footage/{tag}", timeout=25)
+        slugs = re.findall(
+            r"https://cdn\.coverr\.co/videos/([^/\"\\]+)/720p\.mp4",
+            page,
+            flags=re.IGNORECASE,
+        )
+        out, seen = [], set()
+        for slug in slugs:
+            if slug in seen or "premium" in slug or slug.startswith("user-ai-generation"):
+                continue
+            seen.add(slug)
+            title_slug = re.sub(r"^coverr-", "", slug)
+            title_slug = re.sub(r"-\d+$", "", title_slug)
+            title = title_slug.replace("-", " ").strip().title()
+            out.append({
+                "id": f"coverr:{slug}",
+                "duration": 10,
+                # This is Coverr's public thumbnail for the exact selected
+                # video.  still_reference.py saves it as the continuity frame
+                # before any generated/supplied still is enhanced.
+                "image": f"https://cdn.coverr.co/videos/{slug}/thumbnail?width=640",
+                "source": "coverr",
+                "title": title,
+                "description": title,
+                "url": f"https://coverr.co/videos/{slug}",
+                "video_files": [
+                    {
+                        "link": f"https://cdn.coverr.co/videos/{slug}/1080p.mp4",
+                        "width": 1920,
+                        "height": 1080,
+                    },
+                    {
+                        "link": f"https://cdn.coverr.co/videos/{slug}/720p.mp4",
+                        "width": 1280,
+                        "height": 720,
+                    },
+                    {
+                        "link": f"https://cdn.coverr.co/videos/{slug}/360p.mp4",
+                        "width": 640,
+                        "height": 360,
+                    },
+                ],
+            })
+            if len(out) >= limit:
+                break
+        return out
+    except Exception:
+        return []
 
 
 def nasa(q, limit=3):
@@ -119,10 +288,12 @@ SPACE_WORDS = ("space", "nebula", "galaxy", "cosmos", "cosmic", "stars", "planet
 VINTAGE_WORDS = ("vintage", "retro", "archive", "old film", "16mm", "8mm")
 
 
-def supplement(q, genre=None):
+def supplement(q, genre=None, stock_tag=None):
     """Extra candidates routed by query/genre. Cheap: only calls relevant providers."""
     ql = q.lower()
-    out = []
+    out = coverr(q, tag=stock_tag)
+    if not out:
+        out += mixkit(q, tag=stock_tag)
     if any(w in ql for w in SPACE_WORDS):
         out += nasa(q)
     if genre == "dmt" or any(w in ql for w in VINTAGE_WORDS):
@@ -136,6 +307,52 @@ def supplement(q, genre=None):
 def fetch_by_id(vid):
     """Resolve a namespaced id back to a candidate (for pinned re-fetches)."""
     ns, _, raw = str(vid).partition(":")
+    if ns == "mixkit":
+        return {
+            "id": vid,
+            "source": "mixkit",
+            "image": (
+                f"https://assets.mixkit.co/videos/{raw}/"
+                f"{raw}-thumb-360-0.jpg"
+            ),
+            "video_files": [
+                {
+                    "link": f"https://assets.mixkit.co/videos/{raw}/{raw}-720.mp4",
+                    "width": 1280,
+                    "height": 720,
+                },
+                {
+                    "link": f"https://assets.mixkit.co/videos/{raw}/{raw}-360.mp4",
+                    "width": 640,
+                    "height": 360,
+                },
+            ],
+        }
+    if ns == "coverr":
+        return {
+            "id": vid,
+            "source": "coverr",
+            "image": (
+                f"https://cdn.coverr.co/videos/{raw}/thumbnail?width=640"
+            ),
+            "video_files": [
+                {
+                    "link": f"https://cdn.coverr.co/videos/{raw}/1080p.mp4",
+                    "width": 1920,
+                    "height": 1080,
+                },
+                {
+                    "link": f"https://cdn.coverr.co/videos/{raw}/720p.mp4",
+                    "width": 1280,
+                    "height": 720,
+                },
+                {
+                    "link": f"https://cdn.coverr.co/videos/{raw}/360p.mp4",
+                    "width": 640,
+                    "height": 360,
+                },
+            ],
+        }
     if ns == "nasa":
         files = _get(f"https://images-assets.nasa.gov/video/{urllib.parse.quote(raw)}/collection.json")
         mp4s = [urllib.parse.quote(u.replace("http://", "https://"), safe=":/~")

@@ -1,6 +1,7 @@
 """Assemble final video from scenes. Resumable: each scene renders to its own segment file.
 Usage:
   python3 assemble.py <build_dir> scene <i>   # render one scene segment
+  python3 assemble.py <build_dir> render-all  # render every missing segment
   python3 assemble.py <build_dir> concat      # concat segments + mix audio -> final.mp4
 build_dir contains script.json:
 { "title": "...", "slug": "...",
@@ -9,6 +10,7 @@ build_dir contains script.json:
 """
 import json, os, subprocess, sys
 
+import motion
 import profiles
 from video_format import BAND_HEIGHT, BAND_WIDTH, BAND_Y, FPS, HEIGHT, WIDTH
 
@@ -34,9 +36,12 @@ def render_scene(bd, i):
         s = json.load(f)
     sc = s["scenes"][i]
     seg = f"{bd}/seg_{i:02d}.mp4"
-    if os.path.exists(seg):
-        return print(f"seg {i} exists, skip")
     dur = sc["duration"]
+    existing_duration = clip_duration(seg) if os.path.exists(seg) else None
+    if existing_duration and existing_duration >= max(dur - .2, .1):
+        return print(f"seg {i} exists, skip")
+    if os.path.exists(seg):
+        print(f"seg {i} is corrupt/truncated; rebuilding")
     overlays = [(f"{bd}/cap_{i:02d}.png", None)]
     for ov in sc.get("kw_overlays", []):
         t = sc.get("kw_times", {}).get(ov["kw"])
@@ -92,8 +97,14 @@ def render_scene(bd, i):
         zexpr = "z='max(1.13-0.0009*on,1.0)':x='iw/2-(iw/zoom/2)':y='ih/2-(ih/zoom/2)'"
     else:          # lateral drift at light zoom
         zexpr = (f"z=1.08:x='(iw-iw/zoom)*on/{frames}':y='ih/2-(ih/zoom/2)'")
-    zoom = (f"fps={FPS},zoompan={zexpr}:d=1:s={BW}x{BH}:fps={FPS},{grade}{padf},"
-            f"noise=alls={grain}:allf=t+u")
+    if motion.motion_kind(sc) == motion.ANIMATED:
+        # The source already contains depth/internal motion.  A second Ken Burns
+        # transform would flatten that movement back into a slideshow gesture.
+        zoom = (f"fps={FPS},{grade}{padf},"
+                f"noise=alls={grain}:allf=t+u")
+    else:
+        zoom = (f"fps={FPS},zoompan={zexpr}:d=1:s={BW}x{BH}:fps={FPS},{grade}{padf},"
+                f"noise=alls={grain}:allf=t+u")
     # timing: never restart/loop the clip mid-scene. If the clip is shorter than the
     # scene, stretch it (slow motion) or boomerang it (forward+reverse, seamless).
     cd = clip_duration(sc["clip"]) or dur
@@ -157,6 +168,10 @@ def render_scene(bd, i):
 def concat(bd):
     s = json.load(open(f"{bd}/script.json"))
     n = len(s["scenes"])
+    for i, scene in enumerate(s["scenes"]):
+        duration = clip_duration(f"{bd}/seg_{i:02d}.mp4")
+        if duration is None or duration < max(float(scene["duration"]) - .2, .1):
+            raise SystemExit(f"segment {i} is corrupt or truncated; rerender it")
     with open(f"{bd}/list.txt", "w") as f:
         for i in range(n):
             f.write(f"file 'seg_{i:02d}.mp4'\n")
@@ -164,6 +179,11 @@ def concat(bd):
          "-i", f"{bd}/list.txt", "-c", "copy", f"{bd}/video_noaudio.mp4"])
     vo, music = s.get("voiceover"), s.get("music")
     total = sum(sc["duration"] for sc in s["scenes"])
+    concatenated = clip_duration(f"{bd}/video_noaudio.mp4")
+    if concatenated is None or concatenated < total - .5:
+        raise SystemExit(
+            f"concat truncated at {concatenated or 0:.1f}s; expected {total:.1f}s"
+        )
     if vo and music:
         af = ("[1:a]adelay=400|400,apad[voz];"
               "[2:a]volume=0.16,afade=t=out:st=%f:d=3[mz];"
@@ -186,5 +206,9 @@ if __name__ == "__main__":
     bd, cmd = sys.argv[1], sys.argv[2]
     if cmd == "scene":
         render_scene(bd, int(sys.argv[3]))
+    elif cmd == "render-all":
+        script = json.load(open(f"{bd}/script.json"))
+        for index in range(len(script.get("scenes", []))):
+            render_scene(bd, index)
     elif cmd == "concat":
         concat(bd)

@@ -17,13 +17,33 @@ API BASE: https://api.github.com/repos/jameswatson1077/tiktok-videos
   spoken words (especially endings), every new video defaults to 1080x1920 9:16
   portrait, letterboxed, with yellow keyword captions. Titles must wrap and shrink
   automatically when needed so they remain fully inside the portrait safe area.
+  No more than 35% of finished runtime may come from still images. Animated stills,
+  depth moves, keyframes, and pan/zoom all count toward that 35%; at least 65% must
+  be genuine footage where people or objects actually move. Check
+  motion_report.json before delivery.
+  Acquire genuine stock scenes before creating any still. Every still must begin
+  from the saved public frame of the closest related selected stock scene, receive
+  the complete reference/exposure/detail/depth/background/internal-motion/light/
+  grade/grain path, and pass still_reference_report.json. Never use raw stills or
+  pan/zoom-only slides; if reference-conditioned generation fails, use stock video.
+  Match the MECHANISM of each spoken line, not merely its mood. A person is one
+  symbol among many and must have a role (observer, chooser, explorer, scale,
+  collective, creator, guardian, performer, relationship). New normal videos use
+  at least six symbol families, no more than three consecutive beats from one
+  family, and roughly half or less human presence. Avoid generic thoughtful-person
+  footage. Check visual_symbol_report.json before delivery.
 
 ## Step 1 — Write the script file
 Create build/<slug>/script.json  (slug = short-dashed-title):
 { "title": "Three Or Four Words", "slug": "<slug>",
+  "visual_policy": "diverse_symbols",
   "scenes": [ { "text": "One sentence/beat (max ~25 words).",
                 "keywords": ["2-4 words that appear IN that text"],
-                "query": "pexels search: lit-but-moody, literal to the line" } ] }
+                "semantic_anchor": "load-bearing idea",
+                "visual_function": "what the image explains",
+                "symbol_family": "one family from visual_symbols.py",
+                "human_role": "only if a person appears",
+                "query": "physical searchable action: lit-but-moody, literal to the line" } ] }
 Rules: 18-26 scenes and 300-400 words if YOU write the script (second person,
 poetic-direct, quiet powerful ending — see style_profile.md).
 If James supplies script text: split it into scenes VERBATIM (never rewrite), any length.
@@ -64,7 +84,10 @@ line, apply the FIX (usually edit script.json), push, re-dispatch.
 ## Judgment checklist before delivering
 Duration ≈ VO length; 1080x1920 (9:16 portrait); captions with yellow keywords in
 the bottom band; bold rounded title fully fitted on scene 0; majority of slides visibly lit; every clip matches
-its spoken line. If a scene misses, use the swap flow before delivering.
+its spoken line; at least six visual symbol families; no repeated generic-human run;
+still-derived duration <=35% and genuine moving footage >=65%; every still passes
+still_reference_report.json and visibly belongs beside its stock reference. If a scene
+misses, use the swap flow before delivering.
 
 ## v7 additions
 - Deliver BOTH final.mp4 and final_short.mp4 (60s cut) when present in artifacts.

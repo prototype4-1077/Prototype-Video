@@ -10,7 +10,10 @@ then advances the build as far as it can within a ~30s budget and exits with:
 Every step is resumable; running again never breaks anything."""
 import json, os, shutil, subprocess, sys, tempfile, time, urllib.request
 
+import motion
 import profiles
+import still_reference
+import visual_symbols
 
 T0 = time.time()
 BUDGET = 30
@@ -44,9 +47,10 @@ def load_env():
             if line and not line.startswith("#") and "=" in line:
                 k, v = line.split("=", 1)
                 os.environ.setdefault(k, v)
-    for k in ("ELEVENLABS_API_KEY", "PEXELS_API_KEY"):
-        if not os.environ.get(k):
-            err(f"missing {k}", "add it to pipeline/.env")
+    if not os.environ.get("ELEVENLABS_API_KEY"):
+        err("missing ELEVENLABS_API_KEY", "add it to pipeline/.env")
+    if not os.environ.get("PEXELS_API_KEY"):
+        print("note: PEXELS_API_KEY is not configured; using keyless stock providers")
 
 
 def ensure_fonts():
@@ -108,6 +112,20 @@ def validate(bd):
         for k in x.get("keywords", []):
             if k.lower().split()[0] not in low:
                 print(f"note: scene {i} keyword '{k}' not found in text (won't highlight)")
+    # Give every beat an explicit visual job before spending time or API calls.
+    # Advisory scripts receive a report; new scripts that opt into the standing
+    # diverse-symbol policy fail early on severe human/family repetition.
+    changed = visual_symbols.apply_plan(s, profile)
+    report = visual_symbols.write_report(bd, s, profile)
+    if changed:
+        json.dump(s, open(p, "w"), indent=1, ensure_ascii=False)
+    for warning in report["warnings"]:
+        print(f"note: visual symbols: {warning}")
+    if report["violations"]:
+        err(
+            "visual symbol plan: " + "; ".join(report["violations"]),
+            "replace generic human queries with varied physical symbols or assign a concrete human_role",
+        )
     return s
 
 
@@ -171,22 +189,74 @@ def main(bd):
 
     s = json.load(open(f"{bd}/script.json"))
 
-    # 2a. hero shots: free AI-generated 2.5D imagery for flagged metaphor beats
+    # Motion is editorial metadata, not a file-extension guess.  Persist the
+    # source class before acquiring footage so resumable passes agree about the
+    # duration budget.
+    if motion.apply_motion_defaults(s):
+        json.dump(s, open(f"{bd}/script.json", "w"), indent=1, ensure_ascii=False)
+
+    # 2. Acquire genuine stock footage first.  Its selected public frame is the
+    # visual reference for every later still, so hero generation can inherit the
+    # actual film's lens, palette, lighting, and production texture.
+    stock_pending = still_reference.stock_targets(bd, s)
+    for i in stock_pending:
+        if left() < 12:
+            out(f"RUN AGAIN (stock references {i}/{n})")
+        r = sh([py, os.path.join(HERE, "footage.py"), bd, str(i)])
+        if r.returncode != 0:
+            err(f"footage scene {i}: {r.stderr[-300:]}",
+                f"edit scene {i} query in script.json, rerun")
+    if stock_pending:
+        out(f"RUN AGAIN (genuine footage ready; next: reference-matched stills)")
+
+    s = json.load(open(f"{bd}/script.json"))
+
+    # 2a. Supplied/keyframe stills are copied into reference-matched derivatives,
+    # then compiled with the full enhancement path. Originals are never changed.
     for i, sc in enumerate(s["scenes"]):
-        if not sc.get("hero"):
+        if sc.get("hero"):
+            continue
+        if not motion.needs_compile(bd, sc, i):
             continue
         clip = f"{bd}/clip_{i:02d}.mp4"
-        if os.path.exists(clip) and os.path.getsize(clip) > 100_000:
+        if (sc.get("motion_compiled") and os.path.exists(clip) and
+                os.path.getsize(clip) > 100_000 and
+                still_reference.reference_is_current(bd, s, i)):
+            continue
+        if left() < 25:
+            out(f"RUN AGAIN (next: motion shot {i})")
+        r = sh([py, os.path.join(HERE, "motion.py"), "compile", bd, str(i)])
+        if r.returncode != 0:
+            err(f"motion scene {i}: {r.stderr[-300:]}",
+                "fix source_image/keyframes or set motion_mode to stock")
+        print(r.stdout.strip())
+        s = json.load(open(f"{bd}/script.json"))
+
+    # 2b. Hero shots: the closest related selected stock frame is the actual
+    # Kontext image-to-image input, followed by palette/exposure harmonization,
+    # depth layers, background completion, and restrained internal motion.
+    for i, sc in enumerate(s["scenes"]):
+        if not sc.get("hero") or sc.get("motion_kind") == motion.VIDEO:
+            continue
+        clip = f"{bd}/clip_{i:02d}.mp4"
+        if (os.path.exists(clip) and os.path.getsize(clip) > 100_000 and
+                still_reference.reference_is_current(bd, s, i)):
             continue
         if left() < 25:
             out(f"RUN AGAIN (next: hero shot {i})")
         r = sh([py, os.path.join(HERE, "hero.py"), bd, str(i)])
         if r.returncode != 0:
             print(f"note: hero {i} failed ({r.stderr[-160:]}); falling back to stock footage")
+            # Do not let an older, unreferenced hero clip mask the fallback.
+            try:
+                os.remove(clip)
+            except OSError:
+                pass
         else:
             print(r.stdout.strip())
 
-    # 2. footage (scene by scene, resumable)
+    # 2c. A hero can fall back to genuine stock when reference-conditioned image
+    # generation is temporarily unavailable. Ordinary missing scenes also land here.
     missing = [i for i in range(n)
                if not (os.path.exists(f"{bd}/clip_{i:02d}.mp4")
                        and os.path.getsize(f"{bd}/clip_{i:02d}.mp4") > 100_000)]
@@ -199,6 +269,39 @@ def main(bd):
                 f"edit scene {i} query in script.json, rerun")
     if missing:
         out(f"RUN AGAIN (footage complete {n}/{n})")
+
+    # Coverr's free license requires attribution.  Generate this on every
+    # completed acquisition pass so both workflow artifacts and Releases carry
+    # the exact sources used by the current script.
+    r = sh([py, os.path.join(HERE, "footage.py"), bd, "credits"])
+    if r.returncode != 0:
+        err(f"stock credits failed: {r.stderr[-300:]}", "rerun the build")
+    print(r.stdout.strip())
+
+    # A pan/zoom or depth/keyframe animation remains still-derived even when
+    # encoded as MP4. Enforce the source cap by seconds after all footage is
+    # resolved and emit a reviewable manifest.
+    s = json.load(open(f"{bd}/script.json"))
+    visual_report = visual_symbols.write_report(bd, s, profiles.resolve(s))
+    if visual_report["violations"]:
+        err(
+            "visual symbol plan after timing: " + "; ".join(visual_report["violations"]),
+            "diversify long human/symbol runs before acquiring replacement footage",
+        )
+    motion.write_report(bd, s)
+    still_reference.write_report(bd, s)
+    try:
+        mr = motion.validate_budget(s)
+        motion.validate_video_evidence(s)
+        still_reference.validate(bd, s)
+    except motion.MotionBudgetError as e:
+        err(str(e), "replace still-derived scenes with verified moving footage")
+    except still_reference.StillReferenceError as e:
+        err(str(e), "regenerate the still from its closest selected stock-frame reference")
+    still_seconds = mr.static_seconds + mr.animated_seconds
+    print(f"motion budget: still-derived {mr.still_source_ratio:.1%} "
+          f"({still_seconds:.1f}s/{mr.total_seconds:.1f}s); "
+          f"true motion {mr.video_ratio:.1%}")
 
     # 3. overlays + music
     if not os.path.exists(f"{bd}/cap_{n-1:02d}.png") or not os.path.exists(f"{bd}/title.png"):

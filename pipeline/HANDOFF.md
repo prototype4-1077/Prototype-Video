@@ -14,10 +14,15 @@ Everything else is one command run in a loop.
 
    { "title": "Three Or Four Words",
      "slug": "<slug>",
+     "visual_policy": "diverse_symbols",
      "scenes": [
        { "text": "One sentence or beat (max ~25 words).",
          "keywords": ["2-4 load-bearing words from that sentence, highlighted yellow"],
-         "query": "pexels search - COPY OR ADAPT FROM THE QUERY BANK BELOW" }
+         "semantic_anchor": "the load-bearing idea",
+         "visual_function": "literal_anchor|mechanism|choice|boundary|perspective_shift|transformation|recursion|contrast|scale_shift",
+         "symbol_family": "human|collective|perception|language|architecture|pathway|identity|time_memory|object_tool|nature|world_scale|geometry|transformation|light_atmosphere",
+         "human_role": "only when a person appears",
+         "query": "searchable physical action, literal to the line" }
      ] }
 
    Optional character selector: when—and only when—James explicitly says **June Oxley**,
@@ -27,10 +32,14 @@ Everything else is one command run in a loop.
    - 18-26 scenes, 300-400 words total, ~2:00-2:30 spoken
    - Second-person, poetic-direct, grounded-metaphysical. Hook opener. Quiet realization ending.
    - keywords must be words that literally appear in the scene text
+   - Use at least six symbol families, no more than three consecutive scenes from one family,
+     and keep human presence around half the runtime or less. A human must have an editorial
+     role; never use a generic reaction shot as a universal metaphor.
    - Show James the script text for approval before building, unless he says skip.
 
-3. QUERY BANK — visuals are surreal/mystical/liminal, never literal or bright-stocky.
-   Safe bets (mix, adapt nouns, keep the mood words):
+3. QUERY BANK — use literal physical anchors and precise metaphors, styled as cinematic and
+   lit-but-moody. Surreal imagery is one family, not the default answer to every sentence.
+   Legacy mood terms (use only when they explain the line, and mix with other families):
      surreal fog silhouette | nebula space stars | underwater sun rays dark |
      silhouette tunnel light end | fog city aerial dark | smoke swirl black background |
      light rays forest fog | ink drop water black | stars time lapse night sky |
@@ -39,8 +48,9 @@ Everything else is one command run in a loop.
      light through door dark room | clouds time lapse storm dark | mirror reflection surreal |
      glowing orb dark | shadow figure hallway | aurora night sky | deep space travel |
      rain window night bokeh | city lights bokeh night blur
-   Don't worry about picking perfectly: footage.py auto-scores every candidate clip's
-   thumbnail for mood (dark, muted) and picks the best. Bad queries fall back to this bank.
+   Query choice matters. Name the object/action that explains the sentence, not simply
+   "person thinking" or "mystical silhouette." footage.py can add `symbol_query` when it
+   finds weak generic-human filler and writes the audit to visual_symbol_report.json.
 
    JUNE OXLEY EXCEPTION: use literal, lived-in Southern details before abstract mysticism:
    wooden porch, old white man, old pickup, cornfield, barking dog, small-town traffic,
@@ -64,7 +74,8 @@ Everything else is one command run in a loop.
 5. VERIFY (only judgment step besides the script): extract 3 frames and look at them:
        ffmpeg -y -ss 3 -i build/<slug>/final.mp4 -frames:v 1 f1.png   (repeat at mid + end)
    Check: 9:16 portrait, letterboxed footage band, captions below the band with yellow keywords,
-   big rounded title on scene 0, footage moody/mystical. Check duration (~2:00-2:40).
+   big rounded title on scene 0, footage lit-but-moody and symbolically matched. Check duration
+   (~2:00-2:40) plus visual_symbol_report.json and motion_report.json.
    If one scene's footage looks wrong: delete its clip_XX.mp4 AND seg_XX.mp4, improve that
    scene's "query" in script.json, remove its "pexels_id", and rerun build.py.
 
@@ -153,7 +164,8 @@ Nothing to configure. For custom music set "music" in script.json as before.
 For 2-4 metaphor beats per video that stock can never match, add to the scene:
     "hero": true, "image_prompt": "exactly what the shot shows (no style words needed)"
 build.py generates the image (pollinations.ai, keyless), estimates depth locally
-(MiDaS ONNX), and renders a slow 2.5D parallax camera move as that scene's clip.
+(MiDaS ONNX), completes newly exposed background edges, and renders a layered
+cinemagraph with restrained internal movement as that scene's clip.
 Genre styling is automatic (moody film still vs vivid visionary for dmt).
 Use for: impossible metaphors (wall of doors, translucent slides), the title/thumbnail
 scene, and the closer reframe. Stock remains the default for ordinary beats.
@@ -207,3 +219,93 @@ Set `"profile": "june_oxley"` only when James names June Oxley. The profile:
 All captions, scene-0 title behavior, 9:16 letterboxing, VO ducking, and the default style
 for every other video remain unchanged. `character: "June Oxley"` is accepted as an alias,
 but `profile: "june_oxley"` is the canonical field.
+
+## v17: MOTION COMPILER + 35% STILL-SOURCE CAP
+Motion is measured by duration, never inferred from an MP4 extension. A pan, crop, or
+zoom applied to one photograph remains a `static` shot. Depth motion and evolving
+keyframes improve an image but remain still-derived. Every build writes
+`motion_report.json` and fails when `static` plus `animated_still` duration exceeds
+the top-level `max_still_source_ratio` (default `0.35`). At least 65% must be genuine
+moving footage. Source classes are:
+
+- `static`: still, pan, zoom, or Ken Burns only;
+- `animated_still`: depth-separated layers, internal/cinemagraph motion, evolving
+  keyframes, or portrait motion;
+- `video`: recorded/stock footage or true image-to-video generation.
+
+To animate a supplied/generated image without a GPU:
+
+    {"source_image": "still_04.png", "motion_mode": "depth"}
+
+Optional `motion_recipe` values are `human`, `organic`, `paper`, `screen`,
+`reflection`, `light`, and `atmosphere`; otherwise the literal scene text selects one.
+The compiler uses CPU depth estimation, an inpainted background plate, separate depth
+layers, practical-light motion, and restrained recipe-specific movement.
+
+For visible transformations, provide two or more staged images:
+
+    {"keyframes": ["seed_0.png", "seed_1.png", "seed_2.png"],
+     "motion_mode": "keyframes"}
+
+If `RIFE_BIN` points to a `rife-ncnn-vulkan` executable it is used in CPU mode;
+otherwise OpenCV optical flow provides a deterministic fallback. Stock remains the
+right source for ordinary physical actions and must occupy at least 65% of runtime.
+The motion compiler improves the permitted 35% of still-derived quiet tableaux and
+impossible metaphors; it never converts them into the `video` class.
+
+Downloaded footage is checked for independent temporal change after median/global
+camera flow is removed. A `video` scene must carry `motion_verified: true` and its
+evidence in `motion_report.json`; otherwise the build fails. Keyless Coverr stock is
+the primary local fallback when Pexels credentials are absent, Mixkit is secondary,
+and `CREDITS.txt` is emitted for source/license attribution. The automatic short cut
+independently enforces the same 35% still-source ceiling.
+
+## v18: VISUAL SYMBOL PLANNER + DIVERSITY AUDIT
+Every scene now has an explicit visual job. `visual_symbols.py` classifies or preserves its
+`symbol_family`, identifies the `semantic_anchor` and `visual_function`, records a
+`primary_symbol`, and assigns `human_role` whenever a person is part of the image.
+
+For a missing query or a vague reaction shot such as "thoughtful person looking away," the
+planner may add `symbol_query`. This does not rewrite narration or erase the original query;
+it gives footage search a concrete physical metaphor derived from the spoken line. Concrete
+human actions—entering a room, drawing an arrow, returning an object to a shelf—remain intact.
+June Oxley queries are never abstracted away from his literal character action.
+
+New scripts set `"visual_policy": "diverse_symbols"`. Before downloads begin, the build
+requires a varied symbol vocabulary, limits long same-family runs, limits generic human
+filler, and targets human presence at roughly half the runtime or less. Older scripts without
+that flag receive the same annotations and an advisory report without being blocked.
+
+Every build writes `visual_symbol_report.json` with per-scene reasoning, effective search
+queries, human roles, family counts, repetition warnings, and a transparent diversity score.
+Manual commands:
+
+    python3 pipeline/visual_symbols.py plan build/<slug>
+    python3 pipeline/visual_symbols.py validate build/<slug>
+    python3 pipeline/visual_symbols.py report build/<slug>
+
+## v19: STOCK-FRAME-CONDITIONED STILLS + FULL ENHANCEMENT
+The orchestrator now downloads and verifies genuine stock scenes before touching a still.
+For each hero, supplied still, or keyframe sequence, `still_reference.py` ranks the already
+selected stock scenes by literal token overlap, symbol family, primary prop, visual function,
+and timeline distance. It saves the public frame from the closest related stock clip as
+`stock_reference_NN.jpg`.
+
+Generated hero images use that exact public frame URL as Pollinations Kontext image-to-image
+input. The prompt changes the subject/action while preserving the film's camera language,
+lens perspective, exposure, practical light, palette, depth, and production realism. A local
+harmonization pass then matches restrained LAB color/exposure and restores natural detail.
+Supplied images are never overwritten; enhanced copies are written as
+`enhanced_still_NN*.jpg`.
+
+Every still then receives depth-separated foreground/mid/background movement, inpainted
+occlusion completion, recipe-specific internal motion, practical-light movement, the shared
+final grade, and film grain. Static, pan, zoom, and Ken Burns modes are automatically upgraded;
+they are not accepted as finished still treatments. Keyframe transformations retain their
+controlled optical-flow/RIFE evolution after reference matching.
+
+If a generated hero cannot obtain or use a public stock frame, `build.py` falls back to genuine
+stock footage for that beat rather than emitting an isolated unreferenced still. Every build
+writes `still_reference_report.json`; delivery fails if an active still lacks a current closest
+stock reference or any required enhancement step. These images remain `animated_still` and
+continue to count in full toward the 35% still-source ceiling.
