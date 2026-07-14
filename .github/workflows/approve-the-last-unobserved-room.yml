@@ -1,0 +1,99 @@
+name: Approve The Last Unobserved Room
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - build/the-last-unobserved-room/approve.trigger
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tiktok-pipeline-approval-memory
+  cancel-in-progress: false
+
+jobs:
+  approve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install approval dependency
+        run: python -m pip install --quiet numpy
+      - name: Record approval without disturbing parallel slugs
+        shell: bash
+        run: |
+          set -euo pipefail
+          slug="the-last-unobserved-room"
+          repo="$GITHUB_WORKSPACE"
+
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git -C "$repo" fetch origin main
+            wt="$(mktemp -d)"
+            rmdir "$wt"
+            git -C "$repo" worktree add --detach "$wt" origin/main
+            git -C "$wt" config user.name approval-bot
+            git -C "$wt" config user.email approval@users.noreply.github.com
+
+            approval_result="already-recorded"
+            if python3 - "$wt/pipeline/memory.json" "$slug" <<'PY'
+import json
+import sys
+
+with open(sys.argv[1]) as handle:
+    memory = json.load(handle)
+slug = sys.argv[2]
+already = any(video.get("slug") == slug for video in memory.get("videos", []))
+raise SystemExit(1 if already else 0)
+PY
+            then
+              (
+                cd "$wt"
+                python3 pipeline/learn.py record "build/$slug"
+              )
+              approval_result="recorded"
+            fi
+
+            APPROVAL_RESULT="$approval_result" APPROVAL_SLUG="$slug"               APPROVAL_STATUS_PATH="$wt/build/$slug/approval-status.json"               python3 - <<'PY'
+import json
+import os
+
+path = os.environ["APPROVAL_STATUS_PATH"]
+os.makedirs(os.path.dirname(path), exist_ok=True)
+with open(path, "w") as handle:
+    json.dump(
+        {
+            "run_id": int(os.environ["GITHUB_RUN_ID"]),
+            "result": os.environ["APPROVAL_RESULT"],
+            "slug": os.environ["APPROVAL_SLUG"],
+        },
+        handle,
+        indent=2,
+    )
+    handle.write("\n")
+PY
+
+            git -C "$wt" add pipeline/memory.json "build/$slug/approval-status.json"
+            if [ -f "$wt/pipeline/taste.npz" ]; then
+              git -C "$wt" add pipeline/taste.npz
+            fi
+            git -C "$wt" commit -m "approve: record The Last Unobserved Room"
+
+            if git -C "$wt" push origin HEAD:main; then
+              exit 0
+            fi
+
+            git -C "$repo" worktree remove --force "$wt"
+            sleep 5
+          done
+
+          echo "Approval could not be pushed after retries." >&2
+          exit 1
