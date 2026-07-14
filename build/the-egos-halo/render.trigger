@@ -1,3 +1,3 @@
-render retry requested: 2026-07-15T00:49:00Z
-window-symbol fix commit: 76c19af5ed1d0dd3227488d5fcb53827527c376c
+render retry requested: 2026-07-15T00:58:00Z
+source-family hardening commit: 310db1c0d7437c685d5c34ca3b2438ed95607b27
 audio sha256: 027cace801614bc16df36af9a0da5f10382ff23fb0f3c5e3c4af5cbe1ed26e04
