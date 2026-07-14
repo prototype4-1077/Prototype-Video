@@ -1,0 +1,16 @@
+name: Render The Belief Filter
+
+on:
+  push:
+    paths:
+      - "build/the-belief-filter/render.trigger"
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    uses: ./.github/workflows/render.yml
+    with:
+      slug: the-belief-filter
+    secrets: inherit
