@@ -25,6 +25,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Restore connector-uploaded voiceover
+        shell: bash
+        run: |
+          shopt -s nullglob
+          parts=(build/${{ inputs.slug }}/vo.mp3.b64.part*)
+          if ((${#parts[@]})); then
+            cat "${parts[@]}" | base64 --decode > "build/${{ inputs.slug }}/vo.mp3"
+          fi
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
