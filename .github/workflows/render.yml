@@ -34,6 +34,15 @@ jobs:
             cat "${parts[@]}" | base64 --decode > "build/${{ inputs.slug }}/vo.mp3"
           fi
 
+      - name: Restore connector-uploaded visual assets
+        shell: bash
+        run: |
+          shopt -s nullglob
+          for encoded in build/${{ inputs.slug }}/*.b64; do
+            target="${encoded%.b64}"
+            base64 --decode "$encoded" > "$target"
+          done
+
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
