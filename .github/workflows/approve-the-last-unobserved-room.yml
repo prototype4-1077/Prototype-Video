@@ -44,17 +44,7 @@ jobs:
             git -C "$wt" config user.email approval@users.noreply.github.com
 
             approval_result="already-recorded"
-            if python3 - "$wt/pipeline/memory.json" "$slug" <<'PY'
-import json
-import sys
-
-with open(sys.argv[1]) as handle:
-    memory = json.load(handle)
-slug = sys.argv[2]
-already = any(video.get("slug") == slug for video in memory.get("videos", []))
-raise SystemExit(1 if already else 0)
-PY
-            then
+            if python3 -c 'import json,sys; memory=json.load(open(sys.argv[1])); raise SystemExit(1 if any(video.get("slug")==sys.argv[2] for video in memory.get("videos", [])) else 0)' "$wt/pipeline/memory.json" "$slug"; then
               (
                 cd "$wt"
                 python3 pipeline/learn.py record "build/$slug"
@@ -62,24 +52,7 @@ PY
               approval_result="recorded"
             fi
 
-            APPROVAL_RESULT="$approval_result" APPROVAL_SLUG="$slug"               APPROVAL_STATUS_PATH="$wt/build/$slug/approval-status.json"               python3 - <<'PY'
-import json
-import os
-
-path = os.environ["APPROVAL_STATUS_PATH"]
-os.makedirs(os.path.dirname(path), exist_ok=True)
-with open(path, "w") as handle:
-    json.dump(
-        {
-            "run_id": int(os.environ["GITHUB_RUN_ID"]),
-            "result": os.environ["APPROVAL_RESULT"],
-            "slug": os.environ["APPROVAL_SLUG"],
-        },
-        handle,
-        indent=2,
-    )
-    handle.write("\n")
-PY
+            APPROVAL_RESULT="$approval_result" APPROVAL_SLUG="$slug" APPROVAL_STATUS_PATH="$wt/build/$slug/approval-status.json" python3 -c 'import json,os; path=os.environ["APPROVAL_STATUS_PATH"]; os.makedirs(os.path.dirname(path), exist_ok=True); open(path, "w").write(json.dumps({"run_id": int(os.environ["GITHUB_RUN_ID"]), "result": os.environ["APPROVAL_RESULT"], "slug": os.environ["APPROVAL_SLUG"]}, indent=2) + "\n")'
 
             git -C "$wt" add pipeline/memory.json "build/$slug/approval-status.json"
             if [ -f "$wt/pipeline/taste.npz" ]; then
