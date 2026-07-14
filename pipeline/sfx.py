@@ -1,5 +1,5 @@
 """Sound design layer (fully synthesized, free). Usage: python3 sfx.py <build_dir>
-Reads script.json timings + music.wav, bakes events into the bed:
+Reads script.json timings + one selected music file, bakes events into the bed:
 - sub-drop under the title (scene 0) and under the closing line
 - whoosh INTO cuts that follow long contemplative holds (max 6)
 - riser swelling into the final scene"""
@@ -57,10 +57,10 @@ def _dry_brush(dur=.24, seed=9):
     return x * np.exp(-t / .055) * .055
 
 
-def main(bd):
+def main(bd, music_name=None):
     with open(f"{bd}/script.json") as f:
         s = json.load(f)
-    mp = os.path.join(bd, s.get("music", "music.wav"))
+    mp = os.path.join(bd, music_name or s.get("music", "music.wav"))
     if not os.path.exists(mp):
         sys.exit(f"ERROR: {mp} missing | FIX: run prep first")
     w = wave.open(mp, "rb")
@@ -105,4 +105,4 @@ def main(bd):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2] if len(sys.argv) > 2 else None)

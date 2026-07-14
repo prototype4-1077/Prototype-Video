@@ -236,3 +236,13 @@ Isolation rule:
   rural anchors, warm grade, and porch score remain active.
 - June approvals and rejections train a separate taste vector. Never apply June's profile or
   learned taste to a video where James did not name him.
+
+## MUSIC CHOICE SYSTEM
+
+Every render provides at least three full-length music choices under the same narration and
+picture. The choices must differ in arrangement, register, pulse, harmonic movement, texture,
+and spatial treatment—not merely use a different random seed. Ordinary philosophical videos
+use Cinematic Pulse, Glass Horizon, and Deep Current. DMT videos use Prism Drift, Crystal
+Orbit, and Deep Portal. June Oxley videos use Porch Shuffle, Dusk Fingerpick, and Creekside
+Stomp. Keep all choices VO-adaptive, mastered consistently, and low enough that language stays
+dominant. Preserve `final.mp4` as choice 1 while delivering every `final_music_NN.mp4` option.

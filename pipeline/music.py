@@ -1,5 +1,5 @@
 """Generative cinematic score engine v3 (fully synthesized - no licensing, no APIs).
-Usage: python3 music.py <out.wav> <seconds> [vo.mp3|-] [genre|-] [profile|-]
+Usage: python3 music.py <out.wav> <seconds> [vo.mp3|-] [genre|-] [profile|-] [variant]
 - slow minor chord pads with detuned voices + synthetic reverb (real stereo)
 - deep root drone + filtered-noise swells that bloom in the VO's pauses
 - subtle heartbeat pulse (philosophy) / shimmering plucks (dmt)
@@ -10,6 +10,22 @@ import numpy as np
 import profiles
 
 SR = 44100
+
+VARIANT_NAMES = {
+    None: ("Cinematic Pulse", "Glass Horizon", "Deep Current"),
+    "dmt": ("Prism Drift", "Crystal Orbit", "Deep Portal"),
+    "june_oxley": ("Porch Shuffle", "Dusk Fingerpick", "Creekside Stomp"),
+}
+
+
+def variant_family(variant):
+    return (max(1, int(variant or 1)) - 1) % 3 + 1
+
+
+def variant_label(variant, genre=None, profile=None):
+    key = "june_oxley" if profile == profiles.JUNE_OXLEY else genre
+    names = VARIANT_NAMES.get(key, VARIANT_NAMES[None])
+    return names[variant_family(variant) - 1]
 
 
 def vo_envelope(vo, seconds, n):
@@ -93,10 +109,11 @@ def _pluck(freq, dur, rng, brightness=1.0):
     return x * .22
 
 
-def _porch_score(n, seconds, rng):
+def _porch_score(n, seconds, rng, variant=1):
     """Dry front-porch shuffle: guitar/banjo twang, upright bass, and soft brush."""
     out = np.zeros(n, np.float32)
-    bpm = 84.0
+    family = variant_family(variant)
+    bpm = {1: 84.0, 2: 76.0, 3: 92.0}[family]
     beat = 60.0 / bpm
     total_beats = int(seconds / beat) + 1
 
@@ -113,15 +130,20 @@ def _porch_score(n, seconds, rng):
         # Root/fifth thump keeps the bed moving without becoming a full country song.
         bass_f = chord[0] / 2 if within % 2 == 0 else chord[2] / 2
         add(_pluck(bass_f, min(1.0, seconds - at + .1), rng, .72), at, .34)
-        if within in (0, 2):
+        chord_beats = (0, 2) if family != 2 else (0, 3)
+        if within in chord_beats:
             for j, f in enumerate(chord[1:]):
                 add(_pluck(f, min(1.35, seconds - at + .1), rng, .92),
                     at + j * .018, .20)
         # A restrained banjo-like roll on the offbeats supplies the "hickish" identity.
-        for j, f in enumerate((chord[2] * 2, chord[1] * 2, chord[3] * 2)):
-            st = at + beat * (.50 + j * .16)
+        roll = ((chord[2] * 2, chord[1] * 2, chord[3] * 2) if family != 2
+                else (chord[1] * 2, chord[3] * 2))
+        for j, f in enumerate(roll):
+            st = at + beat * ((.50 + j * .16) if family != 3 else (.34 + j * .20))
             if st < seconds:
-                add(_pluck(f, min(.55, seconds - st + .1), rng, 1.35), st, .10)
+                add(_pluck(f, min(.55, seconds - st + .1), rng,
+                           1.05 if family == 2 else 1.35), st,
+                    .075 if family == 2 else .10)
         # Dry brush/shaker, deliberately quieter than the strings.
         st = at + beat * .5
         if st < seconds:
@@ -132,17 +154,29 @@ def _porch_score(n, seconds, rng):
     return out
 
 
-def gen(path, seconds, vo=None, genre=None, profile=None):
+def gen(path, seconds, vo=None, genre=None, profile=None, variant=1):
     vo = None if vo in (None, "", "-") else vo
     genre = None if genre in (None, "", "-") else genre
     profile = None if profile in (None, "", "-") else profile
-    rng = np.random.default_rng(11)
+    variant = max(1, int(variant or 1))
+    family = variant_family(variant)
+    rng = np.random.default_rng(11 + variant * 101)
     n = int(SR * seconds)
     t = np.arange(n) / SR
     # 1. chord pads, 14s bars with 4s equal-power crossfades
     june = profile == profiles.JUNE_OXLEY
-    chords = JUNE_CHORDS if june else CHORDS.get(genre, CHORDS[None])
-    bar, xf = (4 * 60 / 84.0, .45) if june else (14.0, 4.0)
+    chords = list(JUNE_CHORDS if june else CHORDS.get(genre, CHORDS[None]))
+    if family == 2:
+        chords = chords[2:] + chords[:2]
+        chords = [tuple(f * 1.05946 for f in chord) for chord in chords]
+    elif family == 3:
+        chords = list(reversed(chords))
+        chords = [tuple(f * .89090 for f in chord) for chord in chords]
+    if june:
+        bpm = {1: 84.0, 2: 76.0, 3: 92.0}[family]
+        bar, xf = 4 * 60 / bpm, .45
+    else:
+        bar, xf = {1: (14.0, 4.0), 2: (10.5, 3.0), 3: (18.0, 5.5)}[family]
     pads = np.zeros(n, np.float32)
     i, pos = 0, 0.0
     while pos < seconds:
@@ -157,32 +191,49 @@ def gen(path, seconds, vo=None, genre=None, profile=None):
         pads[s0:s0 + seg_n] += seg * w
         pos += bar; i += 1
     # 2. root drone (octave below chord roots)
-    drone_gain = .035 if june else 1.0
-    drone = drone_gain * (0.16 * np.sin(2 * np.pi * 55.0 * t) +
-                          0.08 * np.sin(2 * np.pi * 55.7 * t))
+    drone_gain = .035 if june else {1: 1.0, 2: .55, 3: 1.22}[family]
+    root = {1: 55.0, 2: 65.41, 3: 43.65}[family]
+    drone = drone_gain * (0.16 * np.sin(2 * np.pi * root * t) +
+                          0.08 * np.sin(2 * np.pi * (root + .7) * t))
     # 3. airy noise swells (slow LFO; later re-shaped by VO pauses)
-    swell_lfo = 0.5 + 0.5 * np.sin(2 * np.pi * 0.021 * t + 1.2)
+    swell_lfo = 0.5 + 0.5 * np.sin(2 * np.pi * {1: .021, 2: .033, 3: .014}[family] * t
+                                      + {1: 1.2, 2: .2, 3: 2.4}[family])
     air = _swell_noise(n, seconds, rng) * swell_lfo * (0.025 if june else 0.14)
     v = pads + drone + air
     # 4. genre motion layer
     if june:
-        v += _porch_score(n, seconds, rng)
+        v += _porch_score(n, seconds, rng, variant)
     elif genre == "dmt":  # slow pentatonic plucks, long tails
         scale = [523.25, 587.33, 659.26, 783.99, 880.0, 1046.5]
-        for st in np.arange(2.0, seconds - 3, 4.5):
+        spacing = {1: 4.5, 2: 3.25, 3: 6.2}[family]
+        for st in np.arange(2.0, seconds - 3, spacing):
             f = scale[int(rng.integers(len(scale)))]
             i0 = int(st * SR); L = min(int(3.5 * SR), n - i0)
             tt = np.arange(L) / SR
-            v[i0:i0 + L] += 0.05 * np.exp(-tt / 1.4) * np.sin(2 * np.pi * f * tt)
-    else:               # sparse deep heartbeat ~ every 2.2s
-        beat = np.zeros(n, np.float32)
-        for st in np.arange(1.0, seconds - 1, 2.2):
-            i0 = int(st * SR); L = min(int(0.35 * SR), n - i0)
+            v[i0:i0 + L] += ({1: .05, 2: .065, 3: .032}[family]
+                              * np.exp(-tt / ({1: 1.4, 2: 1.0, 3: 2.2}[family]))
+                              * np.sin(2 * np.pi * f * tt))
+    elif family == 2:   # glassy upper-register horizon, no heartbeat
+        scale = [261.63, 329.63, 392.0, 493.88, 523.25]
+        for st in np.arange(1.5, seconds - 1, 5.25):
+            f = scale[int(rng.integers(len(scale)))]
+            i0 = int(st * SR); L = min(int(2.8 * SR), n - i0)
             tt = np.arange(L) / SR
-            beat[i0:i0 + L] += np.exp(-tt / 0.09) * np.sin(2 * np.pi * 52 * tt)
-        v += beat * 0.10
-    v = _reverb(v, decay=.9 if june else (2.6 if genre == "dmt" else 2.2),
-                mix=.12 if june else .22)
+            bell = (np.sin(2 * np.pi * f * tt) + .32 * np.sin(2 * np.pi * f * 2.01 * tt))
+            v[i0:i0 + L] += .038 * bell * np.exp(-tt / 1.25)
+    else:               # sparse pulse; version 3 is slower and deeper
+        beat = np.zeros(n, np.float32)
+        spacing = 2.2 if family == 1 else 3.4
+        beat_f = 52 if family == 1 else 38
+        for st in np.arange(1.0, seconds - 1, spacing):
+            i0 = int(st * SR); L = min(int((.35 if family == 1 else .7) * SR), n - i0)
+            tt = np.arange(L) / SR
+            beat[i0:i0 + L] += np.exp(-tt / (.09 if family == 1 else .24)) \
+                                * np.sin(2 * np.pi * beat_f * tt)
+        v += beat * (.10 if family == 1 else .075)
+    decay = (.9 if june else (2.6 if genre == "dmt" else {1: 2.2, 2: 3.0, 3: 1.8}[family]))
+    mix = (.12 if june else {1: .22, 2: .30, 3: .16}[family])
+    v = _reverb(v, decay=decay, mix=mix, seed=3 + variant)
     # 5. VO adaptation: duck under speech, bloom in pauses, arc to the ending
     speech, onsets = (None, None)
     if vo:
@@ -213,8 +264,8 @@ def gen(path, seconds, vo=None, genre=None, profile=None):
     w = wave.open(path, "wb")
     w.setnchannels(2); w.setsampwidth(2); w.setframerate(SR)
     w.writeframes(st2.tobytes()); w.close()
-    label = "June Oxley porch shuffle" if june else ("dmt" if genre == "dmt" else "cinematic")
-    print(f"music: {seconds:.1f}s score ({label}"
+    label = variant_label(variant, genre, profile)
+    print(f"music: {seconds:.1f}s score ({label}, choice {variant}"
           f"{', VO-adaptive' if speech is not None else ''})")
 
 
@@ -222,4 +273,5 @@ if __name__ == "__main__":
     gen(sys.argv[1], float(sys.argv[2]),
         sys.argv[3] if len(sys.argv) > 3 else None,
         sys.argv[4] if len(sys.argv) > 4 else None,
-        sys.argv[5] if len(sys.argv) > 5 else None)
+        sys.argv[5] if len(sys.argv) > 5 else None,
+        int(sys.argv[6]) if len(sys.argv) > 6 else 1)

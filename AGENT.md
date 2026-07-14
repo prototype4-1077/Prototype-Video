@@ -2,10 +2,13 @@
 
 You are making a mystical-philosophical TikTok video for James using this repo's
 cloud render farm. You need NO video tools — GitHub Actions renders everything.
-You only need: (1) the ability to call HTTPS APIs or run git, (2) this file.
+You only need: (1) the connected GitHub app, (2) this file.
 
 REPO: jameswatson1077/tiktok-videos (private)
-AUTH: James gives you a token. Use header  Authorization: Bearer <TOKEN>
+ACCESS: Use the workspace's connected GitHub app. This connection is persistent across
+ChatGPT/Codex instances. Never ask James to paste a personal access token and never put a
+credential in a file, command, commit, or response. If the GitHub app is unavailable, report
+that connection as the blocker instead of requesting a secret.
 API BASE: https://api.github.com/repos/jameswatson1077/tiktok-videos
 
 ## Step 0 — Read context (GET file contents via API or git clone)
@@ -32,6 +35,9 @@ API BASE: https://api.github.com/repos/jameswatson1077/tiktok-videos
   at least six symbol families, no more than three consecutive beats from one
   family, and roughly half or less human presence. Avoid generic thoughtful-person
   footage. Check visual_symbol_report.json before delivery.
+  Every render must create at least three genuinely distinct background-music choices.
+  Deliver final_music_01.mp4, final_music_02.mp4, and final_music_03.mp4 together;
+  final.mp4 remains an alias of choice 1. Check music_variants.json for names.
 
 ## Step 1 — Write the script file
 Create build/<slug>/script.json  (slug = short-dashed-title):
@@ -68,7 +74,8 @@ Expect HTTP 204. Takes ~10-15 min.
 ## Step 4 — Poll + fetch result
 GET /actions/runs?per_page=1        -> id, status ("completed"), conclusion ("success")
 GET /actions/runs/<id>/artifacts    -> archive_download_url
-GET that url (same auth, follow redirects) -> zip containing final.mp4. Give it to James.
+GET that url (same auth, follow redirects) -> zip containing final.mp4 plus at least
+three final_music_NN.mp4 choices. Give all choices to James with their manifest labels.
 If conclusion is "failure": GET /actions/runs/<id>/logs, find the "ERROR: ... | FIX: ..."
 line, apply the FIX (usually edit script.json), push, re-dispatch.
 
@@ -87,10 +94,12 @@ the bottom band; bold rounded title fully fitted on scene 0; majority of slides 
 its spoken line; at least six visual symbol families; no repeated generic-human run;
 still-derived duration <=35% and genuine moving footage >=65%; every still passes
 still_reference_report.json and visibly belongs beside its stock reference. If a scene
-misses, use the swap flow before delivering.
+misses, use the swap flow before delivering. Confirm three music-choice MP4s exist and
+have distinct audio before delivery.
 
 ## v7 additions
-- Deliver BOTH final.mp4 and final_short.mp4 (60s cut) when present in artifacts.
+- Deliver final.mp4, all final_music_NN.mp4 choices, and final_short.mp4 (60s cut)
+  when present in artifacts.
 - Scripts must echo ONE motif from memory.json "motifs" as a brief mid-video callback.
 - Retention feedback: python3 pipeline/learn.py retention build/<slug> "<t1,t2>" then push memory.
 - Zero-effort mode: open a GitHub issue labeled "video" with the idea; CI does everything

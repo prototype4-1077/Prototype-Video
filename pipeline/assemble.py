@@ -8,8 +8,9 @@ build_dir contains script.json:
   "scenes": [{"text","keywords":[],"clip":"path.mp4","duration":sec,"start":sec}],
   "voiceover": "vo.mp3", "music": "music.wav" }
 """
-import json, os, subprocess, sys
+import json, os, shutil, subprocess, sys
 
+import audio_variants
 import motion
 import profiles
 from video_format import BAND_HEIGHT, BAND_WIDTH, BAND_Y, FPS, HEIGHT, WIDTH
@@ -177,22 +178,23 @@ def concat(bd):
             f.write(f"file 'seg_{i:02d}.mp4'\n")
     run(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
          "-i", f"{bd}/list.txt", "-c", "copy", f"{bd}/video_noaudio.mp4"])
-    vo, music = s.get("voiceover"), s.get("music")
+    vo = s.get("voiceover")
     total = sum(sc["duration"] for sc in s["scenes"])
     concatenated = clip_duration(f"{bd}/video_noaudio.mp4")
     if concatenated is None or concatenated < total - .5:
         raise SystemExit(
             f"concat truncated at {concatenated or 0:.1f}s; expected {total:.1f}s"
         )
-    if vo and music:
-        af = ("[1:a]adelay=400|400,apad[voz];"
-              "[2:a]volume=0.16,afade=t=out:st=%f:d=3[mz];"
-              "[voz][mz]amix=inputs=2:duration=first:dropout_transition=0[a]" % (total - 3))
-        run(["ffmpeg", "-v", "error", "-y", "-i", f"{bd}/video_noaudio.mp4",
-             "-i", f"{bd}/{vo}", "-i", f"{bd}/{music}",
-             "-filter_complex", af, "-map", "0:v", "-map", "[a]",
-             "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-t", str(total),
-             f"{bd}/final.mp4"])
+    variants = audio_variants.entries(s)
+    if vo and variants:
+        variants = audio_variants.require(s, bd)
+        for i, item in enumerate(variants, 1):
+            output = f"{bd}/{audio_variants.video_name(i)}"
+            audio_variants.mix(f"{bd}/video_noaudio.mp4", f"{bd}/{vo}",
+                               f"{bd}/{item['file']}", total, output)
+            print(f"{os.path.basename(output)} done: {item['label']}")
+        shutil.copy(f"{bd}/{audio_variants.video_name(1)}", f"{bd}/final.mp4")
+        audio_variants.write_manifest(bd, variants)
     elif vo:
         run(["ffmpeg", "-v", "error", "-y", "-i", f"{bd}/video_noaudio.mp4",
              "-i", f"{bd}/{vo}", "-map", "0:v", "-map", "1:a", "-af", "adelay=400|400,apad",

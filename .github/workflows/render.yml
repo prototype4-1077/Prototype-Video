@@ -94,6 +94,7 @@ jobs:
             build/${{ inputs.slug }}/motion_report_short.json
             build/${{ inputs.slug }}/visual_symbol_report.json
             build/${{ inputs.slug }}/still_reference_report.json
+            build/${{ inputs.slug }}/music_variants.json
             build/${{ inputs.slug }}/CREDITS.txt
 
       - name: Publish permanent Release (artifacts expire after 90 days)
@@ -106,6 +107,11 @@ jobs:
               --notes "Rendered $(date -u +%F) by run ${{ github.run_id }}"
           gh release upload "$TAG" \
             "build/${{ inputs.slug }}/final.mp4#${{ inputs.slug }}.mp4" --clobber
+          shopt -s nullglob
+          for variant in build/${{ inputs.slug }}/final_music_*.mp4; do
+            choice="$(basename "$variant" .mp4 | sed 's/final_music_/music-/')"
+            gh release upload "$TAG" "$variant#${{ inputs.slug }}-${choice}.mp4" --clobber
+          done
           test -f "build/${{ inputs.slug }}/final_short.mp4" && gh release upload "$TAG" \
             "build/${{ inputs.slug }}/final_short.mp4#${{ inputs.slug }}-60s.mp4" --clobber || true
           test -f "build/${{ inputs.slug }}/alts_sheet.jpg" && gh release upload "$TAG" \
@@ -116,6 +122,8 @@ jobs:
             "build/${{ inputs.slug }}/visual_symbol_report.json" --clobber || true
           test -f "build/${{ inputs.slug }}/still_reference_report.json" && gh release upload "$TAG" \
             "build/${{ inputs.slug }}/still_reference_report.json" --clobber || true
+          test -f "build/${{ inputs.slug }}/music_variants.json" && gh release upload "$TAG" \
+            "build/${{ inputs.slug }}/music_variants.json" --clobber || true
 
       - name: Commit updated memory + script timings
         run: |

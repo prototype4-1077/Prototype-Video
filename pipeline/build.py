@@ -11,6 +11,7 @@ Every step is resumable; running again never breaks anything."""
 import json, os, shutil, subprocess, sys, tempfile, time, urllib.request
 
 import motion
+import audio_variants
 import profiles
 import still_reference
 import visual_symbols
@@ -303,14 +304,20 @@ def main(bd):
           f"({still_seconds:.1f}s/{mr.total_seconds:.1f}s); "
           f"true motion {mr.video_ratio:.1%}")
 
-    # 3. overlays + music
-    if not os.path.exists(f"{bd}/cap_{n-1:02d}.png") or not os.path.exists(f"{bd}/title.png"):
+    # 3. overlays + at least three selectable score beds
+    try:
+        audio_variants.require(s, bd)
+        music_ready = True
+    except ValueError:
+        music_ready = False
+    if (not os.path.exists(f"{bd}/cap_{n-1:02d}.png")
+            or not os.path.exists(f"{bd}/title.png") or not music_ready):
         if left() < 15: out("RUN AGAIN (next: overlays)")
         r = sh([py, os.path.join(HERE, "prep.py"), bd])
         if r.returncode != 0:
             err(f"prep failed: {r.stderr[-300:]}", "rerun; if fonts missing delete fonts/ and rerun")
         print(r.stdout.strip())
-        out("RUN AGAIN (captions + title + music ready)")
+        out("RUN AGAIN (captions + title + music choices ready)")
 
     # 4. render segments
     for i in range(n):
@@ -333,9 +340,16 @@ def main(bd):
             except OSError:
                 err(f"seg {i} corrupt and undeletable", "enable file deletion, delete it, rerun")
 
-    # 5. concat + audio mix (fast temp disk, then copy to build dir)
+    # 5. concat + three selectable audio mixes
     final = f"{bd}/final.mp4"
-    if not (os.path.exists(final) and probe_ok(final)):
+    try:
+        variants = audio_variants.require(s, bd)
+    except ValueError as e:
+        err(str(e), "rerun prep to generate at least three music choices")
+    variant_targets = [f"{bd}/{audio_variants.video_name(i)}"
+                       for i in range(1, len(variants) + 1)]
+    if (not (os.path.exists(final) and probe_ok(final))
+            or any(not (os.path.exists(p) and probe_ok(p)) for p in variant_targets)):
         if left() < 20: out("RUN AGAIN (next: final assembly)")
         tmp = tempfile.mkdtemp()
         lst = os.path.join(tmp, "list.txt")
@@ -347,41 +361,20 @@ def main(bd):
                 "-i", lst, "-c", "copy", noa])
         if r.returncode != 0: err(f"concat: {r.stderr[-300:]}", "rerun")
         total = sum(x["duration"] for x in s["scenes"])
-        music = s.get("music", "music.wav")
-        if not os.path.exists(f"{bd}/{music}"):  # self-heal: regenerate the bed
-            print(f"note: {music} missing at mix time; regenerating. dir: {sorted(os.listdir(bd))[:8]}...")
-            r = sh([py, os.path.join(HERE, "music.py"), f"{bd}/music.wav", str(total + 2)]
-                   + [f"{bd}/vo.mp3" if os.path.exists(f"{bd}/vo.mp3") else "-",
-                      s.get("genre") or "-", profiles.resolve(s) or "-"])
-            if r.returncode != 0:
-                err(f"music regen: {r.stderr[-200:]}", "rerun")
-            music = "music.wav"
-        af = ("[1:a]acompressor=threshold=-18dB:ratio=3:attack=15:release=180:makeup=4,"
-              "adelay=400|400,apad[voz];"
-              f"[2:a]volume=0.26,afade=t=out:st={total-3}:d=3[mz];"
-              "[voz][mz]amix=inputs=2:duration=first:dropout_transition=0[a]")
-        raw = os.path.join(tmp, "raw.mp4")
-        r = sh(["ffmpeg", "-v", "error", "-y", "-i", noa, "-i", f"{bd}/vo.mp3",
-                "-i", f"{bd}/{music}", "-filter_complex", af, "-map", "0:v", "-map", "[a]",
-                "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-t", str(total), raw])
-        if r.returncode != 0: err(f"audio mix: {r.stderr[-300:]}", "rerun")
-        # two-pass loudness master to -14 LUFS (TikTok reference level)
-        r = sh(["ffmpeg", "-i", raw, "-af", "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json",
-                "-f", "null", "-"])
-        fin = os.path.join(tmp, "final.mp4")
-        try:
-            meas = json.loads("{" + r.stderr.rsplit("{", 1)[1])
-            gain = round(-14.0 - float(meas["input_i"]) + 1.5, 2)  # +1.5 offsets limiter loss
-            ln = (f"volume={gain}dB,"
-                  "alimiter=limit=0.79:attack=2:release=80:level=false")  # ~-14.5 LUFS, TP ~-1dB
-        except Exception:
-            ln = "loudnorm=I=-14:TP=-1.5:LRA=11"
-        r = sh(["ffmpeg", "-v", "error", "-y", "-i", raw, "-af", ln, "-map", "0:v", "-map", "0:a",
-                "-c:v", "copy", "-c:a", "aac", "-b:a", "160k",
-                "-movflags", "+faststart", fin])
-        if r.returncode != 0: err(f"loudness master: {r.stderr[-300:]}", "rerun")
-        shutil.copy(fin, final)
+        for i, (item, target) in enumerate(zip(variants, variant_targets), 1):
+            if os.path.exists(target) and probe_ok(target):
+                continue
+            try:
+                audio_variants.mix(noa, f"{bd}/vo.mp3", f"{bd}/{item['file']}",
+                                   total, target)
+                print(f"{os.path.basename(target)} done: {item['label']}")
+            except Exception as e:
+                err(f"music choice {i} mix: {e}", "rerun")
+        shutil.copy(variant_targets[0], final)
+        audio_variants.write_manifest(bd, variants)
         shutil.rmtree(tmp, ignore_errors=True)
+    if not os.path.exists(f"{bd}/music_variants.json"):
+        audio_variants.write_manifest(bd, variants)
     if not probe_ok(final):
         try: os.remove(final)
         except OSError: pass

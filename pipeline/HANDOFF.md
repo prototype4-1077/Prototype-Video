@@ -66,6 +66,8 @@ Everything else is one command run in a loop.
    It loads keys from pipeline/.env itself (no exports needed), downloads fonts on first run,
    validates your script (with fix hints), generates voiceover, downloads footage, renders,
    and finishes with:  DONE -> build/<slug>/final.mp4
+   The same run also creates final_music_01.mp4 through final_music_03.mp4 so
+   James can compare three genuinely different score arrangements.
    Rules of thumb:
    - Every step is resumable. Rerunning never breaks anything.
    - If a bash call times out, just run the same command again.
@@ -79,7 +81,9 @@ Everything else is one command run in a loop.
    If one scene's footage looks wrong: delete its clip_XX.mp4 AND seg_XX.mp4, improve that
    scene's "query" in script.json, remove its "pexels_id", and rerun build.py.
 
-6. DELIVER: present final.mp4 to James with present_files. Done.
+6. DELIVER: present all final_music_NN.mp4 choices with the labels in
+   music_variants.json. Also include final.mp4 (choice 1 alias) and final_short.mp4
+   when present. Done.
 
 ## Look spec (what "correct" looks like)
 - Every new video defaults to 1080x1920 (9:16 portrait), 30fps. Footage is a 16:9
@@ -95,6 +99,8 @@ Everything else is one command run in a loop.
   Daniel onwK4e9ZLuTAKqWW03F9 is the old calm-deep option). Ask James once per video if unsure.
 - Optional full-frame portrait crop (no letterbox): add "layout": "fullbleed" in script.json.
 - Custom music: put a file in the build dir and set "music": "<filename>" in script.json.
+  It becomes choice 1; the pipeline still generates enough alternatives to provide at
+  least three total choices.
 
 ## Files
 build.py   — THE orchestrator; the only command you need after writing the script
@@ -126,6 +132,12 @@ split it into scenes VERBATIM, never rewrite his words).
 music.py reads the voiceover's energy: it recedes under speech, swells in the pauses,
 sprinkles soft chimes at long-pause onsets, and builds ~30% toward the closing line.
 Nothing to configure. For custom music set "music" in script.json as before.
+
+Every render produces at least three full-video soundtrack choices. For ordinary
+philosophy videos the default families are Cinematic Pulse, Glass Horizon, and Deep
+Current. DMT and June Oxley receive three profile-specific families. The visuals,
+narration, caption timing, and mastering stay identical, which makes the music comparison
+meaningful. `final.mp4` is always an alias of choice 1 for backward compatibility.
 
 ## v5 upgrades (all automatic; nothing new to operate)
 - WORD-SYNCED CAPTIONS: if `faster-whisper` is installed (pip install faster-whisper),
@@ -309,3 +321,12 @@ stock footage for that beat rather than emitting an isolated unreferenced still.
 writes `still_reference_report.json`; delivery fails if an active still lacks a current closest
 stock reference or any required enhancement step. These images remain `animated_still` and
 continue to count in full toward the 35% still-source ceiling.
+
+## v20: THREE-WAY MUSIC CHOICE
+`prep.py` now creates at least three distinct VO-adaptive score beds for every video.
+`build.py` mixes and masters each one against the same narration and picture, producing
+`final_music_01.mp4`, `final_music_02.mp4`, and `final_music_03.mp4`. The selected labels,
+source files, and output names are written to `music_variants.json`; `final.mp4` remains a
+copy of choice 1 so older automation keeps working. A custom score becomes choice 1 and the
+pipeline generates enough alternatives to keep the total at three. GitHub artifacts and
+permanent Releases include every choice.
