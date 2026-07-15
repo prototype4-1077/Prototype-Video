@@ -1,10 +1,15 @@
 {
   "title": "Voice Memo Guy",
   "title_eyebrow": "Social Weather",
+  "series_template": "social_weather",
   "slug": "social-weather-voice-memo-guy",
-  "visual_policy": "diverse_symbols",
+  "visual_policy": {
+    "mode": "diverse_symbols",
+    "max_human_ratio": 0.6
+  },
   "user_vo": true,
   "genre": "comedy",
+  "music_variant_count": 3,
   "max_still_source_ratio": 0.25,
   "scenes": [
     {
@@ -83,7 +88,7 @@
       "text": "Just two people standing at different exits in the same Walmart parking lot.",
       "keywords": ["different exits", "Walmart"],
       "semantic_anchor": "same place different direction",
-      "visual_function": "pathway",
+      "visual_function": "choice",
       "symbol_family": "architecture",
       "query": "wide aerial big-box store parking lot two people walking toward opposite exits dusk"
     },
@@ -200,7 +205,7 @@
       "text": "Men started defending all men. Women started defending all women. Everybody dragged their entire dating history into the courtroom.",
       "keywords": ["defending all men", "defending all women", "courtroom"],
       "semantic_anchor": "personal history becomes tribal trial",
-      "visual_function": "collective",
+      "visual_function": "contrast",
       "symbol_family": "collective",
       "query": "courtroom divided into two crowds carrying boxes of old text messages cinematic",
       "human_role": "crowd splitting into opposing courtroom sides"
