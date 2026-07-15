@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-07-15T14:11:40+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {},
+  "recommendations": [
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "691d8ac7682ab223",
+      "priority": "medium",
+      "stage": "build_pass"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "691d8ac7682ab223",
+      "kind": "failure",
+      "normalized_error": "error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "slugs": [
+        "trained-not-to-look"
+      ],
+      "stage": "build_pass"
+    }
+  ],
+  "runs_analyzed": 1,
+  "schema_version": 1,
+  "stages": {
+    "build_pass": {
+      "attempts": 3,
+      "failure_rate": 0.6667,
+      "failures": 2,
+      "p50_success_s": 26.008,
+      "p95_success_s": 26.008,
+      "sample_count": 1,
+      "successes": 1,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 28.011
+    },
+    "tts": {
+      "attempts": 1,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 25.01,
+      "p95_success_s": 25.01,
+      "sample_count": 1,
+      "successes": 1,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 25.01
+    }
+  },
+  "statuses": {
+    "failed": 1
+  }
+}

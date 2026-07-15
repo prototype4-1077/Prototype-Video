@@ -1,0 +1,76 @@
+{
+  "finished_at": "2026-07-15T14:11:40+00:00",
+  "github_run_id": "29422309223",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "691d8ac7682ab223",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=342c78b22cc818e6. ERROR: visual symbol plan: human imagery occupies 58%; target <= 52% | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
+  "mode": "recover",
+  "passes": 3,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 180.0,
+      "sample_count": 0,
+      "soft_timeout_s": 240.0,
+      "source": "default"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "691d8ac7682ab223",
+      "priority": "high",
+      "reason": "2 occurrence(s): error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "0c1fca182b224aaabd01ac59b5856e77",
+  "schema_version": 1,
+  "slug": "trained-not-to-look",
+  "stages": {
+    "build_pass": {
+      "attempts": 3,
+      "failures": 2,
+      "p50_success_s": 26.008,
+      "p95_success_s": 26.008,
+      "success_durations_s": [
+        26.008
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 28.011
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 25.01,
+      "p95_success_s": 25.01,
+      "success_durations_s": [
+        25.01
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 25.01
+    }
+  },
+  "status": "failed"
+}
