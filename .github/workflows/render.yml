@@ -136,6 +136,49 @@ jobs:
                   changed = True
               print("Applied long-script visual policy: max human presence 60%.")
 
+          # This script's thesis is that relationships and processes outlast objects.
+          # Replace a few literal body shots with visual mechanisms that demonstrate
+          # the idea instead of merely showing someone reacting to it.
+          if script.get("slug") == "pattern-wearing-matter" and len(scenes) >= 18:
+              overrides = {
+                  0: {
+                      "symbol_query": "empty museum pedestal beneath a blank exhibit label while a precise spiral projection moves across the gallery wall, bright cinematic lighting, genuine camera motion",
+                      "image_prompt": "A premium realistic cinematic image of an empty museum pedestal beneath a blank exhibit label, with a precise spiral projection crossing the wall, questioning whether identity is an object, bright readable unoccupied gallery",
+                      "symbol_family": "identity",
+                      "visual_function": "perspective_shift",
+                      "primary_symbol": "empty pedestal",
+                  },
+                  10: {
+                      "symbol_query": "two transparent water tanks display the same rotating spiral pattern while different streams continuously flow through them, bright laboratory light, genuine moving water",
+                      "symbol_family": "geometry",
+                      "visual_function": "perspective_shift",
+                      "primary_symbol": "paired spirals",
+                  },
+                  13: {
+                      "symbol_query": "fixed label ME remains centered while photographs notes and colored cards beneath it are continuously replaced, bright tabletop stop motion, genuine movement",
+                      "symbol_family": "language",
+                      "visual_function": "literal_anchor",
+                      "primary_symbol": "fixed label",
+                  },
+                  17: {
+                      "symbol_query": "one continuous luminous line travels through a corridor of changing clock frames and shifting shadows, bright golden side light, smooth cinematic motion",
+                      "symbol_family": "time_memory",
+                      "visual_function": "perspective_shift",
+                      "primary_symbol": "continuous line",
+                  },
+              }
+              for index, values in overrides.items():
+                  scene = scenes[index]
+                  scene.update(values)
+                  scene.pop("human_role", None)
+                  for key in (
+                      "pexels_id", "source_id", "source_title", "source_url",
+                      "motion_verified", "symbol_family_source",
+                  ):
+                      scene.pop(key, None)
+              changed = True
+              print("Applied four non-human process metaphors to pattern-wearing-matter.")
+
           if changed:
               script_path.write_text(
                   json.dumps(script, ensure_ascii=False, separators=(",", ":")),
