@@ -1,0 +1,120 @@
+            r=12+(i%3)*4
+            if i%2:
+                d.rectangle((x-r,y-r,x+r,y+r),fill=light,outline=accent,width=2)
+            else:
+                d.ellipse((x-r,y-r,x+r,y+r),fill=light,outline=accent,width=2)
+        label(d,"PIECES CHANGE",360,230,22,accent)
+        label(d,"RELATIONSHIP REMAINS",360,820,24,accent)
+    elif kind=="self_rebuild":
+        prog=(math.sin(TAU*local-math.pi/2)+1)/2
+        prog=ease(prog)
+        targets=[]
+        # target points sampled from silhouette geometry
+        for i in range(len(ASSEMBLE_BASE)):
+            a,b,c,q=ASSEMBLE_BASE[i]
+            if q<.2:
+                ang=TAU*c; r=40*math.sqrt(q/.2)
+                tx=360+r*math.cos(ang); ty=330+r*math.sin(ang)
+            elif q<.75:
+                tx=360+(c-.5)*130; ty=380+b%1*250
+            else:
+                side=-1 if c<.5 else 1
+                yy=(b%1)*210
+                tx=360+side*(30+yy*.25); ty=610+yy
+            targets.append((tx,ty))
+        for (sx,sy,_,_), (tx,ty) in zip(ASSEMBLE_BASE,targets):
+            x=sx+(tx-sx)*prog; y=sy+(ty-sy)*prog
+            d.rectangle((x-3,y-3,x+3,y+3),fill=accent)
+        label(d,"REBUILDING “PERSON”",360,870,25,accent)
+    elif kind=="song_not_object":
+        fade=int(255*(1-ease(max(0,(local-.35)/.55))))
+        draw_piano(d,70,500,.72,fade)
+        draw_speaker(d,590,560,.72,fade)
+        line_glow(d,wave_points(60,660,360,55,4,TAU*local*2),accent,3)
+        label(d,"THE SONG CONTINUES",360,820,25,accent)
+    elif kind=="song_elsewhere":
+        # broken piano left, waveform travels to a second speaker
+        draw_piano(d,40,570,.60,170)
+        for k in range(7):
+            x=180+k*9; y=610+k*5
+            d.line((x,y,x+5,y+28),fill=light,width=2)
+        pts=wave_points(80,650,390,45,4.5,TAU*local*2)
+        line_glow(d,pts,accent,3)
+        draw_speaker(d,610,590,.65,255)
+        label(d,"NOT TRAPPED HERE",180,260,19,accent)
+        label(d,"PLAYED SOMEWHERE ELSE",500,780,20,accent)
+    elif kind=="body_receiver":
+        silhouette_outline(d,360,525,1.28,(*light,160),4)
+        for j in range(4):
+            pts=wave_points(70,650,420+j*55,18,3.3,TAU*(local*1.4+j*.17))
+            line_glow(d,pts,mix(accent,light,j*.18),2)
+        # rings resonate around chest
+        for r in (45,80,120):
+            rr=r*(.85+.15*math.sin(TAU*local))
+            d.ellipse((360-rr,520-rr*.45,360+rr,520+rr*.45),outline=(*accent,130),width=2)
+        label(d,"WHERE THE PATTERN PLAYS",360,845,24,accent)
+    elif kind=="taxes_wifi":
+        for i in range(3):
+            draw_bill(d,70+i*10,570-i*18,240,105,accent)
+        # grounded tether
+        d.line((320,620,360,620),fill=light,width=3)
+        d.line((360,620,360,790),fill=light,width=3)
+        # router and wifi arcs
+        d.rounded_rectangle((470,650,625,710),radius=12,fill=(25,31,38),outline=accent,width=2)
+        d.line((500,650,490,590),fill=light,width=3); d.line((595,650,605,590),fill=light,width=3)
+        for r in (55,85,115):
+            box=(548-r,590-r*.55,548+r,590+r*.55)
+            d.arc(box,200,340,fill=accent,width=3)
+        label(d,"CALM DOWN",360,220,28,accent)
+        label(d,"NOT A DIMENSIONAL WI-FI SIGNAL",360,350,18,accent)
+    elif kind=="kitchen_forget":
+        # floor plan
+        d.rounded_rectangle((70,260,650,800),radius=24,fill=(233,232,218),outline=light,width=3)
+        d.line((360,260,360,800),fill=(145,145,135),width=3)
+        d.text((210,300),"LIVING ROOM",font=font(18,True),fill=(90,95,92),anchor="mm")
+        d.text((505,300),"KITCHEN",font=font(18,True),fill=(90,95,92),anchor="mm")
+        u=ease(min(local*1.7,1))
+        x=210+(505-210)*u; y=610-80*math.sin(math.pi*u)
+        d.ellipse((x-12,y-12,x+12,y+12),fill=accent)
+        if local>.48:
+            label(d,"WHY AM I IN HERE?",505,500,16,accent)
+            d.text((505,620),"?",
+                   font=font(90,True),fill=accent,anchor="mm")
+    elif kind=="family_network":
+        names=("MEMORIES","TENSIONS","JOKES","LOYALTIES","EXPECTATIONS","THE ARGUMENT")
+        pts=[(360+205*math.cos(TAU*i/6+.15*math.sin(TAU*local+i)),
+              500+180*.58*math.sin(TAU*i/6+.15*math.sin(TAU*local+i))) for i in range(6)]
+        for i in range(6):
+            for j in (1,2):
+                b=(i+j)%6
+                d.line((*pts[i],*pts[b]),fill=(*accent,75),width=2)
+        for (x,y),name in zip(pts,names):
+            d.ellipse((x-16,y-16,x+16,y+16),fill=light,outline=accent,width=3)
+            label(d,name,x,y+45,12,accent)
+        label(d,"FAMILY = RELATIONSHIP PATTERN",360,820,21,accent)
+    elif kind=="city_bricks":
+        ground=790
+        xs=[75,205,345,495,620]; hs=[210,330,260,390,230]; ws=[100,115,110,120,80]
+        for bi,(x,h,wid) in enumerate(zip(xs,hs,ws)):
+            y0=ground-h
+            d.rectangle((x,y0,x+wid,ground),fill=(40,73,112),outline=accent,width=2)
+            rows=max(2,int(h/40)); cols=max(2,int(wid/40))
+            for r in range(rows):
+                for c in range(cols):
+                    xx=x+c*wid/cols; yy=y0+r*h/rows
+                    phase=(bi*7+r*3+c+int(local*12))%6
+                    col=mix((58,83,111),accent,.18 if phase else .75)
+                    d.rectangle((xx+2,yy+2,xx+wid/cols-2,yy+h/rows-2),fill=col)
+        d.line((45,ground,675,ground),fill=light,width=3)
+        label(d,"SAME CITY · DIFFERENT BRICKS",360,870,21,accent)
+    elif kind=="flame_process":
+        # shrinking logs
+        shrink=.45+.55*(1-local)
+        d.rounded_rectangle((220,760,500,800),radius=18,fill=(104,55,26),outline=light,width=2)
+        d.rounded_rectangle((250,730,470,770),radius=18,fill=(128,68,30),outline=light,width=2)
+        # layered flame
+        phase=math.sin(TAU*local)
+        for off,col,sc in ((0,(255,75,30),1.0),(0,(255,165,45),.72),(0,(255,238,110),.42)):
+            pts=[(360,300+40*(1-sc)+phase*8),(280+35*(1-sc),610),(360,720),(440-35*(1-sc),610)]
+            d.polygon(pts,fill=col)
+        label(d,"WOOD DISAPPEARS",220,240,17,accent)
