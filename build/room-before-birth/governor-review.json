@@ -1,23 +1,66 @@
 {
-  "generated_at": "2026-07-15T23:40:18+00:00",
+  "generated_at": "2026-07-15T23:44:56+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
-  "recommendations": [],
-  "recurring_incidents": [],
+  "recommendations": [
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "1cc12dbdad7fffe9",
+      "priority": "medium",
+      "stage": "footage"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "1cc12dbdad7fffe9",
+      "kind": "failure",
+      "normalized_error": "f len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks s",
+      "slugs": [
+        "room-before-birth"
+      ],
+      "stage": "footage"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "20379bed636e703c",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
+      "slugs": [
+        "room-before-birth"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "6e725aee27eb4041",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
+      "slugs": [
+        "room-before-birth"
+      ],
+      "stage": "build_pass"
+    }
+  ],
   "runs_analyzed": 5,
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 3,
+      "attempts": 4,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.003,
       "p95_success_s": 1.004,
-      "sample_count": 3,
-      "successes": 3,
+      "sample_count": 4,
+      "successes": 4,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 3.009
+      "total_duration_s": 4.012
     },
     "altsheet": {
       "attempts": 3,
@@ -44,16 +87,16 @@
       "total_duration_s": 3701.019
     },
     "build_pass": {
-      "attempts": 57,
-      "failure_rate": 0.0,
-      "failures": 0,
+      "attempts": 59,
+      "failure_rate": 0.0339,
+      "failures": 2,
       "p50_success_s": 112.454,
       "p95_success_s": 145.401,
       "sample_count": 57,
       "successes": 57,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 5519.778
+      "total_duration_s": 5587.844
     },
     "credits": {
       "attempts": 44,
@@ -66,18 +109,6 @@
       "timeout_rate": 0.0,
       "timeouts": 0,
       "total_duration_s": 44.635
-    },
-    "curate": {
-      "attempts": 1,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 17.018,
-      "p95_success_s": 17.018,
-      "sample_count": 1,
-      "successes": 1,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 17.018
     },
     "ffmpeg": {
       "attempts": 68,
@@ -92,16 +123,16 @@
       "total_duration_s": 621.031
     },
     "footage": {
-      "attempts": 88,
-      "failure_rate": 0.0,
-      "failures": 0,
+      "attempts": 90,
+      "failure_rate": 0.0222,
+      "failures": 2,
       "p50_success_s": 3.01,
       "p95_success_s": 10.025,
       "sample_count": 88,
       "successes": 88,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 384.015
+      "total_duration_s": 437.069
     },
     "hero": {
       "attempts": 2,
@@ -140,16 +171,16 @@
       "total_duration_s": 243.369
     },
     "quality": {
-      "attempts": 5,
+      "attempts": 4,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 49.298,
-      "p95_success_s": 60.356,
-      "sample_count": 5,
-      "successes": 5,
+      "p50_success_s": 51.868,
+      "p95_success_s": 60.725,
+      "sample_count": 4,
+      "successes": 4,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 213.008
+      "total_duration_s": 212.004
     },
     "shortcut": {
       "attempts": 4,
@@ -164,16 +195,16 @@
       "total_duration_s": 54.387
     },
     "transcribe": {
-      "attempts": 11,
+      "attempts": 14,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 9.014,
-      "p95_success_s": 10.517,
-      "sample_count": 11,
-      "successes": 11,
+      "p50_success_s": 9.513,
+      "p95_success_s": 10.366,
+      "sample_count": 14,
+      "successes": 14,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 89.123
+      "total_duration_s": 117.156
     },
     "tts": {
       "attempts": 3,
@@ -189,6 +220,7 @@
     }
   },
   "statuses": {
-    "done": 5
+    "done": 4,
+    "failed": 1
   }
 }
