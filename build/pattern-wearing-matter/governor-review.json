@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15T14:13:35+00:00",
+  "generated_at": "2026-07-15T14:19:48+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
@@ -7,7 +7,7 @@
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
       "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "b26e8c95844188e5",
+      "fingerprint": "f9bff39954630754",
       "priority": "medium",
       "stage": "build_pass"
     },
@@ -24,9 +24,9 @@
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "b26e8c95844188e5",
+      "fingerprint": "f9bff39954630754",
       "kind": "failure",
-      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "normalized_error": "error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
       "slugs": [
         "pattern-wearing-matter"
       ],
@@ -57,7 +57,7 @@
       "successes": 1,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 30.015
+      "total_duration_s": 30.013
     },
     "tts": {
       "attempts": 1,

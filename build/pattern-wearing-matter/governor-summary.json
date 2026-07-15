@@ -1,18 +1,18 @@
 {
-  "finished_at": "2026-07-15T14:13:35+00:00",
-  "github_run_id": "29422492150",
+  "finished_at": "2026-07-15T14:19:48+00:00",
+  "github_run_id": "29422841803",
   "incidents": [
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "b26e8c95844188e5",
+      "fingerprint": "f9bff39954630754",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "normalized_error": "error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
       "stage": "build_pass"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=a35b49374d568368. ERROR: visual symbol plan: human imagery occupies 57%; target <= 52% | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=f5284012d21d4e3f. ERROR: 42 scenes | FIX: aim for 18-26 scenes (one sentence/beat each)",
   "mode": "recover",
   "passes": 2,
   "policy": {
@@ -29,13 +29,13 @@
   "recommendations": [
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "b26e8c95844188e5",
+      "fingerprint": "f9bff39954630754",
       "priority": "high",
-      "reason": "2 occurrence(s): note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "reason": "2 occurrence(s): error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
       "stage": "build_pass"
     }
   ],
-  "run_id": "ebd16b98b1dc4e4991b5058b80801342",
+  "run_id": "a4574b0c425b4d9abf00f8d01ac44355",
   "schema_version": 1,
   "slug": "pattern-wearing-matter",
   "stages": {
@@ -47,7 +47,7 @@
       "success_durations_s": [],
       "successes": 0,
       "timeouts": 0,
-      "total_duration_s": 2.004
+      "total_duration_s": 2.002
     }
   },
   "status": "failed"
