@@ -84,10 +84,12 @@ Everything else is one command run in a loop.
    If one scene's footage looks wrong: delete its clip_XX.mp4 AND seg_XX.mp4, improve that
    scene's "query" in script.json, remove its "pexels_id", and rerun build.py.
 
-6. DELIVER: present all portrait final_music_NN.mp4 and landscape
-   final_youtube_music_NN.mp4 choices with the labels in music_variants.json. Also
-   include final.mp4 and final_youtube.mp4 (choice 1 aliases), plus final_short.mp4
-   when present. Done.
+6. DELIVER: read the `delivery` object in music_variants.json and present only its
+   Deep Current portrait and YouTube files by default. Do not show links for the other
+   music choices, final.mp4/final_youtube.mp4 compatibility aliases, or final_short.mp4
+   unless James explicitly asks for them. If a legacy manifest has no `delivery` object,
+   select the row labeled Deep Current and its matching YouTube filename. All outputs
+   remain archived. Done.
 
 ## Look spec (what "correct" looks like)
 - Every build creates two 30fps canvases: 1080x1920 (9:16 portrait) and
@@ -344,3 +346,9 @@ Landscape files use `final_youtube.mp4` and `final_youtube_music_NN.mp4`; portra
 names remain unchanged for backward compatibility. `music_variants.json` records
 both names, and GitHub artifacts and permanent Releases publish both sets.
 
+## v22: DEEP CURRENT DEFAULT DELIVERY
+Every render still generates and archives all three complete music choices. The
+`delivery` object in `music_variants.json` selects Deep Current (choice 3 in the
+standard profile) and names its portrait and 1920x1080 YouTube files. Default delivery
+shows only those two download links. The other choices remain available on request but
+their links are not surfaced automatically.

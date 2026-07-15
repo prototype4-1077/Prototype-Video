@@ -47,7 +47,8 @@ class MusicVariantTests(unittest.TestCase):
             for i in range(1, 4):
                 name = f"music_{i:02d}.wav"
                 open(os.path.join(td, name), "wb").close()
-                variants.append({"file": name, "label": f"Choice {i}"})
+                label = "Deep Current" if i == 3 else f"Choice {i}"
+                variants.append({"file": name, "label": label})
             script = {"music": "music_01.wav", "music_variants": variants}
             self.assertEqual(3, len(audio_variants.require(script, td)))
             manifest = audio_variants.write_manifest(td, variants)
@@ -56,9 +57,24 @@ class MusicVariantTests(unittest.TestCase):
                 "final_youtube_music_03.mp4",
                 manifest["variants"][2]["youtube_video"],
             )
+            self.assertEqual("Deep Current", manifest["delivery"]["label"])
+            self.assertEqual("final_music_03.mp4", manifest["delivery"]["portrait_video"])
+            self.assertEqual(
+                "final_youtube_music_03.mp4", manifest["delivery"]["youtube_video"]
+            )
             with open(os.path.join(td, "music_variants.json")) as f:
                 loaded = json.load(f)
             self.assertEqual(3, loaded["minimum_choices"])
+
+    def test_profiled_labels_fall_back_to_corresponding_third_choice(self):
+        variants = [
+            {"file": "a.wav", "label": "Porch Shuffle"},
+            {"file": "b.wav", "label": "Dusk Fingerpick"},
+            {"file": "c.wav", "label": "Creekside Stomp"},
+        ]
+        index, item = audio_variants.delivery_choice(variants)
+        self.assertEqual(3, index)
+        self.assertEqual("Creekside Stomp", item["label"])
 
     def test_first_generated_filename_remains_backward_compatible(self):
         with tempfile.TemporaryDirectory() as td:
@@ -78,4 +94,3 @@ class MusicVariantTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

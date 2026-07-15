@@ -38,8 +38,12 @@ API BASE: https://api.github.com/repos/jameswatson1077/tiktok-videos
   family, and roughly half or less human presence. Avoid generic thoughtful-person
   footage. Check visual_symbol_report.json before delivery.
   Every render must create at least three genuinely distinct background-music choices.
-  Deliver final_music_01.mp4, final_music_02.mp4, and final_music_03.mp4 together;
-  final.mp4 remains an alias of choice 1. Check music_variants.json for names.
+  Keep every choice in artifacts/Releases, but default delivery shows only the two
+  files named in music_variants.json `delivery`: Deep Current in portrait and native
+  16:9 YouTube. Do not show links for the other music choices unless James explicitly
+  asks for them. For an older manifest without `delivery`, find the variant labeled
+  Deep Current and use its matching portrait/YouTube filenames. final.mp4 remains an
+  alias of choice 1 for compatibility.
 
 ## Step 1 — Write the script file
 Create build/<slug>/script.json  (slug = short-dashed-title):
@@ -77,7 +81,10 @@ Expect HTTP 204. Takes ~10-15 min.
 GET /actions/runs?per_page=1        -> id, status ("completed"), conclusion ("success")
 GET /actions/runs/<id>/artifacts    -> archive_download_url
 GET that url (same auth, follow redirects) -> zip containing final.mp4 plus at least
-three final_music_NN.mp4 choices. Give all choices to James with their manifest labels.
+three final_music_NN.mp4 choices and their YouTube counterparts. Read
+music_variants.json and give James only the two `delivery` files by default. The other
+choices remain available and should be linked only when he specifically asks for them.
+For a legacy manifest, select the row labeled Deep Current and its matching YouTube file.
 If conclusion is "failure": GET /actions/runs/<id>/logs, find the "ERROR: ... | FIX: ..."
 line, apply the FIX (usually edit script.json), push, re-dispatch.
 
@@ -98,11 +105,13 @@ its spoken line; at least six visual symbol families; no repeated generic-human 
 still-derived duration <=35% and genuine moving footage >=65%; every still passes
 still_reference_report.json and visibly belongs beside its stock reference. If a scene
 misses, use the swap flow before delivering. Confirm three music-choice MP4s exist and
-have distinct audio before delivery.
+have distinct audio before delivery, then surface only the manifest's Deep Current
+portrait and YouTube delivery links.
 
 ## v7 additions
-- Deliver final.mp4, all final_music_NN.mp4 choices, and final_short.mp4 (60s cut)
-  when present in artifacts.
+- By default, deliver only the Deep Current portrait and YouTube files selected in
+  music_variants.json. Keep all other full-length choices and final_short.mp4 available
+  for an explicit request, but do not show their download links automatically.
 - Scripts must echo ONE motif from memory.json "motifs" as a brief mid-video callback.
 - Retention feedback: python3 pipeline/learn.py retention build/<slug> "<t1,t2>" then push memory.
 - Zero-effort mode: open a GitHub issue labeled "video" with the idea; CI does everything
@@ -124,4 +133,3 @@ Multiple AIs may work simultaneously, each on its OWN slug. Rules:
 - ALTERNATES: after a render, build/<slug>/alts.json lists runner-up clips per scene and
   the run artifact alts_sheet.jpg shows them. Swap = learn.py pin build/<slug> <i> <id>,
   then re-dispatch. Prefer pinning an alternate over re-rolling queries.
-

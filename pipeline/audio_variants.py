@@ -7,6 +7,8 @@ import tempfile
 
 
 MIN_MUSIC_VARIANTS = 3
+DEFAULT_DELIVERY_LABEL = "Deep Current"
+DEFAULT_DELIVERY_INDEX = 3
 
 
 def entries(script):
@@ -47,6 +49,22 @@ def youtube_video_name(index):
     return f"final_youtube_music_{index:02d}.mp4"
 
 
+def delivery_choice(variants, preferred_label=DEFAULT_DELIVERY_LABEL):
+    """Return the one music choice whose two outputs are presented by default.
+
+    Standard renders select Deep Current by label. Opt-in music profiles have
+    different labels, so they retain the corresponding third arrangement.
+    """
+    if not variants:
+        raise ValueError("cannot choose a delivery variant from an empty list")
+    wanted = preferred_label.strip().casefold()
+    for index, item in enumerate(variants, 1):
+        if str(item.get("label", "")).strip().casefold() == wanted:
+            return index, item
+    index = min(DEFAULT_DELIVERY_INDEX, len(variants))
+    return index, variants[index - 1]
+
+
 def _run(cmd):
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode:
@@ -85,9 +103,17 @@ def mix(noaudio, voiceover, music_path, total, output, delay_ms=400, music_gain=
 
 
 def write_manifest(build_dir, variants, default_index=1):
+    delivery_index, delivery_item = delivery_choice(variants)
     data = {
         "minimum_choices": MIN_MUSIC_VARIANTS,
         "default_index": default_index,
+        "delivery": {
+            "index": delivery_index,
+            "label": delivery_item.get("label", DEFAULT_DELIVERY_LABEL),
+            "portrait_video": video_name(delivery_index),
+            "youtube_video": youtube_video_name(delivery_index),
+            "other_choices": "available_on_request",
+        },
         "variants": [
             {**item, "video": video_name(i), "youtube_video": youtube_video_name(i)}
             for i, item in enumerate(variants, 1)
