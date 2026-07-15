@@ -1,0 +1,120 @@
+
+def draw_piano(d,x,y,s,alpha=255):
+    kw=26*s; kh=104*s
+    for i in range(9):
+        xx=x+i*kw
+        d.rectangle((xx,y,xx+kw-1,y+kh),fill=(235,238,240,alpha),outline=(25,29,34,alpha),width=max(1,int(1.5*s)))
+    for i in (1,2,4,5,6):
+        xx=x+i*kw-kw*.28
+        d.rectangle((xx,y,xx+kw*.58,y+kh*.62),fill=(12,14,18,alpha))
+
+def draw_speaker(d,x,y,s,alpha=255):
+    d.rounded_rectangle((x-50*s,y-82*s,x+50*s,y+82*s),radius=int(10*s),
+                        fill=(20,24,31,alpha),outline=(150,170,188,alpha),width=max(1,int(2*s)))
+    for r,yy in ((34,y+28*s),(18,y-40*s)):
+        d.ellipse((x-r*s,yy-r*s,x+r*s,yy+r*s),fill=(6,8,12,alpha),outline=(75,220,235,alpha),width=max(1,int(3*s)))
+
+def draw_key(d,x,y,s,accent):
+    r=20*s
+    d.ellipse((x-r,y-r,x+r,y+r),outline=accent,width=max(2,int(6*s)))
+    d.line((x+r,y,x+100*s,y),fill=accent,width=max(2,int(8*s)))
+    d.line((x+72*s,y,x+72*s,y+22*s),fill=accent,width=max(2,int(8*s)))
+    d.line((x+96*s,y,x+96*s,y+18*s),fill=accent,width=max(2,int(8*s)))
+
+def draw_bill(d,x,y,w,h,accent):
+    d.rounded_rectangle((x,y,x+w,y+h),radius=12,fill=(237,239,229),outline=accent,width=3)
+    d.text((x+18,y+15),"BILLS",font=font(int(h*.24),True),fill=(30,36,31))
+    for k in range(3):
+        yy=y+h*.56+k*11
+        d.line((x+18,yy,x+w-18,yy),fill=(100,111,103),width=2)
+
+def vortex(d,t,accent,light,cx=360,cy=480,labels=False):
+    for i,(base,theta0,life0,z) in enumerate(VORTEX_BASE):
+        life=(life0+t*.72)%1
+        theta=theta0+TAU*(1.4*t)*(1.35-base)+life*1.2
+        r=(32+base*230)*(.28+.72*life)
+        x=cx+r*math.cos(theta)*1.18
+        y=cy+r*math.sin(theta)*.55
+        rr=1+2.2*(1-base)
+        col=mix(accent,light,.25+.65*(1-base))
+        d.ellipse((x-rr,y-rr,x+rr,y+rr),fill=col)
+    line_glow(d,wave_points(50,670,cy+190,12,4,TAU*t),accent,2)
+    if labels:
+        items=[("MOVEMENT",.05),("PRESSURE",1.65),("GRAVITY",3.25),("SHAPE",4.8)]
+        for text,a in items:
+            aa=a+.12*math.sin(TAU*t)
+            x=cx+245*math.cos(aa); y=cy+170*math.sin(aa)
+            label(d,text,x,y,18,accent)
+            d.line((x,y,cx+100*math.cos(aa),cy+58*math.sin(aa)),fill=light,width=2)
+
+def draw_scene(kind,palette,local,global_t):
+    c0,c1,accent,light=PALETTES[palette]
+    img=bg(palette,local)
+    d=ImageDraw.Draw(img,"RGBA")
+    # upper visual stage and safe caption floor
+    d.rounded_rectangle((24,90,696,960),radius=28,fill=(0,0,0,48),outline=(*light,38),width=2)
+    d.rectangle((0,1010,W,H),fill=(0,0,0,60))
+    if kind=="identity_flow":
+        particle_silhouette(d,360,500,1.45,(*accent,230),local)
+        silhouette_outline(d,360,500,1.45,(*light,180),3)
+        label(d,"PATTERN",360,870,30,accent)
+        if global_t<4.0:
+            d.text((360,140),"YOU ARE NOT A THING",font=font(34,True),fill=light,anchor="mm")
+    elif kind=="keys_bills":
+        draw_bill(d,95,335+10*math.sin(TAU*local*2),250,118,accent)
+        draw_key(d,430,450-8*math.sin(TAU*local*2),1.0,accent)
+        label(d,"OBJECT?",360,220,34,accent)
+        # arrows accuse the room, then point back toward the key
+        for i in range(3):
+            a=TAU*(i/3+local*.12)
+            x=360+190*math.cos(a); y=470+95*math.sin(a)
+            d.line((x,y,360,490),fill=(*light,135),width=3)
+        label(d,"FOUND IN YOUR OWN POCKET",360,750,19,accent)
+    elif kind=="whirlpool_material":
+        vortex(d,local,accent,light)
+        label(d,"SAME VORTEX",360,210,27,accent)
+        label(d,"NEW WATER",360,810,23,accent)
+    elif kind=="whirlpool_persist":
+        vortex(d,local,accent,light)
+        # explicit entry/exit streams
+        d.line((40,480,130,480),fill=accent,width=8)
+        d.polygon([(130,480),(110,468),(110,492)],fill=accent)
+        d.line((590,480,680,480),fill=light,width=8)
+        d.polygon([(680,480),(660,468),(660,492)],fill=light)
+        label(d,"ENTERING",100,420,17,accent)
+        label(d,"LEAVING",620,420,17,accent)
+        label(d,"FORM REMAINS",360,830,25,accent)
+    elif kind=="forces_pattern":
+        vortex(d,local,accent,light,labels=True)
+        label(d,"RELATIONSHIP",360,210,29,accent)
+        label(d,"PATTERN WEARING WATER",360,850,22,accent)
+    elif kind=="self_change":
+        silhouette_outline(d,360,500,1.35,(*light,150),4)
+        names=("BODY","THOUGHTS","BELIEFS")
+        for i,(name,y) in enumerate(zip(names,(320,470,620))):
+            shift=55*math.sin(TAU*(local+i/3))
+            col=mix(accent,light,i*.25)
+            d.rounded_rectangle((190+shift,y-32,530+shift,y+32),radius=18,fill=(*col,195),outline=light,width=2)
+            d.text((360+shift,y),name,font=font(23,True),fill=(250,252,253),anchor="mm")
+        label(d,"SAME NAME",360,850,24,accent)
+    elif kind=="memory_tiles":
+        names=("CELLS","MEMORIES","PASSWORDS","OPINIONS")
+        for i,name in enumerate(names):
+            u=(local+i*.22)%1
+            x=125+i*155+35*math.sin(TAU*u)
+            y=350+90*math.sin(TAU*(u+i*.17))
+            col=mix(accent,light,i/5)
+            d.rounded_rectangle((x-72,y-43,x+72,y+43),radius=13,fill=(*col,215),outline=light,width=2)
+            d.text((x,y),name,font=font(15,True),fill=(250,252,253),anchor="mm")
+        label(d,"ME",360,700,47,accent)
+        d.line((360,650,360,520),fill=light,width=3)
+    elif kind=="relationship_pieces":
+        pts=[]
+        for i in range(8):
+            a=TAU*i/8+.18*math.sin(TAU*local+i)
+            rr=190+30*math.sin(TAU*local*1.7+i)
+            pts.append((360+rr*math.cos(a),485+rr*.55*math.sin(a)))
+        for i in range(8):
+            a,b=pts[i],pts[(i+1)%8]
+            d.line((*a,*b),fill=(*accent,180),width=3)
+        for i,(x,y) in enumerate(pts):
