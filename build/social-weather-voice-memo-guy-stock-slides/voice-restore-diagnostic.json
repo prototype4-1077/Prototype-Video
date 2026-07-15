@@ -74,7 +74,7 @@
       "sha256": "891e5c5b738aebe55847ae0f3c3a61a812f43717554cd568533fb85d0d9c8db1"
     }
   ],
-  "numeric_decode": {
+  "numeric_joined_decode": {
     "count": 13,
     "names": [
       "vo.mp3.b64.part001",
@@ -96,7 +96,7 @@
     "sha256": null,
     "error": "Excess data after padding"
   },
-  "all_parts_decode": {
+  "numeric_independent_decode": {
     "count": 13,
     "names": [
       "vo.mp3.b64.part001",
@@ -113,9 +113,59 @@
       "vo.mp3.b64.part012",
       "vo.mp3.b64.part013"
     ],
-    "base64_chars": 171632,
-    "bytes": 0,
-    "sha256": null,
-    "error": "Excess data after padding"
+    "chunk_bytes": [
+      18102,
+      15000,
+      6750,
+      9000,
+      9000,
+      12000,
+      12000,
+      12000,
+      12000,
+      12000,
+      5259,
+      4978,
+      633
+    ],
+    "bytes": 128722,
+    "sha256": "3a00f6e0151b177e29d7a6451269a456fad30923af3ccd9a0a602ecfe4dc2a3b",
+    "error": null
+  },
+  "all_parts_independent_decode": {
+    "count": 13,
+    "names": [
+      "vo.mp3.b64.part001",
+      "vo.mp3.b64.part002",
+      "vo.mp3.b64.part003",
+      "vo.mp3.b64.part004",
+      "vo.mp3.b64.part005",
+      "vo.mp3.b64.part006",
+      "vo.mp3.b64.part007",
+      "vo.mp3.b64.part008",
+      "vo.mp3.b64.part009",
+      "vo.mp3.b64.part010",
+      "vo.mp3.b64.part011",
+      "vo.mp3.b64.part012",
+      "vo.mp3.b64.part013"
+    ],
+    "chunk_bytes": [
+      18102,
+      15000,
+      6750,
+      9000,
+      9000,
+      12000,
+      12000,
+      12000,
+      12000,
+      12000,
+      5259,
+      4978,
+      633
+    ],
+    "bytes": 128722,
+    "sha256": "3a00f6e0151b177e29d7a6451269a456fad30923af3ccd9a0a602ecfe4dc2a3b",
+    "error": null
   }
 }
