@@ -61,8 +61,10 @@ jobs:
           parts = sorted(path for path in source.glob("vo.mp3.b64.part*") if pattern.search(path.name))
           if len(parts) != 13:
               raise SystemExit(f"expected 13 exact voice parts; found {len(parts)}: {[p.name for p in parts]}")
-          encoded = "".join(path.read_text(encoding="ascii").strip() for path in parts)
-          raw = base64.b64decode(encoded, validate=True)
+          raw = b"".join(
+              base64.b64decode(path.read_text(encoding="ascii").strip(), validate=True)
+              for path in parts
+          )
           digest = hashlib.sha256(raw).hexdigest()
           if len(raw) != int(expected["bytes"]):
               raise SystemExit(f"voice byte mismatch: {len(raw)} != {expected['bytes']}")
