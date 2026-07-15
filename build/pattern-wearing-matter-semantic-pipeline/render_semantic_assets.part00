@@ -1,0 +1,120 @@
+
+from pathlib import Path
+import math, re, subprocess, sys, time, json, os
+import numpy as np
+from PIL import Image, ImageDraw, ImageFont
+
+W, H, FPS = 720, 1280, 20
+TOTAL = 185.730563
+TAU = math.tau
+
+SCENES = [
+    (0.000, 9.017, "identity_flow", "cyan"),
+    (9.017, 20.902, "keys_bills", "amber"),
+    (20.902, 25.454, "whirlpool_material", "cyan"),
+    (25.454, 31.107, "whirlpool_persist", "blue"),
+    (31.107, 43.148, "forces_pattern", "violet"),
+    (43.148, 51.581, "self_change", "green"),
+    (51.581, 59.748, "memory_tiles", "amber"),
+    (59.748, 71.828, "relationship_pieces", "cyan"),
+    (71.828, 80.409, "self_rebuild", "violet"),
+    (80.409, 90.185, "song_not_object", "blue"),
+    (90.185, 102.054, "song_elsewhere", "cyan"),
+    (102.054, 112.127, "body_receiver", "green"),
+    (112.127, 121.661, "taxes_wifi", "amber"),
+    (121.661, 130.367, "kitchen_forget", "cyan"),
+    (130.367, 144.352, "family_network", "violet"),
+    (144.352, 151.762, "city_bricks", "blue"),
+    (151.762, 160.867, "flame_process", "amber"),
+    (160.867, 165.326, "costume_dance", "red"),
+    (165.326, 176.921, "thing_pattern", "violet"),
+    (176.921, 185.731, "instrument_music", "cyan"),
+]
+
+PALETTES = {
+    "cyan": ((4, 12, 22), (11, 44, 61), (70, 226, 238), (232, 252, 255)),
+    "amber": ((20, 9, 4), (80, 36, 12), (255, 176, 61), (255, 244, 212)),
+    "violet": ((13, 6, 27), (54, 22, 87), (193, 124, 255), (248, 236, 255)),
+    "green": ((3, 17, 12), (15, 67, 44), (78, 230, 153), (232, 255, 243)),
+    "red": ((23, 5, 8), (86, 19, 31), (255, 88, 111), (255, 232, 237)),
+    "blue": ((3, 9, 25), (14, 43, 95), (86, 170, 255), (235, 245, 255)),
+}
+
+FONT_REG = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
+FONT_BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+def font(size, bold=False):
+    return ImageFont.truetype(FONT_BOLD if bold else FONT_REG, size)
+
+# deterministic random bases
+rng = np.random.default_rng(48271)
+VORTEX_BASE = [(rng.random(), rng.uniform(0, TAU), rng.random(), rng.random()) for _ in range(250)]
+SIL_BASE = [(rng.random(), rng.random(), rng.random(), rng.random()) for _ in range(260)]
+ASSEMBLE_BASE = [(rng.uniform(80, 640), rng.uniform(130, 840), rng.random(), rng.random()) for _ in range(180)]
+SPARK_BASE = [(rng.random(), rng.random(), rng.random()) for _ in range(90)]
+
+def mix(a,b,t):
+    return tuple(int(x+(y-x)*t) for x,y in zip(a,b))
+
+def ease(x):
+    x=max(0,min(1,x)); return x*x*(3-2*x)
+
+# Precompute gently shifting backgrounds so per-frame work stays fast.
+BG = {}
+for name,(c0,c1,accent,_) in PALETTES.items():
+    for k in range(16):
+        y = np.linspace(0,1,H,dtype=np.float32)[:,None,None]
+        top=np.array(c0,np.float32)[None,None,:]
+        bot=np.array(c1,np.float32)[None,None,:]
+        arr=np.repeat(top*(1-y)+bot*y,W,axis=1)
+        yy,xx=np.mgrid[0:H,0:W]
+        cx=W*(.35+.30*(k/15))
+        cy=H*(.28+.08*math.sin(TAU*k/16))
+        rr=((xx-cx)/(W*.50))**2+((yy-cy)/(H*.44))**2
+        glow=np.exp(-rr*3.0)[...,None]*np.array(accent,np.float32)[None,None,:]*.18
+        noise=np.random.default_rng(k+31).normal(0,1.4,(H,W,1))
+        arr=np.clip(arr+glow+noise,0,255).astype(np.uint8)
+        BG[(name,k)] = Image.fromarray(arr,"RGB")
+
+def bg(name,t):
+    return BG[(name, int((t%1)*16)%16)].copy()
+
+def label(d, text, x, y, size=28, accent=(80,220,235), anchor="mm", fill=(248,250,252), box=True):
+    f=font(size,True)
+    bb=d.textbbox((x,y),text,font=f,anchor=anchor)
+    if box:
+        pad=10
+        d.rounded_rectangle((bb[0]-pad,bb[1]-6,bb[2]+pad,bb[3]+6),radius=10,
+                            fill=(3,6,10,205),outline=accent,width=2)
+    d.text((x,y),text,font=f,fill=fill,anchor=anchor)
+
+def line_glow(d, pts, accent, w=3):
+    d.line(pts,fill=(*accent,100),width=w*4,joint="curve")
+    d.line(pts,fill=(*accent,255),width=w,joint="curve")
+
+def wave_points(x0,x1,y,amp,cycles,phase,n=100):
+    return [(x0+(x1-x0)*u, y+amp*(math.sin(math.pi*u)**.7)*math.sin(TAU*cycles*u+phase))
+            for u in np.linspace(0,1,n)]
+
+def silhouette_outline(d,cx,cy,s,accent,width=3):
+    hr=30*s
+    d.ellipse((cx-hr,cy-175*s-hr,cx+hr,cy-175*s+hr),outline=accent,width=width)
+    d.rounded_rectangle((cx-55*s,cy-145*s,cx+55*s,cy+35*s),radius=int(45*s),outline=accent,width=width)
+    d.line((cx-35*s,cy+30*s,cx-70*s,cy+175*s),fill=accent,width=width)
+    d.line((cx+35*s,cy+30*s,cx+70*s,cy+175*s),fill=accent,width=width)
+    d.line((cx-45*s,cy-95*s,cx-110*s,cy+20*s),fill=accent,width=width)
+    d.line((cx+45*s,cy-95*s,cx+110*s,cy+20*s),fill=accent,width=width)
+
+def particle_silhouette(d,cx,cy,s,accent,t):
+    for i,(a,b,c,q) in enumerate(SIL_BASE):
+        if q<.19:
+            ang=TAU*a; r=30*s*math.sqrt(b)
+            x=cx+r*math.cos(ang); y=cy-175*s+r*math.sin(ang)
+        elif q<.72:
+            x=cx+(a-.5)*100*s; y=cy-140*s+b*170*s
+        else:
+            side=-1 if a<.5 else 1
+            yy=b*150*s
+            x=cx+side*(24*s+yy*.28)+(c-.5)*22*s; y=cy+20*s+yy
+        drift=14*math.sin(TAU*t+i*.23)
+        r=1.2+2.2*c
+        d.ellipse((x+drift-r,y-r,x+drift+r,y+r),fill=accent)
