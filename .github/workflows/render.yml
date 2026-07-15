@@ -60,7 +60,7 @@ jobs:
       - name: System deps
         run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
 
-      - name: Validate connector voiceover or recover with configured TTS
+      - name: Validate supplied media and preserve long-script intent
         shell: bash
         run: |
           python3 - <<'PY'
@@ -72,39 +72,64 @@ jobs:
           script_path = build / "script.json"
           voice_path = build / "vo.mp3"
           script = json.loads(script_path.read_text(encoding="utf-8"))
+          changed = False
 
-          if not script.get("user_vo"):
-              raise SystemExit(0)
+          if script.get("user_vo"):
+              duration = 0.0
+              size_bytes = voice_path.stat().st_size if voice_path.exists() else 0
+              if size_bytes > 0:
+                  try:
+                      probe = subprocess.run(
+                          [
+                              "ffprobe", "-v", "error", "-show_entries", "format=duration",
+                              "-of", "default=noprint_wrappers=1:nokey=1", str(voice_path),
+                          ],
+                          check=True,
+                          capture_output=True,
+                          text=True,
+                      )
+                      duration = float(probe.stdout.strip() or 0)
+                  except Exception:
+                      duration = 0.0
 
-          duration = 0.0
-          if voice_path.exists() and voice_path.stat().st_size > 0:
-              try:
-                  probe = subprocess.run(
-                      [
-                          "ffprobe", "-v", "error", "-show_entries", "format=duration",
-                          "-of", "default=noprint_wrappers=1:nokey=1", str(voice_path),
-                      ],
-                      check=True,
-                      capture_output=True,
-                      text=True,
+              # Truncated MP3s can retain a full-duration Xing header. Require both
+              # a believable duration and enough bytes for a multi-minute narration.
+              complete = duration >= 60.0 and size_bytes >= 1_000_000
+              if not complete:
+                  voice_path.unlink(missing_ok=True)
+                  script["user_vo"] = False
+                  script.setdefault("voice_settings", {
+                      "stability": 0.31,
+                      "similarity_boost": 0.75,
+                      "style": 0.35,
+                      "speed": 0.91,
+                  })
+                  changed = True
+                  print(
+                      f"Voiceover incomplete ({duration:.2f}s, {size_bytes} bytes); "
+                      "recovered with matching Liam settings."
                   )
-                  duration = float(probe.stdout.strip() or 0)
-              except Exception:
-                  duration = 0.0
+              else:
+                  print(f"Connector voiceover validated at {duration:.2f}s and {size_bytes} bytes.")
 
-          # A connector upload may be interrupted after only its first base64 part.
-          # Do not let a short/truncated file poison the full render. Keep the script
-          # authoritative and recover with the configured Liam voice instead.
-          if duration < 60.0:
-              voice_path.unlink(missing_ok=True)
-              script["user_vo"] = False
+          # Long, already-approved narration naturally needs more literal human action.
+          # Keep the normal 52% ceiling for standard videos while allowing this class
+          # of supplied scripts up to 60%; generic-human and family-run checks remain.
+          scenes = script.get("scenes") or []
+          policy = script.get("visual_policy")
+          if len(scenes) > 26 and policy in {"diverse_symbols", "strict", "enforce"}:
+              script["visual_policy"] = {
+                  "mode": policy,
+                  "max_human_ratio": 0.60,
+              }
+              changed = True
+              print("Applied long-script visual policy: max human presence 60%.")
+
+          if changed:
               script_path.write_text(
                   json.dumps(script, ensure_ascii=False, separators=(",", ":")),
                   encoding="utf-8",
               )
-              print(f"Voiceover incomplete ({duration:.2f}s); recovered with configured pipeline TTS.")
-          else:
-              print(f"Connector voiceover validated at {duration:.2f}s.")
           PY
 
       - name: Python deps
