@@ -27,6 +27,16 @@ jobs:
           slug="${file#build/}"
           slug="${slug%/render.request}"
           echo "slug=$slug" >> "$GITHUB_OUTPUT"
+      - name: Mark render started
+        shell: bash
+        run: |
+          slug="${{ steps.slug.outputs.slug }}"
+          printf '%s\n' "$GITHUB_RUN_ID" > "build/$slug/render-started.txt"
+          git config user.name "render-request-bot"
+          git config user.email "render-request@users.noreply.github.com"
+          git add "build/$slug/render-started.txt"
+          git commit -m "render $slug: started $GITHUB_RUN_ID" || true
+          git push
 
   render:
     needs: detect
