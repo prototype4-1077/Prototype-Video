@@ -1,6 +1,7 @@
 """Drop-in entrypoint that places the existing build under Governor control."""
 from __future__ import annotations
 
+import json
 import os
 from pathlib import Path
 import socket
@@ -8,7 +9,51 @@ import sys
 import traceback
 
 import build
-from governor import PipelineGovernor, normalize_error
+from governor import PipelineGovernor, atomic_write_json, normalize_error
+
+
+def _install_probe_cache(build_dir: Path) -> None:
+    """Avoid re-running ffprobe for every completed segment on every pass.
+
+    A successful probe remains valid while the file's byte size and nanosecond
+    modification time are unchanged. The cache is stored inside the build
+    directory so resumable Governor passes share it, but a modified or replaced
+    media file is always probed again.
+    """
+    cache_path = build_dir / ".probe-cache.json"
+    try:
+        raw = json.loads(cache_path.read_text(encoding="utf-8"))
+        cache = raw if isinstance(raw, dict) else {}
+    except (OSError, ValueError, TypeError):
+        cache = {}
+
+    def cached_probe_ok(filename) -> bool:
+        path = Path(filename)
+        try:
+            stat = path.stat()
+        except OSError:
+            return False
+        key = str(path.resolve())
+        signature = {"size": stat.st_size, "mtime_ns": stat.st_mtime_ns}
+        entry = cache.get(key)
+        if isinstance(entry, dict) and entry.get("valid") is True and all(
+            entry.get(field) == value for field, value in signature.items()
+        ):
+            return True
+
+        result = build.sh([
+            "ffprobe", "-v", "error", "-show_entries", "format=duration",
+            "-of", "csv=p=0", str(path),
+        ])
+        valid = result.returncode == 0
+        if valid:
+            cache[key] = {**signature, "valid": True}
+            atomic_write_json(cache_path, cache)
+        else:
+            cache.pop(key, None)
+        return valid
+
+    build.probe_ok = cached_probe_ok
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -23,7 +68,21 @@ def main(argv: list[str] | None = None) -> int:
     governor = PipelineGovernor(build_dir)
     build.sh = governor.run
     build.audio_variants.set_runner(governor.run)
-    governor.record_event("build_pass_start", pid=os.getpid())
+    _install_probe_cache(build_dir)
+
+    # Local quick passes stay short. CI receives enough room to cross an entire
+    # validation/checkpoint boundary rather than repeatedly stopping just before
+    # overlays or final assembly.
+    requested_budget = os.environ.get("BUILD_PASS_BUDGET")
+    if requested_budget:
+        build.BUDGET = max(30.0, float(requested_budget))
+    elif os.environ.get("GITHUB_ACTIONS"):
+        build.BUDGET = 120.0
+
+    governor.record_event(
+        "build_pass_start", pid=os.getpid(), build_budget_s=build.BUDGET,
+        probe_cache=str(build_dir / ".probe-cache.json"),
+    )
     try:
         build.main(str(build_dir))
     except SystemExit as exc:
