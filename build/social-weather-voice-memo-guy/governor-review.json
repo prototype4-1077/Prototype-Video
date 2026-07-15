@@ -1,192 +1,182 @@
 {
-  "generated_at": "2026-07-15T19:33:59+00:00",
+  "generated_at": "2026-07-15T20:10:04+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
-  "recommendations": [
-    {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "ba109e5d9d423014",
-      "priority": "medium",
-      "stage": "build_pass"
-    }
-  ],
-  "recurring_incidents": [
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "ba109e5d9d423014",
-      "kind": "failure",
-      "normalized_error": "r<path> line <n>, in main _restore_exact_voice(build_dir) file \"<path> line <n>, in _restore_exact_voice raise runtimeerror( runtimeerror: exact supplied voiceover could not be reconstructed from repository parts; expected bytes=<n> b64_chars=<n> sha256=<id>; parts=vo.mp3.b64.part001:<n>, vo.mp3.b64.part002:<n>, vo.mp3.b64.part003:<n>, vo.mp3.b64.part004:<n>, vo.mp3.b64.part005:<n>, vo.mp3.b64.part006:<n>, vo.mp3.b64",
-      "slugs": [
-        "social-weather-voice-memo-guy"
-      ],
-      "stage": "build_pass"
-    }
-  ],
+  "recommendations": [],
+  "recurring_incidents": [],
   "runs_analyzed": 4,
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 2,
+      "attempts": 3,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.003,
       "p95_success_s": 1.004,
-      "sample_count": 2,
-      "successes": 2,
+      "sample_count": 3,
+      "successes": 3,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2.006
+      "total_duration_s": 3.009
     },
     "altsheet": {
-      "attempts": 2,
+      "attempts": 3,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 6.569,
-      "p95_success_s": 7.953,
-      "sample_count": 2,
-      "successes": 2,
+      "p50_success_s": 5.032,
+      "p95_success_s": 7.799,
+      "sample_count": 3,
+      "successes": 3,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 13.139
+      "total_duration_s": 17.171
     },
     "assemble": {
-      "attempts": 176,
+      "attempts": 216,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 14.105,
-      "p95_success_s": 33.194,
-      "sample_count": 176,
-      "successes": 176,
+      "p50_success_s": 15.121,
+      "p95_success_s": 33.552,
+      "sample_count": 216,
+      "successes": 216,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2823.342
+      "total_duration_s": 3706.511
     },
     "build_pass": {
-      "attempts": 44,
-      "failure_rate": 0.0455,
-      "failures": 2,
-      "p50_success_s": 112.604,
-      "p95_success_s": 151.018,
-      "sample_count": 42,
-      "successes": 42,
+      "attempts": 57,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 112.454,
+      "p95_success_s": 139.087,
+      "sample_count": 57,
+      "successes": 57,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 4197.971
+      "total_duration_s": 5524.541
     },
     "credits": {
-      "attempts": 35,
+      "attempts": 45,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.012,
+      "p50_success_s": 1.013,
       "p95_success_s": 1.025,
-      "sample_count": 35,
-      "successes": 35,
+      "sample_count": 45,
+      "successes": 45,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 35.527
+      "total_duration_s": 45.663
     },
     "ffmpeg": {
-      "attempts": 60,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 6.152,
-      "p95_success_s": 20.62,
-      "sample_count": 60,
-      "successes": 60,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 584.969
-    },
-    "footage": {
       "attempts": 68,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 3.008,
-      "p95_success_s": 4.663,
+      "p50_success_s": 7.065,
+      "p95_success_s": 20.265,
       "sample_count": 68,
       "successes": 68,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 217.693
+      "total_duration_s": 635.232
     },
-    "prep": {
-      "attempts": 3,
+    "footage": {
+      "attempts": 88,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 44.114,
-      "p95_success_s": 46.026,
-      "sample_count": 3,
-      "successes": 3,
+      "p50_success_s": 3.01,
+      "p95_success_s": 10.025,
+      "sample_count": 88,
+      "successes": 88,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 128.472
+      "total_duration_s": 384.015
     },
-    "probe": {
-      "attempts": 197,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 1.013,
-      "p95_success_s": 1.026,
-      "sample_count": 197,
-      "successes": 197,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 200.863
-    },
-    "quality": {
-      "attempts": 3,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 54.373,
-      "p95_success_s": 61.089,
-      "sample_count": 3,
-      "successes": 3,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 162.641
-    },
-    "shortcut": {
-      "attempts": 3,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 14.173,
-      "p95_success_s": 15.899,
-      "sample_count": 3,
-      "successes": 3,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 42.337
-    },
-    "transcribe": {
-      "attempts": 7,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 6.01,
-      "p95_success_s": 10.716,
-      "sample_count": 7,
-      "successes": 7,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 55.072
-    },
-    "tts": {
+    "hero": {
       "attempts": 2,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 25.52,
-      "p95_success_s": 26.875,
+      "p50_success_s": 2.006,
+      "p95_success_s": 2.007,
       "sample_count": 2,
       "successes": 2,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 51.04
+      "total_duration_s": 4.013
+    },
+    "prep": {
+      "attempts": 4,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 43.138,
+      "p95_success_s": 45.919,
+      "sample_count": 4,
+      "successes": 4,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 170.635
+    },
+    "probe": {
+      "attempts": 239,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.014,
+      "p95_success_s": 1.026,
+      "sample_count": 239,
+      "successes": 239,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 243.448
+    },
+    "quality": {
+      "attempts": 4,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 54.406,
+      "p95_success_s": 60.725,
+      "sample_count": 4,
+      "successes": 4,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 217.079
+    },
+    "shortcut": {
+      "attempts": 4,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 14.13,
+      "p95_success_s": 15.803,
+      "sample_count": 4,
+      "successes": 4,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 56.425
+    },
+    "transcribe": {
+      "attempts": 11,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 9.014,
+      "p95_success_s": 10.517,
+      "sample_count": 11,
+      "successes": 11,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 89.123
+    },
+    "tts": {
+      "attempts": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 27.026,
+      "p95_success_s": 58.549,
+      "sample_count": 3,
+      "successes": 3,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 113.092
     }
   },
   "statuses": {
-    "done": 3,
-    "failed": 1
+    "done": 4
   }
 }
