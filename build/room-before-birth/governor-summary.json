@@ -1,30 +1,47 @@
 {
-  "finished_at": "2026-07-15T22:48:05+00:00",
-  "github_run_id": "29456494746",
+  "finished_at": "2026-07-15T23:28:32+00:00",
+  "github_run_id": "29458487433",
   "incidents": [
     {
-      "count": 3,
+      "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "b1575f0e09c8ed67",
+      "fingerprint": "1cc12dbdad7fffe9",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "governor stage=tts state=start soft=240s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=fde3a81ba09246ff error: tts failed: , line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: http error <n>: unauthorized | fix: check elevenlabs_api_key / credits, rerun",
+      "normalized_error": "f len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks s",
+      "stage": "footage"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "c5549618cbcd53c0",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=5s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=failure duration=<n>.1s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: genera",
       "stage": "build_pass"
     },
     {
-      "count": 3,
-      "failure_class": "transient",
-      "fingerprint": "fde3a81ba09246ff",
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "6e725aee27eb4041",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "response = meth(req, response) ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in http_response response = self.parent.error( ^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in error return self._call_chain(*args) ^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: ht",
-      "stage": "tts"
+      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
+      "stage": "build_pass"
     }
   ],
-  "last_message": "tts failed (transient); retry budget 2 exhausted. fingerprint=fde3a81ba09246ff. ERROR: tts failed: , line 496, in _call_chain",
+  "last_message": "footage failed (unknown); retry budget 1 exhausted. fingerprint=1cc12dbdad7fffe9. ERROR: footage scene 0: board.py\", line 666, in render_scene",
   "mode": "recover",
   "passes": 3,
   "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 120.0,
+      "sample_count": 3,
+      "soft_timeout_s": 180.0,
+      "source": "default"
+    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -33,55 +50,104 @@
       "soft_timeout_s": 1800.0,
       "source": "explicit"
     },
-    "tts": {
-      "hard_timeout_s": 480.0,
-      "historical_p95_s": null,
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 10.02,
+      "idle_timeout_s": 60.07,
+      "sample_count": 88,
+      "soft_timeout_s": 60.07,
+      "source": "history"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 10.52,
       "idle_timeout_s": 180.0,
-      "sample_count": 3,
-      "soft_timeout_s": 240.0,
-      "source": "default"
+      "sample_count": 11,
+      "soft_timeout_s": 180.0,
+      "source": "history"
     }
   },
   "quality": {},
   "recommendations": [
     {
-      "action": "Keep bounded retry enabled and monitor whether the same fingerprint recovers on the next pass.",
-      "fingerprint": "fde3a81ba09246ff",
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "1cc12dbdad7fffe9",
       "priority": "high",
-      "reason": "3 occurrence(s): response = meth(req, response) ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in http_response response = self.parent.error( ^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in error return self._call_chain(*args) ^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: ht",
-      "stage": "tts"
+      "reason": "2 occurrence(s): f len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks s",
+      "stage": "footage"
     },
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "b1575f0e09c8ed67",
-      "priority": "high",
-      "reason": "3 occurrence(s): governor stage=tts state=start soft=240s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=fde3a81ba09246ff error: tts failed: , line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: http error <n>: unauthorized | fix: check elevenlabs_api_key / credits, rerun",
+      "fingerprint": "c5549618cbcd53c0",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=5s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=failure duration=<n>.1s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: genera",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "6e725aee27eb4041",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (75.1s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "ab443b6a8adf4207a70f19ff9969ad45",
+  "run_id": "100f9f125ff64b96b500fd3b7c7f4a39",
   "schema_version": 1,
   "slug": "room-before-birth",
   "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
     "build_pass": {
       "attempts": 3,
-      "failures": 3,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+      "failures": 2,
+      "p50_success_s": 20.013,
+      "p95_success_s": 20.013,
+      "success_durations_s": [
+        20.013
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 6.004
+      "total_duration_s": 75.103
     },
-    "tts": {
-      "attempts": 3,
-      "failures": 3,
+    "footage": {
+      "attempts": 2,
+      "failures": 2,
       "p50_success_s": null,
       "p95_success_s": null,
       "success_durations_s": [],
       "successes": 0,
       "timeouts": 0,
-      "total_duration_s": 3.004
+      "total_duration_s": 53.134
+    },
+    "transcribe": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 6.004,
+      "p95_success_s": 6.005,
+      "success_durations_s": [
+        6.005,
+        6.004,
+        5.004
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 17.013
     }
   },
   "status": "failed"

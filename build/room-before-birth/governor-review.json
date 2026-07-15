@@ -1,63 +1,66 @@
 {
-  "generated_at": "2026-07-15T22:48:05+00:00",
+  "generated_at": "2026-07-15T23:28:32+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
     {
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
-      "evidence": "3 occurrence(s) across 1 build(s)",
-      "fingerprint": "b1575f0e09c8ed67",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "1cc12dbdad7fffe9",
       "priority": "medium",
-      "stage": "build_pass"
-    },
-    {
-      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
-      "category": "recurring_incident",
-      "evidence": "3 occurrence(s) across 1 build(s)",
-      "fingerprint": "fde3a81ba09246ff",
-      "priority": "medium",
-      "stage": "tts"
+      "stage": "footage"
     }
   ],
   "recurring_incidents": [
     {
-      "count": 3,
+      "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "b1575f0e09c8ed67",
+      "fingerprint": "1cc12dbdad7fffe9",
       "kind": "failure",
-      "normalized_error": "governor stage=tts state=start soft=240s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=fde3a81ba09246ff error: tts failed: , line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: http error <n>: unauthorized | fix: check elevenlabs_api_key / credits, rerun",
+      "normalized_error": "f len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks s",
+      "slugs": [
+        "room-before-birth"
+      ],
+      "stage": "footage"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "c5549618cbcd53c0",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=5s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=failure duration=<n>.1s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: genera",
       "slugs": [
         "room-before-birth"
       ],
       "stage": "build_pass"
     },
     {
-      "count": 3,
-      "failure_class": "transient",
-      "fingerprint": "fde3a81ba09246ff",
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "6e725aee27eb4041",
       "kind": "failure",
-      "normalized_error": "response = meth(req, response) ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in http_response response = self.parent.error( ^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in error return self._call_chain(*args) ^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: ht",
+      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
       "slugs": [
         "room-before-birth"
       ],
-      "stage": "tts"
+      "stage": "build_pass"
     }
   ],
   "runs_analyzed": 5,
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 3,
+      "attempts": 4,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.003,
+      "p50_success_s": 1.002,
       "p95_success_s": 1.004,
-      "sample_count": 3,
-      "successes": 3,
+      "sample_count": 4,
+      "successes": 4,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 3.009
+      "total_duration_s": 4.011
     },
     "altsheet": {
       "attempts": 3,
@@ -85,15 +88,15 @@
     },
     "build_pass": {
       "attempts": 59,
-      "failure_rate": 0.0508,
-      "failures": 3,
-      "p50_success_s": 113.051,
-      "p95_success_s": 145.802,
-      "sample_count": 56,
-      "successes": 56,
+      "failure_rate": 0.0339,
+      "failures": 2,
+      "p50_success_s": 112.454,
+      "p95_success_s": 145.401,
+      "sample_count": 57,
+      "successes": 57,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 5507.764
+      "total_duration_s": 5576.863
     },
     "credits": {
       "attempts": 44,
@@ -120,16 +123,16 @@
       "total_duration_s": 621.031
     },
     "footage": {
-      "attempts": 88,
-      "failure_rate": 0.0,
-      "failures": 0,
+      "attempts": 90,
+      "failure_rate": 0.0222,
+      "failures": 2,
       "p50_success_s": 3.01,
       "p95_success_s": 10.025,
       "sample_count": 88,
       "successes": 88,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 384.015
+      "total_duration_s": 437.149
     },
     "hero": {
       "attempts": 2,
@@ -192,28 +195,28 @@
       "total_duration_s": 54.387
     },
     "transcribe": {
-      "attempts": 11,
+      "attempts": 14,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 9.014,
-      "p95_success_s": 10.517,
-      "sample_count": 11,
-      "successes": 11,
+      "p50_success_s": 6.009,
+      "p95_success_s": 10.366,
+      "sample_count": 14,
+      "successes": 14,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 89.123
+      "total_duration_s": 106.136
     },
     "tts": {
-      "attempts": 6,
-      "failure_rate": 0.5,
-      "failures": 3,
+      "attempts": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
       "p50_success_s": 27.026,
       "p95_success_s": 58.549,
       "sample_count": 3,
       "successes": 3,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 116.096
+      "total_duration_s": 113.092
     }
   },
   "statuses": {
