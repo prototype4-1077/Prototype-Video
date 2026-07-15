@@ -1,0 +1,32 @@
+name: Export Pattern Wearing Matter
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "exports/pattern-wearing-matter.request"
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download TikTok release asset
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p export
+          gh release download video-pattern-wearing-matter \
+            --pattern 'pattern-wearing-matter.mp4' \
+            --dir export
+          test -s export/pattern-wearing-matter.mp4
+      - name: Upload TikTok video only
+        uses: actions/upload-artifact@v4
+        with:
+          name: pattern-wearing-matter-tiktok-only
+          path: export/pattern-wearing-matter.mp4
+          compression-level: 0
+          retention-days: 90
