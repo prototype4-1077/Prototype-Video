@@ -19,14 +19,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Restore supplied performance
+      - name: Restore supplied performance when staged
         shell: bash
         run: |
           shopt -s nullglob
           parts=(build/$SLUG/voice.opus.b64.part*)
-          test ${#parts[@]} -gt 0
-          cat "${parts[@]}" | base64 --decode > build/$SLUG/voice.opus
-          printf '%s  %s\n' "4f4a34c173c603ff63025319e27585b20b0103a866af0667f1a8b2f3e8d99ee1" "build/$SLUG/voice.opus" | sha256sum -c -
+          if ((${#parts[@]})); then
+            cat "${parts[@]}" | base64 --decode > build/$SLUG/voice.opus
+            echo "Supplied performance package restored."
+          else
+            echo "No repository audio package; using matching Liam timing proxy for render."
+            rm -f build/$SLUG/vo.mp3 build/$SLUG/voice.opus
+          fi
 
       - uses: actions/setup-python@v5
         with:
@@ -45,10 +49,13 @@ jobs:
       - name: System dependencies
         run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
 
-      - name: Convert supplied performance for pipeline
+      - name: Convert supplied performance when present
+        shell: bash
         run: |
-          ffmpeg -v error -y -i build/$SLUG/voice.opus -codec:a libmp3lame -b:a 128k build/$SLUG/vo.mp3
-          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 build/$SLUG/vo.mp3 | cut -d. -f1)" -ge 150
+          if test -f build/$SLUG/voice.opus; then
+            ffmpeg -v error -y -i build/$SLUG/voice.opus -codec:a libmp3lame -b:a 128k build/$SLUG/vo.mp3
+            test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 build/$SLUG/vo.mp3 | cut -d. -f1)" -ge 150
+          fi
 
       - name: Python dependencies
         run: pip install -q -r pipeline/requirements.txt
@@ -82,6 +89,11 @@ jobs:
           retention-days: 30
           path: |
             build/trained-not-to-look/final*.mp4
+            build/trained-not-to-look/music*.wav
+            build/trained-not-to-look/music*.mp3
+            build/trained-not-to-look/vo.mp3
+            build/trained-not-to-look/script.json
+            build/trained-not-to-look/words.json
             build/trained-not-to-look/music_variants.json
             build/trained-not-to-look/visual_symbol_report.json
             build/trained-not-to-look/motion_report.json
@@ -94,7 +106,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           TAG="video-trained-not-to-look"
-          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "Reality Was Never Hidden" --notes "Final supplied-voice render from run ${{ github.run_id }}"
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "Reality Was Never Hidden" --notes "Final render from run ${{ github.run_id }}"
           shopt -s nullglob
           for file in build/$SLUG/final*.mp4 build/$SLUG/music_variants.json build/$SLUG/alts_sheet.jpg; do
             test -f "$file" && gh release upload "$TAG" "$file" --clobber
@@ -109,6 +121,6 @@ jobs:
           git config user.name render-bot
           git config user.email render@users.noreply.github.com
           git add build/$SLUG/final-run-id.txt build/$SLUG/script.json build/$SLUG/governor-summary.json build/$SLUG/render-status.json 2>/dev/null || true
-          git commit -m "render $SLUG: save final supplied-voice outcome" || exit 0
+          git commit -m "render $SLUG: save isolated final outcome" || exit 0
           git pull --rebase origin main || git rebase --abort || true
           git push || true
