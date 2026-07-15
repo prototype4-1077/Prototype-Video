@@ -1,0 +1,168 @@
+{
+  "generated_at": "2026-07-15T16:44:07+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {},
+  "recommendations": [
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "1120 occurrence(s) across 2 build(s)",
+      "fingerprint": "c6d22c7000797d03",
+      "priority": "high",
+      "stage": "hero"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 1120,
+      "failure_class": "transient",
+      "fingerprint": "c6d22c7000797d03",
+      "kind": "failure",
+      "normalized_error": "error: reference-conditioned image generation failed (http error <n>: internal server error) | fix: rerun; if the stock-frame url remains unavailable, use stock footage for this beat",
+      "slugs": [
+        "trained-not-to-look",
+        "pattern-wearing-matter"
+      ],
+      "stage": "hero"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "social-weather-voice-memo-guy"
+      ],
+      "stage": "build_pass"
+    }
+  ],
+  "runs_analyzed": 3,
+  "schema_version": 1,
+  "stages": {
+    "align": {
+      "attempts": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "sample_count": 3,
+      "successes": 3,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 3.006
+    },
+    "assemble": {
+      "attempts": 31,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 10.107,
+      "p95_success_s": 15.173,
+      "sample_count": 31,
+      "successes": 31,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 312.881
+    },
+    "build_pass": {
+      "attempts": 547,
+      "failure_rate": 0.0018,
+      "failures": 1,
+      "p50_success_s": 7.018,
+      "p95_success_s": 34.143,
+      "sample_count": 546,
+      "successes": 546,
+      "timeout_rate": 0.0018,
+      "timeouts": 1,
+      "total_duration_s": 7863.77
+    },
+    "credits": {
+      "attempts": 128,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.019,
+      "p95_success_s": 1.02,
+      "sample_count": 128,
+      "successes": 128,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 130.424
+    },
+    "footage": {
+      "attempts": 87,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 11.017,
+      "p95_success_s": 15.033,
+      "sample_count": 87,
+      "successes": 87,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 820.476
+    },
+    "hero": {
+      "attempts": 1120,
+      "failure_rate": 1.0,
+      "failures": 1120,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "sample_count": 0,
+      "successes": 0,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 2251.466
+    },
+    "prep": {
+      "attempts": 1,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 47.244,
+      "p95_success_s": 47.244,
+      "sample_count": 1,
+      "successes": 1,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 47.244
+    },
+    "probe": {
+      "attempts": 3531,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.018,
+      "p95_success_s": 1.02,
+      "sample_count": 3531,
+      "successes": 3531,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 3596.035
+    },
+    "transcribe": {
+      "attempts": 11,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 9.007,
+      "p95_success_s": 10.008,
+      "sample_count": 11,
+      "successes": 11,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 87.081
+    },
+    "tts": {
+      "attempts": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 26.014,
+      "p95_success_s": 26.015,
+      "sample_count": 3,
+      "successes": 3,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 76.042
+    }
+  },
+  "statuses": {
+    "failed": 1,
+    "pass_limit": 2
+  }
+}
