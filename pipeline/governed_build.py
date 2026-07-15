@@ -12,6 +12,28 @@ import build
 from governor import PipelineGovernor, atomic_write_json, normalize_error
 
 
+def _install_storyline_router(governor: PipelineGovernor):
+    """Route stock acquisition through the approved narrative-fidelity layer."""
+    storyline_entry = Path(__file__).with_name("storyline_footage.py")
+
+    def governed_runner(command, **kwargs):
+        if isinstance(command, (list, tuple)):
+            parts = [str(part) for part in command]
+            script_index = next(
+                (i for i, part in enumerate(parts) if Path(part).name == "footage.py"),
+                None,
+            )
+            if script_index is not None:
+                parts[script_index] = str(storyline_entry)
+                tail = parts[script_index + 1:]
+                stage = "credits" if "credits" in tail else "footage"
+                return governor.run(parts, stage_override=stage, **kwargs)
+        return governor.run(command, **kwargs)
+
+    build.sh = governed_runner
+    return governed_runner
+
+
 def _install_probe_cache(build_dir: Path) -> None:
     """Avoid re-running ffprobe for every completed segment on every pass.
 
@@ -66,8 +88,8 @@ def main(argv: list[str] | None = None) -> int:
     # font acquisition). Child stages are bounded independently by the Governor.
     socket.setdefaulttimeout(float(os.environ.get("GOVERNOR_SOCKET_TIMEOUT_SECONDS", "60")))
     governor = PipelineGovernor(build_dir)
-    build.sh = governor.run
-    build.audio_variants.set_runner(governor.run)
+    governed_runner = _install_storyline_router(governor)
+    build.audio_variants.set_runner(governed_runner)
     _install_probe_cache(build_dir)
 
     # Local quick passes stay short. CI receives enough room to cross an entire
@@ -82,6 +104,7 @@ def main(argv: list[str] | None = None) -> int:
     governor.record_event(
         "build_pass_start", pid=os.getpid(), build_budget_s=build.BUDGET,
         probe_cache=str(build_dir / ".probe-cache.json"),
+        narrative_fidelity=str(Path(__file__).with_name("editorial_memory.json")),
     )
     try:
         build.main(str(build_dir))
