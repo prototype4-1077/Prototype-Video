@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15T23:28:32+00:00",
+  "generated_at": "2026-07-15T23:34:27+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
@@ -27,9 +27,9 @@
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "c5549618cbcd53c0",
+      "fingerprint": "d377024262cdfef0",
       "kind": "failure",
-      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=5s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=failure duration=<n>.1s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: genera",
+      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: genera",
       "slugs": [
         "room-before-birth"
       ],
@@ -38,9 +38,9 @@
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "6e725aee27eb4041",
+      "fingerprint": "20379bed636e703c",
       "kind": "failure",
-      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
+      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
       "slugs": [
         "room-before-birth"
       ],
@@ -54,13 +54,13 @@
       "attempts": 4,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.002,
+      "p50_success_s": 1.003,
       "p95_success_s": 1.004,
       "sample_count": 4,
       "successes": 4,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 4.011
+      "total_duration_s": 4.012
     },
     "altsheet": {
       "attempts": 3,
@@ -96,7 +96,7 @@
       "successes": 57,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 5576.863
+      "total_duration_s": 5592.84
     },
     "credits": {
       "attempts": 44,
@@ -132,7 +132,7 @@
       "successes": 88,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 437.149
+      "total_duration_s": 441.07
     },
     "hero": {
       "attempts": 2,
@@ -198,13 +198,13 @@
       "attempts": 14,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 6.009,
+      "p50_success_s": 9.511,
       "p95_success_s": 10.366,
       "sample_count": 14,
       "successes": 14,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 106.136
+      "total_duration_s": 117.149
     },
     "tts": {
       "attempts": 3,
