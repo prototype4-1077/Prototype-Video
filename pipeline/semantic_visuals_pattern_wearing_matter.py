@@ -1,16 +1,15 @@
 """Generate semantically exact custom motion scenes for Pattern Wearing Matter.
 
-This module is intentionally deterministic. It creates one portrait MP4 per scene
-from the approved visual mechanism instead of relying on broad-topic stock search.
-The resulting clips are fed back through the standard TikTok Video Pipeline for
-captioning, music, mastering, quality checks, artifact publication, and release.
+This deterministic scene source bypasses broad-topic stock selection. The generated
+clips still pass through the standard TikTok Video Pipeline for captions, music,
+voice mastering, Governor supervision, quality checks, artifacts, and Releases.
 """
 from pathlib import Path
 import importlib.util
 import json
-import shutil
-import subprocess
 import sys
+
+import motion
 
 
 def load_renderer(repo_root: Path):
@@ -34,20 +33,17 @@ def generate(build_dir: str | Path) -> None:
         clip = build / f"clip_{index:02d}.mp4"
         if not clip.exists() or clip.stat().st_size < 100_000:
             raise RuntimeError(f"semantic clip missing or undersized: {clip}")
+        evidence = motion.temporal_evidence(str(clip))
+        if not evidence.get("passes"):
+            raise RuntimeError(f"semantic clip {index} failed temporal-motion verification: {evidence}")
+        evidence["provenance"] = "deterministic evolving frame sequence"
         scene.update({
             "clip": str(clip),
             "motion_kind": "video",
             "motion_mode": "recorded",
             "motion_source": "deterministic_semantic_animation",
             "motion_verified": True,
-            "motion_evidence": {
-                "passes": True,
-                "samples": 9,
-                "residual_flow_p75": 1.0,
-                "active_region_ratio": 0.25,
-                "frame_difference": 4.0,
-                "provenance": "generated frame sequence; not a static pan/zoom",
-            },
+            "motion_evidence": evidence,
             "semantic_visual_locked": True,
         })
     script_path.write_text(json.dumps(script, indent=1, ensure_ascii=False), encoding="utf-8")
