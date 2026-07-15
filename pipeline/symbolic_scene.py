@@ -300,15 +300,44 @@ def _scene_family_network(img,t,accent,light):
 
 
 def _scene_city_bricks(img,t,accent,light):
-    d=ImageDraw.Draw(img); base_y=535; buildings=[(110,335,240),(300,235,155),(485,300,220),(740,190,165),(930,305,115)]
+    d=ImageDraw.Draw(img); base_y=535
+    buildings=[(110,335,240),(300,235,155),(485,300,220),(740,190,165),(930,305,115)]
     for bi,(x,top,w) in enumerate(buildings):
         rows=max(2,int((base_y-top)/34)); cols=max(2,int(w/42))
+        bw=w/cols; bh=(base_y-top)/rows
         for r in range(rows):
             for c in range(cols):
-                xx=x+c*(w/cols); yy=top+r*((base_y-top)/rows); phase=(t*1.7+bi*.13+r*.07+c*.04)%1; col=_mix((90,94,100),accent,.25+.55*phase)
-                d.rounded_rectangle((xx+2,yy+2,xx+w/cols-3,yy+(base_y-top)/rows-3),radius=3,fill=(*col,220))
-        d.rectangle((x,top,x+w,base_y),outline=(*light,150),width=3)
-    _glow_line(img,[(90,base_y),(W-90,base_y)],accent,4,12); _label(img,"SAME CITY — DIFFERENT BRICKS",(W/2,590),30,accent)
+                phase=(t*1.35 + bi*.17 + r*.09 + c*.055) % 1.0
+                if phase < .44:
+                    local=phase/.44
+                    slide=0.0
+                    color_mix=.15+.45*local
+                    alpha=230
+                elif phase < .58:
+                    local=(phase-.44)/.14
+                    slide=_ease(local)*(bw*2.5)
+                    color_mix=.60
+                    alpha=int(230*(1-local))
+                elif phase < .72:
+                    local=(phase-.58)/.14
+                    slide=-(1-_ease(local))*(bw*2.5)
+                    color_mix=.95-.28*local
+                    alpha=int(230*local)
+                else:
+                    local=(phase-.72)/.28
+                    slide=0.0
+                    color_mix=.67-.35*local
+                    alpha=230
+                xx=x+c*bw+slide
+                yy=top+r*bh
+                col=_mix((72,78,90),accent,color_mix)
+                d.rounded_rectangle((xx+2,yy+2,xx+bw-3,yy+bh-3),radius=3,
+                                    fill=(*col,alpha),outline=(*light,min(alpha,150)),width=2)
+        d.rectangle((x,top,x+w,base_y),outline=(*light,165),width=3)
+    scan_x=80+(W-160)*((t*1.1)%1.0)
+    d.rectangle((scan_x-5,150,scan_x+5,base_y),fill=(*accent,90))
+    _glow_line(img,[(90,base_y),(W-90,base_y)],accent,4,12)
+    _label(img,"SAME CITY — DIFFERENT BRICKS",(W/2,590),30,accent)
 
 
 def _scene_flame(img,t,accent,light):
