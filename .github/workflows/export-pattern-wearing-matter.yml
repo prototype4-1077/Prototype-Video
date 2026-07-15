@@ -7,13 +7,21 @@ on:
       - "exports/pattern-wearing-matter.request"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   export:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - name: Mark export started
+        run: |
+          printf '%s\n' "${{ github.run_id }}" > exports/pattern-wearing-matter-run.txt
+          git config user.name export-bot
+          git config user.email export@users.noreply.github.com
+          git add exports/pattern-wearing-matter-run.txt
+          git commit -m "export pattern-wearing-matter: started ${{ github.run_id }}" || true
+          git push
       - name: Download TikTok release asset
         env:
           GH_TOKEN: ${{ github.token }}
