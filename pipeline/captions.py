@@ -27,6 +27,8 @@ TITLE_MAX_LINE_W = 940
 TITLE_MAX_BLOCK_H = 820            # stays above captions and TikTok UI
 TITLE_MIN_FONT_SIZE = 12
 TITLE_FONT_STEP = 6
+TITLE_EYEBROW_RATIO = 0.34
+TITLE_EYEBROW_GAP = 20
 
 # Landscape text is larger in pixels but occupies a similar share of the frame.
 YT_FONT_SIZE = 50
@@ -158,33 +160,71 @@ def _fit_title(title, draw, font_size, max_line_w=TITLE_MAX_LINE_W,
     return font, lines, int((ascent + descent) * 0.98)
 
 
+def _draw_shadowed_line(draw, text, x, y, font, fill=WHITE, shadow_scale=1.0):
+    offsets = [
+        (-4 * shadow_scale, 4 * shadow_scale),
+        (4 * shadow_scale, 4 * shadow_scale),
+        (0, 6 * shadow_scale),
+        (0, -3 * shadow_scale),
+    ]
+    for dx, dy in offsets:
+        draw.text((x + dx, y + dy), text, font=font, fill=(0, 0, 0, 170))
+    draw.text((x, y), text, font=font, fill=fill)
+
+
 def _title_png(title, out_path, width, height, center_y, max_line_w,
-               max_block_h, font_size):
+               max_block_h, font_size, eyebrow=None):
+    """Render a title, optionally with a smaller series label above it."""
     img = Image.new("RGBA", (width, height), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
     title = " ".join(title.upper().split()) or "UNTITLED"
-    font, lines, line_h = _fit_title(title, d, font_size, max_line_w, max_block_h)
-    total_h = line_h * len(lines)
+    eyebrow = " ".join((eyebrow or "").upper().split())
+
+    eyebrow_font = None
+    eyebrow_lines = []
+    eyebrow_line_h = 0
+    eyebrow_total_h = 0
+    gap = 0
+    if eyebrow:
+        eyebrow_size = max(24, int(font_size * TITLE_EYEBROW_RATIO))
+        eyebrow_font, eyebrow_lines, eyebrow_line_h = _fit_title(
+            eyebrow, d, eyebrow_size, max_line_w, max_block_h // 3)
+        eyebrow_total_h = eyebrow_line_h * len(eyebrow_lines)
+        gap = max(10, int(TITLE_EYEBROW_GAP * width / W))
+
+    main_block_h = max(TITLE_MIN_FONT_SIZE, max_block_h - eyebrow_total_h - gap)
+    font, lines, line_h = _fit_title(title, d, font_size, max_line_w, main_block_h)
+    main_total_h = line_h * len(lines)
+    total_h = eyebrow_total_h + gap + main_total_h
     y = center_y - total_h // 2
+
+    if eyebrow:
+        for line in eyebrow_lines:
+            words = " ".join(w for w, _ in line)
+            lw = d.textlength(words, font=eyebrow_font)
+            x = (width - lw) / 2
+            _draw_shadowed_line(d, words, x, y, eyebrow_font,
+                                fill=YELLOW, shadow_scale=0.55)
+            y += eyebrow_line_h
+        y += gap
+
     for line in lines:
         words = " ".join(w for w, _ in line)
         lw = d.textlength(words, font=font)
         x = (width - lw) / 2
-        for dx, dy in [(-4, 4), (4, 4), (0, 6), (0, -3)]:
-            d.text((x + dx, y + dy), words, font=font, fill=(0, 0, 0, 170))
-        d.text((x, y), words, font=font, fill=WHITE)
+        _draw_shadowed_line(d, words, x, y, font)
         y += line_h
     img.save(out_path)
     return out_path
 
 
-def title_png(title, out_path, font_size=190):
+def title_png(title, out_path, font_size=190, eyebrow=None):
     """Render the established title over the portrait picture band."""
     return _title_png(title, out_path, W, H, BAND_Y + BAND_H // 2,
-                      TITLE_MAX_LINE_W, TITLE_MAX_BLOCK_H, font_size)
+                      TITLE_MAX_LINE_W, TITLE_MAX_BLOCK_H, font_size, eyebrow)
 
 
-def youtube_title_png(title, out_path, font_size=170):
+def youtube_title_png(title, out_path, font_size=170, eyebrow=None):
     """Render a native 16:9 title above the YouTube caption safe area."""
     return _title_png(title, out_path, YT_W, YT_H, YT_TITLE_CENTER_Y,
-                      YT_TITLE_MAX_LINE_W, YT_TITLE_MAX_BLOCK_H, font_size)
+                      YT_TITLE_MAX_LINE_W, YT_TITLE_MAX_BLOCK_H, font_size, eyebrow)
