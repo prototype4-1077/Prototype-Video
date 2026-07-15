@@ -9,6 +9,13 @@ import tempfile
 MIN_MUSIC_VARIANTS = 3
 DEFAULT_DELIVERY_LABEL = "Deep Current"
 DEFAULT_DELIVERY_INDEX = 3
+_RUNNER = None
+
+
+def set_runner(runner):
+    """Inject the Governor-compatible subprocess runner for in-process mixes."""
+    global _RUNNER
+    _RUNNER = runner
 
 
 def entries(script):
@@ -66,7 +73,8 @@ def delivery_choice(variants, preferred_label=DEFAULT_DELIVERY_LABEL):
 
 
 def _run(cmd):
-    r = subprocess.run(cmd, capture_output=True, text=True)
+    runner = _RUNNER or subprocess.run
+    r = runner(cmd, capture_output=True, text=True)
     if r.returncode:
         raise RuntimeError(r.stderr[-1500:] or "ffmpeg failed")
     return r
@@ -84,7 +92,8 @@ def mix(noaudio, voiceover, music_path, total, output, delay_ms=400, music_gain=
         _run(["ffmpeg", "-v", "error", "-y", "-i", noaudio, "-i", voiceover,
               "-i", music_path, "-filter_complex", af, "-map", "0:v", "-map", "[a]",
               "-c:v", "copy", "-c:a", "aac", "-b:a", "192k", "-t", str(total), raw])
-        measured = subprocess.run(
+        runner = _RUNNER or subprocess.run
+        measured = runner(
             ["ffmpeg", "-i", raw, "-af", "loudnorm=I=-14:TP=-1.5:LRA=11:print_format=json",
              "-f", "null", "-"], capture_output=True, text=True)
         try:
