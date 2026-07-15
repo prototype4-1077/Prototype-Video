@@ -1,170 +1,192 @@
 {
-  "generated_at": "2026-07-15T18:42:36+00:00",
+  "generated_at": "2026-07-15T18:56:08+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
-  "recommendations": [],
-  "recurring_incidents": [],
+  "recommendations": [
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "691d8ac7682ab223",
+      "priority": "medium",
+      "stage": "build_pass"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "691d8ac7682ab223",
+      "kind": "failure",
+      "normalized_error": "error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "slugs": [
+        "social-weather-voice-memo-guy"
+      ],
+      "stage": "build_pass"
+    }
+  ],
   "runs_analyzed": 3,
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 3,
+      "attempts": 2,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.003,
       "p95_success_s": 1.004,
-      "sample_count": 3,
-      "successes": 3,
+      "sample_count": 2,
+      "successes": 2,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 3.009
+      "total_duration_s": 2.006
     },
     "altsheet": {
-      "attempts": 3,
+      "attempts": 2,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 5.032,
-      "p95_success_s": 7.799,
-      "sample_count": 3,
-      "successes": 3,
+      "p50_success_s": 6.569,
+      "p95_success_s": 7.953,
+      "sample_count": 2,
+      "successes": 2,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 16.158
+      "total_duration_s": 13.139
     },
     "assemble": {
-      "attempts": 176,
+      "attempts": 136,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 12.145,
-      "p95_success_s": 29.486,
-      "sample_count": 176,
-      "successes": 176,
+      "p50_success_s": 11.137,
+      "p95_success_s": 25.819,
+      "sample_count": 136,
+      "successes": 136,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2486.697
+      "total_duration_s": 1740.111
     },
     "build_pass": {
-      "attempts": 42,
-      "failure_rate": 0.0,
-      "failures": 0,
+      "attempts": 32,
+      "failure_rate": 0.0625,
+      "failures": 2,
       "p50_success_s": 110.887,
-      "p95_success_s": 132.909,
-      "sample_count": 42,
-      "successes": 42,
+      "p95_success_s": 142.895,
+      "sample_count": 30,
+      "successes": 30,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 3934.676
+      "total_duration_s": 2796.884
     },
     "credits": {
-      "attempts": 31,
+      "attempts": 22,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.012,
+      "p50_success_s": 1.021,
       "p95_success_s": 1.025,
-      "sample_count": 31,
-      "successes": 31,
+      "sample_count": 22,
+      "successes": 22,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 31.483
+      "total_duration_s": 22.384
     },
     "ffmpeg": {
-      "attempts": 48,
+      "attempts": 40,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 6.136,
-      "p95_success_s": 24.883,
-      "sample_count": 48,
-      "successes": 48,
+      "p50_success_s": 5.053,
+      "p95_success_s": 27.37,
+      "sample_count": 40,
+      "successes": 40,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 419.011
+      "total_duration_s": 374.801
     },
     "footage": {
-      "attempts": 88,
+      "attempts": 68,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 3.01,
-      "p95_success_s": 12.664,
-      "sample_count": 88,
-      "successes": 88,
+      "p50_success_s": 3.008,
+      "p95_success_s": 4.663,
+      "sample_count": 68,
+      "successes": 68,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 421.002
+      "total_duration_s": 217.693
     },
     "prep": {
-      "attempts": 3,
+      "attempts": 2,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 38.12,
-      "p95_success_s": 45.426,
-      "sample_count": 3,
-      "successes": 3,
+      "p50_success_s": 42.179,
+      "p95_success_s": 45.832,
+      "sample_count": 2,
+      "successes": 2,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 121.472
+      "total_duration_s": 84.358
     },
     "probe": {
-      "attempts": 194,
+      "attempts": 149,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.018,
+      "p50_success_s": 1.022,
       "p95_success_s": 1.026,
-      "sample_count": 194,
-      "successes": 194,
+      "sample_count": 149,
+      "successes": 149,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 197.817
+      "total_duration_s": 152.298
     },
     "quality": {
-      "attempts": 3,
+      "attempts": 2,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 46.433,
-      "p95_success_s": 60.295,
-      "sample_count": 3,
-      "successes": 3,
+      "p50_success_s": 54.134,
+      "p95_success_s": 61.065,
+      "sample_count": 2,
+      "successes": 2,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 150.537
+      "total_duration_s": 108.268
     },
     "shortcut": {
-      "attempts": 3,
+      "attempts": 2,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 12.073,
-      "p95_success_s": 13.963,
-      "sample_count": 3,
-      "successes": 3,
+      "p50_success_s": 13.123,
+      "p95_success_s": 14.068,
+      "sample_count": 2,
+      "successes": 2,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 37.299
+      "total_duration_s": 26.246
     },
     "transcribe": {
-      "attempts": 11,
+      "attempts": 7,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 7.008,
-      "p95_success_s": 10.515,
-      "sample_count": 11,
-      "successes": 11,
+      "p50_success_s": 6.01,
+      "p95_success_s": 10.716,
+      "sample_count": 7,
+      "successes": 7,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 80.103
+      "total_duration_s": 55.072
     },
     "tts": {
       "attempts": 3,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 27.02,
-      "p95_success_s": 27.025,
+      "p50_success_s": 25.018,
+      "p95_success_s": 26.825,
       "sample_count": 3,
       "successes": 3,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 78.06
+      "total_duration_s": 76.058
     }
   },
   "statuses": {
-    "done": 3
+    "done": 2,
+    "failed": 1
   }
 }

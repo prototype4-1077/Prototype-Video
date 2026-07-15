@@ -1,35 +1,21 @@
 {
-  "finished_at": "2026-07-15T18:42:36+00:00",
-  "github_run_id": "29440162578",
-  "incidents": [],
-  "last_message": "DONE -> /home/runner/work/tiktok-videos/tiktok-videos/build/social-weather-voice-memo-guy/final.mp4 + /home/runner/work/tiktok-videos/tiktok-videos/build/social-weather-voice-memo-guy/final_youtube.mp4",
+  "finished_at": "2026-07-15T18:56:08+00:00",
+  "github_run_id": "29442386490",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "691d8ac7682ab223",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=342c78b22cc818e6. ERROR: visual symbol plan: human imagery occupies 80%; target <= 78% | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
   "mode": "recover",
-  "passes": 13,
+  "passes": 3,
   "policy": {
-    "align": {
-      "hard_timeout_s": 300.0,
-      "historical_p95_s": null,
-      "idle_timeout_s": 120.0,
-      "sample_count": 3,
-      "soft_timeout_s": 180.0,
-      "source": "default"
-    },
-    "altsheet": {
-      "hard_timeout_s": 300.0,
-      "historical_p95_s": null,
-      "idle_timeout_s": 120.0,
-      "sample_count": 3,
-      "soft_timeout_s": 180.0,
-      "source": "default"
-    },
-    "assemble": {
-      "hard_timeout_s": 900.0,
-      "historical_p95_s": 24.48,
-      "idle_timeout_s": 103.45,
-      "sample_count": 198,
-      "soft_timeout_s": 103.45,
-      "source": "history"
-    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -37,70 +23,6 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
-    },
-    "credits": {
-      "hard_timeout_s": 300.0,
-      "historical_p95_s": 1.02,
-      "idle_timeout_s": 33.08,
-      "sample_count": 32,
-      "soft_timeout_s": 33.08,
-      "source": "history"
-    },
-    "ffmpeg": {
-      "hard_timeout_s": 900.0,
-      "historical_p95_s": 20.62,
-      "idle_timeout_s": 91.86,
-      "sample_count": 60,
-      "soft_timeout_s": 91.86,
-      "source": "history"
-    },
-    "footage": {
-      "hard_timeout_s": 600.0,
-      "historical_p95_s": 5.01,
-      "idle_timeout_s": 60.0,
-      "sample_count": 99,
-      "soft_timeout_s": 60.0,
-      "source": "history"
-    },
-    "prep": {
-      "hard_timeout_s": 900.0,
-      "historical_p95_s": null,
-      "idle_timeout_s": 300.0,
-      "sample_count": 3,
-      "soft_timeout_s": 480.0,
-      "source": "default"
-    },
-    "probe": {
-      "hard_timeout_s": 60.0,
-      "historical_p95_s": 1.03,
-      "idle_timeout_s": 20.0,
-      "sample_count": 200,
-      "soft_timeout_s": 33.08,
-      "source": "history"
-    },
-    "quality": {
-      "hard_timeout_s": 1500.0,
-      "historical_p95_s": null,
-      "idle_timeout_s": 1500.0,
-      "sample_count": 0,
-      "soft_timeout_s": 1500.0,
-      "source": "explicit"
-    },
-    "shortcut": {
-      "hard_timeout_s": 900.0,
-      "historical_p95_s": null,
-      "idle_timeout_s": 300.0,
-      "sample_count": 3,
-      "soft_timeout_s": 600.0,
-      "source": "default"
-    },
-    "transcribe": {
-      "hard_timeout_s": 900.0,
-      "historical_p95_s": 10.52,
-      "idle_timeout_s": 180.0,
-      "sample_count": 11,
-      "soft_timeout_s": 180.0,
-      "source": "history"
     },
     "tts": {
       "hard_timeout_s": 480.0,
@@ -380,304 +302,41 @@
   },
   "recommendations": [
     {
-      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
-      "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (1166.0s).",
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "691d8ac7682ab223",
+      "priority": "high",
+      "reason": "2 occurrence(s): error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
       "stage": "build_pass"
     }
   ],
-  "run_id": "005e702114d249c4ad6eca0bf5863f9f",
+  "run_id": "025c6b73fc484c7494bafdcfb67efd8f",
   "schema_version": 1,
   "slug": "social-weather-voice-memo-guy",
   "stages": {
-    "align": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 1.003,
-      "p95_success_s": 1.003,
-      "success_durations_s": [
-        1.003
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 1.003
-    },
-    "altsheet": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 3.019,
-      "p95_success_s": 3.019,
-      "success_durations_s": [
-        3.019
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 3.019
-    },
-    "assemble": {
-      "attempts": 40,
-      "failures": 0,
-      "p50_success_s": 16.631,
-      "p95_success_s": 35.261,
-      "success_durations_s": [
-        22.175,
-        9.058,
-        13.09,
-        9.064,
-        10.061,
-        17.124,
-        8.063,
-        19.151,
-        16.128,
-        10.073,
-        16.112,
-        19.129,
-        10.057,
-        10.067,
-        16.11,
-        15.097,
-        12.085,
-        9.056,
-        11.074,
-        9.064,
-        37.263,
-        16.124,
-        25.204,
-        16.1,
-        19.164,
-        31.219,
-        16.139,
-        35.311,
-        30.228,
-        19.136,
-        31.265,
-        35.258,
-        18.145,
-        19.158,
-        30.237,
-        28.206,
-        23.184,
-        16.107,
-        20.166,
-        17.134
-      ],
-      "successes": 40,
-      "timeouts": 0,
-      "total_duration_s": 746.586
-    },
     "build_pass": {
-      "attempts": 13,
-      "failures": 0,
-      "p50_success_s": 109.732,
-      "p95_success_s": 126.188,
+      "attempts": 3,
+      "failures": 2,
+      "p50_success_s": 26.018,
+      "p95_success_s": 26.018,
       "success_durations_s": [
-        28.019,
-        28.028,
-        120.133,
-        85.186,
-        39.119,
-        109.656,
-        114.812,
-        116.718,
-        109.732,
-        117.851,
-        132.957,
-        121.676,
-        42.156
-      ],
-      "successes": 13,
-      "timeouts": 0,
-      "total_duration_s": 1166.043
-    },
-    "credits": {
-      "attempts": 9,
-      "failures": 0,
-      "p50_success_s": 1.012,
-      "p95_success_s": 1.012,
-      "success_durations_s": [
-        1.006,
-        1.011,
-        1.011,
-        1.011,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012
-      ],
-      "successes": 9,
-      "timeouts": 0,
-      "total_duration_s": 9.099
-    },
-    "ffmpeg": {
-      "attempts": 8,
-      "failures": 0,
-      "p50_success_s": 7.03,
-      "p95_success_s": 7.033,
-      "success_durations_s": [
-        1.012,
-        7.03,
-        7.03,
-        7.03,
-        1.012,
-        7.031,
-        7.034,
-        7.031
-      ],
-      "successes": 8,
-      "timeouts": 0,
-      "total_duration_s": 44.21
-    },
-    "footage": {
-      "attempts": 20,
-      "failures": 0,
-      "p50_success_s": 9.016,
-      "p95_success_s": 14.276,
-      "success_durations_s": [
-        19.019,
-        12.011,
-        9.012,
-        9.016,
-        9.015,
-        9.011,
-        13.016,
-        9.014,
-        9.018,
-        8.013,
-        13.016,
-        9.014,
-        9.014,
-        9.016,
-        8.013,
-        8.015,
-        9.016,
-        9.017,
-        14.026,
-        9.017
-      ],
-      "successes": 20,
-      "timeouts": 0,
-      "total_duration_s": 203.309
-    },
-    "prep": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 37.114,
-      "p95_success_s": 37.114,
-      "success_durations_s": [
-        37.114
+        26.018
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 37.114
-    },
-    "probe": {
-      "attempts": 45,
-      "failures": 0,
-      "p50_success_s": 1.012,
-      "p95_success_s": 1.012,
-      "success_durations_s": [
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.011,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.011,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012,
-        1.012
-      ],
-      "successes": 45,
-      "timeouts": 0,
-      "total_duration_s": 45.519
-    },
-    "quality": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 42.269,
-      "p95_success_s": 42.269,
-      "success_durations_s": [
-        42.269
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 42.269
-    },
-    "shortcut": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 11.053,
-      "p95_success_s": 11.053,
-      "success_durations_s": [
-        11.053
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 11.053
-    },
-    "transcribe": {
-      "attempts": 4,
-      "failures": 0,
-      "p50_success_s": 7.008,
-      "p95_success_s": 7.009,
-      "success_durations_s": [
-        7.008,
-        7.009,
-        7.009,
-        4.005
-      ],
-      "successes": 4,
-      "timeouts": 0,
-      "total_duration_s": 25.031
+      "total_duration_s": 28.251
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 27.02,
-      "p95_success_s": 27.02,
+      "p50_success_s": 25.018,
+      "p95_success_s": 25.018,
       "success_durations_s": [
-        27.02
+        25.018
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 27.02
+      "total_duration_s": 25.018
     }
   },
-  "status": "done"
+  "status": "failed"
 }
