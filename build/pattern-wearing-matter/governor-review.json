@@ -1,8 +1,16 @@
 {
-  "generated_at": "2026-07-15T14:43:26+00:00",
+  "generated_at": "2026-07-15T15:15:22+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "552 occurrence(s) across 1 build(s)",
+      "fingerprint": "c6d22c7000797d03",
+      "priority": "high",
+      "stage": "hero"
+    },
     {
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
@@ -10,17 +18,20 @@
       "fingerprint": "691d8ac7682ab223",
       "priority": "medium",
       "stage": "build_pass"
-    },
-    {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "b26e8c95844188e5",
-      "priority": "medium",
-      "stage": "build_pass"
     }
   ],
   "recurring_incidents": [
+    {
+      "count": 552,
+      "failure_class": "transient",
+      "fingerprint": "c6d22c7000797d03",
+      "kind": "failure",
+      "normalized_error": "error: reference-conditioned image generation failed (http error <n>: internal server error) | fix: rerun; if the stock-frame url remains unavailable, use stock footage for this beat",
+      "slugs": [
+        "pattern-wearing-matter"
+      ],
+      "stage": "hero"
+    },
     {
       "count": 2,
       "failure_class": "unknown",
@@ -29,17 +40,6 @@
       "normalized_error": "error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
       "slugs": [
         "trained-not-to-look"
-      ],
-      "stage": "build_pass"
-    },
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "b26e8c95844188e5",
-      "kind": "failure",
-      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
-      "slugs": [
-        "pattern-wearing-matter"
       ],
       "stage": "build_pass"
     }
@@ -60,40 +60,52 @@
       "total_duration_s": 2.004
     },
     "build_pass": {
-      "attempts": 20,
-      "failure_rate": 0.2,
-      "failures": 4,
-      "p50_success_s": 21.023,
-      "p95_success_s": 27.053,
-      "sample_count": 16,
-      "successes": 16,
+      "attempts": 211,
+      "failure_rate": 0.0095,
+      "failures": 2,
+      "p50_success_s": 7.018,
+      "p95_success_s": 22.661,
+      "sample_count": 209,
+      "successes": 209,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 352.463
+      "total_duration_s": 1835.186
     },
     "footage": {
-      "attempts": 32,
+      "attempts": 52,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 8.012,
-      "p95_success_s": 11.818,
-      "sample_count": 32,
-      "successes": 32,
+      "p50_success_s": 9.016,
+      "p95_success_s": 13.034,
+      "sample_count": 52,
+      "successes": 52,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 212.319
+      "total_duration_s": 396.766
+    },
+    "hero": {
+      "attempts": 552,
+      "failure_rate": 1.0,
+      "failures": 552,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "sample_count": 0,
+      "successes": 0,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1108.619
     },
     "transcribe": {
       "attempts": 8,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 9.009,
+      "p50_success_s": 9.008,
       "p95_success_s": 9.661,
       "sample_count": 8,
       "successes": 8,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 63.07
+      "total_duration_s": 64.068
     },
     "tts": {
       "attempts": 2,
@@ -109,6 +121,7 @@
     }
   },
   "statuses": {
-    "failed": 2
+    "failed": 1,
+    "pass_limit": 1
   }
 }

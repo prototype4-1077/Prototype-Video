@@ -270,8 +270,7 @@ def _visual_text(scene: dict) -> str:
     # replaced generic human filler with an object or structural metaphor.
     search_query = scene.get("symbol_query") or scene.get("query") or ""
     return _normalize(" ".join(str(value or "") for value in (
-        search_query, scene.get("image_prompt"), scene.get("source_title"),
-        scene.get("source_url"),
+        search_query, scene.get("image_prompt"),
     )))
 
 
