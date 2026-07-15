@@ -1,43 +1,43 @@
 {
-  "generated_at": "2026-07-15T14:29:27+00:00",
+  "generated_at": "2026-07-15T15:03:50+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
     {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
       "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "691d8ac7682ab223",
-      "priority": "medium",
-      "stage": "build_pass"
+      "evidence": "568 occurrence(s) across 1 build(s)",
+      "fingerprint": "c6d22c7000797d03",
+      "priority": "high",
+      "stage": "hero"
     },
     {
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
       "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "f9bff39954630754",
+      "fingerprint": "b26e8c95844188e5",
       "priority": "medium",
       "stage": "build_pass"
     }
   ],
   "recurring_incidents": [
     {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "691d8ac7682ab223",
+      "count": 568,
+      "failure_class": "transient",
+      "fingerprint": "c6d22c7000797d03",
       "kind": "failure",
-      "normalized_error": "error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "normalized_error": "error: reference-conditioned image generation failed (http error <n>: internal server error) | fix: rerun; if the stock-frame url remains unavailable, use stock footage for this beat",
       "slugs": [
         "trained-not-to-look"
       ],
-      "stage": "build_pass"
+      "stage": "hero"
     },
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "f9bff39954630754",
+      "fingerprint": "b26e8c95844188e5",
       "kind": "failure",
-      "normalized_error": "error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
       "slugs": [
         "pattern-wearing-matter"
       ],
@@ -48,67 +48,80 @@
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 1,
+      "attempts": 2,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.002,
       "p95_success_s": 1.002,
-      "sample_count": 1,
-      "successes": 1,
+      "sample_count": 2,
+      "successes": 2,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1.002
+      "total_duration_s": 2.003
     },
     "build_pass": {
-      "attempts": 13,
-      "failure_rate": 0.3077,
-      "failures": 4,
-      "p50_success_s": 21.018,
-      "p95_success_s": 27.038,
-      "sample_count": 9,
-      "successes": 9,
+      "attempts": 213,
+      "failure_rate": 0.0094,
+      "failures": 2,
+      "p50_success_s": 7.01,
+      "p95_success_s": 23.522,
+      "sample_count": 211,
+      "successes": 211,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 203.24
+      "total_duration_s": 1801.221
     },
     "footage": {
-      "attempts": 14,
+      "attempts": 33,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 9.015,
-      "p95_success_s": 11.418,
-      "sample_count": 14,
-      "successes": 14,
+      "p50_success_s": 9.016,
+      "p95_success_s": 15.014,
+      "sample_count": 33,
+      "successes": 33,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 131.199
+      "total_duration_s": 341.411
+    },
+    "hero": {
+      "attempts": 568,
+      "failure_rate": 1.0,
+      "failures": 568,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "sample_count": 0,
+      "successes": 0,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1142.847
     },
     "transcribe": {
-      "attempts": 4,
+      "attempts": 7,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 9.009,
-      "p95_success_s": 9.861,
-      "sample_count": 4,
-      "successes": 4,
+      "p50_success_s": 7.007,
+      "p95_success_s": 8.009,
+      "sample_count": 7,
+      "successes": 7,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 32.036
+      "total_duration_s": 48.045
     },
     "tts": {
-      "attempts": 1,
+      "attempts": 2,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 24.015,
-      "p95_success_s": 24.015,
-      "sample_count": 1,
-      "successes": 1,
+      "p50_success_s": 25.513,
+      "p95_success_s": 26.863,
+      "sample_count": 2,
+      "successes": 2,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 24.015
+      "total_duration_s": 51.026
     }
   },
   "statuses": {
-    "failed": 2
+    "failed": 1,
+    "pass_limit": 1
   }
 }
