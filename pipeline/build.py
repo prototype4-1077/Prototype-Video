@@ -5,7 +5,7 @@
 Each run loads API keys from .env itself, checks fonts, validates script.json,
 then advances the build as far as it can within a ~30s budget and exits with:
     RUN AGAIN  (progress note)      -> just run the same command again
-    DONE -> <build_dir>/final.mp4   -> finished
+    DONE -> portrait final.mp4 + landscape final_youtube.mp4 -> finished
     ERROR: <what> | FIX: <how>      -> fix, then run again
 Every step is resumable; running again never breaks anything."""
 import json, os, shutil, subprocess, sys, tempfile, time, urllib.request
@@ -311,13 +311,15 @@ def main(bd):
     except ValueError:
         music_ready = False
     if (not os.path.exists(f"{bd}/cap_{n-1:02d}.png")
-            or not os.path.exists(f"{bd}/title.png") or not music_ready):
+            or not os.path.exists(f"{bd}/title.png")
+            or not os.path.exists(f"{bd}/youtube_cap_{n-1:02d}.png")
+            or not os.path.exists(f"{bd}/youtube_title.png") or not music_ready):
         if left() < 15: out("RUN AGAIN (next: overlays)")
         r = sh([py, os.path.join(HERE, "prep.py"), bd])
         if r.returncode != 0:
             err(f"prep failed: {r.stderr[-300:]}", "rerun; if fonts missing delete fonts/ and rerun")
         print(r.stdout.strip())
-        out("RUN AGAIN (captions + title + music choices ready)")
+        out("RUN AGAIN (portrait + YouTube overlays + music choices ready)")
 
     # 4. render segments
     for i in range(n):
@@ -330,7 +332,7 @@ def main(bd):
         if r.returncode != 0:
             err(f"render scene {i}: {r.stderr[-300:]}", "rerun; if it repeats, delete that seg file")
 
-    # 4b. verify segments (catch truncated files from timeouts)
+    # 4b. verify portrait segments (catch truncated files from timeouts)
     for i in range(n):
         seg = f"{bd}/seg_{i:02d}.mp4"
         if not probe_ok(seg):
@@ -340,7 +342,28 @@ def main(bd):
             except OSError:
                 err(f"seg {i} corrupt and undeletable", "enable file deletion, delete it, rerun")
 
-    # 5. concat + three selectable audio mixes
+    # 4c. recompose the same edit at native 1920x1080 for regular YouTube.
+    for i in range(n):
+        seg = f"{bd}/youtube_seg_{i:02d}.mp4"
+        if os.path.exists(seg):
+            continue
+        if left() < 12:
+            out(f"RUN AGAIN (rendered {i}/{n} YouTube scenes)")
+        r = sh([py, os.path.join(HERE, "assemble.py"), bd, "youtube-scene", str(i)])
+        if r.returncode != 0:
+            err(f"render YouTube scene {i}: {r.stderr[-300:]}",
+                "rerun; if it repeats, delete that YouTube seg file")
+    for i in range(n):
+        seg = f"{bd}/youtube_seg_{i:02d}.mp4"
+        if not probe_ok(seg):
+            try:
+                os.remove(seg)
+                out(f"RUN AGAIN (YouTube seg {i} was corrupt, will re-render)")
+            except OSError:
+                err(f"YouTube seg {i} corrupt and undeletable",
+                    "enable file deletion, delete it, rerun")
+
+    # 5. concat portrait + three selectable audio mixes
     final = f"{bd}/final.mp4"
     try:
         variants = audio_variants.require(s, bd)
@@ -379,7 +402,43 @@ def main(bd):
         try: os.remove(final)
         except OSError: pass
         out("RUN AGAIN (final was incomplete, will redo)")
-    # 6. bonus 60s cut for longer scripts
+
+    # 5b. concat the native 16:9 YouTube segments and reuse every audio mix.
+    youtube_final = f"{bd}/final_youtube.mp4"
+    youtube_targets = [f"{bd}/{audio_variants.youtube_video_name(i)}"
+                       for i in range(1, len(variants) + 1)]
+    if (not (os.path.exists(youtube_final) and probe_ok(youtube_final))
+            or any(not (os.path.exists(p) and probe_ok(p)) for p in youtube_targets)):
+        if left() < 20: out("RUN AGAIN (next: YouTube final assembly)")
+        tmp = tempfile.mkdtemp()
+        lst = os.path.join(tmp, "youtube-list.txt")
+        with open(lst, "w") as f:
+            for i in range(n):
+                f.write(f"file '{os.path.abspath(bd)}/youtube_seg_{i:02d}.mp4'\n")
+        noa = os.path.join(tmp, "youtube-noaudio.mp4")
+        r = sh(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
+                "-i", lst, "-c", "copy", noa])
+        if r.returncode != 0:
+            err(f"YouTube concat: {r.stderr[-300:]}", "rerun")
+        total = sum(x["duration"] for x in s["scenes"])
+        for i, (item, target) in enumerate(zip(variants, youtube_targets), 1):
+            if os.path.exists(target) and probe_ok(target):
+                continue
+            try:
+                audio_variants.mix(noa, f"{bd}/vo.mp3", f"{bd}/{item['file']}",
+                                   total, target)
+                print(f"{os.path.basename(target)} done: {item['label']}")
+            except Exception as e:
+                err(f"YouTube music choice {i} mix: {e}", "rerun")
+        shutil.copy(youtube_targets[0], youtube_final)
+        audio_variants.write_manifest(bd, variants)
+        shutil.rmtree(tmp, ignore_errors=True)
+    if not probe_ok(youtube_final):
+        try: os.remove(youtube_final)
+        except OSError: pass
+        out("RUN AGAIN (YouTube final was incomplete, will redo)")
+
+    # 6. bonus 60s portrait cut for longer scripts
     short = f"{bd}/final_short.mp4"
     if len(s["scenes"]) >= 16 and not (os.path.exists(short) and probe_ok(short)):
         if left() < 20: out("RUN AGAIN (next: 60s short cut)")
@@ -393,7 +452,7 @@ def main(bd):
         if left() < 15: out("RUN AGAIN (next: review sheet)")
         r = sh([py, os.path.join(HERE, "altsheet.py"), bd])
         print(r.stdout.strip() if r.returncode == 0 else "note: review sheet failed")
-    print(f"DONE -> {final}")
+    print(f"DONE -> {final} + {youtube_final}")
     print(f"After James approves: python3 {os.path.join(HERE, 'learn.py')} record {bd}")
     print(f"If he dislikes scene i's footage: python3 {os.path.join(HERE, 'learn.py')} swap {bd} <i>")
 
@@ -402,3 +461,4 @@ if __name__ == "__main__":
     if len(sys.argv) < 2:
         err("no build dir given", "run: python3 build.py build/<slug>")
     main(sys.argv[1])
+

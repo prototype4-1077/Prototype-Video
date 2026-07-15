@@ -65,9 +65,11 @@ Everything else is one command run in a loop.
 
    It loads keys from pipeline/.env itself (no exports needed), downloads fonts on first run,
    validates your script (with fix hints), generates voiceover, downloads footage, renders,
-   and finishes with:  DONE -> build/<slug>/final.mp4
-   The same run also creates final_music_01.mp4 through final_music_03.mp4 so
-   James can compare three genuinely different score arrangements.
+   and finishes with both:
+       build/<slug>/final.mp4           (1080x1920 social)
+       build/<slug>/final_youtube.mp4   (1920x1080 regular YouTube)
+   The same run also creates three music choices for each canvas so James can
+   compare genuinely different score arrangements.
    Rules of thumb:
    - Every step is resumable. Rerunning never breaks anything.
    - If a bash call times out, just run the same command again.
@@ -75,20 +77,24 @@ Everything else is one command run in a loop.
 
 5. VERIFY (only judgment step besides the script): extract 3 frames and look at them:
        ffmpeg -y -ss 3 -i build/<slug>/final.mp4 -frames:v 1 f1.png   (repeat at mid + end)
-   Check: 9:16 portrait, letterboxed footage band, captions below the band with yellow keywords,
-   big rounded title on scene 0, footage lit-but-moody and symbolically matched. Check duration
+   Check both canvases: 9:16 portrait keeps the letterboxed footage band and 16:9 YouTube
+   fills a native landscape frame without stretching. Confirm yellow keyword captions and the
+   rounded scene-0 title are safely composed in each. Check duration
    (~2:00-2:40) plus visual_symbol_report.json and motion_report.json.
    If one scene's footage looks wrong: delete its clip_XX.mp4 AND seg_XX.mp4, improve that
    scene's "query" in script.json, remove its "pexels_id", and rerun build.py.
 
-6. DELIVER: present all final_music_NN.mp4 choices with the labels in
-   music_variants.json. Also include final.mp4 (choice 1 alias) and final_short.mp4
+6. DELIVER: present all portrait final_music_NN.mp4 and landscape
+   final_youtube_music_NN.mp4 choices with the labels in music_variants.json. Also
+   include final.mp4 and final_youtube.mp4 (choice 1 aliases), plus final_short.mp4
    when present. Done.
 
 ## Look spec (what "correct" looks like)
-- Every new video defaults to 1080x1920 (9:16 portrait), 30fps. Footage is a 16:9
-  band (1080x608) vertically centered on black.
-- Captions: Questrial 44px, white, in the bottom black band, subtle dark boxes,
+- Every build creates two 30fps canvases: 1080x1920 (9:16 portrait) and
+  1920x1080 (16:9 regular YouTube). Portrait footage remains a 1080x608 band
+  vertically centered on black. YouTube is recomposed from source footage to fill
+  the landscape canvas; it is never a stretched portrait render.
+- Portrait captions: Questrial 44px, white, in the bottom black band, subtle dark boxes,
   2-4 keywords per sentence in pale yellow (#e6e87e).
 - Title: Baloo2 ExtraBold ALL-CAPS white with shadow, centered over the footage band,
   scene 0. Long titles automatically wrap and shrink to remain inside the safe area.
@@ -228,8 +234,8 @@ Set `"profile": "june_oxley"` only when James names June Oxley. The profile:
 - replaces the ambient cinematic bed with an 84 BPM front-porch shuffle made from
   synthesized guitar/banjo twang, upright-style bass, soft brush, and wooden foot-stomps;
 - stores approved/rejected CLIP taste under June-specific arrays, isolated from house taste.
-All captions, scene-0 title behavior, 9:16 letterboxing, VO ducking, and the default style
-for every other video remain unchanged. `character: "June Oxley"` is accepted as an alias,
+All captions, scene-0 title behavior, portrait 9:16 letterboxing, native 16:9 YouTube
+composition, VO ducking, and the default style for every other video remain unchanged. `character: "June Oxley"` is accepted as an alias,
 but `profile: "june_oxley"` is the canonical field.
 
 ## v17: MOTION COMPILER + 35% STILL-SOURCE CAP
@@ -330,3 +336,11 @@ source files, and output names are written to `music_variants.json`; `final.mp4`
 copy of choice 1 so older automation keeps working. A custom score becomes choice 1 and the
 pipeline generates enough alternatives to keep the total at three. GitHub artifacts and
 permanent Releases include every choice.
+
+## v21: DUAL SOCIAL + REGULAR-YOUTUBE EXPORT
+Every completed build now renders the same timed edit twice: the established
+1080x1920 portrait version and a separately composed 1920x1080 landscape version.
+Landscape files use `final_youtube.mp4` and `final_youtube_music_NN.mp4`; portrait
+names remain unchanged for backward compatibility. `music_variants.json` records
+both names, and GitHub artifacts and permanent Releases publish both sets.
+

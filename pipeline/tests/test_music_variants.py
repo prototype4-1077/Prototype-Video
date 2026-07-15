@@ -52,6 +52,10 @@ class MusicVariantTests(unittest.TestCase):
             self.assertEqual(3, len(audio_variants.require(script, td)))
             manifest = audio_variants.write_manifest(td, variants)
             self.assertEqual("final_music_03.mp4", manifest["variants"][2]["video"])
+            self.assertEqual(
+                "final_youtube_music_03.mp4",
+                manifest["variants"][2]["youtube_video"],
+            )
             with open(os.path.join(td, "music_variants.json")) as f:
                 loaded = json.load(f)
             self.assertEqual(3, loaded["minimum_choices"])
@@ -74,3 +78,4 @@ class MusicVariantTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+

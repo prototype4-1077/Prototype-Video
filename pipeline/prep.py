@@ -1,8 +1,8 @@
-"""Generate caption + title overlay PNGs and (if missing) synth music bed.
+"""Generate portrait + YouTube overlays and (if missing) synth music beds.
 Usage: python3 prep.py <build_dir>"""
 import json, os, subprocess, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from captions import caption_png, title_png
+from captions import caption_png, title_png, youtube_caption_png, youtube_title_png
 import audio_variants
 import music as score
 import profiles
@@ -20,8 +20,6 @@ def prepare_music(bd, s):
     profile = profiles.resolve(s)
     variants, seen = [], set()
 
-    # Preserve genuinely custom score files. Generated names from an earlier runner
-    # are rebuilt deterministically because WAVs are intentionally not committed.
     declared = s.get("music_variants") or []
     for item in declared:
         if isinstance(item, str):
@@ -45,8 +43,6 @@ def prepare_music(bd, s):
     generated = []
     while len(variants) < count:
         slot = len(variants) + 1
-        # Keep the long-standing first-bed filename so older scripts, tests,
-        # and manual tools still find choice 1 without knowing about variants.
         name = "music.wav" if slot == 1 else f"music_{slot:02d}.wav"
         path = os.path.join(bd, name)
         variant = slot
@@ -67,7 +63,6 @@ def prepare_music(bd, s):
     with open(f"{bd}/script.json", "w") as f:
         json.dump(s, f, indent=1, ensure_ascii=False)
 
-    # Bake identical narrative sound-design cues into every generated choice once.
     for item in generated:
         marker = os.path.join(bd, item["file"] + ".sfx-ok")
         if os.path.exists(marker):
@@ -86,17 +81,26 @@ def prep(bd):
     with open(f"{bd}/script.json") as f:
         s = json.load(f)
     for i, sc in enumerate(s["scenes"]):
-        if sc.get("kw_times"):  # word-synced: keywords ignite when spoken
+        if sc.get("kw_times"):
             ovs = caption_png(sc["text"], sc.get("keywords", []), f"{bd}/cap_{i:02d}.png",
                               kw_overlay_prefix=f"{bd}/cap_{i:02d}_kw")
             sc["kw_overlays"] = [{"kw": k, "png": os.path.basename(p)} for k, p in ovs]
+            yt_ovs = youtube_caption_png(
+                sc["text"], sc.get("keywords", []), f"{bd}/youtube_cap_{i:02d}.png",
+                kw_overlay_prefix=f"{bd}/youtube_cap_{i:02d}_kw")
+            sc["youtube_kw_overlays"] = [
+                {"kw": k, "png": os.path.basename(p)} for k, p in yt_ovs
+            ]
         else:
             caption_png(sc["text"], sc.get("keywords", []), f"{bd}/cap_{i:02d}.png")
+            youtube_caption_png(sc["text"], sc.get("keywords", []),
+                                f"{bd}/youtube_cap_{i:02d}.png")
     with open(f"{bd}/script.json", "w") as f:
         json.dump(s, f, indent=1, ensure_ascii=False)
     title_png(s["title"], f"{bd}/title.png")
+    youtube_title_png(s["title"], f"{bd}/youtube_title.png")
     s = prepare_music(bd, s)
-    print(f"prep done: {len(s['scenes'])} captions + title + "
+    print(f"prep done: {len(s['scenes'])} portrait + YouTube captions/titles + "
           f"{len(s['music_variants'])} music choices")
 
 

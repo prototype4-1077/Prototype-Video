@@ -42,6 +42,11 @@ def video_name(index, short=False):
     return f"{prefix}_{index:02d}.mp4"
 
 
+def youtube_video_name(index):
+    """Return the native 16:9 YouTube filename for a music choice."""
+    return f"final_youtube_music_{index:02d}.mp4"
+
+
 def _run(cmd):
     r = subprocess.run(cmd, capture_output=True, text=True)
     if r.returncode:
@@ -84,7 +89,7 @@ def write_manifest(build_dir, variants, default_index=1):
         "minimum_choices": MIN_MUSIC_VARIANTS,
         "default_index": default_index,
         "variants": [
-            {**item, "video": video_name(i)}
+            {**item, "video": video_name(i), "youtube_video": youtube_video_name(i)}
             for i, item in enumerate(variants, 1)
         ],
     }

@@ -17,8 +17,10 @@ API BASE: https://api.github.com/repos/jameswatson1077/tiktok-videos
 - pipeline/memory.json      — READ "notes" (his standing feedback) and respect it.
   Current standing rules: slides must be LIT-but-moody (window light, god rays,
   lamplight, golden hour; only a few near-dark slides), footage must match the
-  spoken words (especially endings), every new video defaults to 1080x1920 9:16
-  portrait, letterboxed, with yellow keyword captions. Titles must wrap and shrink
+  spoken words (especially endings), and every build creates both a 1080x1920 9:16
+  portrait social export and a native 1920x1080 16:9 regular-YouTube export. Never
+  stretch or pillarbox the portrait render to make the YouTube version. The portrait
+  remains letterboxed with yellow keyword captions. Titles must wrap and shrink
   automatically when needed so they remain fully inside the portrait safe area.
   No more than 35% of finished runtime may come from still images. Animated stills,
   depth moves, keyframes, and pan/zoom all count toward that 35%; at least 65% must
@@ -89,8 +91,9 @@ line, apply the FIX (usually edit script.json), push, re-dispatch.
   commit memory.json. Never delete memory.json.
 
 ## Judgment checklist before delivering
-Duration ≈ VO length; 1080x1920 (9:16 portrait); captions with yellow keywords in
-the bottom band; bold rounded title fully fitted on scene 0; majority of slides visibly lit; every clip matches
+Duration ≈ VO length; both 1080x1920 portrait and 1920x1080 landscape outputs;
+captions with yellow keywords in each format's safe area; bold rounded title fully
+fitted on scene 0; majority of slides visibly lit; every clip matches
 its spoken line; at least six visual symbol families; no repeated generic-human run;
 still-derived duration <=35% and genuine moving footage >=65%; every still passes
 still_reference_report.json and visibly belongs beside its stock reference. If a scene
@@ -121,3 +124,4 @@ Multiple AIs may work simultaneously, each on its OWN slug. Rules:
 - ALTERNATES: after a render, build/<slug>/alts.json lists runner-up clips per scene and
   the run artifact alts_sheet.jpg shows them. Swap = learn.py pin build/<slug> <i> <id>,
   then re-dispatch. Prefer pinning an alternate over re-rolling queries.
+

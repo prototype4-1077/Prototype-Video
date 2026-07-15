@@ -82,6 +82,9 @@ jobs:
             case "$out" in *DONE*) break;; esac
           done
           test -f "build/${{ inputs.slug }}/final.mp4"
+          python3 -c 'import json,sys; s=json.load(open(sys.argv[1])); sys.exit(0 if s.get("curate_scenes") else 1)' \
+            "build/${{ inputs.slug }}/script.json" || \
+            test -f "build/${{ inputs.slug }}/final_youtube.mp4"
 
       - name: Upload final video
         uses: actions/upload-artifact@v4
@@ -107,9 +110,15 @@ jobs:
               --notes "Rendered $(date -u +%F) by run ${{ github.run_id }}"
           gh release upload "$TAG" \
             "build/${{ inputs.slug }}/final.mp4#${{ inputs.slug }}.mp4" --clobber
+          test -f "build/${{ inputs.slug }}/final_youtube.mp4" && gh release upload "$TAG" \
+            "build/${{ inputs.slug }}/final_youtube.mp4#${{ inputs.slug }}-youtube.mp4" --clobber || true
           shopt -s nullglob
           for variant in build/${{ inputs.slug }}/final_music_*.mp4; do
             choice="$(basename "$variant" .mp4 | sed 's/final_music_/music-/')"
+            gh release upload "$TAG" "$variant#${{ inputs.slug }}-${choice}.mp4" --clobber
+          done
+          for variant in build/${{ inputs.slug }}/final_youtube_music_*.mp4; do
+            choice="$(basename "$variant" .mp4 | sed 's/final_youtube_music_/youtube-music-/')"
             gh release upload "$TAG" "$variant#${{ inputs.slug }}-${choice}.mp4" --clobber
           done
           test -f "build/${{ inputs.slug }}/final_short.mp4" && gh release upload "$TAG" \
