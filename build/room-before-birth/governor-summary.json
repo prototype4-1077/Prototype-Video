@@ -1,20 +1,29 @@
 {
-  "finished_at": "2026-07-15T22:45:08+00:00",
-  "github_run_id": "29456327079",
+  "finished_at": "2026-07-15T22:48:05+00:00",
+  "github_run_id": "29456494746",
   "incidents": [
     {
-      "count": 2,
+      "count": 3,
       "failure_class": "unknown",
-      "fingerprint": "f9bff39954630754",
+      "fingerprint": "b1575f0e09c8ed67",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
+      "normalized_error": "governor stage=tts state=start soft=240s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=fde3a81ba09246ff error: tts failed: , line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: http error <n>: unauthorized | fix: check elevenlabs_api_key / credits, rerun",
       "stage": "build_pass"
+    },
+    {
+      "count": 3,
+      "failure_class": "transient",
+      "fingerprint": "fde3a81ba09246ff",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "response = meth(req, response) ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in http_response response = self.parent.error( ^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in error return self._call_chain(*args) ^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: ht",
+      "stage": "tts"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=f5284012d21d4e3f. ERROR: 34 scenes | FIX: aim for 18-26 scenes (one sentence/beat each)",
+  "last_message": "tts failed (transient); retry budget 2 exhausted. fingerprint=fde3a81ba09246ff. ERROR: tts failed: , line 496, in _call_chain",
   "mode": "recover",
-  "passes": 2,
+  "passes": 3,
   "policy": {
     "build_pass": {
       "hard_timeout_s": 1800.0,
@@ -23,31 +32,56 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 180.0,
+      "sample_count": 3,
+      "soft_timeout_s": 240.0,
+      "source": "default"
     }
   },
   "quality": {},
   "recommendations": [
     {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "f9bff39954630754",
+      "action": "Keep bounded retry enabled and monitor whether the same fingerprint recovers on the next pass.",
+      "fingerprint": "fde3a81ba09246ff",
       "priority": "high",
-      "reason": "2 occurrence(s): error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
+      "reason": "3 occurrence(s): response = meth(req, response) ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in http_response response = self.parent.error( ^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in error return self._call_chain(*args) ^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: ht",
+      "stage": "tts"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "b1575f0e09c8ed67",
+      "priority": "high",
+      "reason": "3 occurrence(s): governor stage=tts state=start soft=240s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=fde3a81ba09246ff error: tts failed: , line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: http error <n>: unauthorized | fix: check elevenlabs_api_key / credits, rerun",
       "stage": "build_pass"
     }
   ],
-  "run_id": "983845486be945d8be50bd981767d3bc",
+  "run_id": "ab443b6a8adf4207a70f19ff9969ad45",
   "schema_version": 1,
   "slug": "room-before-birth",
   "stages": {
     "build_pass": {
-      "attempts": 2,
-      "failures": 2,
+      "attempts": 3,
+      "failures": 3,
       "p50_success_s": null,
       "p95_success_s": null,
       "success_durations_s": [],
       "successes": 0,
       "timeouts": 0,
-      "total_duration_s": 2.004
+      "total_duration_s": 6.004
+    },
+    "tts": {
+      "attempts": 3,
+      "failures": 3,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 3.004
     }
   },
   "status": "failed"

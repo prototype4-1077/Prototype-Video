@@ -1,28 +1,47 @@
 {
-  "generated_at": "2026-07-15T22:45:08+00:00",
+  "generated_at": "2026-07-15T22:48:05+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
     {
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "f9bff39954630754",
+      "evidence": "3 occurrence(s) across 1 build(s)",
+      "fingerprint": "b1575f0e09c8ed67",
       "priority": "medium",
       "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "3 occurrence(s) across 1 build(s)",
+      "fingerprint": "fde3a81ba09246ff",
+      "priority": "medium",
+      "stage": "tts"
     }
   ],
   "recurring_incidents": [
     {
-      "count": 2,
+      "count": 3,
       "failure_class": "unknown",
-      "fingerprint": "f9bff39954630754",
+      "fingerprint": "b1575f0e09c8ed67",
       "kind": "failure",
-      "normalized_error": "error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
+      "normalized_error": "governor stage=tts state=start soft=240s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=fde3a81ba09246ff error: tts failed: , line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: http error <n>: unauthorized | fix: check elevenlabs_api_key / credits, rerun",
       "slugs": [
         "room-before-birth"
       ],
       "stage": "build_pass"
+    },
+    {
+      "count": 3,
+      "failure_class": "transient",
+      "fingerprint": "fde3a81ba09246ff",
+      "kind": "failure",
+      "normalized_error": "response = meth(req, response) ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in http_response response = self.parent.error( ^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in error return self._call_chain(*args) ^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: ht",
+      "slugs": [
+        "room-before-birth"
+      ],
+      "stage": "tts"
     }
   ],
   "runs_analyzed": 5,
@@ -65,16 +84,16 @@
       "total_duration_s": 3701.019
     },
     "build_pass": {
-      "attempts": 58,
-      "failure_rate": 0.0345,
-      "failures": 2,
+      "attempts": 59,
+      "failure_rate": 0.0508,
+      "failures": 3,
       "p50_success_s": 113.051,
       "p95_success_s": 145.802,
       "sample_count": 56,
       "successes": 56,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 5503.764
+      "total_duration_s": 5507.764
     },
     "credits": {
       "attempts": 44,
@@ -185,16 +204,16 @@
       "total_duration_s": 89.123
     },
     "tts": {
-      "attempts": 3,
-      "failure_rate": 0.0,
-      "failures": 0,
+      "attempts": 6,
+      "failure_rate": 0.5,
+      "failures": 3,
       "p50_success_s": 27.026,
       "p95_success_s": 58.549,
       "sample_count": 3,
       "successes": 3,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 113.092
+      "total_duration_s": 116.096
     }
   },
   "statuses": {
