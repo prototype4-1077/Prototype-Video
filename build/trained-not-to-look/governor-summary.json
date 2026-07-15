@@ -1,6 +1,6 @@
 {
-  "finished_at": "2026-07-15T14:11:40+00:00",
-  "github_run_id": "29422309223",
+  "finished_at": "2026-07-15T14:19:53+00:00",
+  "github_run_id": "29422664076",
   "incidents": [
     {
       "count": 2,
@@ -12,10 +12,18 @@
       "stage": "build_pass"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=342c78b22cc818e6. ERROR: visual symbol plan: human imagery occupies 58%; target <= 52% | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=342c78b22cc818e6. ERROR: visual symbol plan: human imagery occupies 52%; target <= 52% | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
   "mode": "recover",
-  "passes": 3,
+  "passes": 13,
   "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 120.0,
+      "sample_count": 0,
+      "soft_timeout_s": 180.0,
+      "source": "default"
+    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -24,11 +32,27 @@
       "soft_timeout_s": 1800.0,
       "source": "explicit"
     },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 180.0,
+      "sample_count": 0,
+      "soft_timeout_s": 300.0,
+      "source": "default"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 360.0,
+      "sample_count": 0,
+      "soft_timeout_s": 600.0,
+      "source": "default"
+    },
     "tts": {
       "hard_timeout_s": 480.0,
       "historical_p95_s": null,
       "idle_timeout_s": 180.0,
-      "sample_count": 0,
+      "sample_count": 1,
       "soft_timeout_s": 240.0,
       "source": "default"
     }
@@ -41,35 +65,104 @@
       "priority": "high",
       "reason": "2 occurrence(s): error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
       "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (243.3s).",
+      "stage": "build_pass"
     }
   ],
-  "run_id": "0c1fca182b224aaabd01ac59b5856e77",
+  "run_id": "46c9df78ab654597a653bd28bd070464",
   "schema_version": 1,
   "slug": "trained-not-to-look",
   "stages": {
-    "build_pass": {
-      "attempts": 3,
-      "failures": 2,
-      "p50_success_s": 26.008,
-      "p95_success_s": 26.008,
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
       "success_durations_s": [
-        26.008
+        1.002
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 28.011
+      "total_duration_s": 1.002
+    },
+    "build_pass": {
+      "attempts": 13,
+      "failures": 2,
+      "p50_success_s": 22.041,
+      "p95_success_s": 27.019,
+      "success_durations_s": [
+        25.009,
+        19.01,
+        12.008,
+        29.017,
+        22.015,
+        25.021,
+        23.029,
+        21.035,
+        22.041,
+        19.043,
+        24.047
+      ],
+      "successes": 11,
+      "timeouts": 0,
+      "total_duration_s": 243.286
+    },
+    "footage": {
+      "attempts": 16,
+      "failures": 0,
+      "p50_success_s": 11.015,
+      "p95_success_s": 13.768,
+      "success_durations_s": [
+        16.009,
+        12.01,
+        12.014,
+        9.009,
+        12.01,
+        12.01,
+        13.013,
+        9.011,
+        10.013,
+        10.02,
+        9.014,
+        12.019,
+        9.017,
+        9.018,
+        13.021,
+        10.017
+      ],
+      "successes": 16,
+      "timeouts": 0,
+      "total_duration_s": 177.225
+    },
+    "transcribe": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 9.006,
+      "p95_success_s": 9.007,
+      "success_durations_s": [
+        8.004,
+        9.007,
+        9.006
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 26.017
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 25.01,
-      "p95_success_s": 25.01,
+      "p50_success_s": 24.009,
+      "p95_success_s": 24.009,
       "success_durations_s": [
-        25.01
+        24.009
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 25.01
+      "total_duration_s": 24.009
     }
   },
   "status": "failed"
