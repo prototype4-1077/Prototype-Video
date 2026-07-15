@@ -1,0 +1,116 @@
+        label(d,"FLAME CONTINUES",510,240,17,accent)
+        label(d,"PROCESS > OBJECT",360,875,24,accent)
+    elif kind=="costume_dance":
+        # empty costume outline fades, dance ribbon remains
+        alpha=int(190*(1-local*.7))
+        silhouette_outline(d,235,520,1.15,(*light,alpha),3)
+        pts=[]
+        for u in np.linspace(0,1,100):
+            x=360+250*u
+            y=660-260*u+70*math.sin(TAU*(u*1.5+local))
+            pts.append((x,y))
+        line_glow(d,pts,accent,5)
+        for k in range(7):
+            x,y=pts[min(99,int(k*14+local*12)%100)]
+            d.ellipse((x-6,y-6,x+6,y+6),fill=light)
+        label(d,"COSTUME FADES · DANCE REMAINS",360,860,21,accent)
+    elif kind=="thing_pattern":
+        # cube left dissolves into a living network right
+        cx,cy=210,520
+        size=105
+        d.polygon([(cx,cy-size),(cx-size,cy-45),(cx,cy+15),(cx+size,cy-45)],fill=(94,103,120),outline=light)
+        d.polygon([(cx-size,cy-45),(cx,cy+15),(cx,cy+150),(cx-size,cy+80)],fill=(72,80,96),outline=light)
+        d.polygon([(cx+size,cy-45),(cx,cy+15),(cx,cy+150),(cx+size,cy+80)],fill=(56,65,82),outline=light)
+        pts=[(500+100*math.cos(TAU*i/7+.25*math.sin(TAU*local+i)),
+              520+150*.55*math.sin(TAU*i/7+.25*math.sin(TAU*local+i))) for i in range(7)]
+        for i in range(7):
+            for j in range(i+1,7):
+                if (i+j)%3==0:
+                    d.line((*pts[i],*pts[j]),fill=(*accent,120),width=2)
+        for x,y in pts:
+            d.ellipse((x-8,y-8,x+8,y+8),fill=light)
+        label(d,"THING",210,820,24,accent)
+        label(d,"PATTERN",510,820,24,accent)
+        # connecting transformation arrow
+        d.line((325,520,405,520),fill=accent,width=5); d.polygon([(405,520),(385,508),(385,532)],fill=accent)
+    elif kind=="instrument_music":
+        # instrument outline dissolves while many waves expand
+        draw_piano(d,110,620,.62,int(220*(1-local)))
+        draw_speaker(d,590,660,.62,int(220*(1-local)))
+        for j in range(5):
+            pts=wave_points(30,690,300+j*95,22+9*j,2.8+j*.4,TAU*(local*1.4+j*.11))
+            line_glow(d,pts,mix(accent,light,j*.13),2)
+        # listening ear / reality symbol
+        d.ellipse((330,560,390,650),outline=light,width=3)
+        d.arc((346,578,380,632),80,280,fill=accent,width=3)
+        label(d,"REALITY WAS LISTENING",360,875,27,accent)
+    return img
+
+
+SCENE_VISUALS = [
+    ("identity_flow", "cyan"),
+    ("keys_bills", "amber"),
+    ("whirlpool_material", "cyan"),
+    ("whirlpool_persist", "blue"),
+    ("forces_pattern", "violet"),
+    ("self_change", "green"),
+    ("memory_tiles", "amber"),
+    ("relationship_pieces", "cyan"),
+    ("self_rebuild", "violet"),
+    ("song_not_object", "blue"),
+    ("song_elsewhere", "cyan"),
+    ("body_receiver", "green"),
+    ("taxes_wifi", "amber"),
+    ("kitchen_forget", "cyan"),
+    ("family_network", "violet"),
+    ("city_bricks", "blue"),
+    ("flame_process", "amber"),
+    ("costume_dance", "red"),
+    ("thing_pattern", "violet"),
+    ("instrument_music", "cyan"),
+]
+
+
+def _render_clip(output: Path, duration: float, kind: str, palette: str, start: float) -> None:
+    frames = max(1, int(round(duration * FPS)))
+    command = [
+        "ffmpeg", "-y", "-hide_banner", "-loglevel", "error",
+        "-f", "rawvideo", "-pix_fmt", "rgb24", "-s", f"{W}x{H}",
+        "-r", str(FPS), "-i", "-", "-an", "-c:v", "libx264",
+        "-preset", "veryfast", "-crf", "18", "-pix_fmt", "yuv420p",
+        "-g", str(FPS * 2), "-movflags", "+faststart", str(output),
+    ]
+    process = subprocess.Popen(command, stdin=subprocess.PIPE, stderr=subprocess.PIPE)
+    try:
+        for number in range(frames):
+            local = number / max(frames - 1, 1)
+            global_time = start + local * duration
+            frame = draw_scene(kind, palette, local, global_time)
+            process.stdin.write(np.asarray(frame, dtype=np.uint8).tobytes())
+        process.stdin.close()
+        error = process.stderr.read().decode("utf-8", "replace")
+        return_code = process.wait()
+        if return_code:
+            raise RuntimeError(error[-4000:])
+    finally:
+        try:
+            process.stdin.close()
+        except Exception:
+            pass
+
+
+def generate_all(build_dir) -> None:
+    build = Path(build_dir)
+    script_path = build / "script.json"
+    script = json.loads(script_path.read_text(encoding="utf-8"))
+    scenes = script.get("scenes") or []
+    if len(scenes) != len(SCENE_VISUALS):
+        raise ValueError(f"expected {len(SCENE_VISUALS)} scenes, found {len(scenes)}")
+    for index, (scene, (kind, palette)) in enumerate(zip(scenes, SCENE_VISUALS)):
+        output = build / f"clip_{index:02d}.mp4"
+        duration = float(scene["duration"])
+        start = float(scene.get("start") or 0.0)
+        if output.exists() and output.stat().st_size > 100_000:
+            continue
+        _render_clip(output, duration, kind, palette, start)
+        print(f"semantic visual {index + 1}/{len(scenes)}: {kind}", flush=True)
