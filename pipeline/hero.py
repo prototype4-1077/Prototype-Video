@@ -59,7 +59,7 @@ def generation_url(prompt, seed, reference_url=None):
 
 def gen_image(prompt, genre, out, profile=None, reference_url=None, force=False):
     if not force and os.path.exists(out) and os.path.getsize(out) > 20_000:
-        return
+        return True
     style = profiles.hero_style(profile, genre) or STYLE.get(genre, STYLE[None])
     subject = profiles.hero_prompt(prompt, profile)
     if reference_url:
@@ -83,13 +83,14 @@ def gen_image(prompt, genre, out, profile=None, reference_url=None, force=False)
                 partial = out + ".part.jpg"
                 image.save(partial, quality=95, subsampling=0)
                 os.replace(partial, out)
-                return
+                return True
         except Exception as e:
             last = e
-    sys.exit(
-        f"ERROR: reference-conditioned image generation failed ({last}) | "
-        "FIX: rerun; if the stock-frame URL remains unavailable, use stock footage for this beat"
+    print(
+        f"WARNING: reference-conditioned image generation failed ({last}); "
+        "falling back to genuine stock footage for this beat"
     )
+    return False
 
 
 def depth_map(img_path, out, force=False):
@@ -128,10 +129,27 @@ def main(bd, i):
     reference = still_reference.bind_reference(bd, s, i)
     raw = f"{bd}/hero_{i:02d}_raw.jpg"
     img, dep = f"{bd}/hero_{i:02d}.jpg", f"{bd}/hero_{i:02d}_depth.npy"
-    gen_image(
+    generated = gen_image(
         prompt, s.get("genre"), raw, profiles.resolve(s),
         reference_url=reference["url"], force=True,
     )
+    if not generated:
+        sc["hero"] = False
+        sc["hero_fallback"] = "stock"
+        sc["hero_fallback_reason"] = "reference_conditioned_provider_unavailable"
+        for key in (
+            "hero_generated", "motion_compiled", "still_reference_generation_model",
+            "still_reference_motion_complete", "motion_source",
+        ):
+            sc.pop(key, None)
+        for path in (raw, raw + ".part.jpg", img, dep, out):
+            try:
+                os.remove(path)
+            except FileNotFoundError:
+                pass
+        json.dump(s, open(f"{bd}/script.json", "w"), indent=1, ensure_ascii=False)
+        print(f"hero {i}: disabled after bounded provider failure; stock fallback queued")
+        return
     still_reference.enhance_generated_image(bd, s, i, raw, img)
     d = depth_map(img, dep, force=True)
     recipe = motion.infer_recipe(sc)
