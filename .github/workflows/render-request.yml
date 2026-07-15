@@ -36,7 +36,13 @@ jobs:
           git config user.email "render-request@users.noreply.github.com"
           git add "build/$slug/render-started.txt"
           git commit -m "render $slug: started $GITHUB_RUN_ID" || true
-          git push
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git pull --rebase origin main || git rebase --abort || true
+            sleep $((i * 2))
+          done
+          echo "unable to record render start after 5 attempts" >&2
+          exit 1
 
   render:
     needs: detect
