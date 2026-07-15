@@ -36,19 +36,27 @@ jobs:
           for path in all_parts:
               text = path.read_text(encoding="ascii").strip()
               rows.append({"name": path.name, "chars": len(text), "sha256": hashlib.sha256(text.encode()).hexdigest()})
-          def decode(paths):
+          def decode_joined(paths):
               encoded = "".join(p.read_text(encoding="ascii").strip() for p in paths)
               try:
                   raw = base64.b64decode(encoded, validate=True)
                   return {"count": len(paths), "names": [p.name for p in paths], "base64_chars": len(encoded), "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(), "error": None}
               except Exception as exc:
                   return {"count": len(paths), "names": [p.name for p in paths], "base64_chars": len(encoded), "bytes": 0, "sha256": None, "error": str(exc)}
+          def decode_independent(paths):
+              try:
+                  chunks = [base64.b64decode(p.read_text(encoding="ascii").strip(), validate=True) for p in paths]
+                  raw = b"".join(chunks)
+                  return {"count": len(paths), "names": [p.name for p in paths], "chunk_bytes": [len(x) for x in chunks], "bytes": len(raw), "sha256": hashlib.sha256(raw).hexdigest(), "error": None}
+              except Exception as exc:
+                  return {"count": len(paths), "names": [p.name for p in paths], "bytes": 0, "sha256": None, "error": str(exc)}
           report = {
               "expected": expected,
               "source": str(source),
               "parts": rows,
-              "numeric_decode": decode(numeric),
-              "all_parts_decode": decode(all_parts),
+              "numeric_joined_decode": decode_joined(numeric),
+              "numeric_independent_decode": decode_independent(numeric),
+              "all_parts_independent_decode": decode_independent(all_parts),
           }
           target = bd / "voice-restore-diagnostic.json"
           target.write_text(json.dumps(report, indent=2), encoding="utf-8")
