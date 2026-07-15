@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15T14:19:48+00:00",
+  "generated_at": "2026-07-15T14:29:42+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
@@ -7,7 +7,7 @@
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
       "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "f9bff39954630754",
+      "fingerprint": "b26e8c95844188e5",
       "priority": "medium",
       "stage": "build_pass"
     },
@@ -24,9 +24,9 @@
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "f9bff39954630754",
+      "fingerprint": "b26e8c95844188e5",
       "kind": "failure",
-      "normalized_error": "error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
       "slugs": [
         "pattern-wearing-matter"
       ],
@@ -47,29 +47,65 @@
   "runs_analyzed": 2,
   "schema_version": 1,
   "stages": {
-    "build_pass": {
-      "attempts": 5,
-      "failure_rate": 0.8,
-      "failures": 4,
-      "p50_success_s": 26.008,
-      "p95_success_s": 26.008,
-      "sample_count": 1,
-      "successes": 1,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 30.013
-    },
-    "tts": {
-      "attempts": 1,
+    "align": {
+      "attempts": 2,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 25.01,
-      "p95_success_s": 25.01,
-      "sample_count": 1,
-      "successes": 1,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "sample_count": 2,
+      "successes": 2,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 25.01
+      "total_duration_s": 2.003
+    },
+    "build_pass": {
+      "attempts": 26,
+      "failure_rate": 0.1538,
+      "failures": 4,
+      "p50_success_s": 22.537,
+      "p95_success_s": 27.914,
+      "sample_count": 22,
+      "successes": 22,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 484.557
+    },
+    "footage": {
+      "attempts": 31,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 11.014,
+      "p95_success_s": 14.515,
+      "sample_count": 31,
+      "successes": 31,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 347.44
+    },
+    "transcribe": {
+      "attempts": 7,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 8.004,
+      "p95_success_s": 9.007,
+      "sample_count": 7,
+      "successes": 7,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 53.042
+    },
+    "tts": {
+      "attempts": 2,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 25.511,
+      "p95_success_s": 26.863,
+      "sample_count": 2,
+      "successes": 2,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 51.022
     }
   },
   "statuses": {

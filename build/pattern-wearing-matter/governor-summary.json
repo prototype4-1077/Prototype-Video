@@ -1,21 +1,29 @@
 {
-  "finished_at": "2026-07-15T14:19:48+00:00",
-  "github_run_id": "29422841803",
+  "finished_at": "2026-07-15T14:29:42+00:00",
+  "github_run_id": "29423359443",
   "incidents": [
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "f9bff39954630754",
+      "fingerprint": "b26e8c95844188e5",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
       "stage": "build_pass"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=f5284012d21d4e3f. ERROR: 42 scenes | FIX: aim for 18-26 scenes (one sentence/beat each)",
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=a35b49374d568368. ERROR: visual symbol plan: human imagery occupies 62%; target <= 60% | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
   "mode": "recover",
-  "passes": 2,
+  "passes": 13,
   "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 120.0,
+      "sample_count": 1,
+      "soft_timeout_s": 180.0,
+      "source": "default"
+    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -23,31 +31,138 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 13.77,
+      "idle_timeout_s": 71.3,
+      "sample_count": 16,
+      "soft_timeout_s": 71.3,
+      "source": "history"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 360.0,
+      "sample_count": 3,
+      "soft_timeout_s": 600.0,
+      "source": "default"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 180.0,
+      "sample_count": 1,
+      "soft_timeout_s": 240.0,
+      "source": "default"
     }
   },
   "quality": {},
   "recommendations": [
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "f9bff39954630754",
+      "fingerprint": "b26e8c95844188e5",
       "priority": "high",
-      "reason": "2 occurrence(s): error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
+      "reason": "2 occurrence(s): note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (241.3s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "a4574b0c425b4d9abf00f8d01ac44355",
+  "run_id": "936e320aacb247b098b0aa394fe2e24b",
   "schema_version": 1,
   "slug": "pattern-wearing-matter",
   "stages": {
-    "build_pass": {
-      "attempts": 2,
-      "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.001,
+      "p95_success_s": 1.001,
+      "success_durations_s": [
+        1.001
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 2.002
+      "total_duration_s": 1.001
+    },
+    "build_pass": {
+      "attempts": 13,
+      "failures": 2,
+      "p50_success_s": 23.023,
+      "p95_success_s": 27.023,
+      "success_durations_s": [
+        28.013,
+        26.033,
+        7.004,
+        22.05,
+        25.018,
+        20.016,
+        20.019,
+        23.023,
+        23.026,
+        26.033,
+        19.028
+      ],
+      "successes": 11,
+      "timeouts": 0,
+      "total_duration_s": 241.271
+    },
+    "footage": {
+      "attempts": 15,
+      "failures": 0,
+      "p50_success_s": 11.014,
+      "p95_success_s": 15.423,
+      "success_durations_s": [
+        21.039,
+        12.008,
+        12.008,
+        9.009,
+        10.01,
+        10.01,
+        9.014,
+        13.014,
+        9.016,
+        11.014,
+        11.015,
+        13.016,
+        12.015,
+        9.014,
+        9.013
+      ],
+      "successes": 15,
+      "timeouts": 0,
+      "total_duration_s": 170.215
+    },
+    "transcribe": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 7.505,
+      "p95_success_s": 8.01,
+      "success_durations_s": [
+        8.011,
+        8.004,
+        7.006,
+        4.004
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 27.025
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 27.013,
+      "p95_success_s": 27.013,
+      "success_durations_s": [
+        27.013
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 27.013
     }
   },
   "status": "failed"
