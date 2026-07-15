@@ -12,12 +12,26 @@ permissions:
 env:
   SLUG: trained-not-to-look
 
+concurrency:
+  group: trained-not-to-look-isolated-final
+  cancel-in-progress: true
+
 jobs:
   render-final:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
+
+      - name: Record isolated run started
+        shell: bash
+        run: |
+          printf '%s\n' "${{ github.run_id }}" > build/$SLUG/final-started.txt
+          git config user.name render-bot
+          git config user.email render@users.noreply.github.com
+          git add build/$SLUG/final-started.txt
+          git commit -m "render $SLUG: isolated final started ${{ github.run_id }}" || true
+          git push || true
 
       - name: Restore supplied performance when staged
         shell: bash
