@@ -1,0 +1,114 @@
+name: Render Reality Was Never Hidden Final
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "build/trained-not-to-look/FINAL_RENDER"
+
+permissions:
+  contents: write
+
+env:
+  SLUG: trained-not-to-look
+
+jobs:
+  render-final:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restore supplied performance
+        shell: bash
+        run: |
+          shopt -s nullglob
+          parts=(build/$SLUG/voice.opus.b64.part*)
+          test ${#parts[@]} -gt 0
+          cat "${parts[@]}" | base64 --decode > build/$SLUG/voice.opus
+          printf '%s  %s\n' "4f4a34c173c603ff63025319e27585b20b0103a866af0667f1a8b2f3e8d99ee1" "build/$SLUG/voice.opus" | sha256sum -c -
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Cache models
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            /tmp/clipcache
+            /tmp/models
+          key: models-v1
+
+      - name: System dependencies
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+
+      - name: Convert supplied performance for pipeline
+        run: |
+          ffmpeg -v error -y -i build/$SLUG/voice.opus -codec:a libmp3lame -b:a 128k build/$SLUG/vo.mp3
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 build/$SLUG/vo.mp3 | cut -d. -f1)" -ge 150
+
+      - name: Python dependencies
+        run: pip install -q -r pipeline/requirements.txt
+
+      - name: Regression tests
+        run: python3 -m unittest discover -s pipeline/tests -v
+
+      - name: API keys
+        run: |
+          printf 'ELEVENLABS_API_KEY=%s\nPEXELS_API_KEY=%s\nELEVENLABS_VOICE_ID=%s\n' \
+            "${{ secrets.ELEVENLABS_API_KEY }}" "${{ secrets.PEXELS_API_KEY }}" \
+            "${{ secrets.ELEVENLABS_VOICE_ID || 'TX3LPaxmHKxFdv7VOQHJ' }}" > pipeline/.env
+
+      - name: Render with adaptive Governor
+        env:
+          SEMANTIC_CLIP: "1"
+          GOVERNOR_MODE: "recover"
+          GOVERNOR_CONSOLE_HEARTBEATS: "1"
+          GOVERNOR_HEARTBEAT_SECONDS: "15"
+          BUILD_PASS_BUDGET: "120"
+          PYTHONUNBUFFERED: "1"
+        run: |
+          python3 pipeline/run_governed.py build/$SLUG --max-passes 80 --overall-timeout 4680
+          test -f build/$SLUG/final.mp4
+          test -f build/$SLUG/final_youtube.mp4
+
+      - name: Upload final package
+        uses: actions/upload-artifact@v4
+        with:
+          name: trained-not-to-look-final
+          retention-days: 30
+          path: |
+            build/trained-not-to-look/final*.mp4
+            build/trained-not-to-look/music_variants.json
+            build/trained-not-to-look/visual_symbol_report.json
+            build/trained-not-to-look/motion_report.json
+            build/trained-not-to-look/quality_report.json
+            build/trained-not-to-look/alts_sheet.jpg
+            build/trained-not-to-look/CREDITS.txt
+
+      - name: Publish permanent release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="video-trained-not-to-look"
+          gh release view "$TAG" >/dev/null 2>&1 || gh release create "$TAG" --title "Reality Was Never Hidden" --notes "Final supplied-voice render from run ${{ github.run_id }}"
+          shopt -s nullglob
+          for file in build/$SLUG/final*.mp4 build/$SLUG/music_variants.json build/$SLUG/alts_sheet.jpg; do
+            test -f "$file" && gh release upload "$TAG" "$file" --clobber
+          done
+
+      - name: Save compact outcome
+        if: always()
+        shell: bash
+        run: |
+          rm -f pipeline/.env build/$SLUG/voice.opus build/$SLUG/vo.mp3
+          printf '%s\n' "${{ github.run_id }}" > build/$SLUG/final-run-id.txt
+          git config user.name render-bot
+          git config user.email render@users.noreply.github.com
+          git add build/$SLUG/final-run-id.txt build/$SLUG/script.json build/$SLUG/governor-summary.json build/$SLUG/render-status.json 2>/dev/null || true
+          git commit -m "render $SLUG: save final supplied-voice outcome" || exit 0
+          git pull --rebase origin main || git rebase --abort || true
+          git push || true
