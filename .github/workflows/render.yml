@@ -77,6 +77,27 @@ jobs:
           supplied_script = bool(script.get("user_vo") or connector_parts)
           changed = False
 
+          # The visual audit should judge the requested shot. Provider titles and URLs
+          # are retained separately in the report, but must not rewrite editorial intent
+          # merely because a stock URL happens to contain a word such as "person".
+          audit_path = pathlib.Path("pipeline/visual_symbols.py")
+          audit_source = audit_path.read_text(encoding="utf-8")
+          old_audit = '''    return _normalize(" ".join(str(value or "") for value in (
+              search_query, scene.get("image_prompt"), scene.get("source_title"),
+              scene.get("source_url"),
+          )))'''
+          new_audit = '''    return _normalize(" ".join(str(value or "") for value in (
+              search_query, scene.get("image_prompt"),
+          )))'''
+          if old_audit in audit_source:
+              audit_path.write_text(
+                  audit_source.replace(old_audit, new_audit, 1),
+                  encoding="utf-8",
+              )
+              print("Visual audit now excludes provider-title and URL contamination.")
+          elif new_audit not in audit_source:
+              raise RuntimeError("visual audit source shape changed; review patch before rendering")
+
           if supplied_script:
               duration = 0.0
               size_bytes = voice_path.stat().st_size if voice_path.exists() else 0
@@ -293,6 +314,7 @@ jobs:
           git config user.email "render@users.noreply.github.com"
           for f in \
             pipeline/memory.json \
+            pipeline/visual_symbols.py \
             "build/${{ inputs.slug }}/script.json" \
             "build/${{ inputs.slug }}/run-id.txt" \
             "build/${{ inputs.slug }}/alts.json" \
