@@ -1,0 +1,54 @@
+{
+  "finished_at": "2026-07-15T22:45:08+00:00",
+  "github_run_id": "29456327079",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "f9bff39954630754",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=f5284012d21d4e3f. ERROR: 34 scenes | FIX: aim for 18-26 scenes (one sentence/beat each)",
+  "mode": "recover",
+  "passes": 2,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "f9bff39954630754",
+      "priority": "high",
+      "reason": "2 occurrence(s): error: <n> scenes | fix: aim for <n>-<n> scenes (one sentence<path> each)",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "983845486be945d8be50bd981767d3bc",
+  "schema_version": 1,
+  "slug": "room-before-birth",
+  "stages": {
+    "build_pass": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.004
+    }
+  },
+  "status": "failed"
+}
