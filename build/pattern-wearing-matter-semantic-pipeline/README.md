@@ -1,0 +1,1 @@
+Fresh semantic remaster build. Uses the approved uploaded Liam voice recording as the locked narration master and deterministic scene mechanisms whose primary symbol and action visibly prove every line. No broad-topic stock substitutions are permitted.
