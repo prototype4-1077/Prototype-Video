@@ -1,47 +1,11 @@
 {
-  "finished_at": "2026-07-15T23:34:27+00:00",
-  "github_run_id": "29458777836",
-  "incidents": [
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "1cc12dbdad7fffe9",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "f len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks s",
-      "stage": "footage"
-    },
-    {
-      "count": 1,
-      "failure_class": "unknown",
-      "fingerprint": "d377024262cdfef0",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: genera",
-      "stage": "build_pass"
-    },
-    {
-      "count": 1,
-      "failure_class": "unknown",
-      "fingerprint": "20379bed636e703c",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
-      "stage": "build_pass"
-    }
-  ],
-  "last_message": "footage failed (unknown); retry budget 1 exhausted. fingerprint=1cc12dbdad7fffe9. ERROR: footage scene 0: board.py\", line 666, in render_scene",
+  "finished_at": "2026-07-15T23:40:18+00:00",
+  "github_run_id": "29459121848",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/tiktok-videos/tiktok-videos/build/room-before-birth/final.mp4 (curation reel)",
   "mode": "recover",
-  "passes": 3,
+  "passes": 1,
   "policy": {
-    "align": {
-      "hard_timeout_s": 300.0,
-      "historical_p95_s": null,
-      "idle_timeout_s": 120.0,
-      "sample_count": 4,
-      "soft_timeout_s": 180.0,
-      "source": "default"
-    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -50,105 +14,119 @@
       "soft_timeout_s": 1800.0,
       "source": "explicit"
     },
-    "footage": {
-      "hard_timeout_s": 600.0,
-      "historical_p95_s": 10.02,
-      "idle_timeout_s": 60.07,
-      "sample_count": 88,
-      "soft_timeout_s": 60.07,
-      "source": "history"
+    "curate": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 360.0,
+      "sample_count": 0,
+      "soft_timeout_s": 720.0,
+      "source": "default"
     },
-    "transcribe": {
-      "hard_timeout_s": 900.0,
-      "historical_p95_s": 10.37,
-      "idle_timeout_s": 180.0,
-      "sample_count": 14,
-      "soft_timeout_s": 180.0,
-      "source": "history"
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
     }
   },
-  "quality": {},
-  "recommendations": [
-    {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "1cc12dbdad7fffe9",
-      "priority": "high",
-      "reason": "2 occurrence(s): f len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks s",
-      "stage": "footage"
+  "quality": {
+    "build_dir": "/home/runner/work/tiktok-videos/tiktok-videos/build/room-before-birth",
+    "checked_at": "2026-07-15T23:40:18+00:00",
+    "deep_decode": true,
+    "expected_duration_s": null,
+    "failures": [],
+    "mode": "curation",
+    "outputs": {
+      "portrait": {
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "exists": true,
+        "failures": [],
+        "path": "/home/runner/work/tiktok-videos/tiktok-videos/build/room-before-birth/final.mp4",
+        "probe": {
+          "audio_codec": null,
+          "audio_duration_s": null,
+          "bit_rate": 220188.0,
+          "duration_s": 5.033333,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": false,
+          "has_video": true,
+          "height": 880,
+          "video_codec": "h264",
+          "video_duration_s": 5.033333,
+          "width": 1600
+        },
+        "size_bytes": 138535,
+        "warnings": []
+      }
     },
-    {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "d377024262cdfef0",
-      "priority": "medium",
-      "reason": "1 occurrence(s): governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: genera",
-      "stage": "build_pass"
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": false,
+      "full_decode_required": true,
+      "minimum_dimension": 720,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
     },
-    {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "20379bed636e703c",
-      "priority": "medium",
-      "reason": "1 occurrence(s): governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
-      "stage": "build_pass"
-    },
-    {
-      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
-      "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (91.1s).",
-      "stage": "build_pass"
-    }
-  ],
-  "run_id": "29cb9d86428f474486789b26abcba1db",
+    "schema_version": 1,
+    "warnings": []
+  },
+  "recommendations": [],
+  "run_id": "2b61bba947fb4123a68daa5352fc49e4",
   "schema_version": 1,
   "slug": "room-before-birth",
   "stages": {
-    "align": {
+    "build_pass": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 1.003,
-      "p95_success_s": 1.003,
+      "p50_success_s": 18.018,
+      "p95_success_s": 18.018,
       "success_durations_s": [
-        1.003
+        18.018
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 1.003
+      "total_duration_s": 18.018
     },
-    "build_pass": {
-      "attempts": 3,
-      "failures": 2,
-      "p50_success_s": 32.028,
-      "p95_success_s": 32.028,
-      "success_durations_s": [
-        32.028
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 91.08
-    },
-    "footage": {
-      "attempts": 2,
-      "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
-      "timeouts": 0,
-      "total_duration_s": 57.055
-    },
-    "transcribe": {
-      "attempts": 3,
+    "curate": {
+      "attempts": 1,
       "failures": 0,
-      "p50_success_s": 10.009,
-      "p95_success_s": 10.01,
+      "p50_success_s": 17.018,
+      "p95_success_s": 17.018,
       "success_durations_s": [
-        10.01,
-        10.009,
-        8.007
+        17.018
       ],
-      "successes": 3,
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 28.026
+      "total_duration_s": 17.018
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.004,
+      "p95_success_s": 1.004,
+      "success_durations_s": [
+        1.004
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.004
     }
   },
-  "status": "failed"
+  "status": "done"
 }
