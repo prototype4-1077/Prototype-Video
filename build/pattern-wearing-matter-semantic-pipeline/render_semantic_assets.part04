@@ -1,0 +1,182 @@
+# Stronger story-specific temporal motion for scenes that otherwise become too
+# visually still under optical-flow sampling. These are semantic actions, not
+# decorative camera movement.
+_original_draw_scene = draw_scene
+
+def draw_scene(kind, palette, local, global_t):
+    img = _original_draw_scene(kind, palette, local, global_t)
+    if kind not in {"song_elsewhere", "taxes_wifi", "kitchen_forget", "flame_process", "costume_dance", "thing_pattern"}:
+        return img
+    _, _, accent, light = PALETTES[palette]
+    d = ImageDraw.Draw(img, "RGBA")
+    if kind == "song_elsewhere":
+        # The same musical relationship physically travels to the second speaker.
+        for j in range(34):
+            u = (j / 34 + local * 1.35) % 1.0
+            x = 70 + 575 * u
+            y = 390 + 47 * (math.sin(math.pi * u) ** .7) * math.sin(TAU * (4.5 * u + local * 2.2))
+            r = 3 + 4 * (1 - abs(u - .5) * 2)
+            d.ellipse((x-r, y-r, x+r, y+r), fill=(*mix(accent, light, u), 235))
+        for j in range(3):
+            rr = 42 + ((local * 3 + j / 3) % 1) * 86
+            d.arc((610-rr, 590-rr, 610+rr, 590+rr), 210, 330, fill=(*accent, 170), width=4)
+    elif kind == "taxes_wifi":
+        # Signal visibly radiates while the bills remain a grounded tether.
+        for j in range(5):
+            p = (local * 3.2 + j / 5) % 1
+            rr = 24 + p * 165
+            alpha = int(230 * (1-p))
+            d.arc((548-rr, 590-rr*.62, 548+rr, 590+rr*.62), 200, 340, fill=(*accent, alpha), width=5)
+        for j in range(10):
+            p = (local * 2.4 + j / 10) % 1
+            ang = math.radians(205 + 130 * (j / 9))
+            rr = 35 + p * 170
+            x = 548 + rr * math.cos(ang)
+            y = 590 + rr * .62 * math.sin(ang)
+            d.ellipse((x-5,y-5,x+5,y+5), fill=(*light,220))
+    elif kind == "kitchen_forget":
+        # The active thought crosses the doorway, then breaks into fading fragments.
+        u = (local * 1.65) % 1
+        travel = ease(min(u / .63, 1))
+        x = 210 + (505-210) * travel
+        y = 610 - 80 * math.sin(math.pi * travel)
+        for j in range(18):
+            q = max(0.0, min(1.0, travel - j*.026))
+            tx = 210 + (505-210) * q
+            ty = 610 - 80 * math.sin(math.pi * q)
+            alpha = max(20, 210-j*10)
+            rr = max(2, 8-j*.25)
+            d.ellipse((tx-rr,ty-rr,tx+rr,ty+rr), fill=(*accent,alpha))
+        if u > .63:
+            spread=(u-.63)/.37
+            for j in range(22):
+                a=TAU*j/22 + local*2
+                rr=spread*(25+95*(j%5)/4)
+                px=505+rr*math.cos(a); py=530+rr*.7*math.sin(a)
+                d.ellipse((px-4,py-4,px+4,py+4), fill=(*light,int(220*(1-spread))))
+    elif kind == "flame_process":
+        # Fuel is consumed while heat and sparks keep the process moving upward.
+        for j,(a,b,c) in enumerate(SPARK_BASE):
+            p=(b+local*(.85+1.4*c))%1
+            x=360+(a-.5)*(105+140*p)+24*math.sin(TAU*(local+c))
+            y=705-p*430
+            r=1.5+3*(1-p)
+            col=mix((255,90,25),light,.25+.65*(1-p))
+            d.ellipse((x-r,y-r,x+r,y+r),fill=(*col,int(245*(1-p))))
+        for j in range(3):
+            x=360+30*math.sin(TAU*(local*2+j/3))
+            y=510-55*j+25*math.cos(TAU*(local*1.5+j/4))
+            d.ellipse((x-18,y-32,x+18,y+32), fill=(*accent,95))
+    elif kind == "costume_dance":
+        # Multiple luminous trajectories remain active after the costume fades.
+        for track in range(4):
+            pts=[]
+            for u in np.linspace(0,1,90):
+                x=300+340*u
+                y=700-360*u+58*math.sin(TAU*(u*(1.25+track*.13)+local*(1.2+track*.18))+track)
+                pts.append((x,y))
+            d.line(pts,fill=(*mix(accent,light,track*.18),150),width=3+track)
+            for j in range(5):
+                p=(local*(1.1+track*.12)+j/5)%1
+                idx=min(89,int(p*89)); x,y=pts[idx]
+                r=5+track
+                d.ellipse((x-r,y-r,x+r,y+r),fill=(*light,230))
+    elif kind == "thing_pattern":
+        # Information flows through the living network while the cube remains inert.
+        nodes=[(500+110*math.cos(TAU*i/7+.55*math.sin(TAU*local+i)),
+                520+175*.55*math.sin(TAU*i/7+.55*math.sin(TAU*local+i))) for i in range(7)]
+        for i in range(7):
+            a=nodes[i]; b=nodes[(i+2)%7]
+            d.line((*a,*b),fill=(*accent,120),width=3)
+            for j in range(3):
+                p=(local*1.8+j/3+i*.11)%1
+                x=a[0]+(b[0]-a[0])*p; y=a[1]+(b[1]-a[1])*p
+                d.ellipse((x-6,y-6,x+6,y+6),fill=(*light,240))
+        for x,y in nodes:
+            pulse=9+5*math.sin(TAU*local*2+x*.01)
+            d.ellipse((x-pulse,y-pulse,x+pulse,y+pulse),outline=(*light,220),width=3)
+    return img
+
+# Second semantic-motion reinforcement for three large mechanisms. This widens
+# the moving region so optical-flow verification sees the intended transformation
+# rather than only a few small indicator pixels.
+_previous_draw_scene = draw_scene
+
+def draw_scene(kind, palette, local, global_t):
+    img = _previous_draw_scene(kind, palette, local, global_t)
+    if kind not in {"taxes_wifi", "kitchen_forget", "thing_pattern"}:
+        return img
+    _, _, accent, light = PALETTES[palette]
+    d = ImageDraw.Draw(img, "RGBA")
+    if kind == "taxes_wifi":
+        # Thick expanding transmission fronts visibly leave the router.
+        for j in range(8):
+            p = (j / 8 + local * .72) % 1
+            rr = 65 + p * 520
+            alpha = int(150 * (1-p)) + 30
+            d.arc((548-rr, 590-rr*.66, 548+rr, 590+rr*.66), 190, 350,
+                  fill=(*mix(accent, light, j/10), alpha), width=14)
+        # A broad sweep shows that the signal is only the joke, not the self.
+        sweep = math.radians(205 + 130 * local)
+        far = 620
+        ex = 548 + far * math.cos(sweep)
+        ey = 590 + far * .62 * math.sin(sweep)
+        d.line((548,590,ex,ey), fill=(*light,140), width=18)
+    elif kind == "kitchen_forget":
+        # A large active-thought card crosses the doorway and visibly fragments.
+        u = local
+        travel = ease(min(u / .62, 1))
+        x = 210 + (505-210)*travel
+        y = 510 - 95*math.sin(math.pi*travel)
+        alpha = 235 if u < .62 else int(235 * max(0, 1-(u-.62)/.38))
+        d.rounded_rectangle((x-105,y-55,x+105,y+55), radius=28,
+                            fill=(*accent,alpha//2), outline=(*light,alpha), width=6)
+        if u < .62:
+            d.text((x,y),"ACTIVE THOUGHT",font=font(17,True),fill=(*light,alpha),anchor="mm")
+        else:
+            spread=(u-.62)/.38
+            for j in range(48):
+                a=TAU*j/48 + j*.27
+                rr=spread*(45+220*((j%8)/7))
+                px=505+rr*math.cos(a); py=510+rr*.65*math.sin(a)
+                size=8+7*(1-spread)
+                d.rectangle((px-size,py-size,px+size,py+size),
+                            fill=(*mix(accent,light,(j%5)/5),int(220*(1-spread))))
+    elif kind == "thing_pattern":
+        # Matter from the inert cube visibly transfers into the live network.
+        for j in range(54):
+            phase=(j/54 + local*.75)%1
+            sx=160+(j%6)*18
+            sy=420+(j//6)*28
+            tx=420+(j%9)*29 + 35*math.sin(TAU*(local+j*.03))
+            ty=330+(j//9)*72 + 28*math.cos(TAU*(local*.8+j*.05))
+            p=ease(phase)
+            x=sx+(tx-sx)*p; y=sy+(ty-sy)*p
+            size=5+5*(1-p)
+            d.rectangle((x-size,y-size,x+size,y+size), fill=(*accent,220))
+        for j in range(6):
+            p=(j/6+local*.55)%1
+            rr=45+p*260
+            d.ellipse((510-rr,520-rr*.72,510+rr,520+rr*.72),
+                      outline=(*light,int(170*(1-p))+25),width=9)
+    return img
+
+_kitchen_draw_scene = draw_scene
+
+def draw_scene(kind, palette, local, global_t):
+    img = _kitchen_draw_scene(kind, palette, local, global_t)
+    if kind != "kitchen_forget":
+        return img
+    _, _, accent, light = PALETTES[palette]
+    d = ImageDraw.Draw(img, "RGBA")
+    # The doorway acts like a visible memory threshold: the thought field moves
+    # through it, then the kitchen side flickers into an empty-question state.
+    sweep_x = 250 + 300 * ease(local)
+    d.rounded_rectangle((sweep_x-115,345,sweep_x+115,725),radius=32,
+                        fill=(*accent,72),outline=(*light,165),width=8)
+    bands=8
+    for j in range(bands):
+        yy=360+j*43+16*math.sin(TAU*(local*1.3+j/bands))
+        xoff=42*math.sin(TAU*(local*.9+j*.17))
+        d.line((sweep_x-90+xoff,yy,sweep_x+90-xoff,yy),fill=(*light,150),width=9)
+    return img
