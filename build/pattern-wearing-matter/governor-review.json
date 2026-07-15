@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15T14:37:44+00:00",
+  "generated_at": "2026-07-15T14:43:26+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
@@ -7,7 +7,7 @@
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
       "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "b26e8c95844188e5",
+      "fingerprint": "691d8ac7682ab223",
       "priority": "medium",
       "stage": "build_pass"
     },
@@ -15,7 +15,7 @@
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
       "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "691d8ac7682ab223",
+      "fingerprint": "b26e8c95844188e5",
       "priority": "medium",
       "stage": "build_pass"
     }
@@ -24,22 +24,22 @@
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "b26e8c95844188e5",
+      "fingerprint": "691d8ac7682ab223",
       "kind": "failure",
-      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "normalized_error": "error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
       "slugs": [
-        "pattern-wearing-matter"
+        "trained-not-to-look"
       ],
       "stage": "build_pass"
     },
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "691d8ac7682ab223",
+      "fingerprint": "b26e8c95844188e5",
       "kind": "failure",
-      "normalized_error": "error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
       "slugs": [
-        "trained-not-to-look"
+        "pattern-wearing-matter"
       ],
       "stage": "build_pass"
     }
