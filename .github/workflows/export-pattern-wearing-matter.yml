@@ -28,9 +28,10 @@ jobs:
         run: |
           mkdir -p export
           gh release download video-pattern-wearing-matter \
-            --pattern 'pattern-wearing-matter.mp4' \
+            --pattern 'final.mp4' \
             --dir export
-          test -s export/pattern-wearing-matter.mp4
+          test -s export/final.mp4
+          mv export/final.mp4 export/pattern-wearing-matter.mp4
       - name: Upload TikTok video only
         uses: actions/upload-artifact@v4
         with:
