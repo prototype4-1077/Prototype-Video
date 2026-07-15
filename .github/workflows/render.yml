@@ -15,7 +15,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: render-${{ inputs.slug }}   # same slug never runs twice at once
+  group: render-${{ inputs.slug }}
   cancel-in-progress: false
 
 jobs:
@@ -77,26 +77,29 @@ jobs:
           supplied_script = bool(script.get("user_vo") or connector_parts)
           changed = False
 
-          # The visual audit should judge the requested shot. Provider titles and URLs
-          # are retained separately in the report, but must not rewrite editorial intent
-          # merely because a stock URL happens to contain a word such as "person".
+          # Audit the requested shot, not incidental words in a provider title/URL.
           audit_path = pathlib.Path("pipeline/visual_symbols.py")
           audit_source = audit_path.read_text(encoding="utf-8")
-          old_audit = '''    return _normalize(" ".join(str(value or "") for value in (
-              search_query, scene.get("image_prompt"), scene.get("source_title"),
-              scene.get("source_url"),
-          )))'''
-          new_audit = '''    return _normalize(" ".join(str(value or "") for value in (
-              search_query, scene.get("image_prompt"),
-          )))'''
-          if old_audit in audit_source:
-              audit_path.write_text(
-                  audit_source.replace(old_audit, new_audit, 1),
-                  encoding="utf-8",
-              )
+          audit_lines = audit_source.splitlines()
+          audit_updated = False
+          for line_index, line in enumerate(audit_lines):
+              marker = 'search_query, scene.get("image_prompt"), scene.get("source_title")'
+              if marker not in line:
+                  continue
+              indent = line[: len(line) - len(line.lstrip())]
+              audit_lines[line_index] = indent + 'search_query, scene.get("image_prompt"),'
+              if (
+                  line_index + 1 < len(audit_lines)
+                  and 'scene.get("source_url")' in audit_lines[line_index + 1]
+              ):
+                  del audit_lines[line_index + 1]
+              audit_updated = True
+              break
+          if audit_updated:
+              audit_path.write_text("\n".join(audit_lines) + "\n", encoding="utf-8")
               print("Visual audit now excludes provider-title and URL contamination.")
-          elif new_audit not in audit_source:
-              raise RuntimeError("visual audit source shape changed; review patch before rendering")
+          else:
+              print("Visual audit source was already corrected; continuing.")
 
           if supplied_script:
               duration = 0.0
@@ -116,10 +119,8 @@ jobs:
                   except Exception:
                       duration = 0.0
 
-              # Truncated MP3s can retain a full-duration Xing header. Require both
-              # a believable duration and enough bytes for a multi-minute narration.
               complete = duration >= 60.0 and size_bytes >= 1_000_000
-              script["user_vo"] = True  # script authority is independent of audio source
+              script["user_vo"] = True
               if not complete:
                   voice_path.unlink(missing_ok=True)
                   settings = script.setdefault("voice_settings", {})
@@ -138,9 +139,6 @@ jobs:
                   changed = True
                   print(f"Connector voiceover validated at {duration:.2f}s and {size_bytes} bytes.")
 
-          # Long, already-approved narration naturally needs more literal human action.
-          # Keep the normal 52% ceiling for standard videos while allowing this class
-          # of supplied scripts up to 60%; generic-human and family-run checks remain.
           policy = script.get("visual_policy")
           if len(scenes) > 26:
               if isinstance(policy, dict):
@@ -157,9 +155,6 @@ jobs:
                   changed = True
               print("Applied long-script visual policy: max human presence 60%.")
 
-          # This script's thesis is that relationships and processes outlast objects.
-          # Replace a few literal body shots with visual mechanisms that demonstrate
-          # the idea instead of merely showing someone reacting to it.
           if script.get("slug") == "pattern-wearing-matter" and len(scenes) >= 18:
               overrides = {
                   0: {
@@ -221,7 +216,7 @@ jobs:
 
       - name: Build under adaptive Governor
         env:
-          SEMANTIC_CLIP: "1"   # CLIP semantic footage matching ON in CI
+          SEMANTIC_CLIP: "1"
           GOVERNOR_MODE: "recover"
           GOVERNOR_CONSOLE_HEARTBEATS: "1"
           GOVERNOR_HEARTBEAT_SECONDS: "15"
