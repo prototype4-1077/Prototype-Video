@@ -1,6 +1,6 @@
 {
-  "finished_at": "2026-07-15T23:50:59+00:00",
-  "github_run_id": "29459617585",
+  "finished_at": "2026-07-15T23:57:55+00:00",
+  "github_run_id": "29459894097",
   "incidents": [
     {
       "count": 2,
@@ -8,29 +8,29 @@
       "fingerprint": "1cc12dbdad7fffe9",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "f len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks s",
+      "normalized_error": "len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks suf",
       "stage": "footage"
     },
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "20379bed636e703c",
+      "fingerprint": "c41dff511a5bbbd4",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
+      "normalized_error": "rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1c",
       "stage": "build_pass"
     },
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "6e725aee27eb4041",
+      "fingerprint": "e4d5f0fb9f9d13b8",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
+      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: oard.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false, ",
       "stage": "build_pass"
     }
   ],
-  "last_message": "footage failed (unknown); retry budget 1 exhausted. fingerprint=1cc12dbdad7fffe9. ERROR: footage scene 0: board.py\", line 666, in render_scene",
+  "last_message": "footage failed (unknown); retry budget 1 exhausted. fingerprint=1cc12dbdad7fffe9. ERROR: footage scene 10: oard.py\", line 666, in render_scene",
   "mode": "recover",
   "passes": 3,
   "policy": {
@@ -127,31 +127,31 @@
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
       "fingerprint": "1cc12dbdad7fffe9",
       "priority": "high",
-      "reason": "2 occurrence(s): f len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks s",
+      "reason": "2 occurrence(s): len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks suf",
       "stage": "footage"
     },
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "20379bed636e703c",
+      "fingerprint": "c41dff511a5bbbd4",
       "priority": "medium",
-      "reason": "1 occurrence(s): governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
+      "reason": "1 occurrence(s): rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1c",
       "stage": "build_pass"
     },
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "6e725aee27eb4041",
+      "fingerprint": "e4d5f0fb9f9d13b8",
       "priority": "medium",
-      "reason": "1 occurrence(s): governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
+      "reason": "1 occurrence(s): governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: oard.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false, ",
       "stage": "build_pass"
     },
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (88.1s).",
+      "reason": "Largest measured latency contribution in this run (155.2s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "df28c2b47b6f4ac3985654d4997979c7",
+  "run_id": "153406e85cea4d538fe9646a3e2a059f",
   "schema_version": 1,
   "slug": "room-before-birth",
   "stages": {
@@ -170,38 +170,46 @@
     "build_pass": {
       "attempts": 3,
       "failures": 2,
-      "p50_success_s": 31.024,
-      "p95_success_s": 31.024,
+      "p50_success_s": 31.027,
+      "p95_success_s": 31.027,
       "success_durations_s": [
-        31.024
+        31.027
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 88.078
+      "total_duration_s": 155.166
     },
     "footage": {
-      "attempts": 2,
+      "attempts": 9,
       "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+      "p50_success_s": 12.013,
+      "p95_success_s": 17.718,
+      "success_durations_s": [
+        3.006,
+        17.015,
+        18.019,
+        11.012,
+        14.013,
+        12.013,
+        11.014
+      ],
+      "successes": 7,
       "timeouts": 0,
-      "total_duration_s": 55.042
+      "total_duration_s": 122.149
     },
     "transcribe": {
       "attempts": 3,
       "failures": 0,
-      "p50_success_s": 10.008,
-      "p95_success_s": 10.008,
+      "p50_success_s": 10.009,
+      "p95_success_s": 10.012,
       "success_durations_s": [
-        10.008,
-        10.008,
-        8.009
+        10.012,
+        10.009,
+        8.008
       ],
       "successes": 3,
       "timeouts": 0,
-      "total_duration_s": 28.025
+      "total_duration_s": 28.029
     }
   },
   "status": "failed"

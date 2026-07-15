@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-15T23:50:59+00:00",
+  "generated_at": "2026-07-15T23:57:55+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
@@ -18,7 +18,7 @@
       "failure_class": "unknown",
       "fingerprint": "1cc12dbdad7fffe9",
       "kind": "failure",
-      "normalized_error": "f len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks s",
+      "normalized_error": "len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks suf",
       "slugs": [
         "room-before-birth"
       ],
@@ -27,9 +27,9 @@
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "20379bed636e703c",
+      "fingerprint": "c41dff511a5bbbd4",
       "kind": "failure",
-      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
+      "normalized_error": "rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1c",
       "slugs": [
         "room-before-birth"
       ],
@@ -38,9 +38,9 @@
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "6e725aee27eb4041",
+      "fingerprint": "e4d5f0fb9f9d13b8",
       "kind": "failure",
-      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: board.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false,",
+      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: oard.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false, ",
       "slugs": [
         "room-before-birth"
       ],
@@ -96,7 +96,7 @@
       "successes": 57,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 5589.838
+      "total_duration_s": 5656.926
     },
     "credits": {
       "attempts": 44,
@@ -123,16 +123,16 @@
       "total_duration_s": 621.031
     },
     "footage": {
-      "attempts": 90,
-      "failure_rate": 0.0222,
+      "attempts": 97,
+      "failure_rate": 0.0206,
       "failures": 2,
       "p50_success_s": 3.01,
-      "p95_success_s": 10.025,
-      "sample_count": 88,
-      "successes": 88,
+      "p95_success_s": 13.323,
+      "sample_count": 95,
+      "successes": 95,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 439.057
+      "total_duration_s": 506.164
     },
     "hero": {
       "attempts": 2,
@@ -204,7 +204,7 @@
       "successes": 14,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 117.148
+      "total_duration_s": 117.152
     },
     "tts": {
       "attempts": 3,
