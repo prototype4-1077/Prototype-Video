@@ -1,6 +1,7 @@
 """ElevenLabs TTS with character timestamps -> per-sentence durations.
 Usage: python3 tts.py <build_dir>   (reads script.json, writes vo.mp3 + updates durations)
-Env: ELEVENLABS_API_KEY, ELEVENLABS_VOICE_ID (default: Daniel - deep calm narration)"""
+Env: ELEVENLABS_API_KEY, ELEVENLABS_VOICE_ID (default: Daniel - deep calm narration)
+Per-video overrides: script.json may include voice_settings and elevenlabs_model."""
 import base64, json, os, sys, urllib.request
 
 VOICE = os.environ.get("ELEVENLABS_VOICE_ID", "onwK4e9ZLuTAKqWW03F9")  # Daniel
@@ -11,12 +12,20 @@ MODEL = os.environ.get("ELEVENLABS_MODEL", "eleven_multilingual_v2")
 def tts(bd):
     s = json.load(open(f"{bd}/script.json"))
     full_text = " ".join(sc["text"] for sc in s["scenes"])
+    voice_settings = {
+        "stability": 0.55,
+        "similarity_boost": 0.75,
+        "style": 0.35,
+        "speed": 0.92,
+    }
+    voice_settings.update(s.get("voice_settings", {}))
+    model = s.get("elevenlabs_model", MODEL)
     req = urllib.request.Request(
         f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE}/with-timestamps",
         data=json.dumps({
-            "text": full_text, "model_id": MODEL,
-            "voice_settings": {"stability": 0.55, "similarity_boost": 0.75,
-                               "style": 0.35, "speed": 0.92},
+            "text": full_text,
+            "model_id": model,
+            "voice_settings": voice_settings,
         }).encode(),
         headers={"xi-api-key": KEY, "Content-Type": "application/json"})
     resp = json.load(urllib.request.urlopen(req, timeout=300))
