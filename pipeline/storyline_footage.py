@@ -58,6 +58,38 @@ def _write_report(build_dir: str, rows: list[dict]):
     }, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
 
+def _timeline_position(script: dict, index: int) -> tuple[float, float]:
+    """Use narration time when available; otherwise fall back to scene order."""
+    scenes = script.get("scenes") or []
+    scene = scenes[index]
+    try:
+        start = float(scene.get("start"))
+        total = max(
+            float(item.get("start") or 0.0) + float(item.get("duration") or 0.0)
+            for item in scenes
+        )
+        if total > 0:
+            return start, total
+    except (TypeError, ValueError):
+        pass
+    return float(index), float(max(len(scenes), 1))
+
+
+def _clear_rejected_stock(build_dir: str, scene: dict, index: int) -> None:
+    """Remove a cached stock choice before a narrative replacement is selected."""
+    output = Path(build_dir) / f"clip_{index:02d}.mp4"
+    try:
+        output.unlink()
+    except OSError:
+        pass
+    for field in (
+        "clip", "stock_id", "pexels_id", "motion_verified", "motion_evidence",
+        "motion_source", "source_url", "source_license", "source_title",
+        "stock_frame_url", "stock_frame_url_checked", "stock_frame_url_unusable",
+    ):
+        scene.pop(field, None)
+
+
 def _render_storyboard(build_dir: str, script: dict, index: int, reason: str, decisions=None):
     scene = script["scenes"][index]
     plan = storyboard.render_scene(build_dir, script, index)
@@ -85,10 +117,11 @@ def main(build_dir: str, idx: str | None = None):
     try:
         for index in targets:
             scene = script["scenes"][index]
+            position, span = _timeline_position(script, index)
             _CURRENT.update({
                 "scene": scene,
-                "index": index,
-                "total": len(script["scenes"]),
+                "index": position,
+                "total": span,
                 "decisions": [],
             })
             row = {
@@ -107,13 +140,51 @@ def main(build_dir: str, idx: str | None = None):
                 narrative_fidelity.rejected_context(scene, current_video)
                 if current_id else None
             )
-            if rejected_existing:
-                plan = _render_storyboard(
-                    build_dir, script, index,
-                    str(rejected_existing.get("reason") or "approved edit rejected this stock context"),
+            existing_ok, existing_coverage, existing_reason = (
+                narrative_fidelity.acceptable(scene, current_video, position, span)
+                if current_id else (True, 0.0, "no cached stock")
+            )
+            if rejected_existing or (
+                current_id
+                and narrative_fidelity.direct_match_required(scene, position, span)
+                and not existing_ok
+            ):
+                reason = (
+                    str(rejected_existing.get("reason"))
+                    if rejected_existing
+                    else f"cached stock failed narrative gate: {existing_reason}"
                 )
-                row.update({"result": "literal_storyboard", "plan": plan})
-            elif storyboard.preferred(scene, index, len(script["scenes"])):
+                _clear_rejected_stock(build_dir, scene, index)
+                if storyboard.preferred(scene, position, span):
+                    plan = _render_storyboard(build_dir, script, index, reason)
+                    row.update({
+                        "result": "literal_storyboard",
+                        "existing_anchor_coverage": existing_coverage,
+                        "plan": plan,
+                    })
+                else:
+                    try:
+                        footage.fetch_scene(build_dir, script, index, used)
+                        row.update({
+                            "result": "stock_replaced",
+                            "stock_id": scene.get("stock_id") or scene.get("pexels_id"),
+                            "existing_anchor_coverage": existing_coverage,
+                            "candidate_decisions": _CURRENT.get("decisions") or [],
+                        })
+                    except (NoNarrativeMatch, SystemExit) as exc:
+                        decisions = getattr(exc, "decisions", _CURRENT.get("decisions") or [])
+                        plan = _render_storyboard(
+                            build_dir, script, index,
+                            "cached stock failed and no direct replacement survived",
+                            decisions,
+                        )
+                        row.update({
+                            "result": "literal_storyboard",
+                            "existing_anchor_coverage": existing_coverage,
+                            "candidate_decisions": decisions,
+                            "plan": plan,
+                        })
+            elif storyboard.preferred(scene, position, span):
                 plan = _render_storyboard(build_dir, script, index, "literal mechanism preferred")
                 row.update({"result": "literal_storyboard", "plan": plan})
             else:
