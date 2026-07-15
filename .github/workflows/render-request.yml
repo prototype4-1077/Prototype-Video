@@ -1,0 +1,36 @@
+name: Render queued video request
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "build/**/render.request"
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      slug: ${{ steps.slug.outputs.slug }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - id: slug
+        shell: bash
+        run: |
+          file="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep -E '^build/[^/]+/render\.request$' | head -n 1)"
+          test -n "$file"
+          slug="${file#build/}"
+          slug="${slug%/render.request}"
+          echo "slug=$slug" >> "$GITHUB_OUTPUT"
+
+  render:
+    needs: detect
+    uses: ./.github/workflows/render.yml
+    with:
+      slug: ${{ needs.detect.outputs.slug }}
+    secrets: inherit
