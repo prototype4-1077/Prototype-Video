@@ -1,0 +1,54 @@
+{
+  "finished_at": "2026-07-15T14:13:35+00:00",
+  "github_run_id": "29422492150",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "b26e8c95844188e5",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=a35b49374d568368. ERROR: visual symbol plan: human imagery occupies 57%; target <= 52% | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
+  "mode": "recover",
+  "passes": 2,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "b26e8c95844188e5",
+      "priority": "high",
+      "reason": "2 occurrence(s): note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "ebd16b98b1dc4e4991b5058b80801342",
+  "schema_version": 1,
+  "slug": "pattern-wearing-matter",
+  "stages": {
+    "build_pass": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.004
+    }
+  },
+  "status": "failed"
+}
