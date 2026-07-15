@@ -1,0 +1,202 @@
+name: Render Pattern Wearing Matter Semantic Pipeline
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "semantic-renders/pattern-wearing-matter.request"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: render-pattern-wearing-matter-semantic
+  cancel-in-progress: true
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      SLUG: pattern-wearing-matter-semantic-pipeline
+      BUILD: build/pattern-wearing-matter-semantic-pipeline
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Mark semantic render started
+        run: |
+          printf '%s\n' "${{ github.run_id }}" > semantic-renders/pattern-wearing-matter-run.txt
+          git config user.name render-bot
+          git config user.email render@users.noreply.github.com
+          git add semantic-renders/pattern-wearing-matter-run.txt
+          git commit -m "render pattern-wearing-matter semantic: started ${{ github.run_id }}" || true
+          git push
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: System dependencies
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+
+      - name: Python dependencies
+        run: pip install -q -r pipeline/requirements.txt
+
+      - name: Pipeline regression tests
+        run: python3 -m unittest discover -s pipeline/tests -v
+
+      - name: API keys from repository secrets
+        run: |
+          printf 'ELEVENLABS_API_KEY=%s\nPEXELS_API_KEY=%s\nELEVENLABS_VOICE_ID=%s\n' \
+            "${{ secrets.ELEVENLABS_API_KEY }}" "${{ secrets.PEXELS_API_KEY }}" \
+            "${{ secrets.ELEVENLABS_VOICE_ID || 'TX3LPaxmHKxFdv7VOQHJ' }}" > pipeline/.env
+
+      - name: Assemble deterministic semantic renderer
+        run: |
+          cat "$BUILD"/render_semantic_assets.part?? > "$BUILD/render_semantic_assets.py"
+          python3 -m py_compile "$BUILD/render_semantic_assets.py"
+
+      - name: Generate premium Liam v3 narration
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json
+          import os
+          import pathlib
+          import subprocess
+          import urllib.request
+
+          build = pathlib.Path(os.environ["BUILD"])
+          script = json.loads((build / "script.json").read_text(encoding="utf-8"))
+          for raw in pathlib.Path("pipeline/.env").read_text().splitlines():
+              if raw and "=" in raw:
+                  key, value = raw.split("=", 1)
+                  os.environ[key] = value
+          api_key = os.environ["ELEVENLABS_API_KEY"]
+          voice_id = os.environ.get("ELEVENLABS_VOICE_ID", "TX3LPaxmHKxFdv7VOQHJ")
+          text = " ".join(scene["text"] for scene in script["scenes"])
+          payload = {
+              "text": text,
+              "model_id": script.get("elevenlabs_model", "eleven_v3"),
+              "voice_settings": script["voice_settings"],
+          }
+          request = urllib.request.Request(
+              f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}?output_format=mp3_44100_192",
+              data=json.dumps(payload).encode("utf-8"),
+              headers={"xi-api-key": api_key, "Content-Type": "application/json", "Accept": "audio/mpeg"},
+          )
+          with urllib.request.urlopen(request, timeout=600) as response:
+              audio = response.read()
+          voice = build / "vo.mp3"
+          voice.write_bytes(audio)
+          probe = subprocess.run(
+              ["ffprobe", "-v", "error", "-show_entries", "format=duration,bit_rate", "-of", "json", str(voice)],
+              check=True, capture_output=True, text=True,
+          )
+          info = json.loads(probe.stdout)["format"]
+          duration = float(info["duration"])
+          bitrate = float(info.get("bit_rate") or 0)
+          reference = float(script["voice_standard"]["reference_duration_seconds"])
+          if len(audio) < 2_000_000:
+              raise SystemExit(f"voice file undersized: {len(audio)} bytes")
+          if abs(duration - reference) > 28:
+              raise SystemExit(f"voice pacing outside approved range: {duration:.2f}s versus {reference:.2f}s reference")
+          print(f"premium Liam v3 narration: {duration:.2f}s, {len(audio)} bytes, {bitrate/1000:.0f} kb/s")
+          PY
+
+      - name: Align narration and captions
+        run: |
+          python3 pipeline/transcribe.py "$BUILD"
+          python3 pipeline/align.py "$BUILD"
+
+      - name: Generate and verify locked semantic motion scenes
+        run: |
+          python3 pipeline/semantic_visuals_pattern_wearing_matter.py "$BUILD"
+          python3 - <<'PY'
+          import json, os, pathlib
+          build = pathlib.Path(os.environ["BUILD"])
+          script = json.loads((build / "script.json").read_text(encoding="utf-8"))
+          for index, scene in enumerate(script["scenes"]):
+              if scene.get("motion_source") != "deterministic_semantic_animation":
+                  raise SystemExit(f"scene {index} escaped semantic lock")
+              if not scene.get("semantic_visual_locked") or not scene.get("motion_verified"):
+                  raise SystemExit(f"scene {index} lacks semantic/motion verification")
+              if not scene.get("primary_symbol") or not scene.get("semantic_anchor"):
+                  raise SystemExit(f"scene {index} lacks symbol contract")
+          print(f"semantic lock passed for {len(script['scenes'])} scenes")
+          PY
+
+      - name: Build through the TikTok Video Pipeline Governor
+        env:
+          SEMANTIC_CLIP: "0"
+          GOVERNOR_MODE: recover
+          GOVERNOR_CONSOLE_HEARTBEATS: "1"
+          GOVERNOR_HEARTBEAT_SECONDS: "15"
+          PYTHONUNBUFFERED: "1"
+          BUILD_PASS_BUDGET: "180"
+        run: |
+          python3 pipeline/run_governed.py "$BUILD" --max-passes 200 --overall-timeout 4680
+          test -f "$BUILD/final.mp4"
+          test -f "$BUILD/final_youtube.mp4"
+
+      - name: Select Deep Current delivery and revalidate
+        run: |
+          python3 - <<'PY'
+          import json, os, pathlib, shutil, subprocess
+          build = pathlib.Path(os.environ["BUILD"])
+          manifest = json.loads((build / "music_variants.json").read_text(encoding="utf-8"))
+          delivery = manifest["delivery"]["portrait_video"]
+          source = build / delivery
+          target = build / "final.mp4"
+          if source.resolve() != target.resolve():
+              shutil.copy2(source, target)
+          subprocess.run(["python3", "pipeline/quality_gate.py", str(build)], check=True)
+          print(f"delivery locked to {manifest['delivery']['label']}: {delivery}")
+          PY
+
+      - name: Upload semantic TikTok deliverable
+        uses: actions/upload-artifact@v4
+        with:
+          name: pattern-wearing-matter-semantic-pipeline
+          compression-level: 0
+          retention-days: 90
+          path: |
+            ${{ env.BUILD }}/final.mp4
+            ${{ env.BUILD }}/quality_report.json
+            ${{ env.BUILD }}/script.json
+            ${{ env.BUILD }}/motion_report.json
+            ${{ env.BUILD }}/visual_symbol_report.json
+            ${{ env.BUILD }}/music_variants.json
+
+      - name: Publish permanent semantic Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="video-pattern-wearing-matter-semantic-pipeline"
+          gh release view "$TAG" >/dev/null 2>&1 || \
+            gh release create "$TAG" --title "Pattern Wearing Matter — Semantic Pipeline" \
+              --notes "Semantic TikTok Pipeline render ${{ github.run_id }}"
+          gh release upload "$TAG" \
+            "$BUILD/final.mp4#pattern-wearing-matter-semantic-pipeline.mp4" --clobber
+
+      - name: Persist compact render outcome
+        if: always()
+        run: |
+          rm -f pipeline/.env
+          printf '%s\n' "${{ github.run_id }}" > "$BUILD/run-id.txt"
+          git config user.name render-bot
+          git config user.email render@users.noreply.github.com
+          for file in "$BUILD/script.json" "$BUILD/run-id.txt" "$BUILD/quality_report.json" \
+                      "$BUILD/motion_report.json" "$BUILD/visual_symbol_report.json" \
+                      "$BUILD/music_variants.json"; do
+            git add "$file" 2>/dev/null || true
+          done
+          git commit -m "render pattern-wearing-matter semantic: persist outcome" || true
+          for attempt in 1 2 3 4 5; do
+            git push && exit 0
+            git pull --rebase origin main || git rebase --abort || true
+            sleep $((attempt * 2))
+          done
+          exit 1
