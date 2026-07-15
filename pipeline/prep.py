@@ -97,8 +97,9 @@ def prep(bd):
                                 f"{bd}/youtube_cap_{i:02d}.png")
     with open(f"{bd}/script.json", "w") as f:
         json.dump(s, f, indent=1, ensure_ascii=False)
-    title_png(s["title"], f"{bd}/title.png")
-    youtube_title_png(s["title"], f"{bd}/youtube_title.png")
+    eyebrow = s.get("title_eyebrow") or s.get("series_label")
+    title_png(s["title"], f"{bd}/title.png", eyebrow=eyebrow)
+    youtube_title_png(s["title"], f"{bd}/youtube_title.png", eyebrow=eyebrow)
     s = prepare_music(bd, s)
     print(f"prep done: {len(s['scenes'])} portrait + YouTube captions/titles + "
           f"{len(s['music_variants'])} music choices")
