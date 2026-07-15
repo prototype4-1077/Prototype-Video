@@ -72,9 +72,12 @@ jobs:
           script_path = build / "script.json"
           voice_path = build / "vo.mp3"
           script = json.loads(script_path.read_text(encoding="utf-8"))
+          scenes = script.get("scenes") or []
+          connector_parts = sorted(build.glob("vo.mp3.b64.part*"))
+          supplied_script = bool(script.get("user_vo") or connector_parts)
           changed = False
 
-          if script.get("user_vo"):
+          if supplied_script:
               duration = 0.0
               size_bytes = voice_path.stat().st_size if voice_path.exists() else 0
               if size_bytes > 0:
@@ -95,10 +98,11 @@ jobs:
               # Truncated MP3s can retain a full-duration Xing header. Require both
               # a believable duration and enough bytes for a multi-minute narration.
               complete = duration >= 60.0 and size_bytes >= 1_000_000
+              script["user_vo"] = True  # script authority is independent of audio source
               if not complete:
                   voice_path.unlink(missing_ok=True)
-                  script["user_vo"] = False
-                  script.setdefault("voice_settings", {
+                  settings = script.setdefault("voice_settings", {})
+                  settings.update({
                       "stability": 0.31,
                       "similarity_boost": 0.75,
                       "style": 0.35,
@@ -107,22 +111,29 @@ jobs:
                   changed = True
                   print(
                       f"Voiceover incomplete ({duration:.2f}s, {size_bytes} bytes); "
-                      "recovered with matching Liam settings."
+                      "preserved supplied script and recovered with matching Liam settings."
                   )
               else:
+                  changed = True
                   print(f"Connector voiceover validated at {duration:.2f}s and {size_bytes} bytes.")
 
           # Long, already-approved narration naturally needs more literal human action.
           # Keep the normal 52% ceiling for standard videos while allowing this class
           # of supplied scripts up to 60%; generic-human and family-run checks remain.
-          scenes = script.get("scenes") or []
           policy = script.get("visual_policy")
-          if len(scenes) > 26 and policy in {"diverse_symbols", "strict", "enforce"}:
-              script["visual_policy"] = {
-                  "mode": policy,
-                  "max_human_ratio": 0.60,
-              }
-              changed = True
+          if len(scenes) > 26:
+              if isinstance(policy, dict):
+                  policy.setdefault("mode", "diverse_symbols")
+                  current = float(policy.get("max_human_ratio") or 0.0)
+                  if current < 0.60:
+                      policy["max_human_ratio"] = 0.60
+                      changed = True
+              elif policy in {"diverse_symbols", "strict", "enforce"}:
+                  script["visual_policy"] = {
+                      "mode": policy,
+                      "max_human_ratio": 0.60,
+                  }
+                  changed = True
               print("Applied long-script visual policy: max human presence 60%.")
 
           if changed:
