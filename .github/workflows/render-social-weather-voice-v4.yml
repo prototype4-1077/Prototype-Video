@@ -1,0 +1,156 @@
+name: Render Social Weather Voice Memo Guy v4
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "build/social-weather-voice-memo-guy/render-v4.request"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: render-social-weather-voice-memo-guy-v4
+  cancel-in-progress: false
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Force one continuous Eleven v3 narration
+        shell: bash
+        run: |
+          rm -f \
+            build/social-weather-voice-memo-guy/vo.mp3 \
+            build/social-weather-voice-memo-guy/words.json \
+            build/social-weather-voice-memo-guy/final*.mp4
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path("build/social-weather-voice-memo-guy/script.json")
+          script = json.loads(path.read_text(encoding="utf-8"))
+          script["user_vo"] = False
+          script["force_tts"] = True
+          script["elevenlabs_model"] = "eleven_v3"
+          script["voice_settings"] = {
+              "stability": 0.31,
+              "similarity_boost": 0.75,
+              "style": 0.0,
+              "speed": 0.91,
+              "use_speaker_boost": True,
+          }
+          for scene in script.get("scenes", []):
+              for key in ("start", "duration", "kw_times", "kw_overlays", "youtube_kw_overlays"):
+                  scene.pop(key, None)
+          path.write_text(json.dumps(script, ensure_ascii=False, indent=1), encoding="utf-8")
+          PY
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Cache speech and vision models
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            /tmp/clipcache
+            /tmp/models
+          key: models-v1
+
+      - name: System dependencies
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+
+      - name: Python dependencies
+        run: pip install -q -r pipeline/requirements.txt
+
+      - name: Pipeline regression tests
+        run: python3 -m unittest discover -s pipeline/tests -v
+
+      - name: API keys
+        run: |
+          printf 'ELEVENLABS_API_KEY=%s\nPEXELS_API_KEY=%s\nELEVENLABS_VOICE_ID=%s\n' \
+            "${{ secrets.ELEVENLABS_API_KEY }}" "${{ secrets.PEXELS_API_KEY }}" \
+            "${{ secrets.ELEVENLABS_VOICE_ID || 'TX3LPaxmHKxFdv7VOQHJ' }}" > pipeline/.env
+
+      - name: Build voice-first literal story cut
+        env:
+          SEMANTIC_CLIP: "1"
+          GOVERNOR_MODE: "recover"
+          GOVERNOR_CONSOLE_HEARTBEATS: "1"
+          GOVERNOR_HEARTBEAT_SECONDS: "15"
+          PYTHONUNBUFFERED: "1"
+        run: |
+          python3 pipeline/run_governed.py build/social-weather-voice-memo-guy \
+            --max-passes 200 --overall-timeout 4680
+          test -f build/social-weather-voice-memo-guy/final.mp4
+          test -f build/social-weather-voice-memo-guy/final_youtube.mp4
+          ffprobe -v error -show_entries format=duration -of default=nw=1 \
+            build/social-weather-voice-memo-guy/vo.mp3
+
+      - name: Upload final videos and review material
+        uses: actions/upload-artifact@v4
+        with:
+          name: social-weather-voice-memo-guy-v4
+          retention-days: 90
+          path: |
+            build/social-weather-voice-memo-guy/final*.mp4
+            build/social-weather-voice-memo-guy/vo.mp3
+            build/social-weather-voice-memo-guy/alts_sheet.jpg
+            build/social-weather-voice-memo-guy/motion_report.json
+            build/social-weather-voice-memo-guy/visual_symbol_report.json
+            build/social-weather-voice-memo-guy/still_reference_report.json
+            build/social-weather-voice-memo-guy/music_variants.json
+            build/social-weather-voice-memo-guy/quality_report.json
+            build/social-weather-voice-memo-guy/CREDITS.txt
+
+      - name: Publish permanent v4 release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          TAG="video-social-weather-voice-memo-guy-v4"
+          gh release view "$TAG" >/dev/null 2>&1 || \
+            gh release create "$TAG" --title "Social Weather: Voice Memo Guy — v4" \
+              --notes "Voice-first literal-story rebuild from run ${{ github.run_id }}"
+          shopt -s nullglob
+          for file in build/social-weather-voice-memo-guy/final*.mp4; do
+            gh release upload "$TAG" "$file#$(basename "$file")" --clobber
+          done
+          gh release upload "$TAG" \
+            build/social-weather-voice-memo-guy/alts_sheet.jpg#alts_sheet.jpg --clobber || true
+
+      - name: Commit render outcome
+        if: always()
+        shell: bash
+        run: |
+          rm -f pipeline/.env
+          printf '%s\n' "${{ github.run_id }}" > build/social-weather-voice-memo-guy/run-id-v4.txt
+          git config user.name "render-bot"
+          git config user.email "render@users.noreply.github.com"
+          for file in \
+            pipeline/memory.json \
+            build/social-weather-voice-memo-guy/script.json \
+            build/social-weather-voice-memo-guy/alts.json \
+            build/social-weather-voice-memo-guy/run-id-v4.txt \
+            build/social-weather-voice-memo-guy/governor-summary.json \
+            build/social-weather-voice-memo-guy/governor-review.json \
+            build/social-weather-voice-memo-guy/render-status.json \
+            build/social-weather-voice-memo-guy/quality_report.json \
+            build/social-weather-voice-memo-guy/emb_*.npy; do
+            git add "$file" 2>/dev/null || true
+          done
+          git commit -m "render Voice Memo Guy v4: voice-first literal cut" || true
+          for attempt in 1 2 3 4 5; do
+            git push && exit 0
+            git stash --include-untracked || true
+            git pull --rebase origin main || git rebase --abort || true
+            git stash pop || true
+            sleep $((attempt * 2))
+          done
+          exit 1
