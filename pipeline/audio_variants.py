@@ -80,10 +80,51 @@ def _run(cmd):
     return r
 
 
+def _voice_mix_settings(voiceover):
+    """Read optional per-video voice treatment from the adjacent script.json."""
+    try:
+        script_path = os.path.join(os.path.dirname(os.path.abspath(voiceover)), "script.json")
+        with open(script_path, encoding="utf-8") as handle:
+            script = json.load(handle)
+        settings = script.get("voice_mix") or {}
+        return settings if isinstance(settings, dict) else {}
+    except (OSError, ValueError, TypeError):
+        return {}
+
+
 def mix(noaudio, voiceover, music_path, total, output, delay_ms=400, music_gain=.26):
-    """Mix and loudness-master one score choice without re-encoding video."""
+    """Mix one score choice while honoring optional per-video voice preservation.
+
+    The standard path keeps the established compressed, -14 LUFS social master.
+    A script may opt into ``voice_mix.mode = preserve`` to retain the supplied
+    narrator's original dynamics and tone: no compressor, no loudness remaster,
+    a very low music bed, and only a transparent safety limiter.
+    """
+    settings = _voice_mix_settings(voiceover)
+    preserve = str(settings.get("mode", "")).strip().casefold() == "preserve"
     tmp = tempfile.mkdtemp(prefix="music-variant-")
     try:
+        if preserve:
+            voice_gain_db = float(settings.get("voice_gain_db", 1.5))
+            preserve_music_gain = float(settings.get("music_gain", 0.06))
+            bitrate = str(settings.get("audio_bitrate", "256k"))
+            final_tmp = os.path.join(tmp, "final.mp4")
+            af = (
+                f"[1:a]volume={voice_gain_db}dB,adelay={delay_ms}|{delay_ms},apad[voz];"
+                f"[2:a]volume={preserve_music_gain},"
+                f"afade=t=out:st={max(total-3, 0)}:d=3[mz];"
+                "[voz][mz]amix=inputs=2:duration=first:dropout_transition=0:normalize=0,"
+                "alimiter=limit=0.95:attack=5:release=80:level=false[a]"
+            )
+            _run([
+                "ffmpeg", "-v", "error", "-y", "-i", noaudio, "-i", voiceover,
+                "-i", music_path, "-filter_complex", af, "-map", "0:v", "-map", "[a]",
+                "-c:v", "copy", "-c:a", "aac", "-b:a", bitrate, "-t", str(total),
+                "-movflags", "+faststart", final_tmp,
+            ])
+            shutil.copy(final_tmp, output)
+            return
+
         raw = os.path.join(tmp, "raw.mp4")
         af = ("[1:a]acompressor=threshold=-18dB:ratio=3:attack=15:release=180:makeup=4,"
               f"adelay={delay_ms}|{delay_ms},apad[voz];"
