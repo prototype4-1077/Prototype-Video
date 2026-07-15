@@ -1,0 +1,72 @@
+name: Approve You Were Always Source
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - build/you-were-always-source-final/approve.trigger
+
+permissions:
+  contents: write
+
+concurrency:
+  group: tiktok-pipeline-approval-memory
+  cancel-in-progress: false
+
+jobs:
+  approve:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install approval dependency
+        run: python -m pip install --quiet numpy
+      - name: Record visual approval
+        shell: bash
+        run: |
+          set -euo pipefail
+          slug="you-were-always-source-final"
+          repo="$GITHUB_WORKSPACE"
+
+          for attempt in 1 2 3 4 5 6 7 8; do
+            git -C "$repo" fetch origin main
+            wt="$(mktemp -d)"
+            rmdir "$wt"
+            git -C "$repo" worktree add --detach "$wt" origin/main
+            git -C "$wt" config user.name approval-bot
+            git -C "$wt" config user.email approval@users.noreply.github.com
+
+            approval_result="already-recorded"
+            if python3 -c 'import json,sys; memory=json.load(open(sys.argv[1])); raise SystemExit(1 if any(video.get("slug")==sys.argv[2] for video in memory.get("videos", [])) else 0)' "$wt/pipeline/memory.json" "$slug"; then
+              (
+                cd "$wt"
+                python3 pipeline/learn.py record "build/$slug"
+              )
+              approval_result="recorded"
+            fi
+
+            APPROVAL_RESULT="$approval_result" APPROVAL_SLUG="$slug" APPROVAL_STATUS_PATH="$wt/build/$slug/approval-status.json" python3 -c 'import json,os; path=os.environ["APPROVAL_STATUS_PATH"]; os.makedirs(os.path.dirname(path), exist_ok=True); open(path, "w").write(json.dumps({"run_id": int(os.environ["GITHUB_RUN_ID"]), "result": os.environ["APPROVAL_RESULT"], "slug": os.environ["APPROVAL_SLUG"], "scope": "visuals-only"}, indent=2) + "\n")'
+
+            git -C "$wt" add pipeline/memory.json "build/$slug/approval-status.json"
+            if [ -f "$wt/pipeline/taste.npz" ]; then
+              git -C "$wt" add pipeline/taste.npz
+            fi
+            git -C "$wt" commit -m "approve: record You Were Always Source visuals"
+
+            if git -C "$wt" push origin HEAD:main; then
+              exit 0
+            fi
+
+            git -C "$repo" worktree remove --force "$wt"
+            sleep 5
+          done
+
+          echo "Approval could not be pushed after retries." >&2
+          exit 1
