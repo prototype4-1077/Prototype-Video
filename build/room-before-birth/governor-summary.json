@@ -1,6 +1,6 @@
 {
-  "finished_at": "2026-07-15T23:44:56+00:00",
-  "github_run_id": "29459308378",
+  "finished_at": "2026-07-15T23:50:59+00:00",
+  "github_run_id": "29459617585",
   "incidents": [
     {
       "count": 2,
@@ -38,7 +38,7 @@
       "hard_timeout_s": 300.0,
       "historical_p95_s": null,
       "idle_timeout_s": 120.0,
-      "sample_count": 3,
+      "sample_count": 4,
       "soft_timeout_s": 180.0,
       "source": "default"
     },
@@ -60,9 +60,9 @@
     },
     "transcribe": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 10.52,
+      "historical_p95_s": 10.37,
       "idle_timeout_s": 180.0,
-      "sample_count": 11,
+      "sample_count": 14,
       "soft_timeout_s": 180.0,
       "source": "history"
     }
@@ -147,37 +147,37 @@
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (86.1s).",
+      "reason": "Largest measured latency contribution in this run (88.1s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "b78344c72a3148a2beeac8e5c108fb0f",
+  "run_id": "df28c2b47b6f4ac3985654d4997979c7",
   "schema_version": 1,
   "slug": "room-before-birth",
   "stages": {
     "align": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 1.003,
-      "p95_success_s": 1.003,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
       "success_durations_s": [
-        1.003
+        1.002
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 1.003
+      "total_duration_s": 1.002
     },
     "build_pass": {
       "attempts": 3,
       "failures": 2,
-      "p50_success_s": 31.028,
-      "p95_success_s": 31.028,
+      "p50_success_s": 31.024,
+      "p95_success_s": 31.024,
       "success_durations_s": [
-        31.028
+        31.024
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 86.084
+      "total_duration_s": 88.078
     },
     "footage": {
       "attempts": 2,
@@ -187,21 +187,21 @@
       "success_durations_s": [],
       "successes": 0,
       "timeouts": 0,
-      "total_duration_s": 53.054
+      "total_duration_s": 55.042
     },
     "transcribe": {
       "attempts": 3,
       "failures": 0,
-      "p50_success_s": 10.012,
-      "p95_success_s": 10.013,
+      "p50_success_s": 10.008,
+      "p95_success_s": 10.008,
       "success_durations_s": [
-        10.012,
-        10.013,
-        8.008
+        10.008,
+        10.008,
+        8.009
       ],
       "successes": 3,
       "timeouts": 0,
-      "total_duration_s": 28.033
+      "total_duration_s": 28.025
     }
   },
   "status": "failed"
