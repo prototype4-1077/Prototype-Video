@@ -8,8 +8,56 @@ permissions:
   issues: write
 
 jobs:
+  prepare_existing:
+    if: ${{ contains(github.event.issue.labels.*.name, 'video') && startsWith(github.event.issue.title, 'Render existing:') }}
+    runs-on: ubuntu-latest
+    outputs:
+      slug: ${{ steps.slug.outputs.slug }}
+    steps:
+      - name: Parse existing build slug
+        id: slug
+        shell: bash
+        env:
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+        run: |
+          slug="${ISSUE_TITLE#Render existing:}"
+          slug="$(printf '%s' "$slug" | xargs)"
+          if ! [[ "$slug" =~ ^[a-z0-9]+(-[a-z0-9]+)*$ ]]; then
+            echo "Invalid build slug: $slug" >&2
+            exit 1
+          fi
+          echo "slug=$slug" >> "$GITHUB_OUTPUT"
+
+  render_existing:
+    needs: prepare_existing
+    if: ${{ needs.prepare_existing.result == 'success' }}
+    uses: ./.github/workflows/render.yml
+    with:
+      slug: ${{ needs.prepare_existing.outputs.slug }}
+    secrets: inherit
+
+  comment_existing:
+    needs: [prepare_existing, render_existing]
+    if: ${{ always() && needs.prepare_existing.result == 'success' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment existing-build result
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const slug = `${{ needs.prepare_existing.outputs.slug }}`;
+            const success = `${{ needs.render_existing.result }}` === 'success';
+            const body = success
+              ? `✅ Rendered the existing build **${slug}** with its committed script and voiceover. The permanent release tag is \`video-${slug}\`.`
+              : `❌ Rendering the existing build **${slug}** did not complete successfully. Check this issue's Actions run for diagnostics.`;
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body,
+            });
+
   make:
-    if: contains(github.event.issue.labels.*.name, 'video')
+    if: ${{ contains(github.event.issue.labels.*.name, 'video') && !startsWith(github.event.issue.title, 'Render existing:') }}
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
