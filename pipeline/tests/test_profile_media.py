@@ -87,8 +87,8 @@ class ProfileMediaTests(unittest.TestCase):
             prep.prep(td)
             with open(os.path.join(td, "script.json")) as f:
                 saved = json.load(f)
-            self.assertEqual(saved["music"], "music.wav")
-            with wave.open(os.path.join(td, "music.wav"), "rb") as w:
+            self.assertEqual(saved["music"], "music_03.wav")
+            with wave.open(os.path.join(td, "music_03.wav"), "rb") as w:
                 self.assertGreater(w.getnframes(), music.SR * 3)
 
 
