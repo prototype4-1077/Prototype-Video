@@ -123,7 +123,7 @@ HUMAN_TERMS = (
 )
 
 HUMAN_EXCLUSION_TERMS = tuple(sorted(
-    set(HUMAN_TERMS) | {"body", "bodies", "skin"},
+    set(HUMAN_TERMS) | {"face", "faces", "body", "bodies", "skin", "skins"},
     key=len,
     reverse=True,
 ))
