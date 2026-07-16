@@ -1,52 +1,9 @@
 {
-  "generated_at": "2026-07-15T23:57:55+00:00",
+  "generated_at": "2026-07-16T00:26:52+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
-  "recommendations": [
-    {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "1cc12dbdad7fffe9",
-      "priority": "medium",
-      "stage": "footage"
-    }
-  ],
-  "recurring_incidents": [
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "1cc12dbdad7fffe9",
-      "kind": "failure",
-      "normalized_error": "len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks suf",
-      "slugs": [
-        "room-before-birth"
-      ],
-      "stage": "footage"
-    },
-    {
-      "count": 1,
-      "failure_class": "unknown",
-      "fingerprint": "c41dff511a5bbbd4",
-      "kind": "failure",
-      "normalized_error": "rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1c",
-      "slugs": [
-        "room-before-birth"
-      ],
-      "stage": "build_pass"
-    },
-    {
-      "count": 1,
-      "failure_class": "unknown",
-      "fingerprint": "e4d5f0fb9f9d13b8",
-      "kind": "failure",
-      "normalized_error": "governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=1cc12dbdad7fffe9 error: footage scene <n>: oard.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': false, ",
-      "slugs": [
-        "room-before-birth"
-      ],
-      "stage": "build_pass"
-    }
-  ],
+  "recommendations": [],
+  "recurring_incidents": [],
   "runs_analyzed": 5,
   "schema_version": 1,
   "stages": {
@@ -54,157 +11,157 @@
       "attempts": 4,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.002,
+      "p50_success_s": 1.003,
       "p95_success_s": 1.004,
       "sample_count": 4,
       "successes": 4,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 4.011
+      "total_duration_s": 4.012
     },
     "altsheet": {
-      "attempts": 3,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 5.032,
-      "p95_success_s": 7.799,
-      "sample_count": 3,
-      "successes": 3,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 17.171
-    },
-    "assemble": {
-      "attempts": 216,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 15.121,
-      "p95_success_s": 33.546,
-      "sample_count": 216,
-      "successes": 216,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 3701.019
-    },
-    "build_pass": {
-      "attempts": 59,
-      "failure_rate": 0.0339,
-      "failures": 2,
-      "p50_success_s": 112.454,
-      "p95_success_s": 145.401,
-      "sample_count": 57,
-      "successes": 57,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 5656.926
-    },
-    "credits": {
-      "attempts": 44,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 1.013,
-      "p95_success_s": 1.025,
-      "sample_count": 44,
-      "successes": 44,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 44.635
-    },
-    "ffmpeg": {
-      "attempts": 68,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 7.065,
-      "p95_success_s": 20.265,
-      "sample_count": 68,
-      "successes": 68,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 621.031
-    },
-    "footage": {
-      "attempts": 97,
-      "failure_rate": 0.0206,
-      "failures": 2,
-      "p50_success_s": 3.01,
-      "p95_success_s": 13.323,
-      "sample_count": 95,
-      "successes": 95,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 506.164
-    },
-    "hero": {
-      "attempts": 2,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 2.006,
-      "p95_success_s": 2.007,
-      "sample_count": 2,
-      "successes": 2,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 4.013
-    },
-    "prep": {
       "attempts": 4,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 43.64,
-      "p95_success_s": 46.07,
+      "p50_success_s": 5.047,
+      "p95_success_s": 7.65,
       "sample_count": 4,
       "successes": 4,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 171.638
+      "total_duration_s": 22.233
     },
-    "probe": {
-      "attempts": 239,
+    "assemble": {
+      "attempts": 266,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 14.691,
+      "p95_success_s": 33.305,
+      "sample_count": 266,
+      "successes": 266,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 4482.155
+    },
+    "build_pass": {
+      "attempts": 71,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 112.454,
+      "p95_success_s": 147.805,
+      "sample_count": 71,
+      "successes": 71,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 6931.219
+    },
+    "credits": {
+      "attempts": 54,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.014,
-      "p95_success_s": 1.026,
-      "sample_count": 239,
-      "successes": 239,
+      "p95_success_s": 1.025,
+      "sample_count": 54,
+      "successes": 54,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 243.369
+      "total_duration_s": 54.841
+    },
+    "ffmpeg": {
+      "attempts": 88,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 5.053,
+      "p95_success_s": 23.295,
+      "sample_count": 88,
+      "successes": 88,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 802.088
+    },
+    "footage": {
+      "attempts": 113,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 3.01,
+      "p95_success_s": 15.439,
+      "sample_count": 113,
+      "successes": 113,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 664.568
+    },
+    "hero": {
+      "attempts": 5,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 3.01,
+      "p95_success_s": 3.01,
+      "sample_count": 5,
+      "successes": 5,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 13.043
+    },
+    "prep": {
+      "attempts": 5,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 42.226,
+      "p95_success_s": 46.014,
+      "sample_count": 5,
+      "successes": 5,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 213.864
+    },
+    "probe": {
+      "attempts": 297,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.02,
+      "p95_success_s": 1.025,
+      "sample_count": 297,
+      "successes": 297,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 302.586
     },
     "quality": {
-      "attempts": 4,
+      "attempts": 5,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 51.868,
-      "p95_success_s": 60.725,
-      "sample_count": 4,
-      "successes": 4,
+      "p50_success_s": 51.596,
+      "p95_success_s": 60.356,
+      "sample_count": 5,
+      "successes": 5,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 212.004
+      "total_duration_s": 263.6
     },
     "shortcut": {
-      "attempts": 4,
+      "attempts": 5,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 14.07,
-      "p95_success_s": 14.16,
-      "sample_count": 4,
-      "successes": 4,
+      "p50_success_s": 14.088,
+      "p95_success_s": 14.161,
+      "sample_count": 5,
+      "successes": 5,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 54.387
+      "total_duration_s": 68.5
     },
     "transcribe": {
       "attempts": 14,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 9.511,
+      "p50_success_s": 9.512,
       "p95_success_s": 10.366,
       "sample_count": 14,
       "successes": 14,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 117.152
+      "total_duration_s": 117.157
     },
     "tts": {
       "attempts": 3,
@@ -220,7 +177,6 @@
     }
   },
   "statuses": {
-    "done": 4,
-    "failed": 1
+    "done": 5
   }
 }
