@@ -262,6 +262,8 @@ jobs:
             build/${{ inputs.slug }}/visual_symbol_report.json
             build/${{ inputs.slug }}/still_reference_report.json
             build/${{ inputs.slug }}/music_variants.json
+            build/${{ inputs.slug }}/scene-review.html
+            build/${{ inputs.slug }}/scene-review.json
             build/${{ inputs.slug }}/CREDITS.txt
 
       - name: Publish permanent Release (artifacts expire after 90 days)
@@ -298,6 +300,10 @@ jobs:
             "build/${{ inputs.slug }}/still_reference_report.json" --clobber || true
           test -f "build/${{ inputs.slug }}/music_variants.json" && gh release upload "$TAG" \
             "build/${{ inputs.slug }}/music_variants.json" --clobber || true
+          test -f "build/${{ inputs.slug }}/scene-review.html" && gh release upload "$TAG" \
+            "build/${{ inputs.slug }}/scene-review.html#${{ inputs.slug }}-scene-review.html" --clobber || true
+          test -f "build/${{ inputs.slug }}/scene-review.json" && gh release upload "$TAG" \
+            "build/${{ inputs.slug }}/scene-review.json#${{ inputs.slug }}-scene-review.json" --clobber || true
 
       - name: Commit outcome, memory, and compact Governor telemetry
         if: always()
@@ -317,6 +323,7 @@ jobs:
             "build/${{ inputs.slug }}/governor-review.json" \
             "build/${{ inputs.slug }}/render-status.json" \
             "build/${{ inputs.slug }}/quality_report.json" \
+            "build/${{ inputs.slug }}/scene-review.json" \
             "build/${{ inputs.slug }}"/emb_*.npy; do
             git add "$f" 2>/dev/null || true
           done
