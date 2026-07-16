@@ -2,17 +2,153 @@ name: Render Other Versions of You
 
 on:
   push:
+    branches: [main]
     paths:
-      - ".github/workflows/render-the-other-versions-of-you.yml"
-      - "build/the-other-versions-of-you/**"
+      - "build/the-other-versions-of-you/regenerate.request"
   workflow_dispatch:
 
 permissions:
   contents: write
 
+env:
+  SLUG: the-other-versions-of-you
+
 jobs:
   render:
-    uses: ./.github/workflows/render.yml
-    with:
-      slug: the-other-versions-of-you
-    secrets: inherit
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Record run id
+        shell: bash
+        run: |
+          set -euo pipefail
+          printf '%s\n' "$GITHUB_RUN_ID" > "build/$SLUG/fixed-run-id.txt"
+          git config user.name "render-request-bot"
+          git config user.email "render-request@users.noreply.github.com"
+          git add "build/$SLUG/fixed-run-id.txt"
+          git commit -m "render $SLUG: fixed run started $GITHUB_RUN_ID" || true
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git pull --rebase origin main || git rebase --abort || true
+            sleep $((i * 2))
+          done
+          exit 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: System dependencies
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+
+      - name: Restore and verify supplied narration
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          build="build/$SLUG"
+          opus_parts=("$build"/vo.opus.b64.part*)
+          test "${#opus_parts[@]}" -gt 0
+          cat "${opus_parts[@]}" | base64 --decode > /tmp/voice.opus
+          ffmpeg -hide_banner -loglevel error -y -i /tmp/voice.opus \
+            -map_metadata -1 -map_chapters -1 -ac 1 -ar 44100 \
+            -c:a libmp3lame -b:a 128k "$build/vo.mp3"
+          duration="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$build/vo.mp3")"
+          size="$(stat -c '%s' "$build/vo.mp3")"
+          python3 - "$duration" "$size" <<'PY'
+          import sys
+          duration = float(sys.argv[1])
+          size = int(sys.argv[2])
+          if not (67.0 <= duration <= 71.0):
+              raise SystemExit(f"unexpected narration duration: {duration:.3f}s")
+          if size < 1_000_000:
+              raise SystemExit(f"narration file too small: {size} bytes")
+          print(f"verified supplied narration: {duration:.3f}s, {size} bytes")
+          PY
+
+      - name: Python dependencies
+        run: pip install -q -r pipeline/requirements.txt
+
+      - name: Pipeline regression tests
+        run: python3 -m unittest discover -s pipeline/tests -v
+
+      - name: API keys
+        shell: bash
+        run: |
+          printf 'ELEVENLABS_API_KEY=%s\nPEXELS_API_KEY=%s\nELEVENLABS_VOICE_ID=%s\n' \
+            "${{ secrets.ELEVENLABS_API_KEY }}" "${{ secrets.PEXELS_API_KEY }}" \
+            "${{ secrets.ELEVENLABS_VOICE_ID || 'TX3LPaxmHKxFdv7VOQHJ' }}" > pipeline/.env
+
+      - name: Build under adaptive Governor
+        env:
+          SEMANTIC_CLIP: "1"
+          GOVERNOR_MODE: "recover"
+          GOVERNOR_CONSOLE_HEARTBEATS: "1"
+          GOVERNOR_HEARTBEAT_SECONDS: "15"
+          PYTHONUNBUFFERED: "1"
+        shell: bash
+        run: |
+          python3 pipeline/run_governed.py "build/$SLUG" --max-passes 200 --overall-timeout 4680
+          test -s "build/$SLUG/final.mp4"
+          test -s "build/$SLUG/final_youtube.mp4"
+          test -s "build/$SLUG/scene-review.html"
+          ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "build/$SLUG/final.mp4"
+          ffprobe -v error -select_streams v:0 -show_entries stream=width,height -of csv=p=0 "build/$SLUG/final_youtube.mp4"
+
+      - name: Upload finished delivery
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.SLUG }}-fixed
+          retention-days: 30
+          path: |
+            build/${{ env.SLUG }}/final*.mp4
+            build/${{ env.SLUG }}/scene-review.html
+            build/${{ env.SLUG }}/scene-review.json
+            build/${{ env.SLUG }}/music_variants.json
+            build/${{ env.SLUG }}/motion_report.json
+            build/${{ env.SLUG }}/motion_report_short.json
+            build/${{ env.SLUG }}/visual_symbol_report.json
+            build/${{ env.SLUG }}/still_reference_report.json
+            build/${{ env.SLUG }}/quality_report.json
+            build/${{ env.SLUG }}/alts_sheet.jpg
+            build/${{ env.SLUG }}/CREDITS.txt
+
+      - name: Publish permanent release
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="video-$SLUG"
+          gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "$SLUG" --notes "Regenerated by run $GITHUB_RUN_ID"
+          shopt -s nullglob
+          for file in build/$SLUG/final*.mp4 build/$SLUG/scene-review.html build/$SLUG/scene-review.json build/$SLUG/music_variants.json build/$SLUG/motion_report.json build/$SLUG/visual_symbol_report.json build/$SLUG/still_reference_report.json build/$SLUG/quality_report.json build/$SLUG/alts_sheet.jpg build/$SLUG/CREDITS.txt; do
+            test -f "$file" && gh release upload "$tag" "$file" --clobber
+          done
+
+      - name: Persist outcome
+        if: always()
+        shell: bash
+        run: |
+          rm -f pipeline/.env "build/$SLUG/vo.mp3" /tmp/voice.opus
+          git config user.name "render-bot"
+          git config user.email "render@users.noreply.github.com"
+          for file in pipeline/memory.json pipeline/visual_symbols.py "build/$SLUG/script.json" "build/$SLUG/fixed-run-id.txt" "build/$SLUG/render-status.json" "build/$SLUG/quality_report.json" "build/$SLUG/scene-review.json" "build/$SLUG/alts.json" "build/$SLUG/governor-summary.json" "build/$SLUG/governor-review.json"; do
+            git add "$file" 2>/dev/null || true
+          done
+          git commit -m "render $SLUG: persist regenerated outcome" || true
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git stash --include-untracked || true
+            git pull --rebase origin main || git rebase --abort || true
+            git stash pop || true
+            sleep $((i * 2))
+          done
+          exit 1
