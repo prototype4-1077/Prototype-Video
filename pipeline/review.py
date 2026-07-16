@@ -585,8 +585,10 @@ def is_current(build_dir):
             and os.path.exists(html_path)):
         return False
     try:
-        script = json.load(open(script_path, encoding="utf-8"))
-        saved = json.load(open(review_path, encoding="utf-8"))
+        with open(script_path, encoding="utf-8") as handle:
+            script = json.load(handle)
+        with open(review_path, encoding="utf-8") as handle:
+            saved = json.load(handle)
     except (OSError, ValueError, TypeError):
         return False
     return saved.get("script_fingerprint") == _fingerprint(script)
@@ -612,9 +614,17 @@ def generate(build_dir, video=None):
         "scenes": [],
         "overall": {"decision": "unreviewed", "comments": ""},
     }
+    preview_count = 0
     for index, scene in enumerate(scenes):
         preview = _preview_data_uri(selected_video, scene)
+        if preview:
+            preview_count += 1
         review["scenes"].append(_scene_payload(scene, index, preview))
+    if selected_video and preview_count != len(scenes):
+        raise RuntimeError(
+            f"generated {preview_count}/{len(scenes)} scene previews; "
+            "verify FFmpeg and the selected review video"
+        )
 
     metadata = copy.deepcopy(review)
     for scene in metadata["scenes"]:
