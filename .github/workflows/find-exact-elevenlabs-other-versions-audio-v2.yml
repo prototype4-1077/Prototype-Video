@@ -1,0 +1,94 @@
+name: Find Exact ElevenLabs Other Versions Audio V2
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "build/other-versions-stock-first/find-elevenlabs-exact-audio-v2.request"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Query history without aborting diagnostics
+        id: query
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+        shell: bash
+        run: |
+          set +e
+          build=build/other-versions-stock-first
+          expected=2f063b082d2e019539b9d855c1e5a02f063a46abcbc1647a1be03b3e3bb710fa
+          : > "$build/elevenlabs-v2-candidates.jsonl"
+          : > "$build/elevenlabs-v2-errors.txt"
+          rm -f /tmp/exact-elevenlabs.mp3
+          code=NO_KEY
+          if [ -n "$ELEVENLABS_API_KEY" ]; then
+            code="$(curl -sS -o /tmp/history-v2.json -w '%{http_code}' -H "xi-api-key: $ELEVENLABS_API_KEY" 'https://api.elevenlabs.io/v1/history?page_size=100' 2>>"$build/elevenlabs-v2-errors.txt")"
+          fi
+          echo "$code" > "$build/elevenlabs-v2-http-code.txt"
+          if [ "$code" = 200 ]; then
+            python3 - <<'PY'
+          import json,pathlib
+          d=json.load(open('/tmp/history-v2.json'))
+          out=pathlib.Path('/tmp/history-v2-items.tsv')
+          with out.open('w',encoding='utf-8') as f:
+              for x in d.get('history',[]):
+                  text=' '.join(str(x.get('text') or '').split())
+                  f.write('\t'.join([str(x.get('history_item_id') or ''),str(x.get('date_unix') or ''),str(x.get('voice_id') or ''),text.replace('\t',' ')])+'\n')
+          pathlib.Path('build/other-versions-stock-first/elevenlabs-v2-history-metadata.json').write_text(json.dumps({'count':len(d.get('history',[])),'has_more':d.get('has_more'),'last_history_item_id':d.get('last_history_item_id')},indent=2)+'\n')
+          PY
+            while IFS=$'\t' read -r item_id date_unix voice_id text; do
+              [ -n "$item_id" ] || continue
+              # Download all first-page items; exact SHA is the only acceptance criterion.
+              acode="$(curl -sS -o "/tmp/$item_id.audio" -w '%{http_code}' -H "xi-api-key: $ELEVENLABS_API_KEY" -H 'Accept: audio/mpeg' "https://api.elevenlabs.io/v1/history/$item_id/audio" 2>>"$build/elevenlabs-v2-errors.txt")"
+              [ "$acode" = 200 ] || continue
+              sha="$(sha256sum "/tmp/$item_id.audio" | awk '{print $1}')"
+              size="$(stat -c '%s' "/tmp/$item_id.audio")"
+              python3 - "$build/elevenlabs-v2-candidates.jsonl" "$item_id" "$date_unix" "$voice_id" "$sha" "$size" "$text" <<'PY'
+          import json,sys
+          path,item,date,voice,sha,size,text=sys.argv[1:]
+          with open(path,'a',encoding='utf-8') as f:
+              f.write(json.dumps({'id':item,'date_unix':date,'voice_id':voice,'sha256':sha,'size_bytes':int(size),'text_preview':text[:220]},ensure_ascii=False)+'\n')
+          PY
+              if [ "$sha" = "$expected" ]; then
+                cp "/tmp/$item_id.audio" /tmp/exact-elevenlabs.mp3
+                echo "$item_id" > "$build/elevenlabs-v2-exact-item-id.txt"
+                break
+              fi
+            done < /tmp/history-v2-items.tsv
+          fi
+          found=NO
+          [ -s /tmp/exact-elevenlabs.mp3 ] && found=YES
+          echo "$found" > "$build/elevenlabs-v2-found.txt"
+          echo "http=$code found=$found" >> "$build/elevenlabs-v2-errors.txt"
+          exit 0
+
+      - name: Commit diagnostic state
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          build=build/other-versions-stock-first
+          code="$(cat "$build/elevenlabs-v2-http-code.txt" 2>/dev/null || echo STEP_FAILED)"
+          found="$(cat "$build/elevenlabs-v2-found.txt" 2>/dev/null || echo NO)"
+          rm -f "$build"/ELEVENLABS_V2_*.marker
+          printf 'http=%s\nfound=%s\nrun_id=%s\n' "$code" "$found" "$GITHUB_RUN_ID" > "$build/ELEVENLABS_V2_HTTP_${code}_FOUND_${found}.marker"
+          git config user.name diagnostic-bot
+          git config user.email diagnostic@users.noreply.github.com
+          git add "$build"/ELEVENLABS_V2_*.marker "$build"/elevenlabs-v2-*.txt "$build"/elevenlabs-v2-*.json "$build"/elevenlabs-v2-*.jsonl 2>/dev/null || true
+          git commit -m "diagnostic stock-v2 ELEVENLABS_V2_HTTP_${code}_FOUND_${found}"
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git pull --rebase origin main || git rebase --abort || true
+            sleep $((i * 2))
+          done
+          exit 1
