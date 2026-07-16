@@ -19,7 +19,6 @@ jobs:
        github.event.issue.pull_request &&
        github.event.comment.body == '/render-room-before-birth-scenes-2-5') ||
       (github.event_name == 'pull_request_target' &&
-       github.event.pull_request.number == 6 &&
        github.event.pull_request.title == '[render] Room Before Birth scenes 2 and 5')
     runs-on: ubuntu-latest
     steps:
