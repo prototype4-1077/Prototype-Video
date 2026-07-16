@@ -28,10 +28,14 @@ jobs:
           test -n "$file"
           slug="${file#build/}"
           slug="${slug%/*}"
-          case "$file" in
-            */delivery.request) mode="delivery" ;;
-            *) mode="render" ;;
-          esac
+          if grep -q '^delivery ' "$file"; then
+            mode="delivery"
+          else
+            case "$file" in
+              */delivery.request) mode="delivery" ;;
+              *) mode="render" ;;
+            esac
+          fi
           echo "slug=$slug" >> "$GITHUB_OUTPUT"
           echo "mode=$mode" >> "$GITHUB_OUTPUT"
       - name: Mark request started
