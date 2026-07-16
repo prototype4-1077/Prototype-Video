@@ -66,6 +66,7 @@ jobs:
       - name: Review regression tests
         run: |
           python -m pip install --quiet numpy
+          python -m py_compile pipeline/build.py pipeline/review.py pipeline/learn.py
           python -m unittest pipeline.tests.test_review
 
       - name: Download rendered video
