@@ -8,7 +8,7 @@ Commands:
   python3 learn.py swap <build_dir> <scene_i>  # James dislikes a scene's footage:
                                                #   bans that clip forever, penalizes its query,
                                                #   clears clip+seg so the next build.py run redoes it
-  python3 learn.py note "free-text feedback"   # store James's feedback for future scriptwriters
+  python3 learn.py survey <build_dir> <feedback.json>\n                                               # apply per-scene survey learning\n  python3 learn.py note "free-text feedback"   # store James's feedback for future scriptwriters
   python3 learn.py show                        # print memory summary
 """
 import glob, hashlib, json, os, sys
