@@ -1,0 +1,88 @@
+name: Watch Other Versions Stock First Rebuild V2
+
+on:
+  workflow_run:
+    workflows: ["Render Other Versions Stock First Rebuild V2"]
+    types: [completed]
+
+permissions:
+  contents: write
+  actions: read
+
+jobs:
+  record:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Record completed run and delivery artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RUN_ID: ${{ github.event.workflow_run.id }}
+          CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          base="build/other-versions-stock-first-rebuild"
+          mkdir -p "$base"
+          python3 - <<'PY'
+          import json, os, pathlib, subprocess, time
+          run_id = int(os.environ["RUN_ID"])
+          conclusion = os.environ["CONCLUSION"]
+          base = pathlib.Path("build/other-versions-stock-first-rebuild")
+          payload = {
+              "workflow": "Render Other Versions Stock First Rebuild V2",
+              "run_id": run_id,
+              "conclusion": conclusion,
+              "run_url": f"https://github.com/jameswatson1077/tiktok-videos/actions/runs/{run_id}",
+          }
+          if conclusion == "success":
+              time.sleep(5)
+              raw = subprocess.run(
+                  ["gh", "api", f"repos/jameswatson1077/tiktok-videos/actions/runs/{run_id}/artifacts"],
+                  check=True, capture_output=True, text=True,
+              ).stdout
+              artifacts = json.loads(raw).get("artifacts") or []
+              selected = next(
+                  (a for a in artifacts if a.get("name") == "other-versions-stock-first-rebuild-v2"),
+                  artifacts[0] if artifacts else None,
+              )
+              if not selected:
+                  raise SystemExit("successful V2 render has no delivery artifact")
+              payload.update({
+                  "artifact_id": selected["id"],
+                  "artifact_name": selected["name"],
+                  "artifact_size_bytes": selected.get("size_in_bytes"),
+                  "artifact_expired": selected.get("expired", False),
+              })
+          else:
+              failed = subprocess.run(
+                  ["gh", "run", "view", str(run_id), "--log-failed"],
+                  capture_output=True, text=True,
+              )
+              text = (failed.stdout or "") + "\n" + (failed.stderr or "")
+              lines = [
+                  line for line in text.splitlines()
+                  if "ERROR" in line or "FIX" in line or "Exact attached" in line or "failed" in line.lower()
+              ]
+              payload["failure_excerpt"] = lines[-30:]
+              (base / "last-failure-v2.txt").write_text(text[-50000:] + "\n", encoding="utf-8")
+          (base / "delivery-pointer-v2.json").write_text(
+              json.dumps(payload, indent=2) + "\n", encoding="utf-8"
+          )
+          print(json.dumps(payload, indent=2))
+          PY
+          git config user.name "render-watch-bot"
+          git config user.email "render-watch@users.noreply.github.com"
+          git add "$base/delivery-pointer-v2.json"
+          git add "$base/last-failure-v2.txt" 2>/dev/null || true
+          git commit -m "stock-first rebuild v2 ${CONCLUSION}: run ${RUN_ID}" || true
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main || git rebase --abort || true
+            git push && exit 0
+            sleep $((i * 2))
+          done
+          exit 1
