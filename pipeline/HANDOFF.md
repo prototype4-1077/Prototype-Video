@@ -91,6 +91,21 @@ Everything else is one command run in a loop.
    select the row labeled Deep Current and its matching YouTube filename. All outputs
    remain archived. Done.
 
+## Required scene review after every render
+A successful build automatically creates `scene-review.html` and
+`scene-review.json`. The HTML file is a standalone review form with one numbered block
+per scene: preview frame, narration, visual description, selection rationale,
+Approve/Needs revision controls, and a comments area. It autosaves in the browser and
+exports `<slug>-scene-feedback.json`.
+
+Return that exported JSON to the pipeline with:
+
+    python3 pipeline/learn.py survey build/<slug> <slug>-scene-feedback.json
+
+Approved scenes positively train clip/query taste. Scenes marked Needs revision require a
+comment; their source clips are banned and cleared so only those scenes rerender.
+The overall approval is recorded only when James selects it. Never infer approval.
+
 ## Look spec (what "correct" looks like)
 - Every build creates two 30fps canvases: 1080x1920 (9:16 portrait) and
   1920x1080 (16:9 regular YouTube). Portrait footage remains a 1080x608 band
