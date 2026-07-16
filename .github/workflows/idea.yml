@@ -31,7 +31,7 @@ jobs:
   render_existing:
     needs: prepare_existing
     if: ${{ needs.prepare_existing.result == 'success' }}
-    uses: ./.github/workflows/render.yml
+    uses: ./.github/workflows/render-existing.yml
     with:
       slug: ${{ needs.prepare_existing.outputs.slug }}
     secrets: inherit
