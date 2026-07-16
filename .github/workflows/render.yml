@@ -264,49 +264,6 @@ jobs:
             build/${{ inputs.slug }}/music_variants.json
             build/${{ inputs.slug }}/CREDITS.txt
 
-      - name: Prepare default delivery artifacts
-        if: success()
-        shell: bash
-        run: |
-          build_dir="build/${{ inputs.slug }}"
-          label="$(jq -r '.delivery.label' "$build_dir/music_variants.json")"
-          test -n "$label"
-          test "$label" != "null"
-          portrait="$(jq -r '.delivery.portrait_video' "$build_dir/music_variants.json")"
-          youtube="$(jq -r '.delivery.youtube_video' "$build_dir/music_variants.json")"
-          mkdir -p "$build_dir/delivery"
-          cp "$build_dir/$portrait" "$build_dir/delivery/final-delivery-portrait.mp4"
-          cp "$build_dir/$youtube" "$build_dir/delivery/final-delivery-youtube.mp4"
-
-      - name: Upload default portrait delivery
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ inputs.slug }}-delivery-portrait
-          path: build/${{ inputs.slug }}/delivery/final-delivery-portrait.mp4
-          compression-level: 0
-
-      - name: Upload default YouTube delivery
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ inputs.slug }}-delivery-youtube
-          path: build/${{ inputs.slug }}/delivery/final-delivery-youtube.mp4
-          compression-level: 0
-
-      - name: Upload delivery QA reports
-        if: success()
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{ inputs.slug }}-delivery-qa
-          path: |
-            build/${{ inputs.slug }}/motion_report.json
-            build/${{ inputs.slug }}/visual_symbol_report.json
-            build/${{ inputs.slug }}/still_reference_report.json
-            build/${{ inputs.slug }}/music_variants.json
-            build/${{ inputs.slug }}/quality_report.json
-            build/${{ inputs.slug }}/CREDITS.txt
-
       - name: Publish permanent Release (artifacts expire after 90 days)
         if: success()
         env:
