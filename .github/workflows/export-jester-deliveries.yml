@@ -1,0 +1,45 @@
+name: Export Jester deliveries
+
+on:
+  push:
+    paths:
+      - ".github/workflows/export-jester-deliveries.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      TAG: video-jester-who-knew-my-name
+    steps:
+      - name: Download selected release assets
+        run: |
+          mkdir -p delivery reports
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "final.mp4" --dir delivery
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "final_youtube.mp4" --dir delivery
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "music_variants.json" --dir reports
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "motion_report.json" --dir reports
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "visual_symbol_report.json" --dir reports
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "still_reference_report.json" --dir reports
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "alts_sheet.jpg" --dir reports
+          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "CREDITS.txt" --dir reports
+      - name: Upload portrait delivery
+        uses: actions/upload-artifact@v4
+        with:
+          name: jester-delivery-portrait
+          path: delivery/final.mp4
+          compression-level: 0
+      - name: Upload YouTube delivery
+        uses: actions/upload-artifact@v4
+        with:
+          name: jester-delivery-youtube
+          path: delivery/final_youtube.mp4
+          compression-level: 0
+      - name: Upload QA package
+        uses: actions/upload-artifact@v4
+        with:
+          name: jester-delivery-qa
+          path: reports
