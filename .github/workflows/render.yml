@@ -224,10 +224,23 @@ jobs:
         run: |
           python3 pipeline/run_governed.py "build/${{ inputs.slug }}" \
             --max-passes 200 --overall-timeout 4680
-          test -f "build/${{ inputs.slug }}/final.mp4"
-          python3 -c 'import json,sys; s=json.load(open(sys.argv[1])); sys.exit(0 if s.get("curate_scenes") else 1)' \
-            "build/${{ inputs.slug }}/script.json" || \
-            test -f "build/${{ inputs.slug }}/final_youtube.mp4"
+          python3 - "build/${{ inputs.slug }}/script.json" <<'PY'
+          import json
+          import os
+          import sys
+
+          sys.path.insert(0, "pipeline")
+          import render_policy
+
+          script = json.load(open(sys.argv[1], encoding="utf-8"))
+          build_dir = os.path.dirname(sys.argv[1])
+          missing = [
+              name for name in render_policy.required_video_names(script)
+              if not os.path.exists(os.path.join(build_dir, name))
+          ]
+          if missing:
+              raise SystemExit("missing requested output(s): " + ", ".join(missing))
+          PY
 
       - name: Build cross-run operational review
         if: always()
@@ -275,21 +288,12 @@ jobs:
           gh release view "$TAG" >/dev/null 2>&1 || \
             gh release create "$TAG" --title "${{ inputs.slug }}" \
               --notes "Rendered $(date -u +%F) by run ${{ github.run_id }}"
-          gh release upload "$TAG" \
-            "build/${{ inputs.slug }}/final.mp4#${{ inputs.slug }}.mp4" --clobber
-          test -f "build/${{ inputs.slug }}/final_youtube.mp4" && gh release upload "$TAG" \
-            "build/${{ inputs.slug }}/final_youtube.mp4#${{ inputs.slug }}-youtube.mp4" --clobber || true
           shopt -s nullglob
-          for variant in build/${{ inputs.slug }}/final_music_*.mp4; do
-            choice="$(basename "$variant" .mp4 | sed 's/final_music_/music-/')"
-            gh release upload "$TAG" "$variant#${{ inputs.slug }}-${choice}.mp4" --clobber
+          videos=(build/${{ inputs.slug }}/final*.mp4)
+          test "${#videos[@]}" -ge 1
+          for video in "${videos[@]}"; do
+            gh release upload "$TAG" "$video" --clobber
           done
-          for variant in build/${{ inputs.slug }}/final_youtube_music_*.mp4; do
-            choice="$(basename "$variant" .mp4 | sed 's/final_youtube_music_/youtube-music-/')"
-            gh release upload "$TAG" "$variant#${{ inputs.slug }}-${choice}.mp4" --clobber
-          done
-          test -f "build/${{ inputs.slug }}/final_short.mp4" && gh release upload "$TAG" \
-            "build/${{ inputs.slug }}/final_short.mp4#${{ inputs.slug }}-60s.mp4" --clobber || true
           test -f "build/${{ inputs.slug }}/alts_sheet.jpg" && gh release upload "$TAG" \
             "build/${{ inputs.slug }}/alts_sheet.jpg" --clobber || true
           test -f "build/${{ inputs.slug }}/CREDITS.txt" && gh release upload "$TAG" \
