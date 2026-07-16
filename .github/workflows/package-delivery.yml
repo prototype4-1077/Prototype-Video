@@ -50,12 +50,16 @@ jobs:
           mkdir -p delivery
           tag="video-$SLUG"
           gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name'
-          for asset in "$SLUG-music-03.mp4" "$SLUG-youtube-music-03.mp4" "$SLUG-scene-review.html" "$SLUG-scene-review.json"; do
+          for asset in final_music_03.mp4 final_youtube_music_03.mp4 scene-review.html scene-review.json; do
             gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern "$asset" --dir delivery
           done
           gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern "music_variants.json" --dir delivery || true
-          test -s "delivery/$SLUG-music-03.mp4"
-          test -s "delivery/$SLUG-youtube-music-03.mp4"
+          mv delivery/final_music_03.mp4 "delivery/$SLUG-deep-portal-vertical.mp4"
+          mv delivery/final_youtube_music_03.mp4 "delivery/$SLUG-deep-portal-youtube.mp4"
+          mv delivery/scene-review.html "delivery/$SLUG-scene-review.html"
+          mv delivery/scene-review.json "delivery/$SLUG-scene-review.json"
+          test -s "delivery/$SLUG-deep-portal-vertical.mp4"
+          test -s "delivery/$SLUG-deep-portal-youtube.mp4"
           test -s "delivery/$SLUG-scene-review.html"
           test -s "delivery/$SLUG-scene-review.json"
 
