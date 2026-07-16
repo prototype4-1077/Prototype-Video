@@ -97,6 +97,18 @@ line, apply the FIX (usually edit script.json), push, re-dispatch.
 - James gives style feedback → python3 pipeline/learn.py note "<his feedback>",
   commit memory.json. Never delete memory.json.
 
+## Scene review survey (required after every finished render)
+Every successful video must ship with `scene-review.html` and `scene-review.json`.
+The standalone HTML survey numbers every scene, shows its preview frame, narration,
+visual description, and rationale, and collects an Approve/Needs revision decision plus
+scene-specific comments. Do not deliver a finished video without its survey.
+
+James exports `<slug>-scene-feedback.json` from the survey and returns it for learning.
+Apply it with `python3 pipeline/learn.py survey build/<slug> <feedback.json>`.
+This command positively weights approved clips, bans and clears rejected clips, records
+comments as durable scene feedback, updates the taste vector, and prepares only rejected
+scenes for rerendering. Never mark scenes or the overall video approved on James's behalf.
+
 ## Judgment checklist before delivering
 Duration ≈ VO length; both 1080x1920 portrait and 1920x1080 landscape outputs;
 captions with yellow keywords in each format's safe area; bold rounded title fully
