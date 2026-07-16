@@ -12,6 +12,8 @@ Extracted from "The Collective Tilt" and "Field to Point Synchronization" (Dec 2
 ## Title card
 - Handwritten marker-style font, white with soft black shadow, very large, stacked words
   (e.g. "The / Collective / Tilt"), centered, shown over opening clip for first ~8s alongside first caption.
+- Permanent title wrapping rule: use at most two words on a line. A line may contain three words only
+  when at least one is a short connector or function word such as "I", "a", "the", "on", "of", or "to".
 
 ## Captions
 - Sentence/phrase-level blocks (2-4 lines max, ~34 chars/line), not word-by-word pop
