@@ -13,6 +13,7 @@ import json, os, shutil, subprocess, sys, tempfile, time, urllib.request
 import motion
 import audio_variants
 import profiles
+import review
 import still_reference
 import visual_symbols
 
@@ -452,6 +453,15 @@ def main(bd):
         if left() < 15: out("RUN AGAIN (next: review sheet)")
         r = sh([py, os.path.join(HERE, "altsheet.py"), bd])
         print(r.stdout.strip() if r.returncode == 0 else "note: review sheet failed")
+
+    # Every finished video ships with a standalone, machine-readable scene survey.
+    if not review.is_current(bd):
+        if left() < 25: out("RUN AGAIN (next: scene review survey)")
+        try:
+            review.generate(bd)
+        except Exception as e:
+            err(f"scene review survey: {e}", "rerun; if it repeats, inspect pipeline/review.py")
+
     print(f"DONE -> {final} + {youtube_final}")
     print(f"After James approves: python3 {os.path.join(HERE, 'learn.py')} record {bd}")
     print(f"If he dislikes scene i's footage: python3 {os.path.join(HERE, 'learn.py')} swap {bd} <i>")
