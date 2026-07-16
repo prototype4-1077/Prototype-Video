@@ -1,91 +1,52 @@
-name: Extract completed room-before-birth delivery
+name: Render queued video request
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
     paths:
-      - "build/room-before-birth/render.request"
+      - "build/**/render.request"
 
 permissions:
   contents: write
-  actions: read
+  actions: write
 
 jobs:
-  delivery:
+  detect:
     runs-on: ubuntu-latest
+    outputs:
+      slug: ${{ steps.slug.outputs.slug }}
     steps:
       - uses: actions/checkout@v4
-
-      - name: Mark delivery extraction
-        run: |
-          printf '%s\n' "$GITHUB_RUN_ID" > build/room-before-birth/delivery-split-run.txt
-          git config user.name "delivery-split-bot"
-          git config user.email "delivery-split@users.noreply.github.com"
-          git add build/room-before-birth/delivery-split-run.txt
-          git commit -m "delivery room-before-birth: split started $GITHUB_RUN_ID"
-          git push
-
-      - name: Download completed render artifact
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          mkdir -p extracted delivery qa
-          gh run download 29460182037 --repo "$GITHUB_REPOSITORY" --name room-before-birth --dir extracted
-
-      - name: Select Deep Current delivery and reports
-        run: |
-          python3 - <<'PY'
-          import json
-          import shutil
-          from pathlib import Path
-
-          root = Path("extracted")
-          manifest_path = next(root.rglob("music_variants.json"))
-          manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
-          delivery = manifest["delivery"]
-          if str(delivery.get("label", "")).strip().casefold() != "deep current":
-              raise SystemExit(f"unexpected delivery label: {delivery.get('label')}")
-
-          def locate(name):
-              matches = list(root.rglob(Path(name).name))
-              if len(matches) != 1:
-                  raise SystemExit(f"expected one {name}, found {len(matches)}")
-              return matches[0]
-
-          shutil.copy2(locate(delivery["portrait_video"]), "delivery/DMT-The-Room-Before-Birth-TikTok.mp4")
-          shutil.copy2(locate(delivery["youtube_video"]), "delivery/DMT-The-Room-Before-Birth-YouTube.mp4")
-          for name in (
-              "music_variants.json",
-              "motion_report.json",
-              "visual_symbol_report.json",
-              "still_reference_report.json",
-              "CREDITS.txt",
-          ):
-              matches = list(root.rglob(name))
-              if matches:
-                  shutil.copy2(matches[0], Path("qa") / name)
-          PY
-
-      - name: Record media metadata
-        run: |
-          ffprobe -v error -show_streams -show_format -of json delivery/DMT-The-Room-Before-Birth-TikTok.mp4 > qa/portrait-ffprobe.json
-          ffprobe -v error -show_streams -show_format -of json delivery/DMT-The-Room-Before-Birth-YouTube.mp4 > qa/youtube-ffprobe.json
-          sha256sum delivery/*.mp4 > qa/delivery-sha256.txt
-
-      - uses: actions/upload-artifact@v4
         with:
-          name: room-before-birth-delivery-portrait
-          path: delivery/DMT-The-Room-Before-Birth-TikTok.mp4
-          compression-level: 0
+          fetch-depth: 2
+      - id: slug
+        shell: bash
+        run: |
+          file="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep -E '^build/[^/]+/render\.request$' | head -n 1)"
+          test -n "$file"
+          slug="${file#build/}"
+          slug="${slug%/render.request}"
+          echo "slug=$slug" >> "$GITHUB_OUTPUT"
+      - name: Mark render started
+        shell: bash
+        run: |
+          slug="${{ steps.slug.outputs.slug }}"
+          printf '%s\n' "$GITHUB_RUN_ID" > "build/$slug/render-started.txt"
+          git config user.name "render-request-bot"
+          git config user.email "render-request@users.noreply.github.com"
+          git add "build/$slug/render-started.txt"
+          git commit -m "render $slug: started $GITHUB_RUN_ID" || true
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git pull --rebase origin main || git rebase --abort || true
+            sleep $((i * 2))
+          done
+          echo "unable to record render start after 5 attempts" >&2
+          exit 1
 
-      - uses: actions/upload-artifact@v4
-        with:
-          name: room-before-birth-delivery-youtube
-          path: delivery/DMT-The-Room-Before-Birth-YouTube.mp4
-          compression-level: 0
-
-      - uses: actions/upload-artifact@v4
-        with:
-          name: room-before-birth-qa
-          path: qa/**
+  render:
+    needs: detect
+    uses: ./.github/workflows/render.yml
+    with:
+      slug: ${{ needs.detect.outputs.slug }}
+    secrets: inherit
