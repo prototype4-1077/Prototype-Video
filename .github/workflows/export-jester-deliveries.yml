@@ -31,8 +31,8 @@ jobs:
           gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > release.json
           jq -r '.assets[] | [.name, (.label // ""), (.size | tostring)] | @tsv' release.json
 
-          portrait_url="$(jq -r '.assets[] | select(.name == "final.mp4" or .name == "jester-who-knew-my-name.mp4" or (.label // "") == "jester-who-knew-my-name.mp4") | .url' release.json | head -n 1)"
-          youtube_url="$(jq -r '.assets[] | select(.name == "final_youtube.mp4" or .name == "jester-who-knew-my-name-youtube.mp4" or (.label // "") == "jester-who-knew-my-name-youtube.mp4") | .url' release.json | head -n 1)"
+          portrait_url="$(jq -r '.assets[] | select(.name == "final_music_03.mp4" or .name == "jester-who-knew-my-name-music-03.mp4" or (.label // "") == "jester-who-knew-my-name-music-03.mp4") | .url' release.json | head -n 1)"
+          youtube_url="$(jq -r '.assets[] | select(.name == "final_youtube_music_03.mp4" or .name == "jester-who-knew-my-name-youtube-music-03.mp4" or (.label // "") == "jester-who-knew-my-name-youtube-music-03.mp4") | .url' release.json | head -n 1)"
           test -n "$portrait_url"
           test -n "$youtube_url"
           gh api "$portrait_url" -H "Accept: application/octet-stream" > delivery/final.mp4
