@@ -1,0 +1,18 @@
+name: Render Other Versions of You
+
+on:
+  push:
+    paths:
+      - ".github/workflows/render-the-other-versions-of-you.yml"
+      - "build/the-other-versions-of-you/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    uses: ./.github/workflows/render-existing.yml
+    with:
+      slug: the-other-versions-of-you
+    secrets: inherit
