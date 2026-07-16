@@ -1,52 +1,17 @@
 {
-  "generated_at": "2026-07-16T05:26:53+00:00",
+  "generated_at": "2026-07-16T05:55:06+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
     {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "18b347c43bbf1b74",
+      "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
+      "category": "tail_latency",
+      "evidence": "p50=6.0s, p95=123.7s",
       "priority": "medium",
-      "stage": "footage"
-    }
-  ],
-  "recurring_incidents": [
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "18b347c43bbf1b74",
-      "kind": "failure",
-      "normalized_error": "line <n>, in main plan = _render_storyboard(build_dir, script, index, \"literal mechanism preferred\") ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks suff",
-      "slugs": [
-        "jester-who-knew-my-name"
-      ],
-      "stage": "footage"
-    },
-    {
-      "count": 1,
-      "failure_class": "unknown",
-      "fingerprint": "fcaecfa0c829d7fc",
-      "kind": "failure",
-      "normalized_error": "ds (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18",
-      "slugs": [
-        "jester-who-knew-my-name"
-      ],
-      "stage": "build_pass"
-    },
-    {
-      "count": 1,
-      "failure_class": "unknown",
-      "fingerprint": "a3ff8a29f60173f4",
-      "kind": "failure",
-      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18b347c43bbf1b74 error: footage scene <n>: oard.py\", line <n>, in render_scene raise runtimeerror(f\"generate",
-      "slugs": [
-        "jester-who-knew-my-name"
-      ],
       "stage": "build_pass"
     }
   ],
+  "recurring_incidents": [],
   "runs_analyzed": 6,
   "schema_version": 1,
   "stages": {
@@ -87,16 +52,16 @@
       "total_duration_s": 4490.674
     },
     "build_pass": {
-      "attempts": 73,
-      "failure_rate": 0.0274,
-      "failures": 2,
-      "p50_success_s": 113.648,
-      "p95_success_s": 147.805,
-      "sample_count": 71,
-      "successes": 71,
+      "attempts": 268,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.011,
+      "p95_success_s": 123.724,
+      "sample_count": 268,
+      "successes": 268,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 7071.065
+      "total_duration_s": 8234.936
     },
     "credits": {
       "attempts": 54,
@@ -123,16 +88,16 @@
       "total_duration_s": 808.836
     },
     "footage": {
-      "attempts": 135,
-      "failure_rate": 0.0148,
-      "failures": 2,
-      "p50_success_s": 3.01,
-      "p95_success_s": 15.025,
-      "sample_count": 133,
-      "successes": 133,
+      "attempts": 1132,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 4.005,
+      "sample_count": 1132,
+      "successes": 1132,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 748.843
+      "total_duration_s": 1735.59
     },
     "hero": {
       "attempts": 2,
@@ -198,13 +163,13 @@
       "attempts": 19,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 10.011,
+      "p50_success_s": 7.01,
       "p95_success_s": 10.117,
       "sample_count": 19,
       "successes": 19,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 164.22
+      "total_duration_s": 151.433
     },
     "tts": {
       "attempts": 3,
@@ -221,6 +186,6 @@
   },
   "statuses": {
     "done": 5,
-    "failed": 1
+    "pass_limit": 1
   }
 }
