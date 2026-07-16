@@ -12,7 +12,7 @@ permissions:
 
 jobs:
   render:
-    uses: ./.github/workflows/render-existing.yml
+    uses: ./.github/workflows/render.yml
     with:
       slug: the-other-versions-of-you
     secrets: inherit
