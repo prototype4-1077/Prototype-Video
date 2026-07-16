@@ -125,6 +125,43 @@ class StillPolicyTests(unittest.TestCase):
             ]}
             self.assertEqual(still_reference.stock_targets(td, script), [2])
 
+    def test_generated_graphic_is_not_retried_for_missing_stock_metadata(self):
+        with tempfile.TemporaryDirectory() as td:
+            for index in (1, 2):
+                clip = os.path.join(td, f"clip_{index:02d}.mp4")
+                with open(clip, "wb") as handle:
+                    handle.write(b"0" * 100_001)
+            script = {"scenes": [
+                {"hero": True, "motion_kind": "animated_still"},
+                {
+                    "motion_kind": "video",
+                    "motion_mode": "generated_graphic",
+                    "motion_verified": True,
+                },
+                {
+                    "motion_kind": "video",
+                    "motion_mode": "stock",
+                    "motion_verified": True,
+                    "stock_frame_url_checked": True,
+                },
+            ]}
+            self.assertEqual(still_reference.stock_targets(td, script), [])
+
+    def test_stock_video_is_retried_for_missing_reference_metadata(self):
+        with tempfile.TemporaryDirectory() as td:
+            clip = os.path.join(td, "clip_01.mp4")
+            with open(clip, "wb") as handle:
+                handle.write(b"0" * 100_001)
+            script = {"scenes": [
+                {"hero": True, "motion_kind": "animated_still"},
+                {
+                    "motion_kind": "video",
+                    "motion_mode": "stock",
+                    "motion_verified": True,
+                },
+            ]}
+            self.assertEqual(still_reference.stock_targets(td, script), [1])
+
     def test_validation_rejects_an_unreferenced_animated_still(self):
         with tempfile.TemporaryDirectory() as td:
             script = {"scenes": [{
