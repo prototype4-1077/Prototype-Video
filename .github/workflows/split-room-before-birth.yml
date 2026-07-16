@@ -6,14 +6,29 @@ on:
     paths:
       - ".github/workflows/split-room-before-birth.yml"
 
+concurrency:
+  group: split-room-before-birth
+  cancel-in-progress: true
+
 permissions:
   actions: read
-  contents: read
+  contents: write
 
 jobs:
   split:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+
+      - name: Mark splitter run
+        run: |
+          printf '%s\n' "$GITHUB_RUN_ID" > build/room-before-birth/delivery-split-run.txt
+          git config user.name "delivery-split-bot"
+          git config user.email "delivery-split@users.noreply.github.com"
+          git add build/room-before-birth/delivery-split-run.txt
+          git commit -m "delivery room-before-birth: split started $GITHUB_RUN_ID" || true
+          git push
+
       - name: Download completed render artifact
         env:
           GH_TOKEN: ${{ github.token }}
