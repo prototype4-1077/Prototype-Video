@@ -1,0 +1,223 @@
+{
+  "generated_at": "2026-07-16T05:17:36+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {},
+  "recommendations": [
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "67a45bbaacbc5b53",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "18b347c43bbf1b74",
+      "priority": "medium",
+      "stage": "footage"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "67a45bbaacbc5b53",
+      "kind": "failure",
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18b347c43bbf1b74 error: footage scene <n>: oard.py\"",
+      "slugs": [
+        "jester-who-knew-my-name"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "18b347c43bbf1b74",
+      "kind": "failure",
+      "normalized_error": "line <n>, in main plan = _render_storyboard(build_dir, script, index, \"literal mechanism preferred\") ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks suff",
+      "slugs": [
+        "jester-who-knew-my-name"
+      ],
+      "stage": "footage"
+    }
+  ],
+  "runs_analyzed": 6,
+  "schema_version": 1,
+  "stages": {
+    "align": {
+      "attempts": 5,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.003,
+      "p95_success_s": 1.004,
+      "sample_count": 5,
+      "successes": 5,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 5.016
+    },
+    "altsheet": {
+      "attempts": 4,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 5.041,
+      "p95_success_s": 7.648,
+      "sample_count": 4,
+      "successes": 4,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 22.221
+    },
+    "assemble": {
+      "attempts": 266,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 14.691,
+      "p95_success_s": 33.305,
+      "sample_count": 266,
+      "successes": 266,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 4490.674
+    },
+    "build_pass": {
+      "attempts": 71,
+      "failure_rate": 0.0282,
+      "failures": 2,
+      "p50_success_s": 113.648,
+      "p95_success_s": 148.607,
+      "sample_count": 69,
+      "successes": 69,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 6836.58
+    },
+    "credits": {
+      "attempts": 54,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.014,
+      "p95_success_s": 1.025,
+      "sample_count": 54,
+      "successes": 54,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 54.803
+    },
+    "ffmpeg": {
+      "attempts": 88,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 5.151,
+      "p95_success_s": 24.238,
+      "sample_count": 88,
+      "successes": 88,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 808.836
+    },
+    "footage": {
+      "attempts": 115,
+      "failure_rate": 0.0174,
+      "failures": 2,
+      "p50_success_s": 3.009,
+      "p95_success_s": 10.022,
+      "sample_count": 113,
+      "successes": 113,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 516.304
+    },
+    "hero": {
+      "attempts": 2,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 2.006,
+      "p95_success_s": 2.007,
+      "sample_count": 2,
+      "successes": 2,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 4.013
+    },
+    "prep": {
+      "attempts": 5,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 42.232,
+      "p95_success_s": 46.014,
+      "sample_count": 5,
+      "successes": 5,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 213.87
+    },
+    "probe": {
+      "attempts": 297,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.017,
+      "p95_success_s": 1.025,
+      "sample_count": 297,
+      "successes": 297,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 302.418
+    },
+    "quality": {
+      "attempts": 5,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 51.532,
+      "p95_success_s": 60.356,
+      "sample_count": 5,
+      "successes": 5,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 263.536
+    },
+    "shortcut": {
+      "attempts": 5,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 14.053,
+      "p95_success_s": 14.156,
+      "sample_count": 5,
+      "successes": 5,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 67.504
+    },
+    "transcribe": {
+      "attempts": 19,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 10.012,
+      "p95_success_s": 10.44,
+      "sample_count": 19,
+      "successes": 19,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 164.587
+    },
+    "tts": {
+      "attempts": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 27.026,
+      "p95_success_s": 58.549,
+      "sample_count": 3,
+      "successes": 3,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 113.092
+    }
+  },
+  "statuses": {
+    "done": 5,
+    "failed": 1
+  }
+}
