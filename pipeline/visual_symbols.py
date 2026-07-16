@@ -308,7 +308,7 @@ def _family_from_text(text: str) -> str | None:
         # A specific semantic family beats a generic mood/background family
         # when a visual legitimately contains more than one kind of object.
         return next(family for family in FAMILY_PRIORITY if scores[family] == best)
-    if _count_hits(text, HUMAN_TERMS):
+    if _count_hits(_human_presence_text(text), HUMAN_TERMS):
         return "human"
     return None
 
