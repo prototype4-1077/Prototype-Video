@@ -98,6 +98,27 @@ class VisualSymbolAuditTests(unittest.TestCase):
         self.assertTrue(any("generic human filler repeats" in item
                             for item in report["violations"]))
 
+    def test_negated_human_terms_do_not_count_as_visible_people(self):
+        scene = {
+            "text": "The room finally becomes quiet.",
+            "query": (
+                "small brass bell before a dark television, object-only composition, "
+                "no people, faces, hands or bodies"
+            ),
+            "symbol_family": "object_tool",
+        }
+        self.assertFalse(visual_symbols.uses_human(scene))
+        self.assertEqual(visual_symbols.observed_family(scene), "object_tool")
+
+    def test_explicit_human_role_counts_a_stylized_character(self):
+        scene = {
+            "text": "The jester waits.",
+            "query": "red-and-teal jester on a television throne",
+            "symbol_family": "identity",
+            "human_role": "performer",
+        }
+        self.assertTrue(visual_symbols.uses_human(scene))
+
     def test_advisory_policy_reports_without_blocking(self):
         report = visual_symbols.analyze(self._generic_people_script(strict=False))
         self.assertTrue(report["passes"])
