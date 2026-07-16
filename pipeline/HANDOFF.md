@@ -65,31 +65,27 @@ Everything else is one command run in a loop.
 
    It loads keys from pipeline/.env itself (no exports needed), downloads fonts on first run,
    validates your script (with fix hints), generates voiceover, downloads footage, renders,
-   and finishes with both:
-       build/<slug>/final.mp4           (1080x1920 social)
+   and finishes by default with exactly one video:
        build/<slug>/final_youtube.mp4   (1920x1080 regular YouTube)
-   The same run also creates three music choices for each canvas so James can
-   compare genuinely different score arrangements.
+   It uses music choice 3, the current selected score family. Portrait, short, and
+   alternate-music videos are opt-in only. Set `render_outputs` to any combination
+   of `youtube`, `portrait`, and `short`; set `music_choice` and
+   `music_choices` only when James explicitly requests a different or additional mix.
    Rules of thumb:
    - Every step is resumable. Rerunning never breaks anything.
    - If a bash call times out, just run the same command again.
    - On `ERROR: ... | FIX: ...` do exactly what FIX says, then rerun.
 
 5. VERIFY (only judgment step besides the script): extract 3 frames and look at them:
-       ffmpeg -y -ss 3 -i build/<slug>/final.mp4 -frames:v 1 f1.png   (repeat at mid + end)
-   Check both canvases: 9:16 portrait keeps the letterboxed footage band and 16:9 YouTube
-   fills a native landscape frame without stretching. Confirm yellow keyword captions and the
-   rounded scene-0 title are safely composed in each. Check duration
+       ffmpeg -y -ss 3 -i build/<slug>/final_youtube.mp4 -frames:v 1 f1.png
+   Confirm the native 16:9 canvas fills the frame without stretching, yellow keyword
+   captions are safe, and the rounded scene-0 title is fully visible. Check duration
    (~2:00-2:40) plus visual_symbol_report.json and motion_report.json.
    If one scene's footage looks wrong: delete its clip_XX.mp4 AND seg_XX.mp4, improve that
    scene's "query" in script.json, remove its "pexels_id", and rerun build.py.
 
-6. DELIVER: read the `delivery` object in music_variants.json and present only its
-   Deep Current portrait and YouTube files by default. Do not show links for the other
-   music choices, final.mp4/final_youtube.mp4 compatibility aliases, or final_short.mp4
-   unless James explicitly asks for them. If a legacy manifest has no `delivery` object,
-   select the row labeled Deep Current and its matching YouTube filename. All outputs
-   remain archived. Done.
+6. DELIVER: present final_youtube.mp4 and the required scene survey. Only include
+   additional canvases or soundtrack files when James explicitly requested them. Done.
 
 ## Required scene review after every render
 A successful build automatically creates `scene-review.html` and
@@ -107,12 +103,10 @@ comment; their source clips are banned and cleared so only those scenes rerender
 The overall approval is recorded only when James selects it. Never infer approval.
 
 ## Look spec (what "correct" looks like)
-- Every build creates two 30fps canvases: 1080x1920 (9:16 portrait) and
-  1920x1080 (16:9 regular YouTube). Portrait footage remains a 1080x608 band
-  vertically centered on black. YouTube is recomposed from source footage to fill
-  the landscape canvas; it is never a stretched portrait render.
-- Portrait captions: Questrial 44px, white, in the bottom black band, subtle dark boxes,
-  2-4 keywords per sentence in pale yellow (#e6e87e).
+- Every default build creates one 30fps native 1920x1080 regular-YouTube canvas.
+  It is recomposed directly from source footage and is never a stretched portrait render.
+- YouTube captions remain inside the landscape safe area with 2-4 keywords per
+  sentence in pale yellow (#e6e87e).
 - Title: Baloo2 ExtraBold ALL-CAPS white with shadow, centered over the footage band,
   scene 0. Long titles automatically wrap and shrink to remain inside the safe area.
 - Audio: ElevenLabs VO (voice id in .env; James's current pick is Liam) over a low ambient bed.
@@ -120,10 +114,12 @@ The overall approval is recorded only when James selects it. Never infer approva
 ## Config
 - .env: ELEVENLABS_API_KEY, PEXELS_API_KEY, ELEVENLABS_VOICE_ID (Liam TX3LPaxmHKxFdv7VOQHJ;
   Daniel onwK4e9ZLuTAKqWW03F9 is the old calm-deep option). Ask James once per video if unsure.
-- Optional full-frame portrait crop (no letterbox): add "layout": "fullbleed" in script.json.
+- Optional outputs: set "render_outputs": ["youtube", "portrait", "short"] only for
+  canvases James explicitly requests.
+- Optional score alternatives: keep "music_choice": 3 as the primary and add
+  "music_choices": [3, 1, 2] only when James explicitly requests choices.
 - Custom music: put a file in the build dir and set "music": "<filename>" in script.json.
-  It becomes choice 1; the pipeline still generates enough alternatives to provide at
-  least three total choices.
+  It becomes the one selected soundtrack unless alternatives are explicitly declared.
 
 ## Files
 build.py   — THE orchestrator; the only command you need after writing the script
@@ -156,11 +152,10 @@ music.py reads the voiceover's energy: it recedes under speech, swells in the pa
 sprinkles soft chimes at long-pause onsets, and builds ~30% toward the closing line.
 Nothing to configure. For custom music set "music" in script.json as before.
 
-Every render produces at least three full-video soundtrack choices. For ordinary
-philosophy videos the default families are Cinematic Pulse, Glass Horizon, and Deep
-Current. DMT and June Oxley receive three profile-specific families. The visuals,
-narration, caption timing, and mastering stay identical, which makes the music comparison
-meaningful. `final.mp4` is always an alias of choice 1 for backward compatibility.
+Every default render produces one full-video soundtrack: choice 3. Its label is Deep
+Current for ordinary philosophy videos, Deep Portal for DMT, and Creekside Stomp for
+June Oxley. Additional choices are synthesized only when `music_choices` explicitly
+requests them.
 
 ## v5 upgrades (all automatic; nothing new to operate)
 - WORD-SYNCED CAPTIONS: if `faster-whisper` is installed (pip install faster-whisper),
@@ -182,8 +177,8 @@ meaningful. `final.mp4` is always an alias of choice 1 for backward compatibilit
 - CINEMATIC COHESION (automatic): unified color grade + film grain + vignette, camera
   motion alternates per scene (push-in / pull-out / drift), dip-to-black scene cuts,
   title fades in/out. Nothing to configure.
-- 60s SHORT CUT (automatic for scripts >=16 scenes): build.py also writes final_short.mp4
-  from the strongest beats (hook + questions + ending). Deliver BOTH files to James.
+- 60s SHORT CUT (opt-in): add `short` to render_outputs. build.py then writes
+  final_short.mp4 from the strongest beats using the selected score family.
   Manual: python3 pipeline/shortcut.py build/<slug> [target_secs]
 - MYTHOLOGY: memory.json now holds "motifs" (one signature line per video). When
   scriptwriting, echo exactly ONE earlier motif mid-video as a natural callback phrase.
