@@ -11,7 +11,8 @@ Commands:
   python3 learn.py note "free-text feedback"   # store James's feedback for future scriptwriters
   python3 learn.py show                        # print memory summary
 """
-import json, os, sys
+import glob, hashlib, json, os, sys
+from datetime import datetime, timezone
 
 import profiles
 
@@ -100,6 +101,172 @@ def swap(bd, i):
     print(f"scene {i}: clip banned. Improve its 'query' in script.json if you can, then rerun build.py")
 
 
+
+def survey(bd, feedback_file):
+    """Apply an exported scene-review survey as durable, idempotent training data."""
+    with open(feedback_file, encoding="utf-8") as f:
+        feedback = json.load(f)
+    with open(f"{bd}/script.json", encoding="utf-8") as f:
+        script = json.load(f)
+    if feedback.get("slug") and feedback["slug"] != script.get("slug"):
+        raise ValueError("feedback slug does not match build directory")
+
+    review_id = hashlib.sha256(
+        json.dumps(feedback, sort_keys=True, ensure_ascii=True).encode("utf-8")
+    ).hexdigest()
+    m = load()
+    applied = m.setdefault("scene_review_ids", [])
+    if review_id in applied:
+        print("scene survey already applied; no memory changes made")
+        return
+
+    profile = profiles.resolve(script)
+    weights = (m.setdefault("profile_query_weights", {}).setdefault(profile, {})
+               if profile else m.setdefault("query_weights", {}))
+    scene_feedback = m.setdefault("scene_feedback", [])
+    approved_vectors, rejected_vectors = [], []
+    approved_ids, revised = [], []
+    seen = set()
+    timestamp = datetime.now(timezone.utc).replace(microsecond=0).isoformat()
+
+    for item in feedback.get("scenes", []):
+        decision = str(item.get("decision") or "unreviewed").strip().lower()
+        if decision in ("approve", "approved"):
+            decision = "approved"
+        elif decision in ("revision", "revise", "rejected", "needs_revision"):
+            decision = "revise"
+        else:
+            continue
+        index = item.get("scene_index")
+        if index is None:
+            index = int(item.get("scene_number", 0)) - 1
+        index = int(index)
+        if index < 0 or index >= len(script["scenes"]) or index in seen:
+            raise ValueError(f"invalid or duplicate scene index: {index}")
+        seen.add(index)
+
+        scene = script["scenes"][index]
+        source_id = scene.get("pexels_id") or scene.get("stock_id")
+        query = (scene.get("query") or "").strip().lower()
+        comments = str(item.get("comments") or "").strip()
+        if decision == "revise" and not comments:
+            raise ValueError(f"scene {index + 1} needs a revision comment")
+
+        if decision == "approved":
+            if source_id and source_id not in m.setdefault("used_ids", []):
+                m["used_ids"].append(source_id)
+            if source_id:
+                approved_ids.append(source_id)
+            if query:
+                weights[query] = weights.get(query, 0) + 1
+        else:
+            if source_id and source_id not in m.setdefault("banned_ids", []):
+                m["banned_ids"].append(source_id)
+            if query:
+                weights[query] = weights.get(query, 0) - 2
+            revised.append(index)
+            for key in (
+                "pexels_id", "stock_id", "clip", "motion_source", "motion_verified",
+                "motion_evidence", "stock_frame_url", "stock_frame_url_checked",
+                "source_url", "storyboard_generated", "storyboard_version",
+            ):
+                scene.pop(key, None)
+
+        scene_feedback.append({
+            "review_id": review_id,
+            "reviewed_at": feedback.get("reviewed_at") or timestamp,
+            "slug": script.get("slug"),
+            "scene_index": index,
+            "scene_number": index + 1,
+            "decision": decision,
+            "comments": comments,
+            "query": scene.get("query"),
+            "source_id": source_id,
+            "profile": profile,
+        })
+        if comments:
+            m.setdefault("notes", []).append(
+                f"survey({script.get('slug')}) scene {index + 1} {decision}: {comments}"
+            )
+
+        try:
+            import numpy as _np
+            emb = f"{bd}/emb_{index:02d}.npy"
+            if os.path.exists(emb):
+                (approved_vectors if decision == "approved" else rejected_vectors).append(
+                    _np.load(emb)
+                )
+        except Exception:
+            pass
+
+    overall = feedback.get("overall") or {}
+    overall_decision = str(overall.get("decision") or "unreviewed").lower()
+    overall_comments = str(overall.get("comments") or "").strip()
+    if overall_comments:
+        m.setdefault("notes", []).append(
+            f"survey({script.get('slug')}) overall {overall_decision}: {overall_comments}"
+        )
+    if overall_decision in ("approve", "approved") and not revised:
+        videos = m.setdefault("videos", [])
+        if not any(v.get("slug") == script.get("slug") for v in videos):
+            entry = {
+                "slug": script.get("slug"),
+                "title": script.get("title"),
+                "scenes": len(script["scenes"]),
+                "clips": approved_ids,
+                "review_source": "scene_survey",
+            }
+            if profile:
+                entry["profile"] = profile
+            videos.append(entry)
+
+    try:
+        import numpy as _np, taste
+        if approved_vectors:
+            taste.add("approved", _np.stack(approved_vectors), profile)
+        if rejected_vectors:
+            taste.add("rejected", _np.stack(rejected_vectors), profile)
+    except Exception as error:
+        print(f"note: taste update skipped ({error})")
+
+    if revised:
+        for index in revised:
+            for filename in (
+                f"{bd}/clip_{index:02d}.mp4",
+                f"{bd}/seg_{index:02d}.mp4",
+                f"{bd}/youtube_seg_{index:02d}.mp4",
+            ):
+                if os.path.exists(filename):
+                    try:
+                        os.remove(filename)
+                    except OSError:
+                        print(f"note: could not delete {filename}; delete it manually")
+        for pattern in (
+            f"{bd}/final*.mp4", f"{bd}/scene-review.html", f"{bd}/scene-review.json"
+        ):
+            for filename in glob.glob(pattern):
+                try:
+                    os.remove(filename)
+                except OSError:
+                    pass
+
+    applied.append(review_id)
+    with open(f"{bd}/script.json", "w", encoding="utf-8") as f:
+        json.dump(script, f, indent=1)
+        f.write("\n")
+    with open(f"{bd}/scene-review-feedback.json", "w", encoding="utf-8") as f:
+        json.dump(feedback, f, indent=2)
+        f.write("\n")
+    save(m)
+    print(
+        f"scene survey applied: {len(seen) - len(revised)} approved, "
+        f"{len(revised)} revisions"
+    )
+    if revised:
+        print("Rejected clips were banned and cleared. Update their queries if needed, then rerender.")
+    elif overall_decision in ("approve", "approved"):
+        print("Video approval recorded from the completed scene survey.")
+
 def motif(slug, name, line):
     m = load()
     m.setdefault("motifs", []).append({"video": slug, "name": name, "line": line})
@@ -164,6 +331,7 @@ if __name__ == "__main__":
     cmd = sys.argv[1] if len(sys.argv) > 1 else "show"
     if cmd == "record": record(sys.argv[2])
     elif cmd == "swap": swap(sys.argv[2], int(sys.argv[3]))
+    elif cmd == "survey": survey(sys.argv[2], sys.argv[3])
     elif cmd == "note": note(sys.argv[2])
     elif cmd == "pin": pin(sys.argv[2], int(sys.argv[3]), sys.argv[4])
     elif cmd == "motif": motif(sys.argv[2], sys.argv[3], sys.argv[4])
