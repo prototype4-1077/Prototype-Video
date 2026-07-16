@@ -1,0 +1,358 @@
+{
+  "finished_at": "2026-07-16T21:14:23+00:00",
+  "github_run_id": "29534741970",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/tiktok-videos/tiktok-videos/build/other-versions-stock-first-rebuild/final.mp4",
+  "mode": "recover",
+  "passes": 6,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 5,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 7.5,
+      "idle_timeout_s": 52.49,
+      "sample_count": 5,
+      "soft_timeout_s": 52.49,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 34.22,
+      "idle_timeout_s": 132.66,
+      "sample_count": 200,
+      "soft_timeout_s": 132.66,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.02,
+      "idle_timeout_s": 33.07,
+      "sample_count": 64,
+      "soft_timeout_s": 33.07,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 24.25,
+      "idle_timeout_s": 102.76,
+      "sample_count": 92,
+      "soft_timeout_s": 102.76,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 9.57,
+      "idle_timeout_s": 60.0,
+      "sample_count": 150,
+      "soft_timeout_s": 60.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 45.96,
+      "idle_timeout_s": 167.87,
+      "sample_count": 6,
+      "soft_timeout_s": 167.87,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.02,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.08,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 10.12,
+      "idle_timeout_s": 180.0,
+      "sample_count": 19,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/tiktok-videos/tiktok-videos/build/other-versions-stock-first-rebuild",
+    "checked_at": "2026-07-16T21:14:23+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 70.354,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "portrait": {
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.002,
+        "exists": true,
+        "expected_duration_s": 70.354,
+        "failures": [],
+        "path": "/home/runner/work/tiktok-videos/tiktok-videos/build/other-versions-stock-first-rebuild/final.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 70.356009,
+          "bit_rate": 1610784.0,
+          "duration_s": 70.356009,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1920,
+          "video_codec": "h264",
+          "video_duration_s": 70.333333,
+          "width": 1080
+        },
+        "size_bytes": 14166049,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 720,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
+  "recommendations": [
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (403.3s).",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "f0b1efac8dfb46939ea84d7851274c01",
+  "schema_version": 1,
+  "slug": "other-versions-stock-first-rebuild",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.003,
+      "p95_success_s": 1.003,
+      "success_durations_s": [
+        1.003
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.003
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 4.016,
+      "p95_success_s": 4.016,
+      "success_durations_s": [
+        4.016
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 4.016
+    },
+    "assemble": {
+      "attempts": 16,
+      "failures": 0,
+      "p50_success_s": 7.547,
+      "p95_success_s": 14.599,
+      "success_durations_s": [
+        14.094,
+        4.021,
+        5.041,
+        6.035,
+        16.111,
+        6.032,
+        8.04,
+        8.042,
+        7.054,
+        6.028,
+        8.051,
+        14.095,
+        6.027,
+        7.043,
+        10.067,
+        10.074
+      ],
+      "successes": 16,
+      "timeouts": 0,
+      "total_duration_s": 135.855
+    },
+    "build_pass": {
+      "attempts": 6,
+      "failures": 0,
+      "p50_success_s": 74.233,
+      "p95_success_s": 114.773,
+      "success_durations_s": [
+        18.019,
+        116.147,
+        79.144,
+        10.031,
+        110.651,
+        69.323
+      ],
+      "successes": 6,
+      "timeouts": 0,
+      "total_duration_s": 403.315
+    },
+    "credits": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.01,
+      "success_durations_s": [
+        1.006,
+        1.009,
+        1.01
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 3.025
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 2.513,
+      "p95_success_s": 7.289,
+      "success_durations_s": [
+        1.01,
+        3.015,
+        8.043,
+        2.01
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 14.078
+    },
+    "footage": {
+      "attempts": 16,
+      "failures": 0,
+      "p50_success_s": 12.018,
+      "p95_success_s": 15.273,
+      "success_durations_s": [
+        19.026,
+        12.016,
+        12.013,
+        14.022,
+        11.015,
+        14.019,
+        10.013,
+        13.02,
+        10.019,
+        12.026,
+        12.023,
+        12.021,
+        11.022,
+        12.022,
+        9.019,
+        10.021
+      ],
+      "successes": 16,
+      "timeouts": 0,
+      "total_duration_s": 193.317
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 8.028,
+      "p95_success_s": 8.028,
+      "success_durations_s": [
+        8.028
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 8.028
+    },
+    "probe": {
+      "attempts": 17,
+      "failures": 0,
+      "p50_success_s": 1.01,
+      "p95_success_s": 1.01,
+      "success_durations_s": [
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01
+      ],
+      "successes": 17,
+      "timeouts": 0,
+      "total_duration_s": 17.17
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 9.051,
+      "p95_success_s": 9.051,
+      "success_durations_s": [
+        9.051
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 9.051
+    },
+    "transcribe": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 7.511,
+      "p95_success_s": 9.763,
+      "success_durations_s": [
+        10.013,
+        5.01
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 15.023
+    }
+  },
+  "status": "done"
+}
