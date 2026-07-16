@@ -40,8 +40,9 @@ jobs:
 
           for asset in music_variants.json motion_report.json visual_symbol_report.json still_reference_report.json alts_sheet.jpg CREDITS.txt; do
             url="$(jq -r --arg asset "$asset" '.assets[] | select(.name == $asset) | .url' release.json | head -n 1)"
-            test -n "$url"
-            gh api "$url" -H "Accept: application/octet-stream" > "reports/$asset"
+            if [ -n "$url" ]; then
+              gh api "$url" -H "Accept: application/octet-stream" > "reports/$asset"
+            fi
           done
       - name: Upload portrait delivery
         uses: actions/upload-artifact@v4
