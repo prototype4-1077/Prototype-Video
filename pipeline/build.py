@@ -5,13 +5,14 @@
 Each run loads API keys from .env itself, checks fonts, validates script.json,
 then advances the build as far as it can within a ~30s budget and exits with:
     RUN AGAIN  (progress note)      -> just run the same command again
-    DONE -> portrait final.mp4 + landscape final_youtube.mp4 -> finished
+    DONE -> final_youtube.mp4 (default) -> finished
     ERROR: <what> | FIX: <how>      -> fix, then run again
 Every step is resumable; running again never breaks anything."""
 import json, os, shutil, subprocess, sys, tempfile, time, urllib.request
 
 import motion
 import audio_variants
+import render_policy
 import profiles
 import review
 import still_reference
@@ -305,164 +306,186 @@ def main(bd):
           f"({still_seconds:.1f}s/{mr.total_seconds:.1f}s); "
           f"true motion {mr.video_ratio:.1%}")
 
-    # 3. overlays + at least three selectable score beds
+    # 3. Generate only the overlays and score requested by the output policy.
     try:
+        outputs = render_policy.render_outputs(s)
         audio_variants.require(s, bd)
         music_ready = True
     except ValueError:
+        outputs = render_policy.render_outputs(s)
         music_ready = False
-    if (not os.path.exists(f"{bd}/cap_{n-1:02d}.png")
-            or not os.path.exists(f"{bd}/title.png")
-            or not os.path.exists(f"{bd}/youtube_cap_{n-1:02d}.png")
-            or not os.path.exists(f"{bd}/youtube_title.png") or not music_ready):
-        if left() < 15: out("RUN AGAIN (next: overlays)")
+    portrait_segments = render_policy.needs_portrait_segments(s)
+    youtube_segments = "youtube" in outputs
+    required_overlays = []
+    if portrait_segments:
+        required_overlays.extend([
+            f"{bd}/cap_{n-1:02d}.png",
+            f"{bd}/title.png",
+        ])
+    if youtube_segments:
+        required_overlays.extend([
+            f"{bd}/youtube_cap_{n-1:02d}.png",
+            f"{bd}/youtube_title.png",
+        ])
+    if any(not os.path.exists(path) for path in required_overlays) or not music_ready:
+        if left() < 15:
+            out("RUN AGAIN (next: selected overlays and score)")
         r = sh([py, os.path.join(HERE, "prep.py"), bd])
         if r.returncode != 0:
-            err(f"prep failed: {r.stderr[-300:]}", "rerun; if fonts missing delete fonts/ and rerun")
+            err(
+                f"prep failed: {r.stderr[-300:]}",
+                "rerun; if fonts missing delete fonts/ and rerun",
+            )
         print(r.stdout.strip())
-        out("RUN AGAIN (portrait + YouTube overlays + music choices ready)")
+        out(f"RUN AGAIN ({', '.join(outputs)} overlays + selected score ready)")
 
-    # 4. render segments
-    for i in range(n):
-        seg = f"{bd}/seg_{i:02d}.mp4"
-        if os.path.exists(seg):
-            continue
-        if left() < 12:
-            out(f"RUN AGAIN (rendered {i}/{n} scenes)")
-        r = sh([py, os.path.join(HERE, "assemble.py"), bd, "scene", str(i)])
-        if r.returncode != 0:
-            err(f"render scene {i}: {r.stderr[-300:]}", "rerun; if it repeats, delete that seg file")
+    # 4. Render only scene canvases needed by the requested finished files.
+    if portrait_segments:
+        for i in range(n):
+            seg = f"{bd}/seg_{i:02d}.mp4"
+            if os.path.exists(seg):
+                continue
+            if left() < 12:
+                out(f"RUN AGAIN (rendered {i}/{n} portrait scenes)")
+            r = sh([py, os.path.join(HERE, "assemble.py"), bd, "scene", str(i)])
+            if r.returncode != 0:
+                err(
+                    f"render portrait scene {i}: {r.stderr[-300:]}",
+                    "rerun; if it repeats, delete that seg file",
+                )
+        for i in range(n):
+            seg = f"{bd}/seg_{i:02d}.mp4"
+            if not probe_ok(seg):
+                try:
+                    os.remove(seg)
+                    out(f"RUN AGAIN (portrait seg {i} was corrupt, will re-render)")
+                except OSError:
+                    err(
+                        f"portrait seg {i} corrupt and undeletable",
+                        "enable file deletion, delete it, rerun",
+                    )
 
-    # 4b. verify portrait segments (catch truncated files from timeouts)
-    for i in range(n):
-        seg = f"{bd}/seg_{i:02d}.mp4"
-        if not probe_ok(seg):
-            try:
-                os.remove(seg)
-                out(f"RUN AGAIN (seg {i} was corrupt, will re-render)")
-            except OSError:
-                err(f"seg {i} corrupt and undeletable", "enable file deletion, delete it, rerun")
+    if youtube_segments:
+        for i in range(n):
+            seg = f"{bd}/youtube_seg_{i:02d}.mp4"
+            if os.path.exists(seg):
+                continue
+            if left() < 12:
+                out(f"RUN AGAIN (rendered {i}/{n} YouTube scenes)")
+            r = sh([
+                py, os.path.join(HERE, "assemble.py"), bd, "youtube-scene", str(i)
+            ])
+            if r.returncode != 0:
+                err(
+                    f"render YouTube scene {i}: {r.stderr[-300:]}",
+                    "rerun; if it repeats, delete that YouTube seg file",
+                )
+        for i in range(n):
+            seg = f"{bd}/youtube_seg_{i:02d}.mp4"
+            if not probe_ok(seg):
+                try:
+                    os.remove(seg)
+                    out(f"RUN AGAIN (YouTube seg {i} was corrupt, will re-render)")
+                except OSError:
+                    err(
+                        f"YouTube seg {i} corrupt and undeletable",
+                        "enable file deletion, delete it, rerun",
+                    )
 
-    # 4c. recompose the same edit at native 1920x1080 for regular YouTube.
-    for i in range(n):
-        seg = f"{bd}/youtube_seg_{i:02d}.mp4"
-        if os.path.exists(seg):
-            continue
-        if left() < 12:
-            out(f"RUN AGAIN (rendered {i}/{n} YouTube scenes)")
-        r = sh([py, os.path.join(HERE, "assemble.py"), bd, "youtube-scene", str(i)])
-        if r.returncode != 0:
-            err(f"render YouTube scene {i}: {r.stderr[-300:]}",
-                "rerun; if it repeats, delete that YouTube seg file")
-    for i in range(n):
-        seg = f"{bd}/youtube_seg_{i:02d}.mp4"
-        if not probe_ok(seg):
-            try:
-                os.remove(seg)
-                out(f"RUN AGAIN (YouTube seg {i} was corrupt, will re-render)")
-            except OSError:
-                err(f"YouTube seg {i} corrupt and undeletable",
-                    "enable file deletion, delete it, rerun")
-
-    # 5. concat portrait + three selectable audio mixes
-    final = f"{bd}/final.mp4"
+    # 5. Assemble one canonical video per requested canvas. Explicit alternative
+    # score choices receive additional files; the selected score remains canonical.
     try:
         variants = audio_variants.require(s, bd)
     except ValueError as e:
-        err(str(e), "rerun prep to generate at least three music choices")
-    variant_targets = [f"{bd}/{audio_variants.video_name(i)}"
-                       for i in range(1, len(variants) + 1)]
-    if (not (os.path.exists(final) and probe_ok(final))
-            or any(not (os.path.exists(p) and probe_ok(p)) for p in variant_targets)):
-        if left() < 20: out("RUN AGAIN (next: final assembly)")
-        tmp = tempfile.mkdtemp()
-        lst = os.path.join(tmp, "list.txt")
-        with open(lst, "w") as f:
-            for i in range(n):
-                f.write(f"file '{os.path.abspath(bd)}/seg_{i:02d}.mp4'\n")
-        noa = os.path.join(tmp, "noaudio.mp4")
-        r = sh(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
-                "-i", lst, "-c", "copy", noa])
-        if r.returncode != 0: err(f"concat: {r.stderr[-300:]}", "rerun")
-        total = sum(x["duration"] for x in s["scenes"])
-        for i, (item, target) in enumerate(zip(variants, variant_targets), 1):
-            if os.path.exists(target) and probe_ok(target):
-                continue
-            try:
-                audio_variants.mix(noa, f"{bd}/vo.mp3", f"{bd}/{item['file']}",
-                                   total, target)
-                print(f"{os.path.basename(target)} done: {item['label']}")
-            except Exception as e:
-                err(f"music choice {i} mix: {e}", "rerun")
-        shutil.copy(variant_targets[0], final)
-        audio_variants.write_manifest(bd, variants)
-        shutil.rmtree(tmp, ignore_errors=True)
-    if not os.path.exists(f"{bd}/music_variants.json"):
-        audio_variants.write_manifest(bd, variants)
-    if not probe_ok(final):
-        try: os.remove(final)
-        except OSError: pass
-        out("RUN AGAIN (final was incomplete, will redo)")
+        err(str(e), "rerun prep to generate the selected music choice")
 
-    # 5b. concat the native 16:9 YouTube segments and reuse every audio mix.
-    youtube_final = f"{bd}/final_youtube.mp4"
-    youtube_targets = [f"{bd}/{audio_variants.youtube_video_name(i)}"
-                       for i in range(1, len(variants) + 1)]
-    if (not (os.path.exists(youtube_final) and probe_ok(youtube_final))
-            or any(not (os.path.exists(p) and probe_ok(p)) for p in youtube_targets)):
-        if left() < 20: out("RUN AGAIN (next: YouTube final assembly)")
+    def assemble_canvas(canvas, segment_prefix, canonical_name):
+        targets = [
+            f"{bd}/{render_policy.video_name(canvas, position, item)}"
+            for position, item in enumerate(variants)
+        ]
+        if all(os.path.exists(path) and probe_ok(path) for path in targets):
+            return
+        if left() < 20:
+            out(f"RUN AGAIN (next: {canvas} final assembly)")
         tmp = tempfile.mkdtemp()
-        lst = os.path.join(tmp, "youtube-list.txt")
-        with open(lst, "w") as f:
-            for i in range(n):
-                f.write(f"file '{os.path.abspath(bd)}/youtube_seg_{i:02d}.mp4'\n")
-        noa = os.path.join(tmp, "youtube-noaudio.mp4")
-        r = sh(["ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
-                "-i", lst, "-c", "copy", noa])
-        if r.returncode != 0:
-            err(f"YouTube concat: {r.stderr[-300:]}", "rerun")
-        total = sum(x["duration"] for x in s["scenes"])
-        for i, (item, target) in enumerate(zip(variants, youtube_targets), 1):
-            if os.path.exists(target) and probe_ok(target):
-                continue
+        try:
+            lst = os.path.join(tmp, f"{canvas}-list.txt")
+            with open(lst, "w") as handle:
+                for scene_index in range(n):
+                    handle.write(
+                        f"file '{os.path.abspath(bd)}/{segment_prefix}"
+                        f"{scene_index:02d}.mp4'\n"
+                    )
+            noaudio = os.path.join(tmp, f"{canvas}-noaudio.mp4")
+            result = sh([
+                "ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0",
+                "-i", lst, "-c", "copy", noaudio,
+            ])
+            if result.returncode != 0:
+                err(f"{canvas} concat: {result.stderr[-300:]}", "rerun")
+            total = sum(scene["duration"] for scene in s["scenes"])
+            for position, (item, target) in enumerate(zip(variants, targets)):
+                if os.path.exists(target) and probe_ok(target):
+                    continue
+                try:
+                    audio_variants.mix(
+                        noaudio, f"{bd}/vo.mp3", f"{bd}/{item['file']}", total, target
+                    )
+                    print(f"{os.path.basename(target)} done: {item['label']}")
+                except Exception as e:
+                    err(f"{canvas} music choice {position + 1} mix: {e}", "rerun")
+        finally:
+            shutil.rmtree(tmp, ignore_errors=True)
+        canonical = f"{bd}/{canonical_name}"
+        if not probe_ok(canonical):
             try:
-                audio_variants.mix(noa, f"{bd}/vo.mp3", f"{bd}/{item['file']}",
-                                   total, target)
-                print(f"{os.path.basename(target)} done: {item['label']}")
-            except Exception as e:
-                err(f"YouTube music choice {i} mix: {e}", "rerun")
-        shutil.copy(youtube_targets[0], youtube_final)
-        audio_variants.write_manifest(bd, variants)
-        shutil.rmtree(tmp, ignore_errors=True)
-    if not probe_ok(youtube_final):
-        try: os.remove(youtube_final)
-        except OSError: pass
-        out("RUN AGAIN (YouTube final was incomplete, will redo)")
+                os.remove(canonical)
+            except OSError:
+                pass
+            out(f"RUN AGAIN ({canonical_name} was incomplete, will redo)")
 
-    # 6. bonus 60s portrait cut for longer scripts
-    short = f"{bd}/final_short.mp4"
-    if len(s["scenes"]) >= 16 and not (os.path.exists(short) and probe_ok(short)):
-        if left() < 20: out("RUN AGAIN (next: 60s short cut)")
-        r = sh([py, os.path.join(HERE, "shortcut.py"), bd])
-        if r.returncode != 0:
-            print(f"note: short cut failed ({r.stderr[-200:]}); full video is fine")
-        else:
+    if "portrait" in outputs:
+        assemble_canvas("portrait", "seg_", "final.mp4")
+    if "youtube" in outputs:
+        assemble_canvas("youtube", "youtube_seg_", "final_youtube.mp4")
+
+    # 6. A portrait short is opt-in and reuses portrait segments only when requested.
+    if "short" in outputs:
+        short = f"{bd}/final_short.mp4"
+        if not (os.path.exists(short) and probe_ok(short)):
+            if left() < 20:
+                out("RUN AGAIN (next: requested short cut)")
+            r = sh([py, os.path.join(HERE, "shortcut.py"), bd])
+            if r.returncode != 0:
+                err(f"short cut failed: {r.stderr[-300:]}", "rerun")
             print(r.stdout.strip())
+
+    audio_variants.write_manifest(bd, variants, outputs)
     sheet = f"{bd}/alts_sheet.jpg"
     if not os.path.exists(sheet) and os.path.exists(f"{bd}/alts.json"):
-        if left() < 15: out("RUN AGAIN (next: review sheet)")
+        if left() < 15:
+            out("RUN AGAIN (next: review sheet)")
         r = sh([py, os.path.join(HERE, "altsheet.py"), bd])
         print(r.stdout.strip() if r.returncode == 0 else "note: review sheet failed")
 
     # Every finished video ships with a standalone, machine-readable scene survey.
     if not review.is_current(bd):
-        if left() < 25: out("RUN AGAIN (next: scene review survey)")
+        if left() < 25:
+            out("RUN AGAIN (next: scene review survey)")
         try:
             review.generate(bd)
         except Exception as e:
-            err(f"scene review survey: {e}", "rerun; if it repeats, inspect pipeline/review.py")
+            err(
+                f"scene review survey: {e}",
+                "rerun; if it repeats, inspect pipeline/review.py",
+            )
 
-    print(f"DONE -> {final} + {youtube_final}")
+    finished = [f"{bd}/{name}" for name in render_policy.required_video_names(s)]
+    missing = [path for path in finished if not probe_ok(path)]
+    if missing:
+        err("required output missing: " + ", ".join(missing), "rerun")
+    print("DONE -> " + " + ".join(finished))
     print(f"After James approves: python3 {os.path.join(HERE, 'learn.py')} record {bd}")
     print(f"If he dislikes scene i's footage: python3 {os.path.join(HERE, 'learn.py')} swap {bd} <i>")
 
