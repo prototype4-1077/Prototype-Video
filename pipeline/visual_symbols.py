@@ -339,12 +339,7 @@ def observed_family(scene: dict) -> str:
 def uses_human(scene: dict, family: str | None = None) -> bool:
     family = family or classify_scene(scene)
     visual = _human_presence_text(_visual_text(scene))
-    role = _normalize(scene.get("human_role"))
-    return (
-        family in {"human", "collective"}
-        or (bool(role) and role not in {"none", "not_applicable"})
-        or _count_hits(visual, HUMAN_TERMS) > 0
-    )
+    return family in {"human", "collective"} or _count_hits(visual, HUMAN_TERMS) > 0
 
 
 def infer_human_role(scene: dict) -> str | None:
