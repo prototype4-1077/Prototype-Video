@@ -6,7 +6,7 @@ on:
       - "build/*/delivery.request"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   detect:
@@ -25,6 +25,17 @@ jobs:
           test -n "$file"
           slug="$(printf '%s' "$file" | cut -d/ -f2)"
           echo "slug=$slug" >> "$GITHUB_OUTPUT"
+
+      - name: Mark delivery started
+        shell: bash
+        run: |
+          slug="${{ steps.request.outputs.slug }}"
+          printf '%s\n' "$GITHUB_RUN_ID" > "build/$slug/delivery-started.txt"
+          git config user.name "delivery-bot"
+          git config user.email "delivery@users.noreply.github.com"
+          git add "build/$slug/delivery-started.txt"
+          git commit -m "delivery $slug: started $GITHUB_RUN_ID"
+          git push
 
   package:
     needs: detect
