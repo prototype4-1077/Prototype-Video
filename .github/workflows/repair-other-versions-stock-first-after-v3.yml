@@ -17,8 +17,6 @@ env:
   EXPECTED_AUDIO_SHA256: 2f063b082d2e019539b9d855c1e5a02f063a46abcbc1647a1be03b3e3bb710fa
   EXPECTED_AUDIO_SIZE: "1135634"
   EXPECTED_AUDIO_DURATION: "68.754250"
-  AUDIO_CIPHERTEXT_URL: https://filebin.net/a3f76c91d8e4420fbb6c1de2a94f7c83/narration.bin
-  AUDIO_DECRYPTION_PASSPHRASE: 2f063b08-OV-stock-first-7ad4c891-20260716
 
 jobs:
   repair:
@@ -46,15 +44,22 @@ jobs:
           key: models-v1
 
       - name: System dependencies
-        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg openssl
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
 
       - name: Restore exact attached narration
         shell: bash
         run: |
           set -euo pipefail
           build="build/$SLUG"
-          curl --fail --silent --show-error --retry 5 --retry-delay 3 "$AUDIO_CIPHERTEXT_URL" -o /tmp/narration.bin
-          openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 -in /tmp/narration.bin -out "$build/vo.mp3" -pass pass:"$AUDIO_DECRYPTION_PASSPHRASE"
+          python3 pipeline/exact_audio.py \
+            --parts "$build/vo.mp3.b64.part*" \
+            --output "$build/vo.mp3" \
+            --sha256 "$EXPECTED_AUDIO_SHA256" \
+            --size "$EXPECTED_AUDIO_SIZE" \
+            --duration "$EXPECTED_AUDIO_DURATION" \
+            --source-attachment "ElevenLabs_2026-07-16T14_35_48_Liam - Energetic, Social Media Creator_pre_sp100_s50_sb75_v3 (1)(1).mp3" \
+            --report "$build/audio-verification.json"
+
           actual_sha="$(sha256sum "$build/vo.mp3" | awk '{print $1}')"
           actual_size="$(stat -c '%s' "$build/vo.mp3")"
           actual_duration="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$build/vo.mp3")"
@@ -62,18 +67,11 @@ jobs:
           test "$actual_size" = "$EXPECTED_AUDIO_SIZE"
           python3 - "$actual_duration" "$EXPECTED_AUDIO_DURATION" <<'PY'
           import sys
-          a=float(sys.argv[1]); e=float(sys.argv[2])
-          if abs(a-e)>.001: raise SystemExit(f"exact audio mismatch {a} != {e}")
-          PY
-          python3 - "$build/audio-verification.json" "$actual_sha" "$actual_size" "$actual_duration" <<'PY'
-          import json,pathlib,sys
-          out,sha,size,duration=sys.argv[1:]
-          pathlib.Path(out).write_text(json.dumps({
-            "source_attachment":"ElevenLabs_2026-07-16T14_35_48_Liam - Energetic, Social Media Creator_pre_sp100_s50_sb75_v3 (1)(1).mp3",
-            "sha256":sha,"size_bytes":int(size),"duration_seconds":float(duration),
-            "exact_bytes_restored":True,"transcoded_before_pipeline":False,
-            "pipeline_voiceover_path":"vo.mp3","retry":"broader literal stock searches"
-          },indent=2)+"\n")
+          actual = float(sys.argv[1])
+          expected = float(sys.argv[2])
+          if abs(actual - expected) > 0.001:
+              raise SystemExit(f"Exact audio duration mismatch: {actual:.6f} != {expected:.6f}")
+          print(f"Exact attached narration verified: {actual:.6f}s")
           PY
 
       - name: Prepare broader literal stock searches from a clean state
@@ -137,6 +135,7 @@ jobs:
             build/${{ env.SLUG }}/quality_report.json
             build/${{ env.SLUG }}/stock-only-report.json
             build/${{ env.SLUG }}/audio-verification.json
+            build/${{ env.SLUG }}/audio-package.json
             build/${{ env.SLUG }}/alts_sheet.jpg
             build/${{ env.SLUG }}/alts.json
             build/${{ env.SLUG }}/CREDITS.txt
@@ -149,7 +148,7 @@ jobs:
         run: |
           tag="video-$SLUG"
           gh release view "$tag" >/dev/null 2>&1 || gh release create "$tag" --title "Other Versions of You — Stock First Rebuild" --notes "Genuine-stock-only TikTok Pipeline render using exact attached MP3."
-          for file in build/$SLUG/final.mp4 build/$SLUG/scene-review.html build/$SLUG/scene-review.json build/$SLUG/music_variants.json build/$SLUG/motion_report.json build/$SLUG/visual_symbol_report.json build/$SLUG/still_reference_report.json build/$SLUG/quality_report.json build/$SLUG/stock-only-report.json build/$SLUG/audio-verification.json build/$SLUG/alts_sheet.jpg build/$SLUG/CREDITS.txt; do
+          for file in build/$SLUG/final.mp4 build/$SLUG/scene-review.html build/$SLUG/scene-review.json build/$SLUG/music_variants.json build/$SLUG/motion_report.json build/$SLUG/visual_symbol_report.json build/$SLUG/still_reference_report.json build/$SLUG/quality_report.json build/$SLUG/stock-only-report.json build/$SLUG/audio-verification.json build/$SLUG/audio-package.json build/$SLUG/alts_sheet.jpg build/$SLUG/CREDITS.txt; do
             test -f "$file" && gh release upload "$tag" "$file" --clobber
           done
 
@@ -157,7 +156,7 @@ jobs:
         if: always()
         shell: bash
         run: |
-          rm -f pipeline/.env "build/$SLUG/vo.mp3" /tmp/narration.bin
+          rm -f pipeline/.env "build/$SLUG/vo.mp3"
           printf '%s\n' "$GITHUB_RUN_ID" > "build/$SLUG/run-id-v4.txt"
           git config user.name "render-bot"
           git config user.email "render@users.noreply.github.com"
