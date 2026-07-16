@@ -109,6 +109,8 @@ The overall approval is recorded only when James selects it. Never infer approva
   sentence in pale yellow (#e6e87e).
 - Title: Baloo2 ExtraBold ALL-CAPS white with shadow, centered over the footage band,
   scene 0. Long titles automatically wrap and shrink to remain inside the safe area.
+  Use at most two words per title line; allow three only when the line includes a short
+  connector/function word such as `I`, `a`, `the`, `on`, `of`, or `to`.
 - Audio: ElevenLabs VO (voice id in .env; James's current pick is Liam) over a low ambient bed.
 
 ## Config
