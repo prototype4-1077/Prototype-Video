@@ -17,20 +17,32 @@ jobs:
     steps:
       - name: Mark export run
         run: |
+          marker="repos/$GITHUB_REPOSITORY/contents/build/jester-who-knew-my-name/export-started.txt"
           content="$(printf '%s\n' "$GITHUB_RUN_ID" | base64 -w0)"
-          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/build/jester-who-knew-my-name/export-started.txt" \
-            -f message="Mark Jester export started" -f content="$content" -f branch="$GITHUB_REF_NAME"
+          sha="$(gh api "$marker" --jq .sha 2>/dev/null || true)"
+          if [ -n "$sha" ]; then
+            gh api --method PUT "$marker" -f message="Update Jester export run" -f content="$content" -f branch="$GITHUB_REF_NAME" -f sha="$sha"
+          else
+            gh api --method PUT "$marker" -f message="Mark Jester export started" -f content="$content" -f branch="$GITHUB_REF_NAME"
+          fi
       - name: Download selected release assets
         run: |
           mkdir -p delivery reports
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "final.mp4" --dir delivery
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "final_youtube.mp4" --dir delivery
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "music_variants.json" --dir reports
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "motion_report.json" --dir reports
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "visual_symbol_report.json" --dir reports
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "still_reference_report.json" --dir reports
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "alts_sheet.jpg" --dir reports
-          gh release download "$TAG" --repo "$GITHUB_REPOSITORY" --pattern "CREDITS.txt" --dir reports
+          gh api "repos/$GITHUB_REPOSITORY/releases/tags/$TAG" > release.json
+          jq -r '.assets[] | [.name, (.label // ""), (.size | tostring)] | @tsv' release.json
+
+          portrait_url="$(jq -r '.assets[] | select(.name == "final.mp4" or .name == "jester-who-knew-my-name.mp4" or (.label // "") == "jester-who-knew-my-name.mp4") | .url' release.json | head -n 1)"
+          youtube_url="$(jq -r '.assets[] | select(.name == "final_youtube.mp4" or .name == "jester-who-knew-my-name-youtube.mp4" or (.label // "") == "jester-who-knew-my-name-youtube.mp4") | .url' release.json | head -n 1)"
+          test -n "$portrait_url"
+          test -n "$youtube_url"
+          gh api "$portrait_url" -H "Accept: application/octet-stream" > delivery/final.mp4
+          gh api "$youtube_url" -H "Accept: application/octet-stream" > delivery/final_youtube.mp4
+
+          for asset in music_variants.json motion_report.json visual_symbol_report.json still_reference_report.json alts_sheet.jpg CREDITS.txt; do
+            url="$(jq -r --arg asset "$asset" '.assets[] | select(.name == $asset) | .url' release.json | head -n 1)"
+            test -n "$url"
+            gh api "$url" -H "Accept: application/octet-stream" > "reports/$asset"
+          done
       - name: Upload portrait delivery
         uses: actions/upload-artifact@v4
         with:
