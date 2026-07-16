@@ -1,0 +1,88 @@
+render	Restore and verify exact attached MP3	﻿2026-07-16T19:22:36.8825439Z ##[group]Run set -euo pipefail
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8826245Z ^[[36;1mset -euo pipefail^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8826750Z ^[[36;1mbuild="build/$SLUG"^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8827253Z ^[[36;1mshopt -s nullglob^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8827910Z ^[[36;1mparts=("$build"/vo.mp3.b64.part*)^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8828920Z ^[[36;1mtest "${#parts[@]}" -gt 0^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8829550Z ^[[36;1mcat "${parts[@]}" | tr -d '\r\n' | base64 --decode > "$build/vo.mp3"^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8830341Z ^[[36;1msha="$(sha256sum "$build/vo.mp3" | awk '{print $1}')"^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8831002Z ^[[36;1msize="$(stat -c '%s' "$build/vo.mp3")"^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8831919Z ^[[36;1mduration="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$build/vo.mp3")"^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8833241Z ^[[36;1mformat="$(ffprobe -v error -show_entries format=format_name -of default=noprint_wrappers=1:nokey=1 "$build/vo.mp3")"^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8834187Z ^[[36;1mtest "$sha" = "$EXPECTED_AUDIO_SHA256"^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8834949Z ^[[36;1mtest "$size" = "$EXPECTED_AUDIO_SIZE"^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8836000Z ^[[36;1mpython3 - "$duration" "$EXPECTED_AUDIO_DURATION" <<'PY'^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8836767Z ^[[36;1mimport sys^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8837330Z ^[[36;1mactual, expected = map(float, sys.argv[1:])^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8837967Z ^[[36;1mif abs(actual - expected) > 0.001:^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8838714Z ^[[36;1m    raise SystemExit(f"duration mismatch: {actual:.6f} != {expected:.6f}")^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8839410Z ^[[36;1mPY^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8840079Z ^[[36;1mcase "$format" in *mp3*) ;; *) echo "not MP3: $format" >&2; exit 1;; esac^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8840991Z ^[[36;1mpython3 - "$build/audio-verification.json" "$sha" "$size" "$duration" "$format" <<'PY'^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8841873Z ^[[36;1mimport json, pathlib, sys^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8842442Z ^[[36;1mout, sha, size, duration, fmt = sys.argv[1:]^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8843133Z ^[[36;1mpathlib.Path(out).write_text(json.dumps({^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8844222Z ^[[36;1m  "source_attachment": "ElevenLabs_2026-07-16T14_35_48_Liam - Energetic, Social Media Creator_pre_sp100_s50_sb75_v3 (1)(1).mp3",^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8845945Z ^[[36;1m  "sha256": sha,^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8846510Z ^[[36;1m  "size_bytes": int(size),^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8847071Z ^[[36;1m  "duration_seconds": float(duration),^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8847711Z ^[[36;1m  "format": fmt,^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8848169Z ^[[36;1m  "exact_bytes_restored": True,^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8848806Z ^[[36;1m  "transcoded_before_pipeline": False,^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8849391Z ^[[36;1m  "pipeline_voiceover_path": "vo.mp3"^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8850075Z ^[[36;1m}, indent=2) + "\n", encoding="utf-8")^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8850612Z ^[[36;1mPY^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8851295Z ^[[36;1mecho "Exact attached MP3 verified: $duration seconds, $size bytes, $sha"^[[0m
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8900886Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8901306Z env:
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8901657Z   SLUG: other-versions-stock-first
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8902134Z   EXPECTED_AUDIO_SHA256: 2f063b082d2e019539b9d855c1e5a02f063a46abcbc1647a1be03b3e3bb710fa
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8902634Z   EXPECTED_AUDIO_SIZE: 1135634
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8902994Z   EXPECTED_AUDIO_DURATION: 68.754250
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8903405Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8903873Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8904363Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8904808Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8905595Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8906008Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8906480Z ##[endgroup]
+render	Restore and verify exact attached MP3	2026-07-16T19:22:36.8987975Z ##[error]Process completed with exit code 1.
+render	Persist reports and status	﻿2026-07-16T19:22:36.9070749Z ##[group]Run set -euo pipefail
+render	Persist reports and status	2026-07-16T19:22:36.9071172Z ^[[36;1mset -euo pipefail^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9071534Z ^[[36;1mrm -f pipeline/.env "build/$SLUG/vo.mp3"^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9071991Z ^[[36;1mif [ ! -f "build/$SLUG/stock-v2-status.json" ]; then^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9072516Z ^[[36;1m  cat > "build/$SLUG/stock-v2-status.json" <<JSON^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9072962Z ^[[36;1m  {"run_id":"$GITHUB_RUN_ID","state":"failure","slug":"$SLUG"}^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9073356Z ^[[36;1m  JSON^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9073677Z ^[[36;1mfi^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9073992Z ^[[36;1mgit config user.name "stock-render-bot"^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9074453Z ^[[36;1mgit config user.email "stock-render@users.noreply.github.com"^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9075828Z ^[[36;1mfor file in script.json stock-v2-run-id.txt stock-v2-status.json audio-verification.json stock-only-verification.json motion_report.json visual_symbol_report.json quality_report.json scene-review.json alts.json governor-summary.json governor-review.json render-status.json; do^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9076922Z ^[[36;1m  git add "build/$SLUG/$file" 2>/dev/null || true^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9077302Z ^[[36;1mdone^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9077719Z ^[[36;1mgit add pipeline/memory.json pipeline/visual_symbols.py 2>/dev/null || true^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9078304Z ^[[36;1mgit commit -m "render $SLUG stock-v2: persist outcome $GITHUB_RUN_ID" || true^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9078752Z ^[[36;1mfor i in 1 2 3 4 5; do^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9079189Z ^[[36;1m  git push && exit 0^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9079564Z ^[[36;1m  git stash --include-untracked || true^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9080004Z ^[[36;1m  git pull --rebase origin main || git rebase --abort || true^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9080446Z ^[[36;1m  git stash pop || true^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9080797Z ^[[36;1m  sleep $((i * 2))^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9081106Z ^[[36;1mdone^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9081410Z ^[[36;1mexit 1^[[0m
+render	Persist reports and status	2026-07-16T19:22:36.9108612Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+render	Persist reports and status	2026-07-16T19:22:36.9109067Z env:
+render	Persist reports and status	2026-07-16T19:22:36.9109409Z   SLUG: other-versions-stock-first
+render	Persist reports and status	2026-07-16T19:22:36.9109879Z   EXPECTED_AUDIO_SHA256: 2f063b082d2e019539b9d855c1e5a02f063a46abcbc1647a1be03b3e3bb710fa
+render	Persist reports and status	2026-07-16T19:22:36.9110439Z   EXPECTED_AUDIO_SIZE: 1135634
+render	Persist reports and status	2026-07-16T19:22:36.9110787Z   EXPECTED_AUDIO_DURATION: 68.754250
+render	Persist reports and status	2026-07-16T19:22:36.9111222Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Persist reports and status	2026-07-16T19:22:36.9111686Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+render	Persist reports and status	2026-07-16T19:22:36.9112224Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Persist reports and status	2026-07-16T19:22:36.9112647Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Persist reports and status	2026-07-16T19:22:36.9113105Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Persist reports and status	2026-07-16T19:22:36.9113542Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+render	Persist reports and status	2026-07-16T19:22:36.9113935Z ##[endgroup]
+render	Persist reports and status	2026-07-16T19:22:36.9169248Z /home/runner/work/_temp/22667e62-2d80-4aab-8f19-7b2d5b05aeb6.sh: line 22: warning: here-document at line 4 delimited by end-of-file (wanted `JSON')
+render	Persist reports and status	2026-07-16T19:22:36.9170782Z /home/runner/work/_temp/22667e62-2d80-4aab-8f19-7b2d5b05aeb6.sh: line 23: syntax error: unexpected end of file
+render	Persist reports and status	2026-07-16T19:22:36.9173573Z ##[error]Process completed with exit code 2.
