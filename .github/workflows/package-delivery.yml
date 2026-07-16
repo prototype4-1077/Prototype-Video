@@ -1,0 +1,54 @@
+name: Package preferred video delivery
+
+on:
+  push:
+    paths:
+      - "build/*/delivery.request"
+
+permissions:
+  contents: read
+
+jobs:
+  detect:
+    runs-on: ubuntu-latest
+    outputs:
+      slug: ${{ steps.request.outputs.slug }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - id: request
+        shell: bash
+        run: |
+          file="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" |
+            grep -E '^build/[^/]+/delivery\.request$' | head -n 1)"
+          test -n "$file"
+          slug="$(printf '%s' "$file" | cut -d/ -f2)"
+          echo "slug=$slug" >> "$GITHUB_OUTPUT"
+
+  package:
+    needs: detect
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      SLUG: ${{ needs.detect.outputs.slug }}
+    steps:
+      - name: Download preferred release assets
+        shell: bash
+        run: |
+          mkdir -p delivery
+          tag="video-$SLUG"
+          gh release download "$tag"             --repo "$GITHUB_REPOSITORY"             --pattern "$SLUG-music-03.mp4"             --pattern "$SLUG-youtube-music-03.mp4"             --pattern "$SLUG-scene-review.html"             --pattern "$SLUG-scene-review.json"             --pattern "music_variants.json"             --dir delivery
+          test -s "delivery/$SLUG-music-03.mp4"
+          test -s "delivery/$SLUG-youtube-music-03.mp4"
+          test -s "delivery/$SLUG-scene-review.html"
+          test -s "delivery/$SLUG-scene-review.json"
+
+      - name: Upload stable delivery bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.SLUG }}-preferred-delivery
+          path: delivery/
+          compression-level: 0
+          retention-days: 30
+          if-no-files-found: error
