@@ -4,6 +4,7 @@ import argparse
 import base64
 import copy
 import hashlib
+import html
 import json
 import os
 import subprocess
@@ -576,6 +577,21 @@ textarea:focus, button:focus-visible, input:focus-visible {
 """
 
 
+def is_current(build_dir):
+    script_path = os.path.join(build_dir, "script.json")
+    review_path = os.path.join(build_dir, "scene-review.json")
+    html_path = os.path.join(build_dir, "scene-review.html")
+    if not (os.path.exists(script_path) and os.path.exists(review_path)
+            and os.path.exists(html_path)):
+        return False
+    try:
+        script = json.load(open(script_path, encoding="utf-8"))
+        saved = json.load(open(review_path, encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return False
+    return saved.get("script_fingerprint") == _fingerprint(script)
+
+
 def generate(build_dir, video=None):
     script_path = os.path.join(build_dir, "script.json")
     with open(script_path, encoding="utf-8") as handle:
@@ -610,7 +626,7 @@ def generate(build_dir, video=None):
         json.dump(metadata, handle, indent=2, ensure_ascii=True)
         handle.write("\n")
     embedded = json.dumps(review, ensure_ascii=True).replace("</", "<\\/")
-    rendered = HTML_TEMPLATE.replace("__TITLE__", review["title"]).replace(
+    rendered = HTML_TEMPLATE.replace("__TITLE__", html.escape(review["title"])).replace(
         "__REVIEW_JSON__", embedded)
     with open(html_path, "w", encoding="utf-8") as handle:
         handle.write(rendered)
