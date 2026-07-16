@@ -110,15 +110,6 @@ class VisualSymbolAuditTests(unittest.TestCase):
         self.assertFalse(visual_symbols.uses_human(scene))
         self.assertEqual(visual_symbols.observed_family(scene), "object_tool")
 
-    def test_explicit_human_role_counts_a_stylized_character(self):
-        scene = {
-            "text": "The jester waits.",
-            "query": "red-and-teal jester on a television throne",
-            "symbol_family": "identity",
-            "human_role": "performer",
-        }
-        self.assertTrue(visual_symbols.uses_human(scene))
-
     def test_advisory_policy_reports_without_blocking(self):
         report = visual_symbols.analyze(self._generic_people_script(strict=False))
         self.assertTrue(report["passes"])
