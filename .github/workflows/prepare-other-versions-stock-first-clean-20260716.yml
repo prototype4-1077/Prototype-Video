@@ -1,0 +1,133 @@
+name: Prepare Other Versions Stock First Clean 20260716
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "build/other-versions-stock-first-clean-20260716/prepare.request"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  actions: write
+
+env:
+  SLUG: other-versions-stock-first-clean-20260716
+  EXPECTED_AUDIO_SHA256: 2f063b082d2e019539b9d855c1e5a02f063a46abcbc1647a1be03b3e3bb710fa
+  EXPECTED_AUDIO_SIZE: "1135634"
+  EXPECTED_AUDIO_DURATION: "68.754250"
+  AUDIO_CIPHERTEXT_URL: https://filebin.net/7f4e9d2b0c1a4e6fb87a0d3c9e5b2a61/other-versions-exact-narration.bin
+  AUDIO_DECRYPTION_PASSPHRASE: OV-clean-2f063b08-20260716-19bfc4a2
+
+concurrency:
+  group: prepare-other-versions-stock-first-clean-20260716
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install audio tools
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg openssl
+
+      - name: Restore and verify the exact attached MP3
+        shell: bash
+        run: |
+          set -euo pipefail
+          build="build/$SLUG"
+          mkdir -p "$build"
+          test -s "$build/script.json"
+
+          curl --fail --silent --show-error --retry 10 --retry-delay 3 --max-time 240 \
+            "$AUDIO_CIPHERTEXT_URL" -o /tmp/narration.bin
+          openssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 \
+            -in /tmp/narration.bin -out "$build/vo.mp3" \
+            -pass pass:"$AUDIO_DECRYPTION_PASSPHRASE"
+
+          actual_sha="$(sha256sum "$build/vo.mp3" | awk '{print $1}')"
+          actual_size="$(stat -c '%s' "$build/vo.mp3")"
+          actual_duration="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$build/vo.mp3")"
+          test "$actual_sha" = "$EXPECTED_AUDIO_SHA256"
+          test "$actual_size" = "$EXPECTED_AUDIO_SIZE"
+          python3 - "$actual_duration" "$EXPECTED_AUDIO_DURATION" <<'PY'
+          import sys
+          actual = float(sys.argv[1])
+          expected = float(sys.argv[2])
+          if abs(actual - expected) > 0.001:
+              raise SystemExit(f"exact narration duration mismatch: {actual:.6f} != {expected:.6f}")
+          PY
+
+          rm -f "$build"/vo.mp3.b64.part*
+          base64 -w0 "$build/vo.mp3" | split -b 180000 -d -a 3 - "$build/vo.mp3.b64.part"
+          cat "$build"/vo.mp3.b64.part* | base64 --decode > /tmp/recombined.mp3
+          test "$(sha256sum /tmp/recombined.mp3 | awk '{print $1}')" = "$EXPECTED_AUDIO_SHA256"
+          test "$(stat -c '%s' /tmp/recombined.mp3)" = "$EXPECTED_AUDIO_SIZE"
+
+          python3 - "$build/audio-verification.json" "$actual_sha" "$actual_size" "$actual_duration" <<'PY'
+          import json, pathlib, sys
+          output, sha, size, duration = sys.argv[1:]
+          pathlib.Path(output).write_text(json.dumps({
+              "source_attachment": "ElevenLabs_2026-07-16T14_35_48_Liam - Energetic, Social Media Creator_pre_sp100_s50_sb75_v3 (1)(1).mp3",
+              "sha256": sha,
+              "size_bytes": int(size),
+              "duration_seconds": float(duration),
+              "exact_bytes_restored": True,
+              "transcoded_before_pipeline": False,
+              "pipeline_input": "vo.mp3.b64.part* -> vo.mp3",
+              "render_system": "repository TikTok Video Pipeline"
+          }, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Commit the exact voiceover package
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -f "build/$SLUG/vo.mp3"
+          git config user.name "render-request-bot"
+          git config user.email "render-request@users.noreply.github.com"
+          git add -f "build/$SLUG"/vo.mp3.b64.part* "build/$SLUG/audio-verification.json" "build/$SLUG/script.json"
+          git commit -m "video $SLUG: add exact supplied narration package"
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main || { git rebase --abort || true; }
+            git push origin HEAD:main && break
+            sleep $((i * 2))
+          done
+          test "$(git rev-parse HEAD)" = "$(git ls-remote origin refs/heads/main | awk '{print $1}')"
+
+      - name: Dispatch the existing TikTok Video Pipeline renderer
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          head_sha="$(git rev-parse HEAD)"
+          gh workflow run render.yml --repo jameswatson1077/tiktok-videos --ref main -f slug="$SLUG"
+
+          run_id=""
+          for i in $(seq 1 30); do
+            run_id="$(gh api -X GET \
+              "repos/jameswatson1077/tiktok-videos/actions/workflows/render.yml/runs?event=workflow_dispatch&branch=main&per_page=30" \
+              --jq ".workflow_runs[] | select(.head_sha == \"$head_sha\") | .id" | head -n 1)"
+            if test -n "$run_id"; then
+              break
+            fi
+            sleep 2
+          done
+          test -n "$run_id"
+          printf '%s\n' "$run_id" > "build/$SLUG/dispatched-run-id.txt"
+          printf '%s\n' "$head_sha" > "build/$SLUG/dispatched-head-sha.txt"
+
+          git add "build/$SLUG/dispatched-run-id.txt" "build/$SLUG/dispatched-head-sha.txt"
+          git commit -m "video $SLUG: dispatched standard renderer $run_id"
+          for i in 1 2 3 4 5; do
+            git pull --rebase origin main || { git rebase --abort || true; }
+            git push origin HEAD:main && exit 0
+            sleep $((i * 2))
+          done
+          exit 1
