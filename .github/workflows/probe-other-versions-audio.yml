@@ -1,0 +1,55 @@
+name: Probe Other Versions narration
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "build/the-other-versions-of-you/audio-probe.request"
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+      - name: Decode and inspect narration packages
+        shell: bash
+        run: |
+          set -euo pipefail
+          build="build/the-other-versions-of-you"
+          shopt -s nullglob
+          opus_parts=("$build"/vo.opus.b64.part*)
+          mp3_parts=("$build"/vo.mp3.b64.part*)
+          {
+            echo "run_id=$GITHUB_RUN_ID"
+            echo "opus_parts=${#opus_parts[@]}"
+            echo "mp3_parts=${#mp3_parts[@]}"
+          } > "$build/narration-probe.txt"
+          if ((${#opus_parts[@]})); then
+            cat "${opus_parts[@]}" | base64 --decode > /tmp/voice.opus
+            echo "opus_bytes=$(stat -c '%s' /tmp/voice.opus)" >> "$build/narration-probe.txt"
+            echo "opus_sha256=$(sha256sum /tmp/voice.opus | cut -d' ' -f1)" >> "$build/narration-probe.txt"
+            echo "opus_duration=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 /tmp/voice.opus || true)" >> "$build/narration-probe.txt"
+            ffmpeg -hide_banner -loglevel error -y -i /tmp/voice.opus -map_metadata -1 -map_chapters -1 -ac 1 -ar 44100 -c:a libmp3lame -b:a 128k /tmp/from-opus.mp3
+            echo "transcoded_bytes=$(stat -c '%s' /tmp/from-opus.mp3)" >> "$build/narration-probe.txt"
+            echo "transcoded_duration=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 /tmp/from-opus.mp3 || true)" >> "$build/narration-probe.txt"
+          fi
+          if ((${#mp3_parts[@]})); then
+            cat "${mp3_parts[@]}" | base64 --decode > /tmp/from-parts.mp3 || true
+            echo "mp3_parts_bytes=$(stat -c '%s' /tmp/from-parts.mp3 2>/dev/null || echo 0)" >> "$build/narration-probe.txt"
+            echo "mp3_parts_duration=$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 /tmp/from-parts.mp3 2>/dev/null || true)" >> "$build/narration-probe.txt"
+          fi
+          cat "$build/narration-probe.txt"
+          git config user.name "render-probe-bot"
+          git config user.email "render-probe@users.noreply.github.com"
+          git add "$build/narration-probe.txt"
+          git commit -m "probe Other Versions narration packages"
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git pull --rebase origin main || git rebase --abort || true
+            sleep $((i * 2))
+          done
+          exit 1
