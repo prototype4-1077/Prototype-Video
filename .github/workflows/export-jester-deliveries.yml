@@ -6,7 +6,7 @@ on:
       - ".github/workflows/export-jester-deliveries.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   export:
@@ -15,6 +15,11 @@ jobs:
       GH_TOKEN: ${{ github.token }}
       TAG: video-jester-who-knew-my-name
     steps:
+      - name: Mark export run
+        run: |
+          content="$(printf '%s\n' "$GITHUB_RUN_ID" | base64 -w0)"
+          gh api --method PUT "repos/$GITHUB_REPOSITORY/contents/build/jester-who-knew-my-name/export-started.txt" \
+            -f message="Mark Jester export started" -f content="$content" -f branch="$GITHUB_REF_NAME"
       - name: Download selected release assets
         run: |
           mkdir -p delivery reports
