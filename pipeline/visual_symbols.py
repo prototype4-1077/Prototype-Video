@@ -122,6 +122,25 @@ HUMAN_TERMS = (
     "mother", "father", "crowd", "commuter", "audience", "performer", "driver",
 )
 
+HUMAN_EXCLUSION_TERMS = tuple(sorted(
+    set(HUMAN_TERMS) | {"body", "bodies", "skin"},
+    key=len,
+    reverse=True,
+))
+_HUMAN_EXCLUSION_TERM = "(?:" + "|".join(
+    re.escape(term) for term in HUMAN_EXCLUSION_TERMS
+) + ")"
+_HUMAN_EXCLUSION_MODIFIER = (
+    r"(?:(?:visible|additional|extra|other|new|unrelated|recognizable|realistic|"
+    r"full|exposed|narrator|human)\s+)*"
+)
+_HUMAN_EXCLUSION_RE = re.compile(
+    r"\b(?:no|without)\s+"
+    + _HUMAN_EXCLUSION_MODIFIER + _HUMAN_EXCLUSION_TERM
+    + r"(?:(?:\s*,\s*|\s+(?:or|and)\s+)"
+    + _HUMAN_EXCLUSION_MODIFIER + _HUMAN_EXCLUSION_TERM + r")*"
+)
+
 CONCRETE_HUMAN_ACTIONS = (
     "writes", "writing", "draws", "drawing", "opens", "opening", "closes", "closing",
     "enters", "entering", "leaves", "leaving", "carries", "carrying", "builds", "building",
@@ -264,6 +283,11 @@ def _count_hits(text: str, patterns) -> int:
     return sum(1 for pattern in patterns if _has(text, pattern))
 
 
+def _human_presence_text(value) -> str:
+    """Remove explicit human exclusions before auditing what will appear."""
+    return _normalize(_HUMAN_EXCLUSION_RE.sub(" ", _normalize(value)))
+
+
 def _visual_text(scene: dict) -> str:
     # symbol_query replaces the ordinary stock query.  Keeping both here would
     # incorrectly report a human as present after the planner deliberately
@@ -314,8 +338,13 @@ def observed_family(scene: dict) -> str:
 
 def uses_human(scene: dict, family: str | None = None) -> bool:
     family = family or classify_scene(scene)
-    visual = _visual_text(scene)
-    return family in {"human", "collective"} or _count_hits(visual, HUMAN_TERMS) > 0
+    visual = _human_presence_text(_visual_text(scene))
+    role = _normalize(scene.get("human_role"))
+    return (
+        family in {"human", "collective"}
+        or (bool(role) and role not in {"none", "not_applicable"})
+        or _count_hits(visual, HUMAN_TERMS) > 0
+    )
 
 
 def infer_human_role(scene: dict) -> str | None:
