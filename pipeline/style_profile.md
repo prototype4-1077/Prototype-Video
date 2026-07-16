@@ -2,8 +2,8 @@
 Extracted from "The Collective Tilt" and "Field to Point Synchronization" (Dec 2025).
 
 ## Format
-- Current default: 1080x1920 (9:16 portrait), 30fps, H.264 + AAC. The original
-  December 2025 reference videos were 1080x1080, but new renders are always portrait.
+- Current default: one 1920x1080 (16:9 regular YouTube) video, 30fps, H.264 + AAC.
+  Portrait and short versions are created only when James explicitly requests them.
 - Stock b-roll clips, one per sentence/beat (~6-9s each), scene cut on sentence boundary
 - Footage look: heavily defocused / shallow DOF / blurred motion; moody interiors, anonymous crowds,
   abstract 3D renders (white figure + red question mark), minimal white scenes, dark tech/red-code frames.
@@ -176,8 +176,8 @@ The video replicates what the NARRATOR SEES - not moody observation, but vivid v
 - New scripts use top-level `"visual_policy": "diverse_symbols"`. The planner annotates
   every scene with `semantic_anchor`, `visual_function`, `symbol_family`, `primary_symbol`,
   and—when relevant—`human_role`. It writes `visual_symbol_report.json` before rendering.
-- This reference changes visual reasoning, not delivery format: output remains 1080x1920
-  9:16 portrait with the title and picture visible on frame zero.
+- This reference changes visual reasoning, not delivery format: the default output remains
+  native 1920x1080 YouTube with the title and picture visible on frame zero.
 - June Oxley remains an explicit profile. Keep his literal Southern story world; apply the
   diversity lesson without replacing his concrete character actions with abstract imagery.
 
@@ -239,10 +239,8 @@ Isolation rule:
 
 ## MUSIC CHOICE SYSTEM
 
-Every render provides at least three full-length music choices under the same narration and
-picture. The choices must differ in arrangement, register, pulse, harmonic movement, texture,
-and spatial treatment—not merely use a different random seed. Ordinary philosophical videos
-use Cinematic Pulse, Glass Horizon, and Deep Current. DMT videos use Prism Drift, Crystal
-Orbit, and Deep Portal. June Oxley videos use Porch Shuffle, Dusk Fingerpick, and Creekside
-Stomp. Keep all choices VO-adaptive, mastered consistently, and low enough that language stays
-dominant. Preserve `final.mp4` as choice 1 while delivering every `final_music_NN.mp4` option.
+Every default render provides one full-length selected score under the narration and picture:
+choice 3. That is Deep Current for ordinary philosophical videos, Deep Portal for DMT, and
+Creekside Stomp for June Oxley. Keep it VO-adaptive, mastered consistently, and low enough
+that language stays dominant. Generate other arrangements only when James explicitly asks
+for alternatives through `music_choices`.
