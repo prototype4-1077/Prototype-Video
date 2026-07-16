@@ -161,7 +161,7 @@ jobs:
           for revision in overrides["revisions"]:
               index = int(revision["scene_index"])
               scene = script["scenes"][index]
-              for key in revision.get("remove") or []:
+              for key in (overrides.get("common_remove") or []) + (revision.get("remove") or []):
                   scene.pop(key, None)
               scene.update(revision.get("set") or {})
               scene["revision_note"] = next(
