@@ -43,13 +43,17 @@ def _video_path(build_dir, explicit=None):
         try:
             manifest = json.load(open(manifest_path, encoding="utf-8"))
             delivery = manifest.get("delivery") or {}
-            candidate = delivery.get("portrait_video")
-            if candidate and os.path.exists(os.path.join(build_dir, candidate)):
-                return os.path.join(build_dir, candidate)
+            for key in ("youtube_video", "portrait_video"):
+                candidate = delivery.get(key)
+                if candidate and os.path.exists(os.path.join(build_dir, candidate)):
+                    return os.path.join(build_dir, candidate)
         except (OSError, ValueError, TypeError):
             pass
-    candidate = os.path.join(build_dir, "final.mp4")
-    return candidate if os.path.exists(candidate) else None
+    for name in ("final_youtube.mp4", "final.mp4"):
+        candidate = os.path.join(build_dir, name)
+        if os.path.exists(candidate):
+            return candidate
+    return None
 
 
 def _preview_data_uri(video, scene):
