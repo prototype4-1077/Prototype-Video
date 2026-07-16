@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/split-room-before-birth.yml"
+      - "build/room-before-birth/delivery.request"
 
 concurrency:
   group: split-room-before-birth
