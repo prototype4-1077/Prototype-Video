@@ -17,11 +17,13 @@ API BASE: https://api.github.com/repos/jameswatson1077/tiktok-videos
 - pipeline/memory.json      — READ "notes" (his standing feedback) and respect it.
   Current standing rules: slides must be LIT-but-moody (window light, god rays,
   lamplight, golden hour; only a few near-dark slides), footage must match the
-  spoken words (especially endings), and every build creates both a 1080x1920 9:16
-  portrait social export and a native 1920x1080 16:9 regular-YouTube export. Never
-  stretch or pillarbox the portrait render to make the YouTube version. The portrait
-  remains letterboxed with yellow keyword captions. Titles must wrap and shrink
-  automatically when needed so they remain fully inside the portrait safe area.
+  spoken words (especially endings). By default, every build creates exactly one
+  native 1920x1080 16:9 regular-YouTube video named final_youtube.mp4. It uses the
+  current selected score family (choice 3: Deep Current normally, Deep Portal for
+  DMT, Creekside Stomp for June). Do not generate portrait, short, or alternate-music
+  MP4s unless James explicitly requests them. Opt in per script with render_outputs
+  (youtube, portrait, short), music_choice, and music_choices. Titles and captions
+  must remain safely composed for every explicitly requested canvas.
   No more than 35% of finished runtime may come from still images. Animated stills,
   depth moves, keyframes, and pan/zoom all count toward that 35%; at least 65% must
   be genuine footage where people or objects actually move. Check
@@ -37,13 +39,9 @@ API BASE: https://api.github.com/repos/jameswatson1077/tiktok-videos
   at least six symbol families, no more than three consecutive beats from one
   family, and roughly half or less human presence. Avoid generic thoughtful-person
   footage. Check visual_symbol_report.json before delivery.
-  Every render must create at least three genuinely distinct background-music choices.
-  Keep every choice in artifacts/Releases, but default delivery shows only the two
-  files named in music_variants.json `delivery`: Deep Current in portrait and native
-  16:9 YouTube. Do not show links for the other music choices unless James explicitly
-  asks for them. For an older manifest without `delivery`, find the variant labeled
-  Deep Current and use its matching portrait/YouTube filenames. final.mp4 remains an
-  alias of choice 1 for compatibility.
+  Every render creates one selected background-music mix by default. The canonical
+  deliverable is final_youtube.mp4 and music_variants.json records the selected score.
+  Additional score choices or canvases are opt-in only when James asks for them.
 
 ## Step 1 — Write the script file
 Create build/<slug>/script.json  (slug = short-dashed-title):
@@ -80,11 +78,10 @@ Expect HTTP 204. Takes ~10-15 min.
 ## Step 4 — Poll + fetch result
 GET /actions/runs?per_page=1        -> id, status ("completed"), conclusion ("success")
 GET /actions/runs/<id>/artifacts    -> archive_download_url
-GET that url (same auth, follow redirects) -> zip containing final.mp4 plus at least
-three final_music_NN.mp4 choices and their YouTube counterparts. Read
-music_variants.json and give James only the two `delivery` files by default. The other
-choices remain available and should be linked only when he specifically asks for them.
-For a legacy manifest, select the row labeled Deep Current and its matching YouTube file.
+GET that url (same auth, follow redirects) -> zip containing final_youtube.mp4,
+music_variants.json, reports, and the required scene survey. Deliver the one YouTube
+video by default. Additional canvases or music choices appear only when explicitly
+requested in the script.
 If conclusion is "failure": GET /actions/runs/<id>/logs, find the "ERROR: ... | FIX: ..."
 line, apply the FIX (usually edit script.json), push, re-dispatch.
 
@@ -110,20 +107,18 @@ comments as durable scene feedback, updates the taste vector, and prepares only 
 scenes for rerendering. Never mark scenes or the overall video approved on James's behalf.
 
 ## Judgment checklist before delivering
-Duration ≈ VO length; both 1080x1920 portrait and 1920x1080 landscape outputs;
-captions with yellow keywords in each format's safe area; bold rounded title fully
-fitted on scene 0; majority of slides visibly lit; every clip matches
-its spoken line; at least six visual symbol families; no repeated generic-human run;
-still-derived duration <=35% and genuine moving footage >=65%; every still passes
-still_reference_report.json and visibly belongs beside its stock reference. If a scene
-misses, use the swap flow before delivering. Confirm three music-choice MP4s exist and
-have distinct audio before delivery, then surface only the manifest's Deep Current
-portrait and YouTube delivery links.
+Duration ≈ VO length; default final_youtube.mp4 is 1920x1080 with captions and the
+bold rounded scene-0 title safely fitted; majority of slides visibly lit; every clip
+matches its spoken line; at least six visual symbol families; no repeated generic-human
+run; still-derived duration <=35% and genuine moving footage >=65%; every still passes
+still_reference_report.json and visibly belongs beside its stock reference. Confirm
+exactly the requested MP4 outputs exist and the selected score matches
+music_variants.json before delivery.
 
 ## v7 additions
-- By default, deliver only the Deep Current portrait and YouTube files selected in
-  music_variants.json. Keep all other full-length choices and final_short.mp4 available
-  for an explicit request, but do not show their download links automatically.
+- By default, generate and deliver only final_youtube.mp4 with the selected third score
+  family. Portrait, short, and alternate-music MP4s are created only after an explicit
+  request and must be listed in render_outputs/music_choices.
 - Scripts must echo ONE motif from memory.json "motifs" as a brief mid-video callback.
 - Retention feedback: python3 pipeline/learn.py retention build/<slug> "<t1,t2>" then push memory.
 - Zero-effort mode: open a GitHub issue labeled "video" with the idea; CI does everything
