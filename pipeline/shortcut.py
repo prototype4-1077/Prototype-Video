@@ -7,6 +7,7 @@ import json, os, subprocess, sys, tempfile
 
 import motion
 import profiles
+import render_policy
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
@@ -103,8 +104,11 @@ def main(bd, target=58.0):
          "-filter_complex", fc, "-map", "[vo]", vos])
     # fresh music bed sized to the short cut
     mus = os.path.join(tmp, "music.wav")
-    run([sys.executable, os.path.join(HERE, "music.py"), mus, str(total + 1), vos,
-         s.get("genre") or "-", profiles.resolve(s) or "-"])
+    selected_music = render_policy.music_choices(s)[0]
+    run([
+        sys.executable, os.path.join(HERE, "music.py"), mus, str(total + 1), vos,
+        s.get("genre") or "-", profiles.resolve(s) or "-", str(selected_music),
+    ])
     raw = os.path.join(tmp, "raw.mp4")
     af = ("[1:a]acompressor=threshold=-18dB:ratio=3:attack=15:release=180:makeup=4,"
           "adelay=250|250,apad[voz];"
