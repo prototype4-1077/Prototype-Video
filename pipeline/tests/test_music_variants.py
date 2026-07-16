@@ -41,36 +41,37 @@ class MusicVariantTests(unittest.TestCase):
         self.assertEqual("Prism Drift", music.variant_label(1, "dmt"))
         self.assertEqual("Porch Shuffle", music.variant_label(1, profile="june_oxley"))
 
-    def test_manifest_requires_at_least_three_existing_tracks(self):
+    def test_manifest_defaults_to_one_selected_youtube_track(self):
         with tempfile.TemporaryDirectory() as td:
-            variants = []
-            for i in range(1, 4):
-                name = f"music_{i:02d}.wav"
-                open(os.path.join(td, name), "wb").close()
-                label = "Deep Current" if i == 3 else f"Choice {i}"
-                variants.append({"file": name, "label": label})
-            script = {"music": "music_01.wav", "music_variants": variants}
-            self.assertEqual(3, len(audio_variants.require(script, td)))
+            name = "music_03.wav"
+            open(os.path.join(td, name), "wb").close()
+            variants = [{
+                "file": name,
+                "label": "Deep Current",
+                "variant": 3,
+                "selected": True,
+            }]
+            script = {"music": name, "music_variants": variants}
+            self.assertEqual(1, len(audio_variants.require(script, td)))
             manifest = audio_variants.write_manifest(td, variants)
-            self.assertEqual("final_music_03.mp4", manifest["variants"][2]["video"])
-            self.assertEqual(
-                "final_youtube_music_03.mp4",
-                manifest["variants"][2]["youtube_video"],
-            )
+            self.assertEqual(["youtube"], manifest["render_outputs"])
             self.assertEqual("Deep Current", manifest["delivery"]["label"])
-            self.assertEqual("final_music_03.mp4", manifest["delivery"]["portrait_video"])
             self.assertEqual(
-                "final_youtube_music_03.mp4", manifest["delivery"]["youtube_video"]
+                "final_youtube.mp4", manifest["delivery"]["youtube_video"]
+            )
+            self.assertNotIn("portrait_video", manifest["delivery"])
+            self.assertEqual(
+                "final_youtube.mp4", manifest["variants"][0]["youtube_video"]
             )
             with open(os.path.join(td, "music_variants.json")) as f:
                 loaded = json.load(f)
-            self.assertEqual(3, loaded["minimum_choices"])
+            self.assertEqual(1, loaded["minimum_choices"])
 
     def test_profiled_labels_fall_back_to_corresponding_third_choice(self):
         variants = [
-            {"file": "a.wav", "label": "Porch Shuffle"},
-            {"file": "b.wav", "label": "Dusk Fingerpick"},
-            {"file": "c.wav", "label": "Creekside Stomp"},
+            {"file": "a.wav", "label": "Porch Shuffle", "variant": 1},
+            {"file": "b.wav", "label": "Dusk Fingerpick", "variant": 2},
+            {"file": "c.wav", "label": "Creekside Stomp", "variant": 3},
         ]
         index, item = audio_variants.delivery_choice(variants)
         self.assertEqual(3, index)
@@ -86,10 +87,13 @@ class MusicVariantTests(unittest.TestCase):
                 json.dump(script, f)
             saved = prep.prepare_music(td, script)
             self.assertEqual("music.wav", saved["music"])
+            self.assertEqual("music_03.wav", saved["music"])
             self.assertEqual(
-                ["music.wav", "music_02.wav", "music_03.wav"],
+                ["music_03.wav"],
                 [item["file"] for item in saved["music_variants"]],
             )
+            self.assertEqual(3, saved["music_choice"])
+            self.assertTrue(saved["music_variants"][0]["selected"])
 
 
 if __name__ == "__main__":
