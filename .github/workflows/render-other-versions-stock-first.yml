@@ -1,0 +1,191 @@
+name: Render Other Versions Stock First
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "build/other-versions-stock-first/render.request"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+env:
+  SLUG: other-versions-stock-first
+  SOURCE_AUDIO_SHA256: 2f063b082d2e019539b9d855c1e5a02f063a46abcbc1647a1be03b3e3bb710fa
+  TRANSPORT_AUDIO_SHA256: df149d6d69ca105f95440e373811f5b6a085cbf310d267d63c5cefeec6cea069
+  EXPECTED_PARTS: "16"
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Cache media models
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.cache/huggingface
+            /tmp/clipcache
+            /tmp/models
+          key: models-v1
+
+      - name: System dependencies
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+
+      - name: Restore narration derived only from the supplied attachment
+        shell: bash
+        run: |
+          set -euo pipefail
+          build="build/$SLUG"
+          shopt -s nullglob
+          parts=("$build"/vo.opus.b64.part*)
+          test "${#parts[@]}" -eq "$EXPECTED_PARTS"
+          cat "${parts[@]}" | base64 --decode > /tmp/supplied-voice.opus
+          transport_sha="$(sha256sum /tmp/supplied-voice.opus | awk '{print $1}')"
+          test "$transport_sha" = "$TRANSPORT_AUDIO_SHA256"
+          ffmpeg -hide_banner -loglevel error -y -i /tmp/supplied-voice.opus \
+            -map_metadata -1 -map_chapters -1 -ac 1 -ar 44100 \
+            -c:a libmp3lame -b:a 192k "$build/vo.mp3"
+          duration="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$build/vo.mp3")"
+          size="$(stat -c '%s' "$build/vo.mp3")"
+          python3 - "$build/audio-verification.json" "$duration" "$size" "$transport_sha" <<'PY'
+          import json, pathlib, sys
+          out, duration, size, transport_sha = sys.argv[1:]
+          duration = float(duration)
+          size = int(size)
+          if not 68.0 <= duration <= 69.5:
+              raise SystemExit(f"unexpected supplied narration duration: {duration:.3f}")
+          if size < 1_000_000:
+              raise SystemExit(f"restored narration too small: {size}")
+          pathlib.Path(out).write_text(json.dumps({
+              "source_attachment": "ElevenLabs_2026-07-16T14_35_48_Liam - Energetic, Social Media Creator_pre_sp100_s50_sb75_v3 (1)(1).mp3",
+              "source_sha256": "2f063b082d2e019539b9d855c1e5a02f063a46abcbc1647a1be03b3e3bb710fa",
+              "transport_sha256": transport_sha,
+              "duration_seconds": duration,
+              "restored_mp3_size_bytes": size,
+              "narration_source": "user attachment only",
+              "tts_generated": False
+          }, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Python dependencies
+        run: pip install -q -r pipeline/requirements.txt
+
+      - name: Pipeline regression tests
+        run: python3 -m unittest discover -s pipeline/tests -v
+
+      - name: API keys
+        shell: bash
+        run: |
+          printf 'ELEVENLABS_API_KEY=%s\nPEXELS_API_KEY=%s\nELEVENLABS_VOICE_ID=%s\n' \
+            "${{ secrets.ELEVENLABS_API_KEY }}" "${{ secrets.PEXELS_API_KEY }}" \
+            "${{ secrets.ELEVENLABS_VOICE_ID || 'TX3LPaxmHKxFdv7VOQHJ' }}" > pipeline/.env
+
+      - name: Build with the TikTok Video Pipeline
+        env:
+          SEMANTIC_CLIP: "1"
+          GOVERNOR_MODE: "recover"
+          GOVERNOR_CONSOLE_HEARTBEATS: "1"
+          GOVERNOR_HEARTBEAT_SECONDS: "15"
+          PYTHONUNBUFFERED: "1"
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -s "build/$SLUG/vo.mp3"
+          python3 pipeline/run_governed.py "build/$SLUG" --max-passes 200 --overall-timeout 4680
+          test -s "build/$SLUG/final.mp4"
+          test -s "build/$SLUG/scene-review.html"
+          test -s "build/$SLUG/music_variants.json"
+          test -s "build/$SLUG/motion_report.json"
+          test -s "build/$SLUG/visual_symbol_report.json"
+
+      - name: Enforce stock-only first-pass quality gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, pathlib, subprocess
+          build = pathlib.Path("build/other-versions-stock-first")
+          motion = json.loads((build / "motion_report.json").read_text())
+          if float(motion.get("still_source_ratio", 1)) != 0.0:
+              raise SystemExit(f"still-derived visuals detected: {motion.get('still_source_ratio')}")
+          script = json.loads((build / "script.json").read_text())
+          bad = []
+          allowed = {"pexels", "coverr", "mixkit", "pixabay", "nasa", "ia", "wm", "cached_stock"}
+          for i, scene in enumerate(script.get("scenes", [])):
+              source = str(scene.get("motion_source") or "")
+              stock_id = scene.get("stock_id") or scene.get("pexels_id")
+              if not stock_id or source not in allowed:
+                  bad.append({"scene": i, "source": source, "stock_id": stock_id})
+          if bad:
+              raise SystemExit("non-stock scene sources detected: " + json.dumps(bad))
+          probe = subprocess.check_output([
+              "ffprobe", "-v", "error", "-select_streams", "v:0",
+              "-show_entries", "stream=width,height", "-of", "csv=p=0:s=x",
+              str(build / "final.mp4")
+          ], text=True).strip()
+          if probe != "1080x1920":
+              raise SystemExit(f"unexpected TikTok dimensions: {probe}")
+          print(f"stock-only quality gate passed: {len(script['scenes'])} genuine stock scenes, {probe}")
+          PY
+
+      - name: Upload finished delivery
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.SLUG }}
+          retention-days: 30
+          path: |
+            build/${{ env.SLUG }}/final.mp4
+            build/${{ env.SLUG }}/scene-review.html
+            build/${{ env.SLUG }}/scene-review.json
+            build/${{ env.SLUG }}/music_variants.json
+            build/${{ env.SLUG }}/motion_report.json
+            build/${{ env.SLUG }}/visual_symbol_report.json
+            build/${{ env.SLUG }}/quality_report.json
+            build/${{ env.SLUG }}/audio-verification.json
+            build/${{ env.SLUG }}/alts_sheet.jpg
+            build/${{ env.SLUG }}/CREDITS.txt
+
+      - name: Publish permanent release
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          tag="video-$SLUG"
+          gh release view "$tag" >/dev/null 2>&1 || \
+            gh release create "$tag" --title "Other Versions of You — Stock First" \
+              --notes "Fresh TikTok Video Pipeline render using only genuine stock footage and the supplied narration."
+          for file in final.mp4 scene-review.html scene-review.json music_variants.json motion_report.json visual_symbol_report.json quality_report.json audio-verification.json alts_sheet.jpg CREDITS.txt; do
+            test -f "build/$SLUG/$file" && gh release upload "$tag" "build/$SLUG/$file" --clobber || true
+          done
+
+      - name: Persist outcome and reports
+        if: always()
+        shell: bash
+        run: |
+          rm -f pipeline/.env "build/$SLUG/vo.mp3" /tmp/supplied-voice.opus
+          git config user.name "render-bot"
+          git config user.email "render@users.noreply.github.com"
+          for file in pipeline/memory.json pipeline/visual_symbols.py "build/$SLUG/script.json" "build/$SLUG/render-status.json" "build/$SLUG/quality_report.json" "build/$SLUG/audio-verification.json" "build/$SLUG/scene-review.json" "build/$SLUG/alts.json" "build/$SLUG/governor-summary.json" "build/$SLUG/governor-review.json"; do
+            git add "$file" 2>/dev/null || true
+          done
+          git commit -m "render $SLUG: persist stock-first outcome" || true
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git stash --include-untracked || true
+            git pull --rebase origin main || git rebase --abort || true
+            git stash pop || true
+            sleep $((i * 2))
+          done
+          exit 1
