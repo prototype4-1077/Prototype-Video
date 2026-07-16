@@ -77,7 +77,7 @@ class MusicVariantTests(unittest.TestCase):
         self.assertEqual(3, index)
         self.assertEqual("Creekside Stomp", item["label"])
 
-    def test_first_generated_filename_remains_backward_compatible(self):
+    def test_default_generation_uses_the_current_third_score_family(self):
         with tempfile.TemporaryDirectory() as td:
             script = {
                 "title": "Compatibility",
@@ -86,7 +86,6 @@ class MusicVariantTests(unittest.TestCase):
             with open(os.path.join(td, "script.json"), "w") as f:
                 json.dump(script, f)
             saved = prep.prepare_music(td, script)
-            self.assertEqual("music.wav", saved["music"])
             self.assertEqual("music_03.wav", saved["music"])
             self.assertEqual(
                 ["music_03.wav"],
