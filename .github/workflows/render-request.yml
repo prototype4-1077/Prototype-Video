@@ -5,6 +5,7 @@ on:
     branches: [main]
     paths:
       - "build/**/render.request"
+      - "build/**/delivery.request"
 
 permissions:
   contents: write
@@ -14,39 +15,122 @@ jobs:
   detect:
     runs-on: ubuntu-latest
     outputs:
-      slug: ${{ steps.slug.outputs.slug }}
+      slug: ${{ steps.request.outputs.slug }}
+      mode: ${{ steps.request.outputs.mode }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      - id: slug
+      - id: request
         shell: bash
         run: |
-          file="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep -E '^build/[^/]+/render\.request$' | head -n 1)"
+          file="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep -E '^build/[^/]+/(render|delivery)\.request$' | head -n 1)"
           test -n "$file"
           slug="${file#build/}"
-          slug="${slug%/render.request}"
+          slug="${slug%/*}"
+          case "$file" in
+            */delivery.request) mode="delivery" ;;
+            *) mode="render" ;;
+          esac
           echo "slug=$slug" >> "$GITHUB_OUTPUT"
-      - name: Mark render started
+          echo "mode=$mode" >> "$GITHUB_OUTPUT"
+      - name: Mark request started
         shell: bash
         run: |
-          slug="${{ steps.slug.outputs.slug }}"
-          printf '%s\n' "$GITHUB_RUN_ID" > "build/$slug/render-started.txt"
+          slug="${{ steps.request.outputs.slug }}"
+          mode="${{ steps.request.outputs.mode }}"
+          if [ "$mode" = "delivery" ]; then
+            marker="delivery-split-run.txt"
+            message="delivery $slug: split started $GITHUB_RUN_ID"
+          else
+            marker="render-started.txt"
+            message="render $slug: started $GITHUB_RUN_ID"
+          fi
+          printf '%s\n' "$GITHUB_RUN_ID" > "build/$slug/$marker"
           git config user.name "render-request-bot"
           git config user.email "render-request@users.noreply.github.com"
-          git add "build/$slug/render-started.txt"
-          git commit -m "render $slug: started $GITHUB_RUN_ID" || true
+          git add "build/$slug/$marker"
+          git commit -m "$message" || true
           for i in 1 2 3 4 5; do
             git push && exit 0
             git pull --rebase origin main || git rebase --abort || true
             sleep $((i * 2))
           done
-          echo "unable to record render start after 5 attempts" >&2
+          echo "unable to record request start after 5 attempts" >&2
           exit 1
 
   render:
     needs: detect
+    if: needs.detect.outputs.mode == 'render'
     uses: ./.github/workflows/render.yml
     with:
       slug: ${{ needs.detect.outputs.slug }}
     secrets: inherit
+
+  delivery:
+    needs: detect
+    if: needs.detect.outputs.mode == 'delivery'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download completed render artifact
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p extracted delivery qa
+          gh run download 29460182037 --repo "$GITHUB_REPOSITORY" --name room-before-birth --dir extracted
+
+      - name: Select Deep Current delivery and reports
+        shell: python
+        run: |
+          import json
+          import shutil
+          from pathlib import Path
+
+          root = Path("extracted")
+          manifest_path = next(root.rglob("music_variants.json"))
+          manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+          delivery = manifest["delivery"]
+          if str(delivery.get("label", "")).strip().casefold() != "deep current":
+              raise SystemExit(f"unexpected delivery label: {delivery.get('label')}")
+
+          def locate(name):
+              matches = list(root.rglob(Path(name).name))
+              if len(matches) != 1:
+                  raise SystemExit(f"expected one {name}, found {len(matches)}")
+              return matches[0]
+
+          shutil.copy2(locate(delivery["portrait_video"]), "delivery/DMT-The-Room-Before-Birth-TikTok.mp4")
+          shutil.copy2(locate(delivery["youtube_video"]), "delivery/DMT-The-Room-Before-Birth-YouTube.mp4")
+          for name in [
+              "music_variants.json", "motion_report.json",
+              "visual_symbol_report.json", "still_reference_report.json", "CREDITS.txt",
+          ]:
+              matches = list(root.rglob(name))
+              if matches:
+                  shutil.copy2(matches[0], Path("qa") / name)
+
+      - name: Record media metadata
+        run: |
+          ffprobe -v error -show_streams -show_format -of json delivery/DMT-The-Room-Before-Birth-TikTok.mp4 > qa/portrait-ffprobe.json
+          ffprobe -v error -show_streams -show_format -of json delivery/DMT-The-Room-Before-Birth-YouTube.mp4 > qa/youtube-ffprobe.json
+          sha256sum delivery/*.mp4 > qa/delivery-sha256.txt
+
+      - name: Upload portrait delivery
+        uses: actions/upload-artifact@v4
+        with:
+          name: room-before-birth-delivery-portrait
+          path: delivery/DMT-The-Room-Before-Birth-TikTok.mp4
+          compression-level: 0
+
+      - name: Upload YouTube delivery
+        uses: actions/upload-artifact@v4
+        with:
+          name: room-before-birth-delivery-youtube
+          path: delivery/DMT-The-Room-Before-Birth-YouTube.mp4
+          compression-level: 0
+
+      - name: Upload QA reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: room-before-birth-qa
+          path: qa/**
