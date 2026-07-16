@@ -18,6 +18,7 @@ import sys
 from typing import Any, Mapping
 
 from governor import atomic_write_json, load_json, utc_now
+import render_policy
 
 
 MIN_FILE_BYTES = 100_000
@@ -287,21 +288,32 @@ def run_quality_gate(build_dir: str | os.PathLike[str], *, deep: bool = True) ->
     script = load_json(script_path, {}) or {}
     curation_mode = bool(script.get("curate_scenes"))
     expected_duration = None if curation_mode else expected_script_duration(script)
-    targets: list[tuple[str, Path, str | None, bool, bool]] = [
-        ("portrait", bd / "final.mp4", None if curation_mode else "portrait", not curation_mode, deep),
-    ]
-    if not curation_mode:
-        targets.append(("youtube", bd / "final_youtube.mp4", "landscape", True, deep))
-        # Selectable music variants share the same edit but have independent audio
-        # encodes. Probe every option so one corrupt alternative cannot be released;
-        # reserve the expensive full decode for the two primary deliverables.
-        for path in sorted(bd.glob("final_music_*.mp4")):
-            targets.append((path.stem, path, "portrait", True, False))
-        for path in sorted(bd.glob("final_youtube_music_*.mp4")):
-            targets.append((path.stem, path, "landscape", True, False))
-    if (bd / "final_short.mp4").exists():
-        # The short is a different edit; only structural checks apply.
-        targets.append(("short", bd / "final_short.mp4", "portrait", True, deep))
+    targets: list[tuple[str, Path, str | None, bool, bool]] = []
+    if curation_mode:
+        targets.append(("portrait", bd / "final.mp4", None, False, deep))
+    else:
+        requested = render_policy.render_outputs(script)
+        if "youtube" in requested:
+            targets.append(("youtube", bd / "final_youtube.mp4", "landscape", True, deep))
+        if "portrait" in requested:
+            targets.append(("portrait", bd / "final.mp4", "portrait", True, deep))
+        if "short" in requested:
+            targets.append(("short", bd / "final_short.mp4", "portrait", True, deep))
+
+        # Explicit alternate music choices are independently probed, but the
+        # selected canonical YouTube video is the only required default output.
+        manifest = load_json(bd / "music_variants.json", {}) or {}
+        seen = {str(path) for _name, path, _orientation, _audio, _deep in targets}
+        for row in (manifest.get("variants") or [])[1:]:
+            for key, orientation in (("youtube_video", "landscape"), ("video", "portrait")):
+                name = row.get(key)
+                if not name:
+                    continue
+                path = bd / name
+                if str(path) in seen:
+                    continue
+                seen.add(str(path))
+                targets.append((path.stem, path, orientation, True, False))
 
     outputs: dict[str, Any] = {}
     failures: list[dict[str, Any]] = []
