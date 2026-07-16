@@ -49,7 +49,11 @@ jobs:
         run: |
           mkdir -p delivery
           tag="video-$SLUG"
-          gh release download "$tag"             --repo "$GITHUB_REPOSITORY"             --pattern "$SLUG-music-03.mp4"             --pattern "$SLUG-youtube-music-03.mp4"             --pattern "$SLUG-scene-review.html"             --pattern "$SLUG-scene-review.json"             --pattern "music_variants.json"             --dir delivery
+          gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name'
+          for asset in "$SLUG-music-03.mp4" "$SLUG-youtube-music-03.mp4" "$SLUG-scene-review.html" "$SLUG-scene-review.json"; do
+            gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern "$asset" --dir delivery
+          done
+          gh release download "$tag" --repo "$GITHUB_REPOSITORY" --pattern "music_variants.json" --dir delivery || true
           test -s "delivery/$SLUG-music-03.mp4"
           test -s "delivery/$SLUG-youtube-music-03.mp4"
           test -s "delivery/$SLUG-scene-review.html"
