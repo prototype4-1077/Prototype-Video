@@ -29,6 +29,10 @@ TITLE_MIN_FONT_SIZE = 12
 TITLE_FONT_STEP = 6
 TITLE_EYEBROW_RATIO = 0.34
 TITLE_EYEBROW_GAP = 20
+TITLE_CONNECTOR_WORDS = frozenset({
+    "a", "an", "and", "as", "at", "by", "for", "i", "in", "is", "it",
+    "my", "of", "on", "or", "the", "to", "we",
+})
 
 # Landscape text is larger in pixels but occupies a similar share of the frame.
 YT_FONT_SIZE = 50
@@ -76,6 +80,35 @@ def _wrap(words, font, draw, max_line_w=MAX_LINE_W, split_overlong=True):
         else:
             cur.append(w)
     if cur: lines.append(cur)
+    return lines
+
+
+def _is_title_connector(word):
+    token = re.sub(r"[^\w']", "", word).lower()
+    return token in TITLE_CONNECTOR_WORDS
+
+
+def _group_title_words(words):
+    """Group title tokens into two-word lines, allowing a connector as a third."""
+    lines, cur = [], []
+    for word in words:
+        candidate = cur + [word]
+        limit = 3 if any(_is_title_connector(item[0]) for item in candidate) else 2
+        if cur and len(candidate) > limit:
+            lines.append(cur)
+            cur = [word]
+        else:
+            cur = candidate
+    if cur:
+        lines.append(cur)
+    return lines
+
+
+def _wrap_title(words, font, draw, max_line_w, split_overlong):
+    """Enforce the title word-count rule, then honor the pixel safe area."""
+    lines = []
+    for grouped in _group_title_words(words):
+        lines.extend(_wrap(grouped, font, draw, max_line_w, split_overlong))
     return lines
 
 
@@ -143,8 +176,8 @@ def _fit_title(title, draw, font_size, max_line_w=TITLE_MAX_LINE_W,
     size = max(int(font_size), TITLE_MIN_FONT_SIZE)
     while size >= TITLE_MIN_FONT_SIZE:
         font = _font(TITLE_FONT, size)
-        lines = _wrap(words, font, draw, max_line_w=max_line_w,
-                      split_overlong=False)
+        lines = _wrap_title(words, font, draw, max_line_w=max_line_w,
+                            split_overlong=False)
         ascent, descent = font.getmetrics()
         line_h = int((ascent + descent) * 0.98)
         widest = max(draw.textlength(" ".join(w for w, _ in line), font=font)
@@ -154,8 +187,8 @@ def _fit_title(title, draw, font_size, max_line_w=TITLE_MAX_LINE_W,
             return font, lines, line_h
         size -= TITLE_FONT_STEP
     font = _font(TITLE_FONT, TITLE_MIN_FONT_SIZE)
-    lines = _wrap(words, font, draw, max_line_w=max_line_w,
-                  split_overlong=True)
+    lines = _wrap_title(words, font, draw, max_line_w=max_line_w,
+                        split_overlong=True)
     ascent, descent = font.getmetrics()
     return font, lines, int((ascent + descent) * 0.98)
 
