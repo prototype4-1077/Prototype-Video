@@ -169,6 +169,7 @@ def stock_targets(build_dir, script):
     if needs_reference:
         for index, scene in enumerate(script.get("scenes", [])):
             if (scene.get("motion_kind") == "video" and
+                    str(scene.get("motion_mode") or "").lower() == "stock" and
                     not scene.get("stock_frame_url_checked") and index not in out):
                 out.append(index)
     return out
