@@ -1,0 +1,56 @@
+render	Restore exact attached narration from encrypted transport	﻿2026-07-16T18:58:59.5376538Z ##[group]Run set -euo pipefail
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5377474Z ^[[36;1mset -euo pipefail^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5377779Z ^[[36;1mbuild="build/$SLUG"^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5378060Z ^[[36;1mmkdir -p "$build"^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5378442Z ^[[36;1mcurl --fail --silent --show-error --retry 5 --retry-delay 3 \^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5378922Z ^[[36;1m  "$AUDIO_CIPHERTEXT_URL" -o /tmp/narration.bin^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5379348Z ^[[36;1mopenssl enc -d -aes-256-cbc -pbkdf2 -iter 200000 \^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5379804Z ^[[36;1m  -in /tmp/narration.bin -out "$build/vo.mp3" \^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5380195Z ^[[36;1m  -pass pass:"$AUDIO_DECRYPTION_PASSPHRASE"^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5380522Z ^[[36;1m^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5380833Z ^[[36;1mactual_sha="$(sha256sum "$build/vo.mp3" | awk '{print $1}')"^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5381272Z ^[[36;1mactual_size="$(stat -c '%s' "$build/vo.mp3")"^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5381936Z ^[[36;1mactual_duration="$(ffprobe -v error -show_entries format=duration -of default=noprint_wrappers=1:nokey=1 "$build/vo.mp3")"^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5382635Z ^[[36;1mtest "$actual_sha" = "$EXPECTED_AUDIO_SHA256"^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5383021Z ^[[36;1mtest "$actual_size" = "$EXPECTED_AUDIO_SIZE"^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5383453Z ^[[36;1mpython3 - "$actual_duration" "$EXPECTED_AUDIO_DURATION" <<'PY'^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5383871Z ^[[36;1mimport sys^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5384121Z ^[[36;1mactual = float(sys.argv[1])^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5384428Z ^[[36;1mexpected = float(sys.argv[2])^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5384939Z ^[[36;1mif abs(actual - expected) > 0.001:^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5385425Z ^[[36;1m    raise SystemExit(f"Exact audio duration mismatch: {actual:.6f} != {expected:.6f}")^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5385881Z ^[[36;1mPY^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5386338Z ^[[36;1mpython3 - "$build/audio-verification.json" "$actual_sha" "$actual_size" "$actual_duration" <<'PY'^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5387129Z ^[[36;1mimport json, pathlib, sys^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5387484Z ^[[36;1moutput, sha, size, duration = sys.argv[1:]^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5387876Z ^[[36;1mpathlib.Path(output).write_text(json.dumps({^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5388541Z ^[[36;1m    "source_attachment": "ElevenLabs_2026-07-16T14_35_48_Liam - Energetic, Social Media Creator_pre_sp100_s50_sb75_v3 (1)(1).mp3",^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5389244Z ^[[36;1m    "transport": "temporary encrypted AES-256-CBC transfer",^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5389638Z ^[[36;1m    "sha256": sha,^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5389908Z ^[[36;1m    "size_bytes": int(size),^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5390234Z ^[[36;1m    "duration_seconds": float(duration),^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5390573Z ^[[36;1m    "exact_bytes_restored": True,^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5390911Z ^[[36;1m    "transcoded_before_pipeline": False,^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5391259Z ^[[36;1m    "pipeline_voiceover_path": "vo.mp3"^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5391606Z ^[[36;1m}, indent=2) + "\n", encoding="utf-8")^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5391908Z ^[[36;1mPY^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5392363Z ^[[36;1mecho "Exact attached narration verified: $actual_sha, $actual_size bytes, $actual_duration seconds"^[[0m
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5452042Z shell: /usr/bin/bash --noprofile --norc -e -o pipefail {0}
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5452462Z env:
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5452728Z   SLUG: other-versions-stock-first-rebuild
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5453246Z   EXPECTED_AUDIO_SHA256: 2f063b082d2e019539b9d855c1e5a02f063a46abcbc1647a1be03b3e3bb710fa
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5453743Z   EXPECTED_AUDIO_SIZE: 1135634
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5454034Z   EXPECTED_AUDIO_DURATION: 68.754250
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5454526Z   AUDIO_CIPHERTEXT_URL: https://filebin.net/a3f76c91d8e4420fbb6c1de2a94f7c83/narration.bin
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5455119Z   AUDIO_DECRYPTION_PASSPHRASE: 2f063b08-OV-stock-first-7ad4c891-20260716
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5455596Z   pythonLocation: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5456055Z   PKG_CONFIG_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib/pkgconfig
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5456501Z   Python_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5457219Z   Python2_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5457995Z   Python3_ROOT_DIR: /opt/hostedtoolcache/Python/3.11.15/x64
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5458433Z   LD_LIBRARY_PATH: /opt/hostedtoolcache/Python/3.11.15/x64/lib
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:58:59.5458801Z ##[endgroup]
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:59:00.0846049Z curl: (22) The requested URL returned error: 404
+render	Restore exact attached narration from encrypted transport	2026-07-16T18:59:00.0874453Z ##[error]Process completed with exit code 22.
+
+
