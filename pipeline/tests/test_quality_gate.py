@@ -60,7 +60,9 @@ class QualityGateTests(unittest.TestCase):
             with mock.patch.object(quality_gate, "check_output", return_value=passing) as check:
                 report = quality_gate.run_quality_gate(build_dir, deep=False)
             self.assertTrue(report["passed"])
-            self.assertEqual(check.call_count, 2)
+            self.assertEqual(check.call_count, 1)
+            self.assertEqual(check.call_args.kwargs["target_name"], "youtube")
+            self.assertEqual(check.call_args.kwargs["orientation"], "landscape")
             saved = json.loads((build_dir / "quality_report.json").read_text())
             self.assertTrue(saved["passed"])
 
@@ -81,23 +83,27 @@ class QualityGateTests(unittest.TestCase):
             self.assertFalse(kwargs["require_audio"])
             self.assertIsNone(kwargs["orientation"])
 
-    def test_music_variants_are_independently_probed(self):
+    def test_explicit_music_alternatives_are_independently_probed(self):
         with tempfile.TemporaryDirectory() as tmp:
             build_dir = Path(tmp)
             (build_dir / "script.json").write_text(json.dumps({
                 "scenes": [{"start": 0, "duration": 10}],
             }))
-            for name in ("final_music_01.mp4", "final_youtube_music_01.mp4"):
-                (build_dir / name).write_bytes(b"placeholder")
+            (build_dir / "music_variants.json").write_text(json.dumps({
+                "variants": [
+                    {"variant": 3, "youtube_video": "final_youtube.mp4"},
+                    {"variant": 1, "youtube_video": "final_youtube_music_01.mp4"},
+                ],
+            }))
             passing = {"path": "fake", "failures": [], "warnings": []}
             with mock.patch.object(quality_gate, "check_output", return_value=passing) as check:
                 report = quality_gate.run_quality_gate(build_dir, deep=True)
             self.assertTrue(report["passed"])
-            self.assertEqual(check.call_count, 4)
+            self.assertEqual(check.call_count, 2)
             calls = {call.kwargs["target_name"]: call.kwargs for call in check.call_args_list}
-            self.assertFalse(calls["final_music_01"]["deep"])
+            self.assertTrue(calls["youtube"]["deep"])
             self.assertFalse(calls["final_youtube_music_01"]["deep"])
-            self.assertTrue(calls["portrait"]["deep"])
+
 
 
 if __name__ == "__main__":
