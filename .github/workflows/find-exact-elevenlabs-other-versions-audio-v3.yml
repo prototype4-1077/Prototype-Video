@@ -1,0 +1,109 @@
+name: Find Exact ElevenLabs Other Versions Audio V3
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "build/other-versions-stock-first/find-elevenlabs-exact-audio-v3.request"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  find:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+      - name: Paginate history and test script matches
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+        shell: bash
+        run: |
+          set +e
+          build=build/other-versions-stock-first
+          expected=2f063b082d2e019539b9d855c1e5a02f063a46abcbc1647a1be03b3e3bb710fa
+          : > "$build/elevenlabs-v3-matches.jsonl"
+          : > "$build/elevenlabs-v3-errors.txt"
+          rm -f /tmp/exact-elevenlabs-v3.mp3
+          cursor=""
+          pages=0
+          matches=0
+          final_http=NONE
+          for page in $(seq 1 60); do
+            pages=$page
+            url='https://api.elevenlabs.io/v1/history?page_size=100'
+            [ -n "$cursor" ] && url="$url&start_after_history_item_id=$cursor"
+            code="$(curl -sS -o /tmp/history-v3.json -w '%{http_code}' -H "xi-api-key: $ELEVENLABS_API_KEY" "$url" 2>>"$build/elevenlabs-v3-errors.txt")"
+            final_http=$code
+            [ "$code" = 200 ] || break
+            python3 - <<'PY'
+          import json,pathlib
+          d=json.load(open('/tmp/history-v3.json'))
+          with pathlib.Path('/tmp/history-v3-matches.tsv').open('w',encoding='utf-8') as f:
+              for x in d.get('history',[]):
+                  text=' '.join(str(x.get('text') or '').split())
+                  low=text.lower()
+                  is_match=(
+                    'what if every choice you' in low or
+                    ('the job you turned down' in low and 'you become one' in low) or
+                    ('another version of you may have chosen differently' in low)
+                  )
+                  if is_match:
+                      f.write('\t'.join([str(x.get('history_item_id') or ''),str(x.get('date_unix') or ''),str(x.get('voice_id') or ''),text.replace('\t',' ')])+'\n')
+          PY
+            while IFS=$'\t' read -r item_id date_unix voice_id text; do
+              [ -n "$item_id" ] || continue
+              matches=$((matches+1))
+              acode="$(curl -sS -o "/tmp/$item_id.audio" -w '%{http_code}' -H "xi-api-key: $ELEVENLABS_API_KEY" -H 'Accept: audio/mpeg' "https://api.elevenlabs.io/v1/history/$item_id/audio" 2>>"$build/elevenlabs-v3-errors.txt")"
+              [ "$acode" = 200 ] || continue
+              sha="$(sha256sum "/tmp/$item_id.audio" | awk '{print $1}')"
+              size="$(stat -c '%s' "/tmp/$item_id.audio")"
+              python3 - "$build/elevenlabs-v3-matches.jsonl" "$item_id" "$date_unix" "$voice_id" "$sha" "$size" "$text" <<'PY'
+          import json,sys
+          path,item,date,voice,sha,size,text=sys.argv[1:]
+          with open(path,'a',encoding='utf-8') as f:
+              f.write(json.dumps({'id':item,'date_unix':date,'voice_id':voice,'sha256':sha,'size_bytes':int(size),'text':text},ensure_ascii=False)+'\n')
+          PY
+              if [ "$sha" = "$expected" ]; then
+                cp "/tmp/$item_id.audio" /tmp/exact-elevenlabs-v3.mp3
+                echo "$item_id" > "$build/elevenlabs-v3-exact-item-id.txt"
+                break 2
+              fi
+            done < /tmp/history-v3-matches.tsv
+            has_more="$(python3 -c 'import json; d=json.load(open("/tmp/history-v3.json")); print(str(bool(d.get("has_more"))).lower())')"
+            next="$(python3 -c 'import json; d=json.load(open("/tmp/history-v3.json")); print(d.get("last_history_item_id") or "")')"
+            [ "$has_more" = true ] || break
+            [ -n "$next" ] || break
+            cursor="$next"
+          done
+          found=NO
+          [ -s /tmp/exact-elevenlabs-v3.mp3 ] && found=YES
+          printf 'http=%s\npages=%s\nmatches=%s\nfound=%s\n' "$final_http" "$pages" "$matches" "$found" > "$build/elevenlabs-v3-summary.txt"
+          exit 0
+
+      - name: Commit paginated result
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          build=build/other-versions-stock-first
+          http="$(sed -n 's/^http=//p' "$build/elevenlabs-v3-summary.txt" 2>/dev/null || echo STEP_FAILED)"
+          pages="$(sed -n 's/^pages=//p' "$build/elevenlabs-v3-summary.txt" 2>/dev/null || echo 0)"
+          matches="$(sed -n 's/^matches=//p' "$build/elevenlabs-v3-summary.txt" 2>/dev/null || echo 0)"
+          found="$(sed -n 's/^found=//p' "$build/elevenlabs-v3-summary.txt" 2>/dev/null || echo NO)"
+          rm -f "$build"/ELEVENLABS_V3_*.marker
+          printf 'http=%s\npages=%s\nmatches=%s\nfound=%s\n' "$http" "$pages" "$matches" "$found" > "$build/ELEVENLABS_V3_HTTP_${http}_PAGES_${pages}_MATCHES_${matches}_FOUND_${found}.marker"
+          git config user.name diagnostic-bot
+          git config user.email diagnostic@users.noreply.github.com
+          git add "$build"/ELEVENLABS_V3_*.marker "$build"/elevenlabs-v3-*.txt "$build"/elevenlabs-v3-*.jsonl 2>/dev/null || true
+          git commit -m "diagnostic stock-v2 ELEVENLABS_V3_HTTP_${http}_PAGES_${pages}_MATCHES_${matches}_FOUND_${found}"
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git pull --rebase origin main || git rebase --abort || true
+            sleep $((i * 2))
+          done
+          exit 1
