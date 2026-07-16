@@ -108,7 +108,9 @@ scenes for rerendering. Never mark scenes or the overall video approved on James
 
 ## Judgment checklist before delivering
 Duration ≈ VO length; default final_youtube.mp4 is 1920x1080 with captions and the
-bold rounded scene-0 title safely fitted; majority of slides visibly lit; every clip
+bold rounded scene-0 title safely fitted; title lines use at most two words, or three
+only when one is a short connector/function word such as `I`, `a`, `the`, `on`, `of`, or `to`;
+majority of slides visibly lit; every clip
 matches its spoken line; at least six visual symbol families; no repeated generic-human
 run; still-derived duration <=35% and genuine moving footage >=65%; every still passes
 still_reference_report.json and visibly belongs beside its stock reference. Confirm
