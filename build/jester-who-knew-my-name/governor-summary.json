@@ -1,16 +1,7 @@
 {
-  "finished_at": "2026-07-16T05:17:36+00:00",
-  "github_run_id": "29473360440",
+  "finished_at": "2026-07-16T05:26:53+00:00",
+  "github_run_id": "29473601864",
   "incidents": [
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "67a45bbaacbc5b53",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18b347c43bbf1b74 error: footage scene <n>: oard.py\"",
-      "stage": "build_pass"
-    },
     {
       "count": 2,
       "failure_class": "unknown",
@@ -19,19 +10,37 @@
       "last_item": null,
       "normalized_error": "line <n>, in main plan = _render_storyboard(build_dir, script, index, \"literal mechanism preferred\") ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks suff",
       "stage": "footage"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "fcaecfa0c829d7fc",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "ds (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18",
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "a3ff8a29f60173f4",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18b347c43bbf1b74 error: footage scene <n>: oard.py\", line <n>, in render_scene raise runtimeerror(f\"generate",
+      "stage": "build_pass"
     }
   ],
-  "last_message": "footage failed (unknown); retry budget 1 exhausted. fingerprint=18b347c43bbf1b74. ERROR: footage scene 0: oard.py\", line 666, in render_scene",
+  "last_message": "footage failed (unknown); retry budget 1 exhausted. fingerprint=18b347c43bbf1b74. ERROR: footage scene 22: oard.py\", line 666, in render_scene",
   "mode": "recover",
-  "passes": 3,
+  "passes": 5,
   "policy": {
     "align": {
       "hard_timeout_s": 300.0,
-      "historical_p95_s": null,
-      "idle_timeout_s": 120.0,
-      "sample_count": 4,
-      "soft_timeout_s": 180.0,
-      "source": "default"
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 5,
+      "soft_timeout_s": 33.01,
+      "source": "history"
     },
     "build_pass": {
       "hard_timeout_s": 1800.0,
@@ -51,9 +60,9 @@
     },
     "transcribe": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 10.37,
+      "historical_p95_s": 10.44,
       "idle_timeout_s": 180.0,
-      "sample_count": 14,
+      "sample_count": 19,
       "soft_timeout_s": 180.0,
       "source": "history"
     }
@@ -69,19 +78,26 @@
     },
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "67a45bbaacbc5b53",
-      "priority": "high",
-      "reason": "2 occurrence(s): note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18b347c43bbf1b74 error: footage scene <n>: oard.py\"",
+      "fingerprint": "fcaecfa0c829d7fc",
+      "priority": "medium",
+      "reason": "1 occurrence(s): ds (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "a3ff8a29f60173f4",
+      "priority": "medium",
+      "reason": "1 occurrence(s): note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18b347c43bbf1b74 error: footage scene <n>: oard.py\", line <n>, in render_scene raise runtimeerror(f\"generate",
       "stage": "build_pass"
     },
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (95.1s).",
+      "reason": "Largest measured latency contribution in this run (329.6s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "fbc36c14a9184a40beb16c0bf0f37c68",
+  "run_id": "a7393618f7624d8d8d942c4ba8d50b57",
   "schema_version": 1,
   "slug": "jester-who-knew-my-name",
   "stages": {
@@ -98,42 +114,65 @@
       "total_duration_s": 1.003
     },
     "build_pass": {
-      "attempts": 3,
+      "attempts": 5,
       "failures": 2,
-      "p50_success_s": 51.056,
-      "p95_success_s": 51.056,
+      "p50_success_s": 113.15,
+      "p95_success_s": 116.857,
       "success_durations_s": [
-        51.056
+        51.058,
+        113.15,
+        117.269
       ],
-      "successes": 1,
+      "successes": 3,
       "timeouts": 0,
-      "total_duration_s": 95.112
+      "total_duration_s": 329.597
     },
     "footage": {
-      "attempts": 2,
+      "attempts": 22,
       "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+      "p50_success_s": 12.523,
+      "p95_success_s": 17.122,
+      "success_durations_s": [
+        17.021,
+        15.02,
+        14.016,
+        19.041,
+        12.026,
+        12.017,
+        10.019,
+        13.019,
+        10.019,
+        13.029,
+        11.021,
+        16.047,
+        7.024,
+        11.027,
+        14.031,
+        11.023,
+        7.023,
+        16.047,
+        15.032,
+        9.027
+      ],
+      "successes": 20,
       "timeouts": 0,
-      "total_duration_s": 42.061
+      "total_duration_s": 274.6
     },
     "transcribe": {
       "attempts": 5,
       "failures": 0,
-      "p50_success_s": 10.013,
-      "p95_success_s": 10.304,
+      "p50_success_s": 10.011,
+      "p95_success_s": 10.014,
       "success_durations_s": [
-        10.014,
-        10.013,
-        9.01,
-        10.376,
-        8.009
+        10.015,
+        10.011,
+        9.009,
+        10.012,
+        8.008
       ],
       "successes": 5,
       "timeouts": 0,
-      "total_duration_s": 47.422
+      "total_duration_s": 47.055
     }
   },
   "status": "failed"

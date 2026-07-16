@@ -1,16 +1,8 @@
 {
-  "generated_at": "2026-07-16T05:17:36+00:00",
+  "generated_at": "2026-07-16T05:26:53+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
-    {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "67a45bbaacbc5b53",
-      "priority": "medium",
-      "stage": "build_pass"
-    },
     {
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
@@ -24,17 +16,6 @@
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "67a45bbaacbc5b53",
-      "kind": "failure",
-      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18b347c43bbf1b74 error: footage scene <n>: oard.py\"",
-      "slugs": [
-        "jester-who-knew-my-name"
-      ],
-      "stage": "build_pass"
-    },
-    {
-      "count": 2,
-      "failure_class": "unknown",
       "fingerprint": "18b347c43bbf1b74",
       "kind": "failure",
       "normalized_error": "line <n>, in main plan = _render_storyboard(build_dir, script, index, \"literal mechanism preferred\") ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks suff",
@@ -42,6 +23,28 @@
         "jester-who-knew-my-name"
       ],
       "stage": "footage"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "fcaecfa0c829d7fc",
+      "kind": "failure",
+      "normalized_error": "ds (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=60s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18",
+      "slugs": [
+        "jester-who-knew-my-name"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "a3ff8a29f60173f4",
+      "kind": "failure",
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, vo is user-provided note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided governor stage=footage state=start soft=60s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=18b347c43bbf1b74 error: footage scene <n>: oard.py\", line <n>, in render_scene raise runtimeerror(f\"generate",
+      "slugs": [
+        "jester-who-knew-my-name"
+      ],
+      "stage": "build_pass"
     }
   ],
   "runs_analyzed": 6,
@@ -84,16 +87,16 @@
       "total_duration_s": 4490.674
     },
     "build_pass": {
-      "attempts": 71,
-      "failure_rate": 0.0282,
+      "attempts": 73,
+      "failure_rate": 0.0274,
       "failures": 2,
       "p50_success_s": 113.648,
-      "p95_success_s": 148.607,
-      "sample_count": 69,
-      "successes": 69,
+      "p95_success_s": 147.805,
+      "sample_count": 71,
+      "successes": 71,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 6836.58
+      "total_duration_s": 7071.065
     },
     "credits": {
       "attempts": 54,
@@ -120,16 +123,16 @@
       "total_duration_s": 808.836
     },
     "footage": {
-      "attempts": 115,
-      "failure_rate": 0.0174,
+      "attempts": 135,
+      "failure_rate": 0.0148,
       "failures": 2,
-      "p50_success_s": 3.009,
-      "p95_success_s": 10.022,
-      "sample_count": 113,
-      "successes": 113,
+      "p50_success_s": 3.01,
+      "p95_success_s": 15.025,
+      "sample_count": 133,
+      "successes": 133,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 516.304
+      "total_duration_s": 748.843
     },
     "hero": {
       "attempts": 2,
@@ -195,13 +198,13 @@
       "attempts": 19,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 10.012,
-      "p95_success_s": 10.44,
+      "p50_success_s": 10.011,
+      "p95_success_s": 10.117,
       "sample_count": 19,
       "successes": 19,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 164.587
+      "total_duration_s": 164.22
     },
     "tts": {
       "attempts": 3,
