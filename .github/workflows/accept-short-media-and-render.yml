@@ -37,29 +37,47 @@ jobs:
           python3 - <<'PY'
           from pathlib import Path
 
-          replacements = {
-              Path('.github/workflows/render.yml'): (
-                  'complete = duration >= 60.0 and size_bytes >= 1_000_000',
-                  'complete = duration >= 0.5 and size_bytes >= 1_024',
-              ),
-              Path('.github/workflows/render-existing.yml'): (
-                  'if duration < 60.0 or size < 1_000_000:',
-                  'if duration < 0.5 or size < 1_024:',
-              ),
-          }
+          render = Path('.github/workflows/render.yml')
+          text = render.read_text(encoding='utf-8')
 
-          for path, (old, new) in replacements.items():
-              text = path.read_text(encoding='utf-8')
-              if new in text:
-                  print(f'{path}: short-media validation already enabled')
-                  continue
-              if old not in text:
-                  raise SystemExit(f'{path}: expected legacy validation guard was not found')
-              path.write_text(text.replace(old, new, 1), encoding='utf-8')
-              print(f'{path}: lowered supplied-media floor to 0.5 seconds / 1024 bytes')
+          legacy_guard = 'complete = duration >= 60.0 and size_bytes >= 1_000_000'
+          short_guard = 'complete = duration >= 0.5 and size_bytes >= 1_024'
+          if legacy_guard in text:
+              text = text.replace(legacy_guard, short_guard, 1)
+          elif short_guard not in text:
+              raise SystemExit('render.yml: expected supplied-media validation guard was not found')
+
+          legacy_restore = '''          parts=(build/${{ inputs.slug }}/vo.mp3.b64.part*)
+          if ((${#parts[@]})); then
+            cat "${parts[@]}" | base64 --decode > "build/${{ inputs.slug }}/vo.mp3"
+          fi'''
+          safe_restore = '''          parts=(build/${{ inputs.slug }}/vo.mp3.b64.part*)
+          voice="build/${{ inputs.slug }}/vo.mp3"
+          if [[ ! -s "$voice" ]] && ((${#parts[@]})); then
+            cat "${parts[@]}" | base64 --decode > "$voice"
+          fi'''
+          if legacy_restore in text:
+              text = text.replace(legacy_restore, safe_restore, 1)
+          elif safe_restore not in text:
+              raise SystemExit('render.yml: expected connector voiceover restore block was not found')
+
+          render.write_text(text, encoding='utf-8')
+
+          existing = Path('.github/workflows/render-existing.yml')
+          text = existing.read_text(encoding='utf-8')
+          legacy_existing = 'if duration < 60.0 or size < 1_000_000:'
+          short_existing = 'if duration < 0.5 or size < 1_024:'
+          if legacy_existing in text:
+              text = text.replace(legacy_existing, short_existing, 1)
+          elif short_existing not in text:
+              raise SystemExit('render-existing.yml: expected supplied-media validation guard was not found')
+          existing.write_text(text, encoding='utf-8')
+
+          print('Short supplied audio/video enabled at 0.5 seconds / 1024 bytes.')
+          print('Existing complete vo.mp3 files now take precedence over connector chunks.')
           PY
 
-      - name: Verify the exact attached narration package
+      - name: Verify the attached narration
         shell: bash
         run: |
           set -euo pipefail
@@ -74,17 +92,28 @@ jobs:
           build = Path('build') / sys.argv[1]
           script = json.loads((build / 'script.json').read_text(encoding='utf-8'))
           expected = script.get('source_audio') or {}
-          parts = sorted(build.glob('vo.mp3.b64.part*'))
-          if not parts:
-              raise SystemExit('no supplied narration parts were found')
-          raw = base64.b64decode(''.join(part.read_text(encoding='ascii') for part in parts), validate=True)
+          voice = build / 'vo.mp3'
+
+          if voice.is_file() and voice.stat().st_size:
+              raw = voice.read_bytes()
+              transport = 'direct Git blob'
+          else:
+              parts = sorted(build.glob('vo.mp3.b64.part*'))
+              if not parts:
+                  raise SystemExit('no supplied narration file or complete narration parts were found')
+              raw = base64.b64decode(
+                  ''.join(part.read_text(encoding='ascii') for part in parts),
+                  validate=True,
+              )
+              transport = f'{len(parts)} base64 parts'
+
           actual_sha = hashlib.sha256(raw).hexdigest()
           actual_size = len(raw)
           if actual_sha != expected.get('sha256'):
               raise SystemExit(f'narration SHA-256 mismatch: {actual_sha} != {expected.get("sha256")}')
           if actual_size != int(expected.get('size_bytes') or 0):
               raise SystemExit(f'narration size mismatch: {actual_size} != {expected.get("size_bytes")}')
-          print(f'exact narration package verified: {actual_size} bytes, {actual_sha}')
+          print(f'narration verified via {transport}: {actual_size} bytes, {actual_sha}')
           PY
 
       - name: Commit the permanent pipeline change
