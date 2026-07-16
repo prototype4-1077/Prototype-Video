@@ -5,8 +5,10 @@ import shutil
 import subprocess
 import tempfile
 
+import render_policy
 
-MIN_MUSIC_VARIANTS = 3
+
+MIN_MUSIC_VARIANTS = 1
 DEFAULT_DELIVERY_LABEL = "Deep Current"
 DEFAULT_DELIVERY_INDEX = 3
 _RUNNER = None
@@ -57,19 +59,20 @@ def youtube_video_name(index):
 
 
 def delivery_choice(variants, preferred_label=DEFAULT_DELIVERY_LABEL):
-    """Return the one music choice whose two outputs are presented by default.
-
-    Standard renders select Deep Current by label. Opt-in music profiles have
-    different labels, so they retain the corresponding third arrangement.
-    """
+    """Return the primary score, honoring legacy manifests when necessary."""
     if not variants:
         raise ValueError("cannot choose a delivery variant from an empty list")
+    for index, item in enumerate(variants, 1):
+        if item.get("selected"):
+            return index, item
     wanted = preferred_label.strip().casefold()
     for index, item in enumerate(variants, 1):
         if str(item.get("label", "")).strip().casefold() == wanted:
             return index, item
-    index = min(DEFAULT_DELIVERY_INDEX, len(variants))
-    return index, variants[index - 1]
+    for index, item in enumerate(variants, 1):
+        if int(item.get("variant") or 0) == DEFAULT_DELIVERY_INDEX:
+            return index, item
+    return 1, variants[0]
 
 
 def _run(cmd):
@@ -152,22 +155,39 @@ def mix(noaudio, voiceover, music_path, total, output, delay_ms=400, music_gain=
         shutil.rmtree(tmp, ignore_errors=True)
 
 
-def write_manifest(build_dir, variants, default_index=1):
-    delivery_index, delivery_item = delivery_choice(variants)
+def write_manifest(build_dir, variants, outputs=None):
+    if outputs is None:
+        try:
+            with open(os.path.join(build_dir, "script.json"), encoding="utf-8") as handle:
+                outputs = render_policy.render_outputs(json.load(handle))
+        except (OSError, ValueError, TypeError):
+            outputs = render_policy.DEFAULT_OUTPUTS
+    outputs = tuple(outputs)
+    delivery_position, delivery_item = delivery_choice(variants)
+    rows = []
+    for position, item in enumerate(variants):
+        row = dict(item)
+        if "portrait" in outputs:
+            row["video"] = render_policy.video_name("portrait", position, item)
+        if "youtube" in outputs:
+            row["youtube_video"] = render_policy.video_name("youtube", position, item)
+        rows.append(row)
+    delivery_row = rows[delivery_position - 1]
+    delivery = {
+        "index": int(delivery_item.get("variant") or delivery_position),
+        "label": delivery_item.get("label", DEFAULT_DELIVERY_LABEL),
+        "other_choices": "available_on_request" if len(rows) == 1 else "included",
+    }
+    if delivery_row.get("video"):
+        delivery["portrait_video"] = delivery_row["video"]
+    if delivery_row.get("youtube_video"):
+        delivery["youtube_video"] = delivery_row["youtube_video"]
     data = {
         "minimum_choices": MIN_MUSIC_VARIANTS,
-        "default_index": default_index,
-        "delivery": {
-            "index": delivery_index,
-            "label": delivery_item.get("label", DEFAULT_DELIVERY_LABEL),
-            "portrait_video": video_name(delivery_index),
-            "youtube_video": youtube_video_name(delivery_index),
-            "other_choices": "available_on_request",
-        },
-        "variants": [
-            {**item, "video": video_name(i), "youtube_video": youtube_video_name(i)}
-            for i, item in enumerate(variants, 1)
-        ],
+        "render_outputs": list(outputs),
+        "default_index": delivery["index"],
+        "delivery": delivery,
+        "variants": rows,
     }
     with open(os.path.join(build_dir, "music_variants.json"), "w") as f:
         json.dump(data, f, indent=2)
