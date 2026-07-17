@@ -383,6 +383,25 @@ def prepare_source_assets(build_dir, script, index):
     return outputs
 
 
+def enhance_generated_image_standalone(build_dir, script, index, raw_image, output):
+    """Finish a PURELY generated hero image with no stock-reference conditioning,
+    preserving its own mood (used when a scene sets an explicit hero_style, e.g.
+    a magical/eerie image that must not be exposure-matched to bright footage)."""
+    import cv2
+    scene = script["scenes"][int(index)]
+    image = cv2.imread(raw_image)
+    if image is None:
+        raise StillReferenceError(f"cannot read still image: {raw_image}")
+    image = _cover(image)
+    soft = cv2.GaussianBlur(image, (0, 0), 1.05)   # gentle camera-like detail only
+    image = cv2.addWeighted(image, 1.12, soft, -.12, 0)
+    cv2.imwrite(output, image)
+    scene["enhanced_source_image"] = os.path.basename(output)
+    scene["still_reference_signature"] = _digest([raw_image])
+    _add_steps(scene, GENERATED_STEPS)
+    return output
+
+
 def enhance_generated_image(build_dir, script, index, raw_image, output):
     """Finish a reference-conditioned hero image before depth animation."""
     scene = script["scenes"][int(index)]

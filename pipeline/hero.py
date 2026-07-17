@@ -57,10 +57,10 @@ def generation_url(prompt, seed, reference_url=None):
     )
 
 
-def gen_image(prompt, genre, out, profile=None, reference_url=None, force=False):
+def gen_image(prompt, genre, out, profile=None, reference_url=None, force=False, style_override=None):
     if not force and os.path.exists(out) and os.path.getsize(out) > 20_000:
         return True
-    style = profiles.hero_style(profile, genre) or STYLE.get(genre, STYLE[None])
+    style = style_override or profiles.hero_style(profile, genre) or STYLE.get(genre, STYLE[None])
     subject = profiles.hero_prompt(prompt, profile)
     if reference_url:
         subject = (
@@ -123,15 +123,18 @@ def main(bd, i):
     sc = s["scenes"][i]
     out = f"{bd}/clip_{i:02d}.mp4"
     if (os.path.exists(out) and os.path.getsize(out) > 100_000 and
-            still_reference.reference_is_current(bd, s, i)):
+            not sc.get("hero_style") and still_reference.reference_is_current(bd, s, i)):
         print(f"hero {i}: exists"); return
     prompt = sc.get("image_prompt") or sc["text"]
-    reference = still_reference.bind_reference(bd, s, i)
+    style_override = sc.get("hero_style")
+    pure = bool(style_override)  # purely generated, no stock-reference conditioning
+    reference = ({"url": None, "path": None, "scene_index": None}
+                 if pure else still_reference.bind_reference(bd, s, i))
     raw = f"{bd}/hero_{i:02d}_raw.jpg"
     img, dep = f"{bd}/hero_{i:02d}.jpg", f"{bd}/hero_{i:02d}_depth.npy"
     generated = gen_image(
         prompt, s.get("genre"), raw, profiles.resolve(s),
-        reference_url=reference["url"], force=True,
+        reference_url=reference["url"], force=True, style_override=style_override,
     )
     if not generated:
         sc["hero"] = False
@@ -150,7 +153,10 @@ def main(bd, i):
         json.dump(s, open(f"{bd}/script.json", "w"), indent=1, ensure_ascii=False)
         print(f"hero {i}: disabled after bounded provider failure; stock fallback queued")
         return
-    still_reference.enhance_generated_image(bd, s, i, raw, img)
+    if pure:
+        still_reference.enhance_generated_image_standalone(bd, s, i, raw, img)
+    else:
+        still_reference.enhance_generated_image(bd, s, i, raw, img)
     d = depth_map(img, dep, force=True)
     recipe = motion.infer_recipe(sc)
     render(img, d, sc.get("duration", 8) + 0.5, out, mode=i, recipe=recipe)
