@@ -1,6 +1,6 @@
 {
-  "finished_at": "2026-07-17T05:58:28+00:00",
-  "github_run_id": "29558562564",
+  "finished_at": "2026-07-17T08:36:21+00:00",
+  "github_run_id": "29566806085",
   "incidents": [
     {
       "count": 2,
@@ -14,10 +14,10 @@
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "8da160a7918a8404",
+      "fingerprint": "58d7cd969aaa15b1",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "note: visual symbols: primary symbol 'window' appears <n> times; vary the metaphor vocabulary governor stage=footage state=start soft=66s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=66s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=0b8595951c29d339 error: foota",
+      "normalized_error": "note: visual symbols: primary symbol 'window' appears <n> times; vary the metaphor vocabulary governor stage=footage state=start soft=66s hard=600s governor stage=footage state=running elapsed=15s idle=0s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=66s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=0b8595951c29d339 error: foota",
       "stage": "build_pass"
     },
     {
@@ -38,7 +38,7 @@
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.0,
       "idle_timeout_s": 33.01,
-      "sample_count": 6,
+      "sample_count": 7,
       "soft_timeout_s": 33.01,
       "source": "history"
     },
@@ -52,17 +52,17 @@
     },
     "footage": {
       "hard_timeout_s": 600.0,
-      "historical_p95_s": 12.02,
-      "idle_timeout_s": 66.07,
-      "sample_count": 166,
-      "soft_timeout_s": 66.07,
+      "historical_p95_s": 12.03,
+      "idle_timeout_s": 66.08,
+      "sample_count": 167,
+      "soft_timeout_s": 66.08,
       "source": "history"
     },
     "transcribe": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 10.02,
+      "historical_p95_s": 11.01,
       "idle_timeout_s": 180.0,
-      "sample_count": 21,
+      "sample_count": 24,
       "soft_timeout_s": 180.0,
       "source": "history"
     },
@@ -70,7 +70,7 @@
       "hard_timeout_s": 480.0,
       "historical_p95_s": null,
       "idle_timeout_s": 180.0,
-      "sample_count": 3,
+      "sample_count": 4,
       "soft_timeout_s": 240.0,
       "source": "default"
     }
@@ -86,9 +86,9 @@
     },
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "8da160a7918a8404",
+      "fingerprint": "58d7cd969aaa15b1",
       "priority": "medium",
-      "reason": "1 occurrence(s): note: visual symbols: primary symbol 'window' appears <n> times; vary the metaphor vocabulary governor stage=footage state=start soft=66s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=66s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=0b8595951c29d339 error: foota",
+      "reason": "1 occurrence(s): note: visual symbols: primary symbol 'window' appears <n> times; vary the metaphor vocabulary governor stage=footage state=start soft=66s hard=600s governor stage=footage state=running elapsed=15s idle=0s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=66s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=0b8595951c29d339 error: foota",
       "stage": "build_pass"
     },
     {
@@ -101,76 +101,76 @@
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (138.1s).",
+      "reason": "Largest measured latency contribution in this run (121.1s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "bddc0bef5e8d4b319fca7244ccb27c7f",
+  "run_id": "5eddb67b8f874adb9f1f8bd327606255",
   "schema_version": 1,
   "slug": "the-loop",
   "stages": {
     "align": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 1.001,
-      "p95_success_s": 1.001,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
       "success_durations_s": [
-        1.001
+        1.002
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 1.001
+      "total_duration_s": 1.002
     },
     "build_pass": {
       "attempts": 4,
       "failures": 2,
-      "p50_success_s": 46.02,
-      "p95_success_s": 57.723,
+      "p50_success_s": 41.021,
+      "p95_success_s": 50.022,
       "success_durations_s": [
-        59.023,
-        33.017
+        51.022,
+        31.02
       ],
       "successes": 2,
       "timeouts": 0,
-      "total_duration_s": 138.073
+      "total_duration_s": 121.066
     },
     "footage": {
       "attempts": 3,
       "failures": 2,
-      "p50_success_s": 17.011,
-      "p95_success_s": 17.011,
+      "p50_success_s": 16.012,
+      "p95_success_s": 16.012,
       "success_durations_s": [
-        17.011
+        16.012
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 44.032
+      "total_duration_s": 37.029
     },
     "transcribe": {
       "attempts": 3,
       "failures": 0,
-      "p50_success_s": 11.005,
-      "p95_success_s": 11.006,
+      "p50_success_s": 10.006,
+      "p95_success_s": 10.007,
       "success_durations_s": [
-        11.005,
-        11.006,
-        8.006
+        10.007,
+        10.006,
+        8.005
       ],
       "successes": 3,
       "timeouts": 0,
-      "total_duration_s": 30.017
+      "total_duration_s": 28.018
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 58.023,
-      "p95_success_s": 58.023,
+      "p50_success_s": 50.022,
+      "p95_success_s": 50.022,
       "success_durations_s": [
-        58.023
+        50.022
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 58.023
+      "total_duration_s": 50.022
     }
   },
   "status": "failed"

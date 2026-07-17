@@ -7,7 +7,10 @@
  "voice_settings": {
   "stability": 0.0
  },
- "visual_policy": "diverse_symbols",
+ "visual_policy": {
+  "mode": "diverse_symbols",
+  "max_human_ratio": 0.6
+ },
  "render_outputs": [
   "youtube"
  ],
@@ -23,7 +26,29 @@
    "query": "hand scrolling glowing phone screen dark room lamplight",
    "voice_text": "[long pause] [thoughtful] This isn't a video.",
    "primary_symbol": "perception",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 0.0,
+   "duration": 1.64,
+   "kw_times": {
+    "video": 0.6
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.4348,
+    "active_region_ratio": 0.3752,
+    "frame_difference": 4.9495
+   },
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-loop/clip_00.mp4",
+   "stock_id": 6611954,
+   "pexels_id": 6611954,
+   "stock_frame_url": "https://images.pexels.com/videos/6611954/pexels-photo-6611954.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-scrolling-on-mobile-phone-screen-6611954/"
   },
   {
    "text": "It's a loop. You've seen this before.",
@@ -34,7 +59,13 @@
    "visual_function": "mechanism",
    "symbol_family": "geometry",
    "query": "water swirling spinning down drain close up",
-   "primary_symbol": "window"
+   "primary_symbol": "window",
+   "start": 1.64,
+   "duration": 3.06,
+   "kw_times": {
+    "loop": 1.86
+   },
+   "motion_kind": "video"
   },
   {
    "text": "Not this exact screen. Not these exact words. But this feeling.",
@@ -47,7 +78,14 @@
    "symbol_family": "language",
    "query": "hands typing laptop keyboard warm light close up",
    "primary_symbol": "language",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 4.7,
+   "duration": 5.06,
+   "kw_times": {
+    "words": 6.92,
+    "feeling": 8.46
+   },
+   "motion_kind": "video"
   },
   {
    "text": "The same lesson keeps showing up wearing different clothes.",
@@ -59,7 +97,13 @@
    "symbol_family": "identity",
    "query": "hand sliding through shirts clothing rack warm light",
    "primary_symbol": "window",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 9.76,
+   "duration": 3.24,
+   "kw_times": {
+    "clothes": 11.94
+   },
+   "motion_kind": "video"
   },
   {
    "text": "A different relationship. A different job. A different friend who somehow has the same personality as the last person, just with a new face and slightly better excuses.",
@@ -72,7 +116,14 @@
    "symbol_family": "identity",
    "query": "diverse people walking past city street slow motion daylight",
    "primary_symbol": "wall",
-   "human_role": "relationship"
+   "human_role": "relationship",
+   "start": 13.0,
+   "duration": 10.34,
+   "kw_times": {
+    "friend": 16.28,
+    "face": 20.38
+   },
+   "motion_kind": "video"
   },
   {
    "text": "Life changes the actors, moves the furniture, and gives the problem a new name. But the plot stays suspiciously familiar.",
@@ -84,7 +135,14 @@
    "visual_function": "mechanism",
    "symbol_family": "object_tool",
    "query": "movers loading sofa and boxes into moving truck daylight",
-   "primary_symbol": "object_tool"
+   "primary_symbol": "object_tool",
+   "start": 23.34,
+   "duration": 8.0,
+   "kw_times": {
+    "actors": 24.28,
+    "furniture": 25.6
+   },
+   "motion_kind": "video"
   },
   {
    "text": "You keep reaching the same emotional room, wondering how you got there again.",
@@ -96,7 +154,13 @@
    "symbol_family": "architecture",
    "query": "person walking through doorway into dim room warm light",
    "human_role": "explorer",
-   "primary_symbol": "window"
+   "primary_symbol": "window",
+   "start": 31.34,
+   "duration": 4.6,
+   "kw_times": {
+    "room": 33.02
+   },
+   "motion_kind": "video"
   },
   {
    "text": "Same locked door. Same flickering light. Same version of you standing in the middle saying, \"Okay… who keeps rebuilding this place?\"",
@@ -110,7 +174,14 @@
    "query": "hand turning old door handle dim hallway light",
    "voice_text": "Same locked door. Same flickering light. Same version of you standing in the middle saying, [annoyed] \"Okay… who keeps rebuilding this place?\"",
    "primary_symbol": "door",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 35.94,
+   "duration": 9.96,
+   "kw_times": {
+    "locked door": 36.16,
+    "flickering light": 37.52
+   },
+   "motion_kind": "video"
   },
   {
    "text": "Maybe nobody is rebuilding it. Maybe you never left.",
@@ -122,7 +193,14 @@
    "visual_function": "perspective_shift",
    "symbol_family": "time_memory",
    "query": "time lapse clouds drifting over quiet house golden hour",
-   "primary_symbol": "time_memory"
+   "primary_symbol": "time_memory",
+   "start": 45.9,
+   "duration": 3.72,
+   "kw_times": {
+    "rebuilding": 46.78,
+    "left": 48.48
+   },
+   "motion_kind": "video"
   },
   {
    "text": "Because a loop doesn't repeat simply because time is moving in a circle.",
@@ -135,7 +213,14 @@
    "symbol_family": "time_memory",
    "query": "clock second hand sweeping close up macro",
    "primary_symbol": "wall",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 49.62,
+   "duration": 4.1,
+   "kw_times": {
+    "loop": 50.08,
+    "circle": 52.72
+   },
+   "motion_kind": "video"
   },
   {
    "text": "Sometimes it repeats because your response never changed.",
@@ -147,7 +232,14 @@
    "visual_function": "mechanism",
    "symbol_family": "geometry",
    "query": "metronome arm ticking back and forth warm light",
-   "primary_symbol": "geometry"
+   "primary_symbol": "geometry",
+   "start": 53.72,
+   "duration": 3.54,
+   "kw_times": {
+    "repeats": 54.4,
+    "changed": 56.06
+   },
+   "motion_kind": "video"
   },
   {
    "text": "You keep choosing the same door because someone painted it a different color.",
@@ -160,7 +252,14 @@
    "symbol_family": "architecture",
    "query": "hand rolling fresh paint onto door close up",
    "human_role": "chooser",
-   "primary_symbol": "door"
+   "primary_symbol": "door",
+   "start": 57.26,
+   "duration": 3.96,
+   "kw_times": {
+    "door": 58.56,
+    "color": 60.32
+   },
+   "motion_kind": "video"
   },
   {
    "text": "You keep calling the same pattern \"new\" because it arrived with a different phone number.",
@@ -172,7 +271,14 @@
    "visual_function": "contrast",
    "symbol_family": "object_tool",
    "query": "smartphone screen lighting up incoming call dark desk",
-   "primary_symbol": "object_tool"
+   "primary_symbol": "object_tool",
+   "start": 61.22,
+   "duration": 5.06,
+   "kw_times": {
+    "pattern": 62.34,
+    "phone": 64.72
+   },
+   "motion_kind": "video"
   },
   {
    "text": "And no, this doesn't mean everything painful is your fault.",
@@ -184,7 +290,14 @@
    "visual_function": "perspective_shift",
    "symbol_family": "light_atmosphere",
    "query": "time lapse storm clouds parting sun rays golden",
-   "primary_symbol": "light_atmosphere"
+   "primary_symbol": "light_atmosphere",
+   "start": 66.28,
+   "duration": 3.76,
+   "kw_times": {
+    "painful": 67.86,
+    "fault": 70.0
+   },
+   "motion_kind": "video"
   },
   {
    "text": "Life is not a cosmic debt collector showing up because you forgot to think positively on Tuesday.",
@@ -197,7 +310,14 @@
    "symbol_family": "object_tool",
    "query": "hand stamping paperwork desk lamp close up",
    "primary_symbol": "object_tool",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 70.04,
+   "duration": 4.82,
+   "kw_times": {
+    "debt": 70.73,
+    "positively": 73.08
+   },
+   "motion_kind": "video"
   },
   {
    "text": "But some experiences remain in your field because they are revealing the place where your awareness keeps going unconscious.",
@@ -209,7 +329,14 @@
    "visual_function": "mechanism",
    "symbol_family": "perception",
    "query": "flashlight beam moving across dark room wall",
-   "primary_symbol": "water"
+   "primary_symbol": "water",
+   "start": 74.86,
+   "duration": 6.18,
+   "kw_times": {
+    "experiences": 75.52,
+    "awareness": 79.34
+   },
+   "motion_kind": "video"
   },
   {
    "text": "The betrayal may be showing you the boundary you keep negotiating.",
@@ -221,7 +348,14 @@
    "visual_function": "literal_anchor",
    "symbol_family": "world_scale",
    "query": "wire fence field golden hour grass blowing wind",
-   "primary_symbol": "world_scale"
+   "primary_symbol": "world_scale",
+   "start": 81.04,
+   "duration": 4.38,
+   "kw_times": {
+    "betrayal": 82.0,
+    "boundary": 83.44
+   },
+   "motion_kind": "video"
   },
   {
    "text": "The abandonment may be exposing how often you abandon yourself just to keep someone else comfortable.",
@@ -233,7 +367,14 @@
    "visual_function": "perspective_shift",
    "symbol_family": "identity",
    "query": "empty swing swaying gently warm evening light",
-   "primary_symbol": "window"
+   "primary_symbol": "window",
+   "start": 85.42,
+   "duration": 5.42,
+   "kw_times": {
+    "abandonment": 85.6,
+    "comfortable": 89.7
+   },
+   "motion_kind": "video"
   },
   {
    "text": "The scarcity may be revealing how tightly you grip what you believe can disappear.",
@@ -245,7 +386,14 @@
    "visual_function": "mechanism",
    "symbol_family": "nature",
    "query": "sand falling through open fingers backlit close up",
-   "primary_symbol": "nature"
+   "primary_symbol": "nature",
+   "start": 90.84,
+   "duration": 4.86,
+   "kw_times": {
+    "scarcity": 90.96,
+    "grip": 93.16
+   },
+   "motion_kind": "video"
   },
   {
    "text": "You keep asking, \"Why is this happening to me?\"",
@@ -258,7 +406,14 @@
    "symbol_family": "language",
    "query": "raindrops running down dark glass pane bokeh lights",
    "voice_text": "You keep asking, [annoyed] \"Why is this happening to me?\"",
-   "primary_symbol": "word"
+   "primary_symbol": "word",
+   "start": 95.7,
+   "duration": 3.48,
+   "kw_times": {
+    "asking": 96.06,
+    "happening": 97.7
+   },
+   "motion_kind": "video"
   },
   {
    "text": "But that question makes you the victim trapped inside the scene.",
@@ -271,7 +426,14 @@
    "symbol_family": "architecture",
    "query": "blurred figure behind rain streaked glass night",
    "human_role": "observer",
-   "primary_symbol": "window"
+   "primary_symbol": "window",
+   "start": 99.18,
+   "duration": 3.52,
+   "kw_times": {
+    "question": 99.52,
+    "victim": 100.5
+   },
+   "motion_kind": "video"
   },
   {
    "text": "The loop begins to weaken when you ask something different: \"What is this trying to show me?\"",
@@ -284,7 +446,14 @@
    "symbol_family": "perception",
    "query": "sheer curtains billowing sunlight pouring through morning breeze",
    "voice_text": "The loop begins to weaken when you ask something different: [thoughtful] \"What is this trying to show me?\"",
-   "primary_symbol": "perception"
+   "primary_symbol": "perception",
+   "start": 102.7,
+   "duration": 4.98,
+   "kw_times": {
+    "loop": 102.9,
+    "weaken": 103.66
+   },
+   "motion_kind": "video"
   },
   {
    "text": "That question doesn't magically erase the problem. It changes who is looking at it.",
@@ -296,7 +465,14 @@
    "visual_function": "perspective_shift",
    "symbol_family": "perception",
    "query": "extreme close up eye opening catchlight macro",
-   "primary_symbol": "eye"
+   "primary_symbol": "eye",
+   "start": 107.68,
+   "duration": 5.44,
+   "kw_times": {
+    "question": 108.46,
+    "looking": 112.08
+   },
+   "motion_kind": "video"
   },
   {
    "text": "Now you're not just the character running through the hallway. You're the one noticing the hallway has been circling back on itself.",
@@ -309,7 +485,14 @@
    "symbol_family": "pathway",
    "query": "walking through long dim hotel hallway wall lights",
    "human_role": "observer",
-   "primary_symbol": "wall"
+   "primary_symbol": "wall",
+   "start": 113.12,
+   "duration": 6.8,
+   "kw_times": {
+    "character": 114.18,
+    "hallway": 115.22
+   },
+   "motion_kind": "video"
   },
   {
    "text": "And once you recognize the pattern, you don't escape by finding a better version of the same door. You escape by becoming someone who no longer needs to open it.",
@@ -322,7 +505,14 @@
    "symbol_family": "architecture",
    "query": "silhouette walking toward bright open doorway",
    "human_role": "chooser",
-   "primary_symbol": "window"
+   "primary_symbol": "window",
+   "start": 119.92,
+   "duration": 9.12,
+   "kw_times": {
+    "pattern": 121.18,
+    "door": 124.48
+   },
+   "motion_kind": "video"
   },
   {
    "text": "Then something strange happens. The same people may appear. The same temptation may knock. The same old story may introduce itself.",
@@ -337,7 +527,14 @@
    "symbol_query": "hand moves magnifying glass across printed words on paper natural side light close up",
    "symbol_family_source": "planner",
    "primary_symbol": "word",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 129.04,
+   "duration": 8.26,
+   "kw_times": {
+    "people": 131.48,
+    "temptation": 133.32
+   },
+   "motion_kind": "video"
   },
   {
    "text": "But it can't find the version of you who used to answer. The loop didn't disappear. You stopped feeding it your repetition.",
@@ -350,7 +547,14 @@
    "symbol_family": "identity",
    "query": "empty rocking chair rocking gently warm light",
    "primary_symbol": "door",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 137.3,
+   "duration": 8.02,
+   "kw_times": {
+    "version": 138.88,
+    "loop": 141.22
+   },
+   "motion_kind": "video"
   },
   {
    "text": "And maybe that's why these words feel familiar. You weren't meant to watch them. You were meant to recognize them.",
@@ -362,7 +566,14 @@
    "visual_function": "perspective_shift",
    "symbol_family": "language",
    "query": "pages of book turning warm light close up",
-   "primary_symbol": "language"
+   "primary_symbol": "language",
+   "start": 145.32,
+   "duration": 6.22,
+   "kw_times": {
+    "words": 146.34,
+    "familiar": 146.92
+   },
+   "motion_kind": "video"
   },
   {
    "text": "This isn't a video.",
@@ -374,7 +585,16 @@
    "symbol_family": "perception",
    "query": "phone screen fading to black quiet dark room",
    "voice_text": "This isn't a video. [long pause]",
-   "primary_symbol": "window"
+   "primary_symbol": "window",
+   "start": 151.54,
+   "duration": 6.168,
+   "kw_times": {
+    "video": 152.16
+   },
+   "motion_kind": "video"
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "max_still_source_ratio": 0.35,
+ "still_image_policy": "closest_stock_frame_full_enhancement"
 }
