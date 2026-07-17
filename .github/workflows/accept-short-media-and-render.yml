@@ -27,13 +27,33 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          shopt -s nullglob
-          build="build/${{ inputs.slug }}"
-          parts=("$build"/vo.mp3.b64.part*)
-          if ((${#parts[@]})); then
-            cat "${parts[@]}" | base64 --decode > "$build/vo.mp3"
-          fi
-          test -s "$build/vo.mp3"
+          python3 - "${{ inputs.slug }}" <<'PY'
+          import base64
+          import hashlib
+          from pathlib import Path
+          import sys
+
+          build = Path('build') / sys.argv[1]
+          parts = sorted(build.glob('vo.mp3.b64.part*'))
+          if not parts:
+              raise SystemExit('no connector-uploaded voiceover parts were found')
+          encoded = ''.join(
+              ''.join(part.read_text(encoding='ascii').split())
+              for part in parts
+          )
+          try:
+              raw = base64.b64decode(encoded, validate=True)
+          except Exception as exc:
+              raise SystemExit(f'voiceover Base64 transport is invalid: {exc}') from exc
+          if not raw:
+              raise SystemExit('voiceover transport decoded to zero bytes')
+          output = build / 'vo.mp3'
+          output.write_bytes(raw)
+          print(
+              f'restored {output} from {len(parts)} ordered parts: '
+              f'{len(raw)} bytes, sha256={hashlib.sha256(raw).hexdigest()}'
+          )
+          PY
 
       - uses: actions/setup-python@v5
         with:
