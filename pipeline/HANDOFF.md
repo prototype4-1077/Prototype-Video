@@ -364,3 +364,27 @@ Every render still generates and archives all three complete music choices. The
 standard profile) and names its portrait and 1920x1080 YouTube files. Default delivery
 shows only those two download links. The other choices remain available on request but
 their links are not surfaced automatically.
+
+
+## July 2026 upgrades (quality, learning, efficiency)
+
+- Encode policy lives in `video_format.py` (`ENCODE_QUALITY` slow/CRF18 +
+  BT.709 `COLOR_TAGS`, 256k audio). Footage renditions never upscale: the
+  picker targets the 1920px master canvas (`footage.pick_file`).
+- Audience loop: after uploading, dispatch the "Record published video"
+  workflow (or `learn.py published <slug> <video_id>`); the nightly
+  analytics workflow converts YouTube retention curves into per-scene
+  query/taste learning. Setup: `pipeline/ANALYTICS.md`. Evidence digest:
+  `pipeline/WHATS_WORKING.md` (regenerate with `learn.py digest`).
+- Taste scoring upgrades to a logistic head automatically once it has
+  >=30 approved and >=8 rejected embeddings; query weights decay 2% per
+  recorded video so recent wins outvote old habits.
+- Hook A/B: declare visual-only `hook_variants` in script.json and run
+  `python3 pipeline/hook_variants.py build/<slug>` after a normal build;
+  only overridden scenes re-render (`final*_hook<label>.mp4`).
+- Voice: opt into Eleven v3 per script with `"elevenlabs_model": "eleven_v3"`
+  (inline audio tags like [whispers] give per-beat emotional direction).
+- Renders: Governor default budget is 45 min (`long_render: true` restores
+  78); `use_container: true` runs in the prebuilt ghcr image once the
+  package is public; per-slug footage caching speeds retries.
+- `coherence_report.json` (informational) flags visually jarring cuts.

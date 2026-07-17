@@ -210,6 +210,10 @@ jobs:
               raise SystemExit("missing requested output(s): " + ", ".join(missing))
           PY
 
+      - name: Cut-coherence report (informational)
+        if: always()
+        run: python3 pipeline/coherence.py "build/${{ inputs.slug }}" || true
+
       - name: Build cross-run operational review
         if: always()
         run: |
@@ -243,6 +247,7 @@ jobs:
             build/${{ inputs.slug }}/visual_symbol_report.json
             build/${{ inputs.slug }}/still_reference_report.json
             build/${{ inputs.slug }}/music_variants.json
+            build/${{ inputs.slug }}/coherence_report.json
             build/${{ inputs.slug }}/scene-review.html
             build/${{ inputs.slug }}/scene-review.json
             build/${{ inputs.slug }}/CREDITS.txt

@@ -218,6 +218,13 @@ def check_output(
     fps = probe.get("fps")
     if fps is None or fps < 29:
         failures.append(_issue("frame_rate_below_floor", target_name, f"Frame rate {fps} is below the 30fps delivery floor"))
+    if duration and size and width and height and min(width, height) >= 1080:
+        kbps = size * 8 / duration / 1000
+        result["avg_kbps"] = round(kbps)
+        if kbps < 4000:
+            warnings.append(_issue(
+                "low_bitrate", target_name,
+                f"Average bitrate {kbps:.0f} kbps is unusually low for 1080p; check for over-compression"))
 
     if duration and expected_duration_s and expected_duration_s > 0:
         difference = abs(duration - expected_duration_s)

@@ -18,6 +18,9 @@ AUDIENCE LOOP: after uploading a build to YouTube run
 pipeline/published_videos.json; the nightly analytics workflow feeds real
 retention back into memory.json/taste.npz and refreshes WHATS_WORKING.md
 (setup: pipeline/ANALYTICS.md).
+VOICE: opt into Eleven v3 per script with "elevenlabs_model": "eleven_v3" and
+inline audio tags for emotion. HOOK A/B: visual-only "hook_variants" in
+script.json + pipeline/hook_variants.py (see pipeline/HANDOFF.md).
 ## Step 0 — Read context (GET file contents via API or git clone)
 - pipeline/HANDOFF.md      — full pipeline docs
 - pipeline/style_profile.md — James's writing voice + visual spec
