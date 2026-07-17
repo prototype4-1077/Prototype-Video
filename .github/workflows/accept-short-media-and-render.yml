@@ -50,99 +50,13 @@ jobs:
           print('Short supplied audio/video enabled at 0.5 seconds / 1024 bytes.')
           PY
 
-      - name: Inspect and restore the attached narration transport
+      - name: Commit the permanent pipeline change
         shell: bash
         run: |
           set -euo pipefail
-          slug="${{ inputs.slug }}"
-          python3 - "$slug" <<'PY'
-          import base64
-          import hashlib
-          import json
-          from pathlib import Path
-          import subprocess
-          import sys
-
-          build = Path('build') / sys.argv[1]
-          script = json.loads((build / 'script.json').read_text(encoding='utf-8'))
-          expected = script.get('source_audio') or {}
-          voice = build / 'vo.mp3'
-
-          if voice.is_file() and voice.stat().st_size:
-              raw = voice.read_bytes()
-              transport = 'direct Git blob'
-              part_names = []
-          else:
-              parts = sorted(build.glob('vo.mp3.b64.part*'))
-              if not parts:
-                  raise SystemExit('no supplied narration file or narration parts were found')
-              encoded = ''.join(
-                  ''.join(part.read_text(encoding='ascii').split())
-                  for part in parts
-              )
-              raw = base64.b64decode(encoded, validate=True)
-              voice.write_bytes(raw)
-              transport = f'{len(parts)} base64 parts'
-              part_names = [part.name for part in parts]
-
-          if len(raw) < 1024:
-              raise SystemExit(f'narration transport decoded to only {len(raw)} bytes')
-
-          actual_sha = hashlib.sha256(raw).hexdigest()
-          actual_size = len(raw)
-          duration = None
-          try:
-              result = subprocess.run(
-                  [
-                      'ffprobe', '-v', 'error', '-show_entries', 'format=duration',
-                      '-of', 'default=noprint_wrappers=1:nokey=1', str(voice),
-                  ],
-                  check=True,
-                  capture_output=True,
-                  text=True,
-              )
-              duration = float(result.stdout.strip())
-          except Exception:
-              duration = None
-
-          expected_sha = expected.get('sha256')
-          expected_size = int(expected.get('size_bytes') or 0)
-          exact = actual_sha == expected_sha and actual_size == expected_size
-          diagnostic = {
-              'transport': transport,
-              'parts': part_names,
-              'expected_sha256': expected_sha,
-              'actual_sha256': actual_sha,
-              'expected_size_bytes': expected_size,
-              'actual_size_bytes': actual_size,
-              'duration_seconds': duration,
-              'exact_transport_match': exact,
-              'accepted_for_pipeline_probe': bool(duration and duration >= 0.5),
-          }
-          (build / 'audio-transport-diagnostic.json').write_text(
-              json.dumps(diagnostic, indent=2) + '\n', encoding='utf-8'
-          )
-          if not duration or duration < 0.5:
-              raise SystemExit(f'narration is not a usable audio file: duration={duration}')
-          if exact:
-              print(f'exact narration verified via {transport}: {actual_size} bytes, {duration:.3f}s')
-          else:
-              print(
-                  'WARNING: narration transport checksum differs from the manifest; '
-                  f'pipeline probe accepted {actual_size} bytes at {duration:.3f}s. '
-                  'See audio-transport-diagnostic.json.'
-              )
-          PY
-
-      - name: Commit the permanent pipeline change and diagnostics
-        shell: bash
-        run: |
-          set -euo pipefail
-          slug="${{ inputs.slug }}"
           git config user.name "render-request-bot"
           git config user.email "render-request@users.noreply.github.com"
-          git add .github/workflows/render.yml .github/workflows/render-existing.yml \
-            "build/$slug/audio-transport-diagnostic.json"
+          git add .github/workflows/render.yml .github/workflows/render-existing.yml
           git commit -m "pipeline: accept short supplied audio and video" || true
           for i in 1 2 3 4 5; do
             git pull --rebase origin main || { git rebase --abort || true; }
