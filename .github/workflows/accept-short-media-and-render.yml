@@ -1,10 +1,11 @@
 name: Accept short media and render
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - "build/**/short-media.request"
+  workflow_call:
+    inputs:
+      slug:
+        type: string
+        required: true
 
 permissions:
   contents: write
@@ -18,17 +19,6 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
-
-      - id: slug
-        name: Detect requested build
-        shell: bash
-        run: |
-          set -euo pipefail
-          file="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep -E '^build/[^/]+/short-media\.request$' | head -n 1)"
-          test -n "$file"
-          slug="${file#build/}"
-          slug="${slug%/short-media.request}"
-          echo "slug=$slug" >> "$GITHUB_OUTPUT"
 
       - name: Permanently allow short supplied media
         shell: bash
@@ -81,7 +71,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          slug="${{ steps.slug.outputs.slug }}"
+          slug="${{ inputs.slug }}"
           python3 - "$slug" <<'PY'
           import base64
           import hashlib
@@ -138,6 +128,6 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          slug="${{ steps.slug.outputs.slug }}"
+          slug="${{ inputs.slug }}"
           gh workflow run render.yml --repo "$GITHUB_REPOSITORY" --ref main -f slug="$slug"
           echo "dispatched render.yml for $slug"
