@@ -90,9 +90,27 @@ def _clear_rejected_stock(build_dir: str, scene: dict, index: int) -> None:
         scene.pop(field, None)
 
 
-def _render_storyboard(build_dir: str, script: dict, index: int, reason: str, decisions=None):
+def _render_storyboard(build_dir: str, script: dict, index: int, reason: str,
+                       decisions=None, used=None):
     scene = script["scenes"][index]
-    plan = storyboard.render_scene(build_dir, script, index)
+    try:
+        plan = storyboard.render_scene(build_dir, script, index)
+    except RuntimeError as exc:
+        if "lacks sufficient motion" not in str(exc):
+            raise
+        # Standing rule: if generation fails, use stock video. A deterministic
+        # near-static graphic will fail identically on retry, so re-route to a
+        # genuine stock search instead of burning the retry budget.
+        scene["narrative_mode"] = "stock"
+        print(f"scene {index}: generated storyboard failed motion gate; "
+              f"falling back to genuine stock ({exc})")
+        footage.fetch_scene(build_dir, script, index, used if used is not None else set())
+        return {
+            "scene_index": int(index),
+            "result": "stock_fallback_from_storyboard",
+            "fallback_reason": f"{reason}; storyboard lacked motion",
+            "stock_id": scene.get("stock_id") or scene.get("pexels_id"),
+        }
     plan["fallback_reason"] = reason
     if decisions is not None:
         plan["candidate_decisions"] = decisions
@@ -156,7 +174,7 @@ def main(build_dir: str, idx: str | None = None):
                 )
                 _clear_rejected_stock(build_dir, scene, index)
                 if storyboard.preferred(scene, position, span):
-                    plan = _render_storyboard(build_dir, script, index, reason)
+                    plan = _render_storyboard(build_dir, script, index, reason, used=used)
                     row.update({
                         "result": "literal_storyboard",
                         "existing_anchor_coverage": existing_coverage,
@@ -176,7 +194,7 @@ def main(build_dir: str, idx: str | None = None):
                         plan = _render_storyboard(
                             build_dir, script, index,
                             "cached stock failed and no direct replacement survived",
-                            decisions,
+                            decisions, used=used,
                         )
                         row.update({
                             "result": "literal_storyboard",
@@ -185,7 +203,7 @@ def main(build_dir: str, idx: str | None = None):
                             "plan": plan,
                         })
             elif storyboard.preferred(scene, position, span):
-                plan = _render_storyboard(build_dir, script, index, "literal mechanism preferred")
+                plan = _render_storyboard(build_dir, script, index, "literal mechanism preferred", used=used)
                 row.update({"result": "literal_storyboard", "plan": plan})
             else:
                 try:
@@ -199,7 +217,7 @@ def main(build_dir: str, idx: str | None = None):
                     plan = _render_storyboard(
                         build_dir, script, index,
                         "no stock candidate represented the spoken anchors",
-                        exc.decisions,
+                        exc.decisions, used=used,
                     )
                     row.update({
                         "result": "literal_storyboard",
@@ -213,7 +231,7 @@ def main(build_dir: str, idx: str | None = None):
                     plan = _render_storyboard(
                         build_dir, script, index,
                         "stock search could not produce a usable direct match",
-                        _CURRENT.get("decisions") or [],
+                        _CURRENT.get("decisions"), used=used or [],
                     )
                     row.update({"result": "literal_storyboard", "plan": plan})
             script_path.write_text(json.dumps(script, indent=1, ensure_ascii=False), encoding="utf-8")
