@@ -36,3 +36,13 @@ def is_landscape_16_9(width=YOUTUBE_WIDTH, height=YOUTUBE_HEIGHT):
 
 assert is_portrait_9_16(), "Canonical social canvas must remain 9:16 portrait"
 assert is_landscape_16_9(), "Canonical YouTube canvas must remain 16:9 landscape"
+
+
+# --- Deliverable encode policy (single source of truth) ---------------------
+# 'slow' + CRF 18 maximizes quality-per-bit so more of the master survives
+# platform re-encoding; BT.709 tags stop players/platforms from guessing the
+# color space and shifting the grade. Drafts may use ENCODE_DRAFT.
+ENCODE_QUALITY = ("-preset", "slow", "-crf", "18")
+ENCODE_DRAFT = ("-preset", "veryfast", "-crf", "21")
+COLOR_TAGS = ("-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709")
+AUDIO_BITRATE = "256k"

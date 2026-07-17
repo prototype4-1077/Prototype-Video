@@ -46,7 +46,7 @@ from dataclasses import dataclass
 import numpy as np
 
 import still_reference
-from video_format import BAND_HEIGHT, BAND_WIDTH, FPS
+from video_format import BAND_HEIGHT, BAND_WIDTH, FPS, ENCODE_QUALITY, COLOR_TAGS
 
 
 STATIC = "static"
@@ -482,7 +482,7 @@ def _encode_frames(frames, duration, output, width=W, height=H):
     command = [
         "ffmpeg", "-v", "error", "-y", "-f", "rawvideo", "-pix_fmt", "bgr24",
         "-s", f"{width}x{height}", "-r", str(FPS), "-i", "-", "-an",
-        "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+        "-c:v", "libx264", *ENCODE_QUALITY, *COLOR_TAGS,
         "-pix_fmt", "yuv420p", "-t", f"{duration:.4f}", partial,
     ]
     process = subprocess.Popen(command, stdin=subprocess.PIPE)
@@ -601,7 +601,7 @@ def _render_rife(images, duration, output, binary, cv2):
         command = [
             "ffmpeg", "-v", "error", "-y", "-framerate", str(FPS),
             "-i", os.path.join(rendered, "%08d.png"), "-an", "-c:v", "libx264",
-            "-preset", "veryfast", "-crf", "20", "-pix_fmt", "yuv420p",
+            *ENCODE_QUALITY, *COLOR_TAGS, "-pix_fmt", "yuv420p",
             "-t", f"{duration:.4f}", output + ".part.mp4",
         ]
         subprocess.run(command, check=True)

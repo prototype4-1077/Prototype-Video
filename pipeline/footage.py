@@ -13,6 +13,7 @@ import profiles
 import visual_symbols
 
 KEY = os.environ.get("PEXELS_API_KEY")
+from video_format import YOUTUBE_WIDTH
 UA = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"
 _op = urllib.request.build_opener()
 _op.addheaders = [("User-Agent", UA)]
@@ -210,12 +211,20 @@ def search(q, genre=None, profile=None, per_page=15, stock_tag=None):
     return out
 
 
-def pick_file(video):
-    cands = [f for f in video["video_files"]
-             if (f.get("width") or 0) >= 1080]
-    if not cands:
-        cands = sorted(video["video_files"], key=lambda f: -(f.get("width") or 0))[:1]
-    return sorted(cands, key=lambda f: (f.get("width") or 0) * (f.get("height") or 0))[0]
+def pick_file(video, target_w=None):
+    """Smallest rendition that still meets the delivery canvas (default: the
+    1920px YouTube master) so footage is never upscaled. Falls back to the
+    1080 legacy floor, then to the largest file available."""
+    if target_w is None:
+        target_w = YOUTUBE_WIDTH
+    files = video["video_files"]
+    def area(f):
+        return (f.get("width") or 0) * (f.get("height") or 0)
+    for floor in sorted({target_w, 1080}, reverse=True):
+        cands = [f for f in files if (f.get("width") or 0) >= floor]
+        if cands:
+            return sorted(cands, key=area)[0]
+    return sorted(files, key=area)[-1]
 
 
 def download_video(video, output):

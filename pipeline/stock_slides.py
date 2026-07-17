@@ -17,6 +17,8 @@ import math
 import os
 from pathlib import Path
 import re
+
+from video_format import ENCODE_QUALITY, COLOR_TAGS
 import subprocess
 import sys
 import tempfile
@@ -190,7 +192,7 @@ def render_photo(image: Path, seconds: float, output: Path, style: int) -> None:
     run([
         "ffmpeg", "-v", "error", "-y", "-loop", "1", "-framerate", str(FPS),
         "-i", str(image), "-vf", motion_filter(style, seconds), "-t", f"{seconds:.4f}",
-        "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "18",
+        "-an", "-c:v", "libx264", *ENCODE_QUALITY, *COLOR_TAGS,
         "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(output),
     ])
 
@@ -219,7 +221,7 @@ def combine(parts: list[Path], total: float, output: Path) -> None:
         previous = label
     command += [
         "-filter_complex", ";".join(chain), "-map", f"[{previous}]", "-t", f"{total:.4f}",
-        "-an", "-c:v", "libx264", "-preset", "medium", "-crf", "18",
+        "-an", "-c:v", "libx264", *ENCODE_QUALITY, *COLOR_TAGS,
         "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(output),
     ]
     run(command)

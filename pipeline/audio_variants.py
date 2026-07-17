@@ -149,7 +149,7 @@ def mix(noaudio, voiceover, music_path, total, output, delay_ms=400, music_gain=
         final_tmp = os.path.join(tmp, "final.mp4")
         _run(["ffmpeg", "-v", "error", "-y", "-i", raw, "-af", master,
               "-map", "0:v", "-map", "0:a", "-c:v", "copy", "-c:a", "aac",
-              "-b:a", "160k", "-movflags", "+faststart", final_tmp])
+              "-b:a", "256k", "-movflags", "+faststart", final_tmp])
         shutil.copy(final_tmp, output)
     finally:
         shutil.rmtree(tmp, ignore_errors=True)

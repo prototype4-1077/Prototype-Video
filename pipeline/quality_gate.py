@@ -22,7 +22,8 @@ import render_policy
 
 
 MIN_FILE_BYTES = 100_000
-MIN_DIMENSION = 720
+MIN_DIMENSION = 1080  # deliverable floor: nothing below the 1080 canvas ships
+CURATION_MIN_DIMENSION = 880  # editorial curation reels use a 1600x880 canvas
 
 
 def parse_ratio(value: str | None) -> float | None:
@@ -167,6 +168,7 @@ def check_output(
     require_audio: bool,
     expected_duration_s: float | None,
     deep: bool,
+    min_dimension: int = MIN_DIMENSION,
 ) -> dict[str, Any]:
     failures: list[dict[str, Any]] = []
     warnings: list[dict[str, Any]] = []
@@ -204,20 +206,18 @@ def check_output(
     if not duration or duration <= 1:
         failures.append(_issue("invalid_duration", target_name, f"Duration is not usable: {duration}"))
     width, height = probe["width"], probe["height"]
-    if min(width, height) < MIN_DIMENSION:
+    if min(width, height) < min_dimension:
         failures.append(_issue(
             "resolution_below_floor", target_name,
-            f"Resolution {width}x{height} is below the {MIN_DIMENSION}px quality floor",
+            f"Resolution {width}x{height} is below the {min_dimension}px quality floor",
         ))
     if orientation == "portrait" and not height > width:
         failures.append(_issue("wrong_orientation", target_name, f"Expected portrait but got {width}x{height}"))
     if orientation == "landscape" and not width > height:
         failures.append(_issue("wrong_orientation", target_name, f"Expected landscape but got {width}x{height}"))
     fps = probe.get("fps")
-    if fps is None or fps < 15:
-        failures.append(_issue("frame_rate_below_floor", target_name, f"Frame rate is not usable: {fps}"))
-    elif fps < 23:
-        warnings.append(_issue("low_frame_rate", target_name, f"Frame rate is lower than expected: {fps:.2f}"))
+    if fps is None or fps < 29:
+        failures.append(_issue("frame_rate_below_floor", target_name, f"Frame rate {fps} is below the 30fps delivery floor"))
 
     if duration and expected_duration_s and expected_duration_s > 0:
         difference = abs(duration - expected_duration_s)
@@ -326,6 +326,7 @@ def run_quality_gate(build_dir: str | os.PathLike[str], *, deep: bool = True) ->
             require_audio=require_audio,
             expected_duration_s=expected_duration if not curation_mode and name != "short" else None,
             deep=target_deep,
+            min_dimension=CURATION_MIN_DIMENSION if curation_mode else MIN_DIMENSION,
         )
         outputs[name] = output
         failures.extend(output["failures"])
