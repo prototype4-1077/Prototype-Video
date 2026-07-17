@@ -46,7 +46,7 @@ jobs:
 
   render:
     needs: detect
-    uses: ./.github/workflows/render.yml
+    uses: ./.github/workflows/accept-short-media-and-render.yml
     with:
       slug: ${{ needs.detect.outputs.slug }}
     secrets: inherit
