@@ -74,10 +74,11 @@ jobs:
               parts = sorted(build.glob('vo.mp3.b64.part*'))
               if not parts:
                   raise SystemExit('no supplied narration file or complete narration parts were found')
-              raw = base64.b64decode(
-                  ''.join(part.read_text(encoding='ascii') for part in parts),
-                  validate=True,
+              encoded = ''.join(
+                  ''.join(part.read_text(encoding='ascii').split())
+                  for part in parts
               )
+              raw = base64.b64decode(encoded, validate=True)
               transport = f'{len(parts)} base64 parts'
 
           actual_sha = hashlib.sha256(raw).hexdigest()
