@@ -171,7 +171,10 @@ jobs:
       - name: Cache previously downloaded footage for this slug
         uses: actions/cache@v4
         with:
-          path: build/${{ inputs.slug }}/clip_*.mp4
+          path: |
+            build/${{ inputs.slug }}/clip_*.mp4
+            build/${{ inputs.slug }}/vo.mp3
+            build/${{ inputs.slug }}/words.json
           key: footage-${{ inputs.slug }}-${{ github.run_id }}
           restore-keys: |
             footage-${{ inputs.slug }}-
