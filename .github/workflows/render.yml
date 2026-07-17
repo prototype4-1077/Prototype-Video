@@ -10,12 +10,21 @@ on:
         type: boolean
         required: false
         default: false
+      use_container:
+        description: "Run inside the prebuilt ghcr render image (package must be public)"
+        type: boolean
+        required: false
+        default: false
   workflow_call:
     inputs:
       slug:
         type: string
         required: true
       long_render:
+        type: boolean
+        required: false
+        default: false
+      use_container:
         type: boolean
         required: false
         default: false
@@ -31,6 +40,7 @@ jobs:
   render:
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    container: ${{ inputs.use_container && 'ghcr.io/1974jwatson/tiktok-render:latest' || '' }}
     steps:
       - uses: actions/checkout@v4
 
@@ -52,7 +62,8 @@ jobs:
             base64 --decode "$encoded" > "$target"
           done
 
-      - uses: actions/setup-python@v5
+      - if: ${{ !inputs.use_container }}
+        uses: actions/setup-python@v5
         with:
           python-version: "3.11"
           cache: pip
@@ -67,6 +78,7 @@ jobs:
           key: models-v1
 
       - name: System deps
+        if: ${{ !inputs.use_container }}
         run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
 
       - name: Validate supplied media and preserve long-script intent
@@ -150,10 +162,19 @@ jobs:
           PY
 
       - name: Python deps
+        if: ${{ !inputs.use_container }}
         run: pip install -q -r pipeline/requirements.txt
 
       - name: Pipeline regression tests
         run: python3 -m unittest discover -s pipeline/tests -v
+
+      - name: Cache previously downloaded footage for this slug
+        uses: actions/cache@v4
+        with:
+          path: build/${{ inputs.slug }}/clip_*.mp4
+          key: footage-${{ inputs.slug }}-${{ github.run_id }}
+          restore-keys: |
+            footage-${{ inputs.slug }}-
 
       - name: API keys from repo secrets
         run: |
