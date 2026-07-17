@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-17T13:37:57+00:00",
+  "generated_at": "2026-07-17T13:47:06+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
@@ -7,7 +7,7 @@
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
       "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "6619d6be881f7c84",
+      "fingerprint": "69ace71f4c37a958",
       "priority": "medium",
       "stage": "build_pass"
     },
@@ -15,7 +15,7 @@
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
       "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "69ace71f4c37a958",
+      "fingerprint": "6619d6be881f7c84",
       "priority": "medium",
       "stage": "build_pass"
     },
@@ -32,22 +32,22 @@
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "6619d6be881f7c84",
+      "fingerprint": "69ace71f4c37a958",
       "kind": "failure",
-      "normalized_error": "note: scene <n> keyword 'sand' not found in text (won't highlight) note: scene <n> keyword 'writing' not found in text (won't highlight) governor stage=hero:<n> state=start soft=720s hard=1200s governor stage=hero:<n> state=success duration=<n>.0s rc=<n> hero <n>: generated from stock scene none (an ancient ouroboros, a glowing serpent devouring its own ta...) governor stage=credits state=start soft=33s hard=300s gov",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: architecture repeats for <n> consecutive scenes starting at scene <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
       "slugs": [
-        "the-loop"
+        "the-other-versions-of-you"
       ],
       "stage": "build_pass"
     },
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "69ace71f4c37a958",
+      "fingerprint": "6619d6be881f7c84",
       "kind": "failure",
-      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: architecture repeats for <n> consecutive scenes starting at scene <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "normalized_error": "note: scene <n> keyword 'sand' not found in text (won't highlight) note: scene <n> keyword 'writing' not found in text (won't highlight) governor stage=hero:<n> state=start soft=720s hard=1200s governor stage=hero:<n> state=success duration=<n>.0s rc=<n> hero <n>: generated from stock scene none (an ancient ouroboros, a glowing serpent devouring its own ta...) governor stage=credits state=start soft=33s hard=300s gov",
       "slugs": [
-        "the-other-versions-of-you"
+        "the-loop"
       ],
       "stage": "build_pass"
     },
