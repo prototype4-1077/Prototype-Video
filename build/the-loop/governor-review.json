@@ -1,16 +1,8 @@
 {
-  "generated_at": "2026-07-17T08:48:34+00:00",
+  "generated_at": "2026-07-17T09:28:53+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
-    {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "4ae4baec7b402823",
-      "priority": "medium",
-      "stage": "build_pass"
-    },
     {
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
@@ -26,28 +18,9 @@
       "fingerprint": "c71af56206e907c8",
       "priority": "medium",
       "stage": "build_pass"
-    },
-    {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "c3f682c2a486aebf",
-      "priority": "medium",
-      "stage": "footage"
     }
   ],
   "recurring_incidents": [
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "4ae4baec7b402823",
-      "kind": "failure",
-      "normalized_error": "governor stage=footage state=start soft=66s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=c3f682c2a486aebf error: footage scene <n>: file) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _gated_rank raise nonarrativematch(decisions) nonarrativematch: no stock candidate passed narrative fidelity",
-      "slugs": [
-        "the-loop"
-      ],
-      "stage": "build_pass"
-    },
     {
       "count": 2,
       "failure_class": "unknown",
@@ -69,17 +42,6 @@
         "message-from-your-future-20260716"
       ],
       "stage": "build_pass"
-    },
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "c3f682c2a486aebf",
-      "kind": "failure",
-      "normalized_error": "oryline_footage.py\", line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard footage.fetch_scene(build_dir, script, index, used if used is not none else set()) file \"<path> line <n>, in fetch_scene scored = rank(query, vids, sc.get(\"duration\"), genre, profile) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _gated_rank raise nonarra",
-      "slugs": [
-        "the-loop"
-      ],
-      "stage": "footage"
     }
   ],
   "runs_analyzed": 10,
@@ -98,76 +60,76 @@
       "total_duration_s": 7.023
     },
     "altsheet": {
-      "attempts": 6,
+      "attempts": 7,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 4.532,
-      "p95_success_s": 7.343,
-      "sample_count": 6,
-      "successes": 6,
+      "p50_success_s": 4.032,
+      "p95_success_s": 7.19,
+      "sample_count": 7,
+      "successes": 7,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 27.255
+      "total_duration_s": 28.268
     },
     "assemble": {
-      "attempts": 320,
+      "attempts": 349,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 15.665,
-      "p95_success_s": 34.192,
-      "sample_count": 320,
-      "successes": 320,
+      "p50_success_s": 17.106,
+      "p95_success_s": 46.236,
+      "sample_count": 349,
+      "successes": 349,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 5503.973
+      "total_duration_s": 7011.254
     },
     "build_pass": {
-      "attempts": 97,
-      "failure_rate": 0.0619,
-      "failures": 6,
-      "p50_success_s": 112.172,
-      "p95_success_s": 140.305,
-      "sample_count": 91,
-      "successes": 91,
+      "attempts": 109,
+      "failure_rate": 0.0367,
+      "failures": 4,
+      "p50_success_s": 113.7,
+      "p95_success_s": 145.792,
+      "sample_count": 105,
+      "successes": 105,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 8775.15
+      "total_duration_s": 10392.417
     },
     "credits": {
-      "attempts": 67,
+      "attempts": 81,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.015,
-      "p95_success_s": 1.025,
-      "sample_count": 67,
-      "successes": 67,
+      "p50_success_s": 1.013,
+      "p95_success_s": 1.024,
+      "sample_count": 81,
+      "successes": 81,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 67.998
+      "total_duration_s": 82.158
     },
     "ffmpeg": {
-      "attempts": 96,
+      "attempts": 100,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 5.151,
-      "p95_success_s": 24.248,
-      "sample_count": 96,
-      "successes": 96,
+      "p50_success_s": 5.634,
+      "p95_success_s": 24.425,
+      "sample_count": 100,
+      "successes": 100,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 880.471
+      "total_duration_s": 928.788
     },
     "footage": {
-      "attempts": 186,
-      "failure_rate": 0.0108,
-      "failures": 2,
+      "attempts": 195,
+      "failure_rate": 0.0,
+      "failures": 0,
       "p50_success_s": 3.012,
-      "p95_success_s": 14.025,
-      "sample_count": 184,
-      "successes": 184,
+      "p95_success_s": 13.033,
+      "sample_count": 195,
+      "successes": 195,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1082.433
+      "total_duration_s": 1040.491
     },
     "hero": {
       "attempts": 2,
@@ -194,40 +156,40 @@
       "total_duration_s": 13.056
     },
     "prep": {
-      "attempts": 7,
+      "attempts": 8,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 42.163,
-      "p95_success_s": 45.902,
-      "sample_count": 7,
-      "successes": 7,
+      "p50_success_s": 40.141,
+      "p95_success_s": 45.846,
+      "sample_count": 8,
+      "successes": 8,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 249.023
+      "total_duration_s": 264.07
     },
     "probe": {
-      "attempts": 353,
+      "attempts": 383,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.017,
       "p95_success_s": 1.025,
-      "sample_count": 353,
-      "successes": 353,
+      "sample_count": 383,
+      "successes": 383,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 359.312
+      "total_duration_s": 389.685
     },
     "quality": {
-      "attempts": 7,
+      "attempts": 8,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 49.298,
-      "p95_success_s": 59.616,
-      "sample_count": 7,
-      "successes": 7,
+      "p50_success_s": 47.865,
+      "p95_success_s": 59.246,
+      "sample_count": 8,
+      "successes": 8,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 315.029
+      "total_duration_s": 351.296
     },
     "shortcut": {
       "attempts": 5,
@@ -245,29 +207,29 @@
       "attempts": 24,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 10.009,
-      "p95_success_s": 10.86,
+      "p50_success_s": 10.01,
+      "p95_success_s": 10.868,
       "sample_count": 24,
       "successes": 24,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 209.315
+      "total_duration_s": 218.332
     },
     "tts": {
       "attempts": 4,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 44.539,
-      "p95_success_s": 62.879,
+      "p95_success_s": 64.591,
       "sample_count": 4,
       "successes": 4,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 176.117
+      "total_duration_s": 178.131
     }
   },
   "statuses": {
-    "done": 7,
-    "failed": 3
+    "done": 8,
+    "failed": 2
   }
 }
