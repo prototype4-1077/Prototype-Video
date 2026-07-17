@@ -13,6 +13,11 @@ API BASE: https://api.github.com/repos/1974jwatson/TikTok-Video-Pipeline
 MEDIA POLICY: never commit video/audio/base64 media except the documented
 build/<slug>/vo.mp3 connector path; finished media belongs in Releases/artifacts.
 
+AUDIENCE LOOP: after uploading a build to YouTube run
+`python3 pipeline/learn.py published <slug> <video_id>` and commit
+pipeline/published_videos.json; the nightly analytics workflow feeds real
+retention back into memory.json/taste.npz and refreshes WHATS_WORKING.md
+(setup: pipeline/ANALYTICS.md).
 ## Step 0 — Read context (GET file contents via API or git clone)
 - pipeline/HANDOFF.md      — full pipeline docs
 - pipeline/style_profile.md — James's writing voice + visual spec
