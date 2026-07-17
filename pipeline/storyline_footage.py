@@ -100,10 +100,12 @@ def _render_storyboard(build_dir: str, script: dict, index: int, reason: str,
             raise
         # Standing rule: if generation fails, use stock video. A deterministic
         # near-static graphic will fail identically on retry, so re-route to a
-        # genuine stock search instead of burning the retry budget.
-        scene["narrative_mode"] = "stock"
+        # genuine stock search instead of burning the retry budget. This path
+        # only triggers when BOTH literal routes are impossible, so the direct-
+        # match gate is relaxed (atmosphere) rather than letting the run die.
+        scene["narrative_mode"] = "atmosphere"
         print(f"scene {index}: generated storyboard failed motion gate; "
-              f"falling back to genuine stock ({exc})")
+              f"falling back to genuine stock as atmosphere ({exc})")
         footage.fetch_scene(build_dir, script, index, used if used is not None else set())
         return {
             "scene_index": int(index),
