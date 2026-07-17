@@ -4,14 +4,20 @@ Env: ELEVENLABS_API_KEY, ELEVENLABS_VOICE_ID (default: Daniel - deep calm narrat
 Per-video overrides: script.json may include voice_settings and elevenlabs_model."""
 import base64, json, os, sys, urllib.request
 
-VOICE = os.environ.get("ELEVENLABS_VOICE_ID", "onwK4e9ZLuTAKqWW03F9")  # Daniel
+VOICE = os.environ.get("ELEVENLABS_VOICE_ID", "onwK4e9ZLuTAKqWW03F9")  # Daniel (default)
 KEY = os.environ["ELEVENLABS_API_KEY"]
 MODEL = os.environ.get("ELEVENLABS_MODEL", "eleven_multilingual_v2")
 
 
 def tts(bd):
     s = json.load(open(f"{bd}/script.json"))
-    full_text = " ".join(sc["text"] for sc in s["scenes"])
+    scenes = s["scenes"]
+    # voice_text carries inline v3 emotion tags ([whispers], [annoyed], pauses)
+    # to the model. Plain "text" stays clean for captions, whisper alignment,
+    # and symbol matching, so tags never appear on screen or distort scene words.
+    voice_texts = [sc.get("voice_text") or sc["text"] for sc in scenes]
+    full_text = " ".join(voice_texts)
+    voice = s.get("elevenlabs_voice_id") or VOICE
     model = s.get("elevenlabs_model", MODEL)
     if str(model).startswith("eleven_v3"):
         # v3 interprets settings differently and takes emotional direction from
@@ -29,7 +35,7 @@ def tts(bd):
     if voice_settings:
         body["voice_settings"] = voice_settings
     req = urllib.request.Request(
-        f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE}/with-timestamps",
+        f"https://api.elevenlabs.io/v1/text-to-speech/{voice}/with-timestamps",
         data=json.dumps(body).encode(),
         headers={"xi-api-key": KEY, "Content-Type": "application/json"})
     resp = json.load(urllib.request.urlopen(req, timeout=300))
@@ -39,9 +45,9 @@ def tts(bd):
     # map each scene's text span to audio time
     pos = 0
     joined = full_text
-    for sc in s["scenes"]:
-        i = joined.index(sc["text"], pos)
-        j = i + len(sc["text"])
+    for sc, vt in zip(scenes, voice_texts):
+        i = joined.index(vt, pos)
+        j = i + len(vt)
         # find char indices covering [i, j)
         sc["_t0"] = starts[min(i, len(starts) - 1)]
         sc["_t1"] = ends[min(j - 1, len(ends) - 1)]
