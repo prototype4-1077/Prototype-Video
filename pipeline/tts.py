@@ -12,21 +12,25 @@ MODEL = os.environ.get("ELEVENLABS_MODEL", "eleven_multilingual_v2")
 def tts(bd):
     s = json.load(open(f"{bd}/script.json"))
     full_text = " ".join(sc["text"] for sc in s["scenes"])
-    voice_settings = {
-        "stability": 0.55,
-        "similarity_boost": 0.75,
-        "style": 0.35,
-        "speed": 0.92,
-    }
-    voice_settings.update(s.get("voice_settings", {}))
     model = s.get("elevenlabs_model", MODEL)
+    if str(model).startswith("eleven_v3"):
+        # v3 interprets settings differently and takes emotional direction from
+        # inline audio tags ([whispers], [awe], ...); send only explicit overrides.
+        voice_settings = dict(s.get("voice_settings", {}))
+    else:
+        voice_settings = {
+            "stability": 0.55,
+            "similarity_boost": 0.75,
+            "style": 0.35,
+            "speed": 0.92,
+        }
+        voice_settings.update(s.get("voice_settings", {}))
+    body = {"text": full_text, "model_id": model}
+    if voice_settings:
+        body["voice_settings"] = voice_settings
     req = urllib.request.Request(
         f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE}/with-timestamps",
-        data=json.dumps({
-            "text": full_text,
-            "model_id": model,
-            "voice_settings": voice_settings,
-        }).encode(),
+        data=json.dumps(body).encode(),
         headers={"xi-api-key": KEY, "Content-Type": "application/json"})
     resp = json.load(urllib.request.urlopen(req, timeout=300))
     open(f"{bd}/vo.mp3", "wb").write(base64.b64decode(resp["audio_base64"]))

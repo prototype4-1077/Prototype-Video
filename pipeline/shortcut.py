@@ -128,7 +128,7 @@ def main(bd, target=58.0):
     except Exception:
         ln = "loudnorm=I=-14:TP=-1.5:LRA=11"
     run(["ffmpeg", "-v", "error", "-y", "-i", raw, "-af", ln, "-map", "0:v", "-map", "0:a",
-         "-c:v", "copy", "-c:a", "aac", "-b:a", "160k", "-movflags", "+faststart",
+         "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart",
          f"{bd}/final_short.mp4"])
     short_script = {
         "max_still_source_ratio": cap,

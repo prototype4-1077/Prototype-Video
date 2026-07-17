@@ -16,6 +16,7 @@ import profiles
 from video_format import (
     BAND_HEIGHT, BAND_WIDTH, BAND_Y, FPS, HEIGHT, WIDTH,
     YOUTUBE_HEIGHT, YOUTUBE_WIDTH,
+    ENCODE_QUALITY, COLOR_TAGS,
 )
 
 
@@ -165,7 +166,7 @@ def render_scene(bd, i, output_format="portrait"):
         last = "vf"
     run(["ffmpeg", "-v", "error", "-y"] + inputs +
         ["-filter_complex", fc, "-map", f"[{last}]", "-t", str(dur),
-         "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "21",
+         "-an", "-c:v", "libx264", *ENCODE_QUALITY, *COLOR_TAGS,
          "-pix_fmt", "yuv420p", seg])
     print(f"{prefix} {i} done ({canvas_w}x{canvas_h})")
 

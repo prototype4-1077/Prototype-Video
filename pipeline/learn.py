@@ -18,6 +18,8 @@ import profiles
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 MEM = os.path.join(HERE, "memory.json")
+PUB = os.path.join(HERE, "published_videos.json")
+QUERY_WEIGHT_DECAY = 0.98  # per recorded video; recent evidence outvotes old habits
 
 
 def load():
@@ -40,6 +42,10 @@ def record(bd):
     profile = profiles.resolve(s)
     weights = (m.setdefault("profile_query_weights", {}).setdefault(profile, {})
                if profile else m["query_weights"])
+    for key in list(weights):  # recency decay
+        weights[key] = round(weights[key] * QUERY_WEIGHT_DECAY, 4)
+        if abs(weights[key]) < 0.05:
+            del weights[key]
     kept = []
     for sc in s["scenes"]:
         pid = sc.get("pexels_id")
@@ -292,6 +298,118 @@ def retention(bd, stamps):
     print("Recorded. Future scripts should shorten/energize beats like these.")
 
 
+def audience(bd, retention_file):
+    """Automatic scene-level learning from a YouTube audience-retention curve.
+
+    retention_file: {"video_id", "elapsed" [0..1 x ~100], "watch_ratio" [...]}
+    as written by analytics_sync.py. Each timed scene's retention
+    drop-per-second is ranked; the steepest-bleeding decile is penalized
+    (query -1, taste rejected) and the strongest-holding decile rewarded
+    (query +1, taste approved). Gentler than swap()'s -2 because audience
+    data is noisy. Idempotent per payload hash."""
+    import numpy as np
+    with open(retention_file, encoding="utf-8") as f:
+        payload = json.load(f)
+    with open(f"{bd}/script.json", encoding="utf-8") as f:
+        s = json.load(f)
+    scenes = s.get("scenes") or []
+    if "elapsed" not in payload or "watch_ratio" not in payload:
+        print("audience: payload has no retention curve; skipping")
+        return
+    review_id = hashlib.sha256(
+        json.dumps(payload, sort_keys=True, ensure_ascii=True).encode()).hexdigest()
+    m = load()
+    applied = m.setdefault("audience_review_ids", [])
+    if review_id in applied:
+        print("audience: retention payload already applied")
+        return
+    timed = [i for i, sc in enumerate(scenes) if float(sc.get("duration") or 0) > 0]
+    if len(timed) < 4:
+        print("audience: too few timed scenes to learn from")
+        return
+    total = max(float(scenes[i]["start"]) + float(scenes[i]["duration"]) for i in timed)
+    t = np.asarray(payload["elapsed"], float) * total
+    wr = np.asarray(payload["watch_ratio"], float)
+    dps = {}
+    for i in timed:
+        st = float(scenes[i]["start"]); dur = float(scenes[i]["duration"])
+        w0 = float(np.interp(st, t, wr)); w1 = float(np.interp(st + dur, t, wr))
+        dps[i] = (w0 - w1) / max(dur, 0.1)
+    ranked = sorted(dps, key=lambda i: dps[i])  # holds best -> bleeds worst
+    k = max(1, len(ranked) // 10)
+    best, worst = ranked[:k], ranked[-k:]
+    profile = profiles.resolve(s)
+    weights = (m.setdefault("profile_query_weights", {}).setdefault(profile, {})
+               if profile else m.setdefault("query_weights", {}))
+    approved_vecs, rejected_vecs = [], []
+    for group, delta, bucket in ((best, 1, approved_vecs), (worst, -1, rejected_vecs)):
+        for i in group:
+            q = (scenes[i].get("query") or "").strip().lower()
+            if q:
+                weights[q] = weights.get(q, 0) + delta
+            ef = f"{bd}/emb_{i:02d}.npy"
+            if os.path.exists(ef):
+                try:
+                    import numpy as _np
+                    bucket.append(_np.load(ef))
+                except Exception:
+                    pass
+    m.setdefault("audience_feedback", []).append({
+        "slug": s.get("slug"), "video_id": payload.get("video_id"),
+        "applied_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "held": [int(i) for i in best], "bled": [int(i) for i in worst],
+        "drop_per_s": {str(i): round(dps[i], 5) for i in dps}})
+    applied.append(review_id)
+    save(m)
+    try:
+        import numpy as _np, taste
+        if approved_vecs:
+            taste.add("approved", _np.stack(approved_vecs), profile)
+        if rejected_vecs:
+            taste.add("rejected", _np.stack(rejected_vecs), profile)
+    except Exception as e:
+        print(f"note: taste update skipped ({e})")
+    print(f"audience({s.get('slug')}): held {best} rewarded, bled {worst} penalized")
+
+
+def published(slug, video_id):
+    """Map a build slug to its uploaded YouTube video id (feeds analytics_sync)."""
+    data = {}
+    if os.path.exists(PUB):
+        with open(PUB) as f:
+            data = json.load(f)
+    data[slug] = {"youtube_id": str(video_id),
+                  "published_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat()}
+    with open(PUB, "w") as f:
+        json.dump(data, f, indent=1)
+    print(f"published: {slug} -> {video_id} ({len(data)} mapped). Commit pipeline/published_videos.json.")
+
+
+def digest():
+    """Write pipeline/WHATS_WORKING.md: evidence for future scriptwriters."""
+    m = load()
+    lines = ["# What's working (auto-generated: learn.py digest)", "",
+             f"_Updated {datetime.now(timezone.utc):%Y-%m-%d} from "
+             f"{len(m.get('videos', []))} recorded videos._", ""]
+    top = sorted(m.get("query_weights", {}).items(), key=lambda kv: -kv[1])[:15]
+    if top:
+        lines += ["## Queries that keep winning", ""]
+        lines += [f"- `{q}` ({w:+.2f})" for q, w in top] + [""]
+    for prof, pw in sorted(m.get("profile_query_weights", {}).items()):
+        ptop = sorted(pw.items(), key=lambda kv: -kv[1])[:5]
+        if ptop:
+            lines += [f"## Profile {prof}: top queries", ""]
+            lines += [f"- `{q}` ({w:+.2f})" for q, w in ptop] + [""]
+    fb = m.get("audience_feedback", [])[-10:]
+    if fb:
+        lines += ["## Recent audience verdicts (YouTube retention)", ""]
+        lines += [f"- {e.get('slug')}: scenes {e.get('held')} held viewers, "
+                  f"scenes {e.get('bled')} bled them" for e in fb] + [""]
+    with open(os.path.join(HERE, "WHATS_WORKING.md"), "w") as f:
+        f.write("\n".join(lines))
+    print("wrote pipeline/WHATS_WORKING.md")
+
+
 def pin(bd, i, vid):
     """Pin scene i to a specific clip id (from alts.json or manual curation)."""
     s = json.load(open(f"{bd}/script.json"))
@@ -319,7 +437,7 @@ def show():
     print(f"videos made: {len(m['videos'])} -> {[v['slug'] for v in m['videos']]}")
     print(f"clips remembered (won't reuse): {len(m['used_ids'])}, banned: {len(m['banned_ids'])}")
     top = sorted(m["query_weights"].items(), key=lambda kv: -kv[1])[:10]
-    print("top queries:", ", ".join(f"{q} ({w:+d})" for q, w in top) or "(none yet)")
+    print("top queries:", ", ".join(f"{q} ({w:+.2f})" for q, w in top) or "(none yet)")
     for mo in m.get("motifs", []):
         print(f"motif [{mo['video']}] {mo['name']}: \"{mo['line']}\"")
     print("James's notes:")
@@ -336,4 +454,7 @@ if __name__ == "__main__":
     elif cmd == "pin": pin(sys.argv[2], int(sys.argv[3]), sys.argv[4])
     elif cmd == "motif": motif(sys.argv[2], sys.argv[3], sys.argv[4])
     elif cmd == "retention": retention(sys.argv[2], sys.argv[3].split(","))
+    elif cmd == "audience": audience(sys.argv[2], sys.argv[3])
+    elif cmd == "published": published(sys.argv[2], sys.argv[3])
+    elif cmd == "digest": digest()
     else: show()

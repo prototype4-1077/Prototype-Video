@@ -14,6 +14,8 @@ import sys
 
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 
+from video_format import ENCODE_QUALITY, COLOR_TAGS
+
 import footage
 import profiles
 import visual_symbols
@@ -105,7 +107,7 @@ def make_reel(out_dir, build_dir):
         "ffmpeg", "-v", "error", "-y", "-f", "concat", "-safe", "0", "-i", listing,
         "-vf", "scale=1600:880:force_original_aspect_ratio=decrease,"
                "pad=1600:880:(ow-iw)/2:(oh-ih)/2:black,format=yuv420p",
-        "-r", "30", "-c:v", "libx264", "-preset", "veryfast", "-crf", "20",
+        "-r", "30", "-c:v", "libx264", *ENCODE_QUALITY, *COLOR_TAGS,
         "-movflags", "+faststart", out,
     ], capture_output=True, text=True)
     if r.returncode:

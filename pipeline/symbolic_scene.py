@@ -12,6 +12,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont, ImageFilter
 
 import motion
+from video_format import ENCODE_QUALITY, COLOR_TAGS
 
 W, H, FPS = 1152, 648, 20
 TAU = math.tau
@@ -413,7 +414,7 @@ def render_clip(scene: dict, output: Path) -> None:
     _,_,accent,light=PALETTES[palette]; kind=scene.get("symbolic_kind"); fn=RENDERERS.get(kind)
     if fn is None: raise ValueError(f"unknown symbolic_kind: {kind}")
     output.parent.mkdir(parents=True,exist_ok=True); partial=output.with_suffix(".part.mp4")
-    cmd=["ffmpeg","-hide_banner","-loglevel","error","-y","-f","rawvideo","-pix_fmt","rgb24","-s",f"{W}x{H}","-r",str(FPS),"-i","-","-an","-c:v","libx264","-preset","veryfast","-crf","18","-pix_fmt","yuv420p","-movflags","+faststart",str(partial)]
+    cmd=["ffmpeg","-hide_banner","-loglevel","error","-y","-f","rawvideo","-pix_fmt","rgb24","-s",f"{W}x{H}","-r",str(FPS),"-i","-","-an","-c:v","libx264",*ENCODE_QUALITY,*COLOR_TAGS,"-pix_fmt","yuv420p","-movflags","+faststart",str(partial)]
     proc=subprocess.Popen(cmd,stdin=subprocess.PIPE)
     try:
         for f in range(frames):

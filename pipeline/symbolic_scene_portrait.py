@@ -10,6 +10,8 @@ import math
 import os
 import subprocess
 import sys
+
+from video_format import ENCODE_QUALITY, COLOR_TAGS
 from pathlib import Path
 
 import numpy as np
@@ -98,7 +100,7 @@ def render_clip(scene: dict, output: Path) -> None:
         "ffmpeg", "-hide_banner", "-loglevel", "error", "-y",
         "-f", "rawvideo", "-pix_fmt", "rgb24",
         "-s", f"{OUT_W}x{OUT_H}", "-r", str(FPS), "-i", "-",
-        "-an", "-c:v", "libx264", "-preset", "veryfast", "-crf", "18",
+        "-an", "-c:v", "libx264", *ENCODE_QUALITY, *COLOR_TAGS,
         "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(partial),
     ]
     process = subprocess.Popen(command, stdin=subprocess.PIPE)

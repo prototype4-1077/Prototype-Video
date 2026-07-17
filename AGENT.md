@@ -4,13 +4,23 @@ You are making a mystical-philosophical TikTok video for James using this repo's
 cloud render farm. You need NO video tools — GitHub Actions renders everything.
 You only need: (1) the connected GitHub app, (2) this file.
 
-REPO: jameswatson1077/tiktok-videos (private)
+REPO: 1974jwatson/TikTok-Video-Pipeline (private)
 ACCESS: Use the workspace's connected GitHub app. This connection is persistent across
 ChatGPT/Codex instances. Never ask James to paste a personal access token and never put a
 credential in a file, command, commit, or response. If the GitHub app is unavailable, report
 that connection as the blocker instead of requesting a secret.
-API BASE: https://api.github.com/repos/jameswatson1077/tiktok-videos
+API BASE: https://api.github.com/repos/1974jwatson/TikTok-Video-Pipeline
+MEDIA POLICY: never commit video/audio/base64 media except the documented
+build/<slug>/vo.mp3 connector path; finished media belongs in Releases/artifacts.
 
+AUDIENCE LOOP: after uploading a build to YouTube run
+`python3 pipeline/learn.py published <slug> <video_id>` and commit
+pipeline/published_videos.json; the nightly analytics workflow feeds real
+retention back into memory.json/taste.npz and refreshes WHATS_WORKING.md
+(setup: pipeline/ANALYTICS.md).
+VOICE: opt into Eleven v3 per script with "elevenlabs_model": "eleven_v3" and
+inline audio tags for emotion. HOOK A/B: visual-only "hook_variants" in
+script.json + pipeline/hook_variants.py (see pipeline/HANDOFF.md).
 ## Step 0 — Read context (GET file contents via API or git clone)
 - pipeline/HANDOFF.md      — full pipeline docs
 - pipeline/style_profile.md — James's writing voice + visual spec
