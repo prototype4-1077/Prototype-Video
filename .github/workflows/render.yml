@@ -5,11 +5,20 @@ on:
       slug:
         description: "Build slug (expects build/<slug>/script.json in the repo; optional vo.mp3 next to it)"
         required: true
+      long_render:
+        description: "Allow the full 78-minute Governor budget (default is a 45-minute wallet)"
+        type: boolean
+        required: false
+        default: false
   workflow_call:
     inputs:
       slug:
         type: string
         required: true
+      long_render:
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: write
@@ -77,29 +86,6 @@ jobs:
           supplied_script = bool(script.get("user_vo") or connector_parts)
           changed = False
 
-          # Audit the requested shot, not incidental words in a provider title/URL.
-          audit_path = pathlib.Path("pipeline/visual_symbols.py")
-          audit_source = audit_path.read_text(encoding="utf-8")
-          audit_lines = audit_source.splitlines()
-          audit_updated = False
-          for line_index, line in enumerate(audit_lines):
-              marker = 'search_query, scene.get("image_prompt"), scene.get("source_title")'
-              if marker not in line:
-                  continue
-              indent = line[: len(line) - len(line.lstrip())]
-              audit_lines[line_index] = indent + 'search_query, scene.get("image_prompt"),'
-              if (
-                  line_index + 1 < len(audit_lines)
-                  and 'scene.get("source_url")' in audit_lines[line_index + 1]
-              ):
-                  del audit_lines[line_index + 1]
-              audit_updated = True
-              break
-          if audit_updated:
-              audit_path.write_text("\n".join(audit_lines) + "\n", encoding="utf-8")
-              print("Visual audit now excludes provider-title and URL contamination.")
-          else:
-              print("Visual audit source was already corrected; continuing.")
 
           if supplied_script:
               duration = 0.0
@@ -155,45 +141,6 @@ jobs:
                   changed = True
               print("Applied long-script visual policy: max human presence 60%.")
 
-          if script.get("slug") == "pattern-wearing-matter" and len(scenes) >= 18:
-              overrides = {
-                  0: {
-                      "symbol_query": "empty museum pedestal beneath a blank exhibit label while a precise spiral projection moves across the gallery wall, bright cinematic lighting, genuine camera motion",
-                      "image_prompt": "A premium realistic cinematic image of an empty museum pedestal beneath a blank exhibit label, with a precise spiral projection crossing the wall, questioning whether identity is an object, bright readable unoccupied gallery",
-                      "symbol_family": "identity",
-                      "visual_function": "perspective_shift",
-                      "primary_symbol": "empty pedestal",
-                  },
-                  10: {
-                      "symbol_query": "two transparent water tanks display the same rotating spiral pattern while different streams continuously flow through them, bright laboratory light, genuine moving water",
-                      "symbol_family": "geometry",
-                      "visual_function": "perspective_shift",
-                      "primary_symbol": "paired spirals",
-                  },
-                  13: {
-                      "symbol_query": "fixed label ME remains centered while photographs notes and colored cards beneath it are continuously replaced, bright tabletop stop motion, genuine movement",
-                      "symbol_family": "language",
-                      "visual_function": "literal_anchor",
-                      "primary_symbol": "fixed label",
-                  },
-                  17: {
-                      "symbol_query": "one continuous luminous line travels through a corridor of changing clock frames and shifting shadows, bright golden side light, smooth cinematic motion",
-                      "symbol_family": "time_memory",
-                      "visual_function": "perspective_shift",
-                      "primary_symbol": "continuous line",
-                  },
-              }
-              for index, values in overrides.items():
-                  scene = scenes[index]
-                  scene.update(values)
-                  scene.pop("human_role", None)
-                  for key in (
-                      "pexels_id", "source_id", "source_title", "source_url",
-                      "motion_verified", "symbol_family_source",
-                  ):
-                      scene.pop(key, None)
-              changed = True
-              print("Applied four non-human process metaphors to pattern-wearing-matter.")
 
           if changed:
               script_path.write_text(
@@ -223,7 +170,7 @@ jobs:
           PYTHONUNBUFFERED: "1"
         run: |
           python3 pipeline/run_governed.py "build/${{ inputs.slug }}" \
-            --max-passes 200 --overall-timeout 4680
+            --max-passes 200 --overall-timeout ${{ inputs.long_render && '4680' || '2700' }}
           python3 - "build/${{ inputs.slug }}/script.json" <<'PY'
           import json
           import os
@@ -319,7 +266,6 @@ jobs:
           git config user.email "render@users.noreply.github.com"
           for f in \
             pipeline/memory.json \
-            pipeline/visual_symbols.py \
             "build/${{ inputs.slug }}/script.json" \
             "build/${{ inputs.slug }}/run-id.txt" \
             "build/${{ inputs.slug }}/alts.json" \
