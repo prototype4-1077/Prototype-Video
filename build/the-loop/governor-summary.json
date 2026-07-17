@@ -1,0 +1,177 @@
+{
+  "finished_at": "2026-07-17T05:58:28+00:00",
+  "github_run_id": "29558562564",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "0b8595951c29d339",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "ork<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': fal",
+      "stage": "footage"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "8da160a7918a8404",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "note: visual symbols: primary symbol 'window' appears <n> times; vary the metaphor vocabulary governor stage=footage state=start soft=66s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=66s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=0b8595951c29d339 error: foota",
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "4e0620fb0dc4bf7d",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "note: visual symbols: primary symbol 'window' appears <n> times; vary the metaphor vocabulary governor stage=footage state=start soft=66s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=0b8595951c29d339 error: footage scene <n>: oard.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks ",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "footage failed (unknown); retry budget 1 exhausted. fingerprint=0b8595951c29d339. ERROR: footage scene 1: oard.py\", line 666, in render_scene",
+  "mode": "recover",
+  "passes": 4,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 6,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 12.02,
+      "idle_timeout_s": 66.07,
+      "sample_count": 166,
+      "soft_timeout_s": 66.07,
+      "source": "history"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 10.02,
+      "idle_timeout_s": 180.0,
+      "sample_count": 21,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 180.0,
+      "sample_count": 3,
+      "soft_timeout_s": 240.0,
+      "source": "default"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "0b8595951c29d339",
+      "priority": "high",
+      "reason": "2 occurrence(s): ork<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard plan = storyboard.render_scene(build_dir, script, index) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks sufficient motion: {'passes': fal",
+      "stage": "footage"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "8da160a7918a8404",
+      "priority": "medium",
+      "reason": "1 occurrence(s): note: visual symbols: primary symbol 'window' appears <n> times; vary the metaphor vocabulary governor stage=footage state=start soft=66s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=success duration=<n>.0s rc=<n> governor stage=footage state=start soft=66s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=0b8595951c29d339 error: foota",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "4e0620fb0dc4bf7d",
+      "priority": "medium",
+      "reason": "1 occurrence(s): note: visual symbols: primary symbol 'window' appears <n> times; vary the metaphor vocabulary governor stage=footage state=start soft=66s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=0b8595951c29d339 error: footage scene <n>: oard.py\", line <n>, in render_scene raise runtimeerror(f\"generated storyboard lacks sufficient motion: {evidence}\") runtimeerror: generated storyboard lacks ",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (138.1s).",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "bddc0bef5e8d4b319fca7244ccb27c7f",
+  "schema_version": 1,
+  "slug": "the-loop",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.001,
+      "p95_success_s": 1.001,
+      "success_durations_s": [
+        1.001
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.001
+    },
+    "build_pass": {
+      "attempts": 4,
+      "failures": 2,
+      "p50_success_s": 46.02,
+      "p95_success_s": 57.723,
+      "success_durations_s": [
+        59.023,
+        33.017
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 138.073
+    },
+    "footage": {
+      "attempts": 3,
+      "failures": 2,
+      "p50_success_s": 17.011,
+      "p95_success_s": 17.011,
+      "success_durations_s": [
+        17.011
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 44.032
+    },
+    "transcribe": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 11.005,
+      "p95_success_s": 11.006,
+      "success_durations_s": [
+        11.005,
+        11.006,
+        8.006
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 30.017
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 58.023,
+      "p95_success_s": 58.023,
+      "success_durations_s": [
+        58.023
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 58.023
+    }
+  },
+  "status": "failed"
+}
