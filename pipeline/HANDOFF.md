@@ -388,3 +388,13 @@ their links are not surfaced automatically.
   78); `use_container: true` runs in the prebuilt ghcr image once the
   package is public; per-slug footage caching speeds retries.
 - `coherence_report.json` (informational) flags visually jarring cuts.
+
+
+## Fallback visuals rule (James)
+
+When genuine stock footage cannot be found for a scene, the pipeline does NOT
+use a flat text/label graphic. It auto-generates an appealing SPECIAL-EFFECTS
+STILL IMAGE representing the line (glowing particles, volumetric light, depth,
+cinematic grade) via hero.py, then animates it with a depth push. See
+storyline_footage._render_storyboard and EFFECTS_STILL_STYLE. Any scene can force
+this look by setting "hero": true with an "image_prompt".
