@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-18T14:21:55+00:00",
+  "generated_at": "2026-07-18T15:49:15+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
@@ -42,6 +42,17 @@
         "message-from-your-future-20260716"
       ],
       "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-room-behind-you"
+      ],
+      "stage": "build_pass"
     }
   ],
   "runs_analyzed": 11,
@@ -57,91 +68,91 @@
       "successes": 7,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 7.025
+      "total_duration_s": 7.026
     },
     "altsheet": {
-      "attempts": 8,
+      "attempts": 7,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 4.024,
-      "p95_success_s": 7.037,
-      "sample_count": 8,
-      "successes": 8,
+      "p50_success_s": 4.032,
+      "p95_success_s": 7.19,
+      "sample_count": 7,
+      "successes": 7,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 29.272
+      "total_duration_s": 28.262
     },
     "assemble": {
       "attempts": 374,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 17.27,
-      "p95_success_s": 65.69,
+      "p95_success_s": 55.363,
       "sample_count": 374,
       "successes": 374,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 8599.1
+      "total_duration_s": 8127.397
     },
     "build_pass": {
-      "attempts": 122,
-      "failure_rate": 0.0328,
-      "failures": 4,
-      "p50_success_s": 113.951,
-      "p95_success_s": 171.065,
-      "sample_count": 118,
-      "successes": 118,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 12008.109
+      "attempts": 139,
+      "failure_rate": 0.036,
+      "failures": 5,
+      "p50_success_s": 115.708,
+      "p95_success_s": 170.219,
+      "sample_count": 134,
+      "successes": 134,
+      "timeout_rate": 0.0072,
+      "timeouts": 1,
+      "total_duration_s": 14679.08
     },
     "credits": {
-      "attempts": 95,
+      "attempts": 113,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.011,
+      "p50_success_s": 1.01,
       "p95_success_s": 1.025,
-      "sample_count": 95,
-      "successes": 95,
+      "sample_count": 113,
+      "successes": 113,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 96.354
+      "total_duration_s": 114.415
     },
     "ffmpeg": {
-      "attempts": 104,
+      "attempts": 100,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 5.628,
-      "p95_success_s": 26.905,
-      "sample_count": 104,
-      "successes": 104,
+      "p50_success_s": 5.151,
+      "p95_success_s": 24.425,
+      "sample_count": 100,
+      "successes": 100,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 982.001
+      "total_duration_s": 924.701
     },
     "footage": {
-      "attempts": 172,
+      "attempts": 166,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 3.011,
-      "p95_success_s": 13.473,
-      "sample_count": 172,
-      "successes": 172,
+      "p95_success_s": 12.023,
+      "sample_count": 166,
+      "successes": 166,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 898.257
+      "total_duration_s": 807.062
     },
     "hero": {
-      "attempts": 21,
+      "attempts": 177,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 8.031,
-      "p95_success_s": 9.039,
-      "sample_count": 21,
-      "successes": 21,
+      "p50_success_s": 21.031,
+      "p95_success_s": 24.066,
+      "sample_count": 177,
+      "successes": 177,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 137.471
+      "total_duration_s": 3406.333
     },
     "motion": {
       "attempts": 1,
@@ -165,31 +176,31 @@
       "successes": 9,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 278.093
+      "total_duration_s": 275.072
     },
     "probe": {
-      "attempts": 409,
+      "attempts": 408,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.015,
       "p95_success_s": 1.025,
-      "sample_count": 409,
-      "successes": 409,
+      "sample_count": 408,
+      "successes": 408,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 416.009
+      "total_duration_s": 414.873
     },
     "quality": {
-      "attempts": 9,
+      "attempts": 8,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 46.433,
-      "p95_success_s": 58.876,
-      "sample_count": 9,
-      "successes": 9,
+      "p50_success_s": 47.865,
+      "p95_success_s": 59.246,
+      "sample_count": 8,
+      "successes": 8,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 392.475
+      "total_duration_s": 349.204
     },
     "shortcut": {
       "attempts": 5,
@@ -229,7 +240,7 @@
     }
   },
   "statuses": {
-    "done": 9,
-    "failed": 2
+    "done": 8,
+    "failed": 3
   }
 }
