@@ -10,7 +10,11 @@ import captions
 
 def group(text):
     words = [(word, False) for word in text.split()]
-    return [[word for word, _ in line] for line in captions._group_title_words(words)]
+    # These tests exercise the ordinary title word-count rule. The optional
+    # character hint is reserved for TikTok cover-safe layout and is covered
+    # separately in test_tiktok_cover_title.py.
+    return [[word for word, _ in line]
+            for line in captions._group_title_words(words, use_character_hint=False)]
 
 
 class TitleLayoutTests(unittest.TestCase):

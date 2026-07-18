@@ -1,67 +1,393 @@
-"""ElevenLabs TTS with character timestamps -> per-sentence durations.
-Usage: python3 tts.py <build_dir>   (reads script.json, writes vo.mp3 + updates durations)
-Env: ELEVENLABS_API_KEY, ELEVENLABS_VOICE_ID (default: Daniel - deep calm narration)
-Per-video overrides: script.json may include voice_settings and elevenlabs_model."""
-import base64, json, os, sys, urllib.request
+"""ElevenLabs TTS with character timestamps and per-scene delivery tags.
 
-VOICE = os.environ.get("ELEVENLABS_VOICE_ID", "onwK4e9ZLuTAKqWW03F9")  # Daniel (default)
-KEY = os.environ["ELEVENLABS_API_KEY"]
-MODEL = os.environ.get("ELEVENLABS_MODEL", "eleven_multilingual_v2")
+Usage: python3 tts.py <build_dir>
+Reads script.json, writes vo.mp3 + voiceover-manifest.json, and updates scene timing.
+
+Environment:
+  ELEVENLABS_API_KEY
+  ELEVENLABS_VOICE_ID (default: Liam - Energetic, Social Media Creator)
+  ELEVENLABS_MODEL (default: eleven_v3)
+  ELEVENLABS_STABILITY_MODE (default: creative)
+
+Per-video overrides:
+  elevenlabs_voice_id, elevenlabs_model, elevenlabs_stability_mode,
+  voice_settings, auto_audio_tags, and scene.audio_tags.
+"""
+from __future__ import annotations
+
+import base64
+import json
+import os
+from pathlib import Path
+import re
+import sys
+import urllib.error
+import urllib.parse
+import urllib.request
+
+DEFAULT_VOICE_ID = "TX3LPaxmHKxFdv7VOQHJ"
+DEFAULT_VOICE_NAME = "Liam - Energetic, Social Media Creator"
+DEFAULT_MODEL_ID = "eleven_v3"
+DEFAULT_STABILITY_MODE = "creative"
+V3_CHARACTER_LIMIT = 3_000
+STABILITY_BY_MODE = {
+    "creative": 0.0,
+    "natural": 0.5,
+    "robust": 1.0,
+}
+V3_VOICE_SETTINGS = {
+    "stability": STABILITY_BY_MODE[DEFAULT_STABILITY_MODE],
+    "similarity_boost": 0.75,
+    "style": 0.0,
+    "speed": 0.91,
+}
+LEGACY_VOICE_SETTINGS = {
+    "stability": 0.55,
+    "similarity_boost": 0.75,
+    "style": 0.35,
+    "speed": 0.92,
+}
+OPENING_MOOD_TAGS = {
+    "laugh": "laughs",
+    "laughing": "laughs",
+    "laughs": "laughs",
+    "comedic": "mischievously",
+    "funny": "mischievously",
+    "playful": "mischievously",
+    "mischievous": "mischievously",
+    "mischievously": "mischievously",
+    "low": "low voice",
+    "low tone": "low voice",
+    "low voice": "low voice",
+    "thoughtful": "thoughtful",
+    "reflective": "thoughtful",
+    "sarcastic": "sarcastic",
+    "curious": "curious",
+    "excited": "excited",
+    "dramatic": "dramatic",
+    "tense": "tense",
+    "calm": "calm",
+    "soft": "softly",
+    "softly": "softly",
+    "whisper": "whispers",
+    "whispers": "whispers",
+    "neutral": "",
+}
+_TAG_PATTERN = re.compile(r"^[^\[\]\r\n]{1,48}$")
 
 
-def tts(bd):
-    s = json.load(open(f"{bd}/script.json"))
-    scenes = s["scenes"]
-    # voice_text carries inline v3 emotion tags ([whispers], [annoyed], pauses)
-    # to the model. Plain "text" stays clean for captions, whisper alignment,
-    # and symbol matching, so tags never appear on screen or distort scene words.
-    voice_texts = [sc.get("voice_text") or sc["text"] for sc in scenes]
-    full_text = " ".join(voice_texts)
-    voice = s.get("elevenlabs_voice_id") or VOICE
-    model = s.get("elevenlabs_model", MODEL)
-    if str(model).startswith("eleven_v3"):
-        # v3 interprets settings differently and takes emotional direction from
-        # inline audio tags ([whispers], [awe], ...); send only explicit overrides.
-        voice_settings = dict(s.get("voice_settings", {}))
+def _read_script(build_dir: str | os.PathLike[str]) -> dict:
+    path = Path(build_dir) / "script.json"
+    return json.loads(path.read_text(encoding="utf-8"))
+
+
+def resolve_voice_id(script: dict) -> str:
+    return str(
+        script.get("elevenlabs_voice_id")
+        or os.environ.get("ELEVENLABS_VOICE_ID")
+        or DEFAULT_VOICE_ID
+    ).strip()
+
+
+def resolve_model_id(script: dict) -> str:
+    return str(
+        script.get("elevenlabs_model")
+        or os.environ.get("ELEVENLABS_MODEL")
+        or DEFAULT_MODEL_ID
+    ).strip()
+
+
+def resolve_stability_mode(script: dict, model_id: str) -> str | None:
+    if model_id != DEFAULT_MODEL_ID:
+        return None
+    mode = str(
+        script.get("elevenlabs_stability_mode")
+        or os.environ.get("ELEVENLABS_STABILITY_MODE")
+        or DEFAULT_STABILITY_MODE
+    ).strip().lower()
+    if mode not in STABILITY_BY_MODE:
+        allowed = ", ".join(STABILITY_BY_MODE)
+        raise ValueError(
+            f"invalid elevenlabs_stability_mode {mode!r}; choose one of: {allowed}"
+        )
+    return mode
+
+
+def resolve_voice_settings(script: dict, model_id: str) -> dict:
+    """Return effective settings while keeping Eleven v3 in its named mode.
+
+    v3 maps its Creative/Natural/Robust modes through stability. Legacy numeric
+    stability/style values in old scripts are intentionally not allowed to pull
+    the upgraded pipeline away from the selected v3 mode. Similarity and speed
+    remain safe per-video overrides.
+    """
+    raw = script.get("voice_settings") or {}
+    if not isinstance(raw, dict):
+        raise ValueError("voice_settings must be a JSON object")
+
+    if model_id == DEFAULT_MODEL_ID:
+        mode = resolve_stability_mode(script, model_id)
+        settings = dict(V3_VOICE_SETTINGS)
+        settings["stability"] = STABILITY_BY_MODE[mode]
+        for key in ("similarity_boost", "speed"):
+            if key in raw:
+                settings[key] = float(raw[key])
+        # ElevenLabs recommends style 0 for v3; the audio tags carry direction.
+        settings["style"] = 0.0
+        return settings
+
+    settings = dict(LEGACY_VOICE_SETTINGS)
+    settings.update(raw)
+    return settings
+
+
+def normalize_audio_tags(value: object) -> list[str]:
+    """Normalize `curious` and `[curious]` to a safe API tag name."""
+    if value is None:
+        return []
+    if isinstance(value, str):
+        values = [value]
+    elif isinstance(value, (list, tuple)):
+        values = list(value)
     else:
-        voice_settings = {
-            "stability": 0.55,
-            "similarity_boost": 0.75,
-            "style": 0.35,
-            "speed": 0.92,
-        }
-        voice_settings.update(s.get("voice_settings", {}))
-    body = {"text": full_text, "model_id": model}
-    if voice_settings:
-        body["voice_settings"] = voice_settings
-    req = urllib.request.Request(
-        f"https://api.elevenlabs.io/v1/text-to-speech/{voice}/with-timestamps",
-        data=json.dumps(body).encode(),
-        headers={"xi-api-key": KEY, "Content-Type": "application/json"})
-    resp = json.load(urllib.request.urlopen(req, timeout=300))
-    open(f"{bd}/vo.mp3", "wb").write(base64.b64decode(resp["audio_base64"]))
-    al = resp["alignment"]
-    chars, starts, ends = al["characters"], al["character_start_times_seconds"], al["character_end_times_seconds"]
-    # map each scene's text span to audio time
+        raise ValueError("audio_tags must be a string or list of strings")
+
+    tags: list[str] = []
+    for raw in values:
+        if not isinstance(raw, str):
+            raise ValueError("every audio tag must be a string")
+        tag = raw.strip()
+        if tag.startswith("[") and tag.endswith("]"):
+            tag = tag[1:-1].strip()
+        if not tag:
+            continue
+        if not _TAG_PATTERN.fullmatch(tag):
+            raise ValueError(
+                f"invalid audio tag {raw!r}; use a plain tag such as 'curious'"
+            )
+        tags.append(tag)
+    return tags
+
+
+def opening_mood_tag(scene: dict) -> list[str] | None:
+    """Resolve an optional mood-selected opener without imposing one default."""
+    for field in ("opening_mood", "delivery_mood", "tone"):
+        if field not in scene:
+            continue
+        raw = str(scene.get(field) or "").strip().lower()
+        if raw not in OPENING_MOOD_TAGS:
+            allowed = ", ".join(sorted(OPENING_MOOD_TAGS))
+            raise ValueError(
+                f"invalid {field} {raw!r}; choose a supported mood: {allowed}"
+            )
+        tag = OPENING_MOOD_TAGS[raw]
+        return [tag] if tag else []
+    return None
+
+
+def infer_audio_tags(scene: dict, index: int, total: int) -> list[str]:
+    """Conservative fallback for older scripts that predate scene.audio_tags."""
+    text = str(scene.get("text") or "").strip()
+    function = str(scene.get("visual_function") or "").strip().lower()
+
+    if index == 0:
+        selected = opening_mood_tag(scene)
+        if selected is not None:
+            return selected
+    if index == total - 1:
+        return ["whispers"]
+    if text.endswith("?"):
+        return ["curious"]
+    if "!" in text or function in {"transformation", "scale_shift"}:
+        return ["excited"]
+    return []
+
+
+def scene_audio_tags(
+    script: dict,
+    scene: dict,
+    index: int,
+    total: int,
+    model_id: str,
+) -> list[str]:
+    if model_id != DEFAULT_MODEL_ID:
+        return []
+    if "audio_tags" in scene:
+        return normalize_audio_tags(scene.get("audio_tags"))
+    if not script.get("auto_audio_tags", True):
+        return []
+    return infer_audio_tags(scene, index, total)
+
+
+def build_tts_text(script: dict, model_id: str) -> tuple[str, list[list[str]]]:
+    scenes = script.get("scenes") or []
+    chunks: list[str] = []
+    applied: list[list[str]] = []
+    total = len(scenes)
+
+    for index, scene in enumerate(scenes):
+        text = str(scene.get("text") or "").strip()
+        if not text:
+            raise ValueError(f"scene {index} has no narration text")
+        tags = scene_audio_tags(script, scene, index, total, model_id)
+        prefix = " ".join(f"[{tag}]" for tag in tags)
+        chunks.append(f"{prefix} {text}".strip())
+        applied.append(tags)
+
+    tagged_text = " ".join(chunks)
+    if model_id == DEFAULT_MODEL_ID and len(tagged_text) > V3_CHARACTER_LIMIT:
+        raise ValueError(
+            f"Eleven v3 request is {len(tagged_text):,} characters; "
+            f"limit is {V3_CHARACTER_LIMIT:,}. Shorten the script or reduce audio tags."
+        )
+    return tagged_text, applied
+
+
+def build_request(script: dict) -> tuple[str, str, str | None, dict, dict, list[list[str]]]:
+    voice_id = resolve_voice_id(script)
+    model_id = resolve_model_id(script)
+    stability_mode = resolve_stability_mode(script, model_id)
+    voice_settings = resolve_voice_settings(script, model_id)
+    text, applied_tags = build_tts_text(script, model_id)
+    payload: dict[str, object] = {
+        "text": text,
+        "model_id": model_id,
+        "voice_settings": voice_settings,
+    }
+    if script.get("language_code"):
+        payload["language_code"] = script["language_code"]
+    if script.get("elevenlabs_seed") is not None:
+        payload["seed"] = int(script["elevenlabs_seed"])
+    return voice_id, model_id, stability_mode, voice_settings, payload, applied_tags
+
+
+def apply_scene_timings(script: dict, alignment: dict) -> None:
+    chars = alignment.get("characters") or []
+    starts = alignment.get("character_start_times_seconds") or []
+    ends = alignment.get("character_end_times_seconds") or []
+    if not chars or len(chars) != len(starts) or len(chars) != len(ends):
+        raise RuntimeError("ElevenLabs returned incomplete character alignment")
+
+    aligned_text = "".join(chars)
     pos = 0
-    joined = full_text
-    for sc, vt in zip(scenes, voice_texts):
-        i = joined.index(vt, pos)
-        j = i + len(vt)
-        # find char indices covering [i, j)
-        sc["_t0"] = starts[min(i, len(starts) - 1)]
-        sc["_t1"] = ends[min(j - 1, len(ends) - 1)]
-        pos = j
-    # scene duration = gap until next scene starts (keeps VO pauses inside the same shot)
-    for k, sc in enumerate(s["scenes"]):
-        nxt = s["scenes"][k + 1]["_t0"] if k + 1 < len(s["scenes"]) else sc["_t1"] + 2.0
-        sc["start"] = round(sc["_t0"], 3)
-        sc["duration"] = round(max(2.0, nxt - sc["_t0"]) + (0.4 if k == 0 else 0), 3)
-        del sc["_t0"], sc["_t1"]
-    s["voiceover"] = "vo.mp3"
-    json.dump(s, open(f"{bd}/script.json", "w"), indent=1)
-    total = sum(sc["duration"] for sc in s["scenes"])
-    print(f"vo.mp3 written, {len(s['scenes'])} scenes, total {total:.1f}s")
+    for index, scene in enumerate(script["scenes"]):
+        text = scene["text"]
+        start_index = aligned_text.find(text, pos)
+        if start_index < 0:
+            raise RuntimeError(
+                f"could not locate scene {index} text in ElevenLabs alignment"
+            )
+        end_index = start_index + len(text)
+        scene["_t0"] = starts[min(start_index, len(starts) - 1)]
+        scene["_t1"] = ends[min(end_index - 1, len(ends) - 1)]
+        pos = end_index
+
+    for index, scene in enumerate(script["scenes"]):
+        next_start = (
+            script["scenes"][index + 1]["_t0"]
+            if index + 1 < len(script["scenes"])
+            else scene["_t1"] + 2.0
+        )
+        scene["start"] = round(scene["_t0"], 3)
+        scene["duration"] = round(
+            max(2.0, next_start - scene["_t0"]) + (0.4 if index == 0 else 0),
+            3,
+        )
+        del scene["_t0"], scene["_t1"]
+
+
+def _call_elevenlabs(voice_id: str, payload: dict) -> dict:
+    key = os.environ.get("ELEVENLABS_API_KEY", "").strip()
+    if not key:
+        raise RuntimeError("ELEVENLABS_API_KEY is not configured")
+
+    query = urllib.parse.urlencode({"output_format": "mp3_44100_128"})
+    url = (
+        f"https://api.elevenlabs.io/v1/text-to-speech/{voice_id}/with-timestamps"
+        f"?{query}"
+    )
+    request = urllib.request.Request(
+        url,
+        data=json.dumps(payload, ensure_ascii=False).encode("utf-8"),
+        headers={
+            "xi-api-key": key,
+            "Content-Type": "application/json",
+            "Accept": "application/json",
+        },
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=300) as response:
+            return json.load(response)
+    except urllib.error.HTTPError as error:
+        detail = error.read().decode("utf-8", errors="replace")[:1_000]
+        raise RuntimeError(
+            f"ElevenLabs TTS failed with HTTP {error.code}: {detail}"
+        ) from error
+
+
+def tts(build_dir: str | os.PathLike[str]) -> None:
+    root = Path(build_dir)
+    script = _read_script(root)
+    (
+        voice_id,
+        model_id,
+        stability_mode,
+        voice_settings,
+        payload,
+        applied_tags,
+    ) = build_request(script)
+
+    response = _call_elevenlabs(voice_id, payload)
+    audio = response.get("audio_base64")
+    alignment = response.get("alignment") or response.get("normalized_alignment")
+    if not audio or not alignment:
+        raise RuntimeError("ElevenLabs response omitted audio or alignment")
+
+    (root / "vo.mp3").write_bytes(base64.b64decode(audio))
+    apply_scene_timings(script, alignment)
+    script["voiceover"] = "vo.mp3"
+    script["elevenlabs_model"] = model_id
+    if stability_mode:
+        script["elevenlabs_stability_mode"] = stability_mode
+    script["voiceover_config"] = {
+        "provider": "ElevenLabs",
+        "voice_id": voice_id,
+        "voice_name": DEFAULT_VOICE_NAME if voice_id == DEFAULT_VOICE_ID else "custom",
+        "model_id": model_id,
+        "stability_mode": stability_mode,
+        "voice_settings": voice_settings,
+        "audio_tags_enabled": model_id == DEFAULT_MODEL_ID,
+    }
+    (root / "script.json").write_text(
+        json.dumps(script, indent=1, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+    manifest = {
+        "schema_version": 1,
+        "provider": "ElevenLabs",
+        "voice_id": voice_id,
+        "voice_name": script["voiceover_config"]["voice_name"],
+        "model_id": model_id,
+        "stability_mode": stability_mode,
+        "voice_settings": voice_settings,
+        "request_characters": len(str(payload["text"])),
+        "scene_audio_tags": [
+            {"scene": index, "tags": tags}
+            for index, tags in enumerate(applied_tags)
+            if tags
+        ],
+    }
+    (root / "voiceover-manifest.json").write_text(
+        json.dumps(manifest, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+
+    total = sum(scene["duration"] for scene in script["scenes"])
+    print(
+        f"vo.mp3 written with {model_id}/{stability_mode or 'custom'}, "
+        f"{len(script['scenes'])} scenes, total {total:.1f}s"
+    )
 
 
 if __name__ == "__main__":

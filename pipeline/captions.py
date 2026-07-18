@@ -2,6 +2,7 @@
 
 Portrait keeps the established 16:9 picture band and lower caption zone. The
 YouTube overlays use a native 1920x1080 safe area with captions in the lower third.
+Landscape scene-0 titles also stay inside TikTok's centered 3:4 cover crop.
 """
 import os, re
 from PIL import Image, ImageDraw, ImageFont
@@ -29,6 +30,7 @@ TITLE_MIN_FONT_SIZE = 12
 TITLE_FONT_STEP = 6
 TITLE_EYEBROW_RATIO = 0.34
 TITLE_EYEBROW_GAP = 20
+TITLE_SOFT_MAX_CHARS = 12  # James: no more than 12 characters on one title line
 TITLE_CONNECTOR_WORDS = frozenset({
     "a", "an", "and", "as", "at", "by", "for", "i", "in", "is", "it",
     "my", "of", "on", "or", "the", "to", "we",
@@ -38,7 +40,13 @@ TITLE_CONNECTOR_WORDS = frozenset({
 YT_FONT_SIZE = 50
 YT_BLOCK_CENTER_Y = 900
 YT_MAX_LINE_W = 1460
-YT_TITLE_MAX_LINE_W = 1680
+YT_TIKTOK_COVER_ASPECT = (3, 4)
+YT_TIKTOK_COVER_CROP_W = round(
+    YT_H * YT_TIKTOK_COVER_ASPECT[0] / YT_TIKTOK_COVER_ASPECT[1]
+)
+YT_TIKTOK_COVER_CROP_LEFT = (YT_W - YT_TIKTOK_COVER_CROP_W) // 2
+YT_TIKTOK_COVER_CROP_RIGHT = YT_TIKTOK_COVER_CROP_LEFT + YT_TIKTOK_COVER_CROP_W
+YT_TITLE_MAX_LINE_W = 700
 YT_TITLE_MAX_BLOCK_H = 610
 YT_TITLE_CENTER_Y = 445
 
@@ -88,13 +96,29 @@ def _is_title_connector(word):
     return token in TITLE_CONNECTOR_WORDS
 
 
-def _group_title_words(words):
-    """Group title tokens into two-word lines, allowing a connector as a third."""
+def _title_character_count(words):
+    """Count visible title characters, ignoring spaces and punctuation."""
+    return sum(len(re.sub(r"[^\w']", "", word[0])) for word in words)
+
+
+def _group_title_words(words, use_character_hint=True):
+    """Group title tokens for readable cover-safe lines.
+
+    A line normally contains at most two words; a short connector can make it
+    three. Ten visible characters is a strong wrapping hint, while the final
+    rendered pixel width remains the hard safety check.
+    """
     lines, cur = [], []
     for word in words:
         candidate = cur + [word]
         limit = 3 if any(_is_title_connector(item[0]) for item in candidate) else 2
-        if cur and len(candidate) > limit:
+        over_word_limit = len(candidate) > limit
+        over_character_hint = (
+            use_character_hint
+            and len(candidate) > 1
+            and _title_character_count(candidate) > TITLE_SOFT_MAX_CHARS
+        )
+        if cur and (over_word_limit or over_character_hint):
             lines.append(cur)
             cur = [word]
         else:
@@ -104,10 +128,11 @@ def _group_title_words(words):
     return lines
 
 
-def _wrap_title(words, font, draw, max_line_w, split_overlong):
-    """Enforce the title word-count rule, then honor the pixel safe area."""
+def _wrap_title(words, font, draw, max_line_w, split_overlong,
+                use_character_hint=True):
+    """Apply title readability rules, then honor the pixel safe area."""
     lines = []
-    for grouped in _group_title_words(words):
+    for grouped in _group_title_words(words, use_character_hint):
         lines.extend(_wrap(grouped, font, draw, max_line_w, split_overlong))
     return lines
 
@@ -170,25 +195,35 @@ def youtube_caption_png(text, keywords, out_path, kw_overlay_prefix=None):
 
 
 def _fit_title(title, draw, font_size, max_line_w=TITLE_MAX_LINE_W,
-               max_block_h=TITLE_MAX_BLOCK_H):
-    """Return a wrapped title layout guaranteed to fit its target safe area."""
+               max_block_h=TITLE_MAX_BLOCK_H, cover_safe_layout=False):
+    """Return a title layout that shrinks to fit its safe area.
+
+    James's rule: group into readable lines of at most TITLE_SOFT_MAX_CHARS (12)
+    visible characters FIRST, then shrink the font until that grouping fits the
+    page. This keeps short titles like "THE LOOP" on one line and lets the font
+    adjust to fit, rather than over-splitting a title just to hold a large font.
+    """
     words = [(w, False) for w in title.split()]
+    grouped = _group_title_words(words, use_character_hint=True)
     size = max(int(font_size), TITLE_MIN_FONT_SIZE)
     while size >= TITLE_MIN_FONT_SIZE:
         font = _font(TITLE_FONT, size)
-        lines = _wrap_title(words, font, draw, max_line_w=max_line_w,
-                            split_overlong=False)
         ascent, descent = font.getmetrics()
         line_h = int((ascent + descent) * 0.98)
-        widest = max(draw.textlength(" ".join(w for w, _ in line), font=font)
-                     for line in lines)
-        total_h = line_h * len(lines)
+        widest = max(
+            draw.textlength(" ".join(w for w, _ in line), font=font)
+            for line in grouped
+        )
+        total_h = line_h * len(grouped)
         if widest <= max_line_w and total_h <= max_block_h:
-            return font, lines, line_h
+            return font, grouped, line_h
         size -= TITLE_FONT_STEP
+    # Last resort at the minimum font: split any single word too wide to fit,
+    # so an unbreakable title can never escape the safe crop.
     font = _font(TITLE_FONT, TITLE_MIN_FONT_SIZE)
-    lines = _wrap_title(words, font, draw, max_line_w=max_line_w,
-                        split_overlong=True)
+    lines = []
+    for line in grouped:
+        lines.extend(_wrap(line, font, draw, max_line_w, split_overlong=True))
     ascent, descent = font.getmetrics()
     return font, lines, int((ascent + descent) * 0.98)
 
@@ -205,8 +240,24 @@ def _draw_shadowed_line(draw, text, x, y, font, fill=WHITE, shadow_scale=1.0):
     draw.text((x, y), text, font=font, fill=fill)
 
 
+def _validate_title_bounds(img, safe_bounds, label):
+    """Fail early when antialiased title pixels escape a required crop."""
+    if safe_bounds is None:
+        return
+    bbox = img.getchannel("A").getbbox()
+    if bbox is None:
+        raise ValueError(f"{label} title rendered no visible pixels")
+    left, top, right, bottom = bbox
+    safe_left, safe_top, safe_right, safe_bottom = safe_bounds
+    if left < safe_left or top < safe_top or right > safe_right or bottom > safe_bottom:
+        raise ValueError(
+            f"{label} title escaped safe bounds: bbox={bbox}, safe={safe_bounds}"
+        )
+
+
 def _title_png(title, out_path, width, height, center_y, max_line_w,
-               max_block_h, font_size, eyebrow=None):
+               max_block_h, font_size, eyebrow=None, safe_bounds=None,
+               safe_label="canvas", cover_safe_layout=False):
     """Render a title, optionally with a smaller series label above it."""
     img = Image.new("RGBA", (width, height), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
@@ -221,12 +272,17 @@ def _title_png(title, out_path, width, height, center_y, max_line_w,
     if eyebrow:
         eyebrow_size = max(24, int(font_size * TITLE_EYEBROW_RATIO))
         eyebrow_font, eyebrow_lines, eyebrow_line_h = _fit_title(
-            eyebrow, d, eyebrow_size, max_line_w, max_block_h // 3)
+            eyebrow, d, eyebrow_size, max_line_w, max_block_h // 3,
+            cover_safe_layout=cover_safe_layout,
+        )
         eyebrow_total_h = eyebrow_line_h * len(eyebrow_lines)
         gap = max(10, int(TITLE_EYEBROW_GAP * width / W))
 
     main_block_h = max(TITLE_MIN_FONT_SIZE, max_block_h - eyebrow_total_h - gap)
-    font, lines, line_h = _fit_title(title, d, font_size, max_line_w, main_block_h)
+    font, lines, line_h = _fit_title(
+        title, d, font_size, max_line_w, main_block_h,
+        cover_safe_layout=cover_safe_layout,
+    )
     main_total_h = line_h * len(lines)
     total_h = eyebrow_total_h + gap + main_total_h
     y = center_y - total_h // 2
@@ -247,6 +303,7 @@ def _title_png(title, out_path, width, height, center_y, max_line_w,
         x = (width - lw) / 2
         _draw_shadowed_line(d, words, x, y, font)
         y += line_h
+    _validate_title_bounds(img, safe_bounds, safe_label)
     img.save(out_path)
     return out_path
 
@@ -258,6 +315,12 @@ def title_png(title, out_path, font_size=190, eyebrow=None):
 
 
 def youtube_title_png(title, out_path, font_size=170, eyebrow=None):
-    """Render a native 16:9 title above the YouTube caption safe area."""
-    return _title_png(title, out_path, YT_W, YT_H, YT_TITLE_CENTER_Y,
-                      YT_TITLE_MAX_LINE_W, YT_TITLE_MAX_BLOCK_H, font_size, eyebrow)
+    """Render a 16:9 title that survives TikTok's centered 3:4 cover crop."""
+    return _title_png(
+        title, out_path, YT_W, YT_H, YT_TITLE_CENTER_Y,
+        YT_TITLE_MAX_LINE_W, YT_TITLE_MAX_BLOCK_H, font_size, eyebrow,
+        safe_bounds=(YT_TIKTOK_COVER_CROP_LEFT, 0,
+                     YT_TIKTOK_COVER_CROP_RIGHT, YT_H),
+        safe_label="TikTok 3:4 cover crop",
+        cover_safe_layout=True,
+    )

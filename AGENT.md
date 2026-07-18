@@ -1,5 +1,8 @@
 # AGENT.md — Instructions for any AI operating this repo
 
+> CANONICAL REPO: This project lives at 1974jwatson/TikTok-Video-Pipeline. James makes ALL videos here. Do every video request in this repo; never use jameswatson1077/tiktok-videos.
+
+
 You are making a mystical-philosophical TikTok video for James using this repo's
 cloud render farm. You need NO video tools — GitHub Actions renders everything.
 You only need: (1) the connected GitHub app, (2) this file.
