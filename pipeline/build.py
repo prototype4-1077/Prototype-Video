@@ -99,8 +99,12 @@ def validate(bd):
     sc = s.get("scenes") or []
     user_vo = os.path.exists(f"{bd}/vo.mp3") and not any(x.get("start") is not None for x in sc[:1]) \
               or s.get("user_vo")
-    soft = err if not (os.path.exists(f"{bd}/vo.mp3") or s.get("user_vo")) else (
-        lambda what, fix: print(f"note: {what} ({fix}) - allowed, VO is user-provided"))
+    # Scene-count and word-count are pacing guidance for AI-written scripts. When
+    # James supplies verbatim text (supplied_script) or a voiceover, they become
+    # advisory only, honoring the "supplied scripts, any length" policy.
+    lenient = os.path.exists(f"{bd}/vo.mp3") or s.get("user_vo") or s.get("supplied_script")
+    soft = (lambda what, fix: print(f"note: {what} ({fix}) - allowed, supplied/verbatim script"))\
+        if lenient else err
     if not 14 <= len(sc) <= 30:
         soft(f"{len(sc)} scenes", "aim for 18-26 scenes (one sentence/beat each)")
     words = sum(len(x.get("text", "").split()) for x in sc)
