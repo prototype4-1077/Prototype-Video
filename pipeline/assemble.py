@@ -152,8 +152,12 @@ def render_scene(bd, i, output_format="portrait"):
         inputs += ["-loop", "1", "-t", str(dur), "-i", title]
         title_fade = ("format=rgba," if i == 0 else
                       "format=rgba,fade=t=in:st=0.3:d=0.8:alpha=1,")
+        # Scene 0 (James): the title must not hide the opening visual for the
+        # whole beat - show it ~3s, then fade to reveal the scene art.
+        title_out = (min(3.2, max(dur - 0.7, 1.2)) if i == 0
+                     else max(dur - 0.7, 1.2))
         fc += (f";[{j}:v]{title_fade}"
-               f"fade=t=out:st={max(dur-0.7, 1.2):.2f}:d=0.6:alpha=1[tf]"
+               f"fade=t=out:st={title_out:.2f}:d=0.6:alpha=1[tf]"
                f";[{last}][tf]overlay=0:0[vt]")
         last = "vt"
     if mode == "eerie_museum":
