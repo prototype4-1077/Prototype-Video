@@ -132,9 +132,13 @@ def main(bd, i):
                  if pure else still_reference.bind_reference(bd, s, i))
     raw = f"{bd}/hero_{i:02d}_raw.jpg"
     img, dep = f"{bd}/hero_{i:02d}.jpg", f"{bd}/hero_{i:02d}_depth.npy"
+    # Reuse a pre-generated (committed) raw still when present so renders never
+    # depend on the image provider being reachable from CI. Otherwise generate.
+    have_committed = os.path.exists(raw) and os.path.getsize(raw) > 20_000
     generated = gen_image(
         prompt, s.get("genre"), raw, profiles.resolve(s),
-        reference_url=reference["url"], force=True, style_override=style_override,
+        reference_url=reference["url"], force=not have_committed,
+        style_override=style_override,
     )
     if not generated:
         sc["hero"] = False
