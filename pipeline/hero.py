@@ -122,8 +122,12 @@ def main(bd, i):
     s = json.load(open(f"{bd}/script.json"))
     sc = s["scenes"][i]
     out = f"{bd}/clip_{i:02d}.mp4"
+    # A finished clip is reusable across resumable Governor passes. Pure heroes
+    # (hero_style) have no stock reference, so gate reuse on the clip existing
+    # rather than reference_is_current — otherwise they regenerate every pass and
+    # the build never reaches assembly.
     if (os.path.exists(out) and os.path.getsize(out) > 100_000 and
-            not sc.get("hero_style") and still_reference.reference_is_current(bd, s, i)):
+            (sc.get("hero_style") or still_reference.reference_is_current(bd, s, i))):
         print(f"hero {i}: exists"); return
     prompt = sc.get("image_prompt") or sc["text"]
     style_override = sc.get("hero_style")
