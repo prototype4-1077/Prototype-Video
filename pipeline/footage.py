@@ -341,6 +341,12 @@ def fetch_scene(bd, s, i, used_ids):
     out = f"{bd}/clip_{i:02d}.mp4"
     if os.path.exists(out) and os.path.getsize(out) > 100_000:
         sc["clip"] = out
+        if sc.get("motion_verified") and sc.get("motion_evidence"):
+            # Verification is already recorded for this clip; swap()/pin() clear
+            # the flag together with the file, so trust it instead of re-decoding
+            # optical flow on every resumable pass.
+            backfill_source_metadata(sc)
+            return
         if (sc.get("motion_kind") == "video" or
                 sc.get("motion_mode") in {"stock", "recorded", "i2v"}):
             passed, evidence = verify_and_mark(
@@ -475,7 +481,10 @@ def main(bd, idx=None):
         sc.get("stock_id") or sc.get("pexels_id") for sc in s["scenes"]
         if sc.get("stock_id") or sc.get("pexels_id")
     }
-    targets = [int(idx)] if idx is not None else range(len(s["scenes"]))
+    if idx is None:
+        targets = range(len(s["scenes"]))
+    else:
+        targets = [int(part) for part in str(idx).split(",") if part != ""]
     for i in targets:
         fetch_scene(bd, s, i, used)
         json.dump(s, open(f"{bd}/script.json", "w"), indent=1)

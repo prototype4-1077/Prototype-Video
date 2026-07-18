@@ -189,6 +189,8 @@ jobs:
         env:
           SEMANTIC_CLIP: "1"
           GOVERNOR_MODE: "recover"
+          BUILD_PASS_BUDGET: "3600"
+          TRANSCRIBE_CHUNK_SECONDS: "100000"
           GOVERNOR_CONSOLE_HEARTBEATS: "1"
           GOVERNOR_HEARTBEAT_SECONDS: "15"
           PYTHONUNBUFFERED: "1"

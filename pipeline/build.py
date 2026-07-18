@@ -206,13 +206,16 @@ def main(bd):
     # visual reference for every later still, so hero generation can inherit the
     # actual film's lens, palette, lighting, and production texture.
     stock_pending = still_reference.stock_targets(bd, s)
-    for i in stock_pending:
-        if left() < 12:
-            out(f"RUN AGAIN (stock references {i}/{n})")
-        r = sh([py, os.path.join(HERE, "footage.py"), bd, str(i)])
+    if stock_pending:
+        # One batched invocation: the CLIP scoring model loads once for every
+        # pending scene instead of once per scene (its load alone is ~30s).
+        if left() < 60:
+            out(f"RUN AGAIN (stock references pending: {len(stock_pending)})")
+        batch = ",".join(str(i) for i in stock_pending)
+        r = sh([py, os.path.join(HERE, "footage.py"), bd, batch])
         if r.returncode != 0:
-            err(f"footage scene {i}: {r.stderr[-300:]}",
-                f"edit scene {i} query in script.json, rerun")
+            err(f"footage batch [{batch}]: {r.stderr[-300:]}",
+                "edit the failing scene's query in script.json, rerun")
     if stock_pending:
         out(f"RUN AGAIN (genuine footage ready; next: reference-matched stills)")
 
@@ -247,7 +250,7 @@ def main(bd):
             continue
         clip = f"{bd}/clip_{i:02d}.mp4"
         if (os.path.exists(clip) and os.path.getsize(clip) > 100_000 and
-                still_reference.reference_is_current(bd, s, i)):
+                (sc.get("hero_style") or still_reference.reference_is_current(bd, s, i))):
             continue
         if left() < 25:
             out(f"RUN AGAIN (next: hero shot {i})")
@@ -267,13 +270,14 @@ def main(bd):
     missing = [i for i in range(n)
                if not (os.path.exists(f"{bd}/clip_{i:02d}.mp4")
                        and os.path.getsize(f"{bd}/clip_{i:02d}.mp4") > 100_000)]
-    for i in missing:
-        if left() < 12:
-            out(f"RUN AGAIN (footage {n - len([j for j in missing if j >= i])}/{n})")
-        r = sh([py, os.path.join(HERE, "footage.py"), bd, str(i)])
+    if missing:
+        if left() < 60:
+            out(f"RUN AGAIN (footage pending: {len(missing)}/{n})")
+        batch = ",".join(str(i) for i in missing)
+        r = sh([py, os.path.join(HERE, "footage.py"), bd, batch])
         if r.returncode != 0:
-            err(f"footage scene {i}: {r.stderr[-300:]}",
-                f"edit scene {i} query in script.json, rerun")
+            err(f"footage batch [{batch}]: {r.stderr[-300:]}",
+                "edit the failing scene's query in script.json, rerun")
     if missing:
         out(f"RUN AGAIN (footage complete {n}/{n})")
 

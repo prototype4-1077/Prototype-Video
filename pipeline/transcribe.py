@@ -4,7 +4,7 @@ Writes <build_dir>/words.json: [{"w": word, "s": start, "e": end}, ...]
 Chunks of 55s per invocation keep each run inside the sandbox's 45s bash limit."""
 import json, os, subprocess, sys
 
-CHUNK = 55.0
+CHUNK = float(os.environ.get("TRANSCRIBE_CHUNK_SECONDS") or 55.0)
 
 
 def duration(f):

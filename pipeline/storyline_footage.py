@@ -171,7 +171,10 @@ def main(build_dir: str, idx: str | None = None):
         for scene in script.get("scenes", [])
         if scene.get("stock_id") or scene.get("pexels_id")
     }
-    targets = [int(idx)] if idx is not None else list(range(len(script.get("scenes", []))))
+    if idx is None:
+        targets = list(range(len(script.get("scenes", []))))
+    else:  # single index or comma-separated batch (one process = one CLIP load)
+        targets = [int(part) for part in str(idx).split(",") if part != ""]
     report_rows = []
     footage.rank = _gated_rank
     try:
