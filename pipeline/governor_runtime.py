@@ -299,7 +299,11 @@ class PipelineGovernor(GovernorSummaryMixin):
                 if now >= hard_deadline:
                     idle_for = now - last_progress
                     absolute_cap = started + policy.hard_timeout_s * 3.0
-                    if idle_for < policy.idle_timeout_s and now < absolute_cap:
+                    if (
+                        policy.source != "explicit"
+                        and idle_for < policy.idle_timeout_s
+                        and now < absolute_cap
+                    ):
                         extension = min(300.0, max(60.0, policy.hard_timeout_s * 0.5))
                         hard_deadline = min(absolute_cap, now + extension)
                         self.record_event(
