@@ -8,7 +8,10 @@
  "auto_audio_tags": false,
  "supplied_script": true,
  "voice_standard": "Liam - deliberate dramatic, the confessor revealing the way through",
- "visual_policy": "diverse_symbols",
+ "visual_policy": {
+  "mode": "diverse_symbols",
+  "max_human_ratio": 0.6
+ },
  "render_outputs": [
   "youtube"
  ],
@@ -27,7 +30,41 @@
    "symbol_family": "object_tool",
    "query": "old world map parchment candlelight brass instruments",
    "narrative_mode": "atmosphere",
-   "primary_symbol": "map"
+   "primary_symbol": "map",
+   "start": 0.0,
+   "duration": 4.48,
+   "kw_times": {
+    "map": 0.54,
+    "wrong": 2.56
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 14.2823,
+    "active_region_ratio": 0.9994,
+    "frame_difference": 9.8722
+   },
+   "clip_fingerprint": "38c5444119d1f7fe",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_00.mp4",
+   "stock_id": 10480415,
+   "pexels_id": 10480415,
+   "stock_frame_url": "https://images.pexels.com/videos/10480415/4-k-antique-book-book-book-flipping-10480415.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/old-map-and-book-on-table-with-candle-10480415/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "map",
+     "png": "youtube_cap_00_kw0.png"
+    },
+    {
+     "kw": "wrong",
+     "png": "youtube_cap_00_kw1.png"
+    }
+   ]
   },
   {
    "text": "Not some maps. Not old maps. Every map. Including the one on your phone right now.",
@@ -44,7 +81,41 @@
    "query": "driver following glowing navigation at night city streets",
    "narrative_mode": "atmosphere",
    "primary_symbol": "phone",
-   "human_role": "explorer"
+   "human_role": "explorer",
+   "start": 4.48,
+   "duration": 9.42,
+   "kw_times": {
+    "maps": 5.56,
+    "phone": 11.78
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.7345,
+    "active_region_ratio": 0.9919,
+    "frame_difference": 27.7644
+   },
+   "clip_fingerprint": "39a99910a6c09bdd",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_01.mp4",
+   "stock_id": 3554322,
+   "pexels_id": 3554322,
+   "stock_frame_url": "https://images.pexels.com/videos/3554322/free-video-3554322.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-driver-on-the-road-driving-at-night-3554322/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "maps",
+     "png": "youtube_cap_01_kw0.png"
+    },
+    {
+     "kw": "phone",
+     "png": "youtube_cap_01_kw1.png"
+    }
+   ]
   },
   {
    "text": "Here's why. The Earth is a sphere. A map is flat. And you cannot flatten a sphere without tearing something.",
@@ -63,7 +134,47 @@
    "hero_style": "effects",
    "image_prompt": "a dimensional luminous globe of emerald seas and brass meridians being carefully unpeeled like a fruit into a flat map, the peel tearing into elegant golden gore segments, parchment background, premium antique-cartography art, warm candle glow, no text",
    "symbol_family_source": "auto",
-   "primary_symbol": "map"
+   "primary_symbol": "map",
+   "start": 13.9,
+   "duration": 9.22,
+   "kw_times": {
+    "sphere": 16.5,
+    "flat": 18.54
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_02.jpg",
+   "still_reference_signature": "3baf8bfd9a11cb667cb0",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_02.mp4",
+   "clip_fingerprint": "5f28650b3c6ae6a1",
+   "hero_generated": true,
+   "motion_recipe": "atmosphere",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "youtube_kw_overlays": [
+    {
+     "kw": "sphere",
+     "png": "youtube_cap_02_kw0.png"
+    },
+    {
+     "kw": "flat",
+     "png": "youtube_cap_02_kw1.png"
+    }
+   ]
   },
   {
    "text": "So the mapmakers cheat. On the map you grew up with, Greenland balloons to the size of Africa — when Africa is actually fourteen times larger.",
@@ -82,7 +193,47 @@
    "hero_style": "effects",
    "image_prompt": "on aged parchment two glowing landmass shapes compared - a small swollen ghost-pale shape inflated large, beside a vast solid gold-emerald continent shape, an ornate brass balance scale of light beneath them, premium antique cartography graphic, no letters",
    "symbol_family_source": "auto",
-   "primary_symbol": "object_tool"
+   "primary_symbol": "object_tool",
+   "start": 23.12,
+   "duration": 10.48,
+   "kw_times": {
+    "Greenland": 27.16,
+    "Africa": 28.92
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_03.jpg",
+   "still_reference_signature": "9440c34ac8997fe905bf",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_03.mp4",
+   "clip_fingerprint": "cb319631c8a28115",
+   "hero_generated": true,
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "youtube_kw_overlays": [
+    {
+     "kw": "Greenland",
+     "png": "youtube_cap_03_kw0.png"
+    },
+    {
+     "kw": "Africa",
+     "png": "youtube_cap_03_kw1.png"
+    }
+   ]
   },
   {
    "text": "Antarctica smears across the bottom of the world like a rendering glitch. Distances lie. Angles lie. Something always lies.",
@@ -96,7 +247,41 @@
    "symbol_family": "world_scale",
    "query": "ice shelf antarctica aerial vast white",
    "narrative_mode": "atmosphere",
-   "primary_symbol": "world_scale"
+   "primary_symbol": "world_scale",
+   "start": 33.6,
+   "duration": 9.6,
+   "kw_times": {
+    "Antarctica": 33.6,
+    "lie": 38.58
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 10.2074,
+    "active_region_ratio": 0.9964,
+    "frame_difference": 15.1727
+   },
+   "clip_fingerprint": "b8dc8b5f2a370ad9",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_04.mp4",
+   "stock_id": 8318380,
+   "pexels_id": 8318380,
+   "stock_frame_url": "https://images.pexels.com/videos/8318380/pexels-photo-8318380.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-view-of-giant-icebergs-8318380/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "Antarctica",
+     "png": "youtube_cap_04_kw0.png"
+    },
+    {
+     "kw": "lie",
+     "png": "youtube_cap_04_kw1.png"
+    }
+   ]
   },
   {
    "text": "And yet — here's the strange part — no one in history has ever gotten lost because their map was flat.",
@@ -113,7 +298,41 @@
    "query": "traveler confidently walking with map in city",
    "narrative_mode": "atmosphere",
    "human_role": "explorer",
-   "primary_symbol": "map"
+   "primary_symbol": "map",
+   "start": 43.2,
+   "duration": 7.3,
+   "kw_times": {
+    "lost": 47.8,
+    "flat": 49.5
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.442,
+    "active_region_ratio": 0.9959,
+    "frame_difference": 19.3797
+   },
+   "clip_fingerprint": "31cf6b624897d621",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_05.mp4",
+   "stock_id": 6180917,
+   "pexels_id": 6180917,
+   "stock_frame_url": "https://images.pexels.com/videos/6180917/attractions-city-couple-couple-walking-6180917.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/woman-reading-a-map-and-looking-around-6180917/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "lost",
+     "png": "youtube_cap_05_kw0.png"
+    },
+    {
+     "kw": "flat",
+     "png": "youtube_cap_05_kw1.png"
+    }
+   ]
   },
   {
    "text": "In the last video, we hit a trap: every belief is a lens, and you can't take the lens off. \"All beliefs distort\" is itself a belief — the snake eating its own tail.",
@@ -129,7 +348,41 @@
    "symbol_family": "nature",
    "query": "snake coiled moving slowly dark scales",
    "narrative_mode": "atmosphere",
-   "primary_symbol": "nature"
+   "primary_symbol": "nature",
+   "start": 50.5,
+   "duration": 11.74,
+   "kw_times": {
+    "trap": 52.1,
+    "snake": 60.22
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.2434,
+    "active_region_ratio": 0.9964,
+    "frame_difference": 27.5912
+   },
+   "clip_fingerprint": "3754a026b5ce6440",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_06.mp4",
+   "stock_id": 4000749,
+   "pexels_id": 4000749,
+   "stock_frame_url": "https://images.pexels.com/videos/4000749/snake-snakes-4000749.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-video-of-a-snake-4000749/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "trap",
+     "png": "youtube_cap_06_kw0.png"
+    },
+    {
+     "kw": "snake",
+     "png": "youtube_cap_06_kw1.png"
+    }
+   ]
   },
   {
    "text": "This video is the way through. And it starts with a confession every cartographer knows.",
@@ -146,7 +399,41 @@
    "query": "cartographer drawing map by candlelight vintage",
    "narrative_mode": "atmosphere",
    "human_role": "creator",
-   "primary_symbol": "map"
+   "primary_symbol": "map",
+   "start": 62.24,
+   "duration": 7.02,
+   "kw_times": {
+    "confession": 66.28,
+    "cartographer": 67.2
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.0678,
+    "active_region_ratio": 0.9973,
+    "frame_difference": 20.8311
+   },
+   "clip_fingerprint": "945f137cf12b6ea1",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_07.mp4",
+   "stock_id": 5302860,
+   "pexels_id": 5302860,
+   "stock_frame_url": "https://images.pexels.com/videos/5302860/pexels-photo-5302860.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-drawing-on-a-map-using-a-pencil-and-a-ruler-5302860/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "confession",
+     "png": "youtube_cap_07_kw0.png"
+    },
+    {
+     "kw": "cartographer",
+     "png": "youtube_cap_07_kw1.png"
+    }
+   ]
   },
   {
    "text": "A perfect map is impossible.",
@@ -161,7 +448,36 @@
    "symbol_family": "object_tool",
    "query": "compass rose drawn on parchment close candle",
    "narrative_mode": "atmosphere",
-   "primary_symbol": "compass"
+   "primary_symbol": "compass",
+   "start": 69.26,
+   "duration": 3.44,
+   "kw_times": {
+    "perfect map": 69.34
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.0868,
+    "active_region_ratio": 0.202,
+    "frame_difference": 5.6773
+   },
+   "clip_fingerprint": "f1aad48631962746",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_08.mp4",
+   "stock_id": 7431747,
+   "pexels_id": 7431747,
+   "stock_frame_url": "https://images.pexels.com/videos/7431747/pexels-photo-7431747.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-magnifying-a-world-map-7431747/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "perfect map",
+     "png": "youtube_cap_08_kw0.png"
+    }
+   ]
   },
   {
    "text": "Think about what a zero-distortion map would require. To distort nothing, it would have to include everything. Every rock. Every blade of grass. At full scale. One-to-one.",
@@ -177,7 +493,40 @@
    "symbol_family": "nature",
    "query": "individual blades of grass macro morning dew",
    "narrative_mode": "atmosphere",
-   "primary_symbol": "nature"
+   "primary_symbol": "nature",
+   "start": 72.7,
+   "duration": 12.59,
+   "kw_times": {
+    "grass": 81.52
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.3514,
+    "active_region_ratio": 0.2508,
+    "frame_difference": 1.7181
+   },
+   "clip_fingerprint": "c1b4b8d8d0da25cd",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_09.mp4",
+   "stock_id": 2810795,
+   "pexels_id": 2810795,
+   "stock_frame_url": "https://images.pexels.com/videos/2810795/free-video-2810795.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/grass-leaves-growing-from-the-ground-2810795/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "distortion",
+     "png": "youtube_cap_09_kw0.png"
+    },
+    {
+     "kw": "grass",
+     "png": "youtube_cap_09_kw1.png"
+    }
+   ]
   },
   {
    "text": "A map of Texas... the exact size of Texas.",
@@ -196,7 +545,47 @@
    "hero_style": "effects",
    "image_prompt": "a colossal antique parchment map unrolled across an entire vast desert landscape stretching to the horizon, the map exactly covering the land it depicts, tiny figure standing on it dwarfed, golden hour light, surreal premium cartography art, no text",
    "symbol_family_source": "auto",
-   "primary_symbol": "map"
+   "primary_symbol": "map",
+   "start": 85.29,
+   "duration": 4.97,
+   "kw_times": {
+    "map": 85.62,
+    "Texas": 86.02
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_10.jpg",
+   "still_reference_signature": "abfb1aa84818c0593b8f",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_10.mp4",
+   "clip_fingerprint": "1a57c1bd1a225c18",
+   "hero_generated": true,
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "youtube_kw_overlays": [
+    {
+     "kw": "map",
+     "png": "youtube_cap_10_kw0.png"
+    },
+    {
+     "kw": "Texas",
+     "png": "youtube_cap_10_kw1.png"
+    }
+   ]
   },
   {
    "text": "Congratulations. You are now lost inside the map.",
@@ -213,7 +602,41 @@
    "query": "person tiny in vast desert aerial view",
    "narrative_mode": "atmosphere",
    "human_role": "scale",
-   "primary_symbol": "world_scale"
+   "primary_symbol": "world_scale",
+   "start": 90.26,
+   "duration": 4.0,
+   "kw_times": {
+    "lost": 92.12,
+    "map": 93.3
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.4544,
+    "active_region_ratio": 0.983,
+    "frame_difference": 13.9581
+   },
+   "clip_fingerprint": "e673333eebf0367f",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_11.mp4",
+   "stock_id": 6573933,
+   "pexels_id": 6573933,
+   "stock_frame_url": "https://images.pexels.com/videos/6573933/pexels-photo-6573933.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/drone-footage-of-a-person-walking-in-the-desert-6573933/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "lost",
+     "png": "youtube_cap_11_kw0.png"
+    },
+    {
+     "kw": "map",
+     "png": "youtube_cap_11_kw1.png"
+    }
+   ]
   },
   {
    "text": "A map is only useful because it distorts. The compression isn't the flaw. The compression is the entire point.",
@@ -230,7 +653,41 @@
    "query": "hands folding large paper map smaller and smaller",
    "narrative_mode": "atmosphere",
    "primary_symbol": "map",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 94.26,
+   "duration": 7.88,
+   "kw_times": {
+    "compression": 97.74,
+    "distorts": 96.62
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.1063,
+    "active_region_ratio": 0.1527,
+    "frame_difference": 6.321
+   },
+   "clip_fingerprint": "a98436942c3a3cd8",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_12.mp4",
+   "stock_id": 7606352,
+   "pexels_id": 7606352,
+   "stock_frame_url": "https://images.pexels.com/videos/7606352/pexels-photo-7606352.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-paper-map-lying-on-the-floor-7606352/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "compression",
+     "png": "youtube_cap_12_kw0.png"
+    },
+    {
+     "kw": "distorts",
+     "png": "youtube_cap_12_kw1.png"
+    }
+   ]
   },
   {
    "text": "It takes a world too big for your hands and folds it into your pocket.",
@@ -246,7 +703,41 @@
    "symbol_family": "object_tool",
    "query": "folded map sliding into jacket pocket close",
    "narrative_mode": "atmosphere",
-   "primary_symbol": "map"
+   "primary_symbol": "map",
+   "start": 102.14,
+   "duration": 4.98,
+   "kw_times": {
+    "world": 102.82,
+    "pocket": 105.88
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.8991,
+    "active_region_ratio": 0.9178,
+    "frame_difference": 6.4117
+   },
+   "clip_fingerprint": "4f5676af6bf7491e",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_13.mp4",
+   "stock_id": 3010397,
+   "pexels_id": 3010397,
+   "stock_frame_url": "https://images.pexels.com/videos/3010397/free-video-3010397.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-view-of-a-map-3010397/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "world",
+     "png": "youtube_cap_13_kw0.png"
+    },
+    {
+     "kw": "pocket",
+     "png": "youtube_cap_13_kw1.png"
+    }
+   ]
   },
   {
    "text": "Your beliefs are maps.",
@@ -265,7 +756,47 @@
    "hero_style": "effects",
    "image_prompt": "a luminous human head in profile rendered as an antique parchment map, emerald coastlines and brass roads tracing the mind, a golden compass rose glowing at the center, premium mystical cartography art, warm candlelight, no letters",
    "symbol_family_source": "auto",
-   "primary_symbol": "map"
+   "primary_symbol": "map",
+   "start": 107.12,
+   "duration": 2.2,
+   "kw_times": {
+    "beliefs": 107.36,
+    "maps": 108.26
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_14.jpg",
+   "still_reference_signature": "607c98d4f4d5d16f7073",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_14.mp4",
+   "clip_fingerprint": "848eca9f9724cb8c",
+   "hero_generated": true,
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "youtube_kw_overlays": [
+    {
+     "kw": "beliefs",
+     "png": "youtube_cap_14_kw0.png"
+    },
+    {
+     "kw": "maps",
+     "png": "youtube_cap_14_kw1.png"
+    }
+   ]
   },
   {
    "text": "Every one of them compresses an infinite reality to fit inside a three-pound brain. Every one of them throws away detail, warps proportions, smooths the coastline.",
@@ -279,7 +810,41 @@
    "symbol_family": "nature",
    "query": "waves smoothing sand on shoreline aerial",
    "narrative_mode": "atmosphere",
-   "primary_symbol": "nature"
+   "primary_symbol": "nature",
+   "start": 109.32,
+   "duration": 12.04,
+   "kw_times": {
+    "reality": 111.64,
+    "coastline": 119.9
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.1233,
+    "active_region_ratio": 0.7752,
+    "frame_difference": 18.4181
+   },
+   "clip_fingerprint": "99d2a8343b558e2f",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_15.mp4",
+   "stock_id": 10540776,
+   "pexels_id": 10540776,
+   "stock_frame_url": "https://images.pexels.com/videos/10540776/above-sea-adriatic-sea-black-sea-blue-sea-10540776.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/top-view-of-breaking-waves-on-the-beach-10540776/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "reality",
+     "png": "youtube_cap_15_kw0.png"
+    },
+    {
+     "kw": "coastline",
+     "png": "youtube_cap_15_kw1.png"
+    }
+   ]
   },
   {
    "text": "So the question was never \"is my map distorted?\" It always is. It has to be.",
@@ -296,7 +861,41 @@
    "query": "weathered hands holding worn creased map",
    "narrative_mode": "atmosphere",
    "human_role": "observer",
-   "primary_symbol": "map"
+   "primary_symbol": "map",
+   "start": 121.36,
+   "duration": 5.9,
+   "kw_times": {
+    "question": 121.74,
+    "map": 123.34
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.3659,
+    "active_region_ratio": 0.9963,
+    "frame_difference": 17.3856
+   },
+   "clip_fingerprint": "d941f54b99c9b2f5",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_16.mp4",
+   "stock_id": 9640704,
+   "pexels_id": 9640704,
+   "stock_frame_url": "https://images.pexels.com/videos/9640704/pexels-photo-9640704.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/travelers-checking-the-map-for-direction-9640704/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "question",
+     "png": "youtube_cap_16_kw0.png"
+    },
+    {
+     "kw": "map",
+     "png": "youtube_cap_16_kw1.png"
+    }
+   ]
   },
   {
    "text": "The question is: does it get me home?",
@@ -311,7 +910,36 @@
    "symbol_family": "architecture",
    "query": "warm house lights at end of road dusk",
    "narrative_mode": "atmosphere",
-   "primary_symbol": "road"
+   "primary_symbol": "road",
+   "start": 127.26,
+   "duration": 3.2,
+   "kw_times": {
+    "home": 129.36
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.4544,
+    "active_region_ratio": 0.8716,
+    "frame_difference": 3.5527
+   },
+   "clip_fingerprint": "bc765bf7745fa5ec",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_17.mp4",
+   "stock_id": 5597028,
+   "pexels_id": 5597028,
+   "stock_frame_url": "https://images.pexels.com/videos/5597028/pexels-photo-5597028.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/two-persons-walking-on-a-sidewalk-during-sunset-5597028/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "home",
+     "png": "youtube_cap_17_kw0.png"
+    }
+   ]
   },
   {
    "text": "Because distortion comes in degrees. A subway map ignores every street above ground — and delivers millions of people daily.",
@@ -328,7 +956,41 @@
    "query": "subway train arriving station motion blur crowd",
    "narrative_mode": "atmosphere",
    "primary_symbol": "crowd",
-   "human_role": "collective"
+   "human_role": "collective",
+   "start": 130.46,
+   "duration": 8.0,
+   "kw_times": {
+    "subway": 133.22,
+    "people": 137.12
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.2264,
+    "active_region_ratio": 0.9968,
+    "frame_difference": 40.8257
+   },
+   "clip_fingerprint": "60dd5ad29e488264",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_18.mp4",
+   "stock_id": 34387413,
+   "pexels_id": 34387413,
+   "stock_frame_url": "https://images.pexels.com/videos/34387413/mta-subway-34387413.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/new-york-city-subway-arrival-scene-34387413/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "subway",
+     "png": "youtube_cap_18_kw0.png"
+    },
+    {
+     "kw": "people",
+     "png": "youtube_cap_18_kw1.png"
+    }
+   ]
   },
   {
    "text": "A map drawn from a dream delivers no one. Both are distorted. They are not equally wrong.",
@@ -344,7 +1006,41 @@
    "symbol_family": "light_atmosphere",
    "query": "surreal fog swirling over empty road night",
    "narrative_mode": "atmosphere",
-   "primary_symbol": "road"
+   "primary_symbol": "road",
+   "start": 138.46,
+   "duration": 7.98,
+   "kw_times": {
+    "dream": 139.78,
+    "wrong": 144.92
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.8211,
+    "active_region_ratio": 0.6878,
+    "frame_difference": 17.192
+   },
+   "clip_fingerprint": "c3eb7755ff414013",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_19.mp4",
+   "stock_id": 3679072,
+   "pexels_id": 3679072,
+   "stock_frame_url": "https://images.pexels.com/videos/3679072/dark-footstep-mysterious-night-3679072.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/walking-in-a-path-in-the-forest-3679072/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "dream",
+     "png": "youtube_cap_19_kw0.png"
+    },
+    {
+     "kw": "wrong",
+     "png": "youtube_cap_19_kw1.png"
+    }
+   ]
   },
   {
    "text": "\"Imperfect\" and \"useless\" are not the same word — and confusing them is how people talk themselves into believing nothing.",
@@ -361,7 +1057,41 @@
    "query": "person shrugging walking away from bookshelf",
    "narrative_mode": "atmosphere",
    "human_role": "observer",
-   "primary_symbol": "human"
+   "primary_symbol": "human",
+   "start": 146.44,
+   "duration": 7.9,
+   "kw_times": {
+    "Imperfect": 146.44,
+    "useless": 147.48
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.8212,
+    "active_region_ratio": 0.9712,
+    "frame_difference": 29.4171
+   },
+   "clip_fingerprint": "30b0dec7d6616d9c",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_20.mp4",
+   "stock_id": 7301071,
+   "pexels_id": 7301071,
+   "stock_frame_url": "https://images.pexels.com/videos/7301071/adult-blur-book-book-bindings-7301071.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-getting-a-book-from-a-shelf-7301071/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "Imperfect",
+     "png": "youtube_cap_20_kw0.png"
+    },
+    {
+     "kw": "useless",
+     "png": "youtube_cap_20_kw1.png"
+    }
+   ]
   },
   {
    "text": "Now — the twist that ties it back.",
@@ -377,7 +1107,36 @@
    "query": "rope knot being tied close up hands",
    "narrative_mode": "atmosphere",
    "primary_symbol": "object_tool",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 154.34,
+   "duration": 2.8,
+   "kw_times": {
+    "twist": 155.12
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.4409,
+    "active_region_ratio": 0.9952,
+    "frame_difference": 21.4749
+   },
+   "clip_fingerprint": "4286ed26c695b9f2",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_21.mp4",
+   "stock_id": 5964185,
+   "pexels_id": 5964185,
+   "stock_frame_url": "https://images.pexels.com/videos/5964185/pexels-photo-5964185.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-rock-climber-putting-chalk-dust-5964185/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "twist",
+     "png": "youtube_cap_21_kw0.png"
+    }
+   ]
   },
   {
    "text": "The sentence \"all maps distort\" is itself a map. A map of maps. Compressed. Simplified. Distorted, like everything else.",
@@ -396,7 +1155,47 @@
    "hero_style": "effects",
    "image_prompt": "a small glowing parchment map whose drawn contents are an infinite receding archive of other tiny maps, recursion rendered in emerald and gold ink, candlelit premium cartography art, mise en abyme, no letters",
    "symbol_family_source": "auto",
-   "primary_symbol": "map"
+   "primary_symbol": "map",
+   "start": 157.14,
+   "duration": 10.7,
+   "kw_times": {
+    "maps": 158.2,
+    "map": 160.54
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_22.jpg",
+   "still_reference_signature": "c36306e99b17ca3e058e",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_22.mp4",
+   "clip_fingerprint": "59d5a717b58fa0e2",
+   "hero_generated": true,
+   "motion_recipe": "paper",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "youtube_kw_overlays": [
+    {
+     "kw": "maps",
+     "png": "youtube_cap_22_kw0.png"
+    },
+    {
+     "kw": "map",
+     "png": "youtube_cap_22_kw1.png"
+    }
+   ]
   },
   {
    "text": "But it's the one map that warns you about all the others.",
@@ -412,7 +1211,41 @@
    "symbol_family": "light_atmosphere",
    "query": "lighthouse beam over dark coastline night",
    "narrative_mode": "atmosphere",
-   "primary_symbol": "light_atmosphere"
+   "primary_symbol": "light_atmosphere",
+   "start": 167.84,
+   "duration": 4.1,
+   "kw_times": {
+    "map": 168.64,
+    "warns": 169.22
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.3952,
+    "active_region_ratio": 0.2698,
+    "frame_difference": 5.3128
+   },
+   "clip_fingerprint": "b2e7615b24478b79",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_23.mp4",
+   "stock_id": 30575631,
+   "pexels_id": 30575631,
+   "stock_frame_url": "https://images.pexels.com/videos/30575631/lighthouse-milky-way-starry-sky-30575631.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/lighthouse-illuminating-under-starry-night-sky-30575631/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "map",
+     "png": "youtube_cap_23_kw0.png"
+    },
+    {
+     "kw": "warns",
+     "png": "youtube_cap_23_kw1.png"
+    }
+   ]
   },
   {
    "text": "So fold it up. Keep it in your pocket.",
@@ -429,7 +1262,41 @@
    "query": "hand folding small note into shirt pocket warm",
    "narrative_mode": "atmosphere",
    "human_role": "chooser",
-   "primary_symbol": "hand"
+   "primary_symbol": "hand",
+   "start": 171.94,
+   "duration": 2.68,
+   "kw_times": {
+    "fold": 172.2,
+    "pocket": 173.7
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.9173,
+    "active_region_ratio": 0.9439,
+    "frame_difference": 27.9503
+   },
+   "clip_fingerprint": "0a839ab85e3a1fea",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_24.mp4",
+   "stock_id": 856004,
+   "pexels_id": 856004,
+   "stock_frame_url": "https://images.pexels.com/videos/856004/free-video-856004.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/pocket-tissue-856004/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "fold",
+     "png": "youtube_cap_24_kw0.png"
+    },
+    {
+     "kw": "pocket",
+     "png": "youtube_cap_24_kw1.png"
+    }
+   ]
   },
   {
    "text": "But a pocket full of imperfect maps raises the final question: if nobody's map is true... why do some people clearly navigate better than others? Why do some beliefs win?",
@@ -446,7 +1313,41 @@
    "query": "ship captain at helm looking at horizon dusk",
    "narrative_mode": "atmosphere",
    "human_role": "explorer",
-   "primary_symbol": "human"
+   "primary_symbol": "human",
+   "start": 174.62,
+   "duration": 12.34,
+   "kw_times": {
+    "question": 177.54,
+    "navigate": 182.08
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.9966,
+    "active_region_ratio": 0.8723,
+    "frame_difference": 23.3794
+   },
+   "clip_fingerprint": "051419b23696e6be",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_25.mp4",
+   "stock_id": 37429801,
+   "pexels_id": 37429801,
+   "stock_frame_url": "https://images.pexels.com/videos/37429801/pexels-photo-37429801.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/serene-ocean-view-from-ship-at-sunset-37429801/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "question",
+     "png": "youtube_cap_25_kw0.png"
+    },
+    {
+     "kw": "navigate",
+     "png": "youtube_cap_25_kw1.png"
+    }
+   ]
   },
   {
    "text": "Series three. Two ships. One storm. Only one comes home.",
@@ -462,7 +1363,71 @@
    "symbol_family": "nature",
    "query": "storm clouds gathering over dark ocean horizon",
    "narrative_mode": "atmosphere",
-   "primary_symbol": "nature"
+   "primary_symbol": "nature",
+   "start": 186.96,
+   "duration": 6.927,
+   "kw_times": {
+    "ships": 188.6,
+    "storm": 189.62
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.7625,
+    "active_region_ratio": 0.6781,
+    "frame_difference": 3.7211
+   },
+   "clip_fingerprint": "cc47f5c8de1a727c",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/cartographers-confession/clip_26.mp4",
+   "stock_id": 33007288,
+   "pexels_id": 33007288,
+   "stock_frame_url": "https://images.pexels.com/videos/33007288/pexels-photo-33007288.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/dramatic-ocean-sunset-with-storm-clouds-33007288/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "ships",
+     "png": "youtube_cap_26_kw0.png"
+    },
+    {
+     "kw": "storm",
+     "png": "youtube_cap_26_kw1.png"
+    }
+   ]
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.91
+  },
+  "audio_tags_enabled": true
+ },
+ "max_still_source_ratio": 0.35,
+ "still_image_policy": "closest_stock_frame_full_enhancement",
+ "music_choice": 3,
+ "music_variant_count": 1,
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
