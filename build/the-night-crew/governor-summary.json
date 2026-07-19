@@ -1,65 +1,60 @@
 {
-  "finished_at": "2026-07-19T14:53:34+00:00",
-  "github_run_id": "29690731458",
-  "incidents": [],
-  "last_message": "DONE -> /home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-night-crew/final_youtube.mp4",
+  "finished_at": "2026-07-19T19:22:20+00:00",
+  "github_run_id": "29698995035",
+  "incidents": [
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "019e3c600e4624c4",
+      "kind": "timeout",
+      "last_item": null,
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "2c243482baacee93",
+      "kind": "timeout",
+      "last_item": null,
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.0s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=b4f52fb83db188e8. GovernorTimeout: build_pass hard_timeout after 856.0s; last useful progress 0.0s ago.",
   "mode": "recover",
   "passes": 3,
   "policy": {
-    "altsheet": {
-      "hard_timeout_s": 300.0,
-      "historical_p95_s": 6.43,
-      "idle_timeout_s": 49.28,
-      "sample_count": 12,
-      "soft_timeout_s": 49.28,
-      "source": "history"
-    },
     "assemble": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 61.32,
-      "idle_timeout_s": 213.97,
+      "historical_p95_s": 76.52,
+      "idle_timeout_s": 240.0,
       "sample_count": 200,
-      "soft_timeout_s": 213.97,
+      "soft_timeout_s": 259.57,
       "source": "history"
     },
     "build_pass": {
-      "hard_timeout_s": 1800.0,
+      "hard_timeout_s": 855.0599105770002,
       "historical_p95_s": null,
-      "idle_timeout_s": 1800.0,
+      "idle_timeout_s": 855.0599105770002,
       "sample_count": 0,
-      "soft_timeout_s": 1800.0,
+      "soft_timeout_s": 855.0599105770002,
       "source": "explicit"
     },
     "credits": {
       "hard_timeout_s": 300.0,
-      "historical_p95_s": 1.02,
+      "historical_p95_s": 1.03,
       "idle_timeout_s": 33.08,
-      "sample_count": 91,
+      "sample_count": 98,
       "soft_timeout_s": 33.08,
-      "source": "history"
-    },
-    "ffmpeg": {
-      "hard_timeout_s": 900.0,
-      "historical_p95_s": 32.24,
-      "idle_timeout_s": 126.73,
-      "sample_count": 120,
-      "soft_timeout_s": 126.73,
-      "source": "history"
-    },
-    "footage": {
-      "hard_timeout_s": 600.0,
-      "historical_p95_s": 14.02,
-      "idle_timeout_s": 72.06,
-      "sample_count": 171,
-      "soft_timeout_s": 72.06,
       "source": "history"
     },
     "prep": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 45.57,
-      "idle_timeout_s": 166.7,
-      "sample_count": 13,
-      "soft_timeout_s": 166.7,
+      "historical_p95_s": 45.4,
+      "idle_timeout_s": 166.19,
+      "sample_count": 16,
+      "soft_timeout_s": 166.19,
       "source": "history"
     },
     "probe": {
@@ -69,14 +64,6 @@
       "sample_count": 200,
       "soft_timeout_s": 33.08,
       "source": "history"
-    },
-    "quality": {
-      "hard_timeout_s": 1500.0,
-      "historical_p95_s": null,
-      "idle_timeout_s": 1500.0,
-      "sample_count": 0,
-      "soft_timeout_s": 1500.0,
-      "source": "explicit"
     }
   },
   "quality": {
@@ -139,179 +126,167 @@
   },
   "recommendations": [
     {
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "019e3c600e4624c4",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "2c243482baacee93",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.0s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    },
+    {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (1691.9s).",
+      "reason": "Largest measured latency contribution in this run (2677.9s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "5f2773fc93cf4469a70285983c902525",
+  "run_id": "2a0ca2c34f2145cf9fc2627781ed4d75",
   "schema_version": 1,
   "slug": "the-night-crew",
   "stages": {
-    "altsheet": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 1.009,
-      "p95_success_s": 1.009,
-      "success_durations_s": [
-        1.009
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 1.009
-    },
     "assemble": {
-      "attempts": 25,
+      "attempts": 49,
       "failures": 0,
-      "p50_success_s": 61.374,
-      "p95_success_s": 87.346,
+      "p50_success_s": 51.393,
+      "p95_success_s": 85.929,
       "success_durations_s": [
-        69.42,
-        75.474,
-        49.284,
-        53.339,
-        68.358,
-        70.434,
-        71.467,
-        55.332,
-        61.374,
-        100.678,
-        62.358,
-        59.313,
-        87.539,
-        50.275,
-        63.38,
-        86.575,
-        76.446,
-        39.221,
-        84.533,
-        58.343,
-        46.27,
-        46.28,
-        54.305,
-        31.186,
-        39.197
+        54.406,
+        51.393,
+        33.27,
+        34.234,
+        47.347,
+        43.368,
+        48.38,
+        37.267,
+        41.288,
+        64.492,
+        42.362,
+        40.338,
+        60.52,
+        33.259,
+        41.313,
+        58.437,
+        52.424,
+        25.21,
+        59.455,
+        38.306,
+        29.239,
+        29.233,
+        34.234,
+        21.179,
+        25.204,
+        70.582,
+        76.59,
+        49.359,
+        54.448,
+        68.683,
+        70.583,
+        72.611,
+        56.43,
+        61.491,
+        102.887,
+        73.679,
+        89.778,
+        51.423,
+        64.466,
+        86.753,
+        77.67,
+        40.32,
+        84.693,
+        59.497,
+        47.334,
+        46.355,
+        55.413,
+        32.224,
+        40.287
       ],
-      "successes": 25,
+      "successes": 49,
       "timeouts": 0,
-      "total_duration_s": 1560.381
+      "total_duration_s": 2579.714
     },
     "build_pass": {
       "attempts": 3,
-      "failures": 0,
-      "p50_success_s": 18.04,
-      "p95_success_s": 1496.566,
+      "failures": 2,
+      "p50_success_s": 21.056,
+      "p95_success_s": 21.056,
       "success_durations_s": [
-        13.023,
-        18.04,
-        1660.847
+        21.056
+      ],
+      "successes": 1,
+      "timeouts": 2,
+      "total_duration_s": 2677.882
+    },
+    "credits": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 1.01,
+      "p95_success_s": 1.033,
+      "success_durations_s": [
+        1.006,
+        1.01,
+        1.036
       ],
       "successes": 3,
       "timeouts": 0,
-      "total_duration_s": 1691.91
-    },
-    "credits": {
-      "attempts": 2,
-      "failures": 0,
-      "p50_success_s": 1.006,
-      "p95_success_s": 1.008,
-      "success_durations_s": [
-        1.004,
-        1.008
-      ],
-      "successes": 2,
-      "timeouts": 0,
-      "total_duration_s": 2.012
-    },
-    "ffmpeg": {
-      "attempts": 4,
-      "failures": 0,
-      "p50_success_s": 7.523,
-      "p95_success_s": 31.116,
-      "success_durations_s": [
-        1.009,
-        7.023,
-        35.191,
-        8.024
-      ],
-      "successes": 4,
-      "timeouts": 0,
-      "total_duration_s": 51.247
-    },
-    "footage": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 12.018,
-      "p95_success_s": 12.018,
-      "success_durations_s": [
-        12.018
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 12.018
+      "total_duration_s": 3.052
     },
     "prep": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 16.038,
-      "p95_success_s": 16.038,
+      "p50_success_s": 19.133,
+      "p95_success_s": 19.133,
       "success_durations_s": [
-        16.038
+        19.133
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 16.038
+      "total_duration_s": 19.133
     },
     "probe": {
-      "attempts": 26,
+      "attempts": 28,
       "failures": 0,
-      "p50_success_s": 1.009,
-      "p95_success_s": 1.01,
+      "p50_success_s": 1.011,
+      "p95_success_s": 1.012,
       "success_durations_s": [
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.01,
-        1.01,
-        1.009,
-        1.01,
-        1.01,
-        1.009,
-        1.01,
-        1.009,
-        1.01,
-        1.009,
-        1.01,
-        1.01,
-        1.01,
-        1.009,
-        1.009,
-        1.009,
-        1.01
+        1.011,
+        1.012,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.013,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.012,
+        1.012,
+        1.012
       ],
-      "successes": 26,
+      "successes": 28,
       "timeouts": 0,
-      "total_duration_s": 26.244
-    },
-    "quality": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 38.218,
-      "p95_success_s": 38.218,
-      "success_durations_s": [
-        38.218
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 38.218
+      "total_duration_s": 28.314
     }
   },
-  "status": "done"
+  "status": "failed"
 }
