@@ -297,9 +297,22 @@ class PipelineGovernor(GovernorSummaryMixin):
                     next_heartbeat = now + max(0.1, self.heartbeat_seconds)
 
                 if now >= hard_deadline:
-                    timed_out = True
-                    timeout_kind = "hard_timeout"
-                    break
+                    idle_for = now - last_progress
+                    absolute_cap = started + policy.hard_timeout_s * 3.0
+                    if idle_for < policy.idle_timeout_s and now < absolute_cap:
+                        extension = min(300.0, max(60.0, policy.hard_timeout_s * 0.5))
+                        hard_deadline = min(absolute_cap, now + extension)
+                        self.record_event(
+                            "hard_timeout_extended_progress",
+                            stage=spec.name,
+                            item=spec.item,
+                            idle_s=round(idle_for, 2),
+                            new_deadline_elapsed_s=round(hard_deadline - started, 2),
+                        )
+                    else:
+                        timed_out = True
+                        timeout_kind = "hard_timeout"
+                        break
                 if now >= soft_deadline:
                     idle_for = now - last_progress
                     if idle_for >= policy.idle_timeout_s:
