@@ -859,3 +859,15 @@ def scene_visual_fingerprint(scene):
     return _hashlib.sha256(
         _json.dumps(payload, sort_keys=True, ensure_ascii=True).encode()
     ).hexdigest()[:16]
+
+
+# Standing rule (James): generated stills carry HEAVY layered special effects.
+EFFECTS_STILL_STYLE = (
+    ", cinematic conceptual key art, HEAVY layered special effects: dramatic "
+    "volumetric god rays, dense glowing light particles and embers swirling "
+    "through the air, luminous energy trails and wisps, drifting mist and "
+    "atmospheric haze, sparkling bokeh, soft lens bloom and anamorphic flares, "
+    "subtle chromatic aberration, iridescent glow, rich film-grade color, "
+    "hyperdetailed, ethereal and otherworldly, "
+    "no text, no words, no letters, no captions, no labels, no diagrams"
+)

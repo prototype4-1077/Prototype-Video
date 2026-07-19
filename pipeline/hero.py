@@ -132,6 +132,8 @@ def main(bd, i):
         print(f"hero {i}: exists"); return
     prompt = sc.get("image_prompt") or sc["text"]
     style_override = sc.get("hero_style")
+    if style_override == "effects":  # scripts opt in by name, not by pasting the style
+        style_override = motion.EFFECTS_STILL_STYLE
     pure = bool(style_override)  # purely generated, no stock-reference conditioning
     reference = ({"url": None, "path": None, "scene_index": None}
                  if pure else still_reference.bind_reference(bd, s, i))
