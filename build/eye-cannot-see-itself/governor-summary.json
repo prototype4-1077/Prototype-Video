@@ -1,33 +1,25 @@
 {
-  "finished_at": "2026-07-19T16:04:24+00:00",
-  "github_run_id": "29693067771",
+  "finished_at": "2026-07-19T20:32:26+00:00",
+  "github_run_id": "29700996134",
   "incidents": [],
-  "last_message": "DONE -> /home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/eye-cannot-see-itself/final_youtube.mp4",
+  "last_message": "DONE -> /home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/eye-cannot-see-itself/final_youtube.mp4 + /home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/eye-cannot-see-itself/final.mp4 + /home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/eye-cannot-see-itself/final_short.mp4",
   "mode": "recover",
-  "passes": 5,
+  "passes": 2,
   "policy": {
-    "align": {
-      "hard_timeout_s": 300.0,
-      "historical_p95_s": 1.0,
-      "idle_timeout_s": 33.01,
-      "sample_count": 9,
-      "soft_timeout_s": 33.01,
-      "source": "history"
-    },
     "altsheet": {
       "hard_timeout_s": 300.0,
-      "historical_p95_s": 6.43,
-      "idle_timeout_s": 49.28,
-      "sample_count": 12,
-      "soft_timeout_s": 49.28,
+      "historical_p95_s": 7.43,
+      "idle_timeout_s": 52.29,
+      "sample_count": 14,
+      "soft_timeout_s": 52.29,
       "source": "history"
     },
     "assemble": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 61.32,
-      "idle_timeout_s": 213.97,
+      "historical_p95_s": 76.52,
+      "idle_timeout_s": 240.0,
       "sample_count": 200,
-      "soft_timeout_s": 213.97,
+      "soft_timeout_s": 259.57,
       "source": "history"
     },
     "build_pass": {
@@ -40,42 +32,26 @@
     },
     "credits": {
       "hard_timeout_s": 300.0,
-      "historical_p95_s": 1.02,
-      "idle_timeout_s": 33.08,
-      "sample_count": 91,
-      "soft_timeout_s": 33.08,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.1,
+      "sample_count": 95,
+      "soft_timeout_s": 33.1,
       "source": "history"
     },
     "ffmpeg": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 32.24,
-      "idle_timeout_s": 126.73,
-      "sample_count": 120,
-      "soft_timeout_s": 126.73,
-      "source": "history"
-    },
-    "footage": {
-      "hard_timeout_s": 600.0,
-      "historical_p95_s": 13.52,
-      "idle_timeout_s": 70.57,
-      "sample_count": 171,
-      "soft_timeout_s": 70.57,
-      "source": "history"
-    },
-    "hero": {
-      "hard_timeout_s": 1200.0,
-      "historical_p95_s": 22.43,
-      "idle_timeout_s": 180.0,
-      "sample_count": 32,
-      "soft_timeout_s": 180.0,
+      "historical_p95_s": 29.14,
+      "idle_timeout_s": 117.42,
+      "sample_count": 153,
+      "soft_timeout_s": 117.42,
       "source": "history"
     },
     "prep": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 45.57,
-      "idle_timeout_s": 166.7,
-      "sample_count": 13,
-      "soft_timeout_s": 166.7,
+      "historical_p95_s": 45.34,
+      "idle_timeout_s": 166.02,
+      "sample_count": 17,
+      "soft_timeout_s": 166.02,
       "source": "history"
     },
     "probe": {
@@ -83,7 +59,7 @@
       "historical_p95_s": 1.02,
       "idle_timeout_s": 20.0,
       "sample_count": 200,
-      "soft_timeout_s": 33.08,
+      "soft_timeout_s": 33.06,
       "source": "history"
     },
     "quality": {
@@ -94,33 +70,99 @@
       "soft_timeout_s": 1500.0,
       "source": "explicit"
     },
-    "transcribe": {
+    "shortcut": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 22.86,
-      "idle_timeout_s": 180.0,
-      "sample_count": 24,
-      "soft_timeout_s": 180.0,
-      "source": "history"
-    },
-    "tts": {
-      "hard_timeout_s": 480.0,
-      "historical_p95_s": 63.53,
-      "idle_timeout_s": 180.0,
-      "sample_count": 6,
-      "soft_timeout_s": 220.6,
+      "historical_p95_s": 14.16,
+      "idle_timeout_s": 120.0,
+      "sample_count": 5,
+      "soft_timeout_s": 120.0,
       "source": "history"
     }
   },
   "quality": {
     "build_dir": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/eye-cannot-see-itself",
-    "checked_at": "2026-07-19T16:04:24+00:00",
+    "checked_at": "2026-07-19T20:32:26+00:00",
     "deep_decode": true,
     "expected_duration_s": 189.551,
     "failures": [],
     "mode": "delivery",
     "outputs": {
+      "portrait": {
+        "avg_kbps": 4043,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 1.082,
+        "exists": true,
+        "expected_duration_s": 189.551,
+        "failures": [],
+        "path": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/eye-cannot-see-itself/final.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 190.611995,
+          "bit_rate": 4042971.0,
+          "duration_s": 190.633333,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1920,
+          "video_codec": "h264",
+          "video_duration_s": 190.633333,
+          "width": 1080
+        },
+        "size_bytes": 96340650,
+        "warnings": []
+      },
+      "short": {
+        "avg_kbps": 4016,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "exists": true,
+        "failures": [],
+        "path": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/eye-cannot-see-itself/final_short.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 57.469002,
+          "bit_rate": 4016455.0,
+          "duration_s": 57.469002,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1920,
+          "video_codec": "h264",
+          "video_duration_s": 57.433333,
+          "width": 1080
+        },
+        "size_bytes": 28852712,
+        "warnings": []
+      },
       "youtube": {
-        "avg_kbps": 7845,
+        "avg_kbps": 7844,
         "deep_scan": {
           "black_intervals": 0,
           "black_longest_s": 0.0,
@@ -143,7 +185,7 @@
         "probe": {
           "audio_codec": "aac",
           "audio_duration_s": 190.611995,
-          "bit_rate": 7844529.0,
+          "bit_rate": 7844400.0,
           "duration_s": 190.633333,
           "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
           "fps": 30.0,
@@ -154,7 +196,7 @@
           "video_duration_s": 190.633333,
           "width": 1920
         },
-        "size_bytes": 186928611,
+        "size_bytes": 186925532,
         "warnings": []
       }
     },
@@ -173,230 +215,235 @@
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (1722.9s).",
+      "reason": "Largest measured latency contribution in this run (3064.4s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "dd419ea41235465aab9255fc6966211a",
+  "run_id": "6481d40f5a5c4eb0a5d86cff75ba35f5",
   "schema_version": 1,
   "slug": "eye-cannot-see-itself",
   "stages": {
-    "align": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 1.001,
-      "p95_success_s": 1.001,
-      "success_durations_s": [
-        1.001
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 1.001
-    },
     "altsheet": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 1.009,
-      "p95_success_s": 1.009,
+      "p50_success_s": 7.038,
+      "p95_success_s": 7.038,
       "success_durations_s": [
-        1.009
+        7.038
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 1.009
+      "total_duration_s": 7.038
     },
     "assemble": {
-      "attempts": 26,
+      "attempts": 52,
       "failures": 0,
-      "p50_success_s": 47.791,
-      "p95_success_s": 87.551,
+      "p50_success_s": 52.439,
+      "p95_success_s": 102.955,
       "success_durations_s": [
-        26.122,
-        47.261,
-        31.192,
-        39.339,
-        59.315,
-        41.245,
-        44.252,
-        38.225,
-        56.376,
-        84.51,
-        46.299,
-        32.193,
-        63.432,
-        53.317,
-        35.195,
-        28.148,
-        60.36,
-        74.473,
-        48.321,
-        12.051,
-        88.623,
-        14.068,
-        76.523,
-        88.565,
-        63.344,
-        65.439
+        25.196,
+        39.318,
+        24.173,
+        31.251,
+        52.419,
+        34.267,
+        38.269,
+        31.222,
+        45.351,
+        74.696,
+        39.314,
+        26.192,
+        53.443,
+        44.385,
+        29.198,
+        23.186,
+        52.46,
+        64.475,
+        41.377,
+        10.073,
+        85.785,
+        11.079,
+        71.633,
+        85.718,
+        55.5,
+        57.474,
+        33.216,
+        59.42,
+        40.331,
+        49.435,
+        75.635,
+        53.434,
+        56.505,
+        48.397,
+        71.534,
+        107.935,
+        58.507,
+        41.301,
+        81.702,
+        69.65,
+        44.395,
+        36.3,
+        77.669,
+        95.883,
+        62.576,
+        15.094,
+        113.043,
+        18.135,
+        98.881,
+        112.223,
+        80.727,
+        84.706
       ],
-      "successes": 26,
+      "successes": 52,
       "timeouts": 0,
-      "total_duration_s": 1318.188
+      "total_duration_s": 2834.088
     },
     "build_pass": {
-      "attempts": 5,
+      "attempts": 2,
       "failures": 0,
-      "p50_success_s": 78.237,
-      "p95_success_s": 1158.487,
+      "p50_success_s": 1532.183,
+      "p95_success_s": 2891.294,
       "success_durations_s": [
-        78.237,
-        20.012,
-        151.183,
-        63.184,
-        1410.313
+        22.06,
+        3042.306
       ],
-      "successes": 5,
+      "successes": 2,
       "timeouts": 0,
-      "total_duration_s": 1722.929
+      "total_duration_s": 3064.366
     },
     "credits": {
       "attempts": 2,
       "failures": 0,
       "p50_success_s": 1.007,
-      "p95_success_s": 1.009,
+      "p95_success_s": 1.011,
       "success_durations_s": [
-        1.005,
-        1.009
+        1.004,
+        1.011
       ],
       "successes": 2,
       "timeouts": 0,
-      "total_duration_s": 2.014
+      "total_duration_s": 2.015
     },
     "ffmpeg": {
-      "attempts": 4,
+      "attempts": 8,
       "failures": 0,
-      "p50_success_s": 5.518,
-      "p95_success_s": 28.223,
+      "p50_success_s": 7.532,
+      "p95_success_s": 37.086,
       "success_durations_s": [
-        1.009,
-        5.018,
-        32.141,
-        6.018
+        1.012,
+        7.033,
+        29.209,
+        8.035,
+        1.013,
+        7.031,
+        41.328,
+        8.031
       ],
-      "successes": 4,
+      "successes": 8,
       "timeouts": 0,
-      "total_duration_s": 44.186
-    },
-    "footage": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 150.17,
-      "p95_success_s": 150.17,
-      "success_durations_s": [
-        150.17
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 150.17
-    },
-    "hero": {
-      "attempts": 3,
-      "failures": 0,
-      "p50_success_s": 15.054,
-      "p95_success_s": 21.373,
-      "success_durations_s": [
-        15.054,
-        10.04,
-        22.075
-      ],
-      "successes": 3,
-      "timeouts": 0,
-      "total_duration_s": 47.169
+      "total_duration_s": 102.692
     },
     "prep": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 14.033,
-      "p95_success_s": 14.033,
+      "p50_success_s": 20.055,
+      "p95_success_s": 20.055,
       "success_durations_s": [
-        14.033
+        20.055
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 14.033
+      "total_duration_s": 20.055
     },
     "probe": {
-      "attempts": 27,
+      "attempts": 55,
       "failures": 0,
-      "p50_success_s": 1.009,
-      "p95_success_s": 1.069,
+      "p50_success_s": 1.013,
+      "p95_success_s": 1.014,
       "success_durations_s": [
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.016,
-        1.009,
-        1.092,
-        1.009,
-        1.009,
-        1.008,
-        1.009,
-        1.153,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
+        1.012,
+        1.012,
+        1.012,
+        1.013,
+        1.013,
+        1.012,
+        1.013,
+        1.011,
         1.015,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.009,
-        1.01
+        1.012,
+        1.013,
+        1.013,
+        1.013,
+        1.012,
+        1.014,
+        1.012,
+        1.014,
+        1.011,
+        1.014,
+        1.014,
+        1.013,
+        1.012,
+        1.013,
+        1.014,
+        1.012,
+        1.012,
+        1.012,
+        1.013,
+        1.013,
+        1.013,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.013,
+        1.013,
+        1.018,
+        1.013,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.013,
+        1.012,
+        1.013,
+        1.012,
+        1.013,
+        1.013,
+        1.012,
+        1.013,
+        1.014,
+        1.013
       ],
-      "successes": 27,
+      "successes": 55,
       "timeouts": 0,
-      "total_duration_s": 27.483
+      "total_duration_s": 55.699
     },
     "quality": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 35.2,
-      "p95_success_s": 35.2,
+      "p50_success_s": 88.685,
+      "p95_success_s": 88.685,
       "success_durations_s": [
-        35.2
+        88.685
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 35.2
+      "total_duration_s": 88.685
     },
-    "transcribe": {
+    "shortcut": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 17.01,
-      "p95_success_s": 17.01,
+      "p50_success_s": 18.095,
+      "p95_success_s": 18.095,
       "success_durations_s": [
-        17.01
+        18.095
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 17.01
-    },
-    "tts": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 77.115,
-      "p95_success_s": 77.115,
-      "success_durations_s": [
-        77.115
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 77.115
+      "total_duration_s": 18.095
     }
   },
   "status": "done"
