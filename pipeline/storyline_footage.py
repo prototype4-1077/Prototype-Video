@@ -12,6 +12,7 @@ import sys
 
 import footage
 import hero
+import motion
 import narrative_fidelity
 import profiles
 import storyboard
