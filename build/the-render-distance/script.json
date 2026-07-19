@@ -33,7 +33,27 @@
    "symbol_family": "architecture",
    "query": "dark empty room open doorway shadow night",
    "primary_symbol": "doorway",
-   "narrative_mode": "atmosphere"
+   "narrative_mode": "atmosphere",
+   "start": 0.0,
+   "duration": 5.34,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.4776,
+    "active_region_ratio": 0.3894,
+    "frame_difference": 6.6964
+   },
+   "clip_fingerprint": "acf01e9a80d17c2c",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_00.mp4",
+   "stock_id": 4904266,
+   "pexels_id": 4904266,
+   "stock_frame_url": "https://images.pexels.com/videos/4904266/pexels-photo-4904266.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-dark-room-with-a-light-shining-on-the-floor-4904266/"
   },
   {
    "text": "I know how that sounds. Stick with me — the machine drawing your world runs on a budget.",
@@ -50,7 +70,27 @@
    "symbol_family": "human",
    "query": "man walking dark hallway looking back",
    "primary_symbol": "man",
-   "human_role": "witness"
+   "human_role": "witness",
+   "start": 5.34,
+   "duration": 6.46,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.4822,
+    "active_region_ratio": 0.943,
+    "frame_difference": 16.5948
+   },
+   "clip_fingerprint": "32e391fad0634c69",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_01.mp4",
+   "stock_id": 7599306,
+   "pexels_id": 7599306,
+   "stock_frame_url": "https://images.pexels.com/videos/7599306/pexels-photo-7599306.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-in-black-suit-standing-in-the-hallway-7599306/"
   },
   {
    "text": "In video games, the world only exists near the player.",
@@ -66,7 +106,27 @@
    "symbol_family": "technology",
    "query": "person playing video game glowing screen dark room",
    "primary_symbol": "screen",
-   "human_role": "witness"
+   "human_role": "witness",
+   "start": 11.8,
+   "duration": 3.58,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.7395,
+    "active_region_ratio": 0.9272,
+    "frame_difference": 31.0719
+   },
+   "clip_fingerprint": "225b0881ece046b2",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_02.mp4",
+   "stock_id": 7047271,
+   "pexels_id": 7047271,
+   "stock_frame_url": "https://images.pexels.com/videos/7047271/pexels-photo-7047271.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-playing-video-game-7047271/"
   },
   {
    "text": "Walk toward the mountain, and it draws itself into being. Walk away… and it quietly stops.",
@@ -84,7 +144,56 @@
    "primary_symbol": "mountain",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "a majestic mountain peak half-rendered into existence, one side photorealistic granite and snow, the other side dissolving into glowing neon cyan wireframe polygons and floating code particles against a black void, volumetric light rays, magenta glitch fragments drifting away, cinematic depth of field, hyperdetailed digital art, no text, no words, no letters"
+   "image_prompt": "a majestic mountain peak half-rendered into existence, one side photorealistic granite and snow, the other side dissolving into glowing neon cyan wireframe polygons and floating code particles against a black void, volumetric light rays, magenta glitch fragments drifting away, cinematic depth of field, hyperdetailed digital art, no text, no words, no letters",
+   "start": 15.38,
+   "duration": 6.5,
+   "kw_times": {
+    "mountain": 15.92
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_03.jpg",
+   "still_reference_signature": "090f198e17869adb5b14",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_03.mp4",
+   "clip_fingerprint": "6a14c4423d2f125d",
+   "hero_generated": true,
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "mountain",
+     "png": "cap_03_kw0.png"
+    },
+    {
+     "kw": "wireframe",
+     "png": "cap_03_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "mountain",
+     "png": "youtube_cap_03_kw0.png"
+    },
+    {
+     "kw": "wireframe",
+     "png": "youtube_cap_03_kw1.png"
+    }
+   ]
   },
   {
    "text": "Designers call it render distance. Drawing everything, everywhere, always? Too expensive.",
@@ -99,7 +208,27 @@
    "visual_function": "literal_anchor",
    "symbol_family": "technology",
    "query": "programmer computer screen code dark office",
-   "primary_symbol": "computer"
+   "primary_symbol": "computer",
+   "start": 21.88,
+   "duration": 7.04,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.8735,
+    "active_region_ratio": 0.4946,
+    "frame_difference": 6.0437
+   },
+   "clip_fingerprint": "a1eef040ac77cb33",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_04.mp4",
+   "stock_id": 4709300,
+   "pexels_id": 4709300,
+   "stock_frame_url": "https://images.pexels.com/videos/4709300/pexels-photo-4709300.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-boy-sitting-at-a-desk-looking-at-a-computer-screen-4709300/"
   },
   {
    "text": "Here's the twist that keeps me up at night: your brain runs the same accounting.",
@@ -118,7 +247,56 @@
    "primary_symbol": "brain",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "a translucent human head profile filled with a miniature glowing circuit-board city, neon cyan and magenta data streams flowing through avenues of light, some districts brightly rendered and others fading into dark unfinished wireframe, floating particles, black void background, cinematic rim light, hyperdetailed, no text, no words"
+   "image_prompt": "a translucent human head profile filled with a miniature glowing circuit-board city, neon cyan and magenta data streams flowing through avenues of light, some districts brightly rendered and others fading into dark unfinished wireframe, floating particles, black void background, cinematic rim light, hyperdetailed, no text, no words",
+   "start": 28.92,
+   "duration": 5.66,
+   "kw_times": {
+    "brain": 31.56
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_05.jpg",
+   "still_reference_signature": "5eb91dcfd550c95314ab",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_05.mp4",
+   "clip_fingerprint": "1437bf0be87c12e7",
+   "hero_generated": true,
+   "motion_recipe": "screen",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "brain",
+     "png": "cap_05_kw0.png"
+    },
+    {
+     "kw": "circuit",
+     "png": "cap_05_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "brain",
+     "png": "youtube_cap_05_kw0.png"
+    },
+    {
+     "kw": "circuit",
+     "png": "youtube_cap_05_kw1.png"
+    }
+   ]
   },
   {
    "text": "Three times a second your eyes jump — and every jump, the feed cuts to black.",
@@ -133,7 +311,27 @@
    "symbol_family": "human",
    "query": "extreme close up human eye macro iris",
    "primary_symbol": "eye",
-   "human_role": "witness"
+   "human_role": "witness",
+   "start": 34.58,
+   "duration": 5.38,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.5924,
+    "active_region_ratio": 0.8114,
+    "frame_difference": 4.8315
+   },
+   "clip_fingerprint": "a1ce3e302f8c3d2c",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_06.mp4",
+   "stock_id": 12041905,
+   "pexels_id": 12041905,
+   "stock_frame_url": "https://images.pexels.com/videos/12041905/pexels-photo-12041905.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-view-of-eye-opening-12041905/"
   },
   {
    "text": "That's two hours of blindness a day. You never catch the cuts.",
@@ -149,7 +347,27 @@
    "visual_function": "mechanism",
    "symbol_family": "technology",
    "query": "old film projector flickering beam dark",
-   "primary_symbol": "projector"
+   "primary_symbol": "projector",
+   "start": 39.96,
+   "duration": 4.46,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.6396,
+    "active_region_ratio": 0.9112,
+    "frame_difference": 65.2543
+   },
+   "clip_fingerprint": "d298446aac995490",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_07.mp4",
+   "stock_id": 855120,
+   "pexels_id": 855120,
+   "stock_frame_url": "https://images.pexels.com/videos/855120/free-video-855120.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-video-of-projector-855120/"
   },
   {
    "text": "Because the machine doesn't show you the world. It shows you the latest stable build.",
@@ -167,7 +385,33 @@
    "primary_symbol": "layers",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "a city street being assembled from stacked translucent glass panels floating into place, each layer adding texture light and color, visible magenta glitch seams between layers, unfinished edges dissolving into cyan wireframe and black void, volumetric god rays, floating luminous dust, cinematic, hyperdetailed, no text, no words"
+   "image_prompt": "a city street being assembled from stacked translucent glass panels floating into place, each layer adding texture light and color, visible magenta glitch seams between layers, unfinished edges dissolving into cyan wireframe and black void, volumetric god rays, floating luminous dust, cinematic, hyperdetailed, no text, no words",
+   "start": 44.42,
+   "duration": 6.22,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_08.jpg",
+   "still_reference_signature": "deaf4ba9da19d8c0422e",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_08.mp4",
+   "clip_fingerprint": "3ed1495993d6cfb5",
+   "hero_generated": true,
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Scientists once swapped a stranger mid-conversation. Half of us never noticed — the machine won't re-render what it thinks is loaded.",
@@ -184,7 +428,27 @@
    "symbol_family": "human",
    "query": "two people talking city street daytime",
    "primary_symbol": "people",
-   "human_role": "actor"
+   "human_role": "actor",
+   "start": 50.64,
+   "duration": 8.3,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.1812,
+    "active_region_ratio": 0.9966,
+    "frame_difference": 34.345
+   },
+   "clip_fingerprint": "14196b19c8e4cdce",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_09.mp4",
+   "stock_id": 5977055,
+   "pexels_id": 5977055,
+   "stock_frame_url": "https://images.pexels.com/videos/5977055/autumn-business-businessman-businesswoman-5977055.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-man-and-a-woman-talking-while-walking-in-the-street-5977055/"
   },
   {
    "text": "Your kitchen. Right now. Dark. Silent.",
@@ -200,7 +464,51 @@
    "symbol_family": "architecture",
    "query": "dark empty kitchen night moonlight",
    "primary_symbol": "kitchen",
-   "narrative_mode": "atmosphere"
+   "narrative_mode": "atmosphere",
+   "start": 58.94,
+   "duration": 4.92,
+   "kw_times": {
+    "kitchen": 59.32,
+    "dark": 61.48
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.8105,
+    "active_region_ratio": 0.3773,
+    "frame_difference": 9.0795
+   },
+   "clip_fingerprint": "056a580cec9c30e4",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_10.mp4",
+   "stock_id": 9997825,
+   "pexels_id": 9997825,
+   "stock_frame_url": "https://images.pexels.com/videos/9997825/moon-moonlight-night-9997825.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/time-lapse-of-sky-at-night-9997825/",
+   "kw_overlays": [
+    {
+     "kw": "kitchen",
+     "png": "cap_10_kw0.png"
+    },
+    {
+     "kw": "dark",
+     "png": "cap_10_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "kitchen",
+     "png": "youtube_cap_10_kw0.png"
+    },
+    {
+     "kw": "dark",
+     "png": "youtube_cap_10_kw1.png"
+    }
+   ]
   },
   {
    "text": "Are the plates in the cupboard? Or do they load the moment the door — and your attention — swing open?",
@@ -217,7 +525,27 @@
    "symbol_family": "human",
    "query": "hand opening kitchen cabinet door",
    "primary_symbol": "hand",
-   "human_role": "actor"
+   "human_role": "actor",
+   "start": 63.86,
+   "duration": 6.66,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.481,
+    "active_region_ratio": 0.5539,
+    "frame_difference": 14.3803
+   },
+   "clip_fingerprint": "815c71f4b390bd8f",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_11.mp4",
+   "stock_id": 36017451,
+   "pexels_id": 36017451,
+   "stock_frame_url": "https://images.pexels.com/videos/36017451/pexels-photo-36017451.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-organizing-kitchen-drawer-with-food-items-36017451/"
   },
   {
    "text": "Now, easy — the world really is out there. Physics votes yes.",
@@ -234,7 +562,27 @@
    "symbol_family": "nature",
    "query": "night sky stars timelapse mountains",
    "primary_symbol": "stars",
-   "narrative_mode": "atmosphere"
+   "narrative_mode": "atmosphere",
+   "start": 70.52,
+   "duration": 4.68,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.1116,
+    "active_region_ratio": 0.1158,
+    "frame_difference": 2.6988
+   },
+   "clip_fingerprint": "a3e6792bda23e92e",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_12.mp4",
+   "stock_id": 13423306,
+   "pexels_id": 13423306,
+   "stock_frame_url": "https://images.pexels.com/videos/13423306/lake-milky-way-mountains-night-13423306.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/stars-in-night-sky-over-mountain-lake-13423306/"
   },
   {
    "text": "But your world — the color, the distance, the song you can't unhear — is rendered on demand.",
@@ -250,7 +598,27 @@
    "symbol_family": "human",
    "query": "person headphones colorful bokeh lights night",
    "primary_symbol": "person",
-   "human_role": "witness"
+   "human_role": "witness",
+   "start": 75.2,
+   "duration": 7.18,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.4951,
+    "active_region_ratio": 0.8316,
+    "frame_difference": 9.3636
+   },
+   "clip_fingerprint": "f9fc2418ea35b9da",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_13.mp4",
+   "stock_id": 35412505,
+   "pexels_id": 35412505,
+   "stock_frame_url": "https://images.pexels.com/videos/35412505/pexels-photo-35412505.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/woman-in-hijab-admiring-festive-lights-35412505/"
   },
   {
    "text": "Color isn't even out there. Wavelengths in — crimson out. You live inside the renderer's shader pack.",
@@ -266,7 +634,27 @@
    "visual_function": "mechanism",
    "symbol_family": "light",
    "query": "prism light spectrum rainbow refraction dark",
-   "primary_symbol": "prism"
+   "primary_symbol": "prism",
+   "start": 82.38,
+   "duration": 6.98,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.739,
+    "active_region_ratio": 0.3943,
+    "frame_difference": 6.1826
+   },
+   "clip_fingerprint": "0b63274b2042f8f9",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_14.mp4",
+   "stock_id": 4431323,
+   "pexels_id": 4431323,
+   "stock_frame_url": "https://images.pexels.com/videos/4431323/pexels-photo-4431323.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/rainbow-light-reflection-on-a-soap-bubble-4431323/"
   },
   {
    "text": "And attention? Attention is the graphics card.",
@@ -282,7 +670,27 @@
    "symbol_family": "technology",
    "query": "computer chip circuit board macro glowing",
    "primary_symbol": "chip",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 89.36,
+   "duration": 3.36,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.3467,
+    "active_region_ratio": 0.9968,
+    "frame_difference": 9.9681
+   },
+   "clip_fingerprint": "8eedf7b5cb648aaa",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_15.mp4",
+   "stock_id": 6754822,
+   "pexels_id": 6754822,
+   "stock_frame_url": "https://images.pexels.com/videos/6754822/pexels-photo-6754822.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-shot-of-a-printed-circuit-board-6754822/"
   },
   {
    "text": "Whatever you point it at renders in high resolution. Everything else drops to fog and placeholder shapes.",
@@ -301,7 +709,33 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "a human face in profile split down the middle, left half rendered photorealistic in warm amber cinematic light with fine skin detail, right half degraded into flat gray low-polygon triangles and unlit wireframe dissolving into fog, floating dust particles, black background, dramatic side lighting, hyperdetailed, no text, no words",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 92.72,
+   "duration": 6.42,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_16.jpg",
+   "still_reference_signature": "3acdce1c60e88f1b0895",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_16.mp4",
+   "clip_fingerprint": "72d6021852cad8b4",
+   "hero_generated": true,
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Someone you stopped loving renders in low-poly now. You just stopped spending the budget.",
@@ -318,7 +752,27 @@
    "symbol_family": "human",
    "query": "person silhouette rain window blurred",
    "primary_symbol": "window",
-   "human_role": "witness"
+   "human_role": "witness",
+   "start": 99.14,
+   "duration": 5.38,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.3242,
+    "active_region_ratio": 0.8261,
+    "frame_difference": 12.5949
+   },
+   "clip_fingerprint": "2c5cec9e8b8be298",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_17.mp4",
+   "stock_id": 8549580,
+   "pexels_id": 8549580,
+   "stock_frame_url": "https://images.pexels.com/videos/8549580/coffee-cold-weather-cosy-cosy-home-8549580.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/rain-falling-outside-of-a-glass-window-8549580/"
   },
   {
    "text": "And worry? That's the machine pre-rendering disasters. Full lighting. Rich detail. No player in the level.",
@@ -337,7 +791,33 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "a hyperdetailed ruined city block floating like a video game level diorama in a black void, dramatic crimson and magenta emergency lighting, volumetric smoke, every window and crack rendered in exquisite detail, completely empty of people, edges of the diorama dissolving into cyan wireframe, cinematic, no text, no words",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 104.52,
+   "duration": 8.34,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_18.jpg",
+   "still_reference_signature": "96e84911f59dcb3f7a7f",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_18.mp4",
+   "clip_fingerprint": "a8c2fcee9094b77d",
+   "hero_generated": true,
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "You walk those empty levels at three a.m., don't you. Yeah. Me too.",
@@ -354,7 +834,27 @@
    "symbol_family": "human",
    "query": "man lying awake bed night staring ceiling",
    "primary_symbol": "man",
-   "human_role": "witness"
+   "human_role": "witness",
+   "start": 112.86,
+   "duration": 4.92,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.4602,
+    "active_region_ratio": 0.984,
+    "frame_difference": 28.4427
+   },
+   "clip_fingerprint": "9554611221855d40",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_19.mp4",
+   "stock_id": 6698753,
+   "pexels_id": 6698753,
+   "stock_frame_url": "https://images.pexels.com/videos/6698753/african-alone-bed-bedroom-6698753.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/young-man-lying-down-on-the-bed-6698753/"
   },
   {
    "text": "Gratitude. Presence. Awe. Not greeting-card words — render commands. They aim the whole budget at what's actually here.",
@@ -370,7 +870,27 @@
    "visual_function": "literal_anchor",
    "symbol_family": "light",
    "query": "coffee steam morning light window",
-   "primary_symbol": "coffee"
+   "primary_symbol": "coffee",
+   "start": 117.78,
+   "duration": 8.84,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.0541,
+    "active_region_ratio": 0.1326,
+    "frame_difference": 3.9372
+   },
+   "clip_fingerprint": "2364324a59dae172",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_20.mp4",
+   "stock_id": 852222,
+   "pexels_id": 852222,
+   "stock_frame_url": "https://images.pexels.com/videos/852222/free-video-852222.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/morning-coffee-852222/"
   },
   {
    "text": "People who've seen behind the dashboard — meditators, near-death survivors, DMT travelers — describe the same thing: the world coming off like a skin. Machinery underneath.",
@@ -389,7 +909,56 @@
    "primary_symbol": "curtain",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "the fabric of a photorealistic landscape peeling back like a curtain at one corner, revealing luminous golden and cyan geometric machinery of interlocking sacred-geometry gears and lattices underneath, magenta energy seams, floating particles, black void, volumetric light, cinematic awe, hyperdetailed, no text, no words"
+   "image_prompt": "the fabric of a photorealistic landscape peeling back like a curtain at one corner, revealing luminous golden and cyan geometric machinery of interlocking sacred-geometry gears and lattices underneath, magenta energy seams, floating particles, black void, volumetric light, cinematic awe, hyperdetailed, no text, no words",
+   "start": 126.62,
+   "duration": 12.24,
+   "kw_times": {
+    "machinery": 136.94
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_21.jpg",
+   "still_reference_signature": "a8828fe1328715081ea9",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_21.mp4",
+   "clip_fingerprint": "2aa5aacd7204b7fe",
+   "hero_generated": true,
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "curtain",
+     "png": "cap_21_kw0.png"
+    },
+    {
+     "kw": "machinery",
+     "png": "cap_21_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "curtain",
+     "png": "youtube_cap_21_kw0.png"
+    },
+    {
+     "kw": "machinery",
+     "png": "youtube_cap_21_kw1.png"
+    }
+   ]
   },
   {
    "text": "Maybe hallucination. Maybe the settings menu. I don't know — and I love not knowing.",
@@ -407,7 +976,27 @@
    "query": "person silhouette watching aurora night sky",
    "primary_symbol": "aurora",
    "narrative_mode": "atmosphere",
-   "human_role": "witness"
+   "human_role": "witness",
+   "start": 138.86,
+   "duration": 6.18,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.4736,
+    "active_region_ratio": 0.3621,
+    "frame_difference": 2.5758
+   },
+   "clip_fingerprint": "357937a785d5587f",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_22.mp4",
+   "stock_id": 1966695,
+   "pexels_id": 1966695,
+   "stock_frame_url": "https://images.pexels.com/videos/1966695/free-video-1966695.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/silhouette-of-a-man-sitting-on-the-roof-1966695/"
   },
   {
    "text": "You can't switch the machine off. But you can aim it. And that changes everything it draws.",
@@ -423,7 +1012,27 @@
    "visual_function": "literal_anchor",
    "symbol_family": "light",
    "query": "flashlight beam dark forest night",
-   "primary_symbol": "flashlight"
+   "primary_symbol": "flashlight",
+   "start": 145.04,
+   "duration": 5.86,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.3151,
+    "active_region_ratio": 0.2341,
+    "frame_difference": 7.6619
+   },
+   "clip_fingerprint": "2d266464ad089d12",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_23.mp4",
+   "stock_id": 18359613,
+   "pexels_id": 18359613,
+   "stock_frame_url": "https://images.pexels.com/videos/18359613/agonizing-anguish-artificial-light-celebrating-halloween-18359613.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-is-standing-in-the-dark-with-a-flashlight-18359613/"
   },
   {
    "text": "So. The room behind you. Turn around. Watch it load.",
@@ -441,7 +1050,27 @@
    "query": "person turning toward doorway light",
    "primary_symbol": "doorway",
    "narrative_mode": "stock_ok",
-   "human_role": "actor"
+   "human_role": "actor",
+   "start": 150.9,
+   "duration": 4.9,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.009,
+    "active_region_ratio": 0.1679,
+    "frame_difference": 6.5284
+   },
+   "clip_fingerprint": "6c15f2bc202751f1",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_24.mp4",
+   "stock_id": 7701946,
+   "pexels_id": 7701946,
+   "stock_frame_url": "https://images.pexels.com/videos/7701946/pexels-photo-7701946.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-ringing-the-doorbell-and-looks-at-the-peephole-7701946/"
   },
   {
    "text": "It drew itself because you asked. Not a glitch — the most expensive gift you'll ever be handed, frame by frame. Now… what else haven't you looked at?",
@@ -460,7 +1089,59 @@
    "primary_symbol": "room",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "the same dark doorway and room now fully materialized in warm amber and gold light, every object lovingly detailed, the final cyan wireframe corners just finishing rendering into solid warm reality, floating golden dust motes, volumetric evening light through a window, cinematic warmth and wonder, hyperdetailed, no text, no words"
+   "image_prompt": "the same dark doorway and room now fully materialized in warm amber and gold light, every object lovingly detailed, the final cyan wireframe corners just finishing rendering into solid warm reality, floating golden dust motes, volumetric evening light through a window, cinematic warmth and wonder, hyperdetailed, no text, no words",
+   "start": 155.8,
+   "duration": 11.364,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_25.jpg",
+   "still_reference_signature": "98369eedf1d15e9abe9f",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-render-distance/clip_25.mp4",
+   "clip_fingerprint": "7b94e1a5a2f769fb",
+   "hero_generated": true,
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.91
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
