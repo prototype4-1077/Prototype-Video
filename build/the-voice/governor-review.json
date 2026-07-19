@@ -1,0 +1,273 @@
+{
+  "generated_at": "2026-07-19T11:48:06+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {},
+  "recommendations": [
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "ea298e9634aa6f8c",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "69ace71f4c37a958",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "c71af56206e907c8",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "8fc6b674d66e81ed",
+      "priority": "medium",
+      "stage": "footage"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "ea298e9634aa6f8c",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=66s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=8fc6b674d66e81ed error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: (most recent call last): file \"<path> line <n>, in <module> effects_still_style = motion.effects_still_style # single source of truth ^^^^^^ nameerror: name 'motion' is not defined ",
+      "slugs": [
+        "the-voice"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "69ace71f4c37a958",
+      "kind": "failure",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: architecture repeats for <n> consecutive scenes starting at scene <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "slugs": [
+        "the-other-versions-of-you"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "c71af56206e907c8",
+      "kind": "failure",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "slugs": [
+        "message-from-your-future-20260716"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "8fc6b674d66e81ed",
+      "kind": "failure",
+      "normalized_error": "traceback (most recent call last): file \"<path> line <n>, in <module> effects_still_style = motion.effects_still_style # single source of truth ^^^^^^ nameerror: name 'motion' is not defined",
+      "slugs": [
+        "the-voice"
+      ],
+      "stage": "footage"
+    }
+  ],
+  "runs_analyzed": 12,
+  "schema_version": 1,
+  "stages": {
+    "align": {
+      "attempts": 8,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.003,
+      "p95_success_s": 1.005,
+      "sample_count": 8,
+      "successes": 8,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 8.026
+    },
+    "altsheet": {
+      "attempts": 8,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 4.024,
+      "p95_success_s": 7.037,
+      "sample_count": 8,
+      "successes": 8,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 29.27
+    },
+    "assemble": {
+      "attempts": 374,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 17.27,
+      "p95_success_s": 63.416,
+      "sample_count": 374,
+      "successes": 374,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 8430.146
+    },
+    "build_pass": {
+      "attempts": 114,
+      "failure_rate": 0.0526,
+      "failures": 6,
+      "p50_success_s": 113.466,
+      "p95_success_s": 154.338,
+      "sample_count": 108,
+      "successes": 108,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 12116.645
+    },
+    "credits": {
+      "attempts": 83,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.013,
+      "p95_success_s": 1.025,
+      "sample_count": 83,
+      "successes": 83,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 84.238
+    },
+    "ffmpeg": {
+      "attempts": 104,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 5.628,
+      "p95_success_s": 26.905,
+      "sample_count": 104,
+      "successes": 104,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 973.923
+    },
+    "footage": {
+      "attempts": 169,
+      "failure_rate": 0.0118,
+      "failures": 2,
+      "p50_success_s": 3.011,
+      "p95_success_s": 12.025,
+      "sample_count": 167,
+      "successes": 167,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 924.206
+    },
+    "hero": {
+      "attempts": 21,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 9.033,
+      "p95_success_s": 24.063,
+      "sample_count": 21,
+      "successes": 21,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 232.68
+    },
+    "motion": {
+      "attempts": 1,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 13.056,
+      "p95_success_s": 13.056,
+      "sample_count": 1,
+      "successes": 1,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 13.056
+    },
+    "prep": {
+      "attempts": 9,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 38.12,
+      "p95_success_s": 45.79,
+      "sample_count": 9,
+      "successes": 9,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 277.095
+    },
+    "probe": {
+      "attempts": 409,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.015,
+      "p95_success_s": 1.025,
+      "sample_count": 409,
+      "successes": 409,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 415.962
+    },
+    "quality": {
+      "attempts": 9,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 46.433,
+      "p95_success_s": 58.876,
+      "sample_count": 9,
+      "successes": 9,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 387.407
+    },
+    "shortcut": {
+      "attempts": 5,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 14.053,
+      "p95_success_s": 14.156,
+      "sample_count": 5,
+      "successes": 5,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 67.504
+    },
+    "transcribe": {
+      "attempts": 23,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 10.012,
+      "p95_success_s": 24.518,
+      "sample_count": 23,
+      "successes": 23,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 231.341
+    },
+    "tts": {
+      "attempts": 5,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 51.034,
+      "p95_success_s": 75.635,
+      "sample_count": 5,
+      "successes": 5,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 243.157
+    }
+  },
+  "statuses": {
+    "done": 9,
+    "failed": 3
+  }
+}
