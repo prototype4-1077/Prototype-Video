@@ -1,11 +1,60 @@
 {
   "build_dir": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/been-here-before",
-  "checked_at": "2026-07-19T14:17:28+00:00",
+  "checked_at": "2026-07-19T19:20:55+00:00",
   "deep_decode": true,
   "expected_duration_s": 158.361,
   "failures": [],
   "mode": "delivery",
   "outputs": {
+    "portrait": {
+      "avg_kbps": 3517,
+      "deep_scan": {
+        "black_intervals": 1,
+        "black_longest_s": 6.533,
+        "black_total_s": 6.533,
+        "error": null,
+        "freeze_intervals": 0,
+        "freeze_longest_s": 0.0,
+        "freeze_total_s": 0,
+        "ok": true,
+        "returncode": 0,
+        "silence_intervals": 0,
+        "silence_longest_s": 0.0,
+        "silence_total_s": 0
+      },
+      "duration_difference_s": 0.022,
+      "exists": true,
+      "expected_duration_s": 158.361,
+      "failures": [],
+      "path": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/been-here-before/final.mp4",
+      "probe": {
+        "audio_codec": "aac",
+        "audio_duration_s": 158.382993,
+        "bit_rate": 3517325.0,
+        "duration_s": 158.382993,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "fps": 30.0,
+        "has_audio": true,
+        "has_video": true,
+        "height": 1920,
+        "video_codec": "h264",
+        "video_duration_s": 158.366667,
+        "width": 1080
+      },
+      "size_bytes": 69635567,
+      "warnings": [
+        {
+          "code": "low_bitrate",
+          "message": "Average bitrate 3517 kbps is unusually low for 1080p; check for over-compression",
+          "target": "portrait"
+        },
+        {
+          "code": "long_black_interval",
+          "message": "Detected a 6.53s near-black interval; review intentionally dark scenes",
+          "target": "portrait"
+        }
+      ]
+    },
     "youtube": {
       "avg_kbps": 7023,
       "deep_scan": {
@@ -54,5 +103,16 @@
     "video_stream_required": true
   },
   "schema_version": 1,
-  "warnings": []
+  "warnings": [
+    {
+      "code": "low_bitrate",
+      "message": "Average bitrate 3517 kbps is unusually low for 1080p; check for over-compression",
+      "target": "portrait"
+    },
+    {
+      "code": "long_black_interval",
+      "message": "Detected a 6.53s near-black interval; review intentionally dark scenes",
+      "target": "portrait"
+    }
+  ]
 }
