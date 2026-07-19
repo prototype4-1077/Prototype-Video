@@ -309,11 +309,20 @@ jobs:
             git add "$f" 2>/dev/null || true
           done
           git commit -m "render ${{ inputs.slug }}: persist outcome and governor telemetry" || echo "nothing to commit"
+          # conflict-proof retry: snapshot our outcome files, replay them on fresh remote tip
+          SNAP=$(mktemp -d)
+          git show --pretty= --name-only HEAD | while read -r f; do
+            [ -f "$f" ] && mkdir -p "$SNAP/$(dirname "$f")" && cp "$f" "$SNAP/$f" || true
+          done
           for i in 1 2 3 4 5; do
             git push && exit 0
-            git stash --include-untracked || true
-            git pull --rebase origin main || git rebase --abort || true
-            git stash pop || true
+            git fetch origin main
+            git reset --hard origin/main
+            (cd "$SNAP" && find . -type f | while read -r f; do
+              mkdir -p "$GITHUB_WORKSPACE/$(dirname "$f")" && cp "$f" "$GITHUB_WORKSPACE/$f"
+            done)
+            git add -A
+            git commit -m "render ${{ inputs.slug }}: persist outcome and governor telemetry" || echo "nothing to commit"
             sleep $((i * 2))
           done
           echo "unable to push render outcome after 5 attempts" >&2
