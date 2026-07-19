@@ -1,13 +1,13 @@
 {
   "build_dir": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-loop",
-  "checked_at": "2026-07-17T14:18:25+00:00",
+  "checked_at": "2026-07-19T20:24:58+00:00",
   "deep_decode": true,
-  "expected_duration_s": 153.868,
+  "expected_duration_s": 154.991,
   "failures": [],
   "mode": "delivery",
   "outputs": {
-    "youtube": {
-      "avg_kbps": 7386,
+    "portrait": {
+      "avg_kbps": 3606,
       "deep_scan": {
         "black_intervals": 0,
         "black_longest_s": 0.0,
@@ -22,26 +22,70 @@
         "silence_longest_s": 0.0,
         "silence_total_s": 0
       },
-      "duration_difference_s": 0.01,
+      "duration_difference_s": 0.188,
       "exists": true,
-      "expected_duration_s": 153.868,
+      "expected_duration_s": 154.991,
+      "failures": [],
+      "path": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-loop/final.mp4",
+      "probe": {
+        "audio_codec": "aac",
+        "audio_duration_s": 155.179002,
+        "bit_rate": 3606285.0,
+        "duration_s": 155.179002,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "fps": 30.0,
+        "has_audio": true,
+        "has_video": true,
+        "height": 1920,
+        "video_codec": "h264",
+        "video_duration_s": 155.166667,
+        "width": 1080
+      },
+      "size_bytes": 69952472,
+      "warnings": [
+        {
+          "code": "low_bitrate",
+          "message": "Average bitrate 3606 kbps is unusually low for 1080p; check for over-compression",
+          "target": "portrait"
+        }
+      ]
+    },
+    "youtube": {
+      "avg_kbps": 7435,
+      "deep_scan": {
+        "black_intervals": 0,
+        "black_longest_s": 0.0,
+        "black_total_s": 0,
+        "error": null,
+        "freeze_intervals": 0,
+        "freeze_longest_s": 0.0,
+        "freeze_total_s": 0,
+        "ok": true,
+        "returncode": 0,
+        "silence_intervals": 0,
+        "silence_longest_s": 0.0,
+        "silence_total_s": 0
+      },
+      "duration_difference_s": 0.188,
+      "exists": true,
+      "expected_duration_s": 154.991,
       "failures": [],
       "path": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-loop/final_youtube.mp4",
       "probe": {
         "audio_codec": "aac",
-        "audio_duration_s": 153.878005,
-        "bit_rate": 7386165.0,
-        "duration_s": 153.878005,
+        "audio_duration_s": 155.179002,
+        "bit_rate": 7434973.0,
+        "duration_s": 155.179002,
         "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
         "fps": 30.0,
         "has_audio": true,
         "has_video": true,
         "height": 1080,
         "video_codec": "h264",
-        "video_duration_s": 153.8,
+        "video_duration_s": 155.166667,
         "width": 1920
       },
-      "size_bytes": 142071056,
+      "size_bytes": 144218966,
       "warnings": []
     }
   },
@@ -54,5 +98,11 @@
     "video_stream_required": true
   },
   "schema_version": 1,
-  "warnings": []
+  "warnings": [
+    {
+      "code": "low_bitrate",
+      "message": "Average bitrate 3606 kbps is unusually low for 1080p; check for over-compression",
+      "target": "portrait"
+    }
+  ]
 }
