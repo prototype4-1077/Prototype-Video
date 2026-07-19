@@ -1,8 +1,27 @@
 {
-  "generated_at": "2026-07-19T16:18:11+00:00",
+  "generated_at": "2026-07-19T20:41:23+00:00",
   "quality_failure_codes": {},
-  "quality_warning_codes": {},
+  "quality_warning_codes": {
+    "long_black_interval": 1,
+    "low_bitrate": 3
+  },
   "recommendations": [
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "32160927298be716",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "019e3c600e4624c4",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
     {
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
@@ -21,6 +40,30 @@
     }
   ],
   "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "32160927298be716",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.3s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "where-the-years-go",
+        "the-room-behind-you"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "019e3c600e4624c4",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-render-distance",
+        "the-night-crew"
+      ],
+      "stage": "build_pass"
+    },
     {
       "count": 2,
       "failure_class": "unknown",
@@ -46,16 +89,82 @@
     {
       "count": 1,
       "failure_class": "transient",
-      "fingerprint": "32160927298be716",
+      "fingerprint": "e0134d7c24776f18",
       "kind": "timeout",
-      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.3s; last useful progress <n>.0s ago.",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.4s; last useful progress <n>.0s ago.",
       "slugs": [
-        "two-ships"
+        "where-the-years-go"
       ],
       "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "dd39869b090c1b69",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.2s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-voice"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "978a7d7f9315abb1",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.1s ago.",
+      "slugs": [
+        "the-room-behind-you"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "2c243482baacee93",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.0s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-night-crew"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "7e1d511cec319c51",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.5s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-loop"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "ae42b8afcdf01801",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.7s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "been-here-before"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "2aac25606f27521c",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: quality hard_timeout after <n>.5s; last useful progress <n>.5s ago.",
+      "slugs": [
+        "the-loop"
+      ],
+      "stage": "quality"
     }
   ],
-  "runs_analyzed": 16,
+  "runs_analyzed": 19,
   "schema_version": 1,
   "stages": {
     "align": {
@@ -68,91 +177,91 @@
       "successes": 10,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 10.03
+      "total_duration_s": 10.027
     },
     "altsheet": {
-      "attempts": 13,
+      "attempts": 14,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.015,
-      "p95_success_s": 6.273,
-      "sample_count": 13,
-      "successes": 13,
+      "p50_success_s": 5.041,
+      "p95_success_s": 8.081,
+      "sample_count": 14,
+      "successes": 14,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 34.327
+      "total_duration_s": 68.621
     },
     "assemble": {
-      "attempts": 503,
+      "attempts": 786,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 24.191,
-      "p95_success_s": 80.636,
-      "sample_count": 503,
-      "successes": 503,
+      "p50_success_s": 30.762,
+      "p95_success_s": 77.671,
+      "sample_count": 786,
+      "successes": 786,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 16340.466
+      "total_duration_s": 27661.128
     },
     "build_pass": {
-      "attempts": 132,
-      "failure_rate": 0.0379,
-      "failures": 5,
-      "p50_success_s": 113.23,
-      "p95_success_s": 208.667,
-      "sample_count": 127,
-      "successes": 127,
-      "timeout_rate": 0.0076,
-      "timeouts": 1,
-      "total_duration_s": 21674.31
+      "attempts": 130,
+      "failure_rate": 0.1077,
+      "failures": 14,
+      "p50_success_s": 111.698,
+      "p95_success_s": 318.442,
+      "sample_count": 116,
+      "successes": 116,
+      "timeout_rate": 0.0769,
+      "timeouts": 10,
+      "total_duration_s": 33493.406
     },
     "credits": {
       "attempts": 94,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.012,
-      "p95_success_s": 1.025,
+      "p50_success_s": 1.014,
+      "p95_success_s": 1.03,
       "sample_count": 94,
       "successes": 94,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 95.356
+      "total_duration_s": 95.778
     },
     "ffmpeg": {
-      "attempts": 124,
+      "attempts": 157,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 6.025,
-      "p95_success_s": 33.079,
-      "sample_count": 124,
-      "successes": 124,
+      "p50_success_s": 6.019,
+      "p95_success_s": 30.675,
+      "sample_count": 157,
+      "successes": 157,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1235.597
+      "total_duration_s": 1514.975
     },
     "footage": {
-      "attempts": 172,
+      "attempts": 170,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 3.011,
-      "p95_success_s": 14.02,
-      "sample_count": 172,
-      "successes": 172,
+      "p95_success_s": 13.573,
+      "sample_count": 170,
+      "successes": 170,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1472.189
+      "total_duration_s": 1354.741
     },
     "hero": {
-      "attempts": 37,
+      "attempts": 18,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 11.039,
-      "p95_success_s": 21.686,
-      "sample_count": 37,
-      "successes": 37,
+      "p50_success_s": 15.547,
+      "p95_success_s": 23.511,
+      "sample_count": 18,
+      "successes": 18,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 495.748
+      "total_duration_s": 265.779
     },
     "motion": {
       "attempts": 1,
@@ -167,80 +276,81 @@
       "total_duration_s": 13.056
     },
     "prep": {
-      "attempts": 14,
+      "attempts": 17,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 17.559,
-      "p95_success_s": 45.509,
-      "sample_count": 14,
-      "successes": 14,
+      "p50_success_s": 19.063,
+      "p95_success_s": 45.341,
+      "sample_count": 17,
+      "successes": 17,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 355.344
+      "total_duration_s": 419.626
     },
     "probe": {
-      "attempts": 544,
+      "attempts": 820,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.013,
-      "p95_success_s": 1.025,
-      "sample_count": 544,
-      "successes": 544,
+      "p95_success_s": 1.024,
+      "sample_count": 820,
+      "successes": 820,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 552.567
+      "total_duration_s": 832.289
     },
     "quality": {
       "attempts": 14,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 40.33,
-      "p95_success_s": 57.027,
-      "sample_count": 14,
-      "successes": 14,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 588.869
+      "failure_rate": 0.0714,
+      "failures": 1,
+      "p50_success_s": 49.298,
+      "p95_success_s": 77.853,
+      "sample_count": 13,
+      "successes": 13,
+      "timeout_rate": 0.0714,
+      "timeouts": 1,
+      "total_duration_s": 705.948
     },
     "shortcut": {
-      "attempts": 5,
+      "attempts": 6,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 14.053,
-      "p95_success_s": 14.156,
-      "sample_count": 5,
-      "successes": 5,
+      "p50_success_s": 14.07,
+      "p95_success_s": 17.909,
+      "sample_count": 6,
+      "successes": 6,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 67.504
+      "total_duration_s": 86.658
     },
     "transcribe": {
       "attempts": 25,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 10.013,
-      "p95_success_s": 25.417,
+      "p95_success_s": 18.011,
       "sample_count": 25,
       "successes": 25,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 276.373
+      "total_duration_s": 253.352
     },
     "tts": {
       "attempts": 7,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 60.024,
-      "p95_success_s": 75.932,
+      "p50_success_s": 62.052,
+      "p95_success_s": 76.188,
       "sample_count": 7,
       "successes": 7,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 369.212
+      "total_duration_s": 378.298
     }
   },
   "statuses": {
-    "done": 14,
-    "failed": 2
+    "done": 13,
+    "failed": 5,
+    "quality_failed": 1
   }
 }
