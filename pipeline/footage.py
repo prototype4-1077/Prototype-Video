@@ -289,6 +289,7 @@ def verify_and_mark(scene, clip, source):
     if not evidence["passes"]:
         return False, evidence
     mark_video(scene, source, evidence)
+    scene["clip_fingerprint"] = motion.scene_visual_fingerprint(scene)
     return True, evidence
 
 
@@ -339,6 +340,13 @@ def fetch_scene(bd, s, i, used_ids):
     avoid = set(m["used_ids"]) | set(m["banned_ids"]) | used_ids
     sc = s["scenes"][i]
     out = f"{bd}/clip_{i:02d}.mp4"
+    if (os.path.exists(out) and os.path.getsize(out) > 100_000 and
+            sc.get("clip_fingerprint") != motion.scene_visual_fingerprint(sc)):
+        # The scene's visual definition changed since this clip was produced (or
+        # the file was restored from a stale CI cache). Never trust it.
+        print(f"scene {i}: cached clip is stale for the current scene; re-acquiring")
+        os.remove(out)
+        sc.pop("clip", None)
     if os.path.exists(out) and os.path.getsize(out) > 100_000:
         sc["clip"] = out
         if sc.get("motion_verified") and sc.get("motion_evidence"):

@@ -842,3 +842,20 @@ def main(argv=None):
 
 if __name__ == "__main__":
     main()
+
+
+def scene_visual_fingerprint(scene):
+    """Hash of the fields that define what a scene's clip should LOOK like.
+
+    Cached/committed clip files are only trusted when the recorded fingerprint
+    matches, so a stale clip from an earlier scene definition (e.g. restored by
+    the CI footage cache) can never silently stand in for a revised visual."""
+    import hashlib as _hashlib
+    import json as _json
+    payload = {key: scene.get(key) for key in (
+        "hero", "hero_style", "image_prompt", "query", "symbol_query",
+        "pexels_id", "stock_id", "narrative_mode",
+    )}
+    return _hashlib.sha256(
+        _json.dumps(payload, sort_keys=True, ensure_ascii=True).encode()
+    ).hexdigest()[:16]

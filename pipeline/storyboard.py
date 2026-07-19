@@ -683,6 +683,7 @@ def render_scene(build_dir: str, script: dict, index: int) -> dict:
             "motion_evidence": evidence,
             "storyboard_generated": True,
             "storyboard_version": 1,
+            "clip_fingerprint": motion.scene_visual_fingerprint(scene),
         }
     )
     plan = {

@@ -175,9 +175,9 @@ jobs:
             build/${{ inputs.slug }}/clip_*.mp4
             build/${{ inputs.slug }}/vo.mp3
             build/${{ inputs.slug }}/words.json
-          key: footage-${{ inputs.slug }}-${{ github.run_id }}
+          key: footage-v2-${{ inputs.slug }}-${{ github.run_id }}
           restore-keys: |
-            footage-${{ inputs.slug }}-
+            footage-v2-${{ inputs.slug }}-
 
       - name: API keys from repo secrets
         run: |

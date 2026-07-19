@@ -250,6 +250,7 @@ def main(bd):
             continue
         clip = f"{bd}/clip_{i:02d}.mp4"
         if (os.path.exists(clip) and os.path.getsize(clip) > 100_000 and
+                sc.get("clip_fingerprint") == motion.scene_visual_fingerprint(sc) and
                 (sc.get("hero_style") or still_reference.reference_is_current(bd, s, i))):
             continue
         if left() < 25:

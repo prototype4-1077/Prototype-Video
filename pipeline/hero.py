@@ -127,6 +127,7 @@ def main(bd, i):
     # rather than reference_is_current — otherwise they regenerate every pass and
     # the build never reaches assembly.
     if (os.path.exists(out) and os.path.getsize(out) > 100_000 and
+            sc.get("clip_fingerprint") == motion.scene_visual_fingerprint(sc) and
             (sc.get("hero_style") or still_reference.reference_is_current(bd, s, i))):
         print(f"hero {i}: exists"); return
     prompt = sc.get("image_prompt") or sc["text"]
@@ -169,6 +170,7 @@ def main(bd, i):
     recipe = motion.infer_recipe(sc)
     render(img, d, sc.get("duration", 8) + 0.5, out, mode=i, recipe=recipe)
     sc["clip"] = out
+    sc["clip_fingerprint"] = motion.scene_visual_fingerprint(sc)
     sc["hero_generated"] = True
     sc["motion_mode"] = "cinemagraph"
     sc["motion_kind"] = motion.ANIMATED
