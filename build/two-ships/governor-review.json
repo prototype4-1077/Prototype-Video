@@ -1,0 +1,246 @@
+{
+  "generated_at": "2026-07-19T16:18:11+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {},
+  "recommendations": [
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "69ace71f4c37a958",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "c71af56206e907c8",
+      "priority": "medium",
+      "stage": "build_pass"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "69ace71f4c37a958",
+      "kind": "failure",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: architecture repeats for <n> consecutive scenes starting at scene <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "slugs": [
+        "the-other-versions-of-you"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "c71af56206e907c8",
+      "kind": "failure",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "slugs": [
+        "message-from-your-future-20260716"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "32160927298be716",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.3s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "two-ships"
+      ],
+      "stage": "build_pass"
+    }
+  ],
+  "runs_analyzed": 16,
+  "schema_version": 1,
+  "stages": {
+    "align": {
+      "attempts": 10,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.003,
+      "p95_success_s": 1.005,
+      "sample_count": 10,
+      "successes": 10,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 10.03
+    },
+    "altsheet": {
+      "attempts": 13,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.015,
+      "p95_success_s": 6.273,
+      "sample_count": 13,
+      "successes": 13,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 34.327
+    },
+    "assemble": {
+      "attempts": 503,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 24.191,
+      "p95_success_s": 80.636,
+      "sample_count": 503,
+      "successes": 503,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 16340.466
+    },
+    "build_pass": {
+      "attempts": 132,
+      "failure_rate": 0.0379,
+      "failures": 5,
+      "p50_success_s": 113.23,
+      "p95_success_s": 208.667,
+      "sample_count": 127,
+      "successes": 127,
+      "timeout_rate": 0.0076,
+      "timeouts": 1,
+      "total_duration_s": 21674.31
+    },
+    "credits": {
+      "attempts": 94,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.012,
+      "p95_success_s": 1.025,
+      "sample_count": 94,
+      "successes": 94,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 95.356
+    },
+    "ffmpeg": {
+      "attempts": 124,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.025,
+      "p95_success_s": 33.079,
+      "sample_count": 124,
+      "successes": 124,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1235.597
+    },
+    "footage": {
+      "attempts": 172,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 3.011,
+      "p95_success_s": 14.02,
+      "sample_count": 172,
+      "successes": 172,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1472.189
+    },
+    "hero": {
+      "attempts": 37,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 11.039,
+      "p95_success_s": 21.686,
+      "sample_count": 37,
+      "successes": 37,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 495.748
+    },
+    "motion": {
+      "attempts": 1,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 13.056,
+      "p95_success_s": 13.056,
+      "sample_count": 1,
+      "successes": 1,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 13.056
+    },
+    "prep": {
+      "attempts": 14,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 17.559,
+      "p95_success_s": 45.509,
+      "sample_count": 14,
+      "successes": 14,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 355.344
+    },
+    "probe": {
+      "attempts": 544,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.013,
+      "p95_success_s": 1.025,
+      "sample_count": 544,
+      "successes": 544,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 552.567
+    },
+    "quality": {
+      "attempts": 14,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 40.33,
+      "p95_success_s": 57.027,
+      "sample_count": 14,
+      "successes": 14,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 588.869
+    },
+    "shortcut": {
+      "attempts": 5,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 14.053,
+      "p95_success_s": 14.156,
+      "sample_count": 5,
+      "successes": 5,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 67.504
+    },
+    "transcribe": {
+      "attempts": 25,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 10.013,
+      "p95_success_s": 25.417,
+      "sample_count": 25,
+      "successes": 25,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 276.373
+    },
+    "tts": {
+      "attempts": 7,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 60.024,
+      "p95_success_s": 75.932,
+      "sample_count": 7,
+      "successes": 7,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 369.212
+    }
+  },
+  "statuses": {
+    "done": 14,
+    "failed": 2
+  }
+}
