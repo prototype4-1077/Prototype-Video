@@ -1,36 +1,52 @@
 {
-  "finished_at": "2026-07-20T18:55:59+00:00",
-  "github_run_id": "29769304343",
+  "finished_at": "2026-07-20T19:42:00+00:00",
+  "github_run_id": "29770310391",
   "incidents": [
     {
       "count": 1,
-      "failure_class": "unknown",
-      "fingerprint": "1d9197701d092dd2",
-      "kind": "failure",
+      "failure_class": "transient",
+      "fingerprint": "019e3c600e4624c4",
+      "kind": "timeout",
       "last_item": null,
-      "normalized_error": "ght landscape shattering like a glass ...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=running elapsed=15s idle=1s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (a vast crossword grid in dark space filling itself in with w...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success du",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
     },
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "3683114d05aa1fc0",
+      "fingerprint": "10850e67081e3e92",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "eyword 'rocks' not found in text (won't highlight) note: scene <n> keyword 'man' not found in text (won't highlight) note: scene <n> keyword 'morning' not found in text (won't highlight) note: scene <n> keyword 'ship' not found in text (won't highlight) note: scene <n> keyword 'sunrise' not found in text (won't highlight) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success durat",
-      "stage": "build_pass"
+      "normalized_error": "[mov,mp4,m4a,3gp,3g2,mj2 @ 0x55682ca17780] moov atom not found <path>: invalid data found when processing input",
+      "stage": "probe"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=214c77e791db619a. ERROR: still-derived shots are 36.2% of the film (58.4s/161.2s), above the 35% cap by 2.0s; animated stills count toward this cap, so replace that duration with genuine moving footage | FIX: replace still-derived scenes with verified moving footage",
+  "last_message": "DONE -> /home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-crossword/final_youtube.mp4 + /home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-crossword/final.mp4",
   "mode": "recover",
-  "passes": 5,
+  "passes": 8,
   "policy": {
     "align": {
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.0,
       "idle_timeout_s": 33.01,
-      "sample_count": 11,
+      "sample_count": 12,
       "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 8.07,
+      "idle_timeout_s": 54.22,
+      "sample_count": 17,
+      "soft_timeout_s": 54.22,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 99.37,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 328.11,
       "source": "history"
     },
     "build_pass": {
@@ -45,67 +61,212 @@
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.03,
       "idle_timeout_s": 33.08,
-      "sample_count": 101,
+      "sample_count": 103,
       "soft_timeout_s": 33.08,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 32.82,
+      "idle_timeout_s": 128.46,
+      "sample_count": 189,
+      "soft_timeout_s": 128.46,
       "source": "history"
     },
     "footage": {
       "hard_timeout_s": 600.0,
-      "historical_p95_s": 14.02,
-      "idle_timeout_s": 72.06,
-      "sample_count": 171,
-      "soft_timeout_s": 72.06,
+      "historical_p95_s": 14.92,
+      "idle_timeout_s": 74.77,
+      "sample_count": 172,
+      "soft_timeout_s": 74.77,
       "source": "history"
     },
     "hero": {
       "hard_timeout_s": 1200.0,
-      "historical_p95_s": 26.08,
+      "historical_p95_s": 26.31,
       "idle_timeout_s": 180.0,
-      "sample_count": 31,
+      "sample_count": 37,
       "soft_timeout_s": 180.0,
       "source": "history"
     },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 45.17,
+      "idle_timeout_s": 165.52,
+      "sample_count": 20,
+      "soft_timeout_s": 165.52,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.05,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
     "transcribe": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 21.77,
+      "historical_p95_s": 22.02,
       "idle_timeout_s": 180.0,
-      "sample_count": 26,
+      "sample_count": 27,
       "soft_timeout_s": 180.0,
       "source": "history"
     },
     "tts": {
       "hard_timeout_s": 480.0,
-      "historical_p95_s": 63.68,
+      "historical_p95_s": 63.63,
       "idle_timeout_s": 180.0,
-      "sample_count": 8,
-      "soft_timeout_s": 221.04,
+      "sample_count": 9,
+      "soft_timeout_s": 220.89,
       "source": "history"
     }
   },
-  "quality": {},
+  "quality": {
+    "build_dir": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-crossword",
+    "checked_at": "2026-07-20T19:42:00+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 141.146,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "portrait": {
+        "avg_kbps": 3991,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.021,
+        "exists": true,
+        "expected_duration_s": 141.146,
+        "failures": [],
+        "path": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-crossword/final.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 141.153991,
+          "bit_rate": 3990664.0,
+          "duration_s": 141.166667,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1920,
+          "video_codec": "h264",
+          "video_duration_s": 141.166667,
+          "width": 1080
+        },
+        "size_bytes": 70418607,
+        "warnings": [
+          {
+            "code": "low_bitrate",
+            "message": "Average bitrate 3991 kbps is unusually low for 1080p; check for over-compression",
+            "target": "portrait"
+          }
+        ]
+      },
+      "youtube": {
+        "avg_kbps": 7446,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.021,
+        "exists": true,
+        "expected_duration_s": 141.146,
+        "failures": [],
+        "path": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-crossword/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 141.153991,
+          "bit_rate": 7445909.0,
+          "duration_s": 141.166667,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 141.166667,
+          "width": 1920
+        },
+        "size_bytes": 131389280,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": [
+      {
+        "code": "low_bitrate",
+        "message": "Average bitrate 3991 kbps is unusually low for 1080p; check for over-compression",
+        "target": "portrait"
+      }
+    ]
+  },
   "recommendations": [
     {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "1d9197701d092dd2",
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "019e3c600e4624c4",
       "priority": "medium",
-      "reason": "1 occurrence(s): ght landscape shattering like a glass ...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=running elapsed=15s idle=1s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (a vast crossword grid in dark space filling itself in with w...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success du",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
     },
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "3683114d05aa1fc0",
+      "fingerprint": "10850e67081e3e92",
       "priority": "medium",
-      "reason": "1 occurrence(s): eyword 'rocks' not found in text (won't highlight) note: scene <n> keyword 'man' not found in text (won't highlight) note: scene <n> keyword 'morning' not found in text (won't highlight) note: scene <n> keyword 'ship' not found in text (won't highlight) note: scene <n> keyword 'sunrise' not found in text (won't highlight) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success durat",
-      "stage": "build_pass"
+      "reason": "1 occurrence(s): [mov,mp4,m4a,3gp,3g2,mj2 @ 0x55682ca17780] moov atom not found <path>: invalid data found when processing input",
+      "stage": "probe"
     },
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (360.6s).",
+      "reason": "Largest measured latency contribution in this run (2221.7s).",
       "stage": "build_pass"
+    },
+    {
+      "action": "Review warnings before allowing any speed-oriented policy to become the champion.",
+      "priority": "medium",
+      "reason": "Quality gate emitted 1 warning(s).",
+      "stage": "quality"
     }
   ],
-  "run_id": "040ecc4d28c84331a82030c1deb334e6",
+  "run_id": "751018f04c1048889049c9df4df845e9",
   "schema_version": 1,
   "slug": "the-crossword",
   "stages": {
@@ -121,86 +282,247 @@
       "timeouts": 0,
       "total_duration_s": 1.002
     },
-    "build_pass": {
-      "attempts": 5,
-      "failures": 2,
-      "p50_success_s": 64.026,
-      "p95_success_s": 115.44,
-      "success_durations_s": [
-        64.026,
-        25.016,
-        121.153
-      ],
-      "successes": 3,
-      "timeouts": 0,
-      "total_duration_s": 360.608
-    },
-    "credits": {
-      "attempts": 2,
-      "failures": 0,
-      "p50_success_s": 1.006,
-      "p95_success_s": 1.006,
-      "success_durations_s": [
-        1.006,
-        1.006
-      ],
-      "successes": 2,
-      "timeouts": 0,
-      "total_duration_s": 2.012
-    },
-    "footage": {
+    "altsheet": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 120.168,
-      "p95_success_s": 120.168,
+      "p50_success_s": 4.021,
+      "p95_success_s": 4.021,
       "success_durations_s": [
-        120.168
+        4.021
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 120.168
+      "total_duration_s": 4.021
+    },
+    "assemble": {
+      "attempts": 38,
+      "failures": 0,
+      "p50_success_s": 45.188,
+      "p95_success_s": 78.534,
+      "success_durations_s": [
+        34.136,
+        41.182,
+        24.091,
+        53.216,
+        18.068,
+        33.131,
+        37.24,
+        20.077,
+        44.185,
+        39.187,
+        34.121,
+        59.254,
+        51.235,
+        43.184,
+        39.148,
+        38.16,
+        41.191,
+        38.152,
+        27.1,
+        46.19,
+        64.275,
+        38.159,
+        79.366,
+        27.106,
+        49.193,
+        57.24,
+        31.132,
+        65.294,
+        60.256,
+        54.253,
+        79.321,
+        78.395,
+        63.293,
+        58.266,
+        62.261,
+        69.334,
+        60.278,
+        46.255
+      ],
+      "successes": 38,
+      "timeouts": 0,
+      "total_duration_s": 1805.925
+    },
+    "build_pass": {
+      "attempts": 8,
+      "failures": 1,
+      "p50_success_s": 58.068,
+      "p95_success_s": 130.439,
+      "success_durations_s": [
+        58.068,
+        16.011,
+        59.051,
+        116.143,
+        13.02,
+        22.126,
+        136.566
+      ],
+      "successes": 7,
+      "timeouts": 1,
+      "total_duration_s": 2221.738
+    },
+    "credits": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 1.01,
+      "p95_success_s": 1.03,
+      "success_durations_s": [
+        1.003,
+        1.005,
+        1.033,
+        1.015
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 4.056
+    },
+    "ffmpeg": {
+      "attempts": 8,
+      "failures": 0,
+      "p50_success_s": 4.513,
+      "p95_success_s": 23.956,
+      "success_durations_s": [
+        1.006,
+        4.009,
+        18.075,
+        5.015,
+        1.006,
+        4.011,
+        27.122,
+        5.248
+      ],
+      "successes": 8,
+      "timeouts": 0,
+      "total_duration_s": 65.492
+    },
+    "footage": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 34.534,
+      "p95_success_s": 55.699,
+      "success_durations_s": [
+        58.051,
+        11.017
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 69.068
     },
     "hero": {
-      "attempts": 6,
+      "attempts": 5,
       "failures": 0,
-      "p50_success_s": 23.069,
-      "p95_success_s": 33.111,
+      "p50_success_s": 19.022,
+      "p95_success_s": 28.835,
       "success_durations_s": [
-        16.047,
-        23.065,
-        23.073,
-        35.119,
-        22.071,
-        27.087
+        18.024,
+        16.019,
+        31.036,
+        19.022,
+        20.03
       ],
-      "successes": 6,
+      "successes": 5,
       "timeouts": 0,
-      "total_duration_s": 146.462
+      "total_duration_s": 104.131
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 11.018,
+      "p95_success_s": 11.018,
+      "success_durations_s": [
+        11.018
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 11.018
+    },
+    "probe": {
+      "attempts": 41,
+      "failures": 1,
+      "p50_success_s": 1.01,
+      "p95_success_s": 1.046,
+      "success_durations_s": [
+        1.006,
+        1.006,
+        1.006,
+        1.007,
+        1.171,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.148,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.018,
+        1.013,
+        1.029,
+        1.031,
+        1.025,
+        1.041,
+        1.039,
+        1.02,
+        1.014,
+        1.023,
+        1.028,
+        1.024,
+        1.025,
+        1.024,
+        1.027,
+        1.013,
+        1.022,
+        1.023,
+        1.006,
+        1.007,
+        1.007
+      ],
+      "successes": 40,
+      "timeouts": 0,
+      "total_duration_s": 41.908
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 50.224,
+      "p95_success_s": 50.224,
+      "success_durations_s": [
+        50.224
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 50.224
     },
     "transcribe": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 22.016,
-      "p95_success_s": 22.016,
+      "p50_success_s": 13.009,
+      "p95_success_s": 13.009,
       "success_durations_s": [
-        22.016
+        13.009
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 22.016
+      "total_duration_s": 13.009
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 63.026,
-      "p95_success_s": 63.026,
+      "p50_success_s": 57.092,
+      "p95_success_s": 57.092,
       "success_durations_s": [
-        63.026
+        57.092
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 63.026
+      "total_duration_s": 57.092
     }
   },
-  "status": "failed"
+  "status": "done"
 }
