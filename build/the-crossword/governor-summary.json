@@ -1,0 +1,206 @@
+{
+  "finished_at": "2026-07-20T18:55:59+00:00",
+  "github_run_id": "29769304343",
+  "incidents": [
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "1d9197701d092dd2",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "ght landscape shattering like a glass ...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=running elapsed=15s idle=1s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (a vast crossword grid in dark space filling itself in with w...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success du",
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "3683114d05aa1fc0",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "eyword 'rocks' not found in text (won't highlight) note: scene <n> keyword 'man' not found in text (won't highlight) note: scene <n> keyword 'morning' not found in text (won't highlight) note: scene <n> keyword 'ship' not found in text (won't highlight) note: scene <n> keyword 'sunrise' not found in text (won't highlight) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success durat",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=214c77e791db619a. ERROR: still-derived shots are 36.2% of the film (58.4s/161.2s), above the 35% cap by 2.0s; animated stills count toward this cap, so replace that duration with genuine moving footage | FIX: replace still-derived scenes with verified moving footage",
+  "mode": "recover",
+  "passes": 5,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 11,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.08,
+      "sample_count": 101,
+      "soft_timeout_s": 33.08,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 14.02,
+      "idle_timeout_s": 72.06,
+      "sample_count": 171,
+      "soft_timeout_s": 72.06,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 26.08,
+      "idle_timeout_s": 180.0,
+      "sample_count": 31,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 21.77,
+      "idle_timeout_s": 180.0,
+      "sample_count": 26,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 63.68,
+      "idle_timeout_s": 180.0,
+      "sample_count": 8,
+      "soft_timeout_s": 221.04,
+      "source": "history"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "1d9197701d092dd2",
+      "priority": "medium",
+      "reason": "1 occurrence(s): ght landscape shattering like a glass ...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=running elapsed=15s idle=1s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (a vast crossword grid in dark space filling itself in with w...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success du",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "3683114d05aa1fc0",
+      "priority": "medium",
+      "reason": "1 occurrence(s): eyword 'rocks' not found in text (won't highlight) note: scene <n> keyword 'man' not found in text (won't highlight) note: scene <n> keyword 'morning' not found in text (won't highlight) note: scene <n> keyword 'ship' not found in text (won't highlight) note: scene <n> keyword 'sunrise' not found in text (won't highlight) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success durat",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (360.6s).",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "040ecc4d28c84331a82030c1deb334e6",
+  "schema_version": 1,
+  "slug": "the-crossword",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 2,
+      "p50_success_s": 64.026,
+      "p95_success_s": 115.44,
+      "success_durations_s": [
+        64.026,
+        25.016,
+        121.153
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 360.608
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.006,
+      "success_durations_s": [
+        1.006,
+        1.006
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.012
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 120.168,
+      "p95_success_s": 120.168,
+      "success_durations_s": [
+        120.168
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 120.168
+    },
+    "hero": {
+      "attempts": 6,
+      "failures": 0,
+      "p50_success_s": 23.069,
+      "p95_success_s": 33.111,
+      "success_durations_s": [
+        16.047,
+        23.065,
+        23.073,
+        35.119,
+        22.071,
+        27.087
+      ],
+      "successes": 6,
+      "timeouts": 0,
+      "total_duration_s": 146.462
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 22.016,
+      "p95_success_s": 22.016,
+      "success_durations_s": [
+        22.016
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 22.016
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 63.026,
+      "p95_success_s": 63.026,
+      "success_durations_s": [
+        63.026
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 63.026
+    }
+  },
+  "status": "failed"
+}
