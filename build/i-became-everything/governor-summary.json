@@ -1,0 +1,540 @@
+{
+  "finished_at": "2026-07-20T16:37:42+00:00",
+  "github_run_id": "29756014792",
+  "incidents": [
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "ae42b8afcdf01801",
+      "kind": "timeout",
+      "last_item": null,
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.7s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "DONE -> /home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/i-became-everything/final_youtube.mp4 + /home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/i-became-everything/final.mp4",
+  "mode": "recover",
+  "passes": 6,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 10,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 8.08,
+      "idle_timeout_s": 54.23,
+      "sample_count": 16,
+      "soft_timeout_s": 54.23,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 89.16,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 297.49,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.08,
+      "sample_count": 98,
+      "soft_timeout_s": 33.08,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 32.18,
+      "idle_timeout_s": 126.53,
+      "sample_count": 181,
+      "soft_timeout_s": 126.53,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 13.57,
+      "idle_timeout_s": 70.72,
+      "sample_count": 170,
+      "soft_timeout_s": 70.72,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 26.07,
+      "idle_timeout_s": 180.0,
+      "sample_count": 24,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 45.23,
+      "idle_timeout_s": 165.69,
+      "sample_count": 19,
+      "soft_timeout_s": 165.69,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.02,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.06,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1225.730010745,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1225.730010745,
+      "sample_count": 0,
+      "soft_timeout_s": 1225.730010745,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 20.43,
+      "idle_timeout_s": 180.0,
+      "sample_count": 25,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 62.74,
+      "idle_timeout_s": 180.0,
+      "sample_count": 7,
+      "soft_timeout_s": 218.21,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/i-became-everything",
+    "checked_at": "2026-07-20T16:37:41+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 182.602,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "portrait": {
+        "avg_kbps": 4738,
+        "deep_scan": {
+          "black_intervals": 1,
+          "black_longest_s": 5.267,
+          "black_total_s": 5.267,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.023,
+        "exists": true,
+        "expected_duration_s": 182.602,
+        "failures": [],
+        "path": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/i-became-everything/final.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 182.625011,
+          "bit_rate": 4737801.0,
+          "duration_s": 182.625011,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1920,
+          "video_codec": "h264",
+          "video_duration_s": 182.533333,
+          "width": 1080
+        },
+        "size_bytes": 108155127,
+        "warnings": [
+          {
+            "code": "long_black_interval",
+            "message": "Detected a 5.27s near-black interval; review intentionally dark scenes",
+            "target": "portrait"
+          }
+        ]
+      },
+      "youtube": {
+        "avg_kbps": 9997,
+        "deep_scan": {
+          "black_intervals": 1,
+          "black_longest_s": 3.2,
+          "black_total_s": 3.2,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.023,
+        "exists": true,
+        "expected_duration_s": 182.602,
+        "failures": [],
+        "path": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/i-became-everything/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 182.625011,
+          "bit_rate": 9996736.0,
+          "duration_s": 182.625011,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 182.533333,
+          "width": 1920
+        },
+        "size_bytes": 228206762,
+        "warnings": [
+          {
+            "code": "long_black_interval",
+            "message": "Detected a 3.20s near-black interval; review intentionally dark scenes",
+            "target": "youtube"
+          }
+        ]
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": [
+      {
+        "code": "long_black_interval",
+        "message": "Detected a 3.20s near-black interval; review intentionally dark scenes",
+        "target": "youtube"
+      },
+      {
+        "code": "long_black_interval",
+        "message": "Detected a 5.27s near-black interval; review intentionally dark scenes",
+        "target": "portrait"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "ae42b8afcdf01801",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.7s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (3441.1s).",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Review warnings before allowing any speed-oriented policy to become the champion.",
+      "priority": "medium",
+      "reason": "Quality gate emitted 2 warning(s).",
+      "stage": "quality"
+    }
+  ],
+  "run_id": "24e98582440d46648e236bac039c5b2a",
+  "schema_version": 1,
+  "slug": "i-became-everything",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 6.033,
+      "p95_success_s": 6.033,
+      "success_durations_s": [
+        6.033
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 6.033
+    },
+    "assemble": {
+      "attempts": 47,
+      "failures": 0,
+      "p50_success_s": 55.362,
+      "p95_success_s": 101.084,
+      "success_durations_s": [
+        46.301,
+        56.433,
+        42.272,
+        50.333,
+        42.34,
+        55.362,
+        36.259,
+        70.599,
+        44.304,
+        31.227,
+        42.333,
+        74.521,
+        39.273,
+        32.251,
+        31.225,
+        64.483,
+        50.338,
+        50.375,
+        41.331,
+        37.304,
+        31.227,
+        39.312,
+        45.352,
+        52.376,
+        59.475,
+        88.702,
+        65.467,
+        77.589,
+        76.637,
+        103.803,
+        54.394,
+        107.966,
+        84.972,
+        66.435,
+        105.86,
+        60.492,
+        52.472,
+        47.353,
+        94.739,
+        78.654,
+        79.69,
+        62.51,
+        56.49,
+        50.406,
+        61.474,
+        72.548,
+        80.647
+      ],
+      "successes": 47,
+      "timeouts": 0,
+      "total_duration_s": 2795.906
+    },
+    "build_pass": {
+      "attempts": 6,
+      "failures": 1,
+      "p50_success_s": 158.501,
+      "p95_success_s": 1007.401,
+      "success_durations_s": [
+        65.029,
+        27.018,
+        174.216,
+        158.501,
+        1215.697
+      ],
+      "successes": 5,
+      "timeouts": 1,
+      "total_duration_s": 3441.135
+    },
+    "credits": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 1.01,
+      "p95_success_s": 1.027,
+      "success_durations_s": [
+        1.006,
+        1.01,
+        1.029
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 3.045
+    },
+    "ffmpeg": {
+      "attempts": 8,
+      "failures": 0,
+      "p50_success_s": 7.531,
+      "p95_success_s": 37.699,
+      "success_durations_s": [
+        1.012,
+        7.03,
+        29.186,
+        8.03,
+        1.012,
+        7.032,
+        42.283,
+        8.03
+      ],
+      "successes": 8,
+      "timeouts": 0,
+      "total_duration_s": 103.615
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 173.22,
+      "p95_success_s": 173.22,
+      "success_durations_s": [
+        173.22
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 173.22
+    },
+    "hero": {
+      "attempts": 7,
+      "failures": 0,
+      "p50_success_s": 21.062,
+      "p95_success_s": 24.879,
+      "success_durations_s": [
+        21.062,
+        15.051,
+        22.064,
+        22.07,
+        16.044,
+        26.083,
+        18.059
+      ],
+      "successes": 7,
+      "timeouts": 0,
+      "total_duration_s": 140.433
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 16.044,
+      "p95_success_s": 16.044,
+      "success_durations_s": [
+        16.044
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 16.044
+    },
+    "probe": {
+      "attempts": 50,
+      "failures": 0,
+      "p50_success_s": 1.011,
+      "p95_success_s": 1.012,
+      "success_durations_s": [
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.011,
+        1.011,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.011,
+        1.011,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.011,
+        1.011,
+        1.01,
+        1.012,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.012,
+        1.011,
+        1.011,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.012,
+        1.012,
+        1.011,
+        1.012,
+        1.011,
+        1.012,
+        1.012,
+        1.012
+      ],
+      "successes": 50,
+      "timeouts": 0,
+      "total_duration_s": 50.545
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 74.511,
+      "p95_success_s": 74.511,
+      "success_durations_s": [
+        74.511
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 74.511
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 24.019,
+      "p95_success_s": 24.019,
+      "success_durations_s": [
+        24.019
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 24.019
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 64.029,
+      "p95_success_s": 64.029,
+      "success_durations_s": [
+        64.029
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 64.029
+    }
+  },
+  "status": "done"
+}
