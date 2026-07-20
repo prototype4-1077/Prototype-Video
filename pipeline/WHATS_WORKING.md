@@ -1,6 +1,6 @@
 # What's working (auto-generated: learn.py digest)
 
-_Updated 2026-07-19 from 33 recorded videos._
+_Updated 2026-07-20 from 33 recorded videos._
 
 ## Queries that keep winning
 
@@ -19,3 +19,9 @@ _Updated 2026-07-19 from 33 recorded videos._
 - `close-up of a hand repeatedly opening the same social media profile on a smartphone, scrolling briefly, closing the app and immediately reopening it, bright realistic room, continuous finger and screen motion, no readable personal data` (+2.50)
 - `same jester calmly holds up a clear mirror that reflects the viewer flinching from a smiling truth, carnival background becomes quiet and sharply focused, subtle prismatic movement, serious expressive performance` (+2.50)
 - `layers of ornate theatrical masks peel from an invisible face and dissolve into vivid moving particles one by one, each comic ripple reveals a clearer center beneath, elegant dmt motion graphics, no body or nudity` (+2.50)
+
+## Recent audience verdicts (YouTube retention)
+
+- the-reality-machine-dmt-v3: scenes [27, 17, 26] held viewers, scenes [0, 2, 1] bled them
+- collapse-of-gravity: scenes [26, 20, 6] held viewers, scenes [16, 3, 1] bled them
+- the-unopened-mail: scenes [0, 1, 2] held viewers, scenes [6, 3, 4] bled them
