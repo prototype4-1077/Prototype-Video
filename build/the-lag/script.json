@@ -30,10 +30,32 @@
    ],
    "semantic_anchor": "A city at night, lights streaking with time.",
    "visual_function": "atmosphere",
-   "symbol_family": "urban",
+   "symbol_family": "perception",
    "query": "city night lights long exposure",
    "primary_symbol": "city",
-   "narrative_mode": "atmosphere"
+   "narrative_mode": "atmosphere",
+   "symbol_query": "magnifying lens moves across an ordinary landscape changing what is in focus daylight",
+   "symbol_family_source": "planner",
+   "start": 0.0,
+   "duration": 3.92,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.0281,
+    "active_region_ratio": 0.9906,
+    "frame_difference": 12.9343
+   },
+   "clip_fingerprint": "f774f9ba2ecd75ce",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_00.mp4",
+   "stock_id": 6132804,
+   "pexels_id": 6132804,
+   "stock_frame_url": "https://images.pexels.com/videos/6132804/pexels-photo-6132804.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-man-using-a-magnifying-glass-6132804/"
   },
   {
    "text": "Not years ago. Not seconds ago. About a third of a second ago. And that gap runs your entire life.",
@@ -49,7 +71,28 @@
    "visual_function": "literal_anchor",
    "symbol_family": "objects",
    "query": "clock second hand macro ticking",
-   "primary_symbol": "clock"
+   "primary_symbol": "clock",
+   "human_role": "unspecified",
+   "start": 3.92,
+   "duration": 9.3,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.1276,
+    "active_region_ratio": 0.1203,
+    "frame_difference": 2.1793
+   },
+   "clip_fingerprint": "301c1f6d0bb45ba5",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_01.mp4",
+   "stock_id": 7033607,
+   "pexels_id": 7033607,
+   "stock_frame_url": "https://images.pexels.com/videos/7033607/pexels-photo-7033607.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-ticking-clock-7033607/"
   },
   {
    "text": "Light hits your eye fast. But turning light into a world? That takes the machine time.",
@@ -65,7 +108,51 @@
    "symbol_family": "human",
    "query": "extreme close up eye light reflection macro",
    "primary_symbol": "eye",
-   "human_role": "witness"
+   "human_role": "witness",
+   "start": 13.22,
+   "duration": 6.54,
+   "kw_times": {
+    "eye": 13.92,
+    "light": 13.22
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.3449,
+    "active_region_ratio": 0.9811,
+    "frame_difference": 28.7384
+   },
+   "clip_fingerprint": "047a6c361e30dd2e",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_02.mp4",
+   "stock_id": 8875671,
+   "pexels_id": 8875671,
+   "stock_frame_url": "https://images.pexels.com/videos/8875671/pexels-photo-8875671.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-getting-an-eye-examination-8875671/",
+   "kw_overlays": [
+    {
+     "kw": "eye",
+     "png": "cap_02_kw0.png"
+    },
+    {
+     "kw": "light",
+     "png": "cap_02_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "eye",
+     "png": "youtube_cap_02_kw0.png"
+    },
+    {
+     "kw": "light",
+     "png": "youtube_cap_02_kw1.png"
+    }
+   ]
   },
   {
    "text": "Signals crawl up the wire. Get sorted. Assembled. Painted. By the time 'now' reaches you… it's history.",
@@ -83,7 +170,33 @@
    "primary_symbol": "signal",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "luminous violet and blue signal pulses traveling up a dark glassy neural highway of branching fibers toward a distant radiant assembly chamber of light, motion trails showing their slowness, cold blue vastness, tiny warm amber glow at the destination, floating particles, black void, cinematic, hyperdetailed, no text, no words, no letters"
+   "image_prompt": "luminous violet and blue signal pulses traveling up a dark glassy neural highway of branching fibers toward a distant radiant assembly chamber of light, motion trails showing their slowness, cold blue vastness, tiny warm amber glow at the destination, floating particles, black void, cinematic, hyperdetailed, no text, no words, no letters",
+   "start": 19.76,
+   "duration": 8.3,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_03.jpg",
+   "still_reference_signature": "cbe36d508e2d5e6edfee",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_03.mp4",
+   "clip_fingerprint": "0fd66dae8569b535",
+   "hero_generated": true,
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "So why doesn't life feel delayed? Because the machine cheats.",
@@ -100,7 +213,27 @@
    "symbol_family": "objects",
    "query": "chess piece hand moving board dark",
    "primary_symbol": "chess",
-   "human_role": "actor"
+   "human_role": "actor",
+   "start": 28.06,
+   "duration": 5.02,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.5471,
+    "active_region_ratio": 0.3001,
+    "frame_difference": 8.3114
+   },
+   "clip_fingerprint": "83e3429a69540e70",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_04.mp4",
+   "stock_id": 33123412,
+   "pexels_id": 33123412,
+   "stock_frame_url": "https://images.pexels.com/videos/33123412/pexels-photo-33123412.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/dramatic-chess-game-opening-move-in-dim-light-33123412/"
   },
   {
    "text": "It doesn't show you what just happened. It shows you its best prediction of what's happening next.",
@@ -118,7 +251,33 @@
    "primary_symbol": "waves",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "a dark ocean of blue data waves with a glowing violet holographic projection extending forward ahead of the waves showing their predicted next shape, the projection slightly transparent and shimmering, cold moonlight, magenta correction sparks where projection and reality disagree, black horizon, cinematic, hyperdetailed, no text, no words"
+   "image_prompt": "a dark ocean of blue data waves with a glowing violet holographic projection extending forward ahead of the waves showing their predicted next shape, the projection slightly transparent and shimmering, cold moonlight, magenta correction sparks where projection and reality disagree, black horizon, cinematic, hyperdetailed, no text, no words",
+   "start": 33.08,
+   "duration": 6.64,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_05.jpg",
+   "still_reference_signature": "04c4fa82490ab3001f7e",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_05.mp4",
+   "clip_fingerprint": "1955afb3e6ee81bd",
+   "hero_generated": true,
+   "motion_recipe": "screen",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Your 'present moment' is a rendered forecast. A weather report for a storm that already passed.",
@@ -134,7 +293,50 @@
    "visual_function": "literal_anchor",
    "symbol_family": "nature",
    "query": "storm clouds timelapse dark sky",
-   "primary_symbol": "storm"
+   "primary_symbol": "storm",
+   "start": 39.72,
+   "duration": 6.92,
+   "kw_times": {
+    "storm": 44.14
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.1085,
+    "active_region_ratio": 0.9799,
+    "frame_difference": 11.4786
+   },
+   "clip_fingerprint": "9f0162b2a0d2e716",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_06.mp4",
+   "stock_id": 35225359,
+   "pexels_id": 35225359,
+   "stock_frame_url": "https://images.pexels.com/videos/35225359/4k-aerial-footage-4k-drone-footage-4k-landscape-4k-nature-35225359.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/dramatic-storm-clouds-rolling-over-landscape-35225359/",
+   "kw_overlays": [
+    {
+     "kw": "storm",
+     "png": "cap_06_kw0.png"
+    },
+    {
+     "kw": "clouds",
+     "png": "cap_06_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "storm",
+     "png": "youtube_cap_06_kw0.png"
+    },
+    {
+     "kw": "clouds",
+     "png": "youtube_cap_06_kw1.png"
+    }
+   ]
   },
   {
    "text": "Don't believe me? Baseball. A fastball crosses the plate quicker than your brain can see it.",
@@ -151,7 +353,50 @@
    "symbol_family": "human",
    "query": "baseball batter swing stadium night",
    "primary_symbol": "baseball",
-   "human_role": "actor"
+   "human_role": "actor",
+   "start": 46.64,
+   "duration": 5.88,
+   "kw_times": {
+    "baseball": 48.22
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.2975,
+    "active_region_ratio": 0.7855,
+    "frame_difference": 10.1073
+   },
+   "clip_fingerprint": "2f2587f883b4f342",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_07.mp4",
+   "stock_id": 5182770,
+   "pexels_id": 5182770,
+   "stock_frame_url": "https://images.pexels.com/videos/5182770/pexels-photo-5182770.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/baseball-player-hitting-the-baseball-5182770/",
+   "kw_overlays": [
+    {
+     "kw": "baseball",
+     "png": "cap_07_kw0.png"
+    },
+    {
+     "kw": "swing",
+     "png": "cap_07_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "baseball",
+     "png": "youtube_cap_07_kw0.png"
+    },
+    {
+     "kw": "swing",
+     "png": "youtube_cap_07_kw1.png"
+    }
+   ]
   },
   {
    "text": "Hitters don't swing at the ball. They swing at the machine's guess about the ball. And they hit it.",
@@ -169,7 +414,56 @@
    "primary_symbol": "ball",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "a baseball frozen mid-flight in darkness with a luminous violet-blue predicted trajectory line extending ahead of it, ghostly translucent copies of the ball along the predicted path, warm stadium glow far behind, motion streaks, magenta spark at the point of contact ahead, cinematic drama, hyperdetailed, no text, no words"
+   "image_prompt": "a baseball frozen mid-flight in darkness with a luminous violet-blue predicted trajectory line extending ahead of it, ghostly translucent copies of the ball along the predicted path, warm stadium glow far behind, motion streaks, magenta spark at the point of contact ahead, cinematic drama, hyperdetailed, no text, no words",
+   "start": 52.52,
+   "duration": 7.36,
+   "kw_times": {
+    "ball": 54.04
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_08.jpg",
+   "still_reference_signature": "2334281120ee76541aca",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_08.mp4",
+   "clip_fingerprint": "162d90e36077e9dc",
+   "hero_generated": true,
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "ball",
+     "png": "cap_08_kw0.png"
+    },
+    {
+     "kw": "motion",
+     "png": "cap_08_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "ball",
+     "png": "youtube_cap_08_kw0.png"
+    },
+    {
+     "kw": "motion",
+     "png": "youtube_cap_08_kw1.png"
+    }
+   ]
   },
   {
    "text": "Your whole life works like this. Catching keys. Walking stairs. Reading this sentence — your machine finished it before you did.",
@@ -186,7 +480,50 @@
    "symbol_family": "human",
    "query": "feet walking down stairs motion",
    "primary_symbol": "stairs",
-   "human_role": "actor"
+   "human_role": "actor",
+   "start": 59.88,
+   "duration": 9.62,
+   "kw_times": {
+    "stairs": 63.58
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.8113,
+    "active_region_ratio": 0.9971,
+    "frame_difference": 36.0441
+   },
+   "clip_fingerprint": "21e3c293f97ac7c3",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_09.mp4",
+   "stock_id": 7876921,
+   "pexels_id": 7876921,
+   "stock_frame_url": "https://images.pexels.com/videos/7876921/pexels-photo-7876921.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/woman-running-up-stairs-7876921/",
+   "kw_overlays": [
+    {
+     "kw": "stairs",
+     "png": "cap_09_kw0.png"
+    },
+    {
+     "kw": "steps",
+     "png": "cap_09_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "stairs",
+     "png": "youtube_cap_09_kw0.png"
+    },
+    {
+     "kw": "steps",
+     "png": "youtube_cap_09_kw1.png"
+    }
+   ]
   },
   {
    "text": "Now the eerie part. Sometimes the forecast is wrong.",
@@ -203,7 +540,27 @@
    "symbol_family": "urban",
    "query": "empty street fog night lamp",
    "primary_symbol": "street",
-   "narrative_mode": "atmosphere"
+   "narrative_mode": "atmosphere",
+   "start": 69.5,
+   "duration": 4.8,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.3398,
+    "active_region_ratio": 0.392,
+    "frame_difference": 3.6709
+   },
+   "clip_fingerprint": "09ea496361ce2ecb",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_10.mp4",
+   "stock_id": 30339954,
+   "pexels_id": 30339954,
+   "stock_frame_url": "https://images.pexels.com/videos/30339954/car-headlights-city-fog-city-night-england-30339954.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/misty-nighttime-city-street-with-headlights-in-fog-30339954/"
   },
   {
    "text": "The stair that wasn't there. The friend who turned out to be a stranger. That jolt? That's the machine issuing a correction.",
@@ -222,7 +579,34 @@
    "primary_symbol": "glitch",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "a human silhouette seen from behind on a dark street, two translucent overlapping versions of the person ahead of them snapping together with visible magenta and cyan correction fringes, violet night atmosphere, streetlamp glow, motion blur seams, cinematic unease, hyperdetailed, no text, no words"
+   "image_prompt": "a human silhouette seen from behind on a dark street, two translucent overlapping versions of the person ahead of them snapping together with visible magenta and cyan correction fringes, violet night atmosphere, streetlamp glow, motion blur seams, cinematic unease, hyperdetailed, no text, no words",
+   "human_role": "relationship",
+   "start": 74.3,
+   "duration": 8.94,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_11.jpg",
+   "still_reference_signature": "3a058ea53b02597c53b9",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_11.mp4",
+   "clip_fingerprint": "160a8ffac91087c5",
+   "hero_generated": true,
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Which means the feeling of 'now' — this vivid, obvious moment — is the machine's most convincing render.",
@@ -238,7 +622,27 @@
    "visual_function": "human_experience",
    "symbol_family": "light",
    "query": "sunlight room dust particles beam",
-   "primary_symbol": "light"
+   "primary_symbol": "light",
+   "start": 83.24,
+   "duration": 7.58,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.7957,
+    "active_region_ratio": 0.9195,
+    "frame_difference": 13.4867
+   },
+   "clip_fingerprint": "11ca60fec27152f3",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_12.mp4",
+   "stock_id": 3127063,
+   "pexels_id": 3127063,
+   "stock_frame_url": "https://images.pexels.com/videos/3127063/free-video-3127063.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/the-early-morning-sun-rays-peeking-through-a-room-window-3127063/"
   },
   {
    "text": "You have never touched the actual present. Nobody has. We all live a heartbeat behind the universe, dreaming we're on time.",
@@ -257,7 +661,33 @@
    "primary_symbol": "runner",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "a running human figure made of warm amber light forever one stride behind a brighter identical figure made of white-violet light ahead of them, both on an infinite dark mirror plane under a cold blue cosmos, light trails connecting them, cinematic longing, hyperdetailed, no text, no words"
+   "image_prompt": "a running human figure made of warm amber light forever one stride behind a brighter identical figure made of white-violet light ahead of them, both on an infinite dark mirror plane under a cold blue cosmos, light trails connecting them, cinematic longing, hyperdetailed, no text, no words",
+   "start": 90.82,
+   "duration": 10.1,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_13.jpg",
+   "still_reference_signature": "4c07b0b58653bf60f9f8",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_13.mp4",
+   "clip_fingerprint": "050a18ea1ea382a5",
+   "hero_generated": true,
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "And here's where it gets personal. Your feelings run ahead of your reasons.",
@@ -273,7 +703,27 @@
    "visual_function": "literal_anchor",
    "symbol_family": "technology",
    "query": "heartbeat monitor pulse line screen",
-   "primary_symbol": "pulse"
+   "primary_symbol": "pulse",
+   "start": 100.92,
+   "duration": 5.42,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.7786,
+    "active_region_ratio": 0.763,
+    "frame_difference": 7.0796
+   },
+   "clip_fingerprint": "a269f08205d8e104",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_14.mp4",
+   "stock_id": 6130124,
+   "pexels_id": 6130124,
+   "stock_frame_url": "https://images.pexels.com/videos/6130124/pexels-photo-6130124.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/medical-monitor-measuring-the-heart-rate-6130124/"
   },
   {
    "text": "The machine decides to flinch, to want, to trust — and hands you the paperwork afterward. You sign it and call it a choice.",
@@ -290,7 +740,27 @@
    "symbol_family": "objects",
    "query": "hand signing document pen desk",
    "primary_symbol": "signature",
-   "human_role": "actor"
+   "human_role": "actor",
+   "start": 106.34,
+   "duration": 9.4,
+   "motion_kind": "video",
+   "image_prompt": "A hand signing a document already stamped.",
+   "hero_style": ", cinematic conceptual key art, HEAVY layered special effects: dramatic volumetric god rays, dense glowing light particles and embers swirling through the air, luminous energy trails and wisps, drifting mist and atmospheric haze, sparkling bokeh, soft lens bloom and anamorphic flares, subtle chromatic aberration, iridescent glow, rich film-grade color, hyperdetailed, ethereal and otherworldly, no text, no words, no letters, no captions, no labels, no diagrams",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_15.mp4",
+   "narrative_mode": "literal_graphic",
+   "motion_mode": "generated_graphic",
+   "motion_source": "literal_storyboard",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.0202,
+    "active_region_ratio": 0.1007,
+    "frame_difference": 1.5733
+   },
+   "storyboard_generated": true,
+   "storyboard_version": 1,
+   "clip_fingerprint": "c28745d0ef6c6ca7"
   },
   {
    "text": "Before you spiral — the story isn't finished. There's a power hiding inside the lag.",
@@ -307,7 +777,27 @@
    "symbol_family": "architecture",
    "query": "light under door dark hallway",
    "primary_symbol": "door",
-   "narrative_mode": "atmosphere"
+   "narrative_mode": "atmosphere",
+   "start": 115.74,
+   "duration": 5.92,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.7944,
+    "active_region_ratio": 0.8766,
+    "frame_difference": 30.3219
+   },
+   "clip_fingerprint": "1e88e313b854a5fb",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_16.mp4",
+   "stock_id": 6136988,
+   "pexels_id": 6136988,
+   "stock_frame_url": "https://images.pexels.com/videos/6136988/pexels-photo-6136988.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/people-going-out-from-an-open-doors-6136988/"
   },
   {
    "text": "The machine proposes. But in that third of a second… you can veto.",
@@ -326,7 +816,57 @@
    "primary_symbol": "switch",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "inside a vast slowed-time chamber of suspended violet light particles, a human hand of warm amber light hovering above a single radiant switch, everything else frozen mid-motion, blue cosmos visible through the chamber walls, one heartbeat of stillness, volumetric rays, cinematic power, hyperdetailed, no text, no words"
+   "image_prompt": "inside a vast slowed-time chamber of suspended violet light particles, a human hand of warm amber light hovering above a single radiant switch, everything else frozen mid-motion, blue cosmos visible through the chamber walls, one heartbeat of stillness, volumetric rays, cinematic power, hyperdetailed, no text, no words",
+   "human_role": "unspecified",
+   "start": 121.66,
+   "duration": 6.08,
+   "kw_times": {
+    "veto": 126.28
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_17.jpg",
+   "still_reference_signature": "e250e7a504bd386d6a4f",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_17.mp4",
+   "clip_fingerprint": "09774c5fb50f14e8",
+   "hero_generated": true,
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "veto",
+     "png": "cap_17_kw0.png"
+    },
+    {
+     "kw": "switch",
+     "png": "cap_17_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "veto",
+     "png": "youtube_cap_17_kw0.png"
+    },
+    {
+     "kw": "switch",
+     "png": "youtube_cap_17_kw1.png"
+    }
+   ]
   },
   {
    "text": "The urge arrives. The angry reply drafts itself. And in the gap between forecast and broadcast — a small quiet no.",
@@ -343,7 +883,27 @@
    "symbol_family": "human",
    "query": "thumb hovering phone screen dark",
    "primary_symbol": "phone",
-   "human_role": "actor"
+   "human_role": "actor",
+   "start": 127.74,
+   "duration": 10.98,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.2654,
+    "active_region_ratio": 0.7506,
+    "frame_difference": 10.9951
+   },
+   "clip_fingerprint": "8678c6222bf023d5",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_18.mp4",
+   "stock_id": 6278827,
+   "pexels_id": 6278827,
+   "stock_frame_url": "https://images.pexels.com/videos/6278827/pexels-photo-6278827.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/female-hands-using-smartphone-6278827/"
   },
   {
    "text": "Meditation, breath, presence — every tradition that slows you down is teaching the same skill: living closer to the lag.",
@@ -359,7 +919,50 @@
    "symbol_family": "human",
    "query": "person breathing calm morning fog",
    "primary_symbol": "breath",
-   "human_role": "witness"
+   "human_role": "witness",
+   "start": 138.72,
+   "duration": 9.18,
+   "kw_times": {
+    "breath": 139.84
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.8394,
+    "active_region_ratio": 0.8177,
+    "frame_difference": 35.258
+   },
+   "clip_fingerprint": "283424ea96be1bf8",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_19.mp4",
+   "stock_id": 13152714,
+   "pexels_id": 13152714,
+   "stock_frame_url": "https://images.pexels.com/videos/13152714/2022-4k-video-8-march-adobe-13152714.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/back-view-of-a-woman-walking-in-a-misty-mountain-landscape-13152714/",
+   "kw_overlays": [
+    {
+     "kw": "breath",
+     "png": "cap_19_kw0.png"
+    },
+    {
+     "kw": "calm",
+     "png": "cap_19_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "breath",
+     "png": "youtube_cap_19_kw0.png"
+    },
+    {
+     "kw": "calm",
+     "png": "youtube_cap_19_kw1.png"
+    }
+   ]
   },
   {
    "text": "You'll never catch the present. But you can meet the machine at the door where it's made.",
@@ -378,7 +981,34 @@
    "primary_symbol": "workshop",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "a radiant celestial workshop where translucent frames of a single moment hang in mid-assembly like glowing glass panes, warm amber hands of light placing the final pane, cold blue-violet cosmos outside, magenta sparks of correction settling, volumetric god rays, cinematic awe, hyperdetailed, no text, no words"
+   "image_prompt": "a radiant celestial workshop where translucent frames of a single moment hang in mid-assembly like glowing glass panes, warm amber hands of light placing the final pane, cold blue-violet cosmos outside, magenta sparks of correction settling, volumetric god rays, cinematic awe, hyperdetailed, no text, no words",
+   "human_role": "unspecified",
+   "start": 147.9,
+   "duration": 6.02,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_20.jpg",
+   "still_reference_signature": "cf5ad69c704f1a37b012",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_20.mp4",
+   "clip_fingerprint": "33c598085b1879d9",
+   "hero_generated": true,
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "So. This sentence you're hearing? It ended a third of a second ago.",
@@ -395,7 +1025,27 @@
    "symbol_family": "light",
    "query": "sound waves ripples dark water light",
    "primary_symbol": "ripples",
-   "narrative_mode": "stock_ok"
+   "narrative_mode": "stock_ok",
+   "start": 153.92,
+   "duration": 5.14,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.4969,
+    "active_region_ratio": 0.9979,
+    "frame_difference": 26.471
+   },
+   "clip_fingerprint": "d74734173d37c6dc",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_21.mp4",
+   "stock_id": 11028765,
+   "pexels_id": 11028765,
+   "stock_frame_url": "https://images.pexels.com/videos/11028765/pexels-photo-11028765.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/waves-in-water-at-sunset-11028765/"
   },
   {
    "text": "You're living in the echo — and you always have been. Welcome to the lag. Want to catch up? …Start again.",
@@ -412,7 +1062,54 @@
    "symbol_family": "urban",
    "query": "city night lights long exposure timelapse",
    "primary_symbol": "city",
-   "narrative_mode": "stock_ok"
+   "narrative_mode": "stock_ok",
+   "human_role": "unspecified",
+   "start": 159.06,
+   "duration": 10.011,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.4039,
+    "active_region_ratio": 0.5279,
+    "frame_difference": 22.294
+   },
+   "clip_fingerprint": "bef5c896d31dd784",
+   "clip": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-lag/clip_22.mp4",
+   "stock_id": 33733274,
+   "pexels_id": 33733274,
+   "stock_frame_url": "https://images.pexels.com/videos/33733274/pexels-photo-33733274.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/vibrant-nighttime-city-intersection-timelapse-33733274/"
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.91
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
