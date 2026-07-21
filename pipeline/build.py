@@ -163,6 +163,21 @@ def main(bd):
         out(f"DONE -> {bd}/final.mp4 (curation reel)")
 
     # 1. voiceover (generate) or align (user-provided vo.mp3 without timings)
+    # Stale-voice guard: a cached vo.mp3 from a previous script version must not
+    # survive a text/tag/voice change (same class of bug as clip fingerprints).
+    if os.path.exists(f"{bd}/vo.mp3") and not s.get("user_vo"):
+        try:
+            import tts as _tts
+            _mf_path = f"{bd}/voiceover-manifest.json"
+            _mf = json.load(open(_mf_path)) if os.path.exists(_mf_path) else {}
+            _want = _tts.tts_fingerprint(s, s.get("elevenlabs_model", "eleven_v3"))
+            if _mf.get("tts_fingerprint") != _want:
+                out(f"stale voiceover detected (fingerprint mismatch); regenerating")
+                for _f in ("vo.mp3", "words.json", "voiceover-manifest.json"):
+                    try: os.remove(f"{bd}/{_f}")
+                    except OSError: pass
+        except Exception as _e:
+            print(f"vo fingerprint check skipped: {_e}")
     if not os.path.exists(f"{bd}/vo.mp3"):
         r = sh([py, os.path.join(HERE, "tts.py"), bd])
         if r.returncode != 0:

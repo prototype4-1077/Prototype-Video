@@ -219,6 +219,21 @@ def scene_audio_tags(
     return infer_audio_tags(scene, index, total)
 
 
+def tts_fingerprint(script: "dict", model_id: "str") -> "str":
+    """Identity of the voice take: text+tags+voice+model+stability. If any of it
+    changes, a cached vo.mp3 is stale and must be regenerated."""
+    import hashlib
+    text, tags = build_tts_text(script, model_id)
+    basis = "|".join([
+        text,
+        json.dumps(tags, ensure_ascii=False),
+        str(script.get("elevenlabs_voice_id", "")),
+        str(model_id),
+        str(script.get("elevenlabs_stability_mode", "")),
+    ])
+    return hashlib.sha256(basis.encode("utf-8")).hexdigest()[:16]
+
+
 def build_tts_text(script: dict, model_id: str) -> tuple[str, list[list[str]]]:
     scenes = script.get("scenes") or []
     chunks: list[str] = []
@@ -365,6 +380,7 @@ def tts(build_dir: str | os.PathLike[str]) -> None:
 
     manifest = {
         "schema_version": 1,
+        "tts_fingerprint": tts_fingerprint(script, model_id),
         "provider": "ElevenLabs",
         "voice_id": voice_id,
         "voice_name": script["voiceover_config"]["voice_name"],
