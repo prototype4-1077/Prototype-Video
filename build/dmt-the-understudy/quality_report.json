@@ -1,0 +1,118 @@
+{
+  "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-the-understudy",
+  "checked_at": "2026-07-21T15:05:50+00:00",
+  "deep_decode": true,
+  "expected_duration_s": 184.431,
+  "failures": [],
+  "mode": "delivery",
+  "outputs": {
+    "portrait": {
+      "avg_kbps": 3484,
+      "deep_scan": {
+        "black_intervals": 1,
+        "black_longest_s": 7.033,
+        "black_total_s": 7.033,
+        "error": null,
+        "freeze_intervals": 0,
+        "freeze_longest_s": 0.0,
+        "freeze_total_s": 0,
+        "ok": true,
+        "returncode": 0,
+        "silence_intervals": 0,
+        "silence_longest_s": 0.0,
+        "silence_total_s": 0
+      },
+      "duration_difference_s": 0.005,
+      "exists": true,
+      "expected_duration_s": 184.431,
+      "failures": [],
+      "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-the-understudy/final.mp4",
+      "probe": {
+        "audio_codec": "aac",
+        "audio_duration_s": 184.436009,
+        "bit_rate": 3483989.0,
+        "duration_s": 184.436009,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "fps": 30.0,
+        "has_audio": true,
+        "has_video": true,
+        "height": 1920,
+        "video_codec": "h264",
+        "video_duration_s": 184.433333,
+        "width": 1080
+      },
+      "size_bytes": 80321640,
+      "warnings": [
+        {
+          "code": "low_bitrate",
+          "message": "Average bitrate 3484 kbps is unusually low for 1080p; check for over-compression",
+          "target": "portrait"
+        },
+        {
+          "code": "long_black_interval",
+          "message": "Detected a 7.03s near-black interval; review intentionally dark scenes",
+          "target": "portrait"
+        }
+      ]
+    },
+    "youtube": {
+      "avg_kbps": 6230,
+      "deep_scan": {
+        "black_intervals": 0,
+        "black_longest_s": 0.0,
+        "black_total_s": 0,
+        "error": null,
+        "freeze_intervals": 0,
+        "freeze_longest_s": 0.0,
+        "freeze_total_s": 0,
+        "ok": true,
+        "returncode": 0,
+        "silence_intervals": 0,
+        "silence_longest_s": 0.0,
+        "silence_total_s": 0
+      },
+      "duration_difference_s": 0.005,
+      "exists": true,
+      "expected_duration_s": 184.431,
+      "failures": [],
+      "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-the-understudy/final_youtube.mp4",
+      "probe": {
+        "audio_codec": "aac",
+        "audio_duration_s": 184.436009,
+        "bit_rate": 6229577.0,
+        "duration_s": 184.436009,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "fps": 30.0,
+        "has_audio": true,
+        "has_video": true,
+        "height": 1080,
+        "video_codec": "h264",
+        "video_duration_s": 184.433333,
+        "width": 1920
+      },
+      "size_bytes": 143619811,
+      "warnings": []
+    }
+  },
+  "passed": true,
+  "quality_floor": {
+    "audio_stream_required": true,
+    "full_decode_required": true,
+    "minimum_dimension": 1080,
+    "minimum_file_bytes": 100000,
+    "video_stream_required": true
+  },
+  "schema_version": 1,
+  "warnings": [
+    {
+      "code": "low_bitrate",
+      "message": "Average bitrate 3484 kbps is unusually low for 1080p; check for over-compression",
+      "target": "portrait"
+    },
+    {
+      "code": "long_black_interval",
+      "message": "Detected a 7.03s near-black interval; review intentionally dark scenes",
+      "target": "portrait"
+    }
+  ]
+}
