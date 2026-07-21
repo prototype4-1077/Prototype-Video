@@ -1,0 +1,388 @@
+{
+  "generated_at": "2026-07-21T13:54:34+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {
+    "long_black_interval": 3,
+    "low_bitrate": 7
+  },
+  "recommendations": [
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "98558bbd3949d15e",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "32160927298be716",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "2c243482baacee93",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "019e3c600e4624c4",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "69ace71f4c37a958",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "c71af56206e907c8",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "ae42b8afcdf01801",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
+      "category": "tail_latency",
+      "evidence": "p50=112.2s, p95=809.7s",
+      "priority": "medium",
+      "stage": "build_pass"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "98558bbd3949d15e",
+      "kind": "failure",
+      "normalized_error": "in text (won't highlight) note: scene <n> keyword 'teacup' not found in text (won't highlight) note: scene <n> keyword 'masks' not found in text (won't highlight) note: scene <n> keyword 'two' not found in text (won't highlight) note: scene <n> keyword 'light' not found in text (won't highlight) note: scene <n> keyword 'spotlight' not found in text (won't highlight) note: scene <n> keyword 'chair' not found in text (",
+      "slugs": [
+        "dmt-the-understudy"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "32160927298be716",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.3s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-ship",
+        "the-room-behind-you"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "2c243482baacee93",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.0s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-save-file",
+        "the-night-crew"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "019e3c600e4624c4",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-render-distance",
+        "the-night-crew"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "69ace71f4c37a958",
+      "kind": "failure",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: architecture repeats for <n> consecutive scenes starting at scene <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "slugs": [
+        "the-other-versions-of-you"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "c71af56206e907c8",
+      "kind": "failure",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "slugs": [
+        "message-from-your-future-20260716"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "ae42b8afcdf01801",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.7s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "i-became-everything",
+        "been-here-before"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "dd39869b090c1b69",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.2s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-voice"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "978a7d7f9315abb1",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.1s ago.",
+      "slugs": [
+        "the-room-behind-you"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-lag"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "e0134d7c24776f18",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.4s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-crossword"
+      ],
+      "stage": "build_pass"
+    }
+  ],
+  "runs_analyzed": 25,
+  "schema_version": 1,
+  "stages": {
+    "align": {
+      "attempts": 14,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.003,
+      "p95_success_s": 1.004,
+      "sample_count": 14,
+      "successes": 14,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 14.037
+    },
+    "altsheet": {
+      "attempts": 19,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.027,
+      "p95_success_s": 8.071,
+      "sample_count": 19,
+      "successes": 19,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 109.774
+    },
+    "assemble": {
+      "attempts": 1060,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 37.285,
+      "p95_success_s": 84.65,
+      "sample_count": 1060,
+      "successes": 1060,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 43119.231
+    },
+    "build_pass": {
+      "attempts": 157,
+      "failure_rate": 0.1146,
+      "failures": 18,
+      "p50_success_s": 112.172,
+      "p95_success_s": 809.695,
+      "sample_count": 139,
+      "successes": 139,
+      "timeout_rate": 0.0764,
+      "timeouts": 12,
+      "total_duration_s": 51576.053
+    },
+    "credits": {
+      "attempts": 107,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.013,
+      "p95_success_s": 1.027,
+      "sample_count": 107,
+      "successes": 107,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 108.908
+    },
+    "ffmpeg": {
+      "attempts": 205,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.032,
+      "p95_success_s": 33.25,
+      "sample_count": 205,
+      "successes": 205,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 2084.705
+    },
+    "footage": {
+      "attempts": 174,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 3.011,
+      "p95_success_s": 18.382,
+      "sample_count": 174,
+      "successes": 174,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1834.55
+    },
+    "hero": {
+      "attempts": 42,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 18.556,
+      "p95_success_s": 26.113,
+      "sample_count": 42,
+      "successes": 42,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 781.133
+    },
+    "motion": {
+      "attempts": 1,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 13.056,
+      "p95_success_s": 13.056,
+      "sample_count": 1,
+      "successes": 1,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 13.056
+    },
+    "prep": {
+      "attempts": 22,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 18.556,
+      "p95_success_s": 44.973,
+      "sample_count": 22,
+      "successes": 22,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 508.875
+    },
+    "probe": {
+      "attempts": 1111,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.012,
+      "p95_success_s": 1.023,
+      "sample_count": 1111,
+      "successes": 1111,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1126.557
+    },
+    "quality": {
+      "attempts": 20,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 61.612,
+      "p95_success_s": 90.366,
+      "sample_count": 20,
+      "successes": 20,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1212.695
+    },
+    "shortcut": {
+      "attempts": 8,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 14.13,
+      "p95_success_s": 18.785,
+      "sample_count": 8,
+      "successes": 8,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 122.854
+    },
+    "transcribe": {
+      "attempts": 29,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 10.014,
+      "p95_success_s": 21.62,
+      "sample_count": 29,
+      "successes": 29,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 341.431
+    },
+    "tts": {
+      "attempts": 11,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 56.223,
+      "p95_success_s": 65.038,
+      "sample_count": 11,
+      "successes": 11,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 575.554
+    }
+  },
+  "statuses": {
+    "done": 20,
+    "failed": 5
+  }
+}
