@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-07-21T14:15:46+00:00",
+  "generated_at": "2026-07-21T15:35:49+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
-    "long_black_interval": 3,
-    "low_bitrate": 8
+    "long_black_interval": 4,
+    "low_bitrate": 9
   },
   "recommendations": [
     {
       "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
       "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 2 build(s)",
+      "evidence": "3 occurrence(s) across 3 build(s)",
       "fingerprint": "dd39869b090c1b69",
       "priority": "medium",
       "stage": "build_pass"
@@ -63,31 +63,24 @@
       "stage": "build_pass"
     },
     {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "98558bbd3949d15e",
-      "priority": "medium",
-      "stage": "build_pass"
-    },
-    {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=111.5s, p95=782.5s",
+      "evidence": "p50=111.5s, p95=829.6s",
       "priority": "medium",
       "stage": "build_pass"
     }
   ],
   "recurring_incidents": [
     {
-      "count": 2,
+      "count": 3,
       "failure_class": "transient",
       "fingerprint": "dd39869b090c1b69",
       "kind": "timeout",
       "normalized_error": "governortimeout: build_pass hard_timeout after <n>.2s; last useful progress <n>.0s ago.",
       "slugs": [
         "the-voice",
-        "the-editor"
+        "the-editor",
+        "dmt-the-understudy"
       ],
       "stage": "build_pass"
     },
@@ -162,22 +155,11 @@
       "stage": "build_pass"
     },
     {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "98558bbd3949d15e",
-      "kind": "failure",
-      "normalized_error": "in text (won't highlight) note: scene <n> keyword 'teacup' not found in text (won't highlight) note: scene <n> keyword 'masks' not found in text (won't highlight) note: scene <n> keyword 'two' not found in text (won't highlight) note: scene <n> keyword 'light' not found in text (won't highlight) note: scene <n> keyword 'spotlight' not found in text (won't highlight) note: scene <n> keyword 'chair' not found in text (",
-      "slugs": [
-        "dmt-the-understudy"
-      ],
-      "stage": "build_pass"
-    },
-    {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "9d5d1f7cec1471d2",
+      "fingerprint": "dba7d00f03f03435",
       "kind": "failure",
-      "normalized_error": "falling gently away, a glowing doorw...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=running elapsed=15s idle=1s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (a small cozy waiting room glowing warm amber in an opal void...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success dura",
+      "normalized_error": "falling gently away, a glowing doorw...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=running elapsed=15s idle=3s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (a small cozy waiting room glowing warm amber in an opal void...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success dura",
       "slugs": [
         "dmt-other-side-of-the-door"
       ],
@@ -230,7 +212,7 @@
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "43ea1cf21c37e920",
+      "fingerprint": "e76931441d07c01c",
       "kind": "failure",
       "normalized_error": "s rc=<n> hero <n>: generated from stock scene none (an endless wall of small brass drawers receding into amber d...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=success duration=<n>.0s rc=<n> hero <n>: generated from stock scene none (two cupped human hands in darkness holding a soft sourceless...) governor stage=credits state=start soft=33s hard=300s governor stage=credits ",
       "slugs": [
@@ -258,144 +240,144 @@
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.003,
-      "p95_success_s": 1.004,
+      "p95_success_s": 1.005,
       "sample_count": 17,
       "successes": 17,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 17.045
+      "total_duration_s": 17.05
     },
     "altsheet": {
-      "attempts": 20,
+      "attempts": 21,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 6.03,
-      "p95_success_s": 8.069,
-      "sample_count": 20,
-      "successes": 20,
+      "p50_success_s": 6.027,
+      "p95_success_s": 8.067,
+      "sample_count": 21,
+      "successes": 21,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 115.824
+      "total_duration_s": 120.872
     },
     "assemble": {
-      "attempts": 1109,
+      "attempts": 1150,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 37.267,
-      "p95_success_s": 83.951,
-      "sample_count": 1109,
-      "successes": 1109,
+      "p50_success_s": 38.25,
+      "p95_success_s": 84.7,
+      "sample_count": 1150,
+      "successes": 1150,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 45029.7
+      "total_duration_s": 47748.401
     },
     "build_pass": {
-      "attempts": 173,
-      "failure_rate": 0.1329,
-      "failures": 23,
+      "attempts": 174,
+      "failure_rate": 0.1264,
+      "failures": 22,
       "p50_success_s": 111.497,
-      "p95_success_s": 782.482,
-      "sample_count": 150,
-      "successes": 150,
-      "timeout_rate": 0.0751,
-      "timeouts": 13,
-      "total_duration_s": 54726.744
+      "p95_success_s": 829.573,
+      "sample_count": 152,
+      "successes": 152,
+      "timeout_rate": 0.0805,
+      "timeouts": 14,
+      "total_duration_s": 57735.833
     },
     "credits": {
-      "attempts": 114,
+      "attempts": 117,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.012,
-      "p95_success_s": 1.028,
-      "sample_count": 114,
-      "successes": 114,
+      "p95_success_s": 1.029,
+      "sample_count": 117,
+      "successes": 117,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 115.995
+      "total_duration_s": 119.043
     },
     "ffmpeg": {
-      "attempts": 213,
+      "attempts": 221,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 6.028,
-      "p95_success_s": 33.249,
-      "sample_count": 213,
-      "successes": 213,
+      "p50_success_s": 6.032,
+      "p95_success_s": 33.25,
+      "sample_count": 221,
+      "successes": 221,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2152.178
+      "total_duration_s": 2246.807
     },
     "footage": {
       "attempts": 177,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 3.012,
-      "p95_success_s": 87.973,
+      "p95_success_s": 94.413,
       "sample_count": 177,
       "successes": 177,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2209.142
+      "total_duration_s": 2172.174
     },
     "hero": {
-      "attempts": 61,
+      "attempts": 64,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 19.068,
-      "p95_success_s": 29.072,
-      "sample_count": 61,
-      "successes": 61,
+      "p50_success_s": 19.062,
+      "p95_success_s": 28.11,
+      "sample_count": 64,
+      "successes": 64,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1165.323
+      "total_duration_s": 1231.604
     },
     "motion": {
-      "attempts": 1,
+      "attempts": 3,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 13.056,
-      "p95_success_s": 13.056,
-      "sample_count": 1,
-      "successes": 1,
+      "p50_success_s": 22.085,
+      "p95_success_s": 24.799,
+      "sample_count": 3,
+      "successes": 3,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 13.056
+      "total_duration_s": 60.241
     },
     "prep": {
-      "attempts": 23,
+      "attempts": 24,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 18.049,
-      "p95_success_s": 44.828,
-      "sample_count": 23,
-      "successes": 23,
+      "p50_success_s": 18.048,
+      "p95_success_s": 44.684,
+      "sample_count": 24,
+      "successes": 24,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 520.933
+      "total_duration_s": 537.993
     },
     "probe": {
-      "attempts": 1163,
+      "attempts": 1207,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.012,
       "p95_success_s": 1.023,
-      "sample_count": 1163,
-      "successes": 1163,
+      "sample_count": 1207,
+      "successes": 1207,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1179.221
+      "total_duration_s": 1223.781
     },
     "quality": {
-      "attempts": 21,
+      "attempts": 22,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 61.39,
-      "p95_success_s": 89.808,
-      "sample_count": 21,
-      "successes": 21,
+      "p50_success_s": 61.612,
+      "p95_success_s": 89.752,
+      "sample_count": 22,
+      "successes": 22,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1261.068
+      "total_duration_s": 1327.597
     },
     "shortcut": {
       "attempts": 8,
@@ -414,28 +396,28 @@
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 10.017,
-      "p95_success_s": 22.464,
+      "p95_success_s": 22.467,
       "sample_count": 32,
       "successes": 32,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 404.497
+      "total_duration_s": 404.525
     },
     "tts": {
       "attempts": 14,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 57.624,
-      "p95_success_s": 64.762,
+      "p95_success_s": 66.134,
       "sample_count": 14,
       "successes": 14,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 748.671
+      "total_duration_s": 752.711
     }
   },
   "statuses": {
-    "done": 21,
-    "failed": 7
+    "done": 22,
+    "failed": 6
   }
 }

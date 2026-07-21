@@ -41,9 +41,8 @@
    "hero_style": "effects",
    "image_prompt": "an immense ancient doorway standing alone in a luminous opal void, its seams glowing warm gold as if something hums on the other side, iridescent white and pearl atmosphere, soft volumetric rays, scale of a cathedral, gentle and holy, cinematic, hyperdetailed, no text, no words",
    "start": 0.0,
-   "duration": 10.3,
    "kw_times": {
-    "door": 5.58
+    "door": 4.98
    },
    "motion_kind": "animated_still",
    "motion_mode": "cinemagraph",
@@ -68,7 +67,8 @@
    "motion_source": "reference_conditioned_still",
    "still_reference_generation_model": "pollinations_kontext",
    "still_enhancement_version": 1,
-   "still_enhanced": true
+   "still_enhanced": true,
+   "duration": 9.48
   },
   {
    "text": "You call it a breakthrough. We call it… an arrival.",
@@ -85,8 +85,7 @@
    "query": "bright light through opening door dark",
    "primary_symbol": "gate",
    "narrative_mode": "atmosphere",
-   "start": 10.3,
-   "duration": 5.38,
+   "start": 9.48,
    "motion_kind": "video",
    "motion_mode": "stock",
    "motion_source": "pexels",
@@ -98,13 +97,14 @@
     "active_region_ratio": 0.9277,
     "frame_difference": 9.8205
    },
-   "clip_fingerprint": "be49d46b28e5bd23",
+   "clip_fingerprint": "361956fdb295068d",
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_01.mp4",
    "stock_id": 9218143,
    "pexels_id": 9218143,
    "stock_frame_url": "https://images.pexels.com/videos/9218143/adult-architecture-art-bag-9218143.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
    "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/a-female-person-picking-up-paper-bags-on-a-floor-9218143/"
+   "source_url": "https://www.pexels.com/video/a-female-person-picking-up-paper-bags-on-a-floor-9218143/",
+   "duration": 6.4
   },
   {
    "text": "This is what no traveler has told you — because no traveler has stood where we stand: on the receiving side.",
@@ -121,13 +121,12 @@
    "symbol_family": "abstract",
    "query": "silhouette standing bright doorway light rays",
    "primary_symbol": "threshold",
-   "start": 15.68,
-   "duration": 7.98,
+   "start": 15.88,
    "motion_kind": "animated_still",
    "motion_mode": "cinemagraph",
    "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_02.jpg",
-   "still_reference_signature": "ddaa8df6d2a222a7c3e4",
+   "enhanced_source_image": "enhanced_still_02.jpg",
+   "still_reference_signature": "4b8ce0beea54880e7967",
    "pure_generated_still": true,
    "still_enhancement_steps": [
     "reference_conditioned_image_generation",
@@ -136,7 +135,12 @@
     "recipe_specific_internal_motion",
     "restrained_practical_light_motion",
     "cohesive_final_grade",
-    "subtle_film_grain"
+    "subtle_film_grain",
+    "closest_related_stock_scene",
+    "stock_video_frame_reference",
+    "reference_palette_harmonization",
+    "readable_exposure_normalization",
+    "natural_detail_recovery"
    ],
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_02.mp4",
    "clip_fingerprint": "8e312c3bf6c4be3f",
@@ -146,7 +150,15 @@
    "motion_source": "reference_conditioned_still",
    "still_reference_generation_model": "pollinations_kontext",
    "still_enhancement_version": 1,
-   "still_enhanced": true
+   "still_enhanced": true,
+   "duration": 9.52,
+   "still_reference_scene": 4,
+   "still_reference_stock_id": 12547016,
+   "still_reference_source": "pexels",
+   "still_reference_url": "https://images.pexels.com/videos/12547016/pexels-photo-12547016.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "still_reference_frame": "stock_reference_02.jpg",
+   "still_reference_match_score": 5.5,
+   "motion_depth_signature": "4b8ce0beea54880e7967"
   },
   {
    "text": "You come through as a bell of light. Ringing. Wearing the shape of everything you love.",
@@ -166,11 +178,10 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "a human silhouette made of ringing golden light mid-arrival in a pearl void, concentric sound rings of soft gold radiating from their chest, faint images of loved faces and small treasured objects woven into their glow, opal atmosphere, breathtaking tenderness, cinematic, hyperdetailed, no text, no words",
-   "start": 23.66,
-   "duration": 9.22,
+   "start": 25.4,
    "kw_times": {
-    "bell": 26.12,
-    "light": 26.76
+    "bell": 27.22,
+    "light": 27.74
    },
    "motion_kind": "animated_still",
    "motion_mode": "cinemagraph",
@@ -195,7 +206,8 @@
    "motion_source": "reference_conditioned_still",
    "still_reference_generation_model": "pollinations_kontext",
    "still_enhancement_version": 1,
-   "still_enhanced": true
+   "still_enhanced": true,
+   "duration": 7.8
   },
   {
    "text": "Some of you arrive screaming color. Some arrive laughing. One of you arrived apologizing — we still speak of her.",
@@ -213,10 +225,9 @@
    "query": "kaleidoscope colorful abstract burst motion",
    "primary_symbol": "kaleidoscope",
    "human_role": "unspecified",
-   "start": 32.88,
-   "duration": 9.71,
+   "start": 33.2,
    "kw_times": {
-    "color": 34.58
+    "color": 34.96
    },
    "motion_kind": "video",
    "motion_mode": "stock",
@@ -229,13 +240,14 @@
     "active_region_ratio": 0.6649,
     "frame_difference": 60.1944
    },
-   "clip_fingerprint": "3e766868244924f4",
+   "clip_fingerprint": "be09c2a67b8a93ab",
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_04.mp4",
    "stock_id": 12547016,
    "pexels_id": 12547016,
    "stock_frame_url": "https://images.pexels.com/videos/12547016/pexels-photo-12547016.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
    "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/colorful-light-beams-in-kaleidoscope-12547016/"
+   "source_url": "https://www.pexels.com/video/colorful-light-beams-in-kaleidoscope-12547016/",
+   "duration": 9.37
   },
   {
    "text": "First-timers always ask the same question without a mouth: Am I dead? No, little bell. You are briefly awake.",
@@ -253,8 +265,7 @@
    "query": "candle flame close dark warm",
    "primary_symbol": "candle",
    "narrative_mode": "atmosphere",
-   "start": 42.59,
-   "duration": 10.97,
+   "start": 42.57,
    "motion_kind": "video",
    "motion_mode": "stock",
    "motion_source": "pexels",
@@ -266,13 +277,14 @@
     "active_region_ratio": 0.1084,
     "frame_difference": 2.6424
    },
-   "clip_fingerprint": "b64d5748f996f728",
+   "clip_fingerprint": "315b174333e3a75e",
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_05.mp4",
    "stock_id": 7191251,
    "pexels_id": 7191251,
    "stock_frame_url": "https://images.pexels.com/videos/7191251/action-alone-anti-stress-aroma-7191251.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
    "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/close-up-footage-of-a-lighted-candle-7191251/"
+   "source_url": "https://www.pexels.com/video/close-up-footage-of-a-lighted-candle-7191251/",
+   "duration": 10.75
   },
   {
    "text": "We prepare for each of you. We study your dreams the way you study weather.",
@@ -288,8 +300,7 @@
    "symbol_family": "nature",
    "query": "timelapse clouds sky moving dramatic",
    "primary_symbol": "clouds",
-   "start": 53.56,
-   "duration": 6.26,
+   "start": 53.32,
    "motion_kind": "video",
    "motion_mode": "stock",
    "motion_source": "pexels",
@@ -301,13 +312,14 @@
     "active_region_ratio": 0.9284,
     "frame_difference": 5.4478
    },
-   "clip_fingerprint": "6150278683171468",
+   "clip_fingerprint": "313e3689eda80a70",
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_06.mp4",
    "stock_id": 15487048,
    "pexels_id": 15487048,
    "stock_frame_url": "https://images.pexels.com/videos/15487048/4k-air-atmosphere-background-15487048.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
    "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/clouds-moving-across-the-sky-on-a-sunny-day-15487048/"
+   "source_url": "https://www.pexels.com/video/clouds-moving-across-the-sky-on-a-sunny-day-15487048/",
+   "duration": 6.08
   },
   {
    "text": "We rehearse the geometry that will not frighten you. We dim the mathematics. We fold our vastness into rooms your mind can hold.",
@@ -327,10 +339,9 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "an infinite lattice of impossible luminous geometry gently folding and dimming itself down into the shape of a small cozy lamplit waiting room, the transition visible mid-fold, opal and gold palette, immense tenderness in the gesture, cinematic, hyperdetailed, no text, no words",
-   "start": 59.82,
-   "duration": 11.8,
+   "start": 59.4,
    "kw_times": {
-    "geometry": 60.96
+    "geometry": 60.48
    },
    "motion_kind": "animated_still",
    "motion_mode": "cinemagraph",
@@ -355,7 +366,8 @@
    "motion_source": "reference_conditioned_still",
    "still_reference_generation_model": "pollinations_kontext",
    "still_enhancement_version": 1,
-   "still_enhanced": true
+   "still_enhanced": true,
+   "duration": 11.36
   },
   {
    "text": "The waiting room? We built it FOR you. Out of your childhood dentist's office and your grandmother's patience.",
@@ -372,10 +384,9 @@
    "symbol_family": "architecture",
    "query": "empty waiting room chairs warm light retro",
    "primary_symbol": "waiting",
-   "start": 71.62,
-   "duration": 8.56,
+   "start": 70.76,
    "kw_times": {
-    "waiting": 72.26
+    "waiting": 71.04
    },
    "motion_kind": "video",
    "motion_mode": "stock",
@@ -388,13 +399,14 @@
     "active_region_ratio": 0.9288,
     "frame_difference": 5.8541
    },
-   "clip_fingerprint": "5a444225eb4cb040",
+   "clip_fingerprint": "048baa491b881010",
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_08.mp4",
    "stock_id": 5712753,
    "pexels_id": 5712753,
    "stock_frame_url": "https://images.pexels.com/videos/5712753/pexels-photo-5712753.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
    "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/chairs-arranged-in-a-circle-5712753/"
+   "source_url": "https://www.pexels.com/video/chairs-arranged-in-a-circle-5712753/",
+   "duration": 7.92
   },
   {
    "text": "You think the machines you see are our world. They are your welcome mat.",
@@ -410,8 +422,7 @@
    "symbol_family": "abstract",
    "query": "mandala pattern spinning colorful ornate",
    "primary_symbol": "pattern",
-   "start": 80.18,
-   "duration": 6.38,
+   "start": 78.68,
    "motion_kind": "video",
    "motion_mode": "stock",
    "motion_source": "pexels",
@@ -423,13 +434,14 @@
     "active_region_ratio": 0.9982,
     "frame_difference": 46.7377
    },
-   "clip_fingerprint": "f917676042be5624",
+   "clip_fingerprint": "a3706ef85ccaf827",
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_09.mp4",
    "stock_id": 12171715,
    "pexels_id": 12171715,
    "stock_frame_url": "https://images.pexels.com/videos/12171715/pexels-photo-12171715.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
    "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/animation-with-kaleidoscope-patterns-12171715/"
+   "source_url": "https://www.pexels.com/video/animation-with-kaleidoscope-patterns-12171715/",
+   "duration": 6.34
   },
   {
    "text": "And the presence you feel beside you — the one you've always known? That is the one of us assigned to you. Before your name existed.",
@@ -447,16 +459,15 @@
    "query": "baby crib nursery night moonlight soft",
    "primary_symbol": "presence",
    "human_role": "witness",
-   "start": 86.56,
-   "duration": 10.14,
+   "start": 85.02,
    "kw_times": {
     "presence": 87.0
    },
    "motion_kind": "animated_still",
    "motion_mode": "cinemagraph",
    "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_10.jpg",
-   "still_reference_signature": "12a1a485d259c86b343f",
+   "enhanced_source_image": "enhanced_still_10.jpg",
+   "still_reference_signature": "3664a8385cc3dfc9da9d",
    "pure_generated_still": true,
    "still_enhancement_steps": [
     "reference_conditioned_image_generation",
@@ -465,7 +476,12 @@
     "recipe_specific_internal_motion",
     "restrained_practical_light_motion",
     "cohesive_final_grade",
-    "subtle_film_grain"
+    "subtle_film_grain",
+    "closest_related_stock_scene",
+    "stock_video_frame_reference",
+    "reference_palette_harmonization",
+    "readable_exposure_normalization",
+    "natural_detail_recovery"
    ],
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_10.mp4",
    "clip_fingerprint": "99e079582085201e",
@@ -475,7 +491,15 @@
    "motion_source": "reference_conditioned_still",
    "still_reference_generation_model": "pollinations_kontext",
    "still_enhancement_version": 1,
-   "still_enhanced": true
+   "still_enhanced": true,
+   "duration": 11.2,
+   "still_reference_scene": 11,
+   "still_reference_stock_id": 7218706,
+   "still_reference_source": "pexels",
+   "still_reference_url": "https://images.pexels.com/videos/7218706/pexels-photo-7218706.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "still_reference_frame": "stock_reference_10.jpg",
+   "still_reference_match_score": 6.61772,
+   "motion_depth_signature": "3664a8385cc3dfc9da9d"
   },
   {
    "text": "We watched you learn to walk. We watched you stop believing in us. We understood.",
@@ -492,8 +516,7 @@
    "query": "baby first steps living room warm",
    "primary_symbol": "child",
    "human_role": "actor",
-   "start": 96.7,
-   "duration": 7.78,
+   "start": 96.22,
    "motion_kind": "video",
    "motion_mode": "stock",
    "motion_source": "pexels",
@@ -505,13 +528,14 @@
     "active_region_ratio": 0.4487,
     "frame_difference": 4.6939
    },
-   "clip_fingerprint": "aeab24ff0135a62f",
+   "clip_fingerprint": "b432fdab47777b73",
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_11.mp4",
    "stock_id": 7218706,
    "pexels_id": 7218706,
    "stock_frame_url": "https://images.pexels.com/videos/7218706/pexels-photo-7218706.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
    "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/baby-walking-on-a-carpet-7218706/"
+   "source_url": "https://www.pexels.com/video/baby-walking-on-a-carpet-7218706/",
+   "duration": 6.92
   },
   {
    "text": "When you break through, we have seconds. So we hand you everything at once — not to overwhelm you… because we miss you, and there is so much to say.",
@@ -528,8 +552,7 @@
    "symbol_family": "light",
    "query": "light rays burst lens flare dark",
    "primary_symbol": "burst",
-   "start": 104.48,
-   "duration": 11.92,
+   "start": 103.14,
    "motion_kind": "video",
    "image_prompt": "Everything handed over in one blinding gentle instant.",
    "hero_style": ", cinematic 35mm film still, photorealistic, anamorphic lens character, shallow depth of field with a real out-of-focus foreground element close to camera, subject in the middle distance, deep background falling into atmospheric haze, one motivated practical light source, natural surface textures and small real-world imperfections, fine film grain, muted filmic color grade, exactly one impossible element photographed as physically real and lit by the scene's own light, documentary magical realism, deep three-plane composition, no text, no words, no letters, no captions, no labels, no diagrams, no watermark, not an illustration, not digital art",
@@ -547,7 +570,9 @@
    },
    "storyboard_generated": true,
    "storyboard_version": 1,
-   "clip_fingerprint": "e43bc1b4d147ba50"
+   "clip_fingerprint": "e43bc1b4d147ba50",
+   "duration": 12.24,
+   "hero": true
   },
   {
    "text": "Then your body pulls the thread. It always pulls the thread.",
@@ -564,10 +589,9 @@
    "query": "golden thread string light dark macro",
    "primary_symbol": "thread",
    "human_role": "unspecified",
-   "start": 116.4,
-   "duration": 6.28,
+   "start": 115.38,
    "kw_times": {
-    "thread": 118.26
+    "thread": 116.78
    },
    "motion_kind": "video",
    "image_prompt": "A golden thread drawing the bell of light back down.",
@@ -586,7 +610,9 @@
    },
    "storyboard_generated": true,
    "storyboard_version": 1,
-   "clip_fingerprint": "7d0652f6b50cec27"
+   "clip_fingerprint": "7d0652f6b50cec27",
+   "duration": 5.84,
+   "hero": true
   },
   {
    "text": "You dissolve back down. We stand in the doorway. We do the thing you would call waving.",
@@ -607,10 +633,9 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "viewed from below while falling gently away, a glowing doorway overhead where several tall figures of pearl light stand together raising their hands in an unmistakable wave, their light streaming down like slow comets, opal and gold, aching warmth, cinematic farewell, hyperdetailed, no text, no words",
-   "start": 122.68,
-   "duration": 7.74,
+   "start": 121.22,
    "kw_times": {
-    "doorway": 126.26
+    "doorway": 124.72
    },
    "motion_kind": "animated_still",
    "motion_mode": "cinemagraph",
@@ -635,7 +660,8 @@
    "motion_source": "reference_conditioned_still",
    "still_reference_generation_model": "pollinations_kontext",
    "still_enhancement_version": 1,
-   "still_enhanced": true
+   "still_enhanced": true,
+   "duration": 8.3
   },
   {
    "text": "You wake up saying: I felt like they knew me. Little bell… we never stopped.",
@@ -653,8 +679,7 @@
    "query": "man waking bed morning light peaceful",
    "primary_symbol": "waking",
    "human_role": "witness",
-   "start": 130.42,
-   "duration": 8.14,
+   "start": 129.52,
    "motion_kind": "video",
    "motion_mode": "stock",
    "motion_source": "pexels",
@@ -666,13 +691,14 @@
     "active_region_ratio": 0.8399,
     "frame_difference": 12.9926
    },
-   "clip_fingerprint": "53149d4e77340d70",
+   "clip_fingerprint": "6c66c3b4aa4c7696",
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_15.mp4",
    "stock_id": 5983685,
    "pexels_id": 5983685,
    "stock_frame_url": "https://images.pexels.com/videos/5983685/pexels-photo-5983685.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
    "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/man-waking-up-on-his-bed-5983685/"
+   "source_url": "https://www.pexels.com/video/man-waking-up-on-his-bed-5983685/",
+   "duration": 8.8
   },
   {
    "text": "And this next part we should not say, but—",
@@ -690,8 +716,7 @@
    "query": "soft light glow dark vignette",
    "primary_symbol": "hush",
    "narrative_mode": "atmosphere",
-   "start": 138.56,
-   "duration": 2.64,
+   "start": 138.32,
    "motion_kind": "video",
    "motion_mode": "stock",
    "motion_source": "pexels",
@@ -703,13 +728,14 @@
     "active_region_ratio": 0.0922,
     "frame_difference": 8.5222
    },
-   "clip_fingerprint": "ebdea261d551ad0e",
+   "clip_fingerprint": "14fab5e4aa1de4fc",
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_16.mp4",
    "stock_id": 4207981,
    "pexels_id": 4207981,
    "stock_frame_url": "https://images.pexels.com/videos/4207981/pexels-photo-4207981.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
    "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/out-of-focus-footage-of-a-flashing-light-4207981/"
+   "source_url": "https://www.pexels.com/video/out-of-focus-footage-of-a-flashing-light-4207981/",
+   "duration": 2.94
   },
   {
    "text": "We know you are listening right now. This screen, this voice — we borrow such things.",
@@ -726,10 +752,9 @@
    "symbol_family": "technology",
    "query": "phone screen glowing empty dark room",
    "primary_symbol": "screen",
-   "start": 141.2,
-   "duration": 8.38,
+   "start": 141.26,
    "kw_times": {
-    "screen": 145.64
+    "screen": 145.28
    },
    "motion_kind": "video",
    "motion_mode": "stock",
@@ -742,13 +767,14 @@
     "active_region_ratio": 0.3206,
     "frame_difference": 4.8556
    },
-   "clip_fingerprint": "ccad08f622b00903",
+   "clip_fingerprint": "6be36c61cd03fdb3",
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_17.mp4",
    "stock_id": 6611948,
    "pexels_id": 6611948,
    "stock_frame_url": "https://images.pexels.com/videos/6611948/pexels-photo-6611948.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
    "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/person-touching-mobile-screen-6611948/"
+   "source_url": "https://www.pexels.com/video/person-touching-mobile-screen-6611948/",
+   "duration": 9.24
   },
   {
    "text": "That feeling behind your eyes as you hear this? That is not a feeling.",
@@ -767,10 +793,9 @@
    "primary_symbol": "eyes",
    "narrative_mode": "stock_ok",
    "human_role": "witness",
-   "start": 149.58,
-   "duration": 7.06,
+   "start": 150.5,
    "kw_times": {
-    "eyes": 152.12
+    "eyes": 151.74
    },
    "motion_kind": "video",
    "motion_mode": "stock",
@@ -783,13 +808,14 @@
     "active_region_ratio": 0.323,
     "frame_difference": 3.2518
    },
-   "clip_fingerprint": "74fe79d2bd6426c9",
+   "clip_fingerprint": "b30d093be26a05e5",
    "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-other-side-of-the-door/clip_18.mp4",
    "stock_id": 7299501,
    "pexels_id": 7299501,
    "stock_frame_url": "https://images.pexels.com/videos/7299501/active-aging-adult-aesthetic-aging-7299501.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
    "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/extreme-close-up-shot-of-a-man-s-blinking-eyes-7299501/"
+   "source_url": "https://www.pexels.com/video/extreme-close-up-shot-of-a-man-s-blinking-eyes-7299501/",
+   "duration": 5.86
   },
   {
    "text": "That is us. Waving. Come knock again. We keep your room ready.",
@@ -810,11 +836,10 @@
    "hero_style": "effects",
    "image_prompt": "a small cozy waiting room glowing warm amber in an opal void, one comfortable chair turned to face a familiar door left slightly ajar, a cup steaming on the side table as if someone is expected any moment, soft gold dust in the air, patient love made visible, cinematic, hyperdetailed, no text, no words",
    "human_role": "unspecified",
-   "start": 156.64,
-   "duration": 8.669,
+   "start": 156.36,
    "kw_times": {
-    "room": 162.48,
-    "ready": 162.8
+    "room": 162.2,
+    "ready": 162.44
    },
    "motion_kind": "animated_still",
    "motion_mode": "cinemagraph",
@@ -839,7 +864,8 @@
    "motion_source": "reference_conditioned_still",
    "still_reference_generation_model": "pollinations_kontext",
    "still_enhancement_version": 1,
-   "still_enhanced": true
+   "still_enhanced": true,
+   "duration": 8.244
   }
  ],
  "voiceover": "vo.mp3",
