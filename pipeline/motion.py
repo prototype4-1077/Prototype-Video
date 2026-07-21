@@ -443,10 +443,10 @@ def _light_sweep(frame, t, recipe):
     return np.clip(frame.astype(np.float32) * gain[..., None], 0, 255).astype(np.uint8)
 
 
-def _particles(frame, t, particles, cv2):
+def _particles(frame, t, particles, cv2, drift=0.0):
     for x0, y0, speed, radius, opacity in particles:
         y = (y0 - t * speed * H) % H
-        x = (x0 + math.sin(t * math.tau + y0 / H * 4.0) * 8.0) % W
+        x = (x0 + drift + math.sin(t * math.tau + y0 / H * 4.0) * 8.0) % W
         overlay = frame.copy()
         cv2.circle(overlay, (int(x), int(y)), radius, (230, 226, 205), -1,
                    lineType=cv2.LINE_AA)
@@ -454,11 +454,89 @@ def _particles(frame, t, particles, cv2):
     return frame
 
 
+MOTION_3D_VERSION = "multiplane-v1"
+
+CAMERA_MOVES = ("lateral", "push_in", "dolly_zoom", "orbit", "rack_focus")
+
+
+def _sway(t, phase=0.0, amp=1.0):
+    """Handheld micro-movement: two incommensurate sines, deterministic."""
+    return amp * (0.6 * math.sin(math.tau * (2.13 * t + phase)) +
+                  0.4 * math.sin(math.tau * (3.71 * t + phase + 0.37)))
+
+
+def camera_path(camera, t, strength=1.0):
+    """Per-layer camera parameters for one frame of a multiplane move.
+
+    Returns {layer: (dx, dy, sx, sy, blur_sigma)} for layers bg/mid/near.
+    Pure and deterministic; the testable core of the 3D illusion. Layer scale
+    and translation DIFFERENTIALS between planes are what read as depth."""
+    ease = t * t * (3.0 - 2.0 * t)
+    travel = (2.0 * ease - 1.0) * strength
+    hx, hy = _sway(t, 0.11, 1.1 * strength), _sway(t, 0.53, 0.7 * strength)
+    if camera == "push_in":
+        return {
+            "bg":   (hx * 0.4, hy * 0.4, 1.0 + 0.030 * ease, 1.0 + 0.030 * ease, 0.0),
+            "mid":  (hx * 0.7, hy * 0.7 - 1.0 * ease, 1.0 + 0.055 * ease, 1.0 + 0.055 * ease, 0.0),
+            "near": (hx, hy - 2.2 * ease, 1.0 + 0.088 * ease, 1.0 + 0.088 * ease, 0.0),
+        }
+    if camera == "dolly_zoom":
+        return {
+            "bg":   (hx * 0.4, hy * 0.4, 1.0 + 0.150 * ease, 1.0 + 0.150 * ease, 0.0),
+            "mid":  (hx * 0.7, hy * 0.7, 1.004 + 0.004 * ease, 1.004 + 0.004 * ease, 0.0),
+            "near": (hx, hy, 1.010 - 0.022 * ease, 1.010 - 0.022 * ease, 0.0),
+        }
+    if camera == "orbit":
+        arc = math.sin(ease * math.pi)
+        return {
+            "bg":   (-6.5 * travel + hx * 0.4, 0.8 * arc + hy * 0.4, 1.030, 1.030, 0.0),
+            "mid":  (5.0 * travel + hx * 0.7, -0.6 * arc + hy * 0.7, 1.036, 1.036, 0.0),
+            "near": (14.0 * travel + hx, -1.6 * arc + hy, 1.046, 1.046, 0.0),
+        }
+    if camera == "rack_focus":
+        cross = _smoothstep(0.18, 0.82, np.float32(t))
+        return {
+            "bg":   (-1.5 * travel + hx * 0.4, hy * 0.4, 1.028, 1.028, 2.6 * float(cross)),
+            "mid":  (2.5 * travel + hx * 0.7, hy * 0.7, 1.034, 1.034, 0.0),
+            "near": (6.0 * travel + hx, hy, 1.042, 1.042, 2.2 * float(1.0 - cross)),
+        }
+    # legacy lateral drift (default)
+    return {
+        "bg":   (-2.6 * travel + hx * 0.4, -0.5 * _sway(t, 0.9, strength), 1.035, 1.035, 0.0),
+        "mid":  (5.0 * travel + hx * 0.7, 1.2 * _sway(t, 0.9, strength), 1.038, 1.038, 0.0),
+        "near": (11.5 * travel + hx, 2.0 * _sway(t, 0.9, strength), 1.044, 1.044, 0.0),
+    }
+
+
+def pick_camera(seed, recipe="atmosphere"):
+    """Deterministic per-scene camera-move variety."""
+    order = ("push_in", "orbit", "dolly_zoom", "lateral", "rack_focus")
+    return order[int(seed) % len(order)]
+
+
+def _guided_refine(depth, image, cv2, radius=9, eps=2e-3):
+    """Snap soft depth edges to image edges (small self-contained guided filter)."""
+    guide = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY).astype(np.float32) / 255.0
+    d = depth.astype(np.float32)
+    ksize = (radius * 2 + 1, radius * 2 + 1)
+    mean_g = cv2.boxFilter(guide, -1, ksize)
+    mean_d = cv2.boxFilter(d, -1, ksize)
+    corr_gd = cv2.boxFilter(guide * d, -1, ksize)
+    corr_gg = cv2.boxFilter(guide * guide, -1, ksize)
+    var_g = corr_gg - mean_g * mean_g
+    a = (corr_gd - mean_g * mean_d) / (var_g + eps)
+    b = mean_d - a * mean_g
+    mean_a = cv2.boxFilter(a, -1, ksize)
+    mean_b = cv2.boxFilter(b, -1, ksize)
+    return np.clip(mean_a * guide + mean_b, 0.0, 1.0)
+
+
 def _layer_state(image, depth, cv2):
     depth = cv2.resize(depth.astype(np.float32), (W, H), interpolation=cv2.INTER_CUBIC)
-    depth = cv2.GaussianBlur(depth, (0, 0), 7.0)
+    depth = cv2.GaussianBlur(depth, (0, 0), 5.0)
     lo, hi = float(depth.min()), float(depth.max())
     depth = (depth - lo) / max(hi - lo, 1e-6)
+    depth = _guided_refine(depth, image, cv2)
     p35, p62, p82 = np.percentile(depth, (35, 62, 82))
     near = _smoothstep(p62, max(p82, p62 + .02), depth)
     mid_gate = _smoothstep(p35, max(p62, p35 + .02), depth)
@@ -468,7 +546,7 @@ def _layer_state(image, depth, cv2):
     # deliberately restrained, so this plate is exposed at edges rather than as
     # a large invented background area.
     mask = (near > .62).astype(np.uint8) * 255
-    mask = cv2.dilate(mask, np.ones((7, 7), np.uint8), iterations=1)
+    mask = cv2.dilate(mask, np.ones((11, 11), np.uint8), iterations=1)
     if float((mask > 0).mean()) > .38:
         mask = (depth > np.percentile(depth, 90)).astype(np.uint8) * 255
     background = cv2.inpaint(image, mask, 5, cv2.INPAINT_TELEA)
@@ -498,8 +576,12 @@ def _encode_frames(frames, duration, output, width=W, height=H):
 
 
 def render_depth_animation(image_path, depth, duration, output, recipe="atmosphere",
-                           strength=0.75, seed=0):
-    """Render a deterministic layered cinemagraph from one still and depth map."""
+                           strength=0.75, seed=0, camera="auto"):
+    """Render a deterministic multiplane move from one still and depth map.
+
+    camera: lateral | push_in | dolly_zoom | orbit | rack_focus | auto
+    (auto picks per-seed for variety). Plane differentials in translation and
+    scale produce the deep-parallax "the photo is moving" illusion."""
     import cv2
 
     image = cv2.imread(image_path)
@@ -509,47 +591,63 @@ def render_depth_animation(image_path, depth, duration, output, recipe="atmosphe
     background, mid_alpha, near_alpha = _layer_state(image, depth, cv2)
     frames = max(int(round(max(duration, 1 / FPS) * FPS)), 1)
     strength = min(max(_float(strength, .75), 0.0), 1.5)
+    if camera == "auto" or camera not in CAMERA_MOVES:
+        camera = pick_camera(seed, recipe)
     rng = np.random.default_rng(int(seed))
-    particles = [
-        (float(rng.uniform(0, W)), float(rng.uniform(0, H)),
-         float(rng.uniform(.025, .09)), int(rng.integers(1, 3)),
-         float(rng.uniform(.025, .075)))
-        for _ in range(18)
-    ]
+
+    def make_particles(count, size_lo, size_hi, op_lo, op_hi):
+        return [
+            (float(rng.uniform(0, W)), float(rng.uniform(0, H)),
+             float(rng.uniform(.02, .08)), int(rng.integers(size_lo, size_hi)),
+             float(rng.uniform(op_lo, op_hi)))
+            for _ in range(count)
+        ]
+
+    dust_far = make_particles(9, 2, 4, .018, .04)   # soft, behind the near plane
+    dust_near = make_particles(9, 1, 3, .03, .08)   # crisp, in front of everything
+
+    def maybe_blur(plane, sigma):
+        if sigma and sigma > 0.05:
+            return cv2.GaussianBlur(plane, (0, 0), float(sigma))
+        return plane
 
     def generate():
         for index in range(frames):
             t = index / max(frames - 1, 1)
             ease = t * t * (3.0 - 2.0 * t)
-            travel = (2.0 * ease - 1.0) * strength
-            sway = math.sin(t * math.tau) * strength
             breath = math.sin(t * math.tau * (0.72 if recipe == "human" else 1.0))
+            path = camera_path(camera, t, strength)
 
-            bg, _ = _warp(background, np.ones((H, W), np.float32),
-                          -2.0 * travel, -.5 * sway, 1.035, 1.035, cv2)
-            mid, ma = _warp(image, mid_alpha,
-                            4.0 * travel, 1.2 * sway, 1.038, 1.038, cv2)
+            bx, by, bsx, bsy, bblur = path["bg"]
+            mx, my, msx, msy, mblur = path["mid"]
+            nx, ny, nsx, nsy, nblur = path["near"]
 
-            nx, ny, nsx, nsy = 9.0 * travel, 2.0 * sway, 1.042, 1.042
+            # recipe accents ride on top of the camera move
             if recipe == "human":
                 ny -= 1.7 * breath * strength
                 nsy += .0045 * breath * strength
             elif recipe == "organic":
-                ny -= 3.0 * ease * strength
-                nsx += .009 * ease * strength
-                nsy += .015 * ease * strength
+                ny -= 2.4 * ease * strength
+                nsx += .007 * ease * strength
+                nsy += .012 * ease * strength
             elif recipe == "reflection":
                 nx += 2.5 * math.sin(t * math.tau * .5) * strength
             elif recipe == "paper":
                 nx *= .42
                 ny *= .35
-            near, na = _warp(image, near_alpha, nx, ny, nsx, nsy, cv2)
+
+            bg, _ = _warp(maybe_blur(background, bblur),
+                          np.ones((H, W), np.float32), bx, by, bsx, bsy, cv2)
+            mid, ma = _warp(maybe_blur(image, mblur), mid_alpha, mx, my, msx, msy, cv2)
+            near, na = _warp(maybe_blur(image, nblur), near_alpha, nx, ny, nsx, nsy, cv2)
 
             frame = _composite(bg, mid, ma)
+            if recipe in {"organic", "atmosphere", "light", "human"}:
+                frame = _particles(frame, t, dust_far, cv2, drift=mx * 0.6)
             frame = _composite(frame, near, na)
             frame = _light_sweep(frame, t, recipe)
             if recipe in {"organic", "atmosphere", "light"}:
-                frame = _particles(frame, t, particles, cv2)
+                frame = _particles(frame, t, dust_near, cv2, drift=nx * 1.15)
             yield frame
 
     _encode_frames(generate(), duration, output)
@@ -856,18 +954,27 @@ def scene_visual_fingerprint(scene):
         "hero", "hero_style", "image_prompt", "query", "symbol_query",
         "pexels_id", "stock_id", "narrative_mode",
     )}
+    if scene.get("hero") or scene.get("hero_style") or scene.get("image_prompt"):
+        # Still-derived clips also depend on the motion engine version; stock
+        # footage does not, so its cache identity is left untouched.
+        payload["motion_3d_version"] = MOTION_3D_VERSION
     return _hashlib.sha256(
         _json.dumps(payload, sort_keys=True, ensure_ascii=True).encode()
     ).hexdigest()[:16]
 
 
-# Standing rule (James): generated stills carry HEAVY layered special effects.
+# Standing rule (James, photoreal era): generated stills are PHOTOGRAPHS of
+# the impossible — documentary magical realism, engineered for deep parallax.
+# Full doctrine: pipeline/PHOTOREAL_STYLE.md
 EFFECTS_STILL_STYLE = (
-    ", cinematic conceptual key art, HEAVY layered special effects: dramatic "
-    "volumetric god rays, dense glowing light particles and embers swirling "
-    "through the air, luminous energy trails and wisps, drifting mist and "
-    "atmospheric haze, sparkling bokeh, soft lens bloom and anamorphic flares, "
-    "subtle chromatic aberration, iridescent glow, rich film-grade color, "
-    "hyperdetailed, ethereal and otherworldly, "
-    "no text, no words, no letters, no captions, no labels, no diagrams"
+    ", cinematic 35mm film still, photorealistic, anamorphic lens character, "
+    "shallow depth of field with a real out-of-focus foreground element close "
+    "to camera, subject in the middle distance, deep background falling into "
+    "atmospheric haze, one motivated practical light source, natural surface "
+    "textures and small real-world imperfections, fine film grain, muted "
+    "filmic color grade, exactly one impossible element photographed as "
+    "physically real and lit by the scene's own light, documentary magical "
+    "realism, deep three-plane composition, "
+    "no text, no words, no letters, no captions, no labels, no diagrams, "
+    "no watermark, not an illustration, not digital art"
 )

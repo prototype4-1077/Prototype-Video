@@ -137,3 +137,57 @@ class MotionRenderTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+class MultiplaneCameraTests(unittest.TestCase):
+    def test_dolly_zoom_background_blooms_while_subject_holds(self):
+        import motion
+        end = motion.camera_path("dolly_zoom", 1.0)
+        start = motion.camera_path("dolly_zoom", 0.0)
+        bg_growth = end["bg"][2] - start["bg"][2]
+        mid_growth = abs(end["mid"][2] - start["mid"][2])
+        self.assertGreater(bg_growth, 0.10)
+        self.assertLess(mid_growth, 0.01)
+        self.assertLess(end["near"][2], start["near"][2])
+
+    def test_push_in_scales_ordered_by_depth(self):
+        import motion
+        p = motion.camera_path("push_in", 1.0)
+        self.assertGreater(p["near"][2], p["mid"][2])
+        self.assertGreater(p["mid"][2], p["bg"][2])
+
+    def test_orbit_planes_move_in_opposite_directions(self):
+        import motion
+        p = motion.camera_path("orbit", 0.9)
+        self.assertLess(p["bg"][0] * p["near"][0], 0.0)
+
+    def test_rack_focus_crossfades_blur_between_planes(self):
+        import motion
+        early = motion.camera_path("rack_focus", 0.05)
+        late = motion.camera_path("rack_focus", 0.95)
+        self.assertGreater(early["near"][4], 1.0)
+        self.assertLess(early["bg"][4], 0.5)
+        self.assertGreater(late["bg"][4], 1.0)
+        self.assertLess(late["near"][4], 0.5)
+
+    def test_camera_paths_are_deterministic(self):
+        import motion
+        for move in motion.CAMERA_MOVES:
+            self.assertEqual(motion.camera_path(move, 0.4),
+                             motion.camera_path(move, 0.4))
+
+    def test_still_fingerprint_tracks_motion_version_for_heroes_only(self):
+        import motion
+        hero = {"hero": True, "hero_style": "effects", "image_prompt": "x"}
+        stock = {"query": "ocean waves", "pexels_id": 5}
+        self.assertNotEqual(motion.scene_visual_fingerprint(hero),
+                            motion.scene_visual_fingerprint({**hero, "image_prompt": "y"}))
+        stock_before = motion.scene_visual_fingerprint(stock)
+        hero_before = motion.scene_visual_fingerprint(hero)
+        old_version = motion.MOTION_3D_VERSION
+        try:
+            motion.MOTION_3D_VERSION = "different"
+            self.assertEqual(stock_before, motion.scene_visual_fingerprint(stock))
+            self.assertNotEqual(hero_before, motion.scene_visual_fingerprint(hero))
+        finally:
+            motion.MOTION_3D_VERSION = old_version
