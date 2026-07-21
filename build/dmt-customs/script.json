@@ -8,7 +8,10 @@
  "auto_audio_tags": false,
  "supplied_script": true,
  "voice_standard": "Liam as the returned traveler: shaken wonder, racing at the omniscience, hushed at the desk; voices the Officer with kind unhurried bureaucratic-cosmic warmth; cracks slightly at the gift; lands on quiet promise",
- "visual_policy": "diverse_symbols",
+ "visual_policy": {
+  "mode": "diverse_symbols",
+  "max_human_ratio": 0.6
+ },
  "render_outputs": [
   "youtube",
   "portrait"
@@ -33,27 +36,7 @@
    "symbol_family": "objects",
    "query": "alarm clock bedside night dark",
    "primary_symbol": "clock",
-   "narrative_mode": "atmosphere",
-   "start": 0.0,
-   "duration": 9.32,
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.1557,
-    "active_region_ratio": 0.1846,
-    "frame_difference": 5.7896
-   },
-   "clip_fingerprint": "a60cd713e853e4d9",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_00.mp4",
-   "stock_id": 30039319,
-   "pexels_id": 30039319,
-   "stock_frame_url": "https://images.pexels.com/videos/30039319/pexels-photo-30039319.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/dark-vintage-alarm-clock-striking-midnight-30039319/"
+   "narrative_mode": "atmosphere"
   },
   {
    "text": "Nobody tells you about the border.",
@@ -70,27 +53,7 @@
    "symbol_family": "nature",
    "query": "fog wall mist dark field",
    "primary_symbol": "fog",
-   "narrative_mode": "atmosphere",
-   "start": 9.32,
-   "duration": 2.94,
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 1.7539,
-    "active_region_ratio": 0.9274,
-    "frame_difference": 4.2045
-   },
-   "clip_fingerprint": "5eb7b6f05ef2cae2",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_01.mp4",
-   "stock_id": 4334529,
-   "pexels_id": 4334529,
-   "stock_frame_url": "https://images.pexels.com/videos/4334529/pexels-photo-4334529.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/drone-shot-of-a-forest-field-4334529/"
+   "narrative_mode": "atmosphere"
   },
   {
    "text": "Going in was clean: three pulls, the hum, my body unzipped and the universe handed me… everything.",
@@ -105,27 +68,7 @@
    "visual_function": "literal_anchor",
    "symbol_family": "abstract",
    "query": "colorful tunnel abstract motion fast",
-   "primary_symbol": "tunnel",
-   "start": 12.26,
-   "duration": 7.42,
-   "motion_kind": "video",
-   "image_prompt": "The clean crossing — hum, unzip, tunnel of color.",
-   "hero_style": ", cinematic 35mm film still, photorealistic, anamorphic lens character, shallow depth of field with a real out-of-focus foreground element close to camera, subject in the middle distance, deep background falling into atmospheric haze, one motivated practical light source, natural surface textures and small real-world imperfections, fine film grain, muted filmic color grade, exactly one impossible element photographed as physically real and lit by the scene's own light, documentary magical realism, deep three-plane composition, no text, no words, no letters, no captions, no labels, no diagrams, no watermark, not an illustration, not digital art",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_02.mp4",
-   "narrative_mode": "literal_graphic",
-   "motion_mode": "generated_graphic",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0205,
-    "active_region_ratio": 0.1475,
-    "frame_difference": 2.5912
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "2146eff52767ed01"
+   "primary_symbol": "tunnel"
   },
   {
    "text": "For nine minutes I held it all. The formula under physics. The reason children laugh. What death actually does. Where the missing socks— no. Everything.",
@@ -145,33 +88,7 @@
    "human_role": "witness",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "a man of dark silhouette cupping in both hands a small blinding galaxy of golden equations symbols and living images that swirl like fireflies, his face underlit with astonishment, deep void behind, amber and brass tones, cinematic awe, hyperdetailed, no readable text, abstract glowing symbols only",
-   "start": 19.68,
-   "duration": 11.84,
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_03.jpg",
-   "still_reference_signature": "cc55102e31f630a8571e",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
-   ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_03.mp4",
-   "clip_fingerprint": "1c246560234a96d7",
-   "hero_generated": true,
-   "motion_recipe": "human",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true
+   "image_prompt": "a man of dark silhouette cupping in both hands a small blinding galaxy of golden equations symbols and living images that swirl like fireflies, his face underlit with astonishment, deep void behind, amber and brass tones, cinematic awe, hyperdetailed, no readable text, abstract glowing symbols only"
   },
   {
    "text": "And then, coming down, coming back — a desk. Mid-void. Brass lamp. And behind it… the Officer.",
@@ -190,36 +107,7 @@
    "primary_symbol": "desk",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "a worn wooden bureaucrat's desk floating alone in a dark amber void, a brass banker's lamp casting the only pool of warm light, tidy stacks of luminous paperwork, a tall gentle silhouette seated behind it with kind eyes barely visible, vast emptiness around the small official island of light, cinematic surrealism, photographic texture, hyperdetailed, no readable text",
-   "start": 31.52,
-   "duration": 12.56,
-   "kw_times": {
-    "desk": 35.9
-   },
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_04.jpg",
-   "still_reference_signature": "956547dde3c9fbc707f1",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
-   ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_04.mp4",
-   "clip_fingerprint": "9703470e8c215581",
-   "hero_generated": true,
-   "motion_recipe": "paper",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true
+   "image_prompt": "a worn wooden bureaucrat's desk floating alone in a dark amber void, a brass banker's lamp casting the only pool of warm light, tidy stacks of luminous paperwork, a tall gentle silhouette seated behind it with kind eyes barely visible, vast emptiness around the small official island of light, cinematic surrealism, photographic texture, hyperdetailed, no readable text"
   },
   {
    "text": "Kind eyes. Infinite paperwork. He looked at me the way a librarian looks at a book being returned late.",
@@ -229,34 +117,13 @@
    ],
    "keywords": [
     "glasses",
-    "lamplight"
+    "ledger"
    ],
-   "semantic_anchor": "Kind eyes over glasses in lamplight.",
+   "semantic_anchor": "Reading glasses resting on infinite paperwork — kindness implied.",
    "visual_function": "human_experience",
-   "symbol_family": "human",
-   "query": "old man glasses warm lamp portrait",
-   "primary_symbol": "glasses",
-   "human_role": "witness",
-   "start": 44.08,
-   "duration": 8.32,
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 3.8713,
-    "active_region_ratio": 0.9893,
-    "frame_difference": 12.5745
-   },
-   "clip_fingerprint": "6fb04d9b13519117",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_05.mp4",
-   "stock_id": 5708179,
-   "pexels_id": 5708179,
-   "stock_frame_url": "https://images.pexels.com/videos/5708179/pexels-photo-5708179.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/man-removing-his-eye-glasses-5708179/"
+   "symbol_family": "objects",
+   "query": "reading glasses on old ledger desk lamplight",
+   "primary_symbol": "glasses"
   },
   {
    "text": "Declare everything, he said. So I did. I laid it all on the desk — nine minutes of omniscience, still warm.",
@@ -274,37 +141,7 @@
    "primary_symbol": "laid",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "luminous impossible objects laid out in neat rows on a worn wooden desk under brass lamplight, small glowing geometries a tiny sun a folded equation of light a jar of laughter, arranged like contraband at a customs inspection, amber and gold on deep black, macro depth of field with the lamp out of focus in the near foreground, cinematic, hyperdetailed, no readable text",
-   "start": 52.4,
-   "duration": 9.92,
-   "kw_times": {
-    "desk": 57.62,
-    "laid": 56.52
-   },
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_06.jpg",
-   "still_reference_signature": "6bfe664147297f574530",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
-   ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_06.mp4",
-   "clip_fingerprint": "4912b1291d25c3c9",
-   "hero_generated": true,
-   "motion_recipe": "light",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true
+   "image_prompt": "luminous impossible objects laid out in neat rows on a worn wooden desk under brass lamplight, small glowing geometries a tiny sun a folded equation of light a jar of laughter, arranged like contraband at a customs inspection, amber and gold on deep black, macro depth of field with the lamp out of focus in the near foreground, cinematic, hyperdetailed, no readable text"
   },
   {
    "text": "He went through it piece by piece. The formula — cannot cross. The mechanism of time — cannot cross.",
@@ -321,31 +158,7 @@
    "symbol_family": "human",
    "query": "hand stamp paper desk vintage",
    "primary_symbol": "stamp",
-   "human_role": "actor",
-   "start": 62.32,
-   "duration": 7.66,
-   "motion_kind": "video",
-   "hero": true,
-   "image_prompt": "A hand and stamp, item by item, regretful and firm.",
-   "hero_style": ", cinematic 35mm film still, photorealistic, anamorphic lens character, shallow depth of field with a real out-of-focus foreground element close to camera, subject in the middle distance, deep background falling into atmospheric haze, one motivated practical light source, natural surface textures and small real-world imperfections, fine film grain, muted filmic color grade, exactly one impossible element photographed as physically real and lit by the scene's own light, documentary magical realism, deep three-plane composition, no text, no words, no letters, no captions, no labels, no diagrams, no watermark, not an illustration, not digital art",
-   "narrative_mode": "atmosphere",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.1007,
-    "active_region_ratio": 0.1796,
-    "frame_difference": 10.6497
-   },
-   "clip_fingerprint": "c40f7dd031246474",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_07.mp4",
-   "stock_id": 3838404,
-   "pexels_id": 3838404,
-   "stock_frame_url": "https://images.pexels.com/videos/3838404/alphabet-craft-hands-i-am-sorry-3838404.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/stamping-letters-on-a-paper-to-convey-an-apology-3838404/"
+   "human_role": "actor"
   },
   {
    "text": "Why? I asked. And he said the thing I'll never forget:",
@@ -361,27 +174,7 @@
    "symbol_family": "light",
    "query": "desk lamp warm glow dark room",
    "primary_symbol": "pause",
-   "narrative_mode": "atmosphere",
-   "start": 69.98,
-   "duration": 6.04,
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 7.2286,
-    "active_region_ratio": 0.4209,
-    "frame_difference": 11.2603
-   },
-   "clip_fingerprint": "58daeb519fddf4e8",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_08.mp4",
-   "stock_id": 34771084,
-   "pexels_id": 34771084,
-   "stock_frame_url": "https://images.pexels.com/videos/34771084/vietnamese-house-vietnamese-interior-34771084.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/minimalist-vietnamese-interior-with-lamp-34771084/"
+   "narrative_mode": "atmosphere"
   },
   {
    "text": "Because you are going back to a world made of not-knowing. Carry this through, and your world pops like a bubble. It is not punishment. It is load-bearing ignorance.",
@@ -400,37 +193,7 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "a whole miniature living world houses forests small lit windows held inside one trembling iridescent soap bubble hovering above an open ancient hand, amber void around, the bubble's skin swirling with fragile rainbows, one bright point of knowledge approaching it like a needle of light, cinematic tension and tenderness, hyperdetailed, no text, no words",
-   "human_role": "unspecified",
-   "start": 76.02,
-   "duration": 14.16,
-   "kw_times": {
-    "bubble": 83.62,
-    "world": 77.88
-   },
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_09.jpg",
-   "still_reference_signature": "59ed732aef2d90932b38",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
-   ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_09.mp4",
-   "clip_fingerprint": "1af7852bd6efaf9e",
-   "hero_generated": true,
-   "motion_recipe": "reflection",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true
+   "human_role": "unspecified"
   },
   {
    "text": "That's why every traveler comes back saying I knew everything and it's gone. It's not gone. It's confiscated.",
@@ -446,27 +209,7 @@
    "visual_function": "literal_anchor",
    "symbol_family": "architecture",
    "query": "old wooden drawers cabinet archive rows",
-   "primary_symbol": "drawers",
-   "start": 90.18,
-   "duration": 9.02,
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 10.5052,
-    "active_region_ratio": 0.9972,
-    "frame_difference": 27.1103
-   },
-   "clip_fingerprint": "74a7a056b774f164",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_10.mp4",
-   "stock_id": 9029219,
-   "pexels_id": 9029219,
-   "stock_frame_url": "https://images.pexels.com/videos/9029219/estradiol-hormones-prolactin-testosterone-9029219.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/close-up-shot-of-drawers-9029219/"
+   "primary_symbol": "drawers"
   },
   {
    "text": "Held in your name, at the border, in a brass drawer with your handwriting on the label.",
@@ -485,37 +228,7 @@
    "primary_symbol": "drawer",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "an endless wall of small brass drawers receding into amber darkness, one single drawer glowing softly warmer than all the others with a small blank aged label lit by an unseen source, dust motes in the lamplight, macro depth of field, cinematic quiet wonder, photographic texture, hyperdetailed, no readable text",
-   "start": 99.2,
-   "duration": 7.02,
-   "kw_times": {
-    "drawer": 102.6,
-    "name": 99.88
-   },
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_11.jpg",
-   "still_reference_signature": "0eb3a66f3b6d63f852f6",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
-   ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_11.mp4",
-   "clip_fingerprint": "10966dae4ebe843e",
-   "hero_generated": true,
-   "motion_recipe": "paper",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true
+   "image_prompt": "an endless wall of small brass drawers receding into amber darkness, one single drawer glowing softly warmer than all the others with a small blank aged label lit by an unseen source, dust motes in the lamplight, macro depth of field, cinematic quiet wonder, photographic texture, hyperdetailed, no readable text"
   },
   {
    "text": "But here's what nobody tells you about the Officer. He always lets ONE thing through.",
@@ -533,27 +246,7 @@
    "query": "warm light hands desk shadow",
    "primary_symbol": "turn",
    "narrative_mode": "atmosphere",
-   "human_role": "unspecified",
-   "start": 106.22,
-   "duration": 6.88,
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 4.1083,
-    "active_region_ratio": 0.6715,
-    "frame_difference": 22.7808
-   },
-   "clip_fingerprint": "3215fd4d2ab415d9",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_12.mp4",
-   "stock_id": 32156300,
-   "pexels_id": 32156300,
-   "stock_frame_url": "https://images.pexels.com/videos/32156300/pexels-photo-32156300.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/cozy-indoor-wooden-tray-movement-in-soft-light-32156300/"
+   "human_role": "unspecified"
   },
   {
    "text": "He slid it across the desk without looking up. This one travels. This one is legal everywhere.",
@@ -569,30 +262,7 @@
    "symbol_family": "human",
    "query": "hand sliding paper across wooden desk",
    "primary_symbol": "slide",
-   "human_role": "actor",
-   "start": 113.1,
-   "duration": 8.7,
-   "kw_times": {
-    "desk": 114.12
-   },
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 2.0067,
-    "active_region_ratio": 0.7844,
-    "frame_difference": 12.6812
-   },
-   "clip_fingerprint": "f6b11df4d3091179",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_13.mp4",
-   "stock_id": 37779510,
-   "pexels_id": 37779510,
-   "stock_frame_url": "https://images.pexels.com/videos/37779510/campus-37779510.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/person-writing-notes-at-wooden-desk-37779510/"
+   "human_role": "actor"
   },
   {
    "text": "I looked down. It wasn't a formula.",
@@ -608,27 +278,7 @@
    "symbol_family": "human",
    "query": "open hands cupped light dark",
    "primary_symbol": "hands",
-   "human_role": "witness",
-   "start": 121.8,
-   "duration": 3.8,
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.4324,
-    "active_region_ratio": 0.2521,
-    "frame_difference": 4.7859
-   },
-   "clip_fingerprint": "2838c7855718de15",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_14.mp4",
-   "stock_id": 32308941,
-   "pexels_id": 32308941,
-   "stock_frame_url": "https://images.pexels.com/videos/32308941/pexels-photo-32308941.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/silhouette-hand-shadows-creative-art-32308941/"
+   "human_role": "witness"
   },
   {
    "text": "It was the feeling of being loved by something enormous… that expects nothing back.",
@@ -648,33 +298,7 @@
    "human_role": "witness",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "two cupped human hands in darkness holding a soft sourceless golden warmth that has no shape and casts light upward onto a face we barely see, the glow tender and enormous beyond its size, amber on black, photographic skin texture, film grain, cinematic intimacy, hyperdetailed, no text, no words",
-   "start": 125.6,
-   "duration": 6.88,
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_15.jpg",
-   "still_reference_signature": "71a3877f1e7da80d1eb8",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
-   ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_15.mp4",
-   "clip_fingerprint": "176f6c76b7a4fad9",
-   "hero_generated": true,
-   "motion_recipe": "paper",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true
+   "image_prompt": "two cupped human hands in darkness holding a soft sourceless golden warmth that has no shape and casts light upward onto a face we barely see, the glow tender and enormous beyond its size, amber on black, photographic skin texture, film grain, cinematic intimacy, hyperdetailed, no text, no words"
   },
   {
    "text": "Everyone smuggles this one home, he said. It's the only thing the world can hold.",
@@ -689,27 +313,7 @@
    "visual_function": "literal_anchor",
    "symbol_family": "objects",
    "query": "rubber stamp approval paper close",
-   "primary_symbol": "stamp",
-   "start": 132.48,
-   "duration": 7.32,
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 3.0887,
-    "active_region_ratio": 0.9197,
-    "frame_difference": 6.6925
-   },
-   "clip_fingerprint": "3008cd0adba74c70",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_16.mp4",
-   "stock_id": 6657752,
-   "pexels_id": 6657752,
-   "stock_frame_url": "https://images.pexels.com/videos/6657752/hobby-stamp-stamp-collecting-stamps-6657752.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/person-looking-at-a-stamp-collection-on-an-album-6657752/"
+   "primary_symbol": "stamp"
   },
   {
    "text": "So if you've ever come back from anywhere — a trip, a dream, a prayer — carrying peace you can't explain…",
@@ -726,27 +330,7 @@
    "symbol_family": "human",
    "query": "morning window light curtains peaceful",
    "primary_symbol": "morning",
-   "human_role": "witness",
-   "start": 139.8,
-   "duration": 8.92,
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 3.1876,
-    "active_region_ratio": 0.5989,
-    "frame_difference": 15.3549
-   },
-   "clip_fingerprint": "66c846fa15a0cffd",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_17.mp4",
-   "stock_id": 8860235,
-   "pexels_id": 8860235,
-   "stock_frame_url": "https://images.pexels.com/videos/8860235/pexels-photo-8860235.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/a-man-looking-outside-the-window-8860235/"
+   "human_role": "witness"
   },
   {
    "text": "Now you know. You cleared customs.",
@@ -762,27 +346,7 @@
    "symbol_family": "architecture",
    "query": "door closing warm light hallway",
    "primary_symbol": "door",
-   "narrative_mode": "stock_ok",
-   "start": 148.72,
-   "duration": 2.84,
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 3.7944,
-    "active_region_ratio": 0.8766,
-    "frame_difference": 30.3219
-   },
-   "clip_fingerprint": "284042ebf705367d",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_18.mp4",
-   "stock_id": 6136988,
-   "pexels_id": 6136988,
-   "stock_frame_url": "https://images.pexels.com/videos/6136988/pexels-photo-6136988.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/people-going-out-from-an-open-doors-6136988/"
+   "narrative_mode": "stock_ok"
   },
   {
    "text": "And your drawer is still there. Everything you ever knew, filed under your name… waiting for the day the world can bear the weight.",
@@ -799,46 +363,7 @@
    "symbol_family": "architecture",
    "query": "old archive drawers dark warm light",
    "primary_symbol": "waiting",
-   "narrative_mode": "stock_ok",
-   "start": 151.56,
-   "duration": 11.686,
-   "kw_times": {
-    "drawer": 153.18,
-    "waiting": 158.9
-   },
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 4.479,
-    "active_region_ratio": 0.9694,
-    "frame_difference": 9.3571
-   },
-   "clip_fingerprint": "d9697e0ed29bdfee",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/dmt-customs/clip_19.mp4",
-   "stock_id": 6550143,
-   "pexels_id": 6550143,
-   "stock_frame_url": "https://images.pexels.com/videos/6550143/pexels-photo-6550143.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/girl-leaning-on-a-wooden-drawers-6550143/"
+   "narrative_mode": "stock_ok"
   }
- ],
- "voiceover": "vo.mp3",
- "voiceover_config": {
-  "provider": "ElevenLabs",
-  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
-  "voice_name": "Liam - Energetic, Social Media Creator",
-  "model_id": "eleven_v3",
-  "stability_mode": "creative",
-  "voice_settings": {
-   "stability": 0.0,
-   "similarity_boost": 0.75,
-   "style": 0.0,
-   "speed": 0.91
-  },
-  "audio_tags_enabled": true
- }
+ ]
 }
