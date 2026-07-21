@@ -1,6 +1,6 @@
 # What's working (auto-generated: learn.py digest)
 
-_Updated 2026-07-20 from 33 recorded videos._
+_Updated 2026-07-21 from 33 recorded videos._
 
 ## Queries that keep winning
 
@@ -25,3 +25,4 @@ _Updated 2026-07-20 from 33 recorded videos._
 - the-reality-machine-dmt-v3: scenes [27, 17, 26] held viewers, scenes [0, 2, 1] bled them
 - collapse-of-gravity: scenes [26, 20, 6] held viewers, scenes [16, 3, 1] bled them
 - the-unopened-mail: scenes [0, 1, 2] held viewers, scenes [6, 3, 4] bled them
+- the-reality-machine-dmt-v3: scenes [27, 17, 26] held viewers, scenes [0, 2, 1] bled them
