@@ -1,44 +1,27 @@
 {
-  "finished_at": "2026-07-20T19:42:00+00:00",
-  "github_run_id": "29770310391",
+  "finished_at": "2026-07-21T00:35:48+00:00",
+  "github_run_id": "29788829873",
   "incidents": [
     {
       "count": 1,
       "failure_class": "transient",
-      "fingerprint": "019e3c600e4624c4",
+      "fingerprint": "117579c4ef754b42",
       "kind": "timeout",
       "last_item": null,
-      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.0s ago.",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.9s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
-    },
-    {
-      "count": 1,
-      "failure_class": "unknown",
-      "fingerprint": "10850e67081e3e92",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "[mov,mp4,m4a,3gp,3g2,mj2 @ 0x55682ca17780] moov atom not found <path>: invalid data found when processing input",
-      "stage": "probe"
     }
   ],
   "last_message": "DONE -> /home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-crossword/final_youtube.mp4 + /home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-crossword/final.mp4",
   "mode": "recover",
-  "passes": 8,
+  "passes": 3,
   "policy": {
-    "align": {
-      "hard_timeout_s": 300.0,
-      "historical_p95_s": 1.0,
-      "idle_timeout_s": 33.01,
-      "sample_count": 12,
-      "soft_timeout_s": 33.01,
-      "source": "history"
-    },
     "altsheet": {
       "hard_timeout_s": 300.0,
       "historical_p95_s": 8.07,
-      "idle_timeout_s": 54.22,
-      "sample_count": 17,
-      "soft_timeout_s": 54.22,
+      "idle_timeout_s": 54.21,
+      "sample_count": 19,
+      "soft_timeout_s": 54.21,
       "source": "history"
     },
     "assemble": {
@@ -61,40 +44,24 @@
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.03,
       "idle_timeout_s": 33.08,
-      "sample_count": 103,
+      "sample_count": 108,
       "soft_timeout_s": 33.08,
       "source": "history"
     },
     "ffmpeg": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 32.82,
-      "idle_timeout_s": 128.46,
-      "sample_count": 189,
-      "soft_timeout_s": 128.46,
-      "source": "history"
-    },
-    "footage": {
-      "hard_timeout_s": 600.0,
-      "historical_p95_s": 14.92,
-      "idle_timeout_s": 74.77,
-      "sample_count": 172,
-      "soft_timeout_s": 74.77,
-      "source": "history"
-    },
-    "hero": {
-      "hard_timeout_s": 1200.0,
-      "historical_p95_s": 26.31,
-      "idle_timeout_s": 180.0,
-      "sample_count": 37,
-      "soft_timeout_s": 180.0,
+      "historical_p95_s": 32.23,
+      "idle_timeout_s": 126.69,
+      "sample_count": 200,
+      "soft_timeout_s": 126.69,
       "source": "history"
     },
     "prep": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 45.17,
-      "idle_timeout_s": 165.52,
-      "sample_count": 20,
-      "soft_timeout_s": 165.52,
+      "historical_p95_s": 44.97,
+      "idle_timeout_s": 164.92,
+      "sample_count": 22,
+      "soft_timeout_s": 164.92,
       "source": "history"
     },
     "probe": {
@@ -112,34 +79,18 @@
       "sample_count": 0,
       "soft_timeout_s": 1500.0,
       "source": "explicit"
-    },
-    "transcribe": {
-      "hard_timeout_s": 900.0,
-      "historical_p95_s": 22.02,
-      "idle_timeout_s": 180.0,
-      "sample_count": 27,
-      "soft_timeout_s": 180.0,
-      "source": "history"
-    },
-    "tts": {
-      "hard_timeout_s": 480.0,
-      "historical_p95_s": 63.63,
-      "idle_timeout_s": 180.0,
-      "sample_count": 9,
-      "soft_timeout_s": 220.89,
-      "source": "history"
     }
   },
   "quality": {
     "build_dir": "/home/runner/work/TikTok-Video-Pipeline/TikTok-Video-Pipeline/build/the-crossword",
-    "checked_at": "2026-07-20T19:42:00+00:00",
+    "checked_at": "2026-07-21T00:35:47+00:00",
     "deep_decode": true,
     "expected_duration_s": 141.146,
     "failures": [],
     "mode": "delivery",
     "outputs": {
       "portrait": {
-        "avg_kbps": 3991,
+        "avg_kbps": 3997,
         "deep_scan": {
           "black_intervals": 0,
           "black_longest_s": 0.0,
@@ -162,7 +113,7 @@
         "probe": {
           "audio_codec": "aac",
           "audio_duration_s": 141.153991,
-          "bit_rate": 3990664.0,
+          "bit_rate": 3996833.0,
           "duration_s": 141.166667,
           "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
           "fps": 30.0,
@@ -173,17 +124,17 @@
           "video_duration_s": 141.166667,
           "width": 1080
         },
-        "size_bytes": 70418607,
+        "size_bytes": 70527456,
         "warnings": [
           {
             "code": "low_bitrate",
-            "message": "Average bitrate 3991 kbps is unusually low for 1080p; check for over-compression",
+            "message": "Average bitrate 3997 kbps is unusually low for 1080p; check for over-compression",
             "target": "portrait"
           }
         ]
       },
       "youtube": {
-        "avg_kbps": 7446,
+        "avg_kbps": 7452,
         "deep_scan": {
           "black_intervals": 0,
           "black_longest_s": 0.0,
@@ -206,7 +157,7 @@
         "probe": {
           "audio_codec": "aac",
           "audio_duration_s": 141.153991,
-          "bit_rate": 7445909.0,
+          "bit_rate": 7452249.0,
           "duration_s": 141.166667,
           "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
           "fps": 30.0,
@@ -217,7 +168,7 @@
           "video_duration_s": 141.166667,
           "width": 1920
         },
-        "size_bytes": 131389280,
+        "size_bytes": 131501154,
         "warnings": []
       }
     },
@@ -233,7 +184,7 @@
     "warnings": [
       {
         "code": "low_bitrate",
-        "message": "Average bitrate 3991 kbps is unusually low for 1080p; check for over-compression",
+        "message": "Average bitrate 3997 kbps is unusually low for 1080p; check for over-compression",
         "target": "portrait"
       }
     ]
@@ -241,22 +192,15 @@
   "recommendations": [
     {
       "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
-      "fingerprint": "019e3c600e4624c4",
+      "fingerprint": "117579c4ef754b42",
       "priority": "medium",
-      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.0s ago.",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.9s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
-    },
-    {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "10850e67081e3e92",
-      "priority": "medium",
-      "reason": "1 occurrence(s): [mov,mp4,m4a,3gp,3g2,mj2 @ 0x55682ca17780] moov atom not found <path>: invalid data found when processing input",
-      "stage": "probe"
     },
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (2221.7s).",
+      "reason": "Largest measured latency contribution in this run (2156.1s).",
       "stage": "build_pass"
     },
     {
@@ -266,262 +210,190 @@
       "stage": "quality"
     }
   ],
-  "run_id": "751018f04c1048889049c9df4df845e9",
+  "run_id": "36df90911e114f049409767364d77604",
   "schema_version": 1,
   "slug": "the-crossword",
   "stages": {
-    "align": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 1.002,
-      "p95_success_s": 1.002,
-      "success_durations_s": [
-        1.002
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 1.002
-    },
     "altsheet": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 4.021,
-      "p95_success_s": 4.021,
+      "p50_success_s": 5.027,
+      "p95_success_s": 5.027,
       "success_durations_s": [
-        4.021
+        5.027
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 4.021
+      "total_duration_s": 5.027
     },
     "assemble": {
-      "attempts": 38,
+      "attempts": 37,
       "failures": 0,
-      "p50_success_s": 45.188,
-      "p95_success_s": 78.534,
+      "p50_success_s": 49.275,
+      "p95_success_s": 87.746,
       "success_durations_s": [
-        34.136,
-        41.182,
-        24.091,
-        53.216,
-        18.068,
-        33.131,
-        37.24,
-        20.077,
-        44.185,
-        39.187,
-        34.121,
-        59.254,
-        51.235,
-        43.184,
-        39.148,
-        38.16,
-        41.191,
-        38.152,
-        27.1,
-        46.19,
-        64.275,
-        38.159,
-        79.366,
-        27.106,
-        49.193,
-        57.24,
-        31.132,
-        65.294,
-        60.256,
-        54.253,
-        79.321,
-        78.395,
-        63.293,
-        58.266,
-        62.261,
-        69.334,
-        60.278,
-        46.255
+        40.254,
+        47.311,
+        27.16,
+        60.342,
+        20.096,
+        36.219,
+        41.26,
+        22.113,
+        49.275,
+        44.282,
+        38.233,
+        65.382,
+        57.371,
+        48.3,
+        43.244,
+        43.26,
+        46.283,
+        42.277,
+        30.186,
+        52.299,
+        71.449,
+        43.273,
+        88.544,
+        30.173,
+        55.37,
+        64.389,
+        34.192,
+        72.414,
+        65.453,
+        59.377,
+        87.547,
+        86.579,
+        69.391,
+        64.448,
+        103.821,
+        66.48,
+        49.317
       ],
-      "successes": 38,
+      "successes": 37,
       "timeouts": 0,
-      "total_duration_s": 1805.925
+      "total_duration_s": 1967.364
     },
     "build_pass": {
-      "attempts": 8,
+      "attempts": 3,
       "failures": 1,
-      "p50_success_s": 58.068,
-      "p95_success_s": 130.439,
+      "p50_success_s": 177.59,
+      "p95_success_s": 322.991,
       "success_durations_s": [
-        58.068,
-        16.011,
-        59.051,
-        116.143,
-        13.02,
-        22.126,
-        136.566
+        16.034,
+        339.147
       ],
-      "successes": 7,
+      "successes": 2,
       "timeouts": 1,
-      "total_duration_s": 2221.738
+      "total_duration_s": 2156.084
     },
     "credits": {
-      "attempts": 4,
+      "attempts": 3,
       "failures": 0,
-      "p50_success_s": 1.01,
-      "p95_success_s": 1.03,
+      "p50_success_s": 1.008,
+      "p95_success_s": 1.018,
       "success_durations_s": [
-        1.003,
-        1.005,
-        1.033,
-        1.015
+        1.004,
+        1.008,
+        1.019
       ],
-      "successes": 4,
+      "successes": 3,
       "timeouts": 0,
-      "total_duration_s": 4.056
+      "total_duration_s": 3.031
     },
     "ffmpeg": {
       "attempts": 8,
       "failures": 0,
-      "p50_success_s": 4.513,
-      "p95_success_s": 23.956,
+      "p50_success_s": 5.519,
+      "p95_success_s": 26.357,
       "success_durations_s": [
-        1.006,
-        4.009,
-        18.075,
-        5.015,
-        1.006,
-        4.011,
-        27.122,
-        5.248
+        1.01,
+        5.019,
+        21.138,
+        6.019,
+        1.01,
+        5.018,
+        29.167,
+        6.02
       ],
       "successes": 8,
       "timeouts": 0,
-      "total_duration_s": 65.492
-    },
-    "footage": {
-      "attempts": 2,
-      "failures": 0,
-      "p50_success_s": 34.534,
-      "p95_success_s": 55.699,
-      "success_durations_s": [
-        58.051,
-        11.017
-      ],
-      "successes": 2,
-      "timeouts": 0,
-      "total_duration_s": 69.068
-    },
-    "hero": {
-      "attempts": 5,
-      "failures": 0,
-      "p50_success_s": 19.022,
-      "p95_success_s": 28.835,
-      "success_durations_s": [
-        18.024,
-        16.019,
-        31.036,
-        19.022,
-        20.03
-      ],
-      "successes": 5,
-      "timeouts": 0,
-      "total_duration_s": 104.131
+      "total_duration_s": 74.401
     },
     "prep": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 11.018,
-      "p95_success_s": 11.018,
+      "p50_success_s": 14.029,
+      "p95_success_s": 14.029,
       "success_durations_s": [
-        11.018
+        14.029
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 11.018
+      "total_duration_s": 14.029
     },
     "probe": {
-      "attempts": 41,
-      "failures": 1,
-      "p50_success_s": 1.01,
-      "p95_success_s": 1.046,
+      "attempts": 40,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.01,
       "success_durations_s": [
-        1.006,
-        1.006,
-        1.006,
-        1.007,
-        1.171,
-        1.006,
-        1.006,
-        1.006,
-        1.006,
-        1.006,
-        1.006,
-        1.006,
-        1.148,
-        1.006,
-        1.006,
-        1.006,
-        1.006,
-        1.006,
-        1.006,
-        1.018,
-        1.013,
-        1.029,
-        1.031,
-        1.025,
-        1.041,
-        1.039,
-        1.02,
-        1.014,
-        1.023,
-        1.028,
-        1.024,
-        1.025,
-        1.024,
-        1.027,
-        1.013,
-        1.022,
-        1.023,
-        1.006,
-        1.007,
-        1.007
+        1.008,
+        1.009,
+        1.009,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.009,
+        1.008,
+        1.008,
+        1.009,
+        1.009,
+        1.008,
+        1.009,
+        1.009,
+        1.008,
+        1.009,
+        1.008,
+        1.008,
+        1.009,
+        1.01,
+        1.009,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.009,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.009,
+        1.009,
+        1.01,
+        1.01,
+        1.011
       ],
       "successes": 40,
       "timeouts": 0,
-      "total_duration_s": 41.908
+      "total_duration_s": 40.366
     },
     "quality": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 50.224,
-      "p95_success_s": 50.224,
+      "p50_success_s": 54.312,
+      "p95_success_s": 54.312,
       "success_durations_s": [
-        50.224
+        54.312
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 50.224
-    },
-    "transcribe": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 13.009,
-      "p95_success_s": 13.009,
-      "success_durations_s": [
-        13.009
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 13.009
-    },
-    "tts": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 57.092,
-      "p95_success_s": 57.092,
-      "success_durations_s": [
-        57.092
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 57.092
+      "total_duration_s": 54.312
     }
   },
   "status": "done"
