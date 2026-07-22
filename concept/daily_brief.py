@@ -46,9 +46,21 @@ def brief(date_str):
     body+=["", "_Draw one thread. Don't lead the viewer — hand them the test._"]
     return "\n".join(body)
 
+def performance_lead(date_str):
+    """If we have realized performance, lead the brief with the data-driven call."""
+    try:
+        import intelligence
+        rows, lanes, n = intelligence.analyze()
+        if not rows:
+            return ""
+        return "## Today's data-driven steer\n" + intelligence.recommend() + "\n\n"
+    except Exception:
+        return ""
+
+
 def main():
     date_str=sys.argv[1] if len(sys.argv)>1 else datetime.date.today().isoformat()
-    text=brief(date_str)
+    text=performance_lead(date_str) + brief(date_str)
     print(text)
     log=os.path.join(HERE,"BRIEF_LOG.md")
     with open(log,"a") as f: f.write(text+"\n\n---\n\n")
