@@ -1,0 +1,54 @@
+{
+  "finished_at": "2026-07-22T12:47:36+00:00",
+  "github_run_id": "29920964086",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "690759bc7bc5ffbc",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script note: scene <n> keyword 'portrait' not found in text (won't highlight) note: scene <n> keyword 'film' not found in text (won't highlight) note: scene <n> keyword 'lens' not found in text (won't highlight) error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=440d7c2e898489e3. ERROR: scene 8 text too long (226 chars) | FIX: split it into two scenes",
+  "mode": "recover",
+  "passes": 2,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "690759bc7bc5ffbc",
+      "priority": "high",
+      "reason": "2 occurrence(s): note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script note: scene <n> keyword 'portrait' not found in text (won't highlight) note: scene <n> keyword 'film' not found in text (won't highlight) note: scene <n> keyword 'lens' not found in text (won't highlight) error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "2d67b88f2b7c41228f16ed2fef90ac18",
+  "schema_version": 1,
+  "slug": "the-museum-that-repaints-itself",
+  "stages": {
+    "build_pass": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.003
+    }
+  },
+  "status": "failed"
+}
