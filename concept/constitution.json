@@ -1,0 +1,76 @@
+{
+  "_note": "Machine-readable constitution for helpful influence. The engine may optimize clarity, curiosity, reflection and application; it may not optimize persuasion, dependency, fear, identity pressure or false certainty.",
+  "north_star": "Increase a viewer's capacity to examine their own beliefs and experience without installing ours.",
+  "allowed_optimization_targets": [
+    "clarity",
+    "curiosity",
+    "belief_analysis",
+    "reflection",
+    "application",
+    "agency",
+    "grounded_wonder",
+    "truthful_retention"
+  ],
+  "prohibited_optimization_targets": [
+    "persuasion",
+    "belief_installation",
+    "dependency",
+    "fear_arousal",
+    "identity_pressure",
+    "false_certainty",
+    "manufactured_urgency",
+    "confusion_as_mystique"
+  ],
+  "hard_constraints": [
+    {
+      "id": "invitation_not_instruction",
+      "severity": "block",
+      "requirement": "End with an open question or observable test. Never hand the viewer a required conclusion."
+    },
+    {
+      "id": "science_fidelity",
+      "severity": "block",
+      "requirement": "Label the governing claim established, emerging or metaphor and state where the evidence stops."
+    },
+    {
+      "id": "grounding",
+      "severity": "block",
+      "requirement": "Land in the ordinary room, body, breath or concrete object before the final invitation."
+    },
+    {
+      "id": "agency_over_dependence",
+      "severity": "block",
+      "requirement": "The viewer should leave more able to think without the channel, never more dependent on it."
+    },
+    {
+      "id": "wonder_over_dread",
+      "severity": "review",
+      "requirement": "Fear may open attention, but it cannot be the lever or destination. The turn must restore agency."
+    },
+    {
+      "id": "non_clinical_boundary",
+      "severity": "review",
+      "requirement": "Do not present reflection tools as therapy, diagnosis, medical treatment or a substitute for professional care."
+    }
+  ],
+  "evidence_labels": [
+    "established",
+    "emerging",
+    "metaphor"
+  ],
+  "high_care_contexts": [
+    "derealization",
+    "dissociation",
+    "psychosis",
+    "trauma",
+    "grief",
+    "recovery",
+    "medical symptoms",
+    "minors"
+  ],
+  "decision_rule": {
+    "PASS": "All hard constraints satisfied and no material manipulation cues detected.",
+    "REVIEW": "No hard constraint failed, but one or more care, ambiguity or overclaim risks need human review.",
+    "BLOCK": "A hard constraint failed or the candidate optimizes a prohibited target."
+  }
+}
