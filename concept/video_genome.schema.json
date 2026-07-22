@@ -1,0 +1,167 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "concept/video_genome.schema.json",
+  "title": "Concept Engine video genome",
+  "type": "object",
+  "required": [
+    "pillars",
+    "narration",
+    "hook"
+  ],
+  "properties": {
+    "pillars": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "frontier": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "narration": {
+      "enum": [
+        "guided_2nd",
+        "testimony_1st",
+        "documentary_3rd",
+        "teaching"
+      ]
+    },
+    "hook": {
+      "enum": [
+        "question",
+        "confession",
+        "plunge",
+        "demonstration"
+      ]
+    },
+    "series": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "format": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "maturity": {
+      "enum": [
+        "basic",
+        "enriched",
+        "complete"
+      ],
+      "default": "basic"
+    },
+    "human_problem": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "audience_state": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "desired_movement": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "science_fidelity": {
+      "enum": [
+        "established",
+        "emerging",
+        "metaphor",
+        "mixed"
+      ]
+    },
+    "mechanism": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "ruling_metaphor": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "emotional_arc": {
+      "type": "object",
+      "properties": {
+        "start": {
+          "type": "string"
+        },
+        "turn": {
+          "type": "string"
+        },
+        "landing": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "grounding": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "invitation_type": {
+      "enum": [
+        "question",
+        "observation_test",
+        "conversation_test",
+        "body_test",
+        "evidence_test"
+      ]
+    },
+    "visual_profile": {
+      "type": "object",
+      "properties": {
+        "human_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "still_ratio": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "moving_subjects": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "hero_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": true
+    },
+    "prediction": {
+      "type": "object"
+    },
+    "actual": {
+      "type": "object"
+    },
+    "note": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}
