@@ -30,6 +30,21 @@ def stock(text, stock_id, url, **extra):
 
 
 class ReferenceSelectionTests(unittest.TestCase):
+    def test_hero_image_validation_rejects_a_truncated_jpeg(self):
+        with tempfile.TemporaryDirectory() as td:
+            path = os.path.join(td, "hero.jpg")
+            Image.effect_noise((640, 360), 42).convert("RGB").save(
+                path, quality=95, progressive=True
+            )
+            self.assertTrue(hero._valid_image(path))
+            original_signature = hero._file_signature(path)
+
+            with open(path, "rb+") as handle:
+                handle.truncate(os.path.getsize(path) // 2)
+
+            self.assertFalse(hero._valid_image(path))
+            self.assertNotEqual(original_signature, hero._file_signature(path))
+
     def test_semantic_relationship_beats_simple_timeline_proximity(self):
         script = {"scenes": [
             {

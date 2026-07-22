@@ -5,7 +5,7 @@ Usage: python3 hero.py <build_dir> <scene_index>
 Scene needs: "hero": true, "image_prompt": "what the shot shows"
 Writes clip_XX.mp4 (which footage.py then skips). Stages are cached and resumable:
 hero_XX.jpg -> hero_XX_depth.npy -> clip_XX.mp4 (atomic)."""
-import io, json, os, sys, urllib.parse, urllib.request
+import hashlib, io, json, os, sys, urllib.parse, urllib.request
 
 import numpy as np
 from PIL import Image
@@ -24,6 +24,26 @@ STYLE = {
             "no haze or fog, no silhouetted figures, no fantasy lighting, no surreal effects"),
     "dmt": ", visionary psychedelic art, hyperdetailed, vivid luminous colors on deep black, intricate sacred geometry",
 }
+
+
+def _valid_image(path):
+    """Reject partial JPEG uploads before they can poison a cached hero clip."""
+    try:
+        if not os.path.exists(path) or os.path.getsize(path) <= 20_000:
+            return False
+        with Image.open(path) as image:
+            image.load()
+            return image.width >= 512 and image.height >= 288
+    except Exception:
+        return False
+
+
+def _file_signature(path):
+    digest = hashlib.sha256()
+    with open(path, "rb") as handle:
+        for block in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(block)
+    return digest.hexdigest()[:20]
 
 
 def model_path():
@@ -58,7 +78,7 @@ def generation_url(prompt, seed, reference_url=None):
 
 
 def gen_image(prompt, genre, out, profile=None, reference_url=None, force=False, style_override=None):
-    if not force and os.path.exists(out) and os.path.getsize(out) > 20_000:
+    if not force and _valid_image(out):
         return True
     style = style_override or profiles.hero_style(profile, genre) or STYLE.get(genre, STYLE[None])
     subject = profiles.hero_prompt(prompt, profile)
@@ -122,12 +142,15 @@ def main(bd, i):
     s = json.load(open(f"{bd}/script.json"))
     sc = s["scenes"][i]
     out = f"{bd}/clip_{i:02d}.mp4"
+    raw = f"{bd}/hero_{i:02d}_raw.jpg"
+    raw_signature = _file_signature(raw) if _valid_image(raw) else None
     # A finished clip is reusable across resumable Governor passes. Pure heroes
     # (hero_style) have no stock reference, so gate reuse on the clip existing
-    # rather than reference_is_current — otherwise they regenerate every pass and
-    # the build never reaches assembly.
+    # rather than reference_is_current. The raw-image signature also prevents a
+    # repaired or replaced source JPEG from reusing an older cached clip.
     if (os.path.exists(out) and os.path.getsize(out) > 100_000 and
             sc.get("clip_fingerprint") == motion.scene_visual_fingerprint(sc) and
+            sc.get("hero_raw_signature") == raw_signature and
             (sc.get("hero_style") or still_reference.reference_is_current(bd, s, i))):
         print(f"hero {i}: exists"); return
     prompt = sc.get("image_prompt") or sc["text"]
@@ -137,11 +160,10 @@ def main(bd, i):
     pure = bool(style_override)  # purely generated, no stock-reference conditioning
     reference = ({"url": None, "path": None, "scene_index": None}
                  if pure else still_reference.bind_reference(bd, s, i))
-    raw = f"{bd}/hero_{i:02d}_raw.jpg"
     img, dep = f"{bd}/hero_{i:02d}.jpg", f"{bd}/hero_{i:02d}_depth.npy"
     # Reuse a pre-generated (committed) raw still when present so renders never
     # depend on the image provider being reachable from CI. Otherwise generate.
-    have_committed = os.path.exists(raw) and os.path.getsize(raw) > 20_000
+    have_committed = _valid_image(raw)
     generated = gen_image(
         prompt, s.get("genre"), raw, profiles.resolve(s),
         reference_url=reference["url"], force=not have_committed,
@@ -153,7 +175,7 @@ def main(bd, i):
         sc["hero_fallback_reason"] = "reference_conditioned_provider_unavailable"
         for key in (
             "hero_generated", "motion_compiled", "still_reference_generation_model",
-            "still_reference_motion_complete", "motion_source",
+            "still_reference_motion_complete", "motion_source", "hero_raw_signature",
         ):
             sc.pop(key, None)
         for path in (raw, raw + ".part.jpg", img, dep, out):
@@ -164,6 +186,7 @@ def main(bd, i):
         json.dump(s, open(f"{bd}/script.json", "w"), indent=1, ensure_ascii=False)
         print(f"hero {i}: disabled after bounded provider failure; stock fallback queued")
         return
+    raw_signature = _file_signature(raw)
     if pure:
         still_reference.enhance_generated_image_standalone(bd, s, i, raw, img)
     else:
@@ -174,6 +197,7 @@ def main(bd, i):
     sc["clip"] = out
     sc["clip_fingerprint"] = motion.scene_visual_fingerprint(sc)
     sc["hero_generated"] = True
+    sc["hero_raw_signature"] = raw_signature
     sc["motion_mode"] = "cinemagraph"
     sc["motion_kind"] = motion.ANIMATED
     sc["motion_recipe"] = recipe
