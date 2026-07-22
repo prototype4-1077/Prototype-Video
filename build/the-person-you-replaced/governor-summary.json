@@ -1,29 +1,20 @@
 {
-  "finished_at": "2026-07-22T12:19:02+00:00",
-  "github_run_id": "29919018464",
+  "finished_at": "2026-07-22T12:26:01+00:00",
+  "github_run_id": "29919317796",
   "incidents": [
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "2d5e1f3f092e5573",
+      "fingerprint": "0238daa6519282c4",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "found in text (won't highlight) note: scene <n> keyword 'daylight' not found in text (won't highlight) note: scene <n> keyword 'pen' not found in text (won't highlight) note: scene <n> keyword 'note' not found in text (won't highlight) note: scene <n> keyword 'dawn' not found in text (won't highlight) governor stage=tts state=start soft=241s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprin",
+      "normalized_error": "ext (won't highlight) note: scene <n> keyword 'hand' not found in text (won't highlight) note: scene <n> keyword 'kindness' not found in text (won't highlight) note: scene <n> keyword 'lamp' not found in text (won't highlight) note: scene <n> keyword 'inheritance' not found in text (won't highlight) note: scene <n> keyword 'embrace' not found in text (won't highlight) note: scene <n> keyword 'daylight' not found in t",
       "stage": "build_pass"
-    },
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "3797b6f436aefe92",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
-      "stage": "tts"
     }
   ],
-  "last_message": "tts failed (unknown); retry budget 1 exhausted. fingerprint=3797b6f436aefe92. ERROR: tts failed: del_id)",
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=e9b9cdc38a9f7db2. ERROR: visual symbol plan: human imagery occupies 61%; target <= 60% | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
   "mode": "recover",
-  "passes": 2,
+  "passes": 3,
   "policy": {
     "build_pass": {
       "hard_timeout_s": 1800.0,
@@ -46,42 +37,45 @@
   "recommendations": [
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "3797b6f436aefe92",
+      "fingerprint": "0238daa6519282c4",
       "priority": "high",
-      "reason": "2 occurrence(s): traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
-      "stage": "tts"
+      "reason": "2 occurrence(s): ext (won't highlight) note: scene <n> keyword 'hand' not found in text (won't highlight) note: scene <n> keyword 'kindness' not found in text (won't highlight) note: scene <n> keyword 'lamp' not found in text (won't highlight) note: scene <n> keyword 'inheritance' not found in text (won't highlight) note: scene <n> keyword 'embrace' not found in text (won't highlight) note: scene <n> keyword 'daylight' not found in t",
+      "stage": "build_pass"
     },
     {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "2d5e1f3f092e5573",
-      "priority": "high",
-      "reason": "2 occurrence(s): found in text (won't highlight) note: scene <n> keyword 'daylight' not found in text (won't highlight) note: scene <n> keyword 'pen' not found in text (won't highlight) note: scene <n> keyword 'note' not found in text (won't highlight) note: scene <n> keyword 'dawn' not found in text (won't highlight) governor stage=tts state=start soft=241s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprin",
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (86.0s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "4cf3e70320554614b916b26ca843768c",
+  "run_id": "91e284dde8ce4b89ab44ae32fa780da9",
   "schema_version": 1,
   "slug": "the-person-you-replaced",
   "stages": {
     "build_pass": {
-      "attempts": 2,
+      "attempts": 3,
       "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+      "p50_success_s": 84.043,
+      "p95_success_s": 84.043,
+      "success_durations_s": [
+        84.043
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 4.005
+      "total_duration_s": 86.048
     },
     "tts": {
-      "attempts": 2,
-      "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 83.042,
+      "p95_success_s": 83.042,
+      "success_durations_s": [
+        83.042
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 2.005
+      "total_duration_s": 83.042
     }
   },
   "status": "failed"

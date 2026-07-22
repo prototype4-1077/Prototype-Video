@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-22T12:19:03+00:00",
+  "generated_at": "2026-07-22T12:26:01+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "long_black_interval": 4,
@@ -18,7 +18,7 @@
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
       "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "2d5e1f3f092e5573",
+      "fingerprint": "0238daa6519282c4",
       "priority": "medium",
       "stage": "build_pass"
     },
@@ -71,17 +71,9 @@
       "stage": "build_pass"
     },
     {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "3797b6f436aefe92",
-      "priority": "medium",
-      "stage": "tts"
-    },
-    {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=111.5s, p95=829.6s",
+      "evidence": "p50=111.4s, p95=826.7s",
       "priority": "medium",
       "stage": "build_pass"
     }
@@ -103,9 +95,9 @@
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "2d5e1f3f092e5573",
+      "fingerprint": "0238daa6519282c4",
       "kind": "failure",
-      "normalized_error": "found in text (won't highlight) note: scene <n> keyword 'daylight' not found in text (won't highlight) note: scene <n> keyword 'pen' not found in text (won't highlight) note: scene <n> keyword 'note' not found in text (won't highlight) note: scene <n> keyword 'dawn' not found in text (won't highlight) governor stage=tts state=start soft=241s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprin",
+      "normalized_error": "ext (won't highlight) note: scene <n> keyword 'hand' not found in text (won't highlight) note: scene <n> keyword 'kindness' not found in text (won't highlight) note: scene <n> keyword 'lamp' not found in text (won't highlight) note: scene <n> keyword 'inheritance' not found in text (won't highlight) note: scene <n> keyword 'embrace' not found in text (won't highlight) note: scene <n> keyword 'daylight' not found in t",
       "slugs": [
         "the-person-you-replaced"
       ],
@@ -180,17 +172,6 @@
         "been-here-before"
       ],
       "stage": "build_pass"
-    },
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "3797b6f436aefe92",
-      "kind": "failure",
-      "normalized_error": "traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
-      "slugs": [
-        "the-person-you-replaced"
-      ],
-      "stage": "tts"
     },
     {
       "count": 1,
@@ -310,16 +291,16 @@
       "total_duration_s": 47748.401
     },
     "build_pass": {
-      "attempts": 176,
-      "failure_rate": 0.1364,
+      "attempts": 177,
+      "failure_rate": 0.1356,
       "failures": 24,
-      "p50_success_s": 111.497,
-      "p95_success_s": 829.573,
-      "sample_count": 152,
-      "successes": 152,
-      "timeout_rate": 0.0795,
+      "p50_success_s": 111.443,
+      "p95_success_s": 826.734,
+      "sample_count": 153,
+      "successes": 153,
+      "timeout_rate": 0.0791,
       "timeouts": 14,
-      "total_duration_s": 57612.658
+      "total_duration_s": 57694.701
     },
     "credits": {
       "attempts": 117,
@@ -442,16 +423,16 @@
       "total_duration_s": 405.552
     },
     "tts": {
-      "attempts": 16,
-      "failure_rate": 0.125,
-      "failures": 2,
-      "p50_success_s": 56.144,
-      "p95_success_s": 70.407,
-      "sample_count": 14,
-      "successes": 14,
+      "attempts": 15,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 56.223,
+      "p95_success_s": 74.67,
+      "sample_count": 15,
+      "successes": 15,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 757.721
+      "total_duration_s": 838.758
     }
   },
   "statuses": {
