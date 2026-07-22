@@ -1,21 +1,45 @@
 {
-  "finished_at": "2026-07-22T12:47:55+00:00",
-  "github_run_id": "29920968831",
+  "finished_at": "2026-07-22T13:43:08+00:00",
+  "github_run_id": "29921475211",
   "incidents": [
     {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "bfc74cc230fe4fca",
-      "kind": "failure",
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "kind": "timeout",
       "last_item": null,
-      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=7bd8b2f5106aafb5. ERROR: scene 10 text too long (246 chars) | FIX: split it into two scenes",
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/you-are-a-flame-wearing-a-name-tag/final_youtube.mp4 + /home/runner/work/Prototype-Video/Prototype-Video/build/you-are-a-flame-wearing-a-name-tag/final.mp4",
   "mode": "recover",
-  "passes": 2,
+  "passes": 6,
   "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.02,
+      "sample_count": 17,
+      "soft_timeout_s": 33.02,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 8.07,
+      "idle_timeout_s": 54.2,
+      "sample_count": 21,
+      "soft_timeout_s": 54.2,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 98.93,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 326.8,
+      "source": "history"
+    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -23,32 +47,429 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.09,
+      "sample_count": 117,
+      "soft_timeout_s": 33.09,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 32.23,
+      "idle_timeout_s": 126.69,
+      "sample_count": 200,
+      "soft_timeout_s": 126.69,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 56.93,
+      "idle_timeout_s": 180.0,
+      "sample_count": 177,
+      "soft_timeout_s": 200.78,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 27.87,
+      "idle_timeout_s": 180.0,
+      "sample_count": 63,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 44.68,
+      "idle_timeout_s": 164.05,
+      "sample_count": 24,
+      "soft_timeout_s": 164.05,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.05,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 22.47,
+      "idle_timeout_s": 180.0,
+      "sample_count": 32,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 74.67,
+      "idle_timeout_s": 180.0,
+      "sample_count": 15,
+      "soft_timeout_s": 254.01,
+      "source": "history"
     }
   },
-  "quality": {},
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-are-a-flame-wearing-a-name-tag",
+    "checked_at": "2026-07-22T13:43:08+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 153.398,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "portrait": {
+        "avg_kbps": 4570,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.016,
+        "exists": true,
+        "expected_duration_s": 153.398,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-are-a-flame-wearing-a-name-tag/final.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 153.413991,
+          "bit_rate": 4569932.0,
+          "duration_s": 153.413991,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1920,
+          "video_codec": "h264",
+          "video_duration_s": 153.333333,
+          "width": 1080
+        },
+        "size_bytes": 87636449,
+        "warnings": []
+      },
+      "youtube": {
+        "avg_kbps": 8405,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.016,
+        "exists": true,
+        "expected_duration_s": 153.398,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-are-a-flame-wearing-a-name-tag/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 153.413991,
+          "bit_rate": 8405240.0,
+          "duration_s": 153.413991,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 153.333333,
+          "width": 1920
+        },
+        "size_bytes": 161185186,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
   "recommendations": [
     {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "bfc74cc230fe4fca",
-      "priority": "high",
-      "reason": "2 occurrence(s): note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (2852.4s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "00bf4913be804694af4e302e8f95a171",
+  "run_id": "fed2b74fdcc24910ad54ceedaa3d558a",
   "schema_version": 1,
   "slug": "you-are-a-flame-wearing-a-name-tag",
   "stages": {
-    "build_pass": {
-      "attempts": 2,
-      "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 2.003
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 5.034,
+      "p95_success_s": 5.034,
+      "success_durations_s": [
+        5.034
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 5.034
+    },
+    "assemble": {
+      "attempts": 31,
+      "failures": 0,
+      "p50_success_s": 70.661,
+      "p95_success_s": 107.471,
+      "success_durations_s": [
+        98.895,
+        39.333,
+        75.56,
+        35.273,
+        59.481,
+        63.513,
+        53.41,
+        61.549,
+        31.267,
+        58.485,
+        61.522,
+        53.446,
+        71.653,
+        70.636,
+        45.386,
+        82.774,
+        117.014,
+        60.489,
+        108.918,
+        55.452,
+        88.823,
+        87.625,
+        87.755,
+        89.776,
+        48.413,
+        94.873,
+        82.738,
+        100.986,
+        96.894,
+        70.661,
+        106.024
+      ],
+      "successes": 31,
+      "timeouts": 0,
+      "total_duration_s": 2258.624
+    },
+    "build_pass": {
+      "attempts": 6,
+      "failures": 1,
+      "p50_success_s": 134.164,
+      "p95_success_s": 574.09,
+      "success_durations_s": [
+        71.029,
+        22.014,
+        134.164,
+        143.357,
+        681.773
+      ],
+      "successes": 5,
+      "timeouts": 1,
+      "total_duration_s": 2852.388
+    },
+    "credits": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 1.011,
+      "p95_success_s": 1.037,
+      "success_durations_s": [
+        1.005,
+        1.011,
+        1.04
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 3.056
+    },
+    "ffmpeg": {
+      "attempts": 8,
+      "failures": 0,
+      "p50_success_s": 6.527,
+      "p95_success_s": 30.06,
+      "success_durations_s": [
+        1.012,
+        6.025,
+        24.156,
+        7.032,
+        1.012,
+        6.024,
+        33.239,
+        7.029
+      ],
+      "successes": 8,
+      "timeouts": 0,
+      "total_duration_s": 85.529
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 133.182,
+      "p95_success_s": 133.182,
+      "success_durations_s": [
+        133.182
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 133.182
+    },
+    "hero": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 41.1,
+      "p95_success_s": 47.405,
+      "success_durations_s": [
+        41.1,
+        36.102,
+        48.106
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 125.308
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 16.05,
+      "p95_success_s": 16.05,
+      "success_durations_s": [
+        16.05
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 16.05
+    },
+    "probe": {
+      "attempts": 34,
+      "failures": 0,
+      "p50_success_s": 1.012,
+      "p95_success_s": 1.013,
+      "success_durations_s": [
+        1.012,
+        1.012,
+        1.013,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.013,
+        1.012,
+        1.012,
+        1.013,
+        1.013,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.013,
+        1.012,
+        1.012,
+        1.012,
+        1.013,
+        1.012,
+        1.012,
+        1.012,
+        1.013,
+        1.012,
+        1.012,
+        1.013,
+        1.014
+      ],
+      "successes": 34,
+      "timeouts": 0,
+      "total_duration_s": 34.418
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 61.475,
+      "p95_success_s": 61.475,
+      "success_durations_s": [
+        61.475
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 61.475
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 19.013,
+      "p95_success_s": 19.013,
+      "success_durations_s": [
+        19.013
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 19.013
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 70.031,
+      "p95_success_s": 70.031,
+      "success_durations_s": [
+        70.031
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 70.031
     }
   },
-  "status": "failed"
+  "status": "done"
 }
