@@ -1,21 +1,38 @@
 {
-  "finished_at": "2026-07-22T14:00:25+00:00",
-  "github_run_id": "29926295173",
+  "finished_at": "2026-07-22T14:23:24+00:00",
+  "github_run_id": "29927645664",
   "incidents": [
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "0a5d2df3dc922674",
+      "fingerprint": "174a206e24e5cd74",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "note: scene <n> keyword 'announcement' not found in text (won't highlight) note: scene <n> keyword 'factory' not found in text (won't highlight) note: scene <n> keyword 'microphone' not found in text (won't highlight) error: visual symbol plan: only <n> symbol families across <n> scenes; use at least <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "normalized_error": "note: scene <n> keyword 'announcement' not found in text (won't highlight) note: scene <n> keyword 'factory' not found in text (won't highlight) note: scene <n> keyword 'microphone' not found in text (won't highlight) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success duration=<n>.0s rc=<n> credits: <n> stock clips -> <path> error: still-derived shots are <n>% of the film (<n>.",
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "64eb2400791d4652",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "broad daylight, vivid life sc...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=running elapsed=15s idle=5s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (wide high-key cinematic reveal of a luminous glass building ...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success duration=<n",
       "stage": "build_pass"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=386533f1745791c1. ERROR: visual symbol plan: only 5 symbol families across 16 scenes; use at least 6 | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=4fa8a0486dd9985c. ERROR: still-derived shots are 47.5% of the film (61.6s/129.7s), above the 40% cap by 9.8s; animated stills count toward this cap, so replace that duration with genuine moving footage | FIX: replace still-derived scenes with verified moving footage",
   "mode": "recover",
-  "passes": 2,
+  "passes": 7,
   "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.02,
+      "sample_count": 18,
+      "soft_timeout_s": 33.02,
+      "source": "history"
+    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -23,6 +40,46 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.09,
+      "sample_count": 120,
+      "soft_timeout_s": 33.09,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 56.48,
+      "idle_timeout_s": 180.0,
+      "sample_count": 178,
+      "soft_timeout_s": 199.44,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 27.62,
+      "idle_timeout_s": 180.0,
+      "sample_count": 70,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 23.42,
+      "idle_timeout_s": 180.0,
+      "sample_count": 33,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 73.77,
+      "idle_timeout_s": 180.0,
+      "sample_count": 15,
+      "soft_timeout_s": 251.31,
+      "source": "history"
     }
   },
   "quality": {
@@ -124,25 +181,122 @@
   "recommendations": [
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "0a5d2df3dc922674",
+      "fingerprint": "64eb2400791d4652",
+      "priority": "medium",
+      "reason": "1 occurrence(s): broad daylight, vivid life sc...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=running elapsed=15s idle=5s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (wide high-key cinematic reveal of a luminous glass building ...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success duration=<n",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "174a206e24e5cd74",
       "priority": "high",
-      "reason": "2 occurrence(s): note: scene <n> keyword 'announcement' not found in text (won't highlight) note: scene <n> keyword 'factory' not found in text (won't highlight) note: scene <n> keyword 'microphone' not found in text (won't highlight) error: visual symbol plan: only <n> symbol families across <n> scenes; use at least <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "reason": "2 occurrence(s): note: scene <n> keyword 'announcement' not found in text (won't highlight) note: scene <n> keyword 'factory' not found in text (won't highlight) note: scene <n> keyword 'microphone' not found in text (won't highlight) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success duration=<n>.0s rc=<n> credits: <n> stock clips -> <path> error: still-derived shots are <n>% of the film (<n>.",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (382.5s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "1cda5d77346e44ccbaba5b3449ea5422",
+  "run_id": "e8ea3b7816454fd1963e38cba2c70010",
   "schema_version": 1,
   "slug": "the-press-secretary-in-your-skull",
   "stages": {
-    "build_pass": {
-      "attempts": 2,
-      "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 2.006
+      "total_duration_s": 1.002
+    },
+    "build_pass": {
+      "attempts": 7,
+      "failures": 3,
+      "p50_success_s": 36.023,
+      "p95_success_s": 87.38,
+      "success_durations_s": [
+        1.002,
+        55.032,
+        17.015,
+        93.089
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 382.54
+    },
+    "credits": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 1.005,
+      "p95_success_s": 1.005,
+      "success_durations_s": [
+        1.004,
+        1.005,
+        1.005
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 3.014
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 92.089,
+      "p95_success_s": 92.089,
+      "success_durations_s": [
+        92.089
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 92.089
+    },
+    "hero": {
+      "attempts": 6,
+      "failures": 0,
+      "p50_success_s": 33.579,
+      "p95_success_s": 56.084,
+      "success_durations_s": [
+        32.079,
+        16.036,
+        62.09,
+        38.066,
+        35.078,
+        27.07
+      ],
+      "successes": 6,
+      "timeouts": 0,
+      "total_duration_s": 210.419
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 14.011,
+      "p95_success_s": 14.011,
+      "success_durations_s": [
+        14.011
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 14.011
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 54.031,
+      "p95_success_s": 54.031,
+      "success_durations_s": [
+        54.031
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 54.031
     }
   },
   "status": "failed"
