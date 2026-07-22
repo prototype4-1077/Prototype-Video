@@ -46,6 +46,14 @@ def _file_signature(path):
     return digest.hexdigest()[:20]
 
 
+def source_matches(scene, path):
+    """Return whether a cached hero clip was built from this complete source."""
+    return bool(
+        _valid_image(path) and
+        scene.get("hero_raw_signature") == _file_signature(path)
+    )
+
+
 def model_path():
     p = os.environ.get("HERO_DEPTH_MODEL", "/tmp/models/midas-small.onnx")
     if not os.path.exists(p):
@@ -150,7 +158,7 @@ def main(bd, i):
     # repaired or replaced source JPEG from reusing an older cached clip.
     if (os.path.exists(out) and os.path.getsize(out) > 100_000 and
             sc.get("clip_fingerprint") == motion.scene_visual_fingerprint(sc) and
-            sc.get("hero_raw_signature") == raw_signature and
+            source_matches(sc, raw) and
             (sc.get("hero_style") or still_reference.reference_is_current(bd, s, i))):
         print(f"hero {i}: exists"); return
     prompt = sc.get("image_prompt") or sc["text"]

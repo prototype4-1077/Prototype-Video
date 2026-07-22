@@ -11,6 +11,7 @@ Every step is resumable; running again never breaks anything."""
 import json, os, shutil, subprocess, sys, tempfile, time, urllib.request
 
 import motion
+import hero
 import audio_variants
 import render_policy
 import profiles
@@ -264,8 +265,10 @@ def main(bd):
         if not sc.get("hero") or sc.get("motion_kind") == motion.VIDEO:
             continue
         clip = f"{bd}/clip_{i:02d}.mp4"
+        raw = f"{bd}/hero_{i:02d}_raw.jpg"
         if (os.path.exists(clip) and os.path.getsize(clip) > 100_000 and
                 sc.get("clip_fingerprint") == motion.scene_visual_fingerprint(sc) and
+                hero.source_matches(sc, raw) and
                 (sc.get("hero_style") or still_reference.reference_is_current(bd, s, i))):
             continue
         if left() < 25:

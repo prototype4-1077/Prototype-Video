@@ -38,12 +38,15 @@ class ReferenceSelectionTests(unittest.TestCase):
             )
             self.assertTrue(hero._valid_image(path))
             original_signature = hero._file_signature(path)
+            scene = {"hero_raw_signature": original_signature}
+            self.assertTrue(hero.source_matches(scene, path))
 
             with open(path, "rb+") as handle:
                 handle.truncate(os.path.getsize(path) // 2)
 
             self.assertFalse(hero._valid_image(path))
             self.assertNotEqual(original_signature, hero._file_signature(path))
+            self.assertFalse(hero.source_matches(scene, path))
 
     def test_semantic_relationship_beats_simple_timeline_proximity(self):
         script = {"scenes": [
