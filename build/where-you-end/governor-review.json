@@ -1,0 +1,492 @@
+{
+  "generated_at": "2026-07-22T14:16:18+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {
+    "long_black_interval": 4,
+    "low_bitrate": 10
+  },
+  "recommendations": [
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "3 occurrence(s) across 3 build(s)",
+      "fingerprint": "019e3c600e4624c4",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "3 occurrence(s) across 3 build(s)",
+      "fingerprint": "dd39869b090c1b69",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "bfc74cc230fe4fca",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "32160927298be716",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "2c243482baacee93",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "0238daa6519282c4",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "69ace71f4c37a958",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "690759bc7bc5ffbc",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "c71af56206e907c8",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "ae42b8afcdf01801",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
+      "category": "tail_latency",
+      "evidence": "p50=111.1s, p95=799.2s",
+      "priority": "medium",
+      "stage": "build_pass"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 3,
+      "failure_class": "transient",
+      "fingerprint": "019e3c600e4624c4",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "where-you-end",
+        "the-render-distance",
+        "the-night-crew"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 3,
+      "failure_class": "transient",
+      "fingerprint": "dd39869b090c1b69",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.2s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-voice",
+        "the-editor",
+        "dmt-the-understudy"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "bfc74cc230fe4fca",
+      "kind": "failure",
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "slugs": [
+        "you-are-a-flame-wearing-a-name-tag"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "32160927298be716",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.3s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-ship",
+        "the-room-behind-you"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "2c243482baacee93",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.0s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-save-file",
+        "the-night-crew"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "0238daa6519282c4",
+      "kind": "failure",
+      "normalized_error": "ext (won't highlight) note: scene <n> keyword 'hand' not found in text (won't highlight) note: scene <n> keyword 'kindness' not found in text (won't highlight) note: scene <n> keyword 'lamp' not found in text (won't highlight) note: scene <n> keyword 'inheritance' not found in text (won't highlight) note: scene <n> keyword 'embrace' not found in text (won't highlight) note: scene <n> keyword 'daylight' not found in t",
+      "slugs": [
+        "the-person-you-replaced"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "69ace71f4c37a958",
+      "kind": "failure",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: architecture repeats for <n> consecutive scenes starting at scene <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "slugs": [
+        "the-other-versions-of-you"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "690759bc7bc5ffbc",
+      "kind": "failure",
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script note: scene <n> keyword 'portrait' not found in text (won't highlight) note: scene <n> keyword 'film' not found in text (won't highlight) note: scene <n> keyword 'lens' not found in text (won't highlight) error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "slugs": [
+        "the-museum-that-repaints-itself"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "c71af56206e907c8",
+      "kind": "failure",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, vo is user-provided error: visual symbol plan: human imagery occupies <n>%; target <= <n>% | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "slugs": [
+        "message-from-your-future-20260716"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "ae42b8afcdf01801",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.7s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "i-became-everything",
+        "been-here-before"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "978a7d7f9315abb1",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.1s ago.",
+      "slugs": [
+        "the-room-behind-you"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "7f0ae4a56577d65a",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.6s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-press-secretary-in-your-skull"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-lag"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "e0134d7c24776f18",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.4s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-crossword"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "dba7d00f03f03435",
+      "kind": "failure",
+      "normalized_error": "falling gently away, a glowing doorw...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=running elapsed=15s idle=3s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (a small cozy waiting room glowing warm amber in an opal void...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success dura",
+      "slugs": [
+        "dmt-other-side-of-the-door"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "3a96fe9d0e479d19",
+      "kind": "failure",
+      "normalized_error": "<n> keyword 'bed' not found in text (won't highlight) note: scene <n> keyword 'hush' not found in text (won't highlight) note: scene <n> keyword 'dark' not found in text (won't highlight) note: scene <n> keyword 'glow' not found in text (won't highlight) note: scene <n> keyword 'macro' not found in text (won't highlight) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success durati",
+      "slugs": [
+        "dmt-other-side-of-the-door"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "d0b639a8301f9020",
+      "kind": "failure",
+      "normalized_error": "s rc=<n> hero <n>: generated from stock scene none (an endless wall of small brass drawers receding into amber d...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=success duration=<n>.0s rc=<n> hero <n>: generated from stock scene none (two cupped human hands in darkness holding a soft sourceless...) governor stage=credits state=start soft=33s hard=300s governor stage=credits ",
+      "slugs": [
+        "dmt-customs"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "898a9e8a2044b301",
+      "kind": "failure",
+      "normalized_error": "scene <n> keyword 'approve' not found in text (won't highlight) note: scene <n> keyword 'morning' not found in text (won't highlight) note: scene <n> keyword 'window' not found in text (won't highlight) note: scene <n> keyword 'door' not found in text (won't highlight) note: scene <n> keyword 'light' not found in text (won't highlight) governor stage=credits state=start soft=33s hard=300s governor stage=credits state",
+      "slugs": [
+        "dmt-customs"
+      ],
+      "stage": "build_pass"
+    }
+  ],
+  "runs_analyzed": 33,
+  "schema_version": 1,
+  "stages": {
+    "align": {
+      "attempts": 19,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.003,
+      "p95_success_s": 1.005,
+      "sample_count": 19,
+      "successes": 19,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 19.053
+    },
+    "altsheet": {
+      "attempts": 23,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.027,
+      "p95_success_s": 7.968,
+      "sample_count": 23,
+      "successes": 23,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 130.924
+    },
+    "assemble": {
+      "attempts": 1214,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 39.241,
+      "p95_success_s": 86.677,
+      "sample_count": 1214,
+      "successes": 1214,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 51659.136
+    },
+    "build_pass": {
+      "attempts": 193,
+      "failure_rate": 0.1554,
+      "failures": 30,
+      "p50_success_s": 111.055,
+      "p95_success_s": 799.231,
+      "sample_count": 163,
+      "successes": 163,
+      "timeout_rate": 0.0829,
+      "timeouts": 16,
+      "total_duration_s": 62638.873
+    },
+    "credits": {
+      "attempts": 123,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.012,
+      "p95_success_s": 1.029,
+      "sample_count": 123,
+      "successes": 123,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 125.138
+    },
+    "ffmpeg": {
+      "attempts": 237,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.026,
+      "p95_success_s": 33.249,
+      "sample_count": 237,
+      "successes": 237,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 2393.618
+    },
+    "footage": {
+      "attempts": 179,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 3.012,
+      "p95_success_s": 86.899,
+      "sample_count": 179,
+      "successes": 179,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 2307.211
+    },
+    "hero": {
+      "attempts": 71,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 19.068,
+      "p95_success_s": 31.061,
+      "sample_count": 71,
+      "successes": 71,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1389.043
+    },
+    "motion": {
+      "attempts": 4,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 21.089,
+      "p95_success_s": 26.351,
+      "sample_count": 4,
+      "successes": 4,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 82.336
+    },
+    "prep": {
+      "attempts": 26,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 17.568,
+      "p95_success_s": 44.396,
+      "sample_count": 26,
+      "successes": 26,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 564.069
+    },
+    "probe": {
+      "attempts": 1277,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.012,
+      "p95_success_s": 1.023,
+      "sample_count": 1277,
+      "successes": 1277,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1294.505
+    },
+    "quality": {
+      "attempts": 24,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 59.863,
+      "p95_success_s": 89.64,
+      "sample_count": 24,
+      "successes": 24,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1436.253
+    },
+    "shortcut": {
+      "attempts": 8,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 14.13,
+      "p95_success_s": 18.785,
+      "sample_count": 8,
+      "successes": 8,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 122.854
+    },
+    "transcribe": {
+      "attempts": 34,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 10.018,
+      "p95_success_s": 22.366,
+      "sample_count": 34,
+      "successes": 34,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 444.581
+    },
+    "tts": {
+      "attempts": 17,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 58.135,
+      "p95_success_s": 73.474,
+      "sample_count": 17,
+      "successes": 17,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 956.92
+    }
+  },
+  "statuses": {
+    "done": 24,
+    "failed": 9
+  }
+}
