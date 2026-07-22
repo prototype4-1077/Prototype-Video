@@ -1,130 +1,159 @@
-# The Concept Engine — a thinktank for the channel
+# The Concept Engine — a living think tank for the channel
 
-A living system for generating the channel's best material: it reads the patterns
-across everything we've written, checks them against what science actually says,
-surfaces concepts we haven't touched, and — every day — hands us one fresh thread
-to pull. It exists to help viewers *think*, not to tell them what to think.
+The Concept Engine reads the channel's conceptual history, checks ideas against
+science, senses audience response, chooses responsible new directions, learns
+from production and transforms strong concepts into other forms of help.
 
-Lives in the repo so both Claude and ChatGPT can draw from it. Data-grounded:
-built from a mine of 67 scripts / ~25,600 words (2026-07).
+Its purpose is not to tell viewers what to think.
 
----
+> It hands them a lens, an evidence boundary and a test—then returns ownership
+> of the conclusion to them.
 
-## The purpose (the ethos — read this first)
-James's charge: *"not to lead but to motivate the love of expression and the
-importance of belief analysis."* Five principles govern everything below:
-
-1. **The Invitation, not the Instruction.** Every piece ends on a question or a
-   test handed to the viewer — never a decree. We open doors; we don't push people
-   through them.
-2. **Belief analysis is the product.** The goal isn't for viewers to adopt our
-   beliefs — it's to give them tools to examine their own (coherence, outside
-   evidence, the window vs. the mirror). We teach the test, not the answer.
-3. **Science fidelity.** Metaphor is welcome and is labeled as metaphor. We never
-   smuggle speculation in as established fact. Each frontier concept carries a
-   fidelity tag: `established` / `emerging` / `metaphor`.
-4. **Grounding.** Every flight lands back in the room, the body, the ordinary.
-   This is the channel's signature (273 corpus mentions, the #1 thread) AND its
-   psychological safety rail — it keeps wonder from tipping into derealization.
-5. **Wonder over dread.** The turn is always toward agency and love, never
-   nihilism. The scary reading gets reframed into an empowering one.
+The live architecture is documented in `CONCEPT_ENGINE_V3.md`.
 
 ---
 
-## What's inside
-- **`concept/patterns.json`** — the data-mined pattern map: the 11 pillars of the
-  channel's conceptual DNA (weighted by real corpus frequency) + the recurring
-  structural signatures. This is *what we already are*.
-- **`concept/frontier.json`** — 12 (and growing) science-grounded concepts we
-  haven't made yet, each with hook, ruling metaphor, the turn, and the invitation.
-  This is *where we can go*.
-- **`concept/daily_brief.py`** — the daily draw. Deterministic by date; each day
-  it surfaces ONE angle (an untouched frontier concept, or a cross-pollination of
-  two pillars) as a ready-to-develop spark. Logs to `concept/BRIEF_LOG.md`.
-- **`concept/mine_corpus.py`** — re-mines the corpus to refresh the pillar weights
-  as new scripts are written (run it after each batch).
+## The constitution
+
+1. **Invitation, not instruction.** End with a viewer-owned question or test.
+2. **Belief analysis is the product.** Teach the examination process, not our verdict.
+3. **Science fidelity.** Label established, emerging and metaphor; say where evidence stops.
+4. **Grounding.** Every flight returns to the room, body, breath or ordinary object.
+5. **Wonder over dread.** Fear cannot be the lever or destination.
+6. **Agency over dependence.** Success is a viewer who can think more freely without us.
+7. **Influence is not an optimization target.** Optimize clarity, reflection, application and truthful retention—not persuasion.
+
+Machine-readable source: `concept/constitution.json`.
 
 ---
 
-## The 11 pillars (mined, weighted)
-1. **The ordinary / grounding** (273) — the return to room, body, breath.
-2. **Self & identity as constructed** (141) — you are a role, not a thing.
-3. **Belief analysis / how you know** (134) — coherence vs. evidence.
-4. **Attention as the instrument** (124) — what you aim at renders.
-5. **The lens / never reality raw** (113) — window, mirror, map, veil.
-6. **Memory as construction** (102) — recall rewrites; memory is an artist.
-7. **Prediction & the constructed 'now'** (73) — perception runs behind.
-8. **Emotion, love, and the turn** (72) — toward agency, never nihilism.
-9. **Recursion & self-reference** (66) — the eye can't see itself.
-10. **Mind as machine** (62) — the reality-machine frame.
-11. **Threshold / dissolution** (29) — the DMT lane; newest, highest voltage.
+## What the engine knows
 
-Where science backs each pillar (the integrity map): mediation & prediction ↔
-predictive processing / active inference; memory ↔ reconsolidation &
-constructive memory; attention & render distance ↔ change/inattentional
-blindness, saccadic suppression; self ↔ narrative-self, split-brain interpreter;
-threshold ↔ entropic-brain / relaxed-priors. Full science notes live per-concept
-in `frontier.json`.
+### Channel memory
+
+- `concept/patterns.json` — the 11 mined pillars and structural signatures.
+- `concept/catalog.json` — published-video concept DNA.
+- `concept/video_genome.schema.json` — the richer genome new records can grow into.
+- `concept/craft_ledger.json` — James's rules, production evidence and confidence labels.
+- `concept/impact_ledger.json` — attention, helpfulness proxies, manual feedback and postmortems.
+
+### Frontier and context
+
+- `concept/frontier.json` — science-grounded concepts with hook, metaphor, turn and invitation.
+- `concept/concept_graph.json` — connections to pillars, situations, audience states, help modes, risks and production grammar.
+- `concept/audience_states.json` — editorial state hypotheses and safe movements.
+- `concept/transformations.json` — the ladder from video to test, reflection, relationship, practice and teaching.
+
+### Intelligence and review
+
+- `concept/intelligence.py` — confidence-aware, multi-objective selection.
+- `concept/decision_brief.py` — the pre-script decision brief.
+- `concept/influence_guard.py` — PASS / REVIEW / BLOCK autonomy review.
+- `concept/comment_mining.py` — reflection, application, confusion and risk signals.
+- `concept/impact.py` — refreshes the impact ledger.
+- `concept/ab_experiments.json` — ethical experiment protocol.
+- `concept/invitation.py` — one safe daily belief-analysis question.
 
 ---
 
-## How to use it daily
-**To spark a new script:**
+## The 11 pillars
+
+1. The ordinary / grounding
+2. Self and identity as constructed
+3. Belief analysis / how you know
+4. Attention as the instrument
+5. The lens / never reality raw
+6. Memory as construction
+7. Prediction and the constructed now
+8. Emotion, love and the turn
+9. Recursion and self-reference
+10. Mind as machine / rendering engine
+11. Threshold and dissolution / DMT lane
+
+The pillars describe what the channel has become. They are not quotas and they
+are not claims about ultimate reality.
+
+---
+
+## Daily use
+
+### See the editorial portfolio
+
+```bash
+python3 concept/intelligence.py recommend
 ```
-python3 concept/daily_brief.py            # today's draw
-python3 concept/daily_brief.py 2026-08-01 # a specific day
+
+Returns:
+
+- best next video
+- best experimental bet
+- best evergreen/help-oriented piece
+- sample size and confidence
+- influence status
+
+### Build the decision brief
+
+```bash
+python3 concept/decision_brief.py
+python3 concept/decision_brief.py --concept constructed_emotion
 ```
-Take the hook + ruling metaphor + the turn + the invitation, and develop it into a
-script in the house voice. The brief already enforces the ethos (ends on an
-invitation, honors a structural signature, lands in the ordinary).
 
-**To keep the engine current:**
-- After writing new videos, run `python3 concept/mine_corpus.py` and update the
-  pillar weights in `patterns.json`.
-- When you meet a new idea in the wild (a paper, a comment, a shower thought), add
-  it to `frontier.json` with its fidelity tag. The engine gets smarter the more we
-  feed it.
+### Run the influence review
 
-**The gaps worth mining next** (under-served but on-brand): the DMT/threshold lane
-is smallest (29) yet highest-voltage — `entropic_brain` and `body_ownership` bridge
-it to real science. `constructed_emotion` and `placebo_belief` push the
-belief-analysis pillar into the body, where it has teeth.
+```bash
+python3 concept/influence_guard.py concept/LATEST_DECISION_BRIEF.json
+python3 concept/influence_guard.py --text path/to/script.txt
+```
 
----
+### Generate the daily invitation
 
-## The one-line summary
-We already know what we are (the pillars). This engine tells us, every morning,
-one true and untouched place we could go next — and reminds us to hand the viewer
-the test instead of the answer.
+```bash
+python3 concept/invitation.py
+```
+
+### Validate the engine
+
+```bash
+python3 -m unittest concept/test_concept_engine.py
+```
 
 ---
 
-## Growing the think tank (how BOTH Claude and ChatGPT contribute)
-The think tank is a living, shared brain. **`concept/frontier.json` in this repo is
-the single source of truth.** Anyone with repo write access can grow it:
+## How a new idea enters
 
-**To add a new concept** — append an object to the `frontier` array in
-`concept/frontier.json` with these fields, then commit to `main`:
+Add the frontier concept to `concept/frontier.json`, then add a matching node to
+`concept/concept_graph.json`.
+
+The frontier record says what the idea is:
+
 ```json
-{"id":"snake_case","title":"Punchy Title","fidelity":"established|emerging|metaphor",
- "science":"one honest sentence of the actual science, named",
- "hook":"the disarming opening line","metaphor":"the one ruling image",
- "turn":"the empowering reframe","invitation":"the question handed to the viewer"}
+{
+  "id": "snake_case",
+  "title": "Punchy title",
+  "fidelity": "established|emerging|metaphor",
+  "science": "one honest sentence naming the mechanism",
+  "hook": "the opening line",
+  "metaphor": "one ruling image",
+  "turn": "the empowering reframe",
+  "invitation": "the viewer-owned question"
+}
 ```
-Rules: fidelity must be truthful (never tag speculation as `established`); the
-invitation must be a question, not a decree; keep it on-ethos (wonder over dread,
-belief-analysis, grounding).
 
-**To refresh the pillar weights** after new videos ship: run
-`python3 concept/mine_corpus.py` and update the weights in `concept/patterns.json`.
+The graph node says where it can help, where it can mislead, how it can move,
+and how it can be made visually alive.
 
-**Access map:**
-- **Claude** — full write (clone + commit). Builds concepts, scripts, and hero art.
-- **ChatGPT (Codex Connector)** — read/write to code, so it CAN append a concept to
-  `frontier.json` and commit it. It reads the live file for the current bank.
-- **The ChatGPT Project's uploaded copy** is a static snapshot — re-upload it after
-  the repo file changes to keep the Project's baked-in knowledge current (or rely on
-  the connector reading the live repo version, which the Project instructions do).
+A concept is incomplete until both exist.
 
-So: to *update the think tank*, write to `concept/frontier.json` in the repo. That is
-the canonical act, and both agents can do it.
+---
+
+## The decision rule
+
+The engine may recommend. James decides.
+
+Audience requests are signals, not commands. Performance is evidence, not
+authority. A viral lane is not automatically the next lane. A beautiful
+metaphor is not automatically science. A retention winner is not a winner when
+it increases confusion, dependence or false certainty.
+
+The Concept Engine is intelligent only when it can correct itself without
+forgetting what it is for.
