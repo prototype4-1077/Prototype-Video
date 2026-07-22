@@ -1,18 +1,18 @@
 # AGENT.md — Instructions for any AI operating this repo
 
-> CANONICAL REPO: This project lives at 1974jwatson/TikTok-Video-Pipeline. James makes ALL videos here. Do every video request in this repo; never use jameswatson1077/tiktok-videos.
+> CANONICAL REPO: This project lives at prototype-video/Prototype-Video. James makes ALL videos here. Do every video request in this repo; never route work to a historical source repository.
 
 
 You are making a mystical-philosophical TikTok video for James using this repo's
 cloud render farm. You need NO video tools — GitHub Actions renders everything.
 You only need: (1) the connected GitHub app, (2) this file.
 
-REPO: 1974jwatson/TikTok-Video-Pipeline (private)
+REPO: prototype-video/Prototype-Video (private)
 ACCESS: Use the workspace's connected GitHub app. This connection is persistent across
 ChatGPT/Codex instances. Never ask James to paste a personal access token and never put a
 credential in a file, command, commit, or response. If the GitHub app is unavailable, report
 that connection as the blocker instead of requesting a secret.
-API BASE: https://api.github.com/repos/1974jwatson/TikTok-Video-Pipeline
+API BASE: https://api.github.com/repos/prototype-video/Prototype-Video
 MEDIA POLICY: never commit video/audio/base64 media except the documented
 build/<slug>/vo.mp3 connector path; finished media belongs in Releases/artifacts.
 
@@ -28,6 +28,9 @@ script.json + pipeline/hook_variants.py (see pipeline/HANDOFF.md).
 - pipeline/HANDOFF.md      — full pipeline docs
 - pipeline/style_profile.md — James's writing voice + visual spec
 - pipeline/memory.json      — READ "notes" (his standing feedback) and respect it.
+- CONCEPT_ENGINE.md         — think-tank ethos and evidence workflow
+- concept/evidence.json     — claim bounds, sources, counterviews, and blind spots
+- concept/patterns.json     — deduplicated corpus map and emergent patterns
   Current standing rules: slides must be LIT-but-moody (window light, god rays,
   lamplight, golden hour; only a few near-dark slides), footage must match the
   spoken words (especially endings). By default, every build creates exactly one
@@ -67,8 +70,10 @@ Create build/<slug>/script.json  (slug = short-dashed-title):
                 "symbol_family": "one family from visual_symbols.py",
                 "human_role": "only if a person appears",
                 "query": "physical searchable action: lit-but-moody, literal to the line" } ] }
-Rules: 18-26 scenes and 300-400 words if YOU write the script (second person,
-poetic-direct, quiet powerful ending — see style_profile.md).
+Rules: normally 18-26 scenes and 300-400 words if YOU write the script (second person,
+poetic-direct, quiet powerful ending — see style_profile.md). For an explicitly short
+90-110 second concept video, use roughly 190-230 words at Liam's observed 2.05-2.15
+words/second and record target_duration_seconds + estimated_words_per_second.
 If James supplies script text: split it into scenes VERBATIM (never rewrite), any length.
 If James supplies a voiceover mp3: also commit it as build/<slug>/vo.mp3 and put
 "user_vo": true at the top level. (vo.mp3 is gitignored — force-add it: git add -f,
@@ -78,6 +83,9 @@ Never infer this profile for another video. It automatically changes only that v
 footage search/ranking, warm rural grade, hero-shot styling, music, sound design, and
 separate taste learning. See the June Oxley section in `pipeline/style_profile.md`.
 Show James the script for approval before rendering unless he says skip.
+For every concept_id script, label each scene evidence / interpretation / metaphor /
+speculation / invitation, cite evidence scenes with source_ids from concept/evidence.json,
+then run `python3 concept/script_gate.py build/<slug>/script.json` before dispatch.
 
 ## Step 2 — Commit
 Via git push, or via API (works without git; handles base64 for the mp3):

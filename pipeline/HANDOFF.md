@@ -30,12 +30,21 @@ Everything else is one command run in a loop.
 
    Rules (build.py enforces most of them and tells you what to fix):
    - 18-26 scenes, 300-400 words total, ~2:00-2:30 spoken
+   - For an explicitly short 90-110 second concept video, target 190-230 words and
+     record `target_duration_seconds` plus `estimated_words_per_second`.
    - Second-person, poetic-direct, grounded-metaphysical. Hook opener. Quiet realization ending.
    - keywords must be words that literally appear in the scene text
    - Use at least six symbol families, no more than three consecutive scenes from one family,
      and keep human presence around half the runtime or less. A human must have an editorial
      role; never use a generic reaction shot as a universal metaphor.
    - Show James the script text for approval before building, unless he says skip.
+
+   CONCEPT ENGINE SCRIPTS: add `concept_id`, give every scene an
+   `epistemic_role` (`evidence`, `interpretation`, `metaphor`, `speculation`, or
+   `invitation`), and attach `source_ids` from `concept/evidence.json` to every
+   evidence scene. Run this before BUILD:
+
+       python3 concept/script_gate.py build/<slug>/script.json
 
 3. QUERY BANK — use literal physical anchors and precise metaphors, styled as cinematic and
    lit-but-moody. Surreal imagery is one family, not the default answer to every sentence.

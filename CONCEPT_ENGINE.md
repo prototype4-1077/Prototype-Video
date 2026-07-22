@@ -1,98 +1,196 @@
-# The Concept Engine — a thinktank for the channel
+# The Concept Engine
 
-A living system for generating the channel's best material: it reads the patterns
-across everything we've written, checks them against what science actually says,
-surfaces concepts we haven't touched, and — every day — hands us one fresh thread
-to pull. It exists to help viewers *think*, not to tell them what to think.
+A living think tank for the channel. It studies the complete body of work,
+separates frequency from truth, checks scientific claims against sources,
+surfaces patterns and tensions we did not pre-name, and produces one daily
+thread worth developing. Its purpose is to help viewers examine beliefs—not to
+deliver beliefs for them.
 
-Lives in the repo so both Claude and ChatGPT can draw from it. Data-grounded:
-built from a mine of 67 scripts / ~25,600 words (2026-07).
+## Governing ethos
 
----
+1. **Invitation, not instruction.** End with a question or test, never a decree.
+2. **Belief analysis is the product.** Teach ways to examine a belief: evidence,
+   coherence, alternatives, uncertainty, and consequences.
+3. **Evidence and metaphor stay visibly different.** Science may ground a piece;
+   it does not certify every poetic turn that follows.
+4. **Ground every flight.** Return to the room, body, relationship, or ordinary
+   object. Grounding is both a house signature and a psychological safety rail.
+5. **Wonder over dread.** Make room for agency and care without promising control.
+6. **Frequency is not truth.** A repeated motif describes our corpus; it does not
+   prove the motif is accurate, valuable, or ready to repeat.
+7. **The strongest counterview belongs in the room.** A concept is not ready until
+   we can state what would weaken it and whose experience is missing.
 
-## The purpose (the ethos — read this first)
-James's charge: *"not to lead but to motivate the love of expression and the
-importance of belief analysis."* Five principles govern everything below:
+## The three integrity gates
 
-1. **The Invitation, not the Instruction.** Every piece ends on a question or a
-   test handed to the viewer — never a decree. We open doors; we don't push people
-   through them.
-2. **Belief analysis is the product.** The goal isn't for viewers to adopt our
-   beliefs — it's to give them tools to examine their own (coherence, outside
-   evidence, the window vs. the mirror). We teach the test, not the answer.
-3. **Science fidelity.** Metaphor is welcome and is labeled as metaphor. We never
-   smuggle speculation in as established fact. Each frontier concept carries a
-   fidelity tag: `established` / `emerging` / `metaphor`.
-4. **Grounding.** Every flight lands back in the room, the body, the ordinary.
-   This is the channel's signature (273 corpus mentions, the #1 thread) AND its
-   psychological safety rail — it keeps wonder from tipping into derealization.
-5. **Wonder over dread.** The turn is always toward agency and love, never
-   nihilism. The scary reading gets reframed into an empowering one.
+### 1. Corpus integrity
 
----
+`concept/mine_corpus.py` selects one canonical production for each normalized
+title, preferring published and completed versions. It then:
 
-## What's inside
-- **`concept/patterns.json`** — the data-mined pattern map: the 11 pillars of the
-  channel's conceptual DNA (weighted by real corpus frequency) + the recurring
-  structural signatures. This is *what we already are*.
-- **`concept/frontier.json`** — 12 (and growing) science-grounded concepts we
-  haven't made yet, each with hook, ruling metaphor, the turn, and the invitation.
-  This is *where we can go*.
-- **`concept/daily_brief.py`** — the daily draw. Deterministic by date; each day
-  it surfaces ONE angle (an untouched frontier concept, or a cross-pollination of
-  two pillars) as a ready-to-develop spark. Logs to `concept/BRIEF_LOG.md`.
-- **`concept/mine_corpus.py`** — re-mines the corpus to refresh the pillar weights
-  as new scripts are written (run it after each batch).
+- counts pillar terms on word boundaries;
+- reports how many variant files were deduplicated;
+- discovers recurring two- and three-word phrases that were not in the pillar
+  dictionary;
+- detects recurring conceptual tensions such as fixed/changing,
+  evidence/belief, and alone/connected; and
+- records concept coverage from scripts carrying `concept_id`.
 
----
+Run a read-only report:
 
-## The 11 pillars (mined, weighted)
-1. **The ordinary / grounding** (273) — the return to room, body, breath.
-2. **Self & identity as constructed** (141) — you are a role, not a thing.
-3. **Belief analysis / how you know** (134) — coherence vs. evidence.
-4. **Attention as the instrument** (124) — what you aim at renders.
-5. **The lens / never reality raw** (113) — window, mirror, map, veil.
-6. **Memory as construction** (102) — recall rewrites; memory is an artist.
-7. **Prediction & the constructed 'now'** (73) — perception runs behind.
-8. **Emotion, love, and the turn** (72) — toward agency, never nihilism.
-9. **Recursion & self-reference** (66) — the eye can't see itself.
-10. **Mind as machine** (62) — the reality-machine frame.
-11. **Threshold / dissolution** (29) — the DMT lane; newest, highest voltage.
-
-Where science backs each pillar (the integrity map): mediation & prediction ↔
-predictive processing / active inference; memory ↔ reconsolidation &
-constructive memory; attention & render distance ↔ change/inattentional
-blindness, saccadic suppression; self ↔ narrative-self, split-brain interpreter;
-threshold ↔ entropic-brain / relaxed-priors. Full science notes live per-concept
-in `frontier.json`.
-
----
-
-## How to use it daily
-**To spark a new script:**
+```text
+python3 concept/mine_corpus.py
 ```
-python3 concept/daily_brief.py            # today's draw
-python3 concept/daily_brief.py 2026-08-01 # a specific day
+
+Refresh the checked-in snapshot:
+
+```text
+python3 concept/mine_corpus.py --write
 ```
-Take the hook + ruling metaphor + the turn + the invitation, and develop it into a
-script in the house voice. The brief already enforces the ethos (ends on an
-invitation, honors a structural signature, lands in the ordinary).
 
-**To keep the engine current:**
-- After writing new videos, run `python3 concept/mine_corpus.py` and update the
-  pillar weights in `patterns.json`.
-- When you meet a new idea in the wild (a paper, a comment, a shower thought), add
-  it to `frontier.json` with its fidelity tag. The engine gets smarter the more we
-  feed it.
+`concept/patterns.json` records the method, canonical script count, word count,
+duplicate-title groups, emergent phrases, tensions, and pillar weights. Counts
+are descriptive signals only.
 
-**The gaps worth mining next** (under-served but on-brand): the DMT/threshold lane
-is smallest (29) yet highest-voltage — `entropic_brain` and `body_ownership` bridge
-it to real science. `constructed_emotion` and `placebo_belief` push the
-belief-analysis pillar into the body, where it has teeth.
+### 2. Evidence integrity
 
----
+`concept/evidence.json` is the claim ledger. Each frontier concept records:
 
-## The one-line summary
-We already know what we are (the pillars). This engine tells us, every morning,
-one true and untouched place we could go next — and reminds us to hand the viewer
-the test instead of the answer.
+- a bounded claim the cited source can support;
+- evidence status and confidence;
+- source type and stable URL;
+- limitations;
+- the strongest counterview; and
+- blind spots that deserve another discipline, culture, population, or lived
+  experience.
+
+The five scene roles are:
+
+| Role | Meaning |
+|---|---|
+| `evidence` | A bounded statement supported by cited sources |
+| `interpretation` | A meaning drawn from evidence, not the result itself |
+| `metaphor` | An image for thinking, not a literal mechanism |
+| `speculation` | A possibility whose uncertainty remains visible |
+| `invitation` | A viewer question or practice, not a factual claim |
+
+`concept/frontier.json` contains hooks, metaphors, turns, and invitations, but
+defers scientific bounds and citations to the evidence ledger. A concept-level
+label never automatically transfers to every sentence in a script.
+
+### 3. Production integrity
+
+Concept-led scripts carry a top-level `concept_id`, pacing target, and a role on
+every scene. Evidence scenes cite `source_ids` from the ledger.
+
+Before rendering:
+
+```text
+python3 concept/script_gate.py build/<slug>/script.json
+```
+
+The gate catches:
+
+- repeated or near-duplicate narration;
+- duration estimates that disagree with the stated target;
+- scenes longer than 25 words;
+- evidence scenes without traceable sources;
+- unknown epistemic roles or source IDs;
+- more than four hero stills in a concept video; and
+- visual keywords that never appear in the spoken beat.
+
+The Render workflow runs this gate automatically. It supplements—not replaces—
+human scientific, editorial, accessibility, and visual review.
+
+## Daily selection
+
+`concept/daily_brief.py` is deterministic by date but no longer chooses an item
+at random. It scores frontier concepts using:
+
+- whether a concept-tagged script already exists;
+- recent brief history and a cooldown window;
+- citation readiness and evidence status;
+- lower corpus coverage; and
+- concept-level audience outcomes when available.
+
+Two days emphasize evidence-ready frontier concepts; the third uses a
+lower-coverage cross-pollination. Every brief includes the strongest counterview,
+limits, blind spots, and sources.
+
+Preview without changing history:
+
+```text
+python3 concept/daily_brief.py
+```
+
+Record that a brief was actually issued:
+
+```text
+python3 concept/daily_brief.py 2026-08-01 --record
+```
+
+Record later decisions separately:
+
+```text
+python3 concept/daily_brief.py 2026-08-01 \
+  --concept-id body_ownership --mark selected --slug where-you-end
+```
+
+Valid marks are `selected`, `produced`, `published`, and `rejected`.
+`concept/brief_history.json` distinguishes previewing an idea from choosing it.
+
+## Learning from viewers without chasing them
+
+Visual approvals and retention continue to train footage selection in
+`pipeline/memory.json` and `pipeline/taste.npz`. When a script carries
+`concept_id`, `pipeline/learn.py` also writes bounded concept-level summaries to
+`concept/outcomes.json`:
+
+- explicit human approval count;
+- mean audience watch ratio;
+- mean completion ratio; and
+- held and bled scenes for each sample.
+
+This lets the daily selector learn which concepts connect while keeping concept
+performance separate from visual-query performance. Outcomes inform selection;
+they do not decide truth. A high-retention idea still needs evidence review, and
+a low-retention idea may need a better script rather than abandonment.
+
+## The current conceptual map
+
+The checked-in pillars describe the channel's existing center of gravity:
+
+- the ordinary and grounding;
+- self and identity as constructed;
+- belief analysis and how we know;
+- attention;
+- mediation, lenses, and maps;
+- memory;
+- prediction;
+- emotion, love, and the turn;
+- recursion;
+- mind-as-machine metaphors; and
+- threshold or dissolution experiences.
+
+The generated `emergent_phrases` and `recurring_tensions` sections are where we
+look for vocabulary and conflicts the original pillar list did not anticipate.
+Neither is automatically a script idea; each is an invitation to investigate.
+
+## Review rhythm
+
+- **After new scripts:** run the corpus miner with `--write`.
+- **Before drafting from science:** review the claim ledger and open the cited
+  source—not only its summary.
+- **Before rendering:** run the script gate and inspect every hero frame against
+  its mechanism.
+- **After approval:** record the video normally; concept approval is captured for
+  scripts with `concept_id`.
+- **After retention arrives:** the audience learner updates visual and conceptual
+  outcomes separately.
+- **Quarterly:** review stale sources, contested claims, missing disciplines, and
+  populations overrepresented in the source base.
+
+## The one-line standard
+
+Find a pattern, test its claim, name its uncertainty, include the strongest
+alternative, and hand the viewer a question they can examine for themselves.

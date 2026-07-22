@@ -18,3 +18,12 @@ footage, word-synced captions, adaptive music, -14 LUFS master) with no time lim
    The run commits updated `memory.json` back - the pipeline keeps learning.
 
 Claude can do steps 1-3 via a GitHub connector or gh CLI if you give it repo access.
+
+## Concept Engine
+
+The repository also contains the channel's evidence-aware think tank. Start with
+`CONCEPT_ENGINE.md`. The corpus miner deduplicates script versions and surfaces
+recurring phrases and tensions; the evidence ledger separates bounded findings
+from interpretation and metaphor; the daily brief ranks ideas by novelty,
+coverage, evidence readiness, and audience outcomes. Concept-led scripts pass
+`python3 concept/script_gate.py build/<slug>/script.json` before rendering.

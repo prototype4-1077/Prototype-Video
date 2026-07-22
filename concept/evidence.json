@@ -1,0 +1,203 @@
+{
+  "schema_version": 1,
+  "reviewed_on": "2026-07-22",
+  "epistemic_roles": {
+    "evidence": "A bounded statement directly supported by the cited source.",
+    "interpretation": "A reasonable meaning drawn from evidence, not the result itself.",
+    "metaphor": "An image for thinking; it must not be presented as a literal mechanism.",
+    "speculation": "A possibility or hypothesis whose uncertainty must stay visible.",
+    "invitation": "A question or practice offered to the viewer, not a factual claim."
+  },
+  "sources": {
+    "barrett_2017_nrn": {
+      "citation": "Barrett, L. F. (2017). The theory of constructed emotion: an active inference account of interoception and categorization.",
+      "type": "theory/review",
+      "url": "https://doi.org/10.1038/nrn.2017.68"
+    },
+    "johansson_2005_science": {
+      "citation": "Johansson, P. et al. (2005). Failure to detect mismatches between intention and outcome in a simple decision task.",
+      "type": "experiment",
+      "url": "https://doi.org/10.1126/science.1111709"
+    },
+    "kaptchuk_2010_plos": {
+      "citation": "Kaptchuk, T. J. et al. (2010). Placebos without deception: a randomized controlled trial in irritable bowel syndrome.",
+      "type": "randomized controlled trial",
+      "url": "https://doi.org/10.1371/journal.pone.0015591"
+    },
+    "frith_2006_neuron": {
+      "citation": "Frith, C. D. & Frith, U. (2006). The neural basis of mentalizing.",
+      "type": "review",
+      "url": "https://doi.org/10.1016/j.neuron.2006.05.001"
+    },
+    "hassabis_2007_pnas": {
+      "citation": "Hassabis, D. et al. (2007). Patients with hippocampal amnesia cannot imagine new experiences.",
+      "type": "patient study",
+      "url": "https://doi.org/10.1073/pnas.0610561104"
+    },
+    "moulin_2021_memory": {
+      "citation": "Moulin, C. J. A. et al. (2021). The the the the induction of jamais vu in the laboratory: word alienation and semantic satiation.",
+      "type": "experiment",
+      "url": "https://doi.org/10.1080/09658211.2020.1727519"
+    },
+    "simons_levin_1998_pbr": {
+      "citation": "Simons, D. J. & Levin, D. T. (1998). Failure to detect changes to people during a real-world interaction.",
+      "type": "experiment",
+      "url": "https://doi.org/10.3758/BF03208840"
+    },
+    "zeman_2015_cortex": {
+      "citation": "Zeman, A. et al. (2015). Lives without imagery: congenital aphantasia.",
+      "type": "case series",
+      "url": "https://doi.org/10.1016/j.cortex.2015.05.019"
+    },
+    "haggard_2002_natneuro": {
+      "citation": "Haggard, P., Clark, S. & Kalogeras, J. (2002). Voluntary action and conscious awareness.",
+      "type": "experiment",
+      "url": "https://doi.org/10.1038/nn827"
+    },
+    "carhart_harris_2014_frontiers": {
+      "citation": "Carhart-Harris, R. L. et al. (2014). The entropic brain: a theory of conscious states informed by neuroimaging research with psychedelic drugs.",
+      "type": "theory/review",
+      "url": "https://doi.org/10.3389/fnhum.2014.00020"
+    },
+    "carhart_harris_2026_brain": {
+      "citation": "Carhart-Harris, R. L. (2026). The entropic brain today.",
+      "type": "theory update/review",
+      "url": "https://doi.org/10.1093/brain/awag206"
+    },
+    "botvinick_1998_nature": {
+      "citation": "Botvinick, M. & Cohen, J. (1998). Rubber hands 'feel' touch that eyes see.",
+      "type": "experiment",
+      "url": "https://doi.org/10.1038/35784"
+    },
+    "ehrsson_2007_pnas": {
+      "citation": "Ehrsson, H. H. et al. (2007). Threatening a rubber hand that you feel is yours elicits a cortical anxiety response.",
+      "type": "experiment",
+      "url": "https://doi.org/10.1073/pnas.0610011104"
+    },
+    "tian_2019_frontiers": {
+      "citation": "Tian, Y. et al. (2019). Tool-use training induces changes of the body schema in the limb without using tool.",
+      "type": "experiment",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC6933481/"
+    },
+    "peer_2020_jneuro": {
+      "citation": "Peer, M. et al. (2020). Self-other representation in the social brain reflects social connection.",
+      "type": "neuroimaging study",
+      "url": "https://pmc.ncbi.nlm.nih.gov/articles/PMC7363469/"
+    },
+    "dennett_1992": {
+      "citation": "Dennett, D. C. (1992). The self as a center of narrative gravity.",
+      "type": "philosophical argument",
+      "url": "https://ase.tufts.edu/cogstud/dennett/papers/selfctr.pdf"
+    }
+  },
+  "claims": {
+    "constructed_emotion": {
+      "status": "emerging",
+      "confidence": "medium",
+      "supported_claim": "Constructed-emotion theory models emotion categories as inferences that integrate interoception, context, learning, and prediction.",
+      "source_ids": ["barrett_2017_nrn"],
+      "limitations": "This is an influential theoretical framework, not a settled replacement for every other theory of emotion.",
+      "strongest_counterview": "Basic-emotion and appraisal approaches explain some findings differently; a feeling should not be reduced to a freely editable forecast.",
+      "blind_spots": ["culture and emotion concepts", "clinical variation", "developmental evidence"]
+    },
+    "confabulation": {
+      "status": "established",
+      "confidence": "high for the bounded effect",
+      "supported_claim": "Under controlled choice-blindness conditions, people can accept a mismatched outcome and offer reasons for a choice they did not make.",
+      "source_ids": ["johansson_2005_science"],
+      "limitations": "The experiment does not show that all reasons or all conscious decisions are fabricated after the fact.",
+      "strongest_counterview": "People often have partial access to motives; metacognitive failure is context-dependent rather than universal.",
+      "blind_spots": ["individual differences", "ecological validity", "non-Western samples"]
+    },
+    "placebo_belief": {
+      "status": "established",
+      "confidence": "medium-high for symptom effects",
+      "supported_claim": "Expectation and treatment context can alter some symptoms, and open-label placebo produced improvement in one randomized IBS trial.",
+      "source_ids": ["kaptchuk_2010_plos"],
+      "limitations": "Effects vary by condition and outcome; this is not evidence that belief cures disease or reliably controls immune function.",
+      "strongest_counterview": "Reporting, conditioning, care context, and regression to the mean can contribute alongside expectation.",
+      "blind_spots": ["objective versus subjective outcomes", "replication by condition", "clinical ethics"]
+    },
+    "other_minds": {
+      "status": "emerging",
+      "confidence": "medium",
+      "supported_claim": "Mentalizing recruits systems that infer other people's beliefs, intentions, and traits from incomplete information.",
+      "source_ids": ["frith_2006_neuron"],
+      "limitations": "Calling another person a simulation is a metaphor; inference does not make the other person unreal or wholly authored by the observer.",
+      "strongest_counterview": "Direct social interaction, shared environments, and corrective feedback constrain interpersonal models.",
+      "blind_spots": ["autism and neurodiversity", "power and conflict", "cultural models of personhood"]
+    },
+    "memory_is_future": {
+      "status": "established",
+      "confidence": "high for shared hippocampal contribution",
+      "supported_claim": "Hippocampal damage can impair both episodic recollection and construction of coherent imagined experiences.",
+      "source_ids": ["hassabis_2007_pnas"],
+      "limitations": "Amnesia is heterogeneous, and shared neural machinery does not mean memory exists only to predict the future.",
+      "strongest_counterview": "Remembering also supports identity, learning, testimony, and social coordination.",
+      "blind_spots": ["different memory systems", "trauma", "collective memory"]
+    },
+    "jamais_vu": {
+      "status": "established",
+      "confidence": "medium-high for word alienation",
+      "supported_claim": "Repeatedly writing familiar words can produce a laboratory experience of unfamiliarity resembling jamais vu.",
+      "source_ids": ["moulin_2021_memory"],
+      "limitations": "Word alienation does not demonstrate access to an unfiltered or 'raw' reality.",
+      "strongest_counterview": "Semantic satiation and task fatigue may explain parts of the effect without a general failure of prediction.",
+      "blind_spots": ["clinical jamais vu", "cross-linguistic effects", "visual versus verbal familiarity"]
+    },
+    "binding_continuity": {
+      "status": "established",
+      "confidence": "high for change blindness; lower for a single binding account",
+      "supported_claim": "People can miss large changes during real-world visual interruptions, showing that scene continuity is less complete than experience suggests.",
+      "source_ids": ["simons_levin_1998_pbr"],
+      "limitations": "Change blindness, feature binding, and saccadic suppression are related research areas, not proof of one internal continuity editor.",
+      "strongest_counterview": "The visual system may preserve task-relevant structure without building a detailed movie-like representation.",
+      "blind_spots": ["active vision", "auditory continuity", "expertise and attention"]
+    },
+    "aphantasia_varieties": {
+      "status": "established",
+      "confidence": "high for meaningful variation; evolving for subtypes",
+      "supported_claim": "People report stable, substantial differences in voluntary visual imagery, including lifelong absence of imagery.",
+      "source_ids": ["zeman_2015_cortex"],
+      "limitations": "Aphantasia is heterogeneous and should not be described as a simple hardware difference or deficit.",
+      "strongest_counterview": "Self-report, metacognition, and unconscious visual processing complicate a single imagery continuum.",
+      "blind_spots": ["inner speech is a separate dimension", "dream imagery", "unconscious imagery"]
+    },
+    "agency_time": {
+      "status": "emerging",
+      "confidence": "medium",
+      "supported_claim": "In intentional-binding tasks, voluntary actions and their effects are judged as temporally closer than matched controls.",
+      "source_ids": ["haggard_2002_natneuro"],
+      "limitations": "The measure's relation to agency remains debated; it does not show that passivity literally stretches time or that action guarantees flow.",
+      "strongest_counterview": "Temporal prediction and causal expectation can produce binding-like effects without a unitary feeling of authorship.",
+      "blind_spots": ["replication across paradigms", "clinical agency disorders", "cultural ideas of control"]
+    },
+    "entropic_brain": {
+      "status": "emerging",
+      "confidence": "medium",
+      "supported_claim": "The entropic-brain framework relates expansive conscious states, including psychedelic states, to increases in measures of neural signal diversity.",
+      "source_ids": ["carhart_harris_2014_frontiers", "carhart_harris_2026_brain"],
+      "limitations": "Entropy depends on the measure and state; 'raw signal' and 'filter turned down' are metaphors, not direct observations.",
+      "strongest_counterview": "Other mechanisms, including receptor pharmacology and network-specific changes, may explain experience without a single entropy axis.",
+      "blind_spots": ["adverse experiences", "set and setting", "meditation and grief require separate evidence"]
+    },
+    "body_ownership": {
+      "status": "established",
+      "confidence": "high for multisensory flexibility; medium for broader self claims",
+      "supported_claim": "Synchronous visual and tactile evidence can induce reported ownership of a rubber hand, and tool use can alter aspects of body or near-space representation.",
+      "source_ids": ["botvinick_1998_nature", "ehrsson_2007_pnas", "tian_2019_frontiers", "peer_2020_jneuro"],
+      "limitations": "Rubber-hand ownership varies, and ownership can dissociate from proprioceptive drift. Tool embodiment and close-other representation are separate literatures.",
+      "strongest_counterview": "A flexible laboratory representation does not establish that the whole self has no boundary or that people can consciously redraw it at will.",
+      "blind_spots": ["disability language and lived expertise", "grief research", "individual susceptibility", "cross-cultural models of self"]
+    },
+    "narrative_self": {
+      "status": "metaphor",
+      "confidence": "philosophical",
+      "supported_claim": "The center-of-narrative-gravity account is a philosophical model for organizing talk about identity and continuity.",
+      "source_ids": ["dennett_1992"],
+      "limitations": "It is not an experiment locating or disproving a physical self, and 'useful fiction' does not mean unreal or inconsequential.",
+      "strongest_counterview": "Embodied, minimal-self, ecological, and social accounts describe forms of selfhood not exhausted by narrative.",
+      "blind_spots": ["embodied self", "development", "non-Western philosophies", "clinical depersonalization"]
+    }
+  }
+}

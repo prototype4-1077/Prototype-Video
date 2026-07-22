@@ -233,7 +233,7 @@ jobs:
           set -euo pipefail
           git config user.name "approval-bot"
           git config user.email "approval@users.noreply.github.com"
-          git add pipeline/memory.json "build/$SLUG/approval-record.json"
+          git add pipeline/memory.json concept/outcomes.json "build/$SLUG/approval-record.json"
           test ! -f pipeline/taste.npz || git add pipeline/taste.npz
           git commit -m "approve $SLUG: record James's final approval"
           for i in 1 2 3 4 5; do

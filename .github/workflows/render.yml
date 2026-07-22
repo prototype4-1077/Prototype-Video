@@ -168,6 +168,9 @@ jobs:
       - name: Pipeline regression tests
         run: python3 -m unittest discover -s pipeline/tests -v
 
+      - name: Concept script integrity gate
+        run: python3 concept/script_gate.py "build/${{ inputs.slug }}/script.json"
+
       - name: Cache previously downloaded footage for this slug
         uses: actions/cache@v4
         with:

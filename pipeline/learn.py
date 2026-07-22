@@ -19,6 +19,7 @@ import profiles
 HERE = os.path.dirname(os.path.abspath(__file__))
 MEM = os.path.join(HERE, "memory.json")
 PUB = os.path.join(HERE, "published_videos.json")
+CONCEPT_OUTCOMES = os.path.normpath(os.path.join(HERE, "..", "concept", "outcomes.json"))
 QUERY_WEIGHT_DECAY = 0.98  # per recorded video; recent evidence outvotes old habits
 
 
@@ -33,6 +34,76 @@ def load():
 def save(m):
     with open(MEM, "w") as f:
         json.dump(m, f, indent=1)
+
+
+def load_concept_outcomes():
+    if os.path.exists(CONCEPT_OUTCOMES):
+        with open(CONCEPT_OUTCOMES, encoding="utf-8") as handle:
+            return json.load(handle)
+    return {"schema_version": 1, "concepts": {}, "applied_review_ids": []}
+
+
+def save_concept_outcomes(data):
+    os.makedirs(os.path.dirname(CONCEPT_OUTCOMES), exist_ok=True)
+    with open(CONCEPT_OUTCOMES, "w", encoding="utf-8") as handle:
+        json.dump(data, handle, indent=2, ensure_ascii=False)
+        handle.write("\n")
+
+
+def record_concept_approval(script):
+    """Record human approval separately from visual-query learning."""
+    concept_id = script.get("concept_id")
+    slug = script.get("slug")
+    if not concept_id or not slug:
+        return
+    data = load_concept_outcomes()
+    concept = data.setdefault("concepts", {}).setdefault(str(concept_id), {
+        "approval_count": 0,
+        "approved_slugs": [],
+        "audience_samples": [],
+    })
+    if slug not in concept.setdefault("approved_slugs", []):
+        concept["approved_slugs"].append(slug)
+        concept["approval_count"] = int(concept.get("approval_count") or 0) + 1
+        save_concept_outcomes(data)
+
+
+def record_concept_audience(script, payload, review_id, best, worst):
+    """Attach audience performance to the script's concept, not only its footage."""
+    concept_id = script.get("concept_id")
+    if not concept_id:
+        return
+    data = load_concept_outcomes()
+    applied = data.setdefault("applied_review_ids", [])
+    if review_id in applied:
+        return
+    ratios = [float(value) for value in payload.get("watch_ratio") or []]
+    if not ratios:
+        return
+    concept = data.setdefault("concepts", {}).setdefault(str(concept_id), {
+        "approval_count": 0,
+        "approved_slugs": [],
+        "audience_samples": [],
+    })
+    sample = {
+        "slug": script.get("slug"),
+        "video_id": payload.get("video_id"),
+        "applied_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
+        "mean_watch_ratio": round(sum(ratios) / len(ratios), 5),
+        "completion_ratio": round(ratios[-1] / max(ratios[0], 0.0001), 5),
+        "held_scenes": [int(index) for index in best],
+        "bled_scenes": [int(index) for index in worst],
+    }
+    samples = concept.setdefault("audience_samples", [])
+    samples.append(sample)
+    concept["mean_watch_ratio"] = round(
+        sum(float(item["mean_watch_ratio"]) for item in samples) / len(samples), 5
+    )
+    concept["mean_completion_ratio"] = round(
+        sum(float(item["completion_ratio"]) for item in samples) / len(samples), 5
+    )
+    applied.append(review_id)
+    save_concept_outcomes(data)
 
 
 def record(bd):
@@ -62,6 +133,7 @@ def record(bd):
         entry["profile"] = profile
     m["videos"].append(entry)
     save(m)
+    record_concept_approval(s)
     try:  # taste vector: this video's chosen-clip embeddings become "approved"
         import glob as _g, numpy as _np, taste
         vecs = [_np.load(f) for f in sorted(_g.glob(f"{bd}/emb_*.npy"))]
@@ -225,6 +297,7 @@ def survey(bd, feedback_file):
             if profile:
                 entry["profile"] = profile
             videos.append(entry)
+        record_concept_approval(script)
 
     try:
         import numpy as _np, taste
@@ -361,6 +434,7 @@ def audience(bd, retention_file):
         "drop_per_s": {str(i): round(dps[i], 5) for i in dps}})
     applied.append(review_id)
     save(m)
+    record_concept_audience(s, payload, review_id, best, worst)
     try:
         import numpy as _np, taste
         if approved_vecs:
@@ -405,6 +479,24 @@ def digest():
         lines += ["## Recent audience verdicts (YouTube retention)", ""]
         lines += [f"- {e.get('slug')}: scenes {e.get('held')} held viewers, "
                   f"scenes {e.get('bled')} bled them" for e in fb] + [""]
+    concept_data = load_concept_outcomes().get("concepts") or {}
+    concept_rows = sorted(
+        (
+            (concept_id, values)
+            for concept_id, values in concept_data.items()
+            if values.get("audience_samples")
+        ),
+        key=lambda item: float(item[1].get("mean_watch_ratio") or 0),
+        reverse=True,
+    )
+    if concept_rows:
+        lines += ["## Concept-level audience evidence", ""]
+        lines += [
+            f"- {concept_id}: mean watch ratio {values.get('mean_watch_ratio', 0):.3f}, "
+            f"mean completion {values.get('mean_completion_ratio', 0):.3f} "
+            f"across {len(values.get('audience_samples') or [])} video(s)"
+            for concept_id, values in concept_rows
+        ] + [""]
     with open(os.path.join(HERE, "WHATS_WORKING.md"), "w") as f:
         f.write("\n".join(lines))
     print("wrote pipeline/WHATS_WORKING.md")

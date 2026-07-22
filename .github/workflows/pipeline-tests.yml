@@ -4,12 +4,16 @@ on:
   pull_request:
     paths:
       - "pipeline/**"
+      - "concept/**"
+      - "build/where-you-end/script.json"
       - ".github/workflows/render.yml"
       - ".github/workflows/pipeline-tests.yml"
   push:
     branches: [main]
     paths:
       - "pipeline/**"
+      - "concept/**"
+      - "build/where-you-end/script.json"
       - ".github/workflows/render.yml"
       - ".github/workflows/pipeline-tests.yml"
 
@@ -31,6 +35,8 @@ jobs:
       - name: Python deps
         run: pip install -q -r pipeline/requirements.txt
       - name: Compile pipeline
-        run: python3 -m compileall -q pipeline
+        run: python3 -m compileall -q pipeline concept
       - name: Regression tests
         run: python3 -m unittest discover -s pipeline/tests -v
+      - name: Concept Engine tests
+        run: python3 -m unittest discover -s concept/tests -v

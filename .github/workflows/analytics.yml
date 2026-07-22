@@ -40,6 +40,7 @@ jobs:
           git config user.name "analytics-bot"
           git config user.email "analytics@users.noreply.github.com"
           for f in pipeline/memory.json pipeline/taste.npz pipeline/WHATS_WORKING.md \
+                   concept/outcomes.json \
                    build/*/retention.json build/*/yt_stats.json; do
             git add "$f" 2>/dev/null || true
           done

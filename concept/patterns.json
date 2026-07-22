@@ -1,40 +1,326 @@
 {
-  "_note": "Data-mined pattern map of the channel's conceptual DNA. Counts are corpus mentions across 67 scripts / ~25.6k words (2026-07). Regenerate with concept/mine_corpus.py.",
+  "schema_version": 2,
+  "_note": "Reproducible concept map. Frequency describes the corpus; it is not evidence that a belief is true or valuable.",
+  "_meta": {
+    "script_files": 72,
+    "qualifying_title_groups": 57,
+    "canonical_scripts": 57,
+    "deduplicated_files": 15,
+    "duplicate_titles": {
+      "can you fly": [
+        "can-you-fly-v3",
+        "can-you-fly"
+      ],
+      "museum of myself": [
+        "museum-of-myself-cinematic",
+        "museum-of-myself-curation",
+        "museum-of-myself"
+      ],
+      "other versions of you": [
+        "other-versions-stock-first-clean-20260716",
+        "other-versions-stock-first-rebuild",
+        "other-versions-stock-first",
+        "the-other-versions-of-you"
+      ],
+      "the tools that shape us": [
+        "the-tools-that-shape-us-v2",
+        "the-tools-that-shape-us-v3",
+        "the-tools-that-shape-us-v4",
+        "the-tools-that-shape-us"
+      ],
+      "voice memo guy": [
+        "social-weather-voice-memo-guy-motion",
+        "social-weather-voice-memo-guy-stock-slides",
+        "social-weather-voice-memo-guy"
+      ],
+      "you are not a thing": [
+        "pattern-wearing-matter-semantic-pipeline",
+        "pattern-wearing-matter-v2",
+        "pattern-wearing-matter"
+      ],
+      "you were always source": [
+        "you-were-always-source-final",
+        "you-were-always-source-new-voice",
+        "you-were-always-source"
+      ]
+    },
+    "canonical_words": 21774,
+    "generated_on": "2026-07-22",
+    "method": "canonical-title deduplication; boundary-aware pillar counts; 2-3 gram discovery"
+  },
   "pillars": [
-    {"id":"grounding","label":"The ordinary / return to the body","weight":273,
-     "essence":"Every flight lands back in the room, the kitchen, the hands, the breath. The channel's signature and its psychological safety rail.",
-     "exemplars":["The Room Behind You","Where The Years Go","I Became Everything (wet cheeks, morning)"]},
-    {"id":"self","label":"Self & identity as constructed","weight":141,
-     "essence":"The 'you' is a role, a mask, a narrative center — not a fixed thing behind the eyes.",
-     "exemplars":["The Voice","The Understudy","You Are Not A Thing","The Ego's Halo"]},
-    {"id":"belief","label":"Belief analysis / how you know","weight":134,
-     "essence":"Coherence vs. correspondence; checking beliefs against evidence you didn't author. The channel's core invitation.",
-     "exemplars":["The Ship","The Crossword","The Belief Filter","Two Ships"]},
-    {"id":"attention","label":"Attention as the instrument","weight":124,
-     "essence":"What you aim at renders in high resolution; the rest is fog. Attention as budget, currency, graphics card.",
-     "exemplars":["The Render Distance","The Still Needle","The Inner Search"]},
-    {"id":"mediation","label":"The lens / you never see reality raw","weight":113,
-     "essence":"Window vs. mirror, filter, map vs. territory, the veil. Access is always mediated.",
-     "exemplars":["The Cartographer's Confession","Reality Was Never Hidden","The Ship"]},
-    {"id":"memory","label":"Memory as construction, not recording","weight":102,
-     "essence":"Every recall rewrites; the original is overwritten. Memory is an artist, not an archive.",
-     "exemplars":["The Save File","The Editor","Been Here Before"]},
-    {"id":"prediction","label":"Prediction & the constructed 'now'","weight":73,
-     "essence":"Perception runs a third of a second behind; the present is a forecast. The brain predicts, then corrects.",
-     "exemplars":["The Lag","The Mirror Has a Delay","Message From Your Future"]},
-    {"id":"emotion","label":"Emotion, love, and the turn","weight":72,
-     "essence":"The videos turn toward agency and love, never nihilism. Gratitude as a render command; the seal of being loved.",
-     "exemplars":["I Became Everything","Customs","When Positivity Hides Pain"]},
-    {"id":"machine","label":"Mind as machine / rendering engine","weight":62,
-     "essence":"The reality-machine frame: loading screen, render distance, save file, graphics card, editor.",
-     "exemplars":["DMT: The Reality Machine","The Render Distance","The Editor"]},
-    {"id":"recursion","label":"Recursion & self-reference","weight":66,
-     "essence":"The eye can't see itself; the observer observed; loops that fold back on the watcher.",
-     "exemplars":["The Eye Cannot See Itself","The Loop","Mirror to Mirror"]},
-    {"id":"threshold","label":"Threshold / dissolution (DMT lane)","weight":29,
-     "essence":"Ego dissolution, entities, the border, becoming everything. Newest and smallest lane; high emotional voltage.",
-     "exemplars":["I Became Everything","The Other Side of the Door","Customs","The Understudy"]}
+    {
+      "id": "grounding",
+      "label": "The ordinary / return to the body",
+      "weight": 175,
+      "essence": "Every flight lands back in the room, the kitchen, the hands, the breath. The channel's signature and its psychological safety rail.",
+      "exemplars": [
+        "The Room Behind You",
+        "Where The Years Go",
+        "I Became Everything (wet cheeks, morning)"
+      ]
+    },
+    {
+      "id": "belief",
+      "label": "Belief analysis / how you know",
+      "weight": 119,
+      "essence": "Coherence vs. correspondence; checking beliefs against evidence you didn't author. The channel's core invitation.",
+      "exemplars": [
+        "The Ship",
+        "The Crossword",
+        "The Belief Filter",
+        "Two Ships"
+      ]
+    },
+    {
+      "id": "attention",
+      "label": "Attention as the instrument",
+      "weight": 90,
+      "essence": "What you aim at renders in high resolution; the rest is fog. Attention as budget, currency, graphics card.",
+      "exemplars": [
+        "The Render Distance",
+        "The Still Needle",
+        "The Inner Search"
+      ]
+    },
+    {
+      "id": "mediation",
+      "label": "The lens / you never see reality raw",
+      "weight": 85,
+      "essence": "Window vs. mirror, filter, map vs. territory, the veil. Access is always mediated.",
+      "exemplars": [
+        "The Cartographer's Confession",
+        "Reality Was Never Hidden",
+        "The Ship"
+      ]
+    },
+    {
+      "id": "memory",
+      "label": "Memory as construction, not recording",
+      "weight": 80,
+      "essence": "Every recall rewrites; the original is overwritten. Memory is an artist, not an archive.",
+      "exemplars": [
+        "The Save File",
+        "The Editor",
+        "Been Here Before"
+      ]
+    },
+    {
+      "id": "prediction",
+      "label": "Prediction & the constructed 'now'",
+      "weight": 47,
+      "essence": "Perception runs a third of a second behind; the present is a forecast. The brain predicts, then corrects.",
+      "exemplars": [
+        "The Lag",
+        "The Mirror Has a Delay",
+        "Message From Your Future"
+      ]
+    },
+    {
+      "id": "emotion",
+      "label": "Emotion, love, and the turn",
+      "weight": 47,
+      "essence": "The videos turn toward agency and love, never nihilism. Gratitude as a render command; the seal of being loved.",
+      "exemplars": [
+        "I Became Everything",
+        "Customs",
+        "When Positivity Hides Pain"
+      ]
+    },
+    {
+      "id": "machine",
+      "label": "Mind as machine / rendering engine",
+      "weight": 41,
+      "essence": "The reality-machine frame: loading screen, render distance, save file, graphics card, editor.",
+      "exemplars": [
+        "DMT: The Reality Machine",
+        "The Render Distance",
+        "The Editor"
+      ]
+    },
+    {
+      "id": "recursion",
+      "label": "Recursion & self-reference",
+      "weight": 39,
+      "essence": "The eye can't see itself; the observer observed; loops that fold back on the watcher.",
+      "exemplars": [
+        "The Eye Cannot See Itself",
+        "The Loop",
+        "Mirror to Mirror"
+      ]
+    },
+    {
+      "id": "self",
+      "label": "Self & identity as constructed",
+      "weight": 35,
+      "essence": "The 'you' is a role, a mask, a narrative center — not a fixed thing behind the eyes.",
+      "exemplars": [
+        "The Voice",
+        "The Understudy",
+        "You Are Not A Thing",
+        "The Ego's Halo"
+      ]
+    },
+    {
+      "id": "threshold",
+      "label": "Threshold / dissolution (DMT lane)",
+      "weight": 7,
+      "essence": "Ego dissolution, entities, the border, becoming everything. Newest and smallest lane; high emotional voltage.",
+      "exemplars": [
+        "I Became Everything",
+        "The Other Side of the Door",
+        "Customs",
+        "The Understudy"
+      ]
+    }
   ],
+  "emergent_phrases": [
+    {
+      "phrase": "right now",
+      "mentions": 16,
+      "scripts": 13
+    },
+    {
+      "phrase": "its own",
+      "mentions": 16,
+      "scripts": 10
+    },
+    {
+      "phrase": "feels like",
+      "mentions": 12,
+      "scripts": 8
+    },
+    {
+      "phrase": "feel like",
+      "mentions": 8,
+      "scripts": 8
+    },
+    {
+      "phrase": "whole life",
+      "mentions": 7,
+      "scripts": 7
+    },
+    {
+      "phrase": "felt like",
+      "mentions": 8,
+      "scripts": 6
+    },
+    {
+      "phrase": "years ago",
+      "mentions": 6,
+      "scripts": 6
+    },
+    {
+      "phrase": "two people",
+      "mentions": 6,
+      "scripts": 4
+    },
+    {
+      "phrase": "maybe awakening",
+      "mentions": 5,
+      "scripts": 4
+    },
+    {
+      "phrase": "someone else",
+      "mentions": 5,
+      "scripts": 4
+    },
+    {
+      "phrase": "turn around",
+      "mentions": 5,
+      "scripts": 4
+    },
+    {
+      "phrase": "somewhere beneath",
+      "mentions": 4,
+      "scripts": 4
+    },
+    {
+      "phrase": "exactly like",
+      "mentions": 4,
+      "scripts": 4
+    },
+    {
+      "phrase": "now here's",
+      "mentions": 4,
+      "scripts": 4
+    },
+    {
+      "phrase": "works like",
+      "mentions": 4,
+      "scripts": 4
+    },
+    {
+      "phrase": "may work",
+      "mentions": 4,
+      "scripts": 4
+    },
+    {
+      "phrase": "completely different",
+      "mentions": 4,
+      "scripts": 3
+    },
+    {
+      "phrase": "trapped inside",
+      "mentions": 4,
+      "scripts": 3
+    },
+    {
+      "phrase": "everyone else",
+      "mentions": 4,
+      "scripts": 3
+    },
+    {
+      "phrase": "people may",
+      "mentions": 4,
+      "scripts": 3
+    },
+    {
+      "phrase": "can't see",
+      "mentions": 4,
+      "scripts": 3
+    },
+    {
+      "phrase": "may feel",
+      "mentions": 4,
+      "scripts": 3
+    },
+    {
+      "phrase": "changes everything",
+      "mentions": 3,
+      "scripts": 3
+    },
+    {
+      "phrase": "without realizing",
+      "mentions": 3,
+      "scripts": 3
+    }
+  ],
+  "recurring_tensions": [
+    {
+      "tension": "inside / outside",
+      "scripts": 18
+    },
+    {
+      "tension": "real / constructed",
+      "scripts": 8
+    },
+    {
+      "tension": "fixed / changing",
+      "scripts": 4
+    },
+    {
+      "tension": "evidence / belief",
+      "scripts": 4
+    },
+    {
+      "tension": "alone / connected",
+      "scripts": 3
+    }
+  ],
+  "frontier_coverage": {
+    "body_ownership": 1
+  },
   "structural_signatures": [
     "Disarming confessional or 2nd-person hook that pre-empts disbelief ('I know how that sounds, but listen').",
     "One ruling metaphor system per script, held consistently (machine / ship / crossword / editor / customs).",
