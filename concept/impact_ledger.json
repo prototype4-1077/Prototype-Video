@@ -1,0 +1,16 @@
+{
+  "_note": "Learning ledger for whether a video captured attention, produced reflection, encouraged application and preserved autonomy. Comment-derived measures are low-confidence proxies, never psychological diagnoses.",
+  "metric_definitions": {
+    "attention": [
+      "views",
+      "avg_view_pct",
+      "avg_view_s"
+    ],
+    "belief_analysis_yield_proxy": "Share of scanned comments tagged reflection, application, curiosity or constructive disagreement.",
+    "autonomy_risk_proxy": "Share tagged dependency, certainty transfer, distress or metaphysical/clinical misinterpretation.",
+    "helpfulness_score_proxy": "100 × max(0, belief_analysis_yield_proxy - 1.5 × autonomy_risk_proxy).",
+    "scene_feedback": "James's explicit approvals, rejections and reasons; highest-trust craft evidence.",
+    "confidence": "low until sufficient comments, retention and repeated contextual tests exist."
+  },
+  "entries": {}
+}
