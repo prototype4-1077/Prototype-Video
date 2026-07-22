@@ -20,10 +20,16 @@ def access_token():
 
 def download_final(slug):
     out = f"/tmp/{slug}.mp4"
-    subprocess.run(["gh", "release", "download", f"video-{slug}", "-R", REPO,
-                    "-p", "final.mp4", "-O", out, "--clobber"], check=True,
-                   env={**os.environ})
-    return out
+    last = None
+    for pat in ("final.mp4", "final_youtube.mp4"):
+        try:
+            subprocess.run(["gh", "release", "download", f"video-{slug}", "-R", REPO,
+                            "-p", pat, "-O", out, "--clobber"], check=True,
+                           env={**os.environ})
+            return out
+        except subprocess.CalledProcessError as e:
+            last = e
+    raise last
 
 def upload(path, meta, token):
     size = os.path.getsize(path)
