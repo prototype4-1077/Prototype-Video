@@ -1,5 +1,11 @@
 name: Render queued video request
 
+# Drop a file at build/<slug>/render.request on main and this fires the real
+# render.yml pipeline (ElevenLabs VO generation, footage cache, long_render,
+# permanent release). Any tool that can commit a file -- the GitHub web UI,
+# GitHub mobile, or ChatGPT's read/write GitHub connector -- can start a render
+# without ever touching the Actions API.
+
 on:
   push:
     branches: [main]
@@ -11,42 +17,65 @@ permissions:
   actions: write
 
 jobs:
-  detect:
+  dispatch:
     runs-on: ubuntu-latest
-    outputs:
-      slug: ${{ steps.slug.outputs.slug }}
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 2
-      - id: slug
+
+      - name: Identify requested slug(s)
+        id: slugs
         shell: bash
         run: |
-          file="$(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" | grep -E '^build/[^/]+/render\.request$' | head -n 1)"
-          test -n "$file"
-          slug="${file#build/}"
-          slug="${slug%/render.request}"
-          echo "slug=$slug" >> "$GITHUB_OUTPUT"
-      - name: Mark render started
+          set -euo pipefail
+          mapfile -t files < <(git diff-tree --no-commit-id --name-only -r "$GITHUB_SHA" \
+            | grep -E '^build/[^/]+/render\.request$' || true)
+          if [ "${#files[@]}" -eq 0 ]; then
+            echo "no render.request file in this push; nothing to do"
+            echo "slugs=" >> "$GITHUB_OUTPUT"; exit 0
+          fi
+          slugs=""
+          for f in "${files[@]}"; do
+            s="${f#build/}"; s="${s%/render.request}"
+            slugs="$slugs $s"
+          done
+          echo "slugs=$(echo "$slugs" | xargs)" >> "$GITHUB_OUTPUT"
+
+      - name: Fire render.yml for each requested slug
+        if: steps.slugs.outputs.slugs != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
         shell: bash
         run: |
-          slug="${{ steps.slug.outputs.slug }}"
-          printf '%s\n' "$GITHUB_RUN_ID" > "build/$slug/render-started.txt"
+          set -euo pipefail
+          for slug in ${{ steps.slugs.outputs.slugs }}; do
+            if [ ! -f "build/$slug/script.json" ]; then
+              echo "::warning::build/$slug/script.json not found; skipping $slug"
+              continue
+            fi
+            echo "dispatching render.yml for $slug (long_render=true)"
+            gh workflow run render.yml -f slug="$slug" -f long_render=true
+          done
+
+      - name: Acknowledge request in-repo
+        if: steps.slugs.outputs.slugs != ''
+        shell: bash
+        run: |
+          set -euo pipefail
           git config user.name "render-request-bot"
           git config user.email "render-request@users.noreply.github.com"
-          git add "build/$slug/render-started.txt"
-          git commit -m "render $slug: started $GITHUB_RUN_ID" || true
+          for slug in ${{ steps.slugs.outputs.slugs }}; do
+            printf 'dispatched render.yml at %s (run %s)\n' \
+              "$(date -u +%FT%TZ)" "$GITHUB_RUN_ID" > "build/$slug/render-started.txt"
+            git rm -q "build/$slug/render.request" 2>/dev/null || true
+            git add "build/$slug/render-started.txt" 2>/dev/null || true
+          done
+          git commit -m "render-request: dispatched ${{ steps.slugs.outputs.slugs }}" || exit 0
           for i in 1 2 3 4 5; do
             git push && exit 0
-            git pull --rebase origin main || git rebase --abort || true
+            git fetch origin main && git reset --soft origin/main || true
             sleep $((i * 2))
           done
-          echo "unable to record render start after 5 attempts" >&2
-          exit 1
-
-  render:
-    needs: detect
-    uses: ./.github/workflows/accept-short-media-and-render.yml
-    with:
-      slug: ${{ needs.detect.outputs.slug }}
-    secrets: inherit
+          echo "dispatch already fired; ack push failed, safe to ignore" >&2
+          exit 0
