@@ -96,3 +96,35 @@ belief-analysis pillar into the body, where it has teeth.
 We already know what we are (the pillars). This engine tells us, every morning,
 one true and untouched place we could go next — and reminds us to hand the viewer
 the test instead of the answer.
+
+---
+
+## Growing the think tank (how BOTH Claude and ChatGPT contribute)
+The think tank is a living, shared brain. **`concept/frontier.json` in this repo is
+the single source of truth.** Anyone with repo write access can grow it:
+
+**To add a new concept** — append an object to the `frontier` array in
+`concept/frontier.json` with these fields, then commit to `main`:
+```json
+{"id":"snake_case","title":"Punchy Title","fidelity":"established|emerging|metaphor",
+ "science":"one honest sentence of the actual science, named",
+ "hook":"the disarming opening line","metaphor":"the one ruling image",
+ "turn":"the empowering reframe","invitation":"the question handed to the viewer"}
+```
+Rules: fidelity must be truthful (never tag speculation as `established`); the
+invitation must be a question, not a decree; keep it on-ethos (wonder over dread,
+belief-analysis, grounding).
+
+**To refresh the pillar weights** after new videos ship: run
+`python3 concept/mine_corpus.py` and update the weights in `concept/patterns.json`.
+
+**Access map:**
+- **Claude** — full write (clone + commit). Builds concepts, scripts, and hero art.
+- **ChatGPT (Codex Connector)** — read/write to code, so it CAN append a concept to
+  `frontier.json` and commit it. It reads the live file for the current bank.
+- **The ChatGPT Project's uploaded copy** is a static snapshot — re-upload it after
+  the repo file changes to keep the Project's baked-in knowledge current (or rely on
+  the connector reading the live repo version, which the Project instructions do).
+
+So: to *update the think tank*, write to `concept/frontier.json` in the repo. That is
+the canonical act, and both agents can do it.
