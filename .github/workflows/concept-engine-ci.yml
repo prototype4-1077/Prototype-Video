@@ -1,0 +1,44 @@
+name: Concept Engine integrity
+
+on:
+  pull_request:
+    paths:
+      - "concept/**"
+      - "CONCEPT_ENGINE*.md"
+      - ".github/workflows/concept-engine-ci.yml"
+  push:
+    branches: [main]
+    paths:
+      - "concept/**"
+      - "CONCEPT_ENGINE*.md"
+      - ".github/workflows/concept-engine-ci.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate Python and JSON
+        run: |
+          python3 -m py_compile concept/*.py
+          python3 - <<'PY'
+          import glob, json
+          for path in glob.glob("concept/*.json"):
+              with open(path, encoding="utf-8") as f:
+                  json.load(f)
+              print("valid", path)
+          PY
+      - name: Run Concept Engine tests
+        run: python3 -m unittest concept/test_concept_engine.py -v
+      - name: Build and guard decision brief
+        run: |
+          python3 concept/intelligence.py recommend
+          python3 concept/decision_brief.py
+          python3 concept/influence_guard.py concept/LATEST_DECISION_BRIEF.json
