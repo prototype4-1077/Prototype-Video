@@ -1,45 +1,75 @@
-"""Tier 3 — the daily invitation. The channel's mission distilled to its purest,
-smallest form: one question a day that helps a person examine a belief. NOT a video —
-a standalone, shareable micro-practice (community post / Substack line / Short caption /
-one-a-day email). Audience-facing, where the concept brief is maker-facing.
+"""Tier 3 — daily invitation.
 
-Deterministic by date so a scheduled run is stable per day. Draws from the same
-frontier bank and pillars, but outputs ONLY the invitation + a one-line frame — never
-an explanation, never a lecture. Hand the test, not the verdict.
+A small, audience-facing belief-analysis practice. It uses the v3 selector rather
+than blind random choice, but rotates safely among the top candidates so the daily
+practice does not become an engagement echo chamber.
 
 Usage: python3 concept/invitation.py [YYYY-MM-DD]
 """
-import json, os, sys, datetime, hashlib, random
+from __future__ import annotations
+
+import datetime
+import hashlib
+import json
+import os
+import random
+import sys
+from typing import Any, Dict, List
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 
-def load(n): return json.load(open(os.path.join(HERE, n)))
 
-def seed(date_str): return int(hashlib.sha256(("inv:"+date_str).encode()).hexdigest()[:8], 16)
+def seed(date_str: str) -> int:
+    return int(hashlib.sha256(("inv-v3:" + date_str).encode()).hexdigest()[:8], 16)
 
-def invitation(date_str):
-    frontier = load("frontier.json")["frontier"]
+
+def choose(date_str: str) -> Dict[str, Any]:
+    from intelligence import rank_candidates
+
+    ranked = [
+        item for item in rank_candidates()
+        if item.get("guard", {}).get("decision") == "PASS"
+        and not {"psychosis_vulnerability", "medical_misinformation"} & set(item["node"].get("risks", []))
+    ]
+    if not ranked:
+        ranked = [
+            item for item in rank_candidates()
+            if item.get("guard", {}).get("decision") != "BLOCK"
+        ]
+    if not ranked:
+        raise RuntimeError("no safe invitation candidates")
+
+    # Rotate inside the top safe set; score still determines membership, date chooses the day.
+    pool = ranked[: min(5, len(ranked))]
     rng = random.Random(seed(date_str))
-    c = rng.choice(frontier)
-    # a single-breath frame (metaphor, no science jargon) + the invitation, then silence
+    return rng.choice(pool)
+
+
+def invitation(date_str: str) -> str:
+    item = choose(date_str)
+    grounding = item["node"].get("grounding", "Return to the room and notice what is here.")
     lines = [
         f"**{date_str} — one question**",
         "",
-        f"_{c['metaphor']}_",
+        f"_{item['metaphor']}_",
         "",
-        c["invitation"],
+        item["invitation"],
         "",
-        "— no right answer. just look.",
+        f"_Landing: {grounding}_",
+        "",
+        "There is no answer to perform. Notice what you notice.",
     ]
     return "\n".join(lines)
 
-def main():
+
+def main() -> int:
     date_str = sys.argv[1] if len(sys.argv) > 1 else datetime.date.today().isoformat()
     text = invitation(date_str)
     print(text)
-    log = os.path.join(HERE, "INVITATION_LOG.md")
-    with open(log, "a") as f:
+    with open(os.path.join(HERE, "INVITATION_LOG.md"), "a", encoding="utf-8") as f:
         f.write(text + "\n\n---\n\n")
+    return 0
+
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
