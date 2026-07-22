@@ -1,0 +1,54 @@
+{
+  "finished_at": "2026-07-22T12:08:50+00:00",
+  "github_run_id": "29918320711",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "7342ef730c5f3e94",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "text (won't highlight) note: scene <n> keyword 'kindness' not found in text (won't highlight) note: scene <n> keyword 'lamp' not found in text (won't highlight) note: scene <n> keyword 'inheritance' not found in text (won't highlight) note: scene <n> keyword 'embrace' not found in text (won't highlight) note: scene <n> keyword 'daylight' not found in text (won't highlight) note: scene <n> keyword 'pen' not found in t",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=e9b9cdc38a9f7db2. ERROR: visual symbol plan: human imagery occupies 61%; target <= 60%; language repeats for 4 consecutive scenes starting at scene 16 | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
+  "mode": "recover",
+  "passes": 2,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "7342ef730c5f3e94",
+      "priority": "high",
+      "reason": "2 occurrence(s): text (won't highlight) note: scene <n> keyword 'kindness' not found in text (won't highlight) note: scene <n> keyword 'lamp' not found in text (won't highlight) note: scene <n> keyword 'inheritance' not found in text (won't highlight) note: scene <n> keyword 'embrace' not found in text (won't highlight) note: scene <n> keyword 'daylight' not found in text (won't highlight) note: scene <n> keyword 'pen' not found in t",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "c9282a3d4d30466fa55cee48c3818e97",
+  "schema_version": 1,
+  "slug": "the-person-you-replaced",
+  "stages": {
+    "build_pass": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.002
+    }
+  },
+  "status": "failed"
+}
