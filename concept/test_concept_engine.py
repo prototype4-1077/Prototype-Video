@@ -1,12 +1,13 @@
 """Stdlib tests for Concept Engine v3."""
 from __future__ import annotations
 
-import json
 import os
 import sys
+import tempfile
 import unittest
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
 if HERE not in sys.path:
     sys.path.insert(0, HERE)
 
@@ -20,8 +21,7 @@ class ConceptEngineV3Tests(unittest.TestCase):
     def test_graph_covers_frontier(self):
         frontier = intelligence.load("frontier.json", {})["frontier"]
         graph = intelligence.load("concept_graph.json", {})["nodes"]
-        missing = [item["id"] for item in frontier if item["id"] not in graph]
-        self.assertEqual(missing, [])
+        self.assertEqual([item["id"] for item in frontier if item["id"] not in graph], [])
 
     def test_weights_sum_to_one(self):
         self.assertAlmostEqual(sum(intelligence.WEIGHTS.values()), 1.0, places=6)
@@ -47,7 +47,33 @@ class ConceptEngineV3Tests(unittest.TestCase):
             "desired_movement": "From certainty to examination.",
         }, text="The truth is this proves that reality is fake.")
         self.assertEqual(result["decision"], "BLOCK")
-        self.assertTrue(any(i["code"] == "verdict_installation" for i in result["issues"]))
+        self.assertTrue(any(item["code"] == "verdict_installation" for item in result["issues"]))
+
+    def test_guard_scans_spoken_scene_text(self):
+        candidate = {
+            "science_fidelity": "emerging",
+            "invitation": "What do you notice?",
+            "grounding": "Return to the room.",
+            "evidence_boundary": "The model is emerging.",
+            "desired_movement": "From certainty to examination.",
+            "scenes": [
+                {"text": "The truth is this proves reality is fake.", "epistemic_role": "metaphor"},
+                {"text": "Feel the chair.", "epistemic_role": "invitation", "visual_function": "grounding"},
+                {"text": "What do you notice?", "epistemic_role": "invitation"},
+            ],
+        }
+        result = influence_guard.assess(candidate)
+        self.assertEqual(result["decision"], "BLOCK")
+        self.assertTrue(any(item["code"] == "verdict_installation" for item in result["issues"]))
+
+    def test_forecast_script_passes_full_scene_review(self):
+        path = os.path.join(ROOT, "build", "the-forecast-in-your-chest", "script.json")
+        result = influence_guard.assess_file(path)
+        self.assertEqual(result["decision"], "PASS", result["issues"])
+        self.assertEqual(result["script_metrics"]["scene_count"], 24)
+        self.assertEqual(result["script_metrics"]["word_count"], 337)
+        self.assertLess(result["script_metrics"]["human_scene_ratio"], 0.5)
+        self.assertGreater(result["script_metrics"]["evidence_scene_count"], 0)
 
     def test_comment_classifier_separates_reflection_from_agreement(self):
         tags = comment_mining.classify("I disagree, but this made me think and I checked my assumption.")
