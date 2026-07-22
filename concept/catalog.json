@@ -1,22 +1,202 @@
 {
-  "_note": "Concept DNA of published videos — the join key between the think tank and performance. narration: guided_2nd | testimony_1st | documentary_3rd | teaching. hook: question | confession | plunge | demonstration. pillars: ids from patterns.json. Perf pulled from build/<slug>/yt_stats.json + TikTok where noted; grows via nightly analytics sync.",
-  "videos": {
-    "the-reality-machine-dmt-v3": {"pillars":["machine","attention"],"frontier":"render_distance","narration":"guided_2nd","hook":"plunge","series":"DMT","note":"YT breakout 832 views @47%"},
-    "room-before-birth": {"pillars":["threshold","emotion"],"narration":"testimony_1st","hook":"confession","series":"DMT","note":"TikTok ~1M — testimony + presence + fractal slides"},
-    "collapse-of-gravity": {"pillars":["self","grounding"],"narration":"teaching","hook":"question","series":null},
-    "the-unopened-mail": {"pillars":["prediction","grounding"],"narration":"guided_2nd","hook":"question","series":null},
-    "the-loop": {"pillars":["recursion","grounding"],"narration":"guided_2nd","hook":"question","series":null},
-    "eye-cannot-see-itself": {"pillars":["recursion","mediation"],"narration":"teaching","hook":"demonstration","series":"Belief Trilogy"},
-    "cartographers-confession": {"pillars":["belief","mediation"],"narration":"teaching","hook":"confession","series":"Belief Trilogy"},
-    "two-ships": {"pillars":["belief","emotion"],"narration":"teaching","hook":"demonstration","series":"Belief Trilogy"},
-    "the-voice": {"pillars":["self","recursion"],"narration":"guided_2nd","hook":"question","series":null},
-    "the-room-behind-you": {"pillars":["grounding","self"],"narration":"guided_2nd","hook":"plunge","series":null},
-    "the-lag": {"pillars":["prediction","machine"],"narration":"guided_2nd","hook":"plunge","series":"The Reality Machine"},
-    "the-save-file": {"pillars":["memory","machine"],"narration":"guided_2nd","hook":"plunge","series":"The Reality Machine"},
-    "where-the-years-go": {"pillars":["memory","prediction"],"narration":"guided_2nd","hook":"question","series":null},
-    "been-here-before": {"pillars":["memory","prediction"],"narration":"guided_2nd","hook":"question","series":null},
-    "before-your-words": {"pillars":["self","mediation"],"narration":"teaching","hook":"question","series":null},
-    "jester-who-knew-my-name": {"pillars":["self","threshold"],"narration":"testimony_1st","hook":"confession","series":"DMT"},
-    "i-became-everything": {"pillars":["threshold","emotion"],"narration":"testimony_1st","hook":"confession","series":"DMT"}
+ "_note": "Concept DNA of published videos — the join key between the think tank and performance. narration: guided_2nd | testimony_1st | documentary_3rd | teaching. hook: question | confession | plunge | demonstration. pillars: ids from patterns.json. Perf pulled from build/<slug>/yt_stats.json + TikTok where noted; grows via nightly analytics sync.",
+ "videos": {
+  "the-reality-machine-dmt-v3": {
+   "pillars": [
+    "machine",
+    "attention"
+   ],
+   "frontier": "render_distance",
+   "narration": "guided_2nd",
+   "hook": "plunge",
+   "series": "DMT",
+   "note": "YT breakout 832 views @47%"
+  },
+  "room-before-birth": {
+   "pillars": [
+    "threshold",
+    "emotion"
+   ],
+   "narration": "testimony_1st",
+   "hook": "confession",
+   "series": "DMT",
+   "note": "TikTok ~1M — testimony + presence + fractal slides"
+  },
+  "collapse-of-gravity": {
+   "pillars": [
+    "self",
+    "grounding"
+   ],
+   "narration": "teaching",
+   "hook": "question",
+   "series": null
+  },
+  "the-unopened-mail": {
+   "pillars": [
+    "prediction",
+    "grounding"
+   ],
+   "narration": "guided_2nd",
+   "hook": "question",
+   "series": null
+  },
+  "the-loop": {
+   "pillars": [
+    "recursion",
+    "grounding"
+   ],
+   "narration": "guided_2nd",
+   "hook": "question",
+   "series": null
+  },
+  "eye-cannot-see-itself": {
+   "pillars": [
+    "recursion",
+    "mediation"
+   ],
+   "narration": "teaching",
+   "hook": "demonstration",
+   "series": "Belief Trilogy"
+  },
+  "cartographers-confession": {
+   "pillars": [
+    "belief",
+    "mediation"
+   ],
+   "narration": "teaching",
+   "hook": "confession",
+   "series": "Belief Trilogy"
+  },
+  "two-ships": {
+   "pillars": [
+    "belief",
+    "emotion"
+   ],
+   "narration": "teaching",
+   "hook": "demonstration",
+   "series": "Belief Trilogy"
+  },
+  "the-voice": {
+   "pillars": [
+    "self",
+    "recursion"
+   ],
+   "narration": "guided_2nd",
+   "hook": "question",
+   "series": null
+  },
+  "the-room-behind-you": {
+   "pillars": [
+    "grounding",
+    "self"
+   ],
+   "narration": "guided_2nd",
+   "hook": "plunge",
+   "series": null
+  },
+  "the-lag": {
+   "pillars": [
+    "prediction",
+    "machine"
+   ],
+   "narration": "guided_2nd",
+   "hook": "plunge",
+   "series": "The Reality Machine"
+  },
+  "the-save-file": {
+   "pillars": [
+    "memory",
+    "machine"
+   ],
+   "narration": "guided_2nd",
+   "hook": "plunge",
+   "series": "The Reality Machine"
+  },
+  "where-the-years-go": {
+   "pillars": [
+    "memory",
+    "prediction"
+   ],
+   "narration": "guided_2nd",
+   "hook": "question",
+   "series": null
+  },
+  "been-here-before": {
+   "pillars": [
+    "memory",
+    "prediction"
+   ],
+   "narration": "guided_2nd",
+   "hook": "question",
+   "series": null
+  },
+  "before-your-words": {
+   "pillars": [
+    "self",
+    "mediation"
+   ],
+   "narration": "teaching",
+   "hook": "question",
+   "series": null
+  },
+  "jester-who-knew-my-name": {
+   "pillars": [
+    "self",
+    "threshold"
+   ],
+   "narration": "testimony_1st",
+   "hook": "confession",
+   "series": "DMT"
+  },
+  "i-became-everything": {
+   "pillars": [
+    "threshold",
+    "emotion"
+   ],
+   "narration": "testimony_1st",
+   "hook": "confession",
+   "series": "DMT"
+  },
+  "the-press-secretary-in-your-skull": {
+   "pillars": [
+    "self",
+    "recursion"
+   ],
+   "frontier": "confabulation",
+   "narration": "guided_2nd",
+   "hook": "plunge",
+   "series": "The Reality Machine",
+   "note": "ChatGPT-built from think tank"
+  },
+  "you-are-a-flame-wearing-a-name-tag": {
+   "pillars": [
+    "self",
+    "machine"
+   ],
+   "narration": "guided_2nd",
+   "hook": "demonstration",
+   "series": "The Reality Machine",
+   "note": "ChatGPT-built"
+  },
+  "the-museum-that-repaints-itself": {
+   "pillars": [
+    "memory",
+    "machine"
+   ],
+   "narration": "guided_2nd",
+   "hook": "plunge",
+   "series": "The Reality Machine",
+   "note": "ChatGPT-built"
+  },
+  "the-person-you-replaced": {
+   "pillars": [
+    "self",
+    "memory"
+   ],
+   "narration": "guided_2nd",
+   "hook": "confession",
+   "series": "The Reality Machine",
+   "note": "ChatGPT-built"
   }
+ }
 }
