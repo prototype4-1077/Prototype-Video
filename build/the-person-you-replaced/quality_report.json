@@ -1,0 +1,108 @@
+{
+  "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced",
+  "checked_at": "2026-07-22T13:41:55+00:00",
+  "deep_decode": true,
+  "expected_duration_s": 224.111,
+  "failures": [],
+  "mode": "delivery",
+  "outputs": {
+    "portrait": {
+      "avg_kbps": 3233,
+      "deep_scan": {
+        "black_intervals": 0,
+        "black_longest_s": 0.0,
+        "black_total_s": 0,
+        "error": null,
+        "freeze_intervals": 0,
+        "freeze_longest_s": 0.0,
+        "freeze_total_s": 0,
+        "ok": true,
+        "returncode": 0,
+        "silence_intervals": 0,
+        "silence_longest_s": 0.0,
+        "silence_total_s": 0
+      },
+      "duration_difference_s": 0.022,
+      "exists": true,
+      "expected_duration_s": 224.111,
+      "failures": [],
+      "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/final.mp4",
+      "probe": {
+        "audio_codec": "aac",
+        "audio_duration_s": 224.119002,
+        "bit_rate": 3233198.0,
+        "duration_s": 224.133333,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "fps": 30.0,
+        "has_audio": true,
+        "has_video": true,
+        "height": 1920,
+        "video_codec": "h264",
+        "video_duration_s": 224.133333,
+        "width": 1080
+      },
+      "size_bytes": 90583445,
+      "warnings": [
+        {
+          "code": "low_bitrate",
+          "message": "Average bitrate 3233 kbps is unusually low for 1080p; check for over-compression",
+          "target": "portrait"
+        }
+      ]
+    },
+    "youtube": {
+      "avg_kbps": 5909,
+      "deep_scan": {
+        "black_intervals": 0,
+        "black_longest_s": 0.0,
+        "black_total_s": 0,
+        "error": null,
+        "freeze_intervals": 0,
+        "freeze_longest_s": 0.0,
+        "freeze_total_s": 0,
+        "ok": true,
+        "returncode": 0,
+        "silence_intervals": 0,
+        "silence_longest_s": 0.0,
+        "silence_total_s": 0
+      },
+      "duration_difference_s": 0.022,
+      "exists": true,
+      "expected_duration_s": 224.111,
+      "failures": [],
+      "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/final_youtube.mp4",
+      "probe": {
+        "audio_codec": "aac",
+        "audio_duration_s": 224.119002,
+        "bit_rate": 5908818.0,
+        "duration_s": 224.133333,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "fps": 30.0,
+        "has_audio": true,
+        "has_video": true,
+        "height": 1080,
+        "video_codec": "h264",
+        "video_duration_s": 224.133333,
+        "width": 1920
+      },
+      "size_bytes": 165545396,
+      "warnings": []
+    }
+  },
+  "passed": true,
+  "quality_floor": {
+    "audio_stream_required": true,
+    "full_decode_required": true,
+    "minimum_dimension": 1080,
+    "minimum_file_bytes": 100000,
+    "video_stream_required": true
+  },
+  "schema_version": 1,
+  "warnings": [
+    {
+      "code": "low_bitrate",
+      "message": "Average bitrate 3233 kbps is unusually low for 1080p; check for over-compression",
+      "target": "portrait"
+    }
+  ]
+}

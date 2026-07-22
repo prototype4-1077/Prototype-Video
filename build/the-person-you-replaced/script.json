@@ -39,8 +39,56 @@
    "hero_style": "effects",
    "image_prompt": "cinematic 35mm film still, underside of an old wooden writing desk at midnight, a folded cream paper note taped beneath it with yellowed tape, one adult hand has just found it, a dried coffee-ring stain visible but no readable writing, cold institutional green light from a hallway and a warm tungsten desk lamp leaking around the edges, extreme shallow depth of field, foreground desk grain, subtle film grain, photoreal, no readable text, no words, no watermark",
    "human_role": "creator",
-   "start": 0.207,
-   "duration": 14.757
+   "start": 0.0,
+   "duration": 14.26,
+   "kw_times": {
+    "note": 0.42,
+    "desk": 1.56
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_00.jpg",
+   "still_reference_signature": "485953ce7b21f70456b2",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_00.mp4",
+   "clip_fingerprint": "a7f25bc1066e6739",
+   "hero_generated": true,
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "note",
+     "png": "cap_00_kw0.png"
+    },
+    {
+     "kw": "desk",
+     "png": "cap_00_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "note",
+     "png": "youtube_cap_00_kw0.png"
+    },
+    {
+     "kw": "desk",
+     "png": "youtube_cap_00_kw1.png"
+    }
+   ]
   },
   {
    "text": "Relax. It isn't a suicide note. It's worse. It's an onboarding document.",
@@ -57,8 +105,49 @@
    "query": "employee onboarding clipboard empty office cinematic",
    "primary_symbol": "clipboard",
    "human_role": "unspecified",
-   "start": 14.564,
-   "duration": 6.282
+   "start": 14.26,
+   "duration": 6.52,
+   "kw_times": {
+    "onboarding": 18.36
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.5488,
+    "active_region_ratio": 0.9971,
+    "frame_difference": 27.057
+   },
+   "clip_fingerprint": "8e003cb7506205a4",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_01.mp4",
+   "stock_id": 6563920,
+   "pexels_id": 6563920,
+   "stock_frame_url": "https://images.pexels.com/videos/6563920/account-analysis-beautiful-board-6563920.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-woman-holding-a-clipboard-while-walking-in-an-office-6563920/",
+   "kw_overlays": [
+    {
+     "kw": "clipboard",
+     "png": "cap_01_kw0.png"
+    },
+    {
+     "kw": "onboarding",
+     "png": "cap_01_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "clipboard",
+     "png": "youtube_cap_01_kw0.png"
+    },
+    {
+     "kw": "onboarding",
+     "png": "youtube_cap_01_kw1.png"
+    }
+   ]
   },
   {
    "text": "Instruction one: order the coffee you stopped liking three years ago. Take one sip. Notice whose disappointment arrives.",
@@ -75,8 +164,50 @@
    "query": "person tasting black coffee cafe window thoughtful close up",
    "primary_symbol": "coffee",
    "human_role": "actor",
-   "start": 20.846,
-   "duration": 8.97
+   "start": 20.78,
+   "duration": 8.46,
+   "kw_times": {
+    "coffee": 22.66,
+    "sip": 25.66
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.0095,
+    "active_region_ratio": 0.6002,
+    "frame_difference": 12.7759
+   },
+   "clip_fingerprint": "e18f2f67444d98c3",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_02.mp4",
+   "stock_id": 852303,
+   "pexels_id": 852303,
+   "stock_frame_url": "https://images.pexels.com/videos/852303/free-video-852303.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/woman-drinking-coffee-and-talking-with-her-boyfriend-852303/",
+   "kw_overlays": [
+    {
+     "kw": "coffee",
+     "png": "cap_02_kw0.png"
+    },
+    {
+     "kw": "sip",
+     "png": "cap_02_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "coffee",
+     "png": "youtube_cap_02_kw0.png"
+    },
+    {
+     "kw": "sip",
+     "png": "youtube_cap_02_kw1.png"
+    }
+   ]
   },
   {
    "text": "You do. The taste opens a locked room somewhere behind your ribs. Apparently, nostalgia keeps keys.",
@@ -96,8 +227,56 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "cinematic photoreal 35mm film still, side profile of an adult in a dark kitchen after tasting coffee, their chest subtly translucent only at the sternum where a miniature old locked room glows inside the ribcage, a tiny brass key turning in its door, believable anatomy and practical light, cold green shadows with warm amber light spilling from the miniature room, foreground coffee cup out of focus, restrained surrealism, fine film grain, no text, no words, no watermark",
-   "start": 29.816,
-   "duration": 7.31
+   "start": 29.24,
+   "duration": 8.82,
+   "kw_times": {
+    "room": 32.08,
+    "keys": 36.16
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_03.jpg",
+   "still_reference_signature": "fe2ac79d97b7686e7c98",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_03.mp4",
+   "clip_fingerprint": "cdd8cf014440e931",
+   "hero_generated": true,
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "room",
+     "png": "cap_03_kw0.png"
+    },
+    {
+     "kw": "keys",
+     "png": "cap_03_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "room",
+     "png": "youtube_cap_03_kw0.png"
+    },
+    {
+     "kw": "keys",
+     "png": "youtube_cap_03_kw1.png"
+    }
+   ]
   },
   {
    "text": "Instruction two: call the number labeled HOME. It hasn't belonged to your parents since 2016.",
@@ -112,8 +291,49 @@
    "query": "hand dialing old corded telephone close up dark room",
    "primary_symbol": "phone",
    "human_role": "actor",
-   "start": 37.126,
-   "duration": 9.03
+   "start": 38.06,
+   "duration": 7.6,
+   "kw_times": {
+    "home": 40.7
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.2459,
+    "active_region_ratio": 0.9987,
+    "frame_difference": 21.6412
+   },
+   "clip_fingerprint": "90176a92a742a95e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_04.mp4",
+   "stock_id": 7119837,
+   "pexels_id": 7119837,
+   "stock_frame_url": "https://images.pexels.com/videos/7119837/african-bedroom-call-calling-7119837.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-talking-on-the-phone-7119837/",
+   "kw_overlays": [
+    {
+     "kw": "phone",
+     "png": "cap_04_kw0.png"
+    },
+    {
+     "kw": "home",
+     "png": "cap_04_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "phone",
+     "png": "youtube_cap_04_kw0.png"
+    },
+    {
+     "kw": "home",
+     "png": "youtube_cap_04_kw1.png"
+    }
+   ]
   },
   {
    "text": "A stranger answers. You almost say, sorry, wrong number. But something ancient inside you is furious that they picked up.",
@@ -130,8 +350,49 @@
    "query": "stranger answering landline phone unfamiliar home cinematic",
    "primary_symbol": "receiver",
    "human_role": "actor",
-   "start": 46.156,
-   "duration": 8.07
+   "start": 45.66,
+   "duration": 8.14,
+   "kw_times": {
+    "stranger": 45.78
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.5296,
+    "active_region_ratio": 0.9926,
+    "frame_difference": 17.8912
+   },
+   "clip_fingerprint": "e38d703aeb7f008d",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_05.mp4",
+   "stock_id": 7119841,
+   "pexels_id": 7119841,
+   "stock_frame_url": "https://images.pexels.com/videos/7119841/african-bedroom-call-calling-7119841.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/video-of-a-woman-talking-on-the-phone-7119841/",
+   "kw_overlays": [
+    {
+     "kw": "receiver",
+     "png": "cap_05_kw0.png"
+    },
+    {
+     "kw": "stranger",
+     "png": "cap_05_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "receiver",
+     "png": "youtube_cap_05_kw0.png"
+    },
+    {
+     "kw": "stranger",
+     "png": "youtube_cap_05_kw1.png"
+    }
+   ]
   },
   {
    "text": "The note says: Good. You're still carrying me.",
@@ -146,8 +407,49 @@
    "query": "old suitcase carried down long hallway cinematic back view",
    "primary_symbol": "suitcase",
    "human_role": "actor",
-   "start": 54.226,
-   "duration": 5.48
+   "start": 53.8,
+   "duration": 5.34,
+   "kw_times": {
+    "carrying": 57.22
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.299,
+    "active_region_ratio": 0.9762,
+    "frame_difference": 13.3568
+   },
+   "clip_fingerprint": "f3e172f44f6d6574",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_06.mp4",
+   "stock_id": 8568651,
+   "pexels_id": 8568651,
+   "stock_frame_url": "https://images.pexels.com/videos/8568651/pexels-photo-8568651.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-back-view-of-a-person-carrying-an-acoustic-guitar-8568651/",
+   "kw_overlays": [
+    {
+     "kw": "suitcase",
+     "png": "cap_06_kw0.png"
+    },
+    {
+     "kw": "carrying",
+     "png": "cap_06_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "suitcase",
+     "png": "youtube_cap_06_kw0.png"
+    },
+    {
+     "kw": "carrying",
+     "png": "youtube_cap_06_kw1.png"
+    }
+   ]
   },
   {
    "text": "The handwriting gets smaller here. As if the person writing knew the walls would eventually belong to someone else.",
@@ -164,8 +466,50 @@
    "query": "fountain pen writing tiny lines paper macro moody light",
    "primary_symbol": "handwriting",
    "narrative_mode": "atmosphere",
-   "start": 59.706,
-   "duration": 6.08
+   "start": 59.14,
+   "duration": 6.78,
+   "kw_times": {
+    "handwriting": 59.4,
+    "walls": 63.12
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.0228,
+    "active_region_ratio": 0.7476,
+    "frame_difference": 7.7225
+   },
+   "clip_fingerprint": "758a25e2bc401482",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_07.mp4",
+   "stock_id": 854192,
+   "pexels_id": 854192,
+   "stock_frame_url": "https://images.pexels.com/videos/854192/free-video-854192.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/handwriting-854192/",
+   "kw_overlays": [
+    {
+     "kw": "handwriting",
+     "png": "cap_07_kw0.png"
+    },
+    {
+     "kw": "walls",
+     "png": "cap_07_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "handwriting",
+     "png": "youtube_cap_07_kw0.png"
+    },
+    {
+     "kw": "walls",
+     "png": "youtube_cap_07_kw1.png"
+    }
+   ]
   },
   {
    "text": "You think identity is a house. Same address, same owner, occasional renovation.",
@@ -179,8 +523,50 @@
    "symbol_family": "architecture",
    "query": "old house renovation time lapse cinematic exterior",
    "primary_symbol": "house",
-   "start": 65.786,
-   "duration": 7.507
+   "start": 65.92,
+   "duration": 7.12,
+   "kw_times": {
+    "house": 67.24,
+    "renovation": 71.28
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.1084,
+    "active_region_ratio": 0.9979,
+    "frame_difference": 57.8868
+   },
+   "clip_fingerprint": "cbd6f43f732f2e9e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_08.mp4",
+   "stock_id": 37296669,
+   "pexels_id": 37296669,
+   "stock_frame_url": "https://images.pexels.com/videos/37296669/drone-37296669.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/drone-view-of-house-renovation-project-37296669/",
+   "kw_overlays": [
+    {
+     "kw": "house",
+     "png": "cap_08_kw0.png"
+    },
+    {
+     "kw": "renovation",
+     "png": "cap_08_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "house",
+     "png": "youtube_cap_08_kw0.png"
+    },
+    {
+     "kw": "renovation",
+     "png": "youtube_cap_08_kw1.png"
+    }
+   ]
   },
   {
    "text": "Adorable zoning fiction.",
@@ -197,8 +583,26 @@
    "query": "architectural blueprint desk red stamp close up cinematic",
    "primary_symbol": "blueprint",
    "narrative_mode": "atmosphere",
-   "start": 73.293,
-   "duration": 2.502
+   "start": 73.04,
+   "duration": 2.3,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.3316,
+    "active_region_ratio": 0.9939,
+    "frame_difference": 13.1897
+   },
+   "clip_fingerprint": "9f45efe7adff4c0d",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_09.mp4",
+   "stock_id": 6615509,
+   "pexels_id": 6615509,
+   "stock_frame_url": "https://images.pexels.com/videos/6615509/pexels-photo-6615509.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/blueprints-and-stationery-items-on-office-desk-6615509/"
   },
   {
    "text": "You are a hotel with one room and no checkout desk. Every version of you wakes up, moves the furniture, throws away something important, and calls the previous guest childhood.",
@@ -218,8 +622,56 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "wide cinematic 35mm film still of one aging hotel room at night with no visible exit desk, four subtly different ages of the same anonymous person occupy overlapping layers of the room as if exposed on one frame, a child hiding an object under the bed, a teenager moving a chair, a young adult discarding a box, an older adult waking in the center, each action believable and separated in depth, cold institutional green wallpaper, warm bedside lamps, worn carpet, foreground doorframe out of focus, photoreal, fine film grain, no text, no words, no watermark",
-   "start": 75.795,
-   "duration": 13.008
+   "start": 75.34,
+   "duration": 14.23,
+   "kw_times": {
+    "hotel": 76.14,
+    "room": 77.42
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_10.jpg",
+   "still_reference_signature": "63e707b7b13de696a10e",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_10.mp4",
+   "clip_fingerprint": "480c35b69107075c",
+   "hero_generated": true,
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "hotel",
+     "png": "cap_10_kw0.png"
+    },
+    {
+     "kw": "room",
+     "png": "cap_10_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "hotel",
+     "png": "youtube_cap_10_kw0.png"
+    },
+    {
+     "kw": "room",
+     "png": "youtube_cap_10_kw1.png"
+    }
+   ]
   },
   {
    "text": "The six-year-old who believed shadows had intentions. The sixteen-year-old who could survive anything except being seen trying. The twenty-something who mistook exhaustion for ambition.",
@@ -236,8 +688,26 @@
    "query": "family photographs different ages table empty chair cinematic",
    "primary_symbol": "photographs",
    "human_role": "witness",
-   "start": 88.803,
-   "duration": 12.205
+   "start": 89.57,
+   "duration": 12.53,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.9329,
+    "active_region_ratio": 0.5829,
+    "frame_difference": 23.0731
+   },
+   "clip_fingerprint": "60e1605f5e7b48fe",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_11.mp4",
+   "stock_id": 8871833,
+   "pexels_id": 8871833,
+   "stock_frame_url": "https://images.pexels.com/videos/8871833/pexels-photo-8871833.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-woman-holding-a-framed-photograph-8871833/"
   },
   {
    "text": "None of them left. Not exactly. They were compressed into reflexes. Passwords your fingers remember. Songs that bruise before the chorus. Apologies you still rehearse for people who can no longer hear them.",
@@ -254,8 +724,49 @@
    "query": "hands typing password keyboard vinyl record spinning moody close",
    "primary_symbol": "fingers",
    "human_role": "actor",
-   "start": 101.008,
-   "duration": 15.726
+   "start": 102.1,
+   "duration": 15.94,
+   "kw_times": {
+    "fingers": 108.92
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.5187,
+    "active_region_ratio": 0.3247,
+    "frame_difference": 5.4271
+   },
+   "clip_fingerprint": "a17cd689b252cf54",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_12.mp4",
+   "stock_id": 36056986,
+   "pexels_id": 36056986,
+   "stock_frame_url": "https://images.pexels.com/videos/36056986/pexels-photo-36056986.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/vintage-vinyl-record-spinning-on-turntable-36056986/",
+   "kw_overlays": [
+    {
+     "kw": "fingers",
+     "png": "cap_12_kw0.png"
+    },
+    {
+     "kw": "record",
+     "png": "cap_12_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "fingers",
+     "png": "youtube_cap_12_kw0.png"
+    },
+    {
+     "kw": "record",
+     "png": "youtube_cap_12_kw1.png"
+    }
+   ]
   },
   {
    "text": "Personality isn't a statue. It's a relay race in the dark. The baton is warm, the runner is gone, and everyone insists it's the same hand.",
@@ -275,8 +786,56 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "cinematic photoreal 35mm film still in near-total darkness, a worn wooden relay baton glowing with residual amber warmth passes from an older hand fading into shadow to a younger adult hand entering cold green light, the runners themselves absent as if erased, only forearms and hands suspended across deep space, faint breath vapor and dust, strong depth separation, foreground fingertips out of focus, restrained surrealism, fine film grain, no text, no words, no watermark",
-   "start": 116.734,
-   "duration": 9.473
+   "start": 118.04,
+   "duration": 11.1,
+   "kw_times": {
+    "baton": 123.08,
+    "hand": 127.6
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_13.jpg",
+   "still_reference_signature": "ad06b4ef4b3f912d9325",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_13.mp4",
+   "clip_fingerprint": "46409daf8f86d671",
+   "hero_generated": true,
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "baton",
+     "png": "cap_13_kw0.png"
+    },
+    {
+     "kw": "hand",
+     "png": "cap_13_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "baton",
+     "png": "youtube_cap_13_kw0.png"
+    },
+    {
+     "kw": "hand",
+     "png": "youtube_cap_13_kw1.png"
+    }
+   ]
   },
   {
    "text": "The note says: Check the scar on your left thumb. You don't remember getting it. I do.",
@@ -291,8 +850,50 @@
    "query": "thumb scar macro hand cold light cinematic",
    "primary_symbol": "scar",
    "human_role": "witness",
-   "start": 126.207,
-   "duration": 10.287
+   "start": 129.14,
+   "duration": 8.3,
+   "kw_times": {
+    "scar": 131.22,
+    "thumb": 132.16
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.0761,
+    "active_region_ratio": 0.9749,
+    "frame_difference": 17.1761
+   },
+   "clip_fingerprint": "94f18f7560dd3464",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_14.mp4",
+   "stock_id": 34582380,
+   "pexels_id": 34582380,
+   "stock_frame_url": "https://images.pexels.com/videos/34582380/pexels-photo-34582380.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/hand-with-scar-moisturizing-cream-application-34582380/",
+   "kw_overlays": [
+    {
+     "kw": "scar",
+     "png": "cap_14_kw0.png"
+    },
+    {
+     "kw": "thumb",
+     "png": "cap_14_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "scar",
+     "png": "youtube_cap_14_kw0.png"
+    },
+    {
+     "kw": "thumb",
+     "png": "youtube_cap_14_kw1.png"
+    }
+   ]
   },
   {
    "text": "You don't remember. For one second, your body feels like evidence.",
@@ -309,8 +910,49 @@
    "query": "person examining own hand evidence light dark room",
    "primary_symbol": "hand",
    "human_role": "witness",
-   "start": 136.494,
-   "duration": 4.389
+   "start": 137.44,
+   "duration": 6.3,
+   "kw_times": {
+    "evidence": 141.82
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.9019,
+    "active_region_ratio": 0.9984,
+    "frame_difference": 30.5587
+   },
+   "clip_fingerprint": "3e2cd6a259f1b961",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_15.mp4",
+   "stock_id": 6125525,
+   "pexels_id": 6125525,
+   "stock_frame_url": "https://images.pexels.com/videos/6125525/pexels-photo-6125525.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-showing-evidence-6125525/",
+   "kw_overlays": [
+    {
+     "kw": "hand",
+     "png": "cap_15_kw0.png"
+    },
+    {
+     "kw": "evidence",
+     "png": "cap_15_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "hand",
+     "png": "youtube_cap_15_kw0.png"
+    },
+    {
+     "kw": "evidence",
+     "png": "youtube_cap_15_kw1.png"
+    }
+   ]
   },
   {
    "text": "Instruction three: open the book you never finished. Page 214.",
@@ -324,8 +966,50 @@
    "symbol_family": "objects",
    "query": "old book opening marked page desk lamp cinematic close",
    "primary_symbol": "book",
-   "start": 140.883,
-   "duration": 8.348
+   "start": 143.74,
+   "duration": 5.02,
+   "kw_times": {
+    "book": 145.82,
+    "page": 147.74
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.2295,
+    "active_region_ratio": 0.7465,
+    "frame_difference": 12.8928
+   },
+   "clip_fingerprint": "db9e9675e3c1f59c",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_16.mp4",
+   "stock_id": 6279700,
+   "pexels_id": 6279700,
+   "stock_frame_url": "https://images.pexels.com/videos/6279700/afro-hair-architect-architectural-architectural-building-6279700.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-touching-the-page-of-the-book-6279700/",
+   "kw_overlays": [
+    {
+     "kw": "book",
+     "png": "cap_16_kw0.png"
+    },
+    {
+     "kw": "page",
+     "png": "cap_16_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "book",
+     "png": "youtube_cap_16_kw0.png"
+    },
+    {
+     "kw": "page",
+     "png": "youtube_cap_16_kw1.png"
+    }
+   ]
   },
   {
    "text": "A sentence is underlined: A ship can replace every plank and still arrive carrying the guilt of the original wood.",
@@ -344,8 +1028,55 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "epic yet intimate cinematic 35mm film still of an old wooden ship crossing a black-green sea at night while its hull visibly replaces itself plank by plank, new amber wood locking into place above the water as the original dark planks drift behind beneath the surface like a submerged skeleton, moonless sky, one warm cabin light, low camera near the waterline with a blurred floating plank in the foreground, photoreal, restrained impossible mechanics, fine film grain, entirely unlettered surfaces, watermark-free",
-   "start": 149.231,
-   "duration": 7.723
+   "start": 148.76,
+   "duration": 10.8,
+   "kw_times": {
+    "ship": 152.48
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_17.jpg",
+   "still_reference_signature": "485d6767075f9cc18176",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_17.mp4",
+   "clip_fingerprint": "1ac72a245076a31b",
+   "hero_generated": true,
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "ship",
+     "png": "cap_17_kw0.png"
+    },
+    {
+     "kw": "planks",
+     "png": "cap_17_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "ship",
+     "png": "youtube_cap_17_kw0.png"
+    },
+    {
+     "kw": "planks",
+     "png": "youtube_cap_17_kw1.png"
+    }
+   ]
   },
   {
    "text": "Underneath it, in your handwriting: When this stops hurting, you are not me anymore.",
@@ -360,8 +1091,26 @@
    "query": "finger tracing underlined sentence old book macro moody",
    "primary_symbol": "underline",
    "human_role": "witness",
-   "start": 156.954,
-   "duration": 7.707
+   "start": 159.56,
+   "duration": 7.51,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.8468,
+    "active_region_ratio": 0.9972,
+    "frame_difference": 28.242
+   },
+   "clip_fingerprint": "e0888f6da8857400",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_18.mp4",
+   "stock_id": 5283822,
+   "pexels_id": 5283822,
+   "stock_frame_url": "https://images.pexels.com/videos/5283822/pexels-photo-5283822.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/macro-shot-of-a-book-page-5283822/"
   },
   {
    "text": "It doesn't hurt.",
@@ -378,8 +1127,26 @@
    "query": "open book still dark room single lamp cinematic",
    "primary_symbol": "stillness",
    "narrative_mode": "atmosphere",
-   "start": 164.661,
-   "duration": 3.52
+   "start": 167.07,
+   "duration": 2.45,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.7879,
+    "active_region_ratio": 0.4314,
+    "frame_difference": 22.9346
+   },
+   "clip_fingerprint": "dcc65ddc38a95675",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_19.mp4",
+   "stock_id": 7055351,
+   "pexels_id": 7055351,
+   "stock_frame_url": "https://images.pexels.com/videos/7055351/book-brainstorming-browse-through-business-7055351.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/flipping-pages-of-a-book-7055351/"
   },
   {
    "text": "And there it is. Not terror. Not grief. Administrative confirmation. Somewhere between Tuesday and becoming easier to live with, you replaced a person.",
@@ -395,8 +1162,26 @@
    "symbol_family": "objects",
    "query": "archive filing cabinet drawer closing opening moody cinematic",
    "primary_symbol": "file",
-   "start": 168.181,
-   "duration": 11.6
+   "start": 169.52,
+   "duration": 13.1,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.08,
+    "active_region_ratio": 0.9982,
+    "frame_difference": 30.1702
+   },
+   "clip_fingerprint": "b12682278cae1f1e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_20.mp4",
+   "stock_id": 6549976,
+   "pexels_id": 6549976,
+   "stock_frame_url": "https://images.pexels.com/videos/6549976/pexels-photo-6549976.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/looking-among-files-6549976/"
   },
   {
    "text": "But before you call yourself an impostor, read the final instruction.",
@@ -411,8 +1196,26 @@
    "query": "person reflection window lowers gaze to paper night",
    "primary_symbol": "mirror",
    "human_role": "witness",
-   "start": 179.781,
-   "duration": 5.56
+   "start": 182.62,
+   "duration": 4.94,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.5253,
+    "active_region_ratio": 0.9759,
+    "frame_difference": 7.3898
+   },
+   "clip_fingerprint": "b3116863c972bfb2",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_21.mp4",
+   "stock_id": 12340586,
+   "pexels_id": 12340586,
+   "stock_frame_url": "https://images.pexels.com/videos/12340586/pexels-photo-12340586.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/face-of-sad-woman-behind-glass-window-12340586/"
   },
   {
    "text": "Do one kind thing I would have been too afraid to do.",
@@ -429,8 +1232,26 @@
    "query": "hesitant hand reaching to comfort another daylight close",
    "primary_symbol": "hand",
    "human_role": "actor",
-   "start": 185.341,
-   "duration": 5.007
+   "start": 187.56,
+   "duration": 4.68,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.2563,
+    "active_region_ratio": 0.3068,
+    "frame_difference": 18.9403
+   },
+   "clip_fingerprint": "167944aae4527b8b",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_22.mp4",
+   "stock_id": 8928261,
+   "pexels_id": 8928261,
+   "stock_frame_url": "https://images.pexels.com/videos/8928261/abstract-art-blur-bright-8928261.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-shot-of-a-human-s-hand-8928261/"
   },
   {
    "text": "Because the old you wasn't trying to come back. They were leaving a breadcrumb for the stranger who inherited their consequences.",
@@ -450,8 +1271,56 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "cinematic photoreal 35mm film still of a dark domestic hallway stretching impossibly through several decades, each doorway contains a faintly different silhouette of the same anonymous person at a different age, a single small breadcrumb glows warm amber on the floor in the foreground and a trail of ordinary crumbs recedes through the thresholds toward the newest silhouette, cold institutional green walls gradually warming in the distance, shallow depth of field, dust in light shafts, restrained surrealism, fine film grain, no text, no words, no watermark",
-   "start": 190.348,
-   "duration": 8.927
+   "start": 192.24,
+   "duration": 8.86,
+   "kw_times": {
+    "breadcrumb": 196.62,
+    "stranger": 197.5
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_23.jpg",
+   "still_reference_signature": "200af753fdceb78bf84b",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_23.mp4",
+   "clip_fingerprint": "77861ea49932da69",
+   "hero_generated": true,
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "breadcrumb",
+     "png": "cap_23_kw0.png"
+    },
+    {
+     "kw": "stranger",
+     "png": "cap_23_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "breadcrumb",
+     "png": "youtube_cap_23_kw0.png"
+    },
+    {
+     "kw": "stranger",
+     "png": "youtube_cap_23_kw1.png"
+    }
+   ]
   },
   {
    "text": "The note wasn't proof that you had failed to remain yourself. It was proof that one self believed the next might do better.",
@@ -467,8 +1336,26 @@
    "symbol_family": "light",
    "query": "single lamp left burning in empty room doorway warm cinematic drifting dust no people",
    "primary_symbol": "lamp",
-   "start": 199.275,
-   "duration": 7.884
+   "start": 201.1,
+   "duration": 8.3,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.5263,
+    "active_region_ratio": 0.2899,
+    "frame_difference": 17.607
+   },
+   "clip_fingerprint": "a50dc15740b74863",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_24.mp4",
+   "stock_id": 5155190,
+   "pexels_id": 5155190,
+   "stock_frame_url": "https://images.pexels.com/videos/5155190/pexels-photo-5155190.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/sunrays-coming-from-a-glass-window-5155190/"
   },
   {
    "text": "So you do the kind thing.",
@@ -483,8 +1370,26 @@
    "query": "quiet act of kindness two people daylight cinematic candid",
    "primary_symbol": "kindness",
    "human_role": "actor",
-   "start": 207.159,
-   "duration": 3.2
+   "start": 209.4,
+   "duration": 2.44,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.3044,
+    "active_region_ratio": 0.9859,
+    "frame_difference": 19.2683
+   },
+   "clip_fingerprint": "43260c53bb241ea3",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_25.mp4",
+   "stock_id": 32087874,
+   "pexels_id": 32087874,
+   "stock_frame_url": "https://images.pexels.com/videos/32087874/talk-32087874.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/candid-nighttime-conversation-under-city-lights-32087874/"
   },
   {
    "text": "Then you turn the page over and write: If you're reading this, I didn't make it.",
@@ -501,8 +1406,49 @@
    "query": "hand writing note reverse side paper desk lamp cinematic",
    "primary_symbol": "pen",
    "human_role": "actor",
-   "start": 210.359,
-   "duration": 8.081
+   "start": 211.84,
+   "duration": 6.6,
+   "kw_times": {
+    "page": 212.9
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.2308,
+    "active_region_ratio": 0.9661,
+    "frame_difference": 8.1541
+   },
+   "clip_fingerprint": "38150fdd0412ead2",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_26.mp4",
+   "stock_id": 4327211,
+   "pexels_id": 4327211,
+   "stock_frame_url": "https://images.pexels.com/videos/4327211/pexels-photo-4327211.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-writing-on-a-sticky-note-4327211/",
+   "kw_overlays": [
+    {
+     "kw": "pen",
+     "png": "cap_26_kw0.png"
+    },
+    {
+     "kw": "page",
+     "png": "cap_26_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "pen",
+     "png": "youtube_cap_26_kw0.png"
+    },
+    {
+     "kw": "page",
+     "png": "youtube_cap_26_kw1.png"
+    }
+   ]
   },
   {
    "text": "Not for you. For whoever wakes up here next.",
@@ -523,7 +1469,31 @@
    "image_prompt": "cinematic photoreal 35mm film still at blue dawn, an adult hand tapes a folded cream note beneath the same old wooden desk while a second faint translucent hand from another time aligns perfectly with the gesture, warm desk lamp fading against cool morning window light, a coffee-ring stain on the paper but no readable writing, deep perspective under the desk, foreground wood grain out of focus, subtle hopeful mood, fine film grain, no readable text, no words, no watermark",
    "human_role": "unspecified",
    "start": 218.44,
-   "duration": 6.087
+   "duration": 5.671,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_27.jpg",
+   "still_reference_signature": "3bd794821b5d0f1a9850",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/clip_27.mp4",
+   "clip_fingerprint": "657aea8b3608d4e2",
+   "hero_generated": true,
+   "motion_recipe": "paper",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   }
  ],
  "voiceover": "vo.mp3",
@@ -540,6 +1510,16 @@
    "speed": 0.91
   },
   "audio_tags_enabled": true
- }
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
-
