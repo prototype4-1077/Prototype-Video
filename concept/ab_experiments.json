@@ -1,0 +1,16 @@
+{
+  "_note": "Structural A/B experiments. The pipeline can cut two openers/hooks of one script; ship both as Shorts, let retention pick the winner, then bank the rule into craft_ledger.json. Each experiment: hypothesis, two variants (slug or hook text), metric, and result once measured.",
+  "protocol": [
+    "1. Pick ONE variable to test (hook type, opener length, title, thumbnail).",
+    "2. Build variant A and variant B differing ONLY in that variable (same concept, same body).",
+    "3. Publish both within the same window; let each accrue >=200 views.",
+    "4. Compare avg_view_pct (retention is the true signal) and 48h view velocity.",
+    "5. Bank the winner as a rule in craft_ledger.json; retire the loser pattern."
+  ],
+  "open_hypotheses": [
+    {"id":"hook-plunge-vs-question","variable":"hook type","hypothesis":"2nd-person plunge opener retains better than a question opener for the machine pillar","status":"proposed","note":"data hint: the 832-view breakout used a plunge; test head-to-head"},
+    {"id":"opener-length","variable":"opener duration","hypothesis":"a <2s cold-open beats a 4s atmospheric open (every tracked video bleeds early)","status":"proposed"},
+    {"id":"title-curiosity-gap","variable":"title","hypothesis":"a curiosity-gap title out-clicks a descriptive one at equal thumbnail","status":"proposed"}
+  ],
+  "results": []
+}

@@ -32,7 +32,7 @@ Run: `python3 concept/intelligence.py`. It gets smarter every night automaticall
 
 ---
 
-## TIER 2 — Make them better (craft intelligence) 🔨 STARTED
+## TIER 2 — Make them better (craft intelligence) ✅ LIVE
 Turn behavior into production rules the scriptwriter obeys.
 
 - **From retention (done):** the "held vs. bled" scene verdicts become craft rules —
@@ -47,7 +47,7 @@ Turn behavior into production rules the scriptwriter obeys.
 
 ---
 
-## TIER 3 — Transform into other areas of help & influence 🌱 THE FRAME-BREAK
+## TIER 3 — Transform into other areas of help & influence 🌱 FIRST CONTAINER LIVE
 The real asset was never "videos." It's a **validated method**: warmly showing people
 the constructed nature of their own experience, and inviting them to examine their own
 beliefs — always landing in the ordinary, never leading. That method is portable.
@@ -96,8 +96,11 @@ belief they'd never questioned — and walk away more their own?**
 ---
 
 ## What's live today vs. next
-- **Live:** `concept/catalog.json`, `concept/intelligence.py`, the daily brief's
-  data-driven steer, the retention craft rules. Growing nightly.
-- **Next, on your word:** comment mining, structural A/B, the craft ledger (Tier 2);
-  then pick ONE Tier-3 container to prototype (my pick: the daily-invitation product —
-  smallest build, purest expression of the mission).
+- **Live now:** `concept/catalog.json` + `concept/intelligence.py` (the feedback loop
+  and data-driven steer); `concept/craft_ledger.json` (16 consolidated production
+  rules the scriptwriter reads); `concept/comment_mining.py` (audience signal, wired
+  into the nightly analytics workflow); `concept/ab_experiments.json` (A/B scaffold +
+  protocol); `concept/invitation.py` + a daily scheduled task (the Tier-3 daily-
+  invitation product). All refresh nightly.
+- **Next, on your word:** run the first A/B (plunge vs question hook); prototype a
+  second Tier-3 container (long-form, or the interactive belief-examiner).

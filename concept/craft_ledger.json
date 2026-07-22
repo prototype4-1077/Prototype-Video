@@ -1,0 +1,29 @@
+{
+  "_note": "The compounding craft memory. Every hard-won production rule the scriptwriter reads BEFORE writing. Learned from retention data, render failures, and James's feedback across the whole catalog. Add rules as they're learned; intelligence.py can append retention-derived ones.",
+  "structure": [
+    {"rule":"Hook in the first 1.5 seconds — strongest visual + most provocative line first. No slow atmosphere open.","source":"retention: every tracked video bleeds viewers in its opening scenes","weight":"critical"},
+    {"rule":"Protect the closing turn + invitation — retention-held scenes cluster at the end. Never rush the payoff.","source":"retention verdicts","weight":"high"},
+    {"rule":"One ruling metaphor per script, held all the way (machine / ship / crossword / editor / customs / the tide).","source":"corpus pattern","weight":"high"},
+    {"rule":"End on an open question handed to the viewer — the Invitation, never a decree.","source":"ethos","weight":"critical"},
+    {"rule":"Land a grounding beat near the end (room / body / breath / ordinary object) — signature + safety rail.","source":"corpus #1 thread (273 mentions)","weight":"high"},
+    {"rule":"Reframe the fear beat: turn the scary reading into an empowering one ('it should panic — it was never built to step outside the dream').","source":"corpus pattern","weight":"medium"}
+  ],
+  "pacing": [
+    {"rule":"Liam v3 with dense emotional tags delivers ~2.05-2.15 words/sec. Budget ~330-340 words for a ~2:40 Short; do NOT exceed ~360 or it runs past 3:00.","source":"I Became Everything 387w rendered 3:02","weight":"critical"},
+    {"rule":"Rich personality tags must reach the AUDIO — a cached vo.mp3 from a prior script version will silently ship old flat delivery. Voice fingerprints now force regen, but verify audio changed on revisions.","source":"Ship/Crossword v2 bug","weight":"high"}
+  ],
+  "visual": [
+    {"rule":"Photoreal doctrine: heroes are photographs of the impossible — film-still, anamorphic, motivated light, film grain, ONE impossible element lit by the scene's own light, three-plane depth (near occluder / mid subject / far haze). Never 'digital art'. See PHOTOREAL_STYLE.md.","source":"James art direction","weight":"critical"},
+    {"rule":"Still-derived footage is capped (~35-40%). Entity/void/atmosphere scripts run hero-heavy and blow the cap — convert extra heroes/atmosphere beats to real MOTION stock (stock_ok mode) for margin.","source":"Door/Customs repeated failures","weight":"critical"},
+    {"rule":"Human imagery must stay under ~52% and avoid long runs. Narration with 'you/your body/hands' can trip the human classifier even on object shots — anchor those scenes with a concrete non-human noun (fire/water/object).","source":"Understudy + Where You End","weight":"high"},
+    {"rule":"Palette derives from each story; vary across videos (violet/gold is one option, not default). DMT trance slides keep the stylized mandala/fractal aura; DMT real-world grounding shots go photoreal.","source":"James rules + DMT_STYLE.md","weight":"medium"}
+  ],
+  "performance_lanes": [
+    {"rule":"Spearhead: machine/attention pillar, guided-2nd voice, plunge hook = the current highest reach (832-view breakout). Feed it while it's hot.","source":"intelligence.py","weight":"high"},
+    {"rule":"DMT testimony (1st-person, confession hook, presence + fractal slides) is the highest emotional-voltage lane; Room Before Birth hit ~1M on TikTok.","source":"TikTok catalog study","weight":"high"}
+  ],
+  "titling": [
+    {"rule":"'DMT' in a title ONLY for videos actually about DMT (trip testimony or direct DMT teaching). Consciousness videos never borrow the prefix.","source":"James rule","weight":"critical"},
+    {"rule":"Curiosity-gap titles, no trailing periods. Titles shrink-to-fit, max 12 chars per line.","source":"James rules","weight":"medium"}
+  ]
+}

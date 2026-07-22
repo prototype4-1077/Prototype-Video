@@ -34,13 +34,23 @@ jobs:
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: python3 pipeline/analytics_sync.py
 
+      - name: Mine audience comments + refresh intelligence
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: |
+          python3 concept/comment_mining.py || echo "comment mining skipped"
+          python3 concept/intelligence.py > concept/INTELLIGENCE_REPORT.md || true
+
       - name: Commit learned state
         shell: bash
         run: |
           git config user.name "analytics-bot"
           git config user.email "analytics@users.noreply.github.com"
           for f in pipeline/memory.json pipeline/taste.npz pipeline/WHATS_WORKING.md \
-                   build/*/retention.json build/*/yt_stats.json; do
+                   build/*/retention.json build/*/yt_stats.json \
+                   concept/audience_signal.json concept/INTELLIGENCE_REPORT.md concept/craft_ledger.json; do
             git add "$f" 2>/dev/null || true
           done
           git commit -m "analytics: audience retention learning" || echo "nothing to commit"
