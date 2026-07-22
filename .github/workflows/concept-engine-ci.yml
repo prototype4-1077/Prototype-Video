@@ -4,12 +4,14 @@ on:
   pull_request:
     paths:
       - "concept/**"
+      - "build/the-forecast-in-your-chest/**"
       - "CONCEPT_ENGINE*.md"
       - ".github/workflows/concept-engine-ci.yml"
   push:
     branches: [main]
     paths:
       - "concept/**"
+      - "build/the-forecast-in-your-chest/**"
       - "CONCEPT_ENGINE*.md"
       - ".github/workflows/concept-engine-ci.yml"
   workflow_dispatch:
@@ -30,7 +32,8 @@ jobs:
           python3 -m py_compile concept/*.py
           python3 - <<'PY'
           import glob, json
-          for path in glob.glob("concept/*.json"):
+          paths = glob.glob("concept/*.json") + glob.glob("build/the-forecast-in-your-chest/*.json")
+          for path in paths:
               with open(path, encoding="utf-8") as f:
                   json.load(f)
               print("valid", path)
@@ -42,3 +45,17 @@ jobs:
           python3 concept/intelligence.py recommend
           python3 concept/decision_brief.py
           python3 concept/influence_guard.py concept/LATEST_DECISION_BRIEF.json
+      - name: Guard the full Forecast test script
+        run: |
+          python3 concept/influence_guard.py build/the-forecast-in-your-chest/script.json | tee /tmp/forecast-guard.json
+          python3 - <<'PY'
+          import json
+          result = json.load(open('/tmp/forecast-guard.json'))
+          metrics = result['script_metrics']
+          assert result['decision'] == 'PASS', result
+          assert metrics['scene_count'] == 24, metrics
+          assert metrics['word_count'] == 337, metrics
+          assert metrics['human_scene_ratio'] < 0.5, metrics
+          assert metrics['evidence_scene_count'] >= 1, metrics
+          print('Forecast test passed:', metrics)
+          PY
