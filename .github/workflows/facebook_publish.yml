@@ -1,0 +1,24 @@
+name: Publish to Facebook
+
+on:
+  workflow_dispatch:
+    inputs:
+      slugs:
+        description: "space-separated slugs to publish (blank = whole queue)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish to Facebook Page
+        env:
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: python3 pipeline/fb_publish.py ${{ github.event.inputs.slugs }}
