@@ -1,21 +1,45 @@
 {
-  "finished_at": "2026-07-22T12:47:36+00:00",
-  "github_run_id": "29920964086",
+  "finished_at": "2026-07-22T13:42:29+00:00",
+  "github_run_id": "29921404130",
   "incidents": [
     {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "690759bc7bc5ffbc",
-      "kind": "failure",
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "e0134d7c24776f18",
+      "kind": "timeout",
       "last_item": null,
-      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script note: scene <n> keyword 'portrait' not found in text (won't highlight) note: scene <n> keyword 'film' not found in text (won't highlight) note: scene <n> keyword 'lens' not found in text (won't highlight) error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.4s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=440d7c2e898489e3. ERROR: scene 8 text too long (226 chars) | FIX: split it into two scenes",
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/final_youtube.mp4 + /home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/final.mp4",
   "mode": "recover",
-  "passes": 2,
+  "passes": 6,
   "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.02,
+      "sample_count": 17,
+      "soft_timeout_s": 33.02,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 8.07,
+      "idle_timeout_s": 54.2,
+      "sample_count": 21,
+      "soft_timeout_s": 54.2,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 98.93,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 326.8,
+      "source": "history"
+    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -23,32 +47,451 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.09,
+      "sample_count": 117,
+      "soft_timeout_s": 33.09,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 32.23,
+      "idle_timeout_s": 126.69,
+      "sample_count": 200,
+      "soft_timeout_s": 126.69,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 56.93,
+      "idle_timeout_s": 180.0,
+      "sample_count": 177,
+      "soft_timeout_s": 200.78,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 27.87,
+      "idle_timeout_s": 180.0,
+      "sample_count": 63,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 44.68,
+      "idle_timeout_s": 164.05,
+      "sample_count": 24,
+      "soft_timeout_s": 164.05,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.05,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 22.47,
+      "idle_timeout_s": 180.0,
+      "sample_count": 32,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 74.67,
+      "idle_timeout_s": 180.0,
+      "sample_count": 15,
+      "soft_timeout_s": 254.01,
+      "source": "history"
     }
   },
-  "quality": {},
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself",
+    "checked_at": "2026-07-22T13:42:29+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 164.604,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "portrait": {
+        "avg_kbps": 3611,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.002,
+        "exists": true,
+        "expected_duration_s": 164.604,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/final.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 164.606009,
+          "bit_rate": 3611256.0,
+          "duration_s": 164.606009,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1920,
+          "video_codec": "h264",
+          "video_duration_s": 164.5,
+          "width": 1080
+        },
+        "size_bytes": 74304312,
+        "warnings": [
+          {
+            "code": "low_bitrate",
+            "message": "Average bitrate 3611 kbps is unusually low for 1080p; check for over-compression",
+            "target": "portrait"
+          }
+        ]
+      },
+      "youtube": {
+        "avg_kbps": 6490,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.002,
+        "exists": true,
+        "expected_duration_s": 164.604,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 164.606009,
+          "bit_rate": 6490335.0,
+          "duration_s": 164.606009,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 164.5,
+          "width": 1920
+        },
+        "size_bytes": 133543526,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": [
+      {
+        "code": "low_bitrate",
+        "message": "Average bitrate 3611 kbps is unusually low for 1080p; check for over-compression",
+        "target": "portrait"
+      }
+    ]
+  },
   "recommendations": [
     {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "690759bc7bc5ffbc",
-      "priority": "high",
-      "reason": "2 occurrence(s): note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script note: scene <n> keyword 'portrait' not found in text (won't highlight) note: scene <n> keyword 'film' not found in text (won't highlight) note: scene <n> keyword 'lens' not found in text (won't highlight) error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "e0134d7c24776f18",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.4s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (2876.8s).",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Review warnings before allowing any speed-oriented policy to become the champion.",
+      "priority": "medium",
+      "reason": "Quality gate emitted 1 warning(s).",
+      "stage": "quality"
     }
   ],
-  "run_id": "2d67b88f2b7c41228f16ed2fef90ac18",
+  "run_id": "f72acef9185647aca26beedf7cea780f",
   "schema_version": 1,
   "slug": "the-museum-that-repaints-itself",
   "stages": {
-    "build_pass": {
-      "attempts": 2,
-      "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 2.003
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 4.022,
+      "p95_success_s": 4.022,
+      "success_durations_s": [
+        4.022
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 4.022
+    },
+    "assemble": {
+      "attempts": 33,
+      "failures": 0,
+      "p50_success_s": 69.523,
+      "p95_success_s": 116.832,
+      "success_durations_s": [
+        39.289,
+        45.388,
+        60.494,
+        85.672,
+        82.643,
+        24.157,
+        69.523,
+        67.51,
+        73.64,
+        36.249,
+        77.683,
+        52.402,
+        45.37,
+        68.606,
+        59.483,
+        53.415,
+        40.351,
+        51.382,
+        71.552,
+        83.627,
+        115.987,
+        118.1,
+        38.284,
+        95.745,
+        99.901,
+        98.806,
+        126.347,
+        79.614,
+        67.517,
+        98.816,
+        88.696,
+        80.664,
+        61.493
+      ],
+      "successes": 33,
+      "timeouts": 0,
+      "total_duration_s": 2358.406
+    },
+    "build_pass": {
+      "attempts": 6,
+      "failures": 1,
+      "p50_success_s": 119.144,
+      "p95_success_s": 609.82,
+      "success_durations_s": [
+        73.026,
+        22.016,
+        119.144,
+        133.259,
+        728.96
+      ],
+      "successes": 5,
+      "timeouts": 1,
+      "total_duration_s": 2876.845
+    },
+    "credits": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 1.011,
+      "p95_success_s": 1.021,
+      "success_durations_s": [
+        1.005,
+        1.011,
+        1.022
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 3.038
+    },
+    "ffmpeg": {
+      "attempts": 8,
+      "failures": 0,
+      "p50_success_s": 6.526,
+      "p95_success_s": 28.765,
+      "success_durations_s": [
+        1.012,
+        6.024,
+        24.157,
+        7.028,
+        1.012,
+        6.024,
+        31.247,
+        7.029
+      ],
+      "successes": 8,
+      "timeouts": 0,
+      "total_duration_s": 83.533
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 118.155,
+      "p95_success_s": 118.155,
+      "success_durations_s": [
+        118.155
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 118.155
+    },
+    "hero": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 38.069,
+      "p95_success_s": 52.501,
+      "success_durations_s": [
+        24.055,
+        54.104,
+        38.069
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 116.228
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 15.046,
+      "p95_success_s": 15.046,
+      "success_durations_s": [
+        15.046
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 15.046
+    },
+    "probe": {
+      "attempts": 36,
+      "failures": 0,
+      "p50_success_s": 1.011,
+      "p95_success_s": 1.012,
+      "success_durations_s": [
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.01,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.011,
+        1.012,
+        1.013
+      ],
+      "successes": 36,
+      "timeouts": 0,
+      "total_duration_s": 36.414
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 59.458,
+      "p95_success_s": 59.458,
+      "success_durations_s": [
+        59.458
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 59.458
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 19.011,
+      "p95_success_s": 19.011,
+      "success_durations_s": [
+        19.011
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 19.011
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 72.025,
+      "p95_success_s": 72.025,
+      "success_durations_s": [
+        72.025
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 72.025
     }
   },
-  "status": "failed"
+  "status": "done"
 }

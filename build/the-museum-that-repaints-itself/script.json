@@ -1,334 +1,1051 @@
 {
-  "title": "The Museum That Repaints Itself",
-  "slug": "the-museum-that-repaints-itself",
-  "series_label": "The Reality Machine",
-  "elevenlabs_model": "eleven_v3",
-  "elevenlabs_voice_id": "TX3LPaxmHKxFdv7VOQHJ",
-  "elevenlabs_stability_mode": "creative",
-  "auto_audio_tags": false,
-  "supplied_script": true,
-  "voice_standard": "Magnetic intellectual rogue: intimate, amused, conspiratorial, and vividly human; treats each idea like a secret worth savoring; moves freely through curiosity, concern, disbelief, dismissal, laughter, warmth, urgency, and awe; slows down for the reality-shifting lines, whispers the dangerous implications, laughs naturally at absurdity, and lands with humane authority; crisp consonants, elastic pacing, irresistible forward motion",
-  "visual_policy": {
-    "mode": "diverse_symbols",
-    "max_human_ratio": 0.55
-  },
-  "render_outputs": [
-    "youtube",
-    "portrait"
-  ],
-  "max_still_source_ratio": 0.35,
-  "still_image_policy": "closest_stock_frame_full_enhancement",
-  "music_choice": 3,
-  "music_variant_count": 1,
-  "scenes": [
+ "title": "The Museum That Repaints Itself",
+ "slug": "the-museum-that-repaints-itself",
+ "series_label": "The Reality Machine",
+ "elevenlabs_model": "eleven_v3",
+ "elevenlabs_voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+ "elevenlabs_stability_mode": "creative",
+ "auto_audio_tags": false,
+ "supplied_script": true,
+ "voice_standard": "Magnetic intellectual rogue: intimate, amused, conspiratorial, and vividly human; treats each idea like a secret worth savoring; moves freely through curiosity, concern, disbelief, dismissal, laughter, warmth, urgency, and awe; slows down for the reality-shifting lines, whispers the dangerous implications, laughs naturally at absurdity, and lands with humane authority; crisp consonants, elastic pacing, irresistible forward motion",
+ "visual_policy": {
+  "mode": "diverse_symbols",
+  "max_human_ratio": 0.55
+ },
+ "render_outputs": [
+  "youtube",
+  "portrait"
+ ],
+ "max_still_source_ratio": 0.35,
+ "still_image_policy": "closest_stock_frame_full_enhancement",
+ "music_choice": 3,
+ "music_variant_count": 1,
+ "scenes": [
+  {
+   "text": "Somewhere behind your eyes is a museum that never closes.",
+   "audio_tags": [
+    "curious",
+    "quietly conspiratorial"
+   ],
+   "keywords": [
+    "museum",
+    "eyes"
+   ],
+   "semantic_anchor": "A radiant museum hidden behind human perception.",
+   "visual_function": "perspective_shift",
+   "symbol_family": "architecture",
+   "query": "",
+   "primary_symbol": "museum",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "high-key cinematic 35mm film still, vast contemporary white museum flooded with clean morning sunlight, luminous skylights, vivid coral cyan and yellow artworks, a human silhouette entering through enormous open doors, polished floor reflecting daylight, crisp exposure, optimistic surrealism, photoreal, no dark corners, no noir, no readable text, no words, no watermark",
+   "human_role": "witness",
+   "start": 0.0,
+   "duration": 5.82,
+   "kw_times": {
+    "museum": 2.26,
+    "eyes": 1.38
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_00.jpg",
+   "still_reference_signature": "f28cd2a17dbc421256fb",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_00.mp4",
+   "clip_fingerprint": "fd1453a471b36727",
+   "hero_generated": true,
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
     {
-      "text": "Somewhere behind your eyes is a museum that never closes.",
-      "audio_tags": [
-        "curious",
-        "quietly conspiratorial"
-      ],
-      "keywords": [
-        "museum",
-        "eyes"
-      ],
-      "semantic_anchor": "A radiant museum hidden behind human perception.",
-      "visual_function": "perspective_shift",
-      "symbol_family": "architecture",
-      "query": "",
-      "primary_symbol": "museum",
-      "hero": true,
-      "hero_style": "effects",
-      "image_prompt": "high-key cinematic 35mm film still, vast contemporary white museum flooded with clean morning sunlight, luminous skylights, vivid coral cyan and yellow artworks, a human silhouette entering through enormous open doors, polished floor reflecting daylight, crisp exposure, optimistic surrealism, photoreal, no dark corners, no noir, no readable text, no words, no watermark",
-      "human_role": "witness"
+     "kw": "museum",
+     "png": "cap_00_kw0.png"
     },
     {
-      "text": "Every room contains a moment you swear you remember perfectly. Your first home. Your first heartbreak.",
-      "audio_tags": [
-        "intimate",
-        "curious"
-      ],
-      "keywords": [
-        "rooms",
-        "memories"
-      ],
-      "semantic_anchor": "Bright museum rooms hold vivid fragments of first experiences.",
-      "visual_function": "human_experience",
-      "symbol_family": "human",
-      "query": "bright white museum gallery colorful memory objects daylight cinematic",
-      "primary_symbol": "rooms",
-      "human_role": "creator"
-    },
-    {
-      "text": "The face of someone you loved. There is only one problem. The curator is a forger.",
-      "audio_tags": [
-        "leans closer",
-        "quietly conspiratorial",
-        "whispers"
-      ],
-      "keywords": [
-        "portrait",
-        "curator"
-      ],
-      "semantic_anchor": "A curator secretly repaints the portrait of someone once loved.",
-      "visual_function": "human_experience",
-      "symbol_family": "human",
-      "query": "art curator repainting portrait brilliant sunlit gallery close up",
-      "primary_symbol": "curator",
-      "human_role": "creator"
-    },
-    {
-      "text": "You were told memory works like a camera. Press record. Store the footage. Play it back later. Neat. Mechanical. Reassuring. And almost completely wrong.",
-      "audio_tags": [
-        "matter-of-fact",
-        "dismissive",
-        "laughs softly"
-      ],
-      "keywords": [
-        "camera",
-        "film"
-      ],
-      "semantic_anchor": "A pristine camera represents the comforting but false recording model of memory.",
-      "visual_function": "literal_anchor",
-      "symbol_family": "technology",
-      "query": "vintage film camera bright studio sunlight colorful background spinning reel",
-      "primary_symbol": "camera"
-    },
-    {
-      "text": "Your brain does not preserve entire scenes. It keeps fragments. A smell. A sentence. The angle of someone's shoulders. The feeling in your stomach.",
-      "audio_tags": [
-        "matter-of-fact",
-        "curious",
-        "slows slightly"
-      ],
-      "keywords": [
-        "fragments",
-        "senses"
-      ],
-      "semantic_anchor": "Sensory fragments float separately before a memory is reconstructed.",
-      "visual_function": "mechanism",
-      "symbol_family": "objects",
-      "query": "colorful sensory objects perfume letter chair floating bright white studio",
-      "primary_symbol": "fragments"
-    },
-    {
-      "text": "Then a very confident stage director fills in the rest.",
-      "audio_tags": [
-        "playful",
-        "self-important",
-        "amused"
-      ],
-      "keywords": [
-        "director",
-        "stage"
-      ],
-      "semantic_anchor": "A confident stage director arranges incomplete memory fragments.",
-      "visual_function": "mechanism",
-      "symbol_family": "objects",
-      "query": "charismatic theater director arranging props bright rehearsal stage daylight",
-      "primary_symbol": "director",
-      "human_role": "creator"
-    },
-    {
-      "text": "Every time you remember, the stage is rebuilt. The actors return. The furniture is dragged into place. But the present has been allowed backstage.",
-      "audio_tags": [
-        "dramatically",
-        "building suspense"
-      ],
-      "keywords": [
-        "stage",
-        "actors"
-      ],
-      "semantic_anchor": "A remembered room is rebuilt as a theatrical set while the present changes it backstage.",
-      "visual_function": "mechanism",
-      "symbol_family": "architecture",
-      "query": "",
-      "primary_symbol": "stage",
-      "hero": true,
-      "hero_style": "effects",
-      "image_prompt": "wide high-key cinematic film still, brilliant sunlit theater stage being assembled in real time, visible stagehands moving a yellow kitchen table, red bicycle and family photographs into place, multiple translucent versions of the same actors returning, saturated cyan coral and gold accents, clean white light, crisp faces, photoreal, no heavy shadows, no readable text, no watermark",
-      "human_role": "actor"
-    },
-    {
-      "text": "Today's anger chooses the lighting. Today's loneliness casts the actors. Today's wisdom quietly changes the ending.",
-      "audio_tags": [
-        "concerned",
-        "slows down",
-        "quietly"
-      ],
-      "keywords": [
-        "lighting",
-        "ending"
-      ],
-      "semantic_anchor": "Present emotions operate the controls of a reconstructed past.",
-      "visual_function": "mechanism",
-      "symbol_family": "technology",
-      "query": "bright colorful theater lighting control board hands sliders daylight studio",
-      "primary_symbol": "lighting",
-      "human_role": "creator"
-    },
-    {
-      "text": "That childhood kitchen may feel smaller because you became larger. That old love may seem colder because you finally learned what warmth feels like.",
-      "audio_tags": [
-        "reflective",
-        "softly",
-        "bittersweet"
-      ],
-      "keywords": [
-        "kitchen",
-        "warmth"
-      ],
-      "semantic_anchor": "An adult revisits a bright childhood kitchen as its scale and emotional temperature change.",
-      "visual_function": "perspective_shift",
-      "symbol_family": "architecture",
-      "query": "adult revisiting small childhood kitchen bright summer sunlight warm colorful",
-      "primary_symbol": "kitchen",
-      "human_role": "witness"
-    },
-    {
-      "text": "The past stayed where it was. The person looking back did not.",
-      "audio_tags": [
-        "slows down",
-        "quietly",
-        "lets the last line land"
-      ],
-      "keywords": [
-        "reflection",
-        "change"
-      ],
-      "semantic_anchor": "A reflection changes while the remembered room behind it stays fixed.",
-      "visual_function": "perspective_shift",
-      "symbol_family": "architecture",
-      "query": "changing adult reflection bright mirror sunlit room cinematic",
-      "primary_symbol": "reflection",
-      "human_role": "witness"
-    },
-    {
-      "text": "This is why two people can survive the same afternoon and carry home different histories. Neither one has to be lying. Each brain returned to the scene carrying its own paint.",
-      "audio_tags": [
-        "concerned",
-        "firmly",
-        "empathetic"
-      ],
-      "keywords": [
-        "paint",
-        "histories"
-      ],
-      "semantic_anchor": "Two witnesses paint the same event in visibly different colors.",
-      "visual_function": "human_experience",
-      "symbol_family": "human",
-      "query": "two artists painting opposite sides same canvas bright white gallery colorful daylight",
-      "primary_symbol": "paint",
-      "human_role": "creator"
-    },
-    {
-      "text": "Which becomes frightening when you realize how many arguments are really two altered memories demanding to be treated as security footage.",
-      "audio_tags": [
-        "uneasy",
-        "concerned",
-        "building tension"
-      ],
-      "keywords": [
-        "argument",
-        "footage"
-      ],
-      "semantic_anchor": "Two altered memories present conflicting versions of the same event as evidence.",
-      "visual_function": "perspective_shift",
-      "symbol_family": "language",
-      "query": "bright mediation room two people conflicting colorful photographs daylight",
-      "primary_symbol": "evidence",
-      "human_role": "actor"
-    },
-    {
-      "text": "'I remember exactly what happened.' Of course you do. The museum printed a certificate.",
-      "audio_tags": [
-        "self-assured imitation",
-        "sarcastic",
-        "laughs"
-      ],
-      "keywords": [
-        "certificate",
-        "museum"
-      ],
-      "semantic_anchor": "A museum absurdly certifies an altered memory as exact truth.",
-      "visual_function": "perspective_shift",
-      "symbol_family": "language",
-      "query": "playful museum certificate stamp bright white gallery colorful daylight no readable text",
-      "primary_symbol": "certificate",
-      "human_role": "actor"
-    },
-    {
-      "text": "Memory is not defective. It was never designed to preserve the past with perfect accuracy. It was designed to help you survive what comes next.",
-      "audio_tags": [
-        "warmly",
-        "reassuring",
-        "sincere"
-      ],
-      "keywords": [
-        "memory",
-        "survive"
-      ],
-      "semantic_anchor": "Memory transforms old images into a practical map toward the future.",
-      "visual_function": "transformation",
-      "symbol_family": "time_memory",
-      "query": "sunlit library old photographs transforming into colorful maps open doors",
-      "primary_symbol": "map"
-    },
-    {
-      "text": "It does not ask, 'What happened, exactly?' It asks, 'What should this mean now?'",
-      "audio_tags": [
-        "slows down",
-        "long thoughtful pause",
-        "whispers"
-      ],
-      "keywords": [
-        "question",
-        "meaning"
-      ],
-      "semantic_anchor": "Two questions hang in balance as meaning outweighs exact detail.",
-      "visual_function": "perspective_shift",
-      "symbol_family": "language",
-      "query": "bright white balance scale photograph and glowing compass clean daylight",
-      "primary_symbol": "compass"
-    },
-    {
-      "text": "Perhaps you are not haunted by the past. You are haunted by the newest version of the past that the present knows how to build.",
-      "audio_tags": [
-        "with quiet wonder",
-        "concerned",
-        "slowly"
-      ],
-      "keywords": [
-        "past",
-        "gallery"
-      ],
-      "semantic_anchor": "A person walks through a luminous gallery whose remembered images keep changing.",
-      "visual_function": "transformation",
-      "symbol_family": "time_memory",
-      "query": "person walking bright gallery changing photographs colorful daylight",
-      "primary_symbol": "gallery",
-      "human_role": "witness"
-    },
-    {
-      "text": "You are not carrying what happened. You are carrying today's translation of it.",
-      "audio_tags": [
-        "intimate",
-        "whispers",
-        "softly",
-        "lets the final line land"
-      ],
-      "keywords": [
-        "book",
-        "translation"
-      ],
-      "semantic_anchor": "A living book translates old photographs into present-day meaning.",
-      "visual_function": "transformation",
-      "symbol_family": "time_memory",
-      "query": "",
-      "primary_symbol": "book",
-      "hero": true,
-      "hero_style": "effects",
-      "image_prompt": "high-key cinematic photoreal film still, person in a luminous white room opening a large book, old photographs rise from the pages and transform into vivid beams of coral cyan and golden sunrise, handwritten marks rearrange without readable words, open windows, clean exposure, emotional wonder, no darkness, no readable text, no watermark",
-      "human_role": "witness"
+     "kw": "eyes",
+     "png": "cap_00_kw1.png"
     }
-  ]
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "museum",
+     "png": "youtube_cap_00_kw0.png"
+    },
+    {
+     "kw": "eyes",
+     "png": "youtube_cap_00_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "Every room contains a moment you swear you remember perfectly. Your first home. Your first heartbreak.",
+   "audio_tags": [
+    "intimate",
+    "curious"
+   ],
+   "keywords": [
+    "rooms",
+    "memories"
+   ],
+   "semantic_anchor": "Bright museum rooms hold vivid fragments of first experiences.",
+   "visual_function": "human_experience",
+   "symbol_family": "human",
+   "query": "bright white museum gallery colorful memory objects daylight cinematic",
+   "primary_symbol": "rooms",
+   "human_role": "creator",
+   "start": 5.82,
+   "duration": 8.2,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.0629,
+    "active_region_ratio": 0.9914,
+    "frame_difference": 15.8892
+   },
+   "clip_fingerprint": "d25e2605426c1384",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_01.mp4",
+   "stock_id": 19947949,
+   "pexels_id": 19947949,
+   "stock_frame_url": "https://images.pexels.com/videos/19947949/architecture-area-art-exhibition-19947949.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/exhibition-space-3-19947949/"
+  },
+  {
+   "text": "The face of someone you loved. There is only one problem. The curator is a forger.",
+   "audio_tags": [
+    "leans closer",
+    "quietly conspiratorial",
+    "whispers"
+   ],
+   "keywords": [
+    "portrait",
+    "curator"
+   ],
+   "semantic_anchor": "A curator secretly repaints the portrait of someone once loved.",
+   "visual_function": "human_experience",
+   "symbol_family": "human",
+   "query": "art curator repainting portrait brilliant sunlit gallery close up",
+   "primary_symbol": "curator",
+   "human_role": "creator",
+   "start": 14.02,
+   "duration": 10.02,
+   "kw_times": {
+    "curator": 21.26
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.8546,
+    "active_region_ratio": 0.5923,
+    "frame_difference": 17.0324
+   },
+   "clip_fingerprint": "aad0250c0526d526",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_02.mp4",
+   "stock_id": 4463156,
+   "pexels_id": 4463156,
+   "stock_frame_url": "https://images.pexels.com/videos/4463156/pexels-photo-4463156.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-sketching-a-portrait-of-a-woman-4463156/",
+   "kw_overlays": [
+    {
+     "kw": "portrait",
+     "png": "cap_02_kw0.png"
+    },
+    {
+     "kw": "curator",
+     "png": "cap_02_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "portrait",
+     "png": "youtube_cap_02_kw0.png"
+    },
+    {
+     "kw": "curator",
+     "png": "youtube_cap_02_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "You were told memory works like a camera. Press record. Store the footage. Play it back later. Neat. Mechanical. Reassuring. And almost completely wrong.",
+   "audio_tags": [
+    "matter-of-fact",
+    "dismissive",
+    "laughs softly"
+   ],
+   "keywords": [
+    "camera",
+    "film"
+   ],
+   "semantic_anchor": "A pristine camera represents the comforting but false recording model of memory.",
+   "visual_function": "literal_anchor",
+   "symbol_family": "time_memory",
+   "query": "vintage film camera bright studio sunlight colorful background spinning reel",
+   "primary_symbol": "camera",
+   "symbol_query": "record needle travels across spinning vinyl beside old photographs soft window light",
+   "symbol_family_source": "planner",
+   "start": 24.04,
+   "duration": 13.7,
+   "kw_times": {
+    "camera": 26.0
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "coverr",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.0373,
+    "active_region_ratio": 0.9907,
+    "frame_difference": 10.0719
+   },
+   "clip_fingerprint": "0cb7a74129bd801f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_03.mp4",
+   "stock_id": "coverr:coverr-a-man-takes-out-a-camera-in-a-shop-5714",
+   "stock_frame_url": "https://cdn.coverr.co/videos/coverr-a-man-takes-out-a-camera-in-a-shop-5714/thumbnail?width=640",
+   "stock_frame_url_checked": true,
+   "source_url": "https://coverr.co/videos/coverr-a-man-takes-out-a-camera-in-a-shop-5714",
+   "source_title": "A Man Takes Out A Camera In A Shop",
+   "source_license": "Coverr Free Stock Video License (attribution required)",
+   "kw_overlays": [
+    {
+     "kw": "camera",
+     "png": "cap_03_kw0.png"
+    },
+    {
+     "kw": "film",
+     "png": "cap_03_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "camera",
+     "png": "youtube_cap_03_kw0.png"
+    },
+    {
+     "kw": "film",
+     "png": "youtube_cap_03_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "Your brain does not preserve entire scenes. It keeps fragments. A smell. A sentence. The angle of someone's shoulders. The feeling in your stomach.",
+   "audio_tags": [
+    "matter-of-fact",
+    "curious",
+    "slows slightly"
+   ],
+   "keywords": [
+    "fragments",
+    "senses"
+   ],
+   "semantic_anchor": "Sensory fragments float separately before a memory is reconstructed.",
+   "visual_function": "mechanism",
+   "symbol_family": "objects",
+   "query": "colorful sensory objects perfume letter chair floating bright white studio",
+   "primary_symbol": "fragments",
+   "start": 37.74,
+   "duration": 12.82,
+   "kw_times": {
+    "fragments": 41.22
+   },
+   "motion_kind": "video",
+   "image_prompt": "Sensory fragments float separately before a memory is reconstructed.",
+   "hero_style": ", cinematic 35mm film still, photorealistic, anamorphic lens character, shallow depth of field with a real out-of-focus foreground element close to camera, subject in the middle distance, deep background falling into atmospheric haze, one motivated practical light source, natural surface textures and small real-world imperfections, fine film grain, muted filmic color grade, exactly one impossible element photographed as physically real and lit by the scene's own light, documentary magical realism, deep three-plane composition, no text, no words, no letters, no captions, no labels, no diagrams, no watermark, not an illustration, not digital art",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_04.mp4",
+   "narrative_mode": "literal_graphic",
+   "motion_mode": "generated_graphic",
+   "motion_source": "literal_storyboard",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.0278,
+    "active_region_ratio": 0.1416,
+    "frame_difference": 2.6661
+   },
+   "storyboard_generated": true,
+   "storyboard_version": 1,
+   "clip_fingerprint": "9d077e109caa5c50",
+   "kw_overlays": [
+    {
+     "kw": "fragments",
+     "png": "cap_04_kw0.png"
+    },
+    {
+     "kw": "senses",
+     "png": "cap_04_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "fragments",
+     "png": "youtube_cap_04_kw0.png"
+    },
+    {
+     "kw": "senses",
+     "png": "youtube_cap_04_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "Then a very confident stage director fills in the rest.",
+   "audio_tags": [
+    "playful",
+    "self-important",
+    "amused"
+   ],
+   "keywords": [
+    "director",
+    "stage"
+   ],
+   "semantic_anchor": "A confident stage director arranges incomplete memory fragments.",
+   "visual_function": "mechanism",
+   "symbol_family": "objects",
+   "query": "charismatic theater director arranging props bright rehearsal stage daylight",
+   "primary_symbol": "director",
+   "human_role": "creator",
+   "start": 50.56,
+   "duration": 4.2,
+   "kw_times": {
+    "director": 52.44,
+    "stage": 52.1
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.5464,
+    "active_region_ratio": 0.9977,
+    "frame_difference": 36.6159
+   },
+   "clip_fingerprint": "bda0c7712e5f2dba",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_05.mp4",
+   "stock_id": 6896244,
+   "pexels_id": 6896244,
+   "stock_frame_url": "https://images.pexels.com/videos/6896244/pexels-photo-6896244.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/the-director-supervising-the-actors-rehearsals-6896244/",
+   "kw_overlays": [
+    {
+     "kw": "director",
+     "png": "cap_05_kw0.png"
+    },
+    {
+     "kw": "stage",
+     "png": "cap_05_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "director",
+     "png": "youtube_cap_05_kw0.png"
+    },
+    {
+     "kw": "stage",
+     "png": "youtube_cap_05_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "Every time you remember, the stage is rebuilt. The actors return. The furniture is dragged into place. But the present has been allowed backstage.",
+   "audio_tags": [
+    "dramatically",
+    "building suspense"
+   ],
+   "keywords": [
+    "stage",
+    "actors"
+   ],
+   "semantic_anchor": "A remembered room is rebuilt as a theatrical set while the present changes it backstage.",
+   "visual_function": "mechanism",
+   "symbol_family": "architecture",
+   "query": "",
+   "primary_symbol": "stage",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "wide high-key cinematic film still, brilliant sunlit theater stage being assembled in real time, visible stagehands moving a yellow kitchen table, red bicycle and family photographs into place, multiple translucent versions of the same actors returning, saturated cyan coral and gold accents, clean white light, crisp faces, photoreal, no heavy shadows, no readable text, no watermark",
+   "human_role": "actor",
+   "start": 54.76,
+   "duration": 12.24,
+   "kw_times": {
+    "stage": 56.7,
+    "actors": 58.84
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_06.jpg",
+   "still_reference_signature": "1e7987b3d472dc87fb44",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_06.mp4",
+   "clip_fingerprint": "d12c7b0033ecfbe6",
+   "hero_generated": true,
+   "motion_recipe": "paper",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "stage",
+     "png": "cap_06_kw0.png"
+    },
+    {
+     "kw": "actors",
+     "png": "cap_06_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "stage",
+     "png": "youtube_cap_06_kw0.png"
+    },
+    {
+     "kw": "actors",
+     "png": "youtube_cap_06_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "Today's anger chooses the lighting. Today's loneliness casts the actors. Today's wisdom quietly changes the ending.",
+   "audio_tags": [
+    "concerned",
+    "slows down",
+    "quietly"
+   ],
+   "keywords": [
+    "lighting",
+    "ending"
+   ],
+   "semantic_anchor": "Present emotions operate the controls of a reconstructed past.",
+   "visual_function": "mechanism",
+   "symbol_family": "technology",
+   "query": "bright colorful theater lighting control board hands sliders daylight studio",
+   "primary_symbol": "lighting",
+   "human_role": "creator",
+   "start": 67.0,
+   "duration": 10.84,
+   "kw_times": {
+    "lighting": 68.64,
+    "ending": 76.16
+   },
+   "motion_kind": "video",
+   "image_prompt": "Present emotions operate the controls of a reconstructed past.",
+   "hero_style": ", cinematic 35mm film still, photorealistic, anamorphic lens character, shallow depth of field with a real out-of-focus foreground element close to camera, subject in the middle distance, deep background falling into atmospheric haze, one motivated practical light source, natural surface textures and small real-world imperfections, fine film grain, muted filmic color grade, exactly one impossible element photographed as physically real and lit by the scene's own light, documentary magical realism, deep three-plane composition, no text, no words, no letters, no captions, no labels, no diagrams, no watermark, not an illustration, not digital art",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_07.mp4",
+   "narrative_mode": "literal_graphic",
+   "motion_mode": "generated_graphic",
+   "motion_source": "literal_storyboard",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.0241,
+    "active_region_ratio": 0.1443,
+    "frame_difference": 2.6726
+   },
+   "storyboard_generated": true,
+   "storyboard_version": 1,
+   "clip_fingerprint": "e35c706ce22487f0",
+   "kw_overlays": [
+    {
+     "kw": "lighting",
+     "png": "cap_07_kw0.png"
+    },
+    {
+     "kw": "ending",
+     "png": "cap_07_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "lighting",
+     "png": "youtube_cap_07_kw0.png"
+    },
+    {
+     "kw": "ending",
+     "png": "youtube_cap_07_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "That childhood kitchen may feel smaller because you became larger. That old love may seem colder because you finally learned what warmth feels like.",
+   "audio_tags": [
+    "reflective",
+    "softly",
+    "bittersweet"
+   ],
+   "keywords": [
+    "kitchen",
+    "warmth"
+   ],
+   "semantic_anchor": "An adult revisits a bright childhood kitchen as its scale and emotional temperature change.",
+   "visual_function": "perspective_shift",
+   "symbol_family": "architecture",
+   "query": "adult revisiting small childhood kitchen bright summer sunlight warm colorful",
+   "primary_symbol": "kitchen",
+   "human_role": "witness",
+   "start": 77.84,
+   "duration": 12.86,
+   "kw_times": {
+    "kitchen": 78.72,
+    "warmth": 88.54
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.8203,
+    "active_region_ratio": 0.3488,
+    "frame_difference": 11.7035
+   },
+   "clip_fingerprint": "9e9a678e4ab7646e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_08.mp4",
+   "stock_id": 34762377,
+   "pexels_id": 34762377,
+   "stock_frame_url": "https://images.pexels.com/videos/34762377/4k-bright-kitchen-buenos-aires-old-home-34762377.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/contemplative-woman-in-vintage-kitchen-setting-34762377/",
+   "kw_overlays": [
+    {
+     "kw": "kitchen",
+     "png": "cap_08_kw0.png"
+    },
+    {
+     "kw": "warmth",
+     "png": "cap_08_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "kitchen",
+     "png": "youtube_cap_08_kw0.png"
+    },
+    {
+     "kw": "warmth",
+     "png": "youtube_cap_08_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "The past stayed where it was. The person looking back did not.",
+   "audio_tags": [
+    "slows down",
+    "quietly",
+    "lets the last line land"
+   ],
+   "keywords": [
+    "reflection",
+    "change"
+   ],
+   "semantic_anchor": "A reflection changes while the remembered room behind it stays fixed.",
+   "visual_function": "perspective_shift",
+   "symbol_family": "architecture",
+   "query": "changing adult reflection bright mirror sunlit room cinematic",
+   "primary_symbol": "reflection",
+   "human_role": "witness",
+   "start": 90.7,
+   "duration": 6.5,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.1905,
+    "active_region_ratio": 0.9306,
+    "frame_difference": 8.557
+   },
+   "clip_fingerprint": "4c2e614be4dce704",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_09.mp4",
+   "stock_id": 7013388,
+   "pexels_id": 7013388,
+   "stock_frame_url": "https://images.pexels.com/videos/7013388/pexels-photo-7013388.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-reflection-of-an-elderly-woman-7013388/"
+  },
+  {
+   "text": "This is why two people can survive the same afternoon and carry home different histories. Neither one has to be lying. Each brain returned to the scene carrying its own paint.",
+   "audio_tags": [
+    "concerned",
+    "firmly",
+    "empathetic"
+   ],
+   "keywords": [
+    "paint",
+    "histories"
+   ],
+   "semantic_anchor": "Two witnesses paint the same event in visibly different colors.",
+   "visual_function": "human_experience",
+   "symbol_family": "human",
+   "query": "two artists painting opposite sides same canvas bright white gallery colorful daylight",
+   "primary_symbol": "paint",
+   "human_role": "creator",
+   "start": 97.2,
+   "duration": 13.22,
+   "kw_times": {
+    "paint": 108.96,
+    "histories": 102.34
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.9786,
+    "active_region_ratio": 0.5372,
+    "frame_difference": 7.3438
+   },
+   "clip_fingerprint": "563ca48925c39971",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_10.mp4",
+   "stock_id": 5008852,
+   "pexels_id": 5008852,
+   "stock_frame_url": "https://images.pexels.com/videos/5008852/pexels-photo-5008852.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-view-of-a-person-painting-on-canvas-5008852/",
+   "kw_overlays": [
+    {
+     "kw": "paint",
+     "png": "cap_10_kw0.png"
+    },
+    {
+     "kw": "histories",
+     "png": "cap_10_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "paint",
+     "png": "youtube_cap_10_kw0.png"
+    },
+    {
+     "kw": "histories",
+     "png": "youtube_cap_10_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "Which becomes frightening when you realize how many arguments are really two altered memories demanding to be treated as security footage.",
+   "audio_tags": [
+    "uneasy",
+    "concerned",
+    "building tension"
+   ],
+   "keywords": [
+    "argument",
+    "footage"
+   ],
+   "semantic_anchor": "Two altered memories present conflicting versions of the same event as evidence.",
+   "visual_function": "perspective_shift",
+   "symbol_family": "language",
+   "query": "bright mediation room two people conflicting colorful photographs daylight",
+   "primary_symbol": "evidence",
+   "human_role": "actor",
+   "start": 110.42,
+   "duration": 9.15,
+   "kw_times": {
+    "footage": 118.5
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.4814,
+    "active_region_ratio": 0.9493,
+    "frame_difference": 15.7127
+   },
+   "clip_fingerprint": "faeddd19e981677a",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_11.mp4",
+   "stock_id": 7199786,
+   "pexels_id": 7199786,
+   "stock_frame_url": "https://images.pexels.com/videos/7199786/adolescent-adult-blond-book-series-7199786.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/couple-sitting-on-couch-having-an-argument-7199786/",
+   "kw_overlays": [
+    {
+     "kw": "argument",
+     "png": "cap_11_kw0.png"
+    },
+    {
+     "kw": "footage",
+     "png": "cap_11_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "argument",
+     "png": "youtube_cap_11_kw0.png"
+    },
+    {
+     "kw": "footage",
+     "png": "youtube_cap_11_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "'I remember exactly what happened.' Of course you do. The museum printed a certificate.",
+   "audio_tags": [
+    "self-assured imitation",
+    "sarcastic",
+    "laughs"
+   ],
+   "keywords": [
+    "certificate",
+    "museum"
+   ],
+   "semantic_anchor": "A museum absurdly certifies an altered memory as exact truth.",
+   "visual_function": "perspective_shift",
+   "symbol_family": "language",
+   "query": "playful museum certificate stamp bright white gallery colorful daylight no readable text",
+   "primary_symbol": "certificate",
+   "human_role": "actor",
+   "start": 119.57,
+   "duration": 8.21,
+   "kw_times": {
+    "certificate": 126.1,
+    "museum": 125.02
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.7046,
+    "active_region_ratio": 0.5409,
+    "frame_difference": 9.5792
+   },
+   "clip_fingerprint": "225d1aa6eeb253b1",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_12.mp4",
+   "stock_id": 37461967,
+   "pexels_id": 37461967,
+   "stock_frame_url": "https://images.pexels.com/videos/37461967/pexels-photo-37461967.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/serene-gallery-walkthrough-in-art-museum-37461967/",
+   "kw_overlays": [
+    {
+     "kw": "certificate",
+     "png": "cap_12_kw0.png"
+    },
+    {
+     "kw": "museum",
+     "png": "cap_12_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "certificate",
+     "png": "youtube_cap_12_kw0.png"
+    },
+    {
+     "kw": "museum",
+     "png": "youtube_cap_12_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "Memory is not defective. It was never designed to preserve the past with perfect accuracy. It was designed to help you survive what comes next.",
+   "audio_tags": [
+    "warmly",
+    "reassuring",
+    "sincere"
+   ],
+   "keywords": [
+    "memory",
+    "survive"
+   ],
+   "semantic_anchor": "Memory transforms old images into a practical map toward the future.",
+   "visual_function": "transformation",
+   "symbol_family": "time_memory",
+   "query": "sunlit library old photographs transforming into colorful maps open doors",
+   "primary_symbol": "map",
+   "start": 127.78,
+   "duration": 11.04,
+   "kw_times": {
+    "memory": 127.78,
+    "survive": 136.04
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.4281,
+    "active_region_ratio": 0.9819,
+    "frame_difference": 15.6618
+   },
+   "clip_fingerprint": "a392829cc17e25a8",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_13.mp4",
+   "stock_id": 13661113,
+   "pexels_id": 13661113,
+   "stock_frame_url": "https://images.pexels.com/videos/13661113/atlas-book-map-world-13661113.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/hand-browsing-atlas-13661113/",
+   "kw_overlays": [
+    {
+     "kw": "memory",
+     "png": "cap_13_kw0.png"
+    },
+    {
+     "kw": "survive",
+     "png": "cap_13_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "memory",
+     "png": "youtube_cap_13_kw0.png"
+    },
+    {
+     "kw": "survive",
+     "png": "youtube_cap_13_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "It does not ask, 'What happened, exactly?' It asks, 'What should this mean now?'",
+   "audio_tags": [
+    "slows down",
+    "long thoughtful pause",
+    "whispers"
+   ],
+   "keywords": [
+    "question",
+    "meaning"
+   ],
+   "semantic_anchor": "Two questions hang in balance as meaning outweighs exact detail.",
+   "visual_function": "perspective_shift",
+   "symbol_family": "language",
+   "query": "bright white balance scale photograph and glowing compass clean daylight",
+   "primary_symbol": "compass",
+   "start": 138.82,
+   "duration": 9.36,
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.068,
+    "active_region_ratio": 0.9963,
+    "frame_difference": 20.2926
+   },
+   "clip_fingerprint": "9992904bee2772c5",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_14.mp4",
+   "stock_id": 6157979,
+   "pexels_id": 6157979,
+   "stock_frame_url": "https://images.pexels.com/videos/6157979/auto-brush-car-car-care-6157979.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-reflecting-light-of-a-car-body-6157979/"
+  },
+  {
+   "text": "Perhaps you are not haunted by the past. You are haunted by the newest version of the past that the present knows how to build.",
+   "audio_tags": [
+    "with quiet wonder",
+    "concerned",
+    "slowly"
+   ],
+   "keywords": [
+    "past",
+    "gallery"
+   ],
+   "semantic_anchor": "A person walks through a luminous gallery whose remembered images keep changing.",
+   "visual_function": "transformation",
+   "symbol_family": "time_memory",
+   "query": "person walking bright gallery changing photographs colorful daylight",
+   "primary_symbol": "gallery",
+   "human_role": "witness",
+   "start": 148.18,
+   "duration": 8.98,
+   "kw_times": {
+    "past": 149.84
+   },
+   "motion_kind": "video",
+   "motion_mode": "stock",
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 10.9644,
+    "active_region_ratio": 0.9794,
+    "frame_difference": 13.2162
+   },
+   "clip_fingerprint": "e21b4c8e3766606e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_15.mp4",
+   "stock_id": 32572596,
+   "pexels_id": 32572596,
+   "stock_frame_url": "https://images.pexels.com/videos/32572596/1950s-fashion-32572596.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/vintage-style-gallery-walk-with-hat-32572596/",
+   "kw_overlays": [
+    {
+     "kw": "past",
+     "png": "cap_15_kw0.png"
+    },
+    {
+     "kw": "gallery",
+     "png": "cap_15_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "past",
+     "png": "youtube_cap_15_kw0.png"
+    },
+    {
+     "kw": "gallery",
+     "png": "youtube_cap_15_kw1.png"
+    }
+   ]
+  },
+  {
+   "text": "You are not carrying what happened. You are carrying today's translation of it.",
+   "audio_tags": [
+    "intimate",
+    "whispers",
+    "softly",
+    "lets the final line land"
+   ],
+   "keywords": [
+    "book",
+    "translation"
+   ],
+   "semantic_anchor": "A living book translates old photographs into present-day meaning.",
+   "visual_function": "transformation",
+   "symbol_family": "time_memory",
+   "query": "",
+   "primary_symbol": "book",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "high-key cinematic photoreal film still, person in a luminous white room opening a large book, old photographs rise from the pages and transform into vivid beams of coral cyan and golden sunrise, handwritten marks rearrange without readable words, open windows, clean exposure, emotional wonder, no darkness, no readable text, no watermark",
+   "human_role": "witness",
+   "start": 157.16,
+   "duration": 7.444,
+   "kw_times": {
+    "translation": 161.78
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_16.jpg",
+   "still_reference_signature": "4fc944dc24f4a9ccd579",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-museum-that-repaints-itself/clip_16.mp4",
+   "clip_fingerprint": "d9c9d12c726e3ac8",
+   "hero_generated": true,
+   "motion_recipe": "paper",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "kw_overlays": [
+    {
+     "kw": "book",
+     "png": "cap_16_kw0.png"
+    },
+    {
+     "kw": "translation",
+     "png": "cap_16_kw1.png"
+    }
+   ],
+   "youtube_kw_overlays": [
+    {
+     "kw": "book",
+     "png": "youtube_cap_16_kw0.png"
+    },
+    {
+     "kw": "translation",
+     "png": "youtube_cap_16_kw1.png"
+    }
+   ]
+  }
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.91
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
