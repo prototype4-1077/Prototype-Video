@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "updated_at": "2026-07-15",
+  "rules": {
+    "narrative_fidelity_first": true,
+    "strict_first_fraction": 0.72,
+    "minimum_anchor_coverage": 0.18,
+    "minimum_human_anchor_coverage": 0.10,
+    "fallback_when_no_direct_stock_match": "literal_storyboard",
+    "mood_never_overrides_story": true
+  },
+  "approvals": [
+    {
+      "slug": "trained-not-to-look",
+      "title": "Reality Was Never Hidden",
+      "revision": "storyline-match-redo",
+      "approved": true,
+      "feedback": "The approved revision replaced unrelated early-to-middle stock footage with literal animated metaphors. Direct narrative correspondence must outrank atmosphere, aesthetic similarity, or a broad semantic association. Preserve strong exact-match documentary footage and the final act when it clearly represents the spoken line.",
+      "replacement_window_seconds": [4.45, 113.10],
+      "approved_stock_ids": [
+        8516592,
+        8522956,
+        4904669,
+        4181136,
+        7606352,
+        7593623,
+        2764116,
+        37203868,
+        5250811,
+        6841962,
+        3888250,
+        10524874
+      ],
+      "rejected_stock_contexts": [
+        {"scene_index": 1, "stock_id": 11331038, "reason": "escalator footage did not express trained attention walking past reality", "query": "moving walkway carries rows of identical empty shoes past an open doorway while painted floor arrows point straight ahead"},
+        {"scene_index": 2, "stock_id": 7103503, "reason": "people distributing voting papers did not express imposed identity labels", "query": "automatic label dispenser covers an empty coat with adhesive name tags"},
+        {"scene_index": 3, "stock_id": 5963494, "reason": "wallet-making footage did not express success failure normal impossible stamps", "query": "four physical rubber stamps mark papers success failure normal impossible"},
+        {"scene_index": 4, "stock_id": 3010397, "reason": "generic map footage did not express trusting a lost guide", "query": "guide flag travels through a maze until an upside-down map sends it into a dead end"},
+        {"scene_index": 5, "stock_id": 9733005, "reason": "table-setting footage did not express money value popularity and worth", "query": "cash counter and social media like counter rise beside intrinsic value"},
+        {"scene_index": 6, "stock_id": 5000087, "reason": "lighting-equipment footage did not express exhaustion ambition fear and realism", "query": "late office clock coffee cups and a small object casting an enormous fearful shadow"},
+        {"scene_index": 8, "stock_id": 4181137, "reason": "camera-menu footage did not clearly express symbol recognition replacing direct perception", "query": "camera lens switches between preset icon modes while reality remains outside the frame"},
+        {"scene_index": 9, "stock_id": 6263486, "reason": "engraved-sign footage did not express house title relationship smile as social symbols", "query": "house title rings and smile rotate on symbolic pedestals"},
+        {"scene_index": 12, "stock_id": 6079432, "reason": "generic rack-focus footage did not show recognized categories pushing meaning into blur", "query": "autofocus locks onto faces objects and movement while meaningful details blur"},
+        {"scene_index": 13, "stock_id": 6100411, "reason": "pinboard footage did not express belief selectively focusing evidence", "query": "belief lens sharpens only matching notes on an evidence wall"},
+        {"scene_index": 14, "stock_id": 853961, "reason": "escalator footage did not express collecting selfish moments like receipts", "query": "receipt printer records selfish acts while kindness passes unnoticed"},
+        {"scene_index": 15, "stock_id": 7319202, "reason": "investigation footage represented only one clause and missed Exhibit A plus suspicious love", "query": "mishaps become Exhibit A while a lens scans a love note for hidden tricks"},
+        {"scene_index": 16, "stock_id": 853818, "reason": "selected footage did not express forgotten perception settings", "query": "hidden filter settings activate over an unchanged real world"},
+        {"scene_index": 17, "stock_id": 31794185, "reason": "selected footage did not express deception versus inherited conditioning", "query": "balanced scale settles between deliberate deception and an inherited family map"}
+      ]
+    }
+  ]
+}

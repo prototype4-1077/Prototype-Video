@@ -1,0 +1,27 @@
+name: Publish renders to YouTube
+
+on:
+  workflow_dispatch:
+    inputs:
+      slugs:
+        description: "space-separated slugs to publish (blank = whole queue)"
+        required: false
+        default: ""
+
+permissions:
+  contents: read
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Publish to YouTube (Public)
+        env:
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
+          GH_REPO: ${{ github.repository }}
+        run: python3 pipeline/yt_publish.py ${{ github.event.inputs.slugs }}
