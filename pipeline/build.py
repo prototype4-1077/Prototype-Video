@@ -172,10 +172,10 @@ def main(bd):
             _mf = json.load(open(_mf_path)) if os.path.exists(_mf_path) else {}
             _want = _tts.tts_fingerprint(s, s.get("elevenlabs_model", "eleven_v3"))
             if _mf.get("tts_fingerprint") != _want:
-                out(f"stale voiceover detected (fingerprint mismatch); regenerating")
                 for _f in ("vo.mp3", "words.json", "voiceover-manifest.json"):
                     try: os.remove(f"{bd}/{_f}")
                     except OSError: pass
+                out("RUN AGAIN (stale voiceover removed; regenerating)")
         except Exception as _e:
             print(f"vo fingerprint check skipped: {_e}")
     if not os.path.exists(f"{bd}/vo.mp3"):
