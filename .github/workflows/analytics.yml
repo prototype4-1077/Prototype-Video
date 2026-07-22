@@ -15,7 +15,7 @@ concurrency:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - uses: actions/checkout@v4
 
@@ -27,6 +27,11 @@ jobs:
       - name: Minimal deps
         run: pip install -q numpy
 
+      - name: Validate Concept Engine constitution
+        run: |
+          python3 -m unittest concept/test_concept_engine.py
+          python3 -m py_compile concept/*.py
+
       - name: Pull retention curves and apply audience learning
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
@@ -34,14 +39,19 @@ jobs:
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: python3 pipeline/analytics_sync.py
 
-      - name: Mine audience comments + refresh intelligence
+      - name: Mine audience signal
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+        run: python3 concept/comment_mining.py || echo "comment mining skipped"
+
+      - name: Refresh helpfulness intelligence
         run: |
-          python3 concept/comment_mining.py || echo "comment mining skipped"
-          python3 concept/intelligence.py > concept/INTELLIGENCE_REPORT.md || true
+          python3 concept/impact.py
+          python3 concept/intelligence.py > concept/INTELLIGENCE_REPORT.md
+          python3 concept/decision_brief.py
+          python3 concept/influence_guard.py concept/LATEST_DECISION_BRIEF.json
 
       - name: Commit learned state
         shell: bash
@@ -50,10 +60,14 @@ jobs:
           git config user.email "analytics@users.noreply.github.com"
           for f in pipeline/memory.json pipeline/taste.npz pipeline/WHATS_WORKING.md \
                    build/*/retention.json build/*/yt_stats.json \
-                   concept/audience_signal.json concept/INTELLIGENCE_REPORT.md concept/craft_ledger.json; do
+                   concept/audience_signal.json concept/impact_ledger.json \
+                   concept/INTELLIGENCE_REPORT.md \
+                   concept/LATEST_DECISION_BRIEF.json \
+                   concept/LATEST_DECISION_BRIEF.md \
+                   concept/craft_ledger.json; do
             git add "$f" 2>/dev/null || true
           done
-          git commit -m "analytics: audience retention learning" || echo "nothing to commit"
+          git commit -m "analytics: refresh helpfulness intelligence" || echo "nothing to commit"
           for i in 1 2 3 4 5; do
             git push && exit 0
             git pull --rebase origin main || true
