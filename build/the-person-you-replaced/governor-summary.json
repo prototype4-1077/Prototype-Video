@@ -1,14 +1,14 @@
 {
-  "finished_at": "2026-07-22T15:20:19+00:00",
-  "github_run_id": "29928083665",
+  "finished_at": "2026-07-22T16:32:45+00:00",
+  "github_run_id": "29933799768",
   "incidents": [
     {
       "count": 1,
       "failure_class": "transient",
-      "fingerprint": "7f0ae4a56577d65a",
+      "fingerprint": "e0134d7c24776f18",
       "kind": "timeout",
       "last_item": null,
-      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.6s; last useful progress <n>.0s ago.",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.4s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
     }
   ],
@@ -20,16 +20,16 @@
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.0,
       "idle_timeout_s": 33.02,
-      "sample_count": 18,
+      "sample_count": 22,
       "soft_timeout_s": 33.02,
       "source": "history"
     },
     "altsheet": {
       "hard_timeout_s": 300.0,
-      "historical_p95_s": 8.02,
-      "idle_timeout_s": 54.05,
-      "sample_count": 22,
-      "soft_timeout_s": 54.05,
+      "historical_p95_s": 7.82,
+      "idle_timeout_s": 53.46,
+      "sample_count": 26,
+      "soft_timeout_s": 53.46,
       "source": "history"
     },
     "assemble": {
@@ -51,25 +51,33 @@
     "credits": {
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.03,
-      "idle_timeout_s": 33.09,
-      "sample_count": 120,
-      "soft_timeout_s": 33.09,
+      "idle_timeout_s": 33.1,
+      "sample_count": 132,
+      "soft_timeout_s": 33.1,
       "source": "history"
     },
     "ffmpeg": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 32.23,
-      "idle_timeout_s": 126.69,
+      "historical_p95_s": 33.25,
+      "idle_timeout_s": 129.75,
       "sample_count": 200,
-      "soft_timeout_s": 126.69,
+      "soft_timeout_s": 129.75,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 46.09,
+      "idle_timeout_s": 180.0,
+      "sample_count": 85,
+      "soft_timeout_s": 180.0,
       "source": "history"
     },
     "prep": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 44.54,
-      "idle_timeout_s": 163.62,
-      "sample_count": 25,
-      "soft_timeout_s": 163.62,
+      "historical_p95_s": 43.96,
+      "idle_timeout_s": 161.89,
+      "sample_count": 29,
+      "soft_timeout_s": 161.89,
       "source": "history"
     },
     "probe": {
@@ -81,40 +89,40 @@
       "source": "history"
     },
     "quality": {
-      "hard_timeout_s": 1258.0170354319998,
+      "hard_timeout_s": 1191.1677176900002,
       "historical_p95_s": null,
-      "idle_timeout_s": 1258.0170354319998,
+      "idle_timeout_s": 1191.1677176900002,
       "sample_count": 0,
-      "soft_timeout_s": 1258.0170354319998,
+      "soft_timeout_s": 1191.1677176900002,
       "source": "explicit"
     },
     "transcribe": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 22.42,
+      "historical_p95_s": 23.22,
       "idle_timeout_s": 180.0,
-      "sample_count": 33,
+      "sample_count": 37,
       "soft_timeout_s": 180.0,
       "source": "history"
     },
     "tts": {
       "hard_timeout_s": 480.0,
-      "historical_p95_s": 70.35,
+      "historical_p95_s": 72.18,
       "idle_timeout_s": 180.0,
-      "sample_count": 15,
-      "soft_timeout_s": 241.06,
+      "sample_count": 19,
+      "soft_timeout_s": 246.55,
       "source": "history"
     }
   },
   "quality": {
     "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced",
-    "checked_at": "2026-07-22T15:20:18+00:00",
+    "checked_at": "2026-07-22T16:32:44+00:00",
     "deep_decode": true,
-    "expected_duration_s": 206.531,
+    "expected_duration_s": 204.754,
     "failures": [],
     "mode": "delivery",
     "outputs": {
       "portrait": {
-        "avg_kbps": 3174,
+        "avg_kbps": 3288,
         "deep_scan": {
           "black_intervals": 0,
           "black_longest_s": 0.0,
@@ -129,36 +137,36 @@
           "silence_longest_s": 0.0,
           "silence_total_s": 0
         },
-        "duration_difference_s": 0.069,
+        "duration_difference_s": 0.079,
         "exists": true,
-        "expected_duration_s": 206.531,
+        "expected_duration_s": 204.754,
         "failures": [],
         "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/final.mp4",
         "probe": {
           "audio_codec": "aac",
-          "audio_duration_s": 206.540998,
-          "bit_rate": 3174401.0,
-          "duration_s": 206.6,
+          "audio_duration_s": 204.776009,
+          "bit_rate": 3287708.0,
+          "duration_s": 204.833333,
           "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
           "fps": 30.0,
           "has_audio": true,
           "has_video": true,
           "height": 1920,
           "video_codec": "h264",
-          "video_duration_s": 206.6,
+          "video_duration_s": 204.833333,
           "width": 1080
         },
-        "size_bytes": 81978918,
+        "size_bytes": 84179041,
         "warnings": [
           {
             "code": "low_bitrate",
-            "message": "Average bitrate 3174 kbps is unusually low for 1080p; check for over-compression",
+            "message": "Average bitrate 3288 kbps is unusually low for 1080p; check for over-compression",
             "target": "portrait"
           }
         ]
       },
       "youtube": {
-        "avg_kbps": 5879,
+        "avg_kbps": 6199,
         "deep_scan": {
           "black_intervals": 0,
           "black_longest_s": 0.0,
@@ -173,26 +181,26 @@
           "silence_longest_s": 0.0,
           "silence_total_s": 0
         },
-        "duration_difference_s": 0.069,
+        "duration_difference_s": 0.079,
         "exists": true,
-        "expected_duration_s": 206.531,
+        "expected_duration_s": 204.754,
         "failures": [],
         "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-you-replaced/final_youtube.mp4",
         "probe": {
           "audio_codec": "aac",
-          "audio_duration_s": 206.540998,
-          "bit_rate": 5879264.0,
-          "duration_s": 206.6,
+          "audio_duration_s": 204.776009,
+          "bit_rate": 6198813.0,
+          "duration_s": 204.833333,
           "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
           "fps": 30.0,
           "has_audio": true,
           "has_video": true,
           "height": 1080,
           "video_codec": "h264",
-          "video_duration_s": 206.6,
+          "video_duration_s": 204.833333,
           "width": 1920
         },
-        "size_bytes": 151832001,
+        "size_bytes": 158715442,
         "warnings": []
       }
     },
@@ -208,7 +216,7 @@
     "warnings": [
       {
         "code": "low_bitrate",
-        "message": "Average bitrate 3174 kbps is unusually low for 1080p; check for over-compression",
+        "message": "Average bitrate 3288 kbps is unusually low for 1080p; check for over-compression",
         "target": "portrait"
       }
     ]
@@ -216,15 +224,15 @@
   "recommendations": [
     {
       "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
-      "fingerprint": "7f0ae4a56577d65a",
+      "fingerprint": "e0134d7c24776f18",
       "priority": "medium",
-      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.6s; last useful progress <n>.0s ago.",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.4s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
     },
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (3408.7s).",
+      "reason": "Largest measured latency contribution in this run (3475.7s).",
       "stage": "build_pass"
     },
     {
@@ -234,7 +242,7 @@
       "stage": "quality"
     }
   ],
-  "run_id": "8ce22323d0744cdbb9057f84de28ddce",
+  "run_id": "a087821152a64426bf4a38e05649d32e",
   "schema_version": 1,
   "slug": "the-person-you-replaced",
   "stages": {
@@ -253,129 +261,147 @@
     "altsheet": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 7.052,
-      "p95_success_s": 7.052,
+      "p50_success_s": 7.074,
+      "p95_success_s": 7.074,
       "success_durations_s": [
-        7.052
+        7.074
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 7.052
+      "total_duration_s": 7.074
     },
     "assemble": {
       "attempts": 55,
       "failures": 0,
-      "p50_success_s": 48.388,
-      "p95_success_s": 103.586,
+      "p50_success_s": 47.468,
+      "p95_success_s": 103.259,
       "success_durations_s": [
-        99.892,
-        35.292,
-        46.388,
-        48.388,
-        39.356,
-        46.384,
-        24.184,
-        40.373,
-        34.334,
+        92.862,
+        38.342,
+        46.413,
+        43.41,
+        40.414,
+        43.383,
+        26.2,
+        37.329,
+        34.314,
+        14.1,
+        66.638,
+        75.688,
+        94.917,
+        69.615,
+        38.355,
+        33.343,
+        32.276,
+        47.468,
+        36.289,
+        14.108,
+        71.682,
+        30.259,
+        21.195,
+        42.371,
+        48.45,
         13.109,
-        69.614,
-        73.668,
-        95.787,
-        66.542,
-        40.368,
-        35.338,
-        33.298,
-        54.482,
-        38.352,
-        13.112,
-        78.758,
-        30.284,
-        23.211,
-        45.447,
-        47.431,
-        13.112,
-        37.325,
-        27.281,
-        119.213,
-        54.465,
-        71.615,
-        69.668,
-        58.585,
-        70.654,
-        38.308,
-        73.904,
-        21.183,
-        95.92,
-        102.114,
-        127.195,
-        96.015,
-        62.606,
-        55.539,
-        53.449,
-        77.756,
-        60.547,
-        18.163,
-        107.022,
-        46.47,
-        37.352,
-        68.691,
-        72.785,
-        21.184,
-        59.551,
-        43.453
+        35.325,
+        28.233,
+        115.163,
+        57.563,
+        70.683,
+        66.614,
+        60.631,
+        66.6,
+        42.382,
+        59.654,
+        46.823,
+        102.075,
+        106.022,
+        125.49,
+        94.084,
+        59.595,
+        51.529,
+        51.508,
+        70.631,
+        58.565,
+        20.188,
+        97.946,
+        46.494,
+        33.33,
+        63.583,
+        72.734,
+        20.188,
+        55.548,
+        44.421
       ],
       "successes": 55,
       "timeouts": 0,
-      "total_duration_s": 3034.517
+      "total_duration_s": 2976.132
     },
     "build_pass": {
       "attempts": 6,
       "failures": 1,
-      "p50_success_s": 30.049,
-      "p95_success_s": 1192.516,
+      "p50_success_s": 78.074,
+      "p95_success_s": 1144.654,
       "success_durations_s": [
-        1.005,
-        83.082,
-        30.049,
-        24.068,
-        1469.875
+        1.004,
+        78.074,
+        30.051,
+        180.487,
+        1385.696
       ],
       "successes": 5,
       "timeouts": 1,
-      "total_duration_s": 3408.722
+      "total_duration_s": 3475.668
     },
     "credits": {
       "attempts": 3,
       "failures": 0,
       "p50_success_s": 1.012,
-      "p95_success_s": 1.028,
+      "p95_success_s": 1.021,
       "success_durations_s": [
         1.005,
         1.012,
-        1.03
+        1.022
       ],
       "successes": 3,
       "timeouts": 0,
-      "total_duration_s": 3.047
+      "total_duration_s": 3.039
     },
     "ffmpeg": {
       "attempts": 8,
       "failures": 0,
-      "p50_success_s": 8.537,
-      "p95_success_s": 36.807,
+      "p50_success_s": 7.535,
+      "p95_success_s": 36.429,
       "success_durations_s": [
         1.014,
-        8.032,
-        30.253,
-        9.043,
+        7.035,
+        29.234,
+        8.035,
         1.014,
-        7.033,
-        40.336,
-        9.044
+        7.035,
+        40.304,
+        8.037
       ],
       "successes": 8,
       "timeouts": 0,
-      "total_duration_s": 105.769
+      "total_duration_s": 101.708
+    },
+    "hero": {
+      "attempts": 7,
+      "failures": 0,
+      "p50_success_s": 21.06,
+      "p95_success_s": 28.773,
+      "success_durations_s": [
+        29.074,
+        20.053,
+        28.072,
+        25.065,
+        21.06,
+        20.053,
+        13.042
+      ],
+      "successes": 7,
+      "timeouts": 0,
+      "total_duration_s": 156.419
     },
     "prep": {
       "attempts": 1,
@@ -393,30 +419,12 @@
       "attempts": 58,
       "failures": 0,
       "p50_success_s": 1.014,
-      "p95_success_s": 1.014,
+      "p95_success_s": 1.015,
       "success_durations_s": [
         1.013,
         1.013,
-        1.019,
-        1.012,
         1.013,
-        1.013,
-        1.013,
-        1.012,
-        1.012,
-        1.013,
-        1.013,
-        1.012,
-        1.013,
-        1.013,
-        1.012,
-        1.012,
-        1.013,
-        1.012,
-        1.013,
-        1.013,
-        1.012,
-        1.013,
+        1.014,
         1.013,
         1.013,
         1.013,
@@ -424,75 +432,93 @@
         1.013,
         1.013,
         1.014,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.017,
+        1.013,
         1.014,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
         1.014,
+        1.015,
         1.014,
+        1.015,
+        1.015,
+        1.015,
         1.014,
+        1.015,
+        1.015,
+        1.015,
+        1.015,
+        1.015,
         1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
-        1.014,
+        1.015,
+        1.015,
         1.014,
         1.014,
         1.014,
         1.014,
         1.014,
         1.015,
-        1.015
+        1.014,
+        1.015,
+        1.015,
+        1.015,
+        1.014,
+        1.014,
+        1.014,
+        1.015,
+        1.016
       ],
       "successes": 58,
       "timeouts": 0,
-      "total_duration_s": 58.784
+      "total_duration_s": 58.809
     },
     "quality": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 75.629,
-      "p95_success_s": 75.629,
+      "p50_success_s": 76.676,
+      "p95_success_s": 76.676,
       "success_durations_s": [
-        75.629
+        76.676
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 75.629
+      "total_duration_s": 76.676
     },
     "transcribe": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 27.044,
-      "p95_success_s": 27.044,
+      "p50_success_s": 27.052,
+      "p95_success_s": 27.052,
       "success_durations_s": [
-        27.044
+        27.052
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 27.044
+      "total_duration_s": 27.052
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 82.081,
-      "p95_success_s": 82.081,
+      "p50_success_s": 77.073,
+      "p95_success_s": 77.073,
       "success_durations_s": [
-        82.081
+        77.073
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 82.081
+      "total_duration_s": 77.073
     }
   },
   "status": "done"
