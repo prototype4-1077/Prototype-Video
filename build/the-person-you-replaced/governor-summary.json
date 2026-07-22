@@ -1,18 +1,27 @@
 {
-  "finished_at": "2026-07-22T12:08:50+00:00",
-  "github_run_id": "29918320711",
+  "finished_at": "2026-07-22T12:19:02+00:00",
+  "github_run_id": "29919018464",
   "incidents": [
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "7342ef730c5f3e94",
+      "fingerprint": "2d5e1f3f092e5573",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "text (won't highlight) note: scene <n> keyword 'kindness' not found in text (won't highlight) note: scene <n> keyword 'lamp' not found in text (won't highlight) note: scene <n> keyword 'inheritance' not found in text (won't highlight) note: scene <n> keyword 'embrace' not found in text (won't highlight) note: scene <n> keyword 'daylight' not found in text (won't highlight) note: scene <n> keyword 'pen' not found in t",
+      "normalized_error": "found in text (won't highlight) note: scene <n> keyword 'daylight' not found in text (won't highlight) note: scene <n> keyword 'pen' not found in text (won't highlight) note: scene <n> keyword 'note' not found in text (won't highlight) note: scene <n> keyword 'dawn' not found in text (won't highlight) governor stage=tts state=start soft=241s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprin",
       "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "3797b6f436aefe92",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
+      "stage": "tts"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=e9b9cdc38a9f7db2. ERROR: visual symbol plan: human imagery occupies 61%; target <= 60%; language repeats for 4 consecutive scenes starting at scene 16 | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
+  "last_message": "tts failed (unknown); retry budget 1 exhausted. fingerprint=3797b6f436aefe92. ERROR: tts failed: del_id)",
   "mode": "recover",
   "passes": 2,
   "policy": {
@@ -23,19 +32,34 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 70.41,
+      "idle_timeout_s": 180.0,
+      "sample_count": 14,
+      "soft_timeout_s": 241.22,
+      "source": "history"
     }
   },
   "quality": {},
   "recommendations": [
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "7342ef730c5f3e94",
+      "fingerprint": "3797b6f436aefe92",
       "priority": "high",
-      "reason": "2 occurrence(s): text (won't highlight) note: scene <n> keyword 'kindness' not found in text (won't highlight) note: scene <n> keyword 'lamp' not found in text (won't highlight) note: scene <n> keyword 'inheritance' not found in text (won't highlight) note: scene <n> keyword 'embrace' not found in text (won't highlight) note: scene <n> keyword 'daylight' not found in text (won't highlight) note: scene <n> keyword 'pen' not found in t",
+      "reason": "2 occurrence(s): traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
+      "stage": "tts"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "2d5e1f3f092e5573",
+      "priority": "high",
+      "reason": "2 occurrence(s): found in text (won't highlight) note: scene <n> keyword 'daylight' not found in text (won't highlight) note: scene <n> keyword 'pen' not found in text (won't highlight) note: scene <n> keyword 'note' not found in text (won't highlight) note: scene <n> keyword 'dawn' not found in text (won't highlight) governor stage=tts state=start soft=241s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprin",
       "stage": "build_pass"
     }
   ],
-  "run_id": "c9282a3d4d30466fa55cee48c3818e97",
+  "run_id": "4cf3e70320554614b916b26ca843768c",
   "schema_version": 1,
   "slug": "the-person-you-replaced",
   "stages": {
@@ -47,7 +71,17 @@
       "success_durations_s": [],
       "successes": 0,
       "timeouts": 0,
-      "total_duration_s": 2.002
+      "total_duration_s": 4.005
+    },
+    "tts": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.005
     }
   },
   "status": "failed"
