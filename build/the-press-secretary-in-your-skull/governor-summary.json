@@ -1,27 +1,18 @@
 {
-  "finished_at": "2026-07-22T14:23:24+00:00",
-  "github_run_id": "29927645664",
+  "finished_at": "2026-07-22T15:08:57+00:00",
+  "github_run_id": "29928520865",
   "incidents": [
     {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "174a206e24e5cd74",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "note: scene <n> keyword 'announcement' not found in text (won't highlight) note: scene <n> keyword 'factory' not found in text (won't highlight) note: scene <n> keyword 'microphone' not found in text (won't highlight) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success duration=<n>.0s rc=<n> credits: <n> stock clips -> <path> error: still-derived shots are <n>% of the film (<n>.",
-      "stage": "build_pass"
-    },
-    {
       "count": 1,
-      "failure_class": "unknown",
-      "fingerprint": "64eb2400791d4652",
-      "kind": "failure",
+      "failure_class": "transient",
+      "fingerprint": "7e1d511cec319c51",
+      "kind": "timeout",
       "last_item": null,
-      "normalized_error": "broad daylight, vivid life sc...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=running elapsed=15s idle=5s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (wide high-key cinematic reveal of a luminous glass building ...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success duration=<n",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.5s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=4fa8a0486dd9985c. ERROR: still-derived shots are 47.5% of the film (61.6s/129.7s), above the 40% cap by 9.8s; animated stills count toward this cap, so replace that duration with genuine moving footage | FIX: replace still-derived scenes with verified moving footage",
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-press-secretary-in-your-skull/final_youtube.mp4 + /home/runner/work/Prototype-Video/Prototype-Video/build/the-press-secretary-in-your-skull/final.mp4",
   "mode": "recover",
   "passes": 7,
   "policy": {
@@ -29,8 +20,24 @@
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.0,
       "idle_timeout_s": 33.02,
-      "sample_count": 18,
+      "sample_count": 19,
       "soft_timeout_s": 33.02,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 8.02,
+      "idle_timeout_s": 54.05,
+      "sample_count": 22,
+      "soft_timeout_s": 54.05,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 98.93,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 326.8,
       "source": "history"
     },
     "build_pass": {
@@ -45,53 +52,85 @@
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.03,
       "idle_timeout_s": 33.09,
-      "sample_count": 120,
+      "sample_count": 123,
       "soft_timeout_s": 33.09,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 32.23,
+      "idle_timeout_s": 126.69,
+      "sample_count": 200,
+      "soft_timeout_s": 126.69,
       "source": "history"
     },
     "footage": {
       "hard_timeout_s": 600.0,
-      "historical_p95_s": 56.48,
+      "historical_p95_s": 93.19,
       "idle_timeout_s": 180.0,
-      "sample_count": 178,
-      "soft_timeout_s": 199.44,
+      "sample_count": 179,
+      "soft_timeout_s": 309.58,
       "source": "history"
     },
     "hero": {
       "hard_timeout_s": 1200.0,
-      "historical_p95_s": 27.62,
+      "historical_p95_s": 31.45,
       "idle_timeout_s": 180.0,
-      "sample_count": 70,
+      "sample_count": 74,
       "soft_timeout_s": 180.0,
       "source": "history"
     },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 44.54,
+      "idle_timeout_s": 163.62,
+      "sample_count": 25,
+      "soft_timeout_s": 163.62,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.05,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
     "transcribe": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 23.42,
+      "historical_p95_s": 22.37,
       "idle_timeout_s": 180.0,
-      "sample_count": 33,
+      "sample_count": 34,
       "soft_timeout_s": 180.0,
       "source": "history"
     },
     "tts": {
       "hard_timeout_s": 480.0,
-      "historical_p95_s": 73.77,
+      "historical_p95_s": 70.3,
       "idle_timeout_s": 180.0,
-      "sample_count": 15,
-      "soft_timeout_s": 251.31,
+      "sample_count": 16,
+      "soft_timeout_s": 240.91,
       "source": "history"
     }
   },
   "quality": {
     "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-press-secretary-in-your-skull",
-    "checked_at": "2026-07-22T13:30:28+00:00",
+    "checked_at": "2026-07-22T15:08:56+00:00",
     "deep_decode": true,
-    "expected_duration_s": 143.393,
+    "expected_duration_s": 150.602,
     "failures": [],
     "mode": "delivery",
     "outputs": {
       "portrait": {
-        "avg_kbps": 4305,
+        "avg_kbps": 4219,
         "deep_scan": {
           "black_intervals": 0,
           "black_longest_s": 0.0,
@@ -106,30 +145,30 @@
           "silence_longest_s": 0.0,
           "silence_total_s": 0
         },
-        "duration_difference_s": 0.013,
+        "duration_difference_s": 0.065,
         "exists": true,
-        "expected_duration_s": 143.393,
+        "expected_duration_s": 150.602,
         "failures": [],
         "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-press-secretary-in-your-skull/final.mp4",
         "probe": {
           "audio_codec": "aac",
-          "audio_duration_s": 143.406009,
-          "bit_rate": 4305388.0,
-          "duration_s": 143.406009,
+          "audio_duration_s": 150.603991,
+          "bit_rate": 4218519.0,
+          "duration_s": 150.666667,
           "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
           "fps": 30.0,
           "has_audio": true,
           "has_video": true,
           "height": 1920,
           "video_codec": "h264",
-          "video_duration_s": 143.366667,
+          "video_duration_s": 150.666667,
           "width": 1080
         },
-        "size_bytes": 77177324,
+        "size_bytes": 79448776,
         "warnings": []
       },
       "youtube": {
-        "avg_kbps": 7818,
+        "avg_kbps": 7709,
         "deep_scan": {
           "black_intervals": 0,
           "black_longest_s": 0.0,
@@ -144,26 +183,26 @@
           "silence_longest_s": 0.0,
           "silence_total_s": 0
         },
-        "duration_difference_s": 0.013,
+        "duration_difference_s": 0.065,
         "exists": true,
-        "expected_duration_s": 143.393,
+        "expected_duration_s": 150.602,
         "failures": [],
         "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-press-secretary-in-your-skull/final_youtube.mp4",
         "probe": {
           "audio_codec": "aac",
-          "audio_duration_s": 143.406009,
-          "bit_rate": 7817959.0,
-          "duration_s": 143.406009,
+          "audio_duration_s": 150.603991,
+          "bit_rate": 7709135.0,
+          "duration_s": 150.666667,
           "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
           "fps": 30.0,
           "has_audio": true,
           "has_video": true,
           "height": 1080,
           "video_codec": "h264",
-          "video_duration_s": 143.366667,
+          "video_duration_s": 150.666667,
           "width": 1920
         },
-        "size_bytes": 140142788,
+        "size_bytes": 145188717,
         "warnings": []
       }
     },
@@ -180,124 +219,256 @@
   },
   "recommendations": [
     {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "64eb2400791d4652",
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "7e1d511cec319c51",
       "priority": "medium",
-      "reason": "1 occurrence(s): broad daylight, vivid life sc...) governor stage=hero:<n> state=start soft=180s hard=1200s governor stage=hero:<n> state=running elapsed=15s idle=5s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (wide high-key cinematic reveal of a luminous glass building ...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success duration=<n",
-      "stage": "build_pass"
-    },
-    {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "174a206e24e5cd74",
-      "priority": "high",
-      "reason": "2 occurrence(s): note: scene <n> keyword 'announcement' not found in text (won't highlight) note: scene <n> keyword 'factory' not found in text (won't highlight) note: scene <n> keyword 'microphone' not found in text (won't highlight) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success duration=<n>.0s rc=<n> credits: <n> stock clips -> <path> error: still-derived shots are <n>% of the film (<n>.",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.5s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
     },
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (382.5s).",
+      "reason": "Largest measured latency contribution in this run (2442.6s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "e8ea3b7816454fd1963e38cba2c70010",
+  "run_id": "53d71c11cefa4c78a7b4663ea0214cf6",
   "schema_version": 1,
   "slug": "the-press-secretary-in-your-skull",
   "stages": {
     "align": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 1.002,
-      "p95_success_s": 1.002,
+      "p50_success_s": 1.003,
+      "p95_success_s": 1.003,
       "success_durations_s": [
-        1.002
+        1.003
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 1.002
+      "total_duration_s": 1.003
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 5.026,
+      "p95_success_s": 5.026,
+      "success_durations_s": [
+        5.026
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 5.026
+    },
+    "assemble": {
+      "attempts": 31,
+      "failures": 0,
+      "p50_success_s": 67.376,
+      "p95_success_s": 105.188,
+      "success_durations_s": [
+        94.573,
+        58.335,
+        36.207,
+        21.118,
+        66.36,
+        42.229,
+        66.413,
+        67.376,
+        72.395,
+        82.479,
+        34.196,
+        40.228,
+        42.227,
+        48.308,
+        51.293,
+        77.432,
+        106.658,
+        81.491,
+        56.34,
+        35.212,
+        92.585,
+        63.397,
+        93.607,
+        92.552,
+        97.615,
+        116.724,
+        64.395,
+        68.421,
+        73.497,
+        78.454,
+        103.718
+      ],
+      "successes": 31,
+      "timeouts": 0,
+      "total_duration_s": 2125.835
     },
     "build_pass": {
       "attempts": 7,
-      "failures": 3,
-      "p50_success_s": 36.023,
-      "p95_success_s": 87.38,
+      "failures": 1,
+      "p50_success_s": 32.051,
+      "p95_success_s": 397.959,
       "success_durations_s": [
-        1.002,
-        55.032,
-        17.015,
-        93.089
+        1.003,
+        53.035,
+        21.023,
+        11.014,
+        43.079,
+        512.933
       ],
-      "successes": 4,
-      "timeouts": 0,
-      "total_duration_s": 382.54
+      "successes": 6,
+      "timeouts": 1,
+      "total_duration_s": 2442.618
     },
     "credits": {
       "attempts": 3,
       "failures": 0,
-      "p50_success_s": 1.005,
-      "p95_success_s": 1.005,
+      "p50_success_s": 1.008,
+      "p95_success_s": 1.021,
       "success_durations_s": [
-        1.004,
-        1.005,
-        1.005
+        1.003,
+        1.008,
+        1.023
       ],
       "successes": 3,
       "timeouts": 0,
-      "total_duration_s": 3.014
+      "total_duration_s": 3.034
+    },
+    "ffmpeg": {
+      "attempts": 8,
+      "failures": 0,
+      "p50_success_s": 6.019,
+      "p95_success_s": 28.997,
+      "success_durations_s": [
+        1.009,
+        6.019,
+        23.126,
+        6.019,
+        1.009,
+        6.019,
+        32.158,
+        6.018
+      ],
+      "successes": 8,
+      "timeouts": 0,
+      "total_duration_s": 81.377
     },
     "footage": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 92.089,
-      "p95_success_s": 92.089,
+      "p50_success_s": 10.013,
+      "p95_success_s": 10.013,
       "success_durations_s": [
-        92.089
+        10.013
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 92.089
+      "total_duration_s": 10.013
     },
     "hero": {
-      "attempts": 6,
+      "attempts": 1,
       "failures": 0,
-      "p50_success_s": 33.579,
-      "p95_success_s": 56.084,
+      "p50_success_s": 26.045,
+      "p95_success_s": 26.045,
       "success_durations_s": [
-        32.079,
-        16.036,
-        62.09,
-        38.066,
-        35.078,
-        27.07
+        26.045
       ],
-      "successes": 6,
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 210.419
+      "total_duration_s": 26.045
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 15.032,
+      "p95_success_s": 15.032,
+      "success_durations_s": [
+        15.032
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 15.032
+    },
+    "probe": {
+      "attempts": 34,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.01,
+      "success_durations_s": [
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.011,
+        1.009,
+        1.01,
+        1.01
+      ],
+      "successes": 34,
+      "timeouts": 0,
+      "total_duration_s": 34.294
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 60.343,
+      "p95_success_s": 60.343,
+      "success_durations_s": [
+        60.343
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 60.343
     },
     "transcribe": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 14.011,
-      "p95_success_s": 14.011,
+      "p50_success_s": 18.021,
+      "p95_success_s": 18.021,
       "success_durations_s": [
-        14.011
+        18.021
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 14.011
+      "total_duration_s": 18.021
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 54.031,
-      "p95_success_s": 54.031,
+      "p50_success_s": 52.034,
+      "p95_success_s": 52.034,
       "success_durations_s": [
-        54.031
+        52.034
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 54.031
+      "total_duration_s": 52.034
     }
   },
-  "status": "failed"
+  "status": "done"
 }
