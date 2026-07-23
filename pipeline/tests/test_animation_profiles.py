@@ -187,5 +187,48 @@ class AnimationProfileTests(unittest.TestCase):
                 governed_build._apply_animation_contract(root)
 
 
+
+class CartoonContractTests(unittest.TestCase):
+    def _cartoon_script(self, stock=False, motion_ok=True):
+        scene = {
+            "text": "Inside the booth.",
+            "animation_profile": animation_profiles.ANIMATED_TIER1,
+            "animation_query": "cartoon DJ works the booth",
+            "motion_kind": "video" if motion_ok else "image",
+        }
+        if stock:
+            scene["stock_id"] = 12345
+        return {
+            "title": "Cartoon Fixture",
+            "slug": "cartoon-fixture",
+            "animation_profile": animation_profiles.ANIMATED_TIER1,
+            "animation_contract_version": animation_profiles.CONTRACT_VERSION,
+            "cartoon_only": True,
+            "generated_temporal_video_required": True,
+            "max_still_source_ratio": 0.2,
+            "target_still_source_ratio": 0.0,
+            "scenes": [scene],
+        }
+
+    def test_apply_defaults_sets_cartoon_fields(self):
+        value = script(animation_profiles.ANIMATED_TIER1)
+        animation_profiles.apply_defaults(value)
+        self.assertTrue(value.get("cartoon_only"))
+        self.assertFalse(value.get("stock_allowed"))
+        self.assertTrue(value.get("generated_temporal_video_required"))
+        self.assertEqual(value.get("animation_medium"), "cartoon_character_animation")
+        self.assertEqual(value.get("target_still_source_ratio"), 0.0)
+
+    def test_cartoon_only_rejects_stock(self):
+        errs = animation_profiles.validate(self._cartoon_script(stock=True))
+        self.assertTrue(any("cartoon_only" in e for e in errs), errs)
+
+    def test_cartoon_only_clean_passes(self):
+        self.assertEqual(animation_profiles.validate(self._cartoon_script()), [])
+
+    def test_generated_video_requires_motion_video(self):
+        errs = animation_profiles.validate(self._cartoon_script(motion_ok=False))
+        self.assertTrue(any("motion_kind" in e for e in errs), errs)
+
 if __name__ == "__main__":
     unittest.main()
