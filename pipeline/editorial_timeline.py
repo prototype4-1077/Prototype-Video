@@ -1,8 +1,8 @@
 """Create and validate the canonical OpenTimelineIO edit for a rendered build.
 
 The OTIO timeline is the durable editorial truth. It references scene masters,
-voiceover, and score externally while carrying scene approval/revision metadata.
-It deliberately does not embed media.
+voiceover, score, and the exact approved delivery mix externally while carrying
+scene approval/revision metadata. It deliberately does not embed media.
 """
 from __future__ import annotations
 
@@ -96,6 +96,14 @@ def _selected_score(build_dir: Path) -> str | None:
     return None
 
 
+def _audio_specs(build_dir: Path) -> list[tuple[str, str | None, str]]:
+    return [
+        ("Locked Delivery Mix", "locked_delivery_audio.m4a", "delivery_mix"),
+        ("Voiceover", "vo.mp3", "voiceover"),
+        ("Selected Score", _selected_score(build_dir), "music"),
+    ]
+
+
 def build_timeline(build_dir: str | Path) -> dict[str, Any]:
     import opentimelineio as otio
 
@@ -122,6 +130,7 @@ def build_timeline(build_dir: str | Path) -> dict[str, Any]:
         "approved_scenes": sorted(approved),
         "revised_scenes": sorted(revised),
         "revision_number": int(script.get("scene_feedback_revision_count") or 0),
+        "locked_delivery_audio_sha256": _sha256(build_dir / "locked_delivery_audio.m4a"),
     }
 
     manifest_tracks: list[dict[str, Any]] = []
@@ -183,7 +192,8 @@ def build_timeline(build_dir: str | Path) -> dict[str, Any]:
         )
 
     total_duration = sum(float(scene["duration"]) for scene in scenes)
-    for name, filename in (("Voiceover", "vo.mp3"), ("Selected Score", _selected_score(build_dir))):
+    manifest_audio: list[dict[str, Any]] = []
+    for name, filename, role in _audio_specs(build_dir):
         if not filename:
             continue
         media_path = build_dir / filename
@@ -196,11 +206,21 @@ def build_timeline(build_dir: str | Path) -> dict[str, Any]:
             source_range=_time_range(otio, total_duration),
         )
         clip.metadata[NAMESPACE] = {
-            "role": "voiceover" if name == "Voiceover" else "music",
+            "role": role,
             "sha256": _sha256(media_path),
+            "locked": role == "delivery_mix",
         }
         track.append(clip)
         timeline.tracks.append(track)
+        manifest_audio.append(
+            {
+                "name": name,
+                "role": role,
+                "path": media_path.name,
+                "sha256": _sha256(media_path),
+                "locked": role == "delivery_mix",
+            }
+        )
 
     otio_path = build_dir / "editorial.otio"
     otio.adapters.write_to_file(timeline, str(otio_path))
@@ -215,6 +235,8 @@ def build_timeline(build_dir: str | Path) -> dict[str, Any]:
         "approved_scenes": sorted(approved),
         "revised_scenes": sorted(revised),
         "tracks": manifest_tracks,
+        "audio_tracks": manifest_audio,
+        "locked_delivery_audio_sha256": _sha256(build_dir / "locked_delivery_audio.m4a"),
         "otio_file": otio_path.name,
         "otio_sha256": _sha256(otio_path),
     }
@@ -239,6 +261,10 @@ def verify_timeline(build_dir: str | Path) -> dict[str, Any]:
     video_tracks = [
         track for track in timeline.tracks
         if getattr(track, "kind", None) == otio.schema.TrackKind.Video
+    ]
+    audio_tracks = [
+        track for track in timeline.tracks
+        if getattr(track, "kind", None) == otio.schema.TrackKind.Audio
     ]
     if not video_tracks:
         failures.append({"code": "missing_video_track", "message": "OTIO has no video track"})
@@ -278,13 +304,18 @@ def verify_timeline(build_dir: str | Path) -> dict[str, Any]:
                             "target_url": target,
                         }
                     )
+    locked = build_dir / "locked_delivery_audio.m4a"
+    if locked.exists() and not any(track.name == "Locked Delivery Mix" for track in audio_tracks):
+        failures.append({"code": "missing_locked_delivery_audio_track"})
     report = {
         "schema_version": 1,
         "slug": script.get("slug") or build_dir.name,
         "passed": not failures,
         "expected_scene_count": expected,
         "video_track_count": len(video_tracks),
+        "audio_track_count": len(audio_tracks),
         "narration_fingerprint": narration_fingerprint(script),
+        "locked_delivery_audio_sha256": _sha256(locked),
         "failures": failures,
     }
     (build_dir / "editorial-verification.json").write_text(
