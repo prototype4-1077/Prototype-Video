@@ -8,7 +8,9 @@ import json
 from pathlib import Path
 from typing import Any
 
-CACHE_VERSION = 1
+import locked_audio
+
+CACHE_VERSION = 2
 
 
 def _sha256(path: Path) -> str:
@@ -52,6 +54,7 @@ def _cache_files(build_dir: Path) -> list[Path]:
         "editorial.otio",
         "editorial_manifest.json",
         "editorial-verification.json",
+        "locked-audio-manifest.json",
     )
     found: dict[str, Path] = {}
     for pattern in patterns:
@@ -67,6 +70,9 @@ def build_manifest(build_dir: str | Path, *, run_id: str | None = None) -> dict[
     scenes = script.get("scenes") or []
     if not scenes:
         raise SystemExit("script has no scenes")
+    locked_report = locked_audio.verify(build_dir)
+    if not locked_report["passed"]:
+        raise SystemExit("revision cache requires exact locked delivery audio")
     expected_prefixes: list[str] = []
     if (build_dir / "youtube_seg_00.mp4").exists():
         expected_prefixes.append("youtube_seg_")
@@ -95,6 +101,7 @@ def build_manifest(build_dir: str | Path, *, run_id: str | None = None) -> dict[
         "scene_count": len(scenes),
         "scene_durations": durations,
         "segment_prefixes": expected_prefixes,
+        "locked_audio_sha256": locked_report.get("locked_audio_sha256"),
         "file_count": len(files),
         "total_bytes": total_bytes,
         "files": files,
@@ -131,6 +138,11 @@ def validate_manifest(build_dir: str | Path) -> dict[str, Any]:
                 "script": expected_durations,
             }
         )
+    locked_report = locked_audio.verify(build_dir)
+    if not locked_report["passed"]:
+        failures.extend(locked_report["failures"])
+    elif manifest.get("locked_audio_sha256") != locked_report.get("locked_audio_sha256"):
+        failures.append({"code": "cache_locked_audio_mismatch"})
     for item in manifest.get("files") or []:
         path = build_dir / str(item.get("path") or "")
         if not path.exists():
@@ -145,6 +157,7 @@ def validate_manifest(build_dir: str | Path) -> dict[str, Any]:
         "schema_version": 1,
         "slug": script.get("slug") or build_dir.name,
         "passed": not failures,
+        "locked_audio_sha256": locked_report.get("locked_audio_sha256"),
         "failures": failures,
     }
     (build_dir / "revision-cache-verification.json").write_text(
