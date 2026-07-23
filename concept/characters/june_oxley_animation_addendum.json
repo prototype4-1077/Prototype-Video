@@ -1,0 +1,76 @@
+{
+  "schema_version": 1,
+  "character_id": "june_oxley",
+  "mode_id": "premium_animation",
+  "default": false,
+  "activation": "Use only when James explicitly requests animated, cartoon, illustrated, stylized, or fully generated animation.",
+  "reference_policy": "The three uploaded legacy animated videos are pacing and concept-staging references only. Preserve their willingness to visualize invisible ideas, but do not reproduce their flat-template look, generic characters, white voids, stock vector assets, or slideshow-like motion.",
+  "creative_goal": "A premium cinematic animated short set inside Oxley's recurring town, with consistent character design, expressive acting, dimensional environments, authored camera movement, and surreal metaphysical events emerging from ordinary rural objects.",
+  "quality_floor": {
+    "character_consistency": "The same canonical Oxley face, age, beard, body proportions, wardrobe family, and silhouette must persist across every shot.",
+    "environment_consistency": "Recurring porch, diner, feed store, garage, shed, roads, water tower, and town geography should feel like one coherent world rather than disconnected stock backgrounds.",
+    "motion": "Use continuous character and environmental motion, secondary motion, parallax, camera movement, and motivated transitions. No static cutout drifting, simple scale-pans, or long frozen poses.",
+    "lighting": "Use cinematic motivated lighting, volumetric atmosphere where appropriate, believable shadows, material response, and a controlled palette tied to the episode's emotional turn.",
+    "acting": "Oxley must blink, breathe, shift weight, gesture naturally, chuckle physically, and react before speaking. Locals need readable but dignified body language.",
+    "composition": "Every shot needs a clear focal subject, depth layers, readable silhouettes, and vertical-safe framing without empty template space.",
+    "materials": "Wood, denim, enamel, dust, glass, metal, weather, skin, and foliage should have tactile texture and stable detail across frames.",
+    "surrealism": "Metaphysical imagery must grow from the ruling rural metaphor: porch boards becoming timelines, jar reflections becoming portals, fence posts becoming belief boundaries, carburetor parts becoming thought loops.",
+    "text": "No permanent banner, no paragraph captions, no text boxes, no labels floating inside the scene. Use the modern caption system only."
+  },
+  "preferred_styles": [
+    "cinematic stylized 3D with handcrafted rural textures",
+    "high-end painterly 2.5D with deep parallax and expressive character animation",
+    "premium stop-motion-inspired CG with tactile materials",
+    "surreal storybook realism for metaphysical transitions"
+  ],
+  "forbidden_styles": [
+    "flat explainer animation",
+    "generic stock-vector characters",
+    "white-background corporate cartoons",
+    "emoji or clip-art storytelling",
+    "randomly changing character designs",
+    "cheap puppet-mouth loops",
+    "template motion graphics",
+    "long still-image pans",
+    "visuals selected only because they literally match one noun"
+  ],
+  "shot_mix": {
+    "oxley_and_locals_max_ratio": 0.5,
+    "world_and_object_motion_min_ratio": 0.35,
+    "surreal_metaphor_ratio_range": [0.15, 0.35],
+    "maximum_consecutive_talking_shots": 2,
+    "minimum_distinct_camera_behaviors": 5
+  },
+  "camera_language": [
+    "slow porch push-in for intimate observations",
+    "low tracking move beside boots, dogs, tools, or tires",
+    "diner booth orbit during conversational escalation",
+    "macro move through an ordinary object into the metaphysical mechanism",
+    "wide town establishing shot with moving weather and local traffic",
+    "locked quiet frame for the knife line, followed by a subtle return to breath"
+  ],
+  "animation_pipeline_contract": {
+    "design_first": "Approve one Oxley turnaround, expression sheet, wardrobe palette, and recurring-location bible before the first animated episode.",
+    "scene_contract": "Each scene must declare character IDs, location ID, action, camera path, foreground/background motion, transition purpose, and anatomy/contact risk.",
+    "continuity": "Reuse approved character and environment references across shots; do not regenerate identities from text alone.",
+    "quality_review": "Reject identity drift, hand deformation, lip-sync distraction, sliding feet, frozen backgrounds, inconsistent lighting, texture boil, or motion without narrative purpose.",
+    "fallback": "When a complex human interaction cannot meet the quality floor, cut to an object-led or environment-led animated metaphor rather than accepting malformed characters."
+  },
+  "legacy_reference_takeaways": {
+    "keep": [
+      "bold visual metaphors for invisible inner processes",
+      "comedic contrast between ordinary life and cosmic interpretation",
+      "rapid shifts between local situations and conceptual imagery",
+      "willingness to personify emotions, beliefs, and perception"
+    ],
+    "replace": [
+      "flat one-layer staging",
+      "inconsistent generic characters",
+      "minimal facial acting",
+      "empty white or solid-color backgrounds",
+      "literal clip-art object matching",
+      "low-detail transitions",
+      "subtitles competing with the image"
+    ]
+  }
+}
