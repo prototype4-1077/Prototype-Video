@@ -28,12 +28,14 @@ jobs:
       PYTHONPATH: pipeline
     steps:
       - uses: actions/checkout@v4
+        with:
+          show-progress: false
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
 
-      - name: Validate narration, ethos, voice, animation, and motion contracts
+      - name: Produce structured package validation report
         run: |
           python3 - <<'PY'
           import copy
@@ -59,50 +61,127 @@ jobs:
               },
           }
 
+          result = {'schema_version': 1, 'packages': [], 'errors': []}
+
+          def check(row, condition, message):
+              if not condition:
+                  row['errors'].append(message)
+                  result['errors'].append(f"{row['file']}: {message}")
+
           for filename, expected in packages.items():
               script = json.loads(Path(filename).read_text(encoding='utf-8'))
               scenes = script.get('scenes') or []
               words = sum(len(str(scene.get('text') or '').split()) for scene in scenes)
+              row = {'file': filename, 'scene_count': len(scenes), 'word_count': words, 'errors': []}
+              result['packages'].append(row)
 
-              assert len(scenes) == 24, (filename, len(scenes))
-              assert 320 <= words <= 350, (filename, words)
-              assert script.get('science_fidelity') in {'established', 'emerging', 'metaphor'}
-              assert script.get('evidence_boundary')
-              assert script.get('grounding')
-              assert str(script.get('invitation') or '').endswith('?')
-              assert str(scenes[-1].get('text') or '').endswith('?')
-              assert scenes[-1].get('epistemic_role') == 'invitation'
-              assert any(scene.get('visual_function') == 'grounding' for scene in scenes[-4:])
-              assert script.get('hero_art_status') == 'not_required_no_static_hero_scenes'
-              assert not any(scene.get('hero') for scene in scenes)
-              assert all(scene.get('motion_kind') == 'video' for scene in scenes)
-              assert all(scene.get('motion_mode') in {'stock', 'video', 'i2v', 'image_to_video'} for scene in scenes)
+              check(row, len(scenes) == 24, f"scene count is {len(scenes)}, expected 24")
+              check(row, 320 <= words <= 350, f"word count is {words}, expected 320-350")
+              check(row, script.get('science_fidelity') in {'established', 'emerging', 'metaphor'},
+                    f"invalid science_fidelity {script.get('science_fidelity')!r}")
+              check(row, bool(script.get('evidence_boundary')), 'missing evidence_boundary')
+              check(row, bool(script.get('grounding')), 'missing grounding')
+              check(row, str(script.get('invitation') or '').endswith('?'), 'top-level invitation is not a question')
+              check(row, bool(scenes) and str(scenes[-1].get('text') or '').endswith('?'),
+                    'final narration is not a question')
+              check(row, bool(scenes) and scenes[-1].get('epistemic_role') == 'invitation',
+                    'final scene epistemic_role is not invitation')
+              check(row, any(scene.get('visual_function') == 'grounding' for scene in scenes[-4:]),
+                    'no grounding visual_function in final four scenes')
+              check(row, script.get('hero_art_status') == 'not_required_no_static_hero_scenes',
+                    f"unexpected hero_art_status {script.get('hero_art_status')!r}")
+              check(row, not any(scene.get('hero') for scene in scenes), 'one or more scenes request static hero art')
+              check(row, all(scene.get('motion_kind') == 'video' for scene in scenes),
+                    'one or more scenes are not motion_kind=video')
+              check(row, all(scene.get('motion_mode') in {'stock', 'video', 'i2v', 'image_to_video'} for scene in scenes),
+                    'one or more scenes use a non-temporal motion_mode')
 
               visible = ' '.join(str(scene.get('text') or '') for scene in scenes)
-              assert '[' not in visible and ']' not in visible, f'visible performance tag in {filename}'
+              check(row, '[' not in visible and ']' not in visible, 'visible narration contains performance tags')
 
-              character = profiles.resolve(script, strict=True)
-              assert character == expected['profile'], (filename, character)
+              try:
+                  character = profiles.resolve(script, strict=True)
+              except Exception as exc:
+                  character = f'ERROR:{exc}'
+              row['character_profile'] = character
+              check(row, character == expected['profile'],
+                    f"character profile is {character!r}, expected {expected['profile']!r}")
               if character == profiles.JUNE_OXLEY:
-                  assert script.get('elevenlabs_voice_name') == 'Granpa Spuds Oxley'
-                  assert not script.get('elevenlabs_voice_id'), 'June ID must resolve from exact account name at render time'
+                  check(row, script.get('elevenlabs_voice_name') == 'Granpa Spuds Oxley',
+                        f"June voice name is {script.get('elevenlabs_voice_name')!r}")
+                  check(row, not script.get('elevenlabs_voice_id'),
+                        'June voice ID was guessed instead of deferred to exact account-name resolution')
               else:
-                  assert script.get('elevenlabs_voice_id') == 'TX3LPaxmHKxFdv7VOQHJ'
+                  check(row, script.get('elevenlabs_voice_id') == 'TX3LPaxmHKxFdv7VOQHJ',
+                        'regular video does not explicitly use Liam')
 
-              animation = animation_profiles.resolve(script, strict=True)
-              assert animation == expected['animation'], (filename, animation)
+              try:
+                  animation = animation_profiles.resolve(script, strict=True)
+              except Exception as exc:
+                  animation = f'ERROR:{exc}'
+              row['animation_profile'] = animation
+              check(row, animation == expected['animation'],
+                    f"animation profile is {animation!r}, expected {expected['animation']!r}")
+
               prepared = copy.deepcopy(script)
-              changed = animation_profiles.apply_defaults(prepared, character_profile=character, strict=True)
-              if animation:
-                  assert changed
-                  assert animation_profiles.validate(prepared, character) == []
+              try:
+                  changed = animation_profiles.apply_defaults(
+                      prepared, character_profile=character if not str(character).startswith('ERROR:') else None,
+                      strict=True,
+                  )
+                  animation_errors = animation_profiles.validate(
+                      prepared, character if not str(character).startswith('ERROR:') else None,
+                  )
+              except Exception as exc:
+                  changed = None
+                  animation_errors = [str(exc)]
+              row['animation_preflight_changed'] = changed
+              row['animation_errors'] = animation_errors
+              if expected['animation']:
+                  check(row, changed is True, f'animation preflight changed={changed!r}, expected True')
+                  check(row, not animation_errors, f'animation preflight errors: {animation_errors}')
               else:
-                  assert changed is False
+                  check(row, changed is False, f'ordinary June script unexpectedly changed by animation preflight: {changed!r}')
 
-              report = visual_symbols.analyze(copy.deepcopy(script), character)
-              assert not report['violations'], (filename, report['violations'])
-              assert report['symbol_family_count'] >= 6, (filename, report['symbol_family_count'])
-              print(filename, 'scenes=', len(scenes), 'words=', words,
-                    'human=', report['human_presence_ratio'],
-                    'families=', report['symbol_family_count'])
+              try:
+                  report = visual_symbols.analyze(copy.deepcopy(script), character if character == profiles.JUNE_OXLEY else None)
+                  row['visual_report'] = {
+                      'human_presence_ratio': report['human_presence_ratio'],
+                      'generic_human_ratio': report['generic_human_ratio'],
+                      'symbol_family_count': report['symbol_family_count'],
+                      'longest_family_run': report['longest_family_run'],
+                      'violations': report['violations'],
+                      'warnings': report['warnings'],
+                  }
+                  check(row, not report['violations'], f"visual violations: {report['violations']}")
+                  check(row, report['symbol_family_count'] >= 6,
+                        f"only {report['symbol_family_count']} symbol families")
+              except Exception as exc:
+                  row['visual_report'] = {'error': str(exc)}
+                  check(row, False, f'visual analysis failed: {exc}')
+
+          Path('package-validation.json').write_text(
+              json.dumps(result, indent=2, ensure_ascii=False) + '\n',
+              encoding='utf-8',
+          )
+          print(json.dumps(result, indent=2, ensure_ascii=False))
+          PY
+
+      - name: Upload package validation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: legacy-remake-package-validation-${{ github.run_id }}
+          retention-days: 30
+          if-no-files-found: error
+          path: package-validation.json
+
+      - name: Enforce package validation result
+        run: |
+          python3 - <<'PY'
+          import json
+          report = json.load(open('package-validation.json', encoding='utf-8'))
+          if report['errors']:
+              raise SystemExit('\n'.join(report['errors']))
+          print('all three remake packages passed')
           PY
