@@ -1,0 +1,168 @@
+{
+  "generated_at": "2026-07-23T14:48:45+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {
+    "low_bitrate": 1
+  },
+  "recommendations": [
+    {
+      "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
+      "category": "tail_latency",
+      "evidence": "p50=57.0s, p95=1247.4s",
+      "priority": "medium",
+      "stage": "build_pass"
+    }
+  ],
+  "recurring_incidents": [],
+  "runs_analyzed": 3,
+  "schema_version": 1,
+  "stages": {
+    "align": {
+      "attempts": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.003,
+      "sample_count": 3,
+      "successes": 3,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 3.006
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.051,
+      "p95_success_s": 6.051,
+      "sample_count": 1,
+      "successes": 1,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 6.051
+    },
+    "assemble": {
+      "attempts": 73,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 43.415,
+      "p95_success_s": 82.521,
+      "sample_count": 73,
+      "successes": 73,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 3408.816
+    },
+    "build_pass": {
+      "attempts": 15,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 57.023,
+      "p95_success_s": 1247.377,
+      "sample_count": 15,
+      "successes": 15,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 4360.283
+    },
+    "credits": {
+      "attempts": 6,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.011,
+      "sample_count": 6,
+      "successes": 6,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 6.039
+    },
+    "ffmpeg": {
+      "attempts": 12,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.022,
+      "p95_success_s": 29.593,
+      "sample_count": 12,
+      "successes": 12,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 125.668
+    },
+    "footage": {
+      "attempts": 2,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 192.233,
+      "p95_success_s": 204.006,
+      "sample_count": 2,
+      "successes": 2,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 384.465
+    },
+    "prep": {
+      "attempts": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 14.048,
+      "p95_success_s": 14.933,
+      "sample_count": 3,
+      "successes": 3,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 40.096
+    },
+    "probe": {
+      "attempts": 76,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.014,
+      "sample_count": 76,
+      "successes": 76,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 76.739
+    },
+    "quality": {
+      "attempts": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 33.145,
+      "p95_success_s": 33.181,
+      "sample_count": 3,
+      "successes": 3,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 94.554
+    },
+    "transcribe": {
+      "attempts": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 21.014,
+      "p95_success_s": 23.716,
+      "sample_count": 3,
+      "successes": 3,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 64.051
+    },
+    "tts": {
+      "attempts": 3,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 58.045,
+      "p95_success_s": 63.427,
+      "sample_count": 3,
+      "successes": 3,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 178.093
+    }
+  },
+  "statuses": {
+    "done": 3
+  }
+}

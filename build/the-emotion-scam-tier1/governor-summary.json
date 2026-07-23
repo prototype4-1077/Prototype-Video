@@ -1,0 +1,395 @@
+{
+  "finished_at": "2026-07-23T14:48:44+00:00",
+  "github_run_id": "30015516493",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-emotion-scam-tier1/final.mp4",
+  "mode": "recover",
+  "passes": 5,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 120.0,
+      "sample_count": 2,
+      "soft_timeout_s": 180.0,
+      "source": "default"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 120.0,
+      "sample_count": 0,
+      "soft_timeout_s": 180.0,
+      "source": "default"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 85.55,
+      "idle_timeout_s": 240.0,
+      "sample_count": 49,
+      "soft_timeout_s": 286.65,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 120.0,
+      "sample_count": 4,
+      "soft_timeout_s": 180.0,
+      "source": "default"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 29.78,
+      "idle_timeout_s": 119.35,
+      "sample_count": 8,
+      "soft_timeout_s": 119.35,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 180.0,
+      "sample_count": 1,
+      "soft_timeout_s": 300.0,
+      "source": "default"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 300.0,
+      "sample_count": 2,
+      "soft_timeout_s": 480.0,
+      "source": "default"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 51,
+      "soft_timeout_s": 33.03,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 360.0,
+      "sample_count": 2,
+      "soft_timeout_s": 600.0,
+      "source": "default"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 180.0,
+      "sample_count": 2,
+      "soft_timeout_s": 240.0,
+      "source": "default"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-emotion-scam-tier1",
+    "checked_at": "2026-07-23T14:48:44+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 163.559,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "portrait": {
+        "avg_kbps": 3959,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.008,
+        "exists": true,
+        "expected_duration_s": 163.559,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-emotion-scam-tier1/final.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 163.560998,
+          "bit_rate": 3959362.0,
+          "duration_s": 163.566667,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1920,
+          "video_codec": "h264",
+          "video_duration_s": 163.566667,
+          "width": 1080
+        },
+        "size_bytes": 80952459,
+        "warnings": [
+          {
+            "code": "low_bitrate",
+            "message": "Average bitrate 3959 kbps is unusually low for 1080p; check for over-compression",
+            "target": "portrait"
+          }
+        ]
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": [
+      {
+        "code": "low_bitrate",
+        "message": "Average bitrate 3959 kbps is unusually low for 1080p; check for over-compression",
+        "target": "portrait"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (1403.4s).",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Review warnings before allowing any speed-oriented policy to become the champion.",
+      "priority": "medium",
+      "reason": "Quality gate emitted 1 warning(s).",
+      "stage": "quality"
+    }
+  ],
+  "run_id": "a88beea4caf0406eb8aedbf01f4dba03",
+  "schema_version": 1,
+  "slug": "the-emotion-scam-tier1",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.001,
+      "p95_success_s": 1.001,
+      "success_durations_s": [
+        1.001
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.001
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 6.051,
+      "p95_success_s": 6.051,
+      "success_durations_s": [
+        6.051
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 6.051
+    },
+    "assemble": {
+      "attempts": 24,
+      "failures": 0,
+      "p50_success_s": 41.904,
+      "p95_success_s": 62.88,
+      "success_durations_s": [
+        63.644,
+        43.415,
+        50.446,
+        35.348,
+        54.484,
+        58.552,
+        21.188,
+        34.318,
+        43.426,
+        32.279,
+        46.516,
+        38.328,
+        37.379,
+        33.351,
+        22.202,
+        46.452,
+        18.149,
+        63.656,
+        35.366,
+        43.631,
+        40.392,
+        36.351,
+        53.52,
+        50.48
+      ],
+      "successes": 24,
+      "timeouts": 0,
+      "total_duration_s": 1002.873
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 65.026,
+      "p95_success_s": 914.033,
+      "success_durations_s": [
+        65.026,
+        25.014,
+        206.319,
+        16.053,
+        1090.962
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 1403.374
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 1.01,
+      "p95_success_s": 1.012,
+      "success_durations_s": [
+        1.008,
+        1.012
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.02
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 6.53,
+      "p95_success_s": 22.499,
+      "success_durations_s": [
+        1.014,
+        6.025,
+        25.228,
+        7.035
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 39.302
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 205.314,
+      "p95_success_s": 205.314,
+      "success_durations_s": [
+        205.314
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 205.314
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 14.048,
+      "p95_success_s": 14.048,
+      "success_durations_s": [
+        14.048
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 14.048
+    },
+    "probe": {
+      "attempts": 25,
+      "failures": 0,
+      "p50_success_s": 1.013,
+      "p95_success_s": 1.014,
+      "success_durations_s": [
+        1.014,
+        1.013,
+        1.013,
+        1.013,
+        1.014,
+        1.014,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.017,
+        1.014,
+        1.014,
+        1.014,
+        1.014,
+        1.014,
+        1.013,
+        1.013,
+        1.014
+      ],
+      "successes": 25,
+      "timeouts": 0,
+      "total_duration_s": 25.338
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 28.224,
+      "p95_success_s": 28.224,
+      "success_durations_s": [
+        28.224
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 28.224
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 21.014,
+      "p95_success_s": 21.014,
+      "success_durations_s": [
+        21.014
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 21.014
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 64.025,
+      "p95_success_s": 64.025,
+      "success_durations_s": [
+        64.025
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 64.025
+    }
+  },
+  "status": "done"
+}
