@@ -8,7 +8,9 @@ import socket
 import sys
 import traceback
 
+import animation_profiles
 import build
+import profiles
 from governor import PipelineGovernor, atomic_write_json, normalize_error
 
 
@@ -32,6 +34,30 @@ def _install_storyline_router(governor: PipelineGovernor):
 
     build.sh = governed_runner
     return governed_runner
+
+
+def _apply_animation_contract(build_dir: Path) -> dict | None:
+    """Persist a requested animation profile before any production stage runs."""
+    script_path = build_dir / "script.json"
+    if not script_path.exists():
+        return None
+    try:
+        script = json.loads(script_path.read_text(encoding="utf-8"))
+        character_profile = profiles.resolve(script, strict=True)
+        changed = animation_profiles.apply_defaults(
+            script, character_profile=character_profile, strict=True
+        )
+        errors = animation_profiles.validate(script, character_profile)
+    except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"animation profile validation failed: {exc}") from exc
+    if errors:
+        raise ValueError("animation profile validation failed: " + "; ".join(errors))
+    if changed:
+        script_path.write_text(
+            json.dumps(script, indent=1, ensure_ascii=False) + "\n",
+            encoding="utf-8",
+        )
+    return script
 
 
 def _install_probe_cache(build_dir: Path) -> None:
@@ -84,6 +110,11 @@ def main(argv: list[str] | None = None) -> int:
         print("ERROR: no build dir given | FIX: run governed_build.py build/<slug>", file=sys.stderr)
         return 1
     build_dir = Path(args[0]).resolve()
+    try:
+        prepared = _apply_animation_contract(build_dir)
+    except ValueError as exc:
+        print(f"ERROR: {exc} | FIX: choose a supported animation_profile and repair its contract", file=sys.stderr)
+        return 1
     # Covers direct network work performed inside build.py itself (currently
     # font acquisition). Child stages are bounded independently by the Governor.
     socket.setdefaulttimeout(float(os.environ.get("GOVERNOR_SOCKET_TIMEOUT_SECONDS", "60")))
@@ -101,10 +132,13 @@ def main(argv: list[str] | None = None) -> int:
     elif os.environ.get("GITHUB_ACTIONS"):
         build.BUDGET = 120.0
 
+    animation_name = animation_profiles.resolve(prepared or {})
     governor.record_event(
         "build_pass_start", pid=os.getpid(), build_budget_s=build.BUDGET,
         probe_cache=str(build_dir / ".probe-cache.json"),
         narrative_fidelity=str(Path(__file__).with_name("editorial_memory.json")),
+        animation_profile=animation_name,
+        animation_quality_tier=(prepared or {}).get("animation_quality_tier"),
     )
     try:
         build.main(str(build_dir))
