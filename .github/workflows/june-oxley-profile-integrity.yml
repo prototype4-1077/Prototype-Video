@@ -42,11 +42,13 @@ jobs:
           assert profile['canonical_status'] == 'active'
           assert profile['voice']['provider'] == 'ElevenLabs'
           assert profile['voice']['voice_display_name'] == 'Granpa Spuds Oxley'
-          assert profile['voice']['voice_id'] is None or isinstance(profile['voice']['voice_id'], str)
+          assert profile['voice']['voice_id'] == 'NOpBlnGInO9m6vDvFkFC'
           assert 'Never silently substitute Liam' in profile['voice']['voice_id_policy']
+          assert 'official public ElevenLabs' in profile['voice']['voice_id_policy']
           assert profile['ethical_constitution']['politics'].startswith('Oxley has no political identity')
           assert profile['ethical_constitution']['core_belief'].startswith('You are supposed to do right by people')
           assert profile['visual_identity']['continuity_rule'].startswith('Use one stable Oxley face')
+          assert 'only into scenes that actually show June' in profile['visual_identity']['continuity_rule']
           assert profile['visual_identity']['max_human_scene_ratio'] <= 0.45
           assert profile['script_contract']['scene_target'] == 24
           assert profile['script_contract']['word_target_min'] == 330
