@@ -43,6 +43,9 @@ importance of belief analysis."* Five principles govern everything below:
   two pillars) as a ready-to-develop spark. Logs to `concept/BRIEF_LOG.md`.
 - **`concept/mine_corpus.py`** — re-mines the corpus to refresh the pillar weights
   as new scripts are written (run it after each batch).
+- **`concept/characters/`** — canonical character bibles for recurring on-channel
+  voices. Character scripts must load the named profile before writing or rendering
+  so voice, ethics, appearance, world continuity, and visual grammar remain stable.
 
 ---
 
@@ -77,6 +80,19 @@ python3 concept/daily_brief.py 2026-08-01 # a specific day
 Take the hook + ruling metaphor + the turn + the invitation, and develop it into a
 script in the house voice. The brief already enforces the ethos (ends on an
 invitation, honors a structural signature, lands in the ordinary).
+
+**For a recurring character script:**
+1. Load the character JSON and companion bible under `concept/characters/`.
+2. Preserve the character's exact voice provider/name and do not silently substitute
+   the normal Liam voice.
+3. Keep the channel ethos and science-fidelity boundary active inside the character's
+   own language.
+4. Treat the character's appearance, town, ethics, title system, and recurring props
+   as continuity—not disposable prompt decoration.
+
+The canonical June Oxley profile is:
+- `concept/characters/june_oxley.json`
+- `concept/characters/JUNE_OXLEY.md`
 
 **To keep the engine current:**
 - After writing new videos, run `python3 concept/mine_corpus.py` and update the
