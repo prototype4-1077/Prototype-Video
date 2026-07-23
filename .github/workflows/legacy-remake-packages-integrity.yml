@@ -45,6 +45,9 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install focused pipeline dependencies
+        run: pip install -q numpy Pillow
+
       - name: Validate narration, ethos, voice, animation, and motion contracts
         id: package_tests
         continue-on-error: true
@@ -108,18 +111,19 @@ jobs:
               visible = ' '.join(str(scene.get('text') or '') for scene in scenes)
               check(filename, '[' not in visible and ']' not in visible, 'visible performance tag present')
 
-              character = profiles.resolve(script, strict=True)
-              check(filename, character == expected['profile'],
-                    f"character {character!r} != {expected['profile']!r}")
+              initial_character = profiles.resolve(script, strict=True)
               animation = animation_profiles.resolve(script, strict=True)
               check(filename, animation == expected['animation'],
                     f"animation {animation!r} != {expected['animation']!r}")
 
               prepared = copy.deepcopy(script)
-              voice_changed = governed_build._apply_character_voice(prepared, character)
               animation_changed = animation_profiles.apply_defaults(
-                  prepared, character_profile=character, strict=True
+                  prepared, character_profile=initial_character, strict=True
               )
+              character = profiles.resolve(prepared, strict=True)
+              voice_changed = governed_build._apply_character_voice(prepared, character)
+              check(filename, character == expected['profile'],
+                    f"character {character!r} != {expected['profile']!r}")
               if animation:
                   for scene in prepared.get('scenes') or []:
                       styled = animation_profiles.effective_query(scene, animation)
