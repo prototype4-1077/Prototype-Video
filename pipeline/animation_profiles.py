@@ -120,12 +120,12 @@ def _scene_needs_character(scene: dict, required_character: str | None, base_que
     """
     if not required_character:
         return False
-    explicit = scene.get("animation_character_required")
-    if isinstance(explicit, bool):
-        return explicit
     role = _key(scene.get("human_role") or "")
     if role in _HARD_NON_CHARACTER_ROLES:
         return False
+    explicit = scene.get("animation_character_required")
+    if isinstance(explicit, bool):
+        return explicit
     if role in _CHARACTER_ROLES:
         return True
     if role not in _NON_CHARACTER_ROLES:
@@ -228,6 +228,13 @@ def apply_defaults(script: dict, character_profile: str | None = None, strict: b
     general_suffix = data["prompt_suffix"]
     character_suffix = data.get("character_prompt_suffix") or ""
     for index, scene in enumerate(script.get("scenes") or []):
+        role = _key(scene.get("human_role") or "")
+        if role in _HARD_NON_CHARACTER_ROLES:
+            if scene.pop("animation_character_required", None) is not None:
+                changed = True
+            if scene.pop("animation_character_reference_id", None) is not None:
+                changed = True
+
         literal_query = (
             scene.get("animation_base_query") or scene.get("query")
             or scene.get("image_prompt") or scene.get("text") or ""
@@ -244,9 +251,6 @@ def apply_defaults(script: dict, character_profile: str | None = None, strict: b
             if scene.get("animation_object_query") != render_base:
                 scene["animation_object_query"] = render_base
                 changed = True
-            # visual_symbols and footage both treat symbol_query as the deliberate
-            # override. Replace any stale human planner query with the same repaired
-            # object-led base used by the animation contract.
             if scene.get("symbol_query") != render_base:
                 scene["symbol_query"] = render_base
                 changed = True
