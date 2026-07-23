@@ -23,6 +23,22 @@ def _sha256(path: Path) -> str:
     return digest.hexdigest()
 
 
+def _audio_stream_md5(path: Path) -> str:
+    result = subprocess.run(
+        [
+            "ffmpeg", "-v", "error", "-i", str(path), "-map", "0:a:0",
+            "-c:a", "copy", "-f", "md5", "-",
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+    value = result.stdout.strip()
+    if not value.startswith("MD5="):
+        raise SystemExit(f"could not fingerprint audio stream in {path}")
+    return value.split("=", 1)[1].strip()
+
+
 def _probe(path: Path) -> dict[str, Any]:
     result = subprocess.run(
         [
@@ -66,12 +82,13 @@ def extract(source_video: str | Path, build_dir: str | Path) -> dict[str, Any]:
     if probe["duration"] <= 0.0:
         raise SystemExit("approved audio has invalid duration")
     manifest = {
-        "schema_version": 1,
+        "schema_version": 2,
         "created_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "source_video": source_video.name,
         "source_video_sha256": _sha256(source_video),
         "locked_audio": target.name,
         "locked_audio_sha256": _sha256(target),
+        "locked_audio_stream_md5": _audio_stream_md5(target),
         "audio": probe,
         "policy": "stream-copy approved final audio; visual revisions may not alter it",
     }
@@ -94,6 +111,7 @@ def apply(video: str | Path, build_dir: str | Path) -> dict[str, Any]:
     actual = _sha256(locked)
     if expected != actual:
         raise SystemExit("locked delivery audio hash changed")
+    expected_stream = manifest.get("locked_audio_stream_md5") or _audio_stream_md5(locked)
     with tempfile.NamedTemporaryFile(
         prefix=f".{video.stem}-locked-", suffix=video.suffix, dir=video.parent, delete=False
     ) as handle:
@@ -113,10 +131,16 @@ def apply(video: str | Path, build_dir: str | Path) -> dict[str, Any]:
         os.replace(temporary, video)
     finally:
         temporary.unlink(missing_ok=True)
+    video_stream = _audio_stream_md5(video)
+    if video_stream != expected_stream:
+        raise SystemExit("final video audio packets do not match the approved delivery audio")
     result_payload = {
         "video": video.name,
         "video_sha256": _sha256(video),
         "locked_audio_sha256": actual,
+        "locked_audio_stream_md5": expected_stream,
+        "video_audio_stream_md5": video_stream,
+        "exact_audio_match": True,
         "audio": _probe(video),
     }
     return result_payload
@@ -132,15 +156,21 @@ def verify(build_dir: str | Path) -> dict[str, Any]:
         manifest: dict[str, Any] = {}
     else:
         manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    stream_md5 = None
     if not locked.exists():
         failures.append({"code": "missing_locked_audio"})
     elif manifest.get("locked_audio_sha256") != _sha256(locked):
         failures.append({"code": "locked_audio_hash_mismatch"})
+    elif manifest.get("locked_audio_stream_md5"):
+        stream_md5 = _audio_stream_md5(locked)
+        if manifest.get("locked_audio_stream_md5") != stream_md5:
+            failures.append({"code": "locked_audio_stream_mismatch"})
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "passed": not failures,
         "locked_audio": locked.name,
         "locked_audio_sha256": _sha256(locked) if locked.exists() else None,
+        "locked_audio_stream_md5": stream_md5 or manifest.get("locked_audio_stream_md5"),
         "failures": failures,
     }
 
