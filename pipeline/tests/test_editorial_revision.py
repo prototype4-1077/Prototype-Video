@@ -1,3 +1,4 @@
+import hashlib
 import json
 from pathlib import Path
 import sys
@@ -9,6 +10,7 @@ sys.path.insert(0, str(HERE))
 
 import editorial_timeline
 import export_verify
+import locked_audio
 import revision_cache
 import selective_revision
 
@@ -24,6 +26,22 @@ class EditorialRevisionTests(unittest.TestCase):
                 {"text": "three?", "start": 2.0, "duration": 1.0, "clip": "old"},
             ],
         }
+
+    def _write_locked_audio(self, build: Path) -> str:
+        audio = build / locked_audio.LOCKED_NAME
+        audio.write_bytes(b"approved-delivery-audio" * 100)
+        digest = hashlib.sha256(audio.read_bytes()).hexdigest()
+        (build / locked_audio.MANIFEST_NAME).write_text(
+            json.dumps(
+                {
+                    "schema_version": 1,
+                    "locked_audio": audio.name,
+                    "locked_audio_sha256": digest,
+                }
+            ),
+            encoding="utf-8",
+        )
+        return digest
 
     def test_boundary_matching(self):
         planned = export_verify.planned_boundaries([1.0, 2.0, 3.0])
@@ -43,11 +61,12 @@ class EditorialRevisionTests(unittest.TestCase):
         script["scenes"][0]["text"] = "changed"
         self.assertNotEqual(before, editorial_timeline.narration_fingerprint(script))
 
-    def test_selective_revision_preserves_approved_hashes(self):
+    def test_selective_revision_preserves_approved_hashes_and_audio(self):
         with tempfile.TemporaryDirectory() as temp:
             build = Path(temp)
             script = self._script()
             (build / "script.json").write_text(json.dumps(script), encoding="utf-8")
+            locked_hash = self._write_locked_audio(build)
             for index in range(3):
                 (build / f"clip_{index:02d}.mp4").write_bytes(bytes([index + 1]) * 100_001)
                 (build / f"youtube_seg_{index:02d}.mp4").write_bytes(bytes([index + 11]) * 100_001)
@@ -66,6 +85,7 @@ class EditorialRevisionTests(unittest.TestCase):
             revision_cache.build_manifest(build, run_id="123")
             report = selective_revision.prepare(build)
             self.assertEqual(report["revised_scenes"], [1])
+            self.assertEqual(report["locked_audio_sha256"], locked_hash)
             self.assertTrue((build / "youtube_seg_00.mp4").exists())
             self.assertFalse((build / "youtube_seg_01.mp4").exists())
             revised_script = json.loads((build / "script.json").read_text())
@@ -74,10 +94,12 @@ class EditorialRevisionTests(unittest.TestCase):
 
             (build / "clip_01.mp4").write_bytes(b"n" * 100_001)
             (build / "youtube_seg_01.mp4").write_bytes(b"r" * 100_001)
-            (build / "final_youtube.mp4").write_bytes(b"f" * 1_000_001)
+            (build / "final_youtube.mp4").write_bytes(b"f" * 100_001)
             result = selective_revision.finalize(build)
             self.assertTrue(result["passed"], result)
             self.assertEqual(result["approved_scenes_preserved"], 2)
+            self.assertTrue(result["approved_delivery_audio_preserved"])
+            self.assertEqual(result["locked_audio_sha256"], locked_hash)
 
     def test_otio_round_trip_when_installed(self):
         try:
@@ -88,12 +110,15 @@ class EditorialRevisionTests(unittest.TestCase):
             build = Path(temp)
             script = self._script()
             (build / "script.json").write_text(json.dumps(script), encoding="utf-8")
+            locked_hash = self._write_locked_audio(build)
             for index in range(3):
                 (build / f"youtube_seg_{index:02d}.mp4").write_bytes(b"v" * 100)
             manifest = editorial_timeline.build_timeline(build)
             self.assertEqual(manifest["scene_count"], 3)
+            self.assertEqual(manifest["locked_delivery_audio_sha256"], locked_hash)
             verification = editorial_timeline.verify_timeline(build)
             self.assertTrue(verification["passed"], verification)
+            self.assertEqual(verification["locked_delivery_audio_sha256"], locked_hash)
 
 
 if __name__ == "__main__":
