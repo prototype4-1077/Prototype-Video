@@ -20,6 +20,14 @@ def _load(path: Path) -> dict[str, Any]:
     return payload
 
 
+def _load_optional(path: Path) -> dict[str, Any]:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return {}
+    return payload if isinstance(payload, dict) else {}
+
+
 def _probe(path: Path) -> dict[str, float]:
     command = [
         "ffprobe", "-v", "error",
@@ -121,6 +129,23 @@ def _extract_frames(build_dir: Path, video: Path, durations: list[float], canvas
     return outputs
 
 
+def _planned_edit(
+    build_dir: Path, video: Path, scenes: list[dict[str, Any]]
+) -> tuple[str, list[dict[str, Any]], list[int]]:
+    stem = video.stem.lower()
+    if "short" in stem:
+        canvas = "short"
+        short_report = _load_optional(build_dir / "motion_report_short.json")
+        indexes = [int(value) for value in short_report.get("selected_indexes") or []]
+        if not indexes:
+            raise SystemExit("short export requires motion_report_short.json selected_indexes")
+        if any(index < 0 or index >= len(scenes) for index in indexes):
+            raise SystemExit("short export contains invalid selected scene indexes")
+        return canvas, [scenes[index] for index in indexes], indexes
+    canvas = "youtube" if "youtube" in stem else "portrait"
+    return canvas, scenes, list(range(len(scenes)))
+
+
 def verify_export(
     build_dir: str | Path,
     video_name: str,
@@ -131,14 +156,14 @@ def verify_export(
 ) -> dict[str, Any]:
     build_dir = Path(build_dir).resolve()
     script = _load(build_dir / "script.json")
-    scenes = script.get("scenes") or []
-    durations = [float(scene.get("duration") or 0.0) for scene in scenes]
-    if not durations or any(value <= 0 for value in durations):
-        raise SystemExit("all scenes need positive durations")
+    all_scenes = script.get("scenes") or []
     video = build_dir / video_name
     if not video.exists():
         raise SystemExit(f"missing export: {video}")
-    canvas = "youtube" if "youtube" in video.stem else ("short" if "short" in video.stem else "portrait")
+    canvas, scenes, scene_indexes = _planned_edit(build_dir, video, all_scenes)
+    durations = [float(scene.get("duration") or 0.0) for scene in scenes]
+    if not durations or any(value <= 0 for value in durations):
+        raise SystemExit("all planned export scenes need positive durations")
     probe = _probe(video)
     expected_total = sum(durations)
     detected_ranges = _detect(video, threshold=threshold, min_scene_seconds=0.25)
@@ -200,12 +225,13 @@ def verify_export(
         )
     frames = _extract_frames(build_dir, video, durations, canvas) if extract_frames else []
     report = {
-        "schema_version": 1,
+        "schema_version": 2,
         "slug": script.get("slug") or build_dir.name,
         "canvas": canvas,
         "video": video.name,
         "passed": not failures,
         "expected_scene_count": len(scenes),
+        "expected_scene_indexes": scene_indexes,
         "expected_duration": round(expected_total, 3),
         "probe": {key: round(value, 3) for key, value in probe.items()},
         "detector": {
