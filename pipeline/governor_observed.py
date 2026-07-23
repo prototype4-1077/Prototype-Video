@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import os
+from pathlib import Path
 import subprocess
 import time
 from typing import Any, Sequence
@@ -24,6 +25,17 @@ class PipelineGovernor(RuntimePipelineGovernor):
         self.telemetry = None
         super().__init__(*args, **kwargs)
         try:
+            # Existing render artifacts already upload governor/**.  Keep the
+            # telemetry there while preserving build/<slug>/telemetry as the
+            # stable local path used by tools and tests.
+            target = self.directory / "telemetry"
+            stable = self.build_dir / "telemetry"
+            target.mkdir(parents=True, exist_ok=True)
+            if not stable.exists():
+                try:
+                    stable.symlink_to(target, target_is_directory=True)
+                except OSError:
+                    stable.mkdir(parents=True, exist_ok=True)
             self.telemetry = create_session(
                 self.build_dir,
                 run_id=self.run_id,
