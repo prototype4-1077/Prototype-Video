@@ -50,7 +50,7 @@ jobs:
           sudo apt-get install -y -q ffmpeg
           pip install -q -r pipeline/requirements.txt
 
-      - name: Download original finished artifact
+      - name: Download original finished artifact and lock approved audio
         env:
           GH_TOKEN: ${{ github.token }}
           SLUG: ${{ steps.target.outputs.slug }}
@@ -66,6 +66,11 @@ jobs:
           for video in "${originals[@]}"; do
             cp "$video" "build/$SLUG/original_$(basename "$video")"
           done
+          approved="/tmp/original/final_youtube.mp4"
+          test -s "$approved" || approved="/tmp/original/final.mp4"
+          test -s "$approved" || approved="${originals[0]}"
+          python3 pipeline/locked_audio.py extract "$approved" "build/$SLUG"
+          python3 pipeline/locked_audio.py verify "build/$SLUG"
 
       - name: Restore cached footage and narration
         uses: actions/cache/restore@v4
@@ -101,6 +106,20 @@ jobs:
           PYTHONUNBUFFERED: "1"
         run: python3 pipeline/editorial_cache_build.py "build/$SLUG" --max-passes 40
 
+      - name: Reapply exact approved delivery audio
+        env:
+          SLUG: ${{ steps.target.outputs.slug }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          finals=(build/$SLUG/final*.mp4)
+          test "${#finals[@]}" -ge 1
+          for video in "${finals[@]}"; do
+            python3 pipeline/locked_audio.py apply "$video" "build/$SLUG"
+          done
+          python3 pipeline/locked_audio.py verify "build/$SLUG"
+
       - name: Write and verify canonical OTIO timeline
         env:
           SLUG: ${{ steps.target.outputs.slug }}
@@ -125,6 +144,11 @@ jobs:
                "build/$SLUG/export-verification-original-$canvas.json"
             mv "build/$SLUG/detected-scenes-$canvas.csv" \
                "build/$SLUG/detected-scenes-original-$canvas.csv"
+            if [ -d "build/$SLUG/verification_frames/$canvas" ]; then
+              rm -rf "build/$SLUG/verification_frames/original-$canvas"
+              mv "build/$SLUG/verification_frames/$canvas" \
+                 "build/$SLUG/verification_frames/original-$canvas"
+            fi
           done
           for rebuilt in build/$SLUG/final*.mp4; do
             python3 pipeline/export_verify.py "build/$SLUG" "$(basename "$rebuilt")" --frames
@@ -164,6 +188,7 @@ jobs:
             build/${{ steps.target.outputs.slug }}/editorial.otio
             build/${{ steps.target.outputs.slug }}/editorial_manifest.json
             build/${{ steps.target.outputs.slug }}/editorial-verification.json
+            build/${{ steps.target.outputs.slug }}/locked-audio-manifest.json
             build/${{ steps.target.outputs.slug }}/revision-cache-manifest.json
 
       - name: Upload editorial verification package
@@ -176,6 +201,7 @@ jobs:
             build/${{ steps.target.outputs.slug }}/editorial.otio
             build/${{ steps.target.outputs.slug }}/editorial_manifest.json
             build/${{ steps.target.outputs.slug }}/editorial-verification.json
+            build/${{ steps.target.outputs.slug }}/locked-audio-manifest.json
             build/${{ steps.target.outputs.slug }}/revision-cache-manifest.json
             build/${{ steps.target.outputs.slug }}/export-verification*.json
             build/${{ steps.target.outputs.slug }}/detected-scenes*.csv
@@ -195,6 +221,7 @@ jobs:
             "build/$SLUG/editorial.otio" \
             "build/$SLUG/editorial_manifest.json" \
             "build/$SLUG/editorial-verification.json" \
+            "build/$SLUG/locked-audio-manifest.json" \
             "build/$SLUG/revision-cache-manifest.json" \
             build/$SLUG/export-verification*.json \
             build/$SLUG/detected-scenes*.csv; do
@@ -216,6 +243,7 @@ jobs:
             "build/$SLUG/editorial.otio" \
             "build/$SLUG/editorial_manifest.json" \
             "build/$SLUG/editorial-verification.json" \
+            "build/$SLUG/locked-audio-manifest.json" \
             "build/$SLUG/revision-cache-manifest.json" \
             "build/$SLUG"/export-verification*.json \
             "build/$SLUG"/detected-scenes*.csv
