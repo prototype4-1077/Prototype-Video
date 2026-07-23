@@ -34,12 +34,23 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Compile and run unit tests
+      - name: Compile challenger and ledger
         run: |
           python3 -m py_compile \
             pipeline/whisperx_challenger.py \
             pipeline/whisperx_benchmark_ledger.py
-          python3 -m unittest pipeline.tests.test_whisperx_challenger -v
+
+      - name: Test WhisperX result flattening
+        run: python3 -m unittest pipeline.tests.test_whisperx_challenger.WhisperXChallengerTests.test_flatten_whisperx_segments -v
+
+      - name: Test production timing immutability
+        run: python3 -m unittest pipeline.tests.test_whisperx_challenger.WhisperXChallengerTests.test_shadow_report_never_writes_production_timing -v
+
+      - name: Test manual-reference nomination gate
+        run: python3 -m unittest pipeline.tests.test_whisperx_challenger.WhisperXChallengerTests.test_manual_reference_can_nominate_but_not_promote -v
+
+      - name: Test aggregate evidence floor
+        run: python3 -m unittest pipeline.tests.test_whisperx_challenger.WhisperXChallengerTests.test_ledger_waits_for_minimum_evidence -v
 
       - name: Exercise fixture challenger without WhisperX installation
         shell: bash
