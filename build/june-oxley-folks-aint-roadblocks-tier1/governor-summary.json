@@ -1,21 +1,47 @@
 {
-  "finished_at": "2026-07-23T14:24:49+00:00",
-  "github_run_id": "30015535867",
+  "finished_at": "2026-07-23T15:37:37+00:00",
+  "github_run_id": "30020801099",
   "incidents": [
+    {
+      "count": 3,
+      "failure_class": "transient",
+      "fingerprint": "667cc43ce3238cd7",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "n response = meth(req, response) ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in http_response response = self.parent.error( ^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in error return self._call_chain(*args) ^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: ",
+      "stage": "footage"
+    },
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "ac79b673fe475420",
+      "fingerprint": "d7bdfb546a04d76f",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "error: visual symbol plan: only <n> symbol families across <n> scenes; use at least <n>; human imagery occupies <n>%; target <= <n>%; pathway repeats for <n> consecutive scenes starting at scene <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "normalized_error": "governor stage=footage state=start soft=300s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=667cc43ce3238cd7 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: py\", line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.http",
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "59b6f6839df57e9c",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "governor stage=footage state=start soft=300s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=running elapsed=45s idle=0s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=667cc43ce3238cd7 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>",
       "stage": "build_pass"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=38fd5ff3096e0de4. ERROR: visual symbol plan: only 4 symbol families across 24 scenes; use at least 5; human imagery occupies 100%; target <= 58%; pathway repeats for 16 consecutive scenes starting at scene 2 | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
+  "last_message": "footage failed (transient); retry budget 2 exhausted. fingerprint=667cc43ce3238cd7. ERROR: footage batch [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]: py\", line 496, in _call_chain",
   "mode": "recover",
-  "passes": 2,
+  "passes": 5,
   "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 120.0,
+      "sample_count": 3,
+      "soft_timeout_s": 180.0,
+      "source": "default"
+    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -23,31 +49,124 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 180.0,
+      "sample_count": 2,
+      "soft_timeout_s": 300.0,
+      "source": "default"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 360.0,
+      "sample_count": 3,
+      "soft_timeout_s": 600.0,
+      "source": "default"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 180.0,
+      "sample_count": 3,
+      "soft_timeout_s": 240.0,
+      "source": "default"
     }
   },
   "quality": {},
   "recommendations": [
     {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "ac79b673fe475420",
+      "action": "Keep bounded retry enabled and monitor whether the same fingerprint recovers on the next pass.",
+      "fingerprint": "667cc43ce3238cd7",
       "priority": "high",
-      "reason": "2 occurrence(s): error: visual symbol plan: only <n> symbol families across <n> scenes; use at least <n>; human imagery occupies <n>%; target <= <n>%; pathway repeats for <n> consecutive scenes starting at scene <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "reason": "3 occurrence(s): n response = meth(req, response) ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in http_response response = self.parent.error( ^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in error return self._call_chain(*args) ^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: ",
+      "stage": "footage"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "59b6f6839df57e9c",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governor stage=footage state=start soft=300s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=running elapsed=45s idle=0s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=667cc43ce3238cd7 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "d7bdfb546a04d76f",
+      "priority": "high",
+      "reason": "2 occurrence(s): governor stage=footage state=start soft=300s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=667cc43ce3238cd7 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: py\", line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.http",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (146.1s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "aa98f673422147099ac980338c9b7ce1",
+  "run_id": "9fde8a6c5d4b4909a91f0f5260377fcf",
   "schema_version": 1,
   "slug": "june-oxley-folks-aint-roadblocks-tier1",
   "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
     "build_pass": {
-      "attempts": 2,
-      "failures": 2,
+      "attempts": 5,
+      "failures": 3,
+      "p50_success_s": 43.52,
+      "p95_success_s": 61.976,
+      "success_durations_s": [
+        64.027,
+        23.013
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 146.086
+    },
+    "footage": {
+      "attempts": 3,
+      "failures": 3,
       "p50_success_s": null,
       "p95_success_s": null,
       "success_durations_s": [],
       "successes": 0,
       "timeouts": 0,
-      "total_duration_s": 2.003
+      "total_duration_s": 56.049
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 20.015,
+      "p95_success_s": 20.015,
+      "success_durations_s": [
+        20.015
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 20.015
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 63.026,
+      "p95_success_s": 63.026,
+      "success_durations_s": [
+        63.026
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 63.026
     }
   },
   "status": "failed"
