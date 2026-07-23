@@ -1,0 +1,88 @@
+{
+  "finished_at": "2026-07-23T14:24:38+00:00",
+  "github_run_id": "30015555870",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "5fb4ccadaad6e548",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "governor stage=tts state=start soft=240s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=3469f5faaae06c5e error: tts failed: ntimeerror: elevenlabs voice search failed with http <n>: {\"detail\":{\"type\":\"authentication_error\",\"code\":\"unauthorized\",\"message\":\"the api key you used is missing the permission voices_read to execute this operation.\",\"status\":\"missing_permissions\",\"request_id\":\"<",
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "3469f5faaae06c5e",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "ork<path> line <n>, in build_request voice_id = resolve_voice_id(script) ^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in resolve_voice_id matched = _search_voice_library(voice_name) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _search_voice_library raise runtimeerror( runtimeerror: elevenlabs voice search failed with http <n>: {\"detail\":{\"type\":\"authentication_error\",\"code\":\"unauthorized\",\"message\":",
+      "stage": "tts"
+    }
+  ],
+  "last_message": "tts failed (unknown); retry budget 1 exhausted. fingerprint=3469f5faaae06c5e. ERROR: tts failed: ntimeError: ElevenLabs voice search failed with HTTP 401: {\"detail\":{\"type\":\"authentication_error\",\"code\":\"unauthorized\",\"message\":\"The API key you used is missing the permission voices_read to execute this operation.\",\"status\":\"missing_permissions\",\"request_id\":\"d4e04baf5b7da47dec55ba1c81a55470\"}}",
+  "mode": "recover",
+  "passes": 2,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 180.0,
+      "sample_count": 2,
+      "soft_timeout_s": 240.0,
+      "source": "default"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "3469f5faaae06c5e",
+      "priority": "high",
+      "reason": "2 occurrence(s): ork<path> line <n>, in build_request voice_id = resolve_voice_id(script) ^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in resolve_voice_id matched = _search_voice_library(voice_name) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _search_voice_library raise runtimeerror( runtimeerror: elevenlabs voice search failed with http <n>: {\"detail\":{\"type\":\"authentication_error\",\"code\":\"unauthorized\",\"message\":",
+      "stage": "tts"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "5fb4ccadaad6e548",
+      "priority": "high",
+      "reason": "2 occurrence(s): governor stage=tts state=start soft=240s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=3469f5faaae06c5e error: tts failed: ntimeerror: elevenlabs voice search failed with http <n>: {\"detail\":{\"type\":\"authentication_error\",\"code\":\"unauthorized\",\"message\":\"the api key you used is missing the permission voices_read to execute this operation.\",\"status\":\"missing_permissions\",\"request_id\":\"<",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "4ec0e12ee3e142fdad66c1a27874da43",
+  "schema_version": 1,
+  "slug": "june-oxley-left-the-vehicle",
+  "stages": {
+    "build_pass": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 4.004
+    },
+    "tts": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.004
+    }
+  },
+  "status": "failed"
+}
