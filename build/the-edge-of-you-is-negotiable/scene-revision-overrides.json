@@ -1,0 +1,143 @@
+{
+  "schema_version": 1,
+  "slug": "the-edge-of-you-is-negotiable",
+  "common_remove": [
+    "hero_raw_signature",
+    "motion_kind",
+    "motion_mode",
+    "motion_source",
+    "motion_verified",
+    "motion_evidence",
+    "clip_fingerprint",
+    "clip",
+    "enhanced_source_image",
+    "still_reference_signature",
+    "pure_generated_still",
+    "still_enhancement_steps",
+    "hero_generated",
+    "motion_recipe",
+    "motion_compiled",
+    "still_reference_generation_model",
+    "still_enhancement_version",
+    "still_enhanced",
+    "kw_overlays",
+    "youtube_kw_overlays",
+    "stock_id",
+    "pexels_id",
+    "stock_frame_url",
+    "stock_frame_url_checked",
+    "source_url",
+    "image_prompt",
+    "hero_style"
+  ],
+  "revisions": [
+    {
+      "scene_index": 1,
+      "remove": ["hero"],
+      "set": {
+        "semantic_anchor": "One intact silicone prosthetic hand lies on the right side of a laboratory divider; the real hand is completely hidden.",
+        "visual_function": "mechanism",
+        "symbol_family": "laboratory",
+        "primary_symbol": "prosthetic hand",
+        "narrative_mode": "stock_ok",
+        "query": "single intact five-finger silicone prosthetic hand lying flat on wooden laboratory table beside opaque white divider, soft paintbrush resting across divider, no human hand visible, no extra fingers, warm light, subtle camera motion",
+        "human_role": "none",
+        "lower_model_safe": true,
+        "generation_constraints": [
+          "exactly one visible hand",
+          "five distinct fingers",
+          "hand lies flat",
+          "no touching hands",
+          "no cropped wrist",
+          "no extra limbs"
+        ]
+      }
+    },
+    {
+      "scene_index": 2,
+      "remove": ["hero"],
+      "set": {
+        "semantic_anchor": "A hammer-shaped shadow falls across one intact silicone prosthetic hand lying flat on a table.",
+        "visual_function": "mechanism",
+        "symbol_family": "objects",
+        "primary_symbol": "hammer shadow",
+        "narrative_mode": "stock_ok",
+        "query": "single intact five-finger silicone prosthetic hand lying flat on wooden table, clear hammer shadow passes across hand, hammer itself outside frame, no human hand, no impact, warm laboratory light, cinematic motion",
+        "human_role": "none",
+        "lower_model_safe": true,
+        "generation_constraints": [
+          "exactly one visible prosthetic hand",
+          "five fingers",
+          "hammer outside frame",
+          "shadow only",
+          "no grasp",
+          "no impact"
+        ]
+      }
+    },
+    {
+      "scene_index": 7,
+      "remove": ["hero"],
+      "set": {
+        "semantic_anchor": "An empty chalk outline on a dark floor is erased and redrawn wider, with no person inside it.",
+        "visual_function": "turn",
+        "symbol_family": "cartography",
+        "primary_symbol": "empty chalk outline",
+        "narrative_mode": "stock_ok",
+        "query": "empty human-sized chalk outline on dark slate floor slowly erased and redrawn wider by moving chalk line, no person, no body, no limbs, dust motes, warm side light, genuine motion",
+        "human_role": "none",
+        "lower_model_safe": true,
+        "generation_constraints": [
+          "empty outline only",
+          "no person",
+          "no anatomy",
+          "one continuous chalk line",
+          "floor-level camera"
+        ]
+      }
+    },
+    {
+      "scene_index": 10,
+      "remove": ["hero"],
+      "set": {
+        "semantic_anchor": "A gloved hand repeatedly guides a wooden cane with precise, controlled motion.",
+        "visual_function": "mechanism",
+        "symbol_family": "tools",
+        "primary_symbol": "cane",
+        "narrative_mode": "stock_ok",
+        "query": "real stock footage close-up gloved hand guiding wooden cane or tool with repeated controlled motion, intact glove, no morphing, warm workshop light, visible physical contact",
+        "human_role": "actor",
+        "lower_model_safe": true,
+        "generation_constraints": [
+          "use stock footage",
+          "glove covers all fingers",
+          "one hand only",
+          "no dissolving",
+          "no body-tool fusion"
+        ]
+      }
+    },
+    {
+      "scene_index": 16,
+      "remove": ["hero"],
+      "set": {
+        "semantic_anchor": "A tactile floor plan expands beyond its original border into familiar rooms and routes.",
+        "visual_function": "metaphor",
+        "symbol_family": "cartography",
+        "primary_symbol": "expanding map",
+        "narrative_mode": "stock_ok",
+        "query": "architectural floor plan or tactile map on dark table, illuminated boundary line expands into connected familiar rooms and routes, no people, no hands, no reflections, slow camera movement",
+        "human_role": "none",
+        "lower_model_safe": true,
+        "generation_constraints": [
+          "no human figure",
+          "no hands",
+          "no face",
+          "no reflection",
+          "clean readable geometry",
+          "single expanding boundary"
+        ]
+      }
+    }
+  ]
+}
