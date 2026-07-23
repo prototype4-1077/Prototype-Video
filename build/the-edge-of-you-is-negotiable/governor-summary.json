@@ -1,6 +1,6 @@
 {
-  "finished_at": "2026-07-23T03:10:05+00:00",
-  "github_run_id": "29975013591",
+  "finished_at": "2026-07-23T04:24:15+00:00",
+  "github_run_id": "29978212601",
   "incidents": [],
   "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-edge-of-you-is-negotiable/final_youtube.mp4",
   "mode": "recover",
@@ -24,10 +24,10 @@
     },
     "assemble": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 91.49,
+      "historical_p95_s": 91.63,
       "idle_timeout_s": 240.0,
       "sample_count": 19,
-      "soft_timeout_s": 304.47,
+      "soft_timeout_s": 304.88,
       "source": "history"
     },
     "build_pass": {
@@ -62,14 +62,6 @@
       "soft_timeout_s": 300.0,
       "source": "default"
     },
-    "hero": {
-      "hard_timeout_s": 1200.0,
-      "historical_p95_s": null,
-      "idle_timeout_s": 360.0,
-      "sample_count": 3,
-      "soft_timeout_s": 720.0,
-      "source": "default"
-    },
     "prep": {
       "hard_timeout_s": 900.0,
       "historical_p95_s": null,
@@ -87,11 +79,11 @@
       "source": "history"
     },
     "quality": {
-      "hard_timeout_s": 1500.0,
+      "hard_timeout_s": 1073.824067509,
       "historical_p95_s": null,
-      "idle_timeout_s": 1500.0,
+      "idle_timeout_s": 1073.824067509,
       "sample_count": 0,
-      "soft_timeout_s": 1500.0,
+      "soft_timeout_s": 1073.824067509,
       "source": "explicit"
     },
     "transcribe": {
@@ -113,14 +105,14 @@
   },
   "quality": {
     "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-edge-of-you-is-negotiable",
-    "checked_at": "2026-07-23T03:10:05+00:00",
+    "checked_at": "2026-07-23T04:24:15+00:00",
     "deep_decode": true,
-    "expected_duration_s": 140.911,
+    "expected_duration_s": 151.726,
     "failures": [],
     "mode": "delivery",
     "outputs": {
       "youtube": {
-        "avg_kbps": 6607,
+        "avg_kbps": 7075,
         "deep_scan": {
           "black_intervals": 0,
           "black_longest_s": 0.0,
@@ -135,26 +127,26 @@
           "silence_longest_s": 0.0,
           "silence_total_s": 0
         },
-        "duration_difference_s": 0.022,
+        "duration_difference_s": 0.074,
         "exists": true,
-        "expected_duration_s": 140.911,
+        "expected_duration_s": 151.726,
         "failures": [],
         "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-edge-of-you-is-negotiable/final_youtube.mp4",
         "probe": {
           "audio_codec": "aac",
-          "audio_duration_s": 140.921995,
-          "bit_rate": 6607291.0,
-          "duration_s": 140.933333,
+          "audio_duration_s": 151.741995,
+          "bit_rate": 7075434.0,
+          "duration_s": 151.8,
           "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
           "fps": 30.0,
           "has_audio": true,
           "has_video": true,
           "height": 1080,
           "video_codec": "h264",
-          "video_duration_s": 140.933333,
+          "video_duration_s": 151.8,
           "width": 1920
         },
-        "size_bytes": 116398459,
+        "size_bytes": 134256371,
         "warnings": []
       }
     },
@@ -173,11 +165,11 @@
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (1618.8s).",
+      "reason": "Largest measured latency contribution in this run (1616.1s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "2af7759a1cb5472ab213bda63708b5eb",
+  "run_id": "1f7fe901b2a344709efd85ce6fc76254",
   "schema_version": 1,
   "slug": "the-edge-of-you-is-negotiable",
   "stages": {
@@ -196,196 +188,180 @@
     "altsheet": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 1.01,
-      "p95_success_s": 1.01,
+      "p50_success_s": 1.008,
+      "p95_success_s": 1.008,
       "success_durations_s": [
-        1.01
+        1.008
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 1.01
+      "total_duration_s": 1.008
     },
     "assemble": {
       "attempts": 19,
       "failures": 0,
-      "p50_success_s": 63.439,
-      "p95_success_s": 91.628,
+      "p50_success_s": 70.403,
+      "p95_success_s": 103.231,
       "success_durations_s": [
-        63.429,
-        66.419,
-        60.377,
-        71.516,
-        68.47,
-        63.439,
-        63.431,
-        75.53,
-        80.576,
-        55.385,
-        80.523,
-        45.309,
-        34.195,
-        100.789,
-        57.41,
-        76.517,
-        45.336,
-        90.61,
-        61.442
+        70.395,
+        79.403,
+        68.381,
+        71.393,
+        74.42,
+        63.357,
+        68.376,
+        89.507,
+        87.508,
+        59.365,
+        88.485,
+        65.378,
+        24.117,
+        108.706,
+        60.309,
+        82.469,
+        59.32,
+        102.623,
+        70.403
       ],
       "successes": 19,
       "timeouts": 0,
-      "total_duration_s": 1260.703
+      "total_duration_s": 1393.915
     },
     "build_pass": {
       "attempts": 6,
       "failures": 0,
-      "p50_success_s": 73.225,
-      "p95_success_s": 1032.363,
+      "p50_success_s": 31.538,
+      "p95_success_s": 1123.497,
       "success_durations_s": [
         1.003,
-        46.158,
-        22.023,
-        109.19,
-        100.292,
-        1340.087
+        57.041,
+        24.023,
+        39.052,
+        16.035,
+        1478.982
       ],
       "successes": 6,
       "timeouts": 0,
-      "total_duration_s": 1618.753
+      "total_duration_s": 1616.136
     },
     "credits": {
       "attempts": 2,
       "failures": 0,
-      "p50_success_s": 1.008,
-      "p95_success_s": 1.01,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.007,
       "success_durations_s": [
-        1.006,
-        1.01
+        1.005,
+        1.007
       ],
       "successes": 2,
       "timeouts": 0,
-      "total_duration_s": 2.016
+      "total_duration_s": 2.012
     },
     "ffmpeg": {
       "attempts": 4,
       "failures": 0,
-      "p50_success_s": 5.521,
-      "p95_success_s": 24.86,
+      "p50_success_s": 5.516,
+      "p95_success_s": 28.25,
       "success_durations_s": [
-        1.01,
-        5.021,
-        28.184,
-        6.022
+        1.008,
+        5.015,
+        32.174,
+        6.017
       ],
       "successes": 4,
       "timeouts": 0,
-      "total_duration_s": 40.237
+      "total_duration_s": 44.214
     },
     "footage": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 108.187,
-      "p95_success_s": 108.187,
+      "p50_success_s": 38.043,
+      "p95_success_s": 38.043,
       "success_durations_s": [
-        108.187
+        38.043
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 108.187
-    },
-    "hero": {
-      "attempts": 5,
-      "failures": 0,
-      "p50_success_s": 17.056,
-      "p95_success_s": 20.87,
-      "success_durations_s": [
-        17.056,
-        16.054,
-        20.064,
-        21.071,
-        13.052
-      ],
-      "successes": 5,
-      "timeouts": 0,
-      "total_duration_s": 87.297
+      "total_duration_s": 38.043
     },
     "prep": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 11.033,
-      "p95_success_s": 11.033,
+      "p50_success_s": 14.033,
+      "p95_success_s": 14.033,
       "success_durations_s": [
-        11.033
+        14.033
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 11.033
+      "total_duration_s": 14.033
     },
     "probe": {
       "attempts": 20,
       "failures": 0,
-      "p50_success_s": 1.01,
-      "p95_success_s": 1.011,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.009,
       "success_durations_s": [
-        1.01,
-        1.01,
-        1.01,
-        1.01,
-        1.01,
-        1.01,
-        1.01,
-        1.01,
-        1.01,
-        1.01,
-        1.01,
-        1.01,
-        1.01,
-        1.011,
-        1.01,
-        1.01,
-        1.01,
-        1.01,
-        1.011,
-        1.012
+        1.008,
+        1.008,
+        1.008,
+        1.009,
+        1.008,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.008,
+        1.009,
+        1.008,
+        1.008,
+        1.009,
+        1.009,
+        1.008,
+        1.009
       ],
       "successes": 20,
       "timeouts": 0,
-      "total_duration_s": 20.204
+      "total_duration_s": 20.172
     },
     "quality": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 30.187,
-      "p95_success_s": 30.187,
+      "p50_success_s": 34.203,
+      "p95_success_s": 34.203,
       "success_durations_s": [
-        30.187
+        34.203
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 30.187
+      "total_duration_s": 34.203
     },
     "transcribe": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 19.019,
-      "p95_success_s": 19.019,
+      "p50_success_s": 20.022,
+      "p95_success_s": 20.022,
       "success_durations_s": [
-        19.019
+        20.022
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 19.019
+      "total_duration_s": 20.022
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 45.211,
-      "p95_success_s": 45.211,
+      "p50_success_s": 56.04,
+      "p95_success_s": 56.04,
       "success_durations_s": [
-        45.211
+        56.04
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 45.211
+      "total_duration_s": 56.04
     }
   },
   "status": "done"
