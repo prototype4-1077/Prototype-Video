@@ -1,0 +1,108 @@
+name: Legacy remake packages integrity
+
+on:
+  pull_request:
+    paths:
+      - "build/the-emotion-scam-tier1/script.json"
+      - "build/june-oxley-folks-aint-roadblocks-tier1/script.json"
+      - "build/june-oxley-left-the-vehicle/script.json"
+      - ".github/workflows/legacy-remake-packages-integrity.yml"
+  push:
+    branches: [main]
+    paths:
+      - "build/the-emotion-scam-tier1/script.json"
+      - "build/june-oxley-folks-aint-roadblocks-tier1/script.json"
+      - "build/june-oxley-left-the-vehicle/script.json"
+      - ".github/workflows/legacy-remake-packages-integrity.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
+      PYTHONPATH: pipeline
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Validate narration, ethos, voice, animation, and motion contracts
+        run: |
+          python3 - <<'PY'
+          import copy
+          import json
+          from pathlib import Path
+
+          import animation_profiles
+          import profiles
+          import visual_symbols
+
+          packages = {
+              'build/the-emotion-scam-tier1/script.json': {
+                  'animation': 'animated_tier1',
+                  'profile': None,
+              },
+              'build/june-oxley-folks-aint-roadblocks-tier1/script.json': {
+                  'animation': 'june_oxley_animated_tier1',
+                  'profile': 'june_oxley',
+              },
+              'build/june-oxley-left-the-vehicle/script.json': {
+                  'animation': None,
+                  'profile': 'june_oxley',
+              },
+          }
+
+          for filename, expected in packages.items():
+              script = json.loads(Path(filename).read_text(encoding='utf-8'))
+              scenes = script.get('scenes') or []
+              words = sum(len(str(scene.get('text') or '').split()) for scene in scenes)
+
+              assert len(scenes) == 24, (filename, len(scenes))
+              assert 320 <= words <= 350, (filename, words)
+              assert script.get('science_fidelity') in {'established', 'emerging', 'metaphor'}
+              assert script.get('evidence_boundary')
+              assert script.get('grounding')
+              assert str(script.get('invitation') or '').endswith('?')
+              assert str(scenes[-1].get('text') or '').endswith('?')
+              assert scenes[-1].get('epistemic_role') == 'invitation'
+              assert any(scene.get('visual_function') == 'grounding' for scene in scenes[-4:])
+              assert script.get('hero_art_status') == 'not_required_no_static_hero_scenes'
+              assert not any(scene.get('hero') for scene in scenes)
+              assert all(scene.get('motion_kind') == 'video' for scene in scenes)
+              assert all(scene.get('motion_mode') in {'stock', 'video', 'i2v', 'image_to_video'} for scene in scenes)
+
+              visible = ' '.join(str(scene.get('text') or '') for scene in scenes)
+              assert '[' not in visible and ']' not in visible, f'visible performance tag in {filename}'
+
+              character = profiles.resolve(script, strict=True)
+              assert character == expected['profile'], (filename, character)
+              if character == profiles.JUNE_OXLEY:
+                  assert script.get('elevenlabs_voice_name') == 'Granpa Spuds Oxley'
+                  assert not script.get('elevenlabs_voice_id'), 'June ID must resolve from exact account name at render time'
+              else:
+                  assert script.get('elevenlabs_voice_id') == 'TX3LPaxmHKxFdv7VOQHJ'
+
+              animation = animation_profiles.resolve(script, strict=True)
+              assert animation == expected['animation'], (filename, animation)
+              prepared = copy.deepcopy(script)
+              changed = animation_profiles.apply_defaults(prepared, character_profile=character, strict=True)
+              if animation:
+                  assert changed
+                  assert animation_profiles.validate(prepared, character) == []
+              else:
+                  assert changed is False
+
+              report = visual_symbols.analyze(copy.deepcopy(script), character)
+              assert not report['violations'], (filename, report['violations'])
+              assert report['symbol_family_count'] >= 6, (filename, report['symbol_family_count'])
+              print(filename, 'scenes=', len(scenes), 'words=', words,
+                    'human=', report['human_presence_ratio'],
+                    'families=', report['symbol_family_count'])
+          PY
