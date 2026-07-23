@@ -1,0 +1,256 @@
+{
+  "experiments": [
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for motion_quality.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "visual_failure:motion_quality",
+      "id": "experiment:0a7aa1bfc13076c7",
+      "information_value": 0.7159,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "Scenes involving motion quality may have an elevated revision risk.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only motion_quality using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for duplicate_object.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "visual_failure:duplicate_object",
+      "id": "experiment:65ba1564663d14fe",
+      "information_value": 0.7159,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "Scenes involving duplicate object may have an elevated revision risk.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only duplicate_object using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for semantic_mismatch.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "visual_failure:semantic_mismatch",
+      "id": "experiment:80c3149a747ad5d6",
+      "information_value": 0.7159,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "Scenes involving semantic mismatch may have an elevated revision risk.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only semantic_mismatch using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for reflection.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "visual_failure:reflection",
+      "id": "experiment:8fa9edbe7513411f",
+      "information_value": 0.7159,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "Scenes involving reflection may have an elevated revision risk.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only reflection using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for darkness.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "visual_failure:darkness",
+      "id": "experiment:edc505a888ec6455",
+      "information_value": 0.7159,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "Scenes involving darkness may have an elevated revision risk.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only darkness using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for synthetic_contact.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "visual_failure:synthetic_contact",
+      "id": "experiment:95c33d77eb5813e9",
+      "information_value": 0.5114,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "Scenes involving synthetic contact may have an elevated revision risk.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only synthetic_contact using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for hand_anatomy.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "visual_failure:hand_anatomy",
+      "id": "experiment:9749c3333ec5c8d5",
+      "information_value": 0.3068,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "Scenes involving hand anatomy may have an elevated revision risk.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only hand_anatomy using the challenger condition."
+    }
+  ]
+}

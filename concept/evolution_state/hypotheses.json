@@ -1,0 +1,238 @@
+{
+  "hypotheses": [
+    {
+      "alternatives": [
+        "Model version",
+        "Prompt complexity",
+        "Source image quality"
+      ],
+      "confidence": 0.625,
+      "context": {
+        "failure_tag": "hand_anatomy"
+      },
+      "evidence_against": [
+        "The failure may be provider-specific or caused by one prompt family."
+      ],
+      "evidence_for": {
+        "examples": [
+          {
+            "scene_index": 1,
+            "slug": "the-edge-of-you-is-negotiable"
+          },
+          {
+            "scene_index": 2,
+            "slug": "the-edge-of-you-is-negotiable"
+          },
+          {
+            "scene_index": 7,
+            "slug": "the-edge-of-you-is-negotiable"
+          },
+          {
+            "scene_index": 10,
+            "slug": "the-edge-of-you-is-negotiable"
+          },
+          {
+            "scene_index": 16,
+            "slug": "the-edge-of-you-is-negotiable"
+          }
+        ],
+        "revision_count": 5
+      },
+      "id": "visual_failure:hand_anatomy",
+      "kind": "visual_reliability",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "Scenes involving hand anatomy may have an elevated revision risk.",
+      "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "alternatives": [
+        "Model version",
+        "Prompt complexity",
+        "Source image quality"
+      ],
+      "confidence": 0.375,
+      "context": {
+        "failure_tag": "synthetic_contact"
+      },
+      "evidence_against": [
+        "The failure may be provider-specific or caused by one prompt family."
+      ],
+      "evidence_for": {
+        "examples": [
+          {
+            "scene_index": 1,
+            "slug": "the-edge-of-you-is-negotiable"
+          },
+          {
+            "scene_index": 2,
+            "slug": "the-edge-of-you-is-negotiable"
+          },
+          {
+            "scene_index": 10,
+            "slug": "the-edge-of-you-is-negotiable"
+          }
+        ],
+        "revision_count": 3
+      },
+      "id": "visual_failure:synthetic_contact",
+      "kind": "visual_reliability",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "Scenes involving synthetic contact may have an elevated revision risk.",
+      "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "alternatives": [
+        "Model version",
+        "Prompt complexity",
+        "Source image quality"
+      ],
+      "confidence": 0.125,
+      "context": {
+        "failure_tag": "darkness"
+      },
+      "evidence_against": [
+        "The failure may be provider-specific or caused by one prompt family."
+      ],
+      "evidence_for": {
+        "examples": [
+          {
+            "scene_index": 7,
+            "slug": "the-edge-of-you-is-negotiable"
+          }
+        ],
+        "revision_count": 1
+      },
+      "id": "visual_failure:darkness",
+      "kind": "visual_reliability",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "Scenes involving darkness may have an elevated revision risk.",
+      "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "alternatives": [
+        "Model version",
+        "Prompt complexity",
+        "Source image quality"
+      ],
+      "confidence": 0.125,
+      "context": {
+        "failure_tag": "duplicate_object"
+      },
+      "evidence_against": [
+        "The failure may be provider-specific or caused by one prompt family."
+      ],
+      "evidence_for": {
+        "examples": [
+          {
+            "scene_index": 1,
+            "slug": "the-edge-of-you-is-negotiable"
+          }
+        ],
+        "revision_count": 1
+      },
+      "id": "visual_failure:duplicate_object",
+      "kind": "visual_reliability",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "Scenes involving duplicate object may have an elevated revision risk.",
+      "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "alternatives": [
+        "Model version",
+        "Prompt complexity",
+        "Source image quality"
+      ],
+      "confidence": 0.125,
+      "context": {
+        "failure_tag": "motion_quality"
+      },
+      "evidence_against": [
+        "The failure may be provider-specific or caused by one prompt family."
+      ],
+      "evidence_for": {
+        "examples": [
+          {
+            "scene_index": 10,
+            "slug": "the-edge-of-you-is-negotiable"
+          }
+        ],
+        "revision_count": 1
+      },
+      "id": "visual_failure:motion_quality",
+      "kind": "visual_reliability",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "Scenes involving motion quality may have an elevated revision risk.",
+      "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "alternatives": [
+        "Model version",
+        "Prompt complexity",
+        "Source image quality"
+      ],
+      "confidence": 0.125,
+      "context": {
+        "failure_tag": "reflection"
+      },
+      "evidence_against": [
+        "The failure may be provider-specific or caused by one prompt family."
+      ],
+      "evidence_for": {
+        "examples": [
+          {
+            "scene_index": 16,
+            "slug": "the-edge-of-you-is-negotiable"
+          }
+        ],
+        "revision_count": 1
+      },
+      "id": "visual_failure:reflection",
+      "kind": "visual_reliability",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "Scenes involving reflection may have an elevated revision risk.",
+      "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "alternatives": [
+        "Model version",
+        "Prompt complexity",
+        "Source image quality"
+      ],
+      "confidence": 0.125,
+      "context": {
+        "failure_tag": "semantic_mismatch"
+      },
+      "evidence_against": [
+        "The failure may be provider-specific or caused by one prompt family."
+      ],
+      "evidence_for": {
+        "examples": [
+          {
+            "scene_index": 16,
+            "slug": "the-edge-of-you-is-negotiable"
+          }
+        ],
+        "revision_count": 1
+      },
+      "id": "visual_failure:semantic_mismatch",
+      "kind": "visual_reliability",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "Scenes involving semantic mismatch may have an elevated revision risk.",
+      "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    }
+  ]
+}

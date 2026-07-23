@@ -1,0 +1,145 @@
+{
+  "capabilities": [
+    {
+      "evidence": [
+        "pipeline/selective_revision.py",
+        "pipeline/tests/test_editorial_revision.py"
+      ],
+      "evidence_count": 2,
+      "evidence_paths": [
+        "pipeline/selective_revision.py",
+        "pipeline/tests/test_editorial_revision.py"
+      ],
+      "id": "preserve_narration",
+      "minimum_evidence": 2,
+      "statement": "Preserve exact approved narration during visual revision.",
+      "status": "demonstrated"
+    },
+    {
+      "evidence": [
+        "concept/frontier.json",
+        "concept/patterns.json"
+      ],
+      "evidence_count": 2,
+      "evidence_paths": [
+        "concept/frontier.json",
+        "concept/patterns.json"
+      ],
+      "id": "science_boundary",
+      "minimum_evidence": 2,
+      "statement": "Distinguish established, emerging, and metaphor claims.",
+      "status": "demonstrated"
+    },
+    {
+      "evidence": [
+        "pipeline/visual_risk.py",
+        "intelligence_stack/comfy",
+        "intelligence_stack/comfy/examples",
+        "intelligence_stack/comfy/workflows"
+      ],
+      "evidence_count": 4,
+      "evidence_paths": [
+        "pipeline/visual_risk.py",
+        "intelligence_stack/comfy/**"
+      ],
+      "id": "visual_risk_detection",
+      "minimum_evidence": 1,
+      "statement": "Detect fragile anatomy, contact, reflection, and transformation plans before rendering.",
+      "status": "demonstrated"
+    },
+    {
+      "evidence": [
+        "pipeline/editorial_timeline.py",
+        "pipeline/locked_audio.py",
+        "pipeline/revision_cache.py"
+      ],
+      "evidence_count": 3,
+      "evidence_paths": [
+        "pipeline/editorial_timeline.py",
+        "pipeline/locked_audio.py",
+        "pipeline/revision_cache.py"
+      ],
+      "id": "surgical_revision",
+      "minimum_evidence": 3,
+      "statement": "Replace rejected scene masters while preserving approved scene and audio hashes.",
+      "status": "demonstrated"
+    },
+    {
+      "evidence": [
+        "intelligence_stack/promptfoo",
+        "intelligence_stack/promptfoo/fixtures",
+        "pipeline/whisperx_challenger.py"
+      ],
+      "evidence_count": 3,
+      "evidence_paths": [
+        "intelligence_stack/promptfoo/**",
+        "pipeline/whisperx_challenger.py"
+      ],
+      "id": "model_champion_challenger",
+      "minimum_evidence": 1,
+      "statement": "Evaluate a challenger without granting production authority.",
+      "status": "demonstrated"
+    },
+    {
+      "evidence": [
+        "pipeline/observability.py",
+        "pipeline/telemetry_report.py"
+      ],
+      "evidence_count": 2,
+      "evidence_paths": [
+        "pipeline/observability.py",
+        "pipeline/telemetry_report.py"
+      ],
+      "id": "trace_render_causally",
+      "minimum_evidence": 2,
+      "statement": "Trace stage, scene, model, provider, retry, and failure evidence across a render.",
+      "status": "demonstrated"
+    },
+    {
+      "evidence": [
+        "concept/perpetual_frontier.py",
+        "concept/tests/test_perpetual_frontier.py"
+      ],
+      "evidence_count": 2,
+      "evidence_paths": [
+        "concept/perpetual_frontier.py",
+        "concept/tests/test_perpetual_frontier.py"
+      ],
+      "id": "detect_missing_taxonomy",
+      "minimum_evidence": 2,
+      "statement": "Detect when successful or failed artifacts fit no current category.",
+      "status": "demonstrated"
+    },
+    {
+      "evidence": [
+        "concept/perpetual_frontier.py"
+      ],
+      "evidence_count": 1,
+      "evidence_paths": [
+        "concept/perpetual_frontier.py",
+        "concept/evolution_state/experiment_queue.json"
+      ],
+      "id": "design_information_experiments",
+      "minimum_evidence": 1,
+      "statement": "Propose controlled experiments selected for information value, not only predicted views.",
+      "status": "demonstrated"
+    },
+    {
+      "evidence": [
+        "concept/evolution_constitution.json"
+      ],
+      "evidence_count": 1,
+      "evidence_paths": [
+        "concept/evolution_constitution.json",
+        "concept/evolution_state/diversity_atlas.json",
+        "concept/evolution_state/multiple_selves.json"
+      ],
+      "id": "maintain_cognitive_biodiversity",
+      "minimum_evidence": 1,
+      "statement": "Preserve multiple cognitive selves and a quality-diversity atlas.",
+      "status": "demonstrated"
+    }
+  ],
+  "demonstrated": 9,
+  "total": 9
+}
