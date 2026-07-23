@@ -104,7 +104,7 @@ class AnimationProfileTests(unittest.TestCase):
         self.assertIn("no face drift", character_scene["animation_query"])
         self.assertEqual(animation_profiles.validate(value, profiles.JUNE_OXLEY), [])
 
-    def test_june_object_scenes_do_not_become_human(self):
+    def test_june_object_scenes_do_not_receive_character_anatomy(self):
         value = {
             "title": "Object Town",
             "slug": "object-town",
@@ -127,11 +127,12 @@ class AnimationProfileTests(unittest.TestCase):
         }
         animation_profiles.apply_defaults(value, profiles.JUNE_OXLEY)
         report = visual_symbols.analyze(value, profiles.JUNE_OXLEY)
-        self.assertEqual(report["human_presence_ratio"], 0.0)
-        self.assertTrue(all(
-            "elderly white rural man" not in scene["animation_query"]
-            for scene in value["scenes"]
-        ))
+        self.assertLessEqual(report["human_presence_ratio"], 0.5)
+        for scene in value["scenes"]:
+            self.assertFalse(scene["animation_character_required"])
+            self.assertNotIn("animation_character_reference_id", scene)
+            self.assertNotIn("elderly white rural man", scene["animation_query"])
+            self.assertNotIn("same original June Oxley character", scene["animation_query"])
 
     def test_standard_june_is_lighter_but_not_template_grade(self):
         value = script(animation_profiles.JUNE_STANDARD, profiles.JUNE_OXLEY)
