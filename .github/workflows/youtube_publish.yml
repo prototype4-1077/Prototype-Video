@@ -7,9 +7,18 @@ on:
         description: "space-separated slugs to publish (blank = whole queue)"
         required: false
         default: ""
+  push:
+    branches:
+      - main
+    paths:
+      - pipeline/youtube_publish.request
 
 permissions:
   contents: read
+
+concurrency:
+  group: youtube-publish-${{ github.ref }}
+  cancel-in-progress: false
 
 jobs:
   publish:
@@ -17,6 +26,20 @@ jobs:
     timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
+      - name: Resolve requested slugs
+        id: request
+        shell: bash
+        run: |
+          if [[ "${GITHUB_EVENT_NAME}" == "push" ]]; then
+            SLUGS="$(tr '\n' ' ' < pipeline/youtube_publish.request | xargs)"
+          else
+            SLUGS="${{ github.event.inputs.slugs }}"
+          fi
+          if [[ -z "${SLUGS}" ]]; then
+            echo "No explicit slug was supplied; refusing to publish the entire queue automatically."
+            exit 1
+          fi
+          echo "slugs=${SLUGS}" >> "${GITHUB_OUTPUT}"
       - name: Publish to YouTube (Public)
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
@@ -24,4 +47,4 @@ jobs:
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
           GH_TOKEN: ${{ github.token }}
           GH_REPO: ${{ github.repository }}
-        run: python3 pipeline/yt_publish.py ${{ github.event.inputs.slugs }}
+        run: python3 pipeline/yt_publish.py ${{ steps.request.outputs.slugs }}
