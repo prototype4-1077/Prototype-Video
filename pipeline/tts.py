@@ -10,8 +10,14 @@ Environment:
   ELEVENLABS_STABILITY_MODE (default: creative)
 
 Per-video overrides:
-  elevenlabs_voice_id, elevenlabs_model, elevenlabs_stability_mode,
-  voice_settings, auto_audio_tags, and scene.audio_tags.
+  elevenlabs_voice_id, elevenlabs_voice_name, elevenlabs_model,
+  elevenlabs_stability_mode, voice_settings, auto_audio_tags, and
+  scene.audio_tags.
+
+When a script supplies ``elevenlabs_voice_name`` without an ID, the authenticated
+ElevenLabs voice library is searched by name. Exactly one normalized exact match
+is required. The resolved ID is persisted in script.json and the voiceover
+manifest; zero or multiple matches fail instead of silently falling back to Liam.
 """
 from __future__ import annotations
 
@@ -81,12 +87,120 @@ def _read_script(build_dir: str | os.PathLike[str]) -> dict:
     return json.loads(path.read_text(encoding="utf-8"))
 
 
+def normalize_voice_name(value: object) -> str:
+    """Normalize harmless spacing/case differences without fuzzy matching."""
+    return " ".join(str(value or "").split()).casefold()
+
+
+def _search_voice_library(voice_name: str) -> dict:
+    """Return exactly one authenticated voice whose normalized name is exact."""
+    key = os.environ.get("ELEVENLABS_API_KEY", "").strip()
+    if not key:
+        raise RuntimeError(
+            "ELEVENLABS_API_KEY is required to resolve elevenlabs_voice_name"
+        )
+    requested = " ".join(str(voice_name).split()).strip()
+    if not requested:
+        raise ValueError("elevenlabs_voice_name cannot be empty")
+
+    exact: list[dict] = []
+    seen: dict[str, dict] = {}
+    next_token: str | None = None
+    for _page in range(10):
+        params: dict[str, object] = {
+            "search": requested,
+            "page_size": 100,
+            "include_total_count": "false",
+        }
+        if next_token:
+            params["next_page_token"] = next_token
+        url = "https://api.elevenlabs.io/v2/voices?" + urllib.parse.urlencode(params)
+        request = urllib.request.Request(
+            url,
+            headers={
+                "xi-api-key": key,
+                "Accept": "application/json",
+                "User-Agent": "Prototype-Video/voice-name-resolver",
+            },
+        )
+        try:
+            with urllib.request.urlopen(request, timeout=60) as response:
+                payload = json.load(response)
+        except urllib.error.HTTPError as error:
+            detail = error.read().decode("utf-8", errors="replace")[:1_000]
+            raise RuntimeError(
+                f"ElevenLabs voice search failed with HTTP {error.code}: {detail}"
+            ) from error
+
+        for voice in payload.get("voices") or []:
+            voice_id = str(voice.get("voice_id") or "").strip()
+            name = str(voice.get("name") or "").strip()
+            if not voice_id or not name:
+                continue
+            seen[voice_id] = voice
+            if normalize_voice_name(name) == normalize_voice_name(requested):
+                exact.append(voice)
+
+        if exact or not payload.get("has_more"):
+            break
+        next_token = str(payload.get("next_page_token") or "").strip() or None
+        if not next_token:
+            break
+
+    # De-duplicate pages while preserving evidence for ambiguity.
+    exact_by_id = {
+        str(item.get("voice_id")): item
+        for item in exact
+        if item.get("voice_id")
+    }
+    matches = list(exact_by_id.values())
+    if len(matches) == 1:
+        return matches[0]
+    if len(matches) > 1:
+        ids = ", ".join(sorted(str(item["voice_id"]) for item in matches))
+        raise RuntimeError(
+            f"ElevenLabs voice name {requested!r} is ambiguous ({ids}); "
+            "set elevenlabs_voice_id explicitly"
+        )
+    suggestions = sorted({
+        str(item.get("name") or "").strip()
+        for item in seen.values()
+        if str(item.get("name") or "").strip()
+    })[:8]
+    suffix = f"; search returned: {', '.join(suggestions)}" if suggestions else ""
+    raise RuntimeError(
+        f"ElevenLabs voice name {requested!r} was not found in the authenticated library"
+        f"{suffix}"
+    )
+
+
 def resolve_voice_id(script: dict) -> str:
+    explicit = str(script.get("elevenlabs_voice_id") or "").strip()
+    if explicit:
+        return explicit
+
+    voice_name = str(script.get("elevenlabs_voice_name") or "").strip()
+    if voice_name:
+        matched = _search_voice_library(voice_name)
+        voice_id = str(matched["voice_id"]).strip()
+        canonical_name = str(matched.get("name") or voice_name).strip()
+        # Persist the exact account identity before generating any audio. This also
+        # makes cached-voice fingerprints deterministic on later resumable passes.
+        script["elevenlabs_voice_id"] = voice_id
+        script["elevenlabs_voice_name"] = canonical_name
+        return voice_id
+
     return str(
-        script.get("elevenlabs_voice_id")
-        or os.environ.get("ELEVENLABS_VOICE_ID")
+        os.environ.get("ELEVENLABS_VOICE_ID")
         or DEFAULT_VOICE_ID
     ).strip()
+
+
+def resolve_voice_name(script: dict, voice_id: str) -> str:
+    configured = str(script.get("elevenlabs_voice_name") or "").strip()
+    if configured:
+        return configured
+    return DEFAULT_VOICE_NAME if voice_id == DEFAULT_VOICE_ID else "custom"
 
 
 def resolve_model_id(script: dict) -> str:
@@ -228,6 +342,7 @@ def tts_fingerprint(script: "dict", model_id: "str") -> "str":
         text,
         json.dumps(tags, ensure_ascii=False),
         str(script.get("elevenlabs_voice_id", "")),
+        str(script.get("elevenlabs_voice_name", "")),
         str(model_id),
         str(script.get("elevenlabs_stability_mode", "")),
     ])
@@ -351,6 +466,7 @@ def tts(build_dir: str | os.PathLike[str]) -> None:
         payload,
         applied_tags,
     ) = build_request(script)
+    voice_name = resolve_voice_name(script, voice_id)
 
     response = _call_elevenlabs(voice_id, payload)
     audio = response.get("audio_base64")
@@ -361,13 +477,15 @@ def tts(build_dir: str | os.PathLike[str]) -> None:
     (root / "vo.mp3").write_bytes(base64.b64decode(audio))
     apply_scene_timings(script, alignment)
     script["voiceover"] = "vo.mp3"
+    script["elevenlabs_voice_id"] = voice_id
+    script["elevenlabs_voice_name"] = voice_name
     script["elevenlabs_model"] = model_id
     if stability_mode:
         script["elevenlabs_stability_mode"] = stability_mode
     script["voiceover_config"] = {
         "provider": "ElevenLabs",
         "voice_id": voice_id,
-        "voice_name": DEFAULT_VOICE_NAME if voice_id == DEFAULT_VOICE_ID else "custom",
+        "voice_name": voice_name,
         "model_id": model_id,
         "stability_mode": stability_mode,
         "voice_settings": voice_settings,
@@ -383,7 +501,7 @@ def tts(build_dir: str | os.PathLike[str]) -> None:
         "tts_fingerprint": tts_fingerprint(script, model_id),
         "provider": "ElevenLabs",
         "voice_id": voice_id,
-        "voice_name": script["voiceover_config"]["voice_name"],
+        "voice_name": voice_name,
         "model_id": model_id,
         "stability_mode": stability_mode,
         "voice_settings": voice_settings,
@@ -401,7 +519,7 @@ def tts(build_dir: str | os.PathLike[str]) -> None:
 
     total = sum(scene["duration"] for scene in script["scenes"])
     print(
-        f"vo.mp3 written with {model_id}/{stability_mode or 'custom'}, "
+        f"vo.mp3 written with {voice_name}/{model_id}/{stability_mode or 'custom'}, "
         f"{len(script['scenes'])} scenes, total {total:.1f}s"
     )
 

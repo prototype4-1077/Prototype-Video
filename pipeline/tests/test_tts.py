@@ -1,10 +1,13 @@
 from __future__ import annotations
 
 import copy
+import io
 import json
+import os
 from pathlib import Path
 import sys
 import unittest
+from unittest import mock
 
 
 PIPELINE = Path(__file__).resolve().parents[1]
@@ -12,6 +15,15 @@ REPO_ROOT = PIPELINE.parent
 sys.path.insert(0, str(PIPELINE))
 
 import tts  # noqa: E402
+
+
+class _FakeResponse(io.BytesIO):
+    def __enter__(self):
+        return self
+
+    def __exit__(self, exc_type, exc, tb):
+        self.close()
+        return False
 
 
 class ElevenV3TTSTests(unittest.TestCase):
@@ -132,6 +144,56 @@ class ElevenV3TTSTests(unittest.TestCase):
             with self.subTest(tag=tag):
                 with self.assertRaisesRegex(ValueError, "invalid audio tag"):
                     tts.normalize_audio_tags(tag)
+
+    def test_voice_name_resolves_exact_match_and_persists_id(self) -> None:
+        payload = {
+            "voices": [
+                {"voice_id": "spuds123", "name": "Granpa   Spuds Oxley"},
+                {"voice_id": "other", "name": "Other Voice"},
+            ],
+            "has_more": False,
+        }
+        script = {"elevenlabs_voice_name": "granpa spuds oxley"}
+        with mock.patch.dict(os.environ, {"ELEVENLABS_API_KEY": "test-key"}, clear=False), \
+             mock.patch("urllib.request.urlopen", return_value=_FakeResponse(json.dumps(payload).encode())):
+            voice_id = tts.resolve_voice_id(script)
+        self.assertEqual(voice_id, "spuds123")
+        self.assertEqual(script["elevenlabs_voice_id"], "spuds123")
+        self.assertEqual(script["elevenlabs_voice_name"], "Granpa   Spuds Oxley")
+
+    def test_voice_name_resolution_rejects_ambiguity(self) -> None:
+        payload = {
+            "voices": [
+                {"voice_id": "a", "name": "Granpa Spuds Oxley"},
+                {"voice_id": "b", "name": "granpa spuds oxley"},
+            ],
+            "has_more": False,
+        }
+        with mock.patch.dict(os.environ, {"ELEVENLABS_API_KEY": "test-key"}, clear=False), \
+             mock.patch("urllib.request.urlopen", return_value=_FakeResponse(json.dumps(payload).encode())):
+            with self.assertRaisesRegex(RuntimeError, "ambiguous"):
+                tts.resolve_voice_id({"elevenlabs_voice_name": "Granpa Spuds Oxley"})
+
+    def test_voice_name_resolution_rejects_missing_match(self) -> None:
+        payload = {
+            "voices": [{"voice_id": "other", "name": "Other Voice"}],
+            "has_more": False,
+        }
+        with mock.patch.dict(os.environ, {"ELEVENLABS_API_KEY": "test-key"}, clear=False), \
+             mock.patch("urllib.request.urlopen", return_value=_FakeResponse(json.dumps(payload).encode())):
+            with self.assertRaisesRegex(RuntimeError, "was not found"):
+                tts.resolve_voice_id({"elevenlabs_voice_name": "Granpa Spuds Oxley"})
+
+    def test_voice_name_changes_tts_fingerprint(self) -> None:
+        base = {"scenes": [{"text": "Hello."}], "elevenlabs_voice_id": "same"}
+        first = copy.deepcopy(base)
+        first["elevenlabs_voice_name"] = "Voice A"
+        second = copy.deepcopy(base)
+        second["elevenlabs_voice_name"] = "Voice B"
+        self.assertNotEqual(
+            tts.tts_fingerprint(first, tts.DEFAULT_MODEL_ID),
+            tts.tts_fingerprint(second, tts.DEFAULT_MODEL_ID),
+        )
 
     def test_reality_machine_tags_never_enter_caption_text(self) -> None:
         path = REPO_ROOT / "build" / "the-reality-machine-dmt-v3" / "script.json"
