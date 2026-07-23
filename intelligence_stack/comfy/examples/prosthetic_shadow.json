@@ -1,0 +1,22 @@
+{
+  "workflow_id": "single_subject_v1",
+  "route": "comfyui",
+  "prompt": "cinematic low side-angle photograph of one intact silicone prosthetic hand lying flat on a wooden laboratory table while a hammer-shaped shadow crosses the surface, warm directional light, one impossible element: a faint amber pulse beneath the silicone wrist, three-plane depth, film grain",
+  "negative_prompt": "deformed anatomy, duplicate object, ambiguous contact, illustration, cartoon, typography",
+  "seed": 10774,
+  "subject_count": 1,
+  "action_count": 1,
+  "impossible_element_count": 1,
+  "constraints": [
+    "exactly one visible prosthetic hand",
+    "five distinct fingers",
+    "hand lies flat",
+    "hammer remains outside frame",
+    "no human limbs",
+    "no impact or grasp"
+  ],
+  "checkpoint": "replace-with-approved-photoreal-checkpoint.safetensors",
+  "width": 1024,
+  "height": 576,
+  "filename_prefix": "prototype_video/prosthetic_shadow"
+}
