@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "editorial_rule": "External attention is a signal, never authority. No record can bypass science, autonomy, grounding, sequence, or James's judgment.",
+  "limits": {
+    "per_query": 6,
+    "excerpt_chars": 280,
+    "max_records": 120
+  },
+  "topics": [
+    {
+      "id": "belief_analysis",
+      "terms": ["belief", "certainty", "evidence", "assumption", "prediction", "perception", "reality"]
+    },
+    {
+      "id": "emotion_prediction",
+      "terms": ["anxiety", "emotion", "interoception", "body signal", "forecast", "stress", "constructed emotion"]
+    },
+    {
+      "id": "self_identity",
+      "terms": ["self", "identity", "body ownership", "ego", "narrative self", "dissociation"]
+    },
+    {
+      "id": "memory_time",
+      "terms": ["memory", "future simulation", "time perception", "agency", "attention"]
+    },
+    {
+      "id": "psychedelic_science",
+      "terms": ["DMT", "psychedelic", "entropic brain", "relaxed priors", "neural diversity"]
+    },
+    {
+      "id": "collective_questions",
+      "terms": ["loneliness", "relationships", "tribalism", "single life", "meaning", "social trust"]
+    },
+    {
+      "id": "render_intelligence",
+      "terms": ["image generation", "video generation", "ComfyUI", "caption alignment", "visual language model", "render pipeline"]
+    }
+  ],
+  "github_repositories": [
+    "Panniantong/Agent-Reach",
+    "promptfoo/promptfoo",
+    "Comfy-Org/ComfyUI",
+    "voxel51/fiftyone",
+    "yt-dlp/yt-dlp",
+    "Breakthrough/PySceneDetect"
+  ],
+  "youtube_queries": [
+    "constructed emotion interoception lecture",
+    "predictive processing perception neuroscience",
+    "body ownership rubber hand illusion research",
+    "consciousness science interview",
+    "DMT psychedelic neuroscience research"
+  ],
+  "rss_feeds": [
+    {
+      "name": "arXiv artificial intelligence",
+      "url": "https://rss.arxiv.org/rss/cs.AI"
+    },
+    {
+      "name": "arXiv neuroscience",
+      "url": "https://rss.arxiv.org/rss/q-bio.NC"
+    }
+  ],
+  "authenticated_channels": {
+    "enabled_in_github_actions": false,
+    "channels": ["twitter", "reddit", "facebook", "instagram", "xiaohongshu"],
+    "policy": "Collect only on a trusted local or self-hosted runner with dedicated secondary accounts. Export minimized JSONL; never commit cookies, tokens, author identifiers, or full private content."
+  }
+}
