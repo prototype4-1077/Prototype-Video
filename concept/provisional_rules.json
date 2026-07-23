@@ -1,0 +1,67 @@
+{
+  "schema_version": 1,
+  "rules": [
+    {
+      "id": "ethos_invitation",
+      "kind": "constitutional",
+      "statement": "End by handing the viewer a question or test, never a decree.",
+      "confidence": 1.0
+    },
+    {
+      "id": "ethos_science_fidelity",
+      "kind": "constitutional",
+      "statement": "Never present metaphor or speculation as established science.",
+      "confidence": 1.0
+    },
+    {
+      "id": "ethos_grounding",
+      "kind": "constitutional",
+      "statement": "Land near the end in an ordinary room, object, body, or breath.",
+      "confidence": 1.0
+    },
+    {
+      "id": "visual_one_subject_one_action_one_anomaly",
+      "kind": "provisional",
+      "statement": "Lower-capability image models are more reliable with one subject, one action, and one anomaly.",
+      "direction": "prefer",
+      "contexts": ["visual_generation"],
+      "confidence": 0.9,
+      "created_at": "2026-07-23",
+      "last_evidence": "2026-07-23",
+      "half_life_days": 180
+    },
+    {
+      "id": "stock_first_fragile_contact",
+      "kind": "provisional",
+      "statement": "Prefer stock or constrained workflows for hands, tools, surgery, mirrors, and complex contact.",
+      "direction": "prefer",
+      "contexts": ["visual_generation"],
+      "confidence": 0.88,
+      "created_at": "2026-07-23",
+      "last_evidence": "2026-07-23",
+      "half_life_days": 180
+    },
+    {
+      "id": "hook_immediate_plunge",
+      "kind": "provisional",
+      "statement": "A mechanism-rich plunge in the opening may improve early retention for the present audience.",
+      "direction": "prefer",
+      "contexts": ["attention", "machine"],
+      "confidence": 0.55,
+      "created_at": "2026-07-23",
+      "last_evidence": "2026-07-23",
+      "half_life_days": 60
+    },
+    {
+      "id": "generated_human_ratio",
+      "kind": "provisional",
+      "statement": "Keeping human-heavy imagery under half may improve diversity and lower anatomy risk.",
+      "direction": "prefer",
+      "contexts": ["visual_generation"],
+      "confidence": 0.7,
+      "created_at": "2026-07-23",
+      "last_evidence": "2026-07-23",
+      "half_life_days": 120
+    }
+  ]
+}
