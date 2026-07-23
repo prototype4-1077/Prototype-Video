@@ -158,14 +158,18 @@ def fallback_queries(profile: str | None, genre: str | None = None) -> tuple[str
 
 
 def hero_style(profile: str | None, genre: str | None = None) -> str | None:
+    """Return shared June-world art direction without forcing June into every shot.
+
+    ``hero_prompt``/``identity_query`` adds June's identity only when the literal
+    request contains a human cue. Object, weather, animal, vehicle, and town-detail
+    heroes retain the same world without being turned into portraits.
+    """
     if profile != JUNE_OXLEY:
         return None
     return (
-        ", original recurring June Oxley character, lean weathered elderly white rural man "
-        "age 78 to 84, pale blue-gray eyes, short thinning white hair, trimmed white beard "
-        "and mustache, deep smile lines, slightly crooked friendly grin, faded plaid or denim "
-        "workwear, lived-in small-town America, warm natural light, tactile weathered materials, "
-        "jolly grounded presence, no stock-model face drift, no political imagery"
+        ", lived-in rural small-town America, warm natural light, tactile weathered "
+        "materials, practical everyday detail, gentle deadpan humor, coherent recurring "
+        "town art direction, no political imagery, no generic motivational gloss"
     )
 
 
@@ -184,6 +188,7 @@ def writer_context(profile: str | None) -> str:
 - Let the encounter reveal a deeper question about belief, perception, kindness, DMT, memory, attention, or the small ways reality fibs.
 - DMT is a personal report, interpretation, or metaphor unless a scientific statement is separately sourced and fidelity-labeled. Moonshine is a comic prop, never a recipe or proof.
 - Use one original consistent June Oxley face and recurring town continuity; no rotating elderly stock models, meme-grandpa design, or permanent joke banner.
+- Keep most object, animal, weather, vehicle, and town-detail scenes free of June; character continuity applies only when he is actually shown.
 - Land back on the porch, weather, mug, body, or neighbor, then hand the viewer an open question.
 - Set the top-level JSON field exactly to \"profile\": \"june_oxley\"."""
 
