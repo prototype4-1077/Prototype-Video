@@ -93,7 +93,7 @@ class AnimationProfileTests(unittest.TestCase):
         self.assertFalse(object_scene["animation_character_required"])
         self.assertNotIn("animation_character_reference_id", object_scene)
         self.assertNotIn("same original June Oxley character", object_scene["animation_query"])
-        self.assertIn("recurring rural small-town world", object_scene["animation_query"])
+        self.assertIn("recurring rural small-town setting", object_scene["animation_query"])
 
         character_scene = value["scenes"][2]
         self.assertTrue(character_scene["animation_character_required"])
