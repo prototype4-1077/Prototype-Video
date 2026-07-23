@@ -2,7 +2,8 @@
 
 Approved scene masters are hash-locked and kept. Rejected scene masters and their
 visual source artifacts are removed so the normal resumable builder regenerates
-only those scenes. Narration text/timing are fingerprint-locked throughout.
+only those scenes. Narration text/timing and the approved delivery audio are
+fingerprint-locked throughout.
 """
 from __future__ import annotations
 
@@ -14,6 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from editorial_timeline import narration_fingerprint
+import locked_audio
 from revision_cache import validate_manifest
 
 REVISION_DECISIONS = {"revise", "revision", "needs_revision"}
@@ -130,6 +132,9 @@ def prepare(build_dir: str | Path) -> dict[str, Any]:
     cache_report = validate_manifest(build_dir)
     if not cache_report["passed"]:
         raise SystemExit("revision cache failed validation: " + json.dumps(cache_report["failures"]))
+    audio_report = locked_audio.verify(build_dir)
+    if not audio_report["passed"]:
+        raise SystemExit("approved delivery audio is not safely locked")
     script_path = build_dir / "script.json"
     script = _load(script_path)
     scenes = script.get("scenes") or []
@@ -167,12 +172,13 @@ def prepare(build_dir: str | Path) -> dict[str, Any]:
 
     _write(script_path, script)
     manifest = {
-        "schema_version": 1,
+        "schema_version": 2,
         "slug": script.get("slug") or build_dir.name,
         "prepared_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "approved_scenes": approved,
         "revised_scenes": revised,
         "narration_fingerprint": narration_fingerprint(script),
+        "locked_audio_sha256": audio_report.get("locked_audio_sha256"),
         "baseline_segment_hashes": baseline,
         "status": "prepared",
     }
@@ -189,6 +195,11 @@ def finalize(build_dir: str | Path) -> dict[str, Any]:
     current_narration = narration_fingerprint(script)
     if current_narration != manifest.get("narration_fingerprint"):
         failures.append({"code": "narration_changed"})
+    audio_report = locked_audio.verify(build_dir)
+    if not audio_report["passed"]:
+        failures.extend(audio_report["failures"])
+    elif audio_report.get("locked_audio_sha256") != manifest.get("locked_audio_sha256"):
+        failures.append({"code": "approved_delivery_audio_changed"})
 
     approved_hashes = (manifest.get("baseline_segment_hashes") or {}).get("approved") or {}
     for name, expected_hash in approved_hashes.items():
@@ -225,15 +236,25 @@ def finalize(build_dir: str | Path) -> dict[str, Any]:
             else:
                 changed_revised.append(path.name)
 
-    finals = [path.name for path in sorted(build_dir.glob("final*.mp4")) if path.stat().st_size > 1_000_000]
+    finals = [path.name for path in sorted(build_dir.glob("final*.mp4")) if path.stat().st_size > 100_000]
     if not finals:
         failures.append({"code": "missing_final_output"})
     result = {
-        "schema_version": 1,
+        "schema_version": 2,
         "slug": script.get("slug") or build_dir.name,
         "finished_at": dt.datetime.now(dt.timezone.utc).isoformat(),
         "passed": not failures,
         "approved_scenes_preserved": len(manifest.get("approved_scenes") or []),
+        "approved_delivery_audio_preserved": not any(
+            failure.get("code") in {
+                "missing_locked_audio",
+                "missing_locked_audio_manifest",
+                "locked_audio_hash_mismatch",
+                "approved_delivery_audio_changed",
+            }
+            for failure in failures
+        ),
+        "locked_audio_sha256": audio_report.get("locked_audio_sha256"),
         "revised_scenes": manifest.get("revised_scenes") or [],
         "changed_revised_segments": sorted(changed_revised),
         "final_outputs": finals,
