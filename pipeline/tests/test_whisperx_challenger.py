@@ -62,16 +62,18 @@ class WhisperXChallengerTests(unittest.TestCase):
         return build
 
     def _challenger_words(self):
-        return [
-            {"w": "The", "s": 0.2, "e": 0.42},
-            {"w": "signal", "s": 0.44, "e": 0.82},
-            {"w": "starts", "s": 0.84, "e": 1.16},
-            {"w": "here", "s": 1.18, "e": 1.55},
-            {"w": "Then", "s": 2.02, "e": 2.3},
-            {"w": "4", "s": 2.32, "e": 2.48},
-            {"w": "doors", "s": 2.5, "e": 2.83},
-            {"w": "open", "s": 2.85, "e": 3.28},
-        ]
+        return whisperx_challenger._normalize_words(
+            [
+                {"w": "The", "s": 0.2, "e": 0.42},
+                {"w": "signal", "s": 0.44, "e": 0.82},
+                {"w": "starts", "s": 0.84, "e": 1.16},
+                {"w": "here", "s": 1.18, "e": 1.55},
+                {"w": "Then", "s": 2.02, "e": 2.3},
+                {"w": "4", "s": 2.32, "e": 2.48},
+                {"w": "doors", "s": 2.5, "e": 2.83},
+                {"w": "open", "s": 2.85, "e": 3.28},
+            ]
+        )
 
     def test_flatten_whisperx_segments(self):
         payload = {
