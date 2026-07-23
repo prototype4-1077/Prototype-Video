@@ -112,56 +112,30 @@
     "fake hand",
     "same time"
    ],
-   "semantic_anchor": "Real hand hidden behind a paper wall; a rubber hand waits beside it.",
+   "semantic_anchor": "One intact silicone prosthetic hand lies on the right side of a laboratory divider; the real hand is completely hidden.",
    "visual_function": "mechanism",
    "symbol_family": "laboratory",
-   "primary_symbol": "rubber hand",
-   "narrative_mode": "hero",
+   "primary_symbol": "prosthetic hand",
+   "narrative_mode": "stock_ok",
    "start": 6.78,
-   "hero": true,
-   "hero_style": "effects",
-   "human_role": "experiment subject",
-   "image_prompt": "cinematic 35mm film still, a rubber-hand-illusion setup on a wooden table: a real human hand hidden behind an upright white paper partition on the left, a lifelike pale rubber hand resting on the table to the right, a single soft paintbrush caught mid-stroke touching both, warm directional lab light, a faint impossible glow where the brush bridges the real and the fake hand, shallow depth of field, out-of-focus table edge in the near foreground, film grain, photoreal magical realism, no text, no words",
-   "hero_raw_signature": "8e843353d2728bc90565",
+   "human_role": "none",
    "duration": 8.24,
    "kw_times": {
     "fake hand": 6.92,
     "same time": 13.1
    },
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
    "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_01.jpg",
-   "still_reference_signature": "c9d6d19b2c0097bc8007",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
+   "query": "single intact five-finger silicone prosthetic hand lying flat on wooden laboratory table beside opaque white divider, soft paintbrush resting across divider, no human hand visible, no extra fingers, warm light, subtle camera motion",
+   "lower_model_safe": true,
+   "generation_constraints": [
+    "exactly one visible hand",
+    "five distinct fingers",
+    "hand lies flat",
+    "no touching hands",
+    "no cropped wrist",
+    "no extra limbs"
    ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-edge-of-you-is-negotiable/clip_01.mp4",
-   "clip_fingerprint": "a8b9203d1fdc89b9",
-   "hero_generated": true,
-   "motion_recipe": "paper",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "fake hand",
-     "png": "youtube_cap_01_kw0.png"
-    },
-    {
-     "kw": "same time",
-     "png": "youtube_cap_01_kw1.png"
-    }
-   ]
+   "revision_note": "Generated rubber hand is anatomically deformed with extra/fused fingers. Replace with a lower-model-safe single prosthetic hand setup: only one visible silicone hand, real hand completely hidden, no human fingers in frame, brush resting across the divider rather than touching anatomy."
   },
   {
    "text": "Then I lift a hammer over the rubber one — and you flinch. For something made of silicone.",
@@ -173,56 +147,30 @@
     "hammer",
     "flinch"
    ],
-   "semantic_anchor": "Low angle: a hammer frozen mid-swing over the rubber hand.",
+   "semantic_anchor": "A hammer-shaped shadow falls across one intact silicone prosthetic hand lying flat on a table.",
    "visual_function": "mechanism",
    "symbol_family": "objects",
-   "primary_symbol": "rubber hand",
+   "primary_symbol": "hammer shadow",
    "narrative_mode": "stock_ok",
-   "hero": true,
-   "hero_style": "effects",
-   "image_prompt": "cinematic 35mm film still, low side angle skimming along a wooden tabletop, a raised claw hammer frozen mid-swing above a lifelike rubber hand, the fake hand tensing with a faint living flush at the knuckles, a real hand recoiling behind a white paper screen in the soft-focus background, one hard warm key light throwing a long shadow across the grain, fine dust in the air, film grain, photoreal magical realism, no text, no words",
    "start": 15.02,
-   "human_role": "subject",
-   "hero_raw_signature": "43cbba0c4f4fb824b40b",
+   "human_role": "none",
    "duration": 7.24,
    "kw_times": {
     "hammer": 15.86,
     "flinch": 18.3
    },
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
    "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_02.jpg",
-   "still_reference_signature": "c3641603c66995d18760",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
+   "query": "single intact five-finger silicone prosthetic hand lying flat on wooden table, clear hammer shadow passes across hand, hammer itself outside frame, no human hand, no impact, warm laboratory light, cinematic motion",
+   "lower_model_safe": true,
+   "generation_constraints": [
+    "exactly one visible prosthetic hand",
+    "five fingers",
+    "hammer outside frame",
+    "shadow only",
+    "no grasp",
+    "no impact"
    ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-edge-of-you-is-negotiable/clip_02.mp4",
-   "clip_fingerprint": "d714d56b5122318a",
-   "hero_generated": true,
-   "motion_recipe": "paper",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "hammer",
-     "png": "youtube_cap_02_kw0.png"
-    },
-    {
-     "kw": "flinch",
-     "png": "youtube_cap_02_kw1.png"
-    }
-   ]
+   "revision_note": "Hammer and hand interaction is physically incoherent. Replace with one intact five-finger silicone prosthetic hand lying flat and a hammer SHADOW crossing the table; keep the actual hammer out of frame to avoid malformed grasp/contact."
   },
   {
    "text": "Because your brain never feels where your hand is. It predicts it — from sight, touch, and the fact they usually agree.",
@@ -438,57 +386,29 @@
     "edge of you",
     "chalk line"
    ],
-   "semantic_anchor": "A luminous chalk outline around a person blurs outward past the skin.",
+   "semantic_anchor": "An empty chalk outline on a dark floor is erased and redrawn wider, with no person inside it.",
    "visual_function": "turn",
-   "symbol_family": "figure",
-   "primary_symbol": "chalk outline",
+   "symbol_family": "cartography",
+   "primary_symbol": "empty chalk outline",
    "narrative_mode": "stock_ok",
-   "hero": true,
-   "hero_style": "effects",
-   "image_prompt": "cinematic 35mm film still, a person standing in warm low light with a faint luminous chalk outline drawn around their body, the line caught mid-redraw and blurring outward past the skin, one soft key light, out-of-focus chalk dust drifting in the near foreground, shallow depth of field, film grain, photoreal magical realism, no text, no words",
-   "query": "",
+   "query": "empty human-sized chalk outline on dark slate floor slowly erased and redrawn wider by moving chalk line, no person, no body, no limbs, dust motes, warm side light, genuine motion",
    "start": 51.52,
-   "hero_raw_signature": "321440f309d56c47035c",
-   "human_role": "unspecified",
+   "human_role": "none",
    "duration": 8.72,
    "kw_times": {
     "edge of you": 54.24,
     "chalk line": 56.82
    },
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
    "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_07.jpg",
-   "still_reference_signature": "03fafc0af84faab4c6ac",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
+   "lower_model_safe": true,
+   "generation_constraints": [
+    "empty outline only",
+    "no person",
+    "no anatomy",
+    "one continuous chalk line",
+    "floor-level camera"
    ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-edge-of-you-is-negotiable/clip_07.mp4",
-   "clip_fingerprint": "e069a4276c7be246",
-   "hero_generated": true,
-   "motion_recipe": "human",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "edge of you",
-     "png": "youtube_cap_07_kw0.png"
-    },
-    {
-     "kw": "chalk line",
-     "png": "youtube_cap_07_kw1.png"
-    }
-   ]
+   "revision_note": "Glowing human outline is soft and anatomically unstable. Replace the person with an EMPTY chalk outline on a dark floor being redrawn outward by a moving chalk line; no body or limbs visible."
   },
   {
    "text": "You feel solid. Continuous. A clean outline. But that outline is drawn live, from your senses agreeing.",
@@ -603,57 +523,29 @@
     "folds it in",
     "worn"
    ],
-   "semantic_anchor": "A wooden cane dissolves into the fingers that hold it.",
+   "semantic_anchor": "A gloved hand repeatedly guides a wooden cane with precise, controlled motion.",
    "visual_function": "mechanism",
    "symbol_family": "tools",
    "primary_symbol": "cane",
    "narrative_mode": "stock_ok",
-   "hero": true,
-   "hero_style": "effects",
-   "image_prompt": "cinematic 35mm film still, a human hand where the wooden cane it holds is dissolving into the fingers as if grown from them, warm side light catching the grain becoming skin, dark out-of-focus background, macro shallow depth of field, near-foreground blur, film grain, photoreal magical realism, no text, no words",
-   "query": "",
+   "query": "real stock footage close-up gloved hand guiding wooden cane or tool with repeated controlled motion, intact glove, no morphing, warm workshop light, visible physical contact",
    "start": 75.78,
-   "hero_raw_signature": "292fb099d72891954778",
-   "human_role": "unspecified",
+   "human_role": "actor",
    "duration": 9.12,
    "kw_times": {
     "folds it in": 79.18,
     "worn": 83.54
    },
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
    "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_10.jpg",
-   "still_reference_signature": "84c5711822f285e27311",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
+   "lower_model_safe": true,
+   "generation_constraints": [
+    "use stock footage",
+    "glove covers all fingers",
+    "one hand only",
+    "no dissolving",
+    "no body-tool fusion"
    ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-edge-of-you-is-negotiable/clip_10.mp4",
-   "clip_fingerprint": "098b7f83f76b2fab",
-   "hero_generated": true,
-   "motion_recipe": "organic",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "folds it in",
-     "png": "youtube_cap_10_kw0.png"
-    },
-    {
-     "kw": "worn",
-     "png": "youtube_cap_10_kw1.png"
-    }
-   ]
+   "revision_note": "Hand/cane fusion looks synthetic and risks malformed fingers. Replace with real stock footage of a gloved hand using a cane or tool, emphasizing repeated controlled motion; no morphing, dissolving, or exposed fingers."
   },
   {
    "text": "The surgeon feels the tissue through the blade. The body's edge jumped to the tip of the instrument.",
@@ -905,55 +797,30 @@
     "paintbrush",
     "line somebody was drawing"
    ],
-   "semantic_anchor": "A brush draws a glowing line that dissolves as it is redrawn.",
+   "semantic_anchor": "A tactile floor plan expands beyond its original border into familiar rooms and routes.",
    "visual_function": "metaphor",
-   "symbol_family": "objects",
-   "primary_symbol": "paintbrush",
-   "narrative_mode": "hero",
+   "symbol_family": "cartography",
+   "primary_symbol": "expanding map",
+   "narrative_mode": "stock_ok",
    "start": 118.32,
-   "hero": true,
-   "hero_style": "effects",
-   "image_prompt": "cinematic 35mm film still, a single fine paintbrush drawing a glowing chalk-white line across a dark surface, the line curving and dissolving at one end as if being redrawn, warm rim light on the bristles, out-of-focus dust motes in the near foreground, macro shallow depth of field, film grain, photoreal magical realism, no text, no words",
-   "hero_raw_signature": "8922fa387c0a456ca6fa",
    "duration": 5.54,
    "kw_times": {
     "paintbrush": 118.7,
     "line somebody was drawing": 119.76
    },
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
    "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_16.jpg",
-   "still_reference_signature": "9164b69279745b53e1b5",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
+   "query": "architectural floor plan or tactile map on dark table, illuminated boundary line expands into connected familiar rooms and routes, no people, no hands, no reflections, slow camera movement",
+   "human_role": "none",
+   "lower_model_safe": true,
+   "generation_constraints": [
+    "no human figure",
+    "no hands",
+    "no face",
+    "no reflection",
+    "clean readable geometry",
+    "single expanding boundary"
    ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-edge-of-you-is-negotiable/clip_16.mp4",
-   "clip_fingerprint": "49dc936921cf483c",
-   "hero_generated": true,
-   "motion_recipe": "human",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "paintbrush",
-     "png": "youtube_cap_16_kw0.png"
-    },
-    {
-     "kw": "line somebody was drawing",
-     "png": "youtube_cap_16_kw1.png"
-    }
-   ]
+   "revision_note": "The reflected human/body-map visual is muddy and difficult to parse. Replace with a moving architectural floor plan or tactile map whose illuminated boundary expands into familiar rooms and routes; no face, body, hands, or reflections."
   },
   {
    "text": "So carry this with you. What have you been calling 'not me' — a person, a tool, a place — that you can't feel the seam of anymore?",
@@ -1083,5 +950,7 @@
    "selected": true
   }
  ],
- "music": "music_03.wav"
+ "music": "music_03.wav",
+ "scene_feedback_reviewed_at": "2026-07-23T03:30:00Z",
+ "scene_feedback_revision_count": 5
 }
