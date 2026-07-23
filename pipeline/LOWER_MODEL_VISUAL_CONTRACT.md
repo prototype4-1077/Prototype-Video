@@ -4,6 +4,32 @@ Use this contract whenever a lower-capability model generates hero art or still-
 Its purpose is not to make prompts less cinematic. It removes combinations that image models
 commonly solve by deforming anatomy or violating object physics.
 
+## Machine enforcement
+
+A script can opt into hard enforcement with:
+
+```json
+{
+  "visual_contract_version": 1
+}
+```
+
+Every generated scene should also declare one of these routes:
+
+```json
+{
+  "generation_route": "stock | nonhuman_geometry | comfyui",
+  "lower_model_safe": true,
+  "generation_constraints": ["at least four explicit constraints"],
+  "comfy_workflow_id": "single_subject_v1"
+}
+```
+
+`python3 pipeline/visual_risk.py build/<slug>/script.json --enforce` blocks unsafe
+free-form generated scenes. The pull-request workflow runs the same check for every changed
+script that opts into this contract. High-risk scenes must route to stock, non-human geometry,
+or a versioned ComfyUI workflow before render.
+
 ## Default rule: one subject, one action, one anomaly
 
 A lower-model-safe still contains:
@@ -76,6 +102,24 @@ Example:
 > wooden table. A hammer-shaped shadow passes across it; the hammer is outside the frame. One warm
 > laboratory lamp. No human hand, no grasp, no impact, no extra fingers, no reflection, no text.
 
+## ComfyUI route
+
+The repository includes the versioned API workflow
+`intelligence_stack/comfy/workflows/single_subject_v1.json`. Agents fill a compact scene contract
+instead of inventing an arbitrary node graph. Required fields include deterministic seed, exact
+subject/action/anomaly counts, checkpoint, dimensions, and negative constraints.
+
+Resolve and inspect without submitting:
+
+```bash
+python3 intelligence_stack/comfy/render.py \
+  intelligence_stack/comfy/examples/prosthetic_shadow.json \
+  --dry-run
+```
+
+Submit only from a trusted machine that can reach the approved ComfyUI server by setting
+`COMFYUI_URL`. Generated output still requires the selection gate below.
+
 ## Selection gate
 
 Before a generated still is animated, inspect it at full resolution for:
@@ -97,5 +141,13 @@ captions to hide it.
 
 1. Genuine stock footage for hands, tools, medical work, mirrors, and physical interaction.
 2. Generated non-human geometry or objects for abstract mechanisms.
-3. Generated human imagery only when the pose is simple and anatomy is fully visible.
-4. Complex anatomy or transformation requires a higher-capability model or manual approval.
+3. Versioned constrained ComfyUI workflows for one-subject hero art.
+4. Generated human imagery only when the pose is simple and anatomy is fully visible.
+5. Complex anatomy or transformation requires a higher-capability model or manual approval.
+
+## Learning loop
+
+James's numbered scene review is the highest-trust signal. After feedback, the visual-memory
+workflow exports narration, prompt, model/provider, workflow, seed, asset hash, decision,
+comment, deformation tags, and risk score to `concept/visual_memory/manifest.jsonl`. The manifest
+can be imported into FiftyOne for visual inspection and dataset analysis.
