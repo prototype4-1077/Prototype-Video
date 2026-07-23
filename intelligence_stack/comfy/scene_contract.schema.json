@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "intelligence_stack/comfy/scene_contract.schema.json",
+  "title": "Lower-model-safe ComfyUI scene contract",
+  "type": "object",
+  "required": [
+    "workflow_id",
+    "prompt",
+    "negative_prompt",
+    "seed",
+    "subject_count",
+    "action_count",
+    "impossible_element_count",
+    "constraints",
+    "checkpoint",
+    "width",
+    "height",
+    "filename_prefix"
+  ],
+  "properties": {
+    "workflow_id": {
+      "const": "single_subject_v1"
+    },
+    "route": {
+      "const": "comfyui"
+    },
+    "prompt": {
+      "type": "string",
+      "minLength": 20
+    },
+    "negative_prompt": {
+      "type": "string",
+      "minLength": 20
+    },
+    "seed": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "subject_count": {
+      "const": 1
+    },
+    "action_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "impossible_element_count": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "constraints": {
+      "type": "array",
+      "minItems": 4,
+      "items": {
+        "type": "string"
+      }
+    },
+    "checkpoint": {
+      "type": "string",
+      "minLength": 1
+    },
+    "width": {
+      "type": "integer",
+      "minimum": 512,
+      "maximum": 2048
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 512,
+      "maximum": 2048
+    },
+    "filename_prefix": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_./-]+$"
+    }
+  },
+  "additionalProperties": true
+}
