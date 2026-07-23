@@ -6,6 +6,11 @@ on:
       - "build/the-emotion-scam-tier1/script.json"
       - "build/june-oxley-folks-aint-roadblocks-tier1/script.json"
       - "build/june-oxley-left-the-vehicle/script.json"
+      - "concept/characters/june_oxley.json"
+      - "pipeline/animation_profiles.py"
+      - "pipeline/animation_style_profiles.json"
+      - "pipeline/governed_build.py"
+      - "pipeline/profiles.py"
       - ".github/workflows/legacy-remake-packages-integrity.yml"
   push:
     branches: [main]
@@ -13,6 +18,11 @@ on:
       - "build/the-emotion-scam-tier1/script.json"
       - "build/june-oxley-folks-aint-roadblocks-tier1/script.json"
       - "build/june-oxley-left-the-vehicle/script.json"
+      - "concept/characters/june_oxley.json"
+      - "pipeline/animation_profiles.py"
+      - "pipeline/animation_style_profiles.json"
+      - "pipeline/governed_build.py"
+      - "pipeline/profiles.py"
       - ".github/workflows/legacy-remake-packages-integrity.yml"
   workflow_dispatch:
 
@@ -43,9 +53,11 @@ jobs:
           from pathlib import Path
 
           import animation_profiles
+          import governed_build
           import profiles
           import visual_symbols
 
+          SPUDS_ID = 'NOpBlnGInO9m6vDvFkFC'
           packages = {
               'build/the-emotion-scam-tier1/script.json': {
                   'animation': 'animated_tier1',
@@ -95,30 +107,47 @@ jobs:
               character = profiles.resolve(script, strict=True)
               check(filename, character == expected['profile'],
                     f"character {character!r} != {expected['profile']!r}")
-              if character == profiles.JUNE_OXLEY:
-                  check(filename, script.get('elevenlabs_voice_name') == 'Granpa Spuds Oxley',
-                        f"wrong June voice {script.get('elevenlabs_voice_name')!r}")
-                  check(filename, not script.get('elevenlabs_voice_id'),
-                        'June voice ID guessed instead of deferred to authenticated exact-name lookup')
-              else:
-                  check(filename, script.get('elevenlabs_voice_id') == 'TX3LPaxmHKxFdv7VOQHJ',
-                        'regular video does not explicitly use Liam')
-
               animation = animation_profiles.resolve(script, strict=True)
               check(filename, animation == expected['animation'],
                     f"animation {animation!r} != {expected['animation']!r}")
+
+              # Exercise the exact production preflight in memory. This repairs old
+              # expanded animation queries and pins a canonical character voice.
               prepared = copy.deepcopy(script)
-              changed = animation_profiles.apply_defaults(
+              voice_changed = governed_build._apply_character_voice(prepared, character)
+              animation_changed = animation_profiles.apply_defaults(
                   prepared, character_profile=character, strict=True
               )
-              animation_errors = animation_profiles.validate(prepared, character)
               if animation:
-                  check(filename, changed is True, f'animation preflight changed={changed!r}')
-                  check(filename, not animation_errors, f'animation preflight errors {animation_errors}')
-              else:
-                  check(filename, changed is False, f'ordinary June unexpectedly changed by animation preflight: {changed!r}')
+                  for scene in prepared.get('scenes') or []:
+                      styled = animation_profiles.effective_query(scene, animation)
+                      if styled:
+                          scene['query'] = styled
+              animation_errors = animation_profiles.validate(prepared, character)
+              check(filename, not animation_errors, f'animation preflight errors {animation_errors}')
 
-              report = visual_symbols.analyze(copy.deepcopy(script), character)
+              if character == profiles.JUNE_OXLEY:
+                  check(filename, prepared.get('elevenlabs_voice_name') == 'Granpa Spuds Oxley',
+                        f"wrong June voice {prepared.get('elevenlabs_voice_name')!r}")
+                  check(filename, prepared.get('elevenlabs_voice_id') == SPUDS_ID,
+                        f"June voice ID {prepared.get('elevenlabs_voice_id')!r} != {SPUDS_ID}")
+                  check(filename, voice_changed or script.get('elevenlabs_voice_id') == SPUDS_ID,
+                        'canonical June voice was not confirmed by preflight')
+              else:
+                  check(filename, prepared.get('elevenlabs_voice_id') == 'TX3LPaxmHKxFdv7VOQHJ',
+                        'regular video does not explicitly use Liam')
+
+              if animation:
+                  check(filename, animation_changed is True or script.get('animation_contract_version') == 1,
+                        f'animation preflight did not establish its contract: {animation_changed!r}')
+              else:
+                  check(filename, animation_changed is False,
+                        f'ordinary June unexpectedly changed by animation preflight: {animation_changed!r}')
+
+              # Analyze the post-preflight production plan, not the authoring draft.
+              # This specifically guards against town-wide style suffixes turning
+              # every object scene into a recurring-character portrait.
+              report = visual_symbols.analyze(copy.deepcopy(prepared), character)
               check(filename, not report['violations'], f"visual violations {report['violations']}")
               check(filename, report['symbol_family_count'] >= 6,
                     f"only {report['symbol_family_count']} visual families")
@@ -127,7 +156,8 @@ jobs:
                   f"human={report['human_presence_ratio']:.1%} "
                   f"families={report['symbol_family_count']} "
                   f"run={report['longest_family_run']['value']}:"
-                  f"{report['longest_family_run']['length']}"
+                  f"{report['longest_family_run']['length']} "
+                  f"voice={prepared.get('elevenlabs_voice_id')}"
               )
 
           if errors:
@@ -135,5 +165,5 @@ jobs:
               for error in errors:
                   print(' -', error)
               raise SystemExit(1)
-          print('ALL THREE REMAKE PACKAGES PASSED')
+          print('ALL THREE REMAKE PACKAGES PASSED PRODUCTION PREFLIGHT')
           PY
