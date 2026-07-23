@@ -38,10 +38,15 @@ _CHARACTER_ROLES = {
     "narrator", "observer", "chooser", "creator", "explorer", "guardian",
     "performer", "relationship", "collective", "scale_reference",
 }
-_NON_CHARACTER_ROLES = {"", "none", "no_human", "object", "environment", "unspecified"}
+_HARD_NON_CHARACTER_ROLES = {"none", "no_human", "object", "environment"}
+_NON_CHARACTER_ROLES = {"", *_HARD_NON_CHARACTER_ROLES, "unspecified"}
 _CHARACTER_CUES = (
     "june oxley", "june", "earl", "clyde", "neighbor", "waitress",
     "man", "woman", "person", "people", "driver", "hand", "hands", "face",
+)
+_OBJECT_REWRITE_CUES = _CHARACTER_CUES + (
+    "townspeople", "locals", "silhouette", "traveler", "travelers",
+    "actor", "actors", "cast", "ex",
 )
 
 
@@ -101,13 +106,17 @@ def _has_word(text: str, cue: str) -> bool:
     return bool(re.search(rf"(?<![a-z0-9]){re.escape(cue)}(?![a-z0-9])", text))
 
 
+def _mentions_any(text: str, cues: tuple[str, ...]) -> bool:
+    normalized = " ".join(str(text or "").lower().split())
+    return any(_has_word(normalized, cue) for cue in cues)
+
+
 def _scene_needs_character(scene: dict, required_character: str | None, base_query: str) -> bool:
     """Return whether the requested shot actually contains the recurring character.
 
     A June animation profile defines a shared town-wide art direction. It must not
     inject an elderly man into tractors, fences, squirrels, weather, or other
-    object-led metaphor scenes. Explicit human roles and literal visual cues opt a
-    scene into the locked character suffix.
+    object-led metaphor scenes. An explicit ``human_role: none`` is authoritative.
     """
     if not required_character:
         return False
@@ -115,14 +124,35 @@ def _scene_needs_character(scene: dict, required_character: str | None, base_que
     if isinstance(explicit, bool):
         return explicit
     role = _key(scene.get("human_role") or "")
+    if role in _HARD_NON_CHARACTER_ROLES:
+        return False
     if role in _CHARACTER_ROLES:
         return True
     if role not in _NON_CHARACTER_ROLES:
         return True
-    visual = " ".join(str(
-        scene.get("symbol_query") or base_query or scene.get("image_prompt") or ""
-    ).lower().split())
-    return any(_has_word(visual, cue) for cue in _CHARACTER_CUES)
+    visual = scene.get("symbol_query") or base_query or scene.get("image_prompt") or ""
+    return _mentions_any(str(visual), _CHARACTER_CUES)
+
+
+def _object_led_query(scene: dict) -> str:
+    anchor = " ".join(str(
+        scene.get("semantic_anchor") or scene.get("primary_symbol")
+        or "rural visual metaphor"
+    ).split())
+    return (
+        f"{anchor}, expressed through moving objects, architecture, weather, animals, "
+        "vehicles or light in a rural setting, no people, no hands, no faces, no visible body"
+    )
+
+
+def _needs_object_rewrite(scene: dict, required_character: str | None,
+                          character_required: bool, literal_query: str) -> bool:
+    if not required_character or character_required:
+        return False
+    role = _key(scene.get("human_role") or "")
+    return role in _HARD_NON_CHARACTER_ROLES and _mentions_any(
+        literal_query, _OBJECT_REWRITE_CUES
+    )
 
 
 def _merge_visual_policy(script: dict, data: dict) -> bool:
@@ -147,12 +177,7 @@ def _merge_visual_policy(script: dict, data: dict) -> bool:
 
 
 def apply_defaults(script: dict, character_profile: str | None = None, strict: bool = True) -> bool:
-    """Apply one idempotent animation contract to a script in memory.
-
-    This does not choose concepts, rewrite narration, or generate media. It makes the
-    requested animation mode machine-readable and constrains later acquisition,
-    generation, motion accounting, and review.
-    """
+    """Apply one idempotent animation contract to a script in memory."""
     name = resolve(script, strict=strict)
     if name is None:
         return False
@@ -203,13 +228,26 @@ def apply_defaults(script: dict, character_profile: str | None = None, strict: b
     general_suffix = data["prompt_suffix"]
     character_suffix = data.get("character_prompt_suffix") or ""
     for index, scene in enumerate(script.get("scenes") or []):
-        base_query = (
-            scene.get("animation_base_query") or scene.get("symbol_query")
-            or scene.get("query") or scene.get("image_prompt") or scene.get("text") or ""
+        literal_query = (
+            scene.get("animation_base_query") or scene.get("query")
+            or scene.get("image_prompt") or scene.get("text") or ""
         )
         character_required = _scene_needs_character(
-            scene, required_character, str(base_query)
+            scene, required_character, str(literal_query)
         )
+        render_base = scene.get("symbol_query") or literal_query
+        object_rewrite = _needs_object_rewrite(
+            scene, required_character, character_required, str(render_base)
+        )
+        if object_rewrite:
+            render_base = _object_led_query(scene)
+            if scene.get("animation_object_query") != render_base:
+                scene["animation_object_query"] = render_base
+                changed = True
+        elif "animation_object_query" in scene:
+            scene.pop("animation_object_query", None)
+            changed = True
+
         desired_scene = {
             "animation_profile": canonical,
             "animation_quality_tier": data["quality_tier"],
@@ -232,10 +270,10 @@ def apply_defaults(script: dict, character_profile: str | None = None, strict: b
             scene.pop("animation_character_reference_id", None)
             changed = True
 
-        if scene.get("animation_base_query") != base_query:
-            scene["animation_base_query"] = base_query
+        if scene.get("animation_base_query") != literal_query:
+            scene["animation_base_query"] = literal_query
             changed = True
-        styled = _append_once(str(base_query), general_suffix)
+        styled = _append_once(str(render_base), general_suffix)
         if character_required and character_suffix:
             styled = _append_once(styled, character_suffix)
         if scene.get("animation_query") != styled:
@@ -243,14 +281,15 @@ def apply_defaults(script: dict, character_profile: str | None = None, strict: b
             changed = True
 
         if scene.get("hero") or scene.get("image_prompt"):
-            base_prompt = (
+            literal_prompt = (
                 scene.get("animation_base_prompt") or scene.get("image_prompt")
-                or base_query
+                or literal_query
             )
-            if scene.get("animation_base_prompt") != base_prompt:
-                scene["animation_base_prompt"] = base_prompt
+            if scene.get("animation_base_prompt") != literal_prompt:
+                scene["animation_base_prompt"] = literal_prompt
                 changed = True
-            styled_prompt = _append_once(str(base_prompt), general_suffix)
+            prompt_base = render_base if object_rewrite else literal_prompt
+            styled_prompt = _append_once(str(prompt_base), general_suffix)
             if character_required and character_suffix:
                 styled_prompt = _append_once(styled_prompt, character_suffix)
             if scene.get("image_prompt") != styled_prompt:
@@ -288,6 +327,7 @@ def writer_context(name: str | None) -> str:
         f"- Captions: {data['caption_policy']}.\n"
         "- Use one ruling visual system, one strong symbol per beat, and no cheap template animation.\n"
         "- Recurring-character anatomy belongs only in scenes that actually show the character.\n"
+        "- A scene explicitly marked human_role: none must be rendered through objects or environment.\n"
         f"- Set top-level JSON field exactly to \"animation_profile\": \"{name}\"."
     )
 
@@ -322,5 +362,10 @@ def validate(script: dict, character_profile: str | None = None) -> list[str]:
             errors.append(
                 f"scene {index} character/reference mismatch: "
                 f"required={needs_character}, reference={has_reference}"
+            )
+        role = _key(scene.get("human_role") or "")
+        if role in _HARD_NON_CHARACTER_ROLES and needs_character:
+            errors.append(
+                f"scene {index} is human_role={role} but requests the recurring character"
             )
     return errors
