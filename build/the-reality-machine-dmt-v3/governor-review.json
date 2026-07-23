@@ -1,0 +1,166 @@
+{
+  "generated_at": "2026-07-23T12:42:59+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {},
+  "recommendations": [
+    {
+      "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
+      "category": "tail_latency",
+      "evidence": "p50=39.1s, p95=1331.0s",
+      "priority": "medium",
+      "stage": "build_pass"
+    }
+  ],
+  "recurring_incidents": [],
+  "runs_analyzed": 2,
+  "schema_version": 1,
+  "stages": {
+    "align": {
+      "attempts": 2,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.003,
+      "sample_count": 2,
+      "successes": 2,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 2.005
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.008,
+      "p95_success_s": 1.008,
+      "sample_count": 1,
+      "successes": 1,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1.008
+    },
+    "assemble": {
+      "attempts": 49,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 46.264,
+      "p95_success_s": 89.098,
+      "sample_count": 49,
+      "successes": 49,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 2484.599
+    },
+    "build_pass": {
+      "attempts": 11,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 39.052,
+      "p95_success_s": 1330.987,
+      "sample_count": 11,
+      "successes": 11,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 3080.352
+    },
+    "credits": {
+      "attempts": 4,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.008,
+      "sample_count": 4,
+      "successes": 4,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 4.023
+    },
+    "ffmpeg": {
+      "attempts": 8,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.018,
+      "p95_success_s": 31.12,
+      "sample_count": 8,
+      "successes": 8,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 87.429
+    },
+    "footage": {
+      "attempts": 2,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 108.597,
+      "p95_success_s": 172.096,
+      "sample_count": 2,
+      "successes": 2,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 217.194
+    },
+    "prep": {
+      "attempts": 2,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 14.532,
+      "p95_success_s": 14.981,
+      "sample_count": 2,
+      "successes": 2,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 29.064
+    },
+    "probe": {
+      "attempts": 51,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.009,
+      "sample_count": 51,
+      "successes": 51,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 51.452
+    },
+    "quality": {
+      "attempts": 2,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 33.694,
+      "p95_success_s": 34.152,
+      "sample_count": 2,
+      "successes": 2,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 67.388
+    },
+    "transcribe": {
+      "attempts": 2,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 22.019,
+      "p95_success_s": 23.816,
+      "sample_count": 2,
+      "successes": 2,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 44.038
+    },
+    "tts": {
+      "attempts": 2,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 56.032,
+      "p95_success_s": 56.039,
+      "sample_count": 2,
+      "successes": 2,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 112.063
+    }
+  },
+  "statuses": {
+    "done": 2
+  }
+}
