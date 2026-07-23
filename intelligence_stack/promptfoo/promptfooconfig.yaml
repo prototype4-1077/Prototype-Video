@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://promptfoo.dev/config-schema.json
+
+description: Prototype Video lower-model production competency gate
+
+providers:
+  - id: file://provider.py
+    label: fixture-or-lower-model-command
+    config:
+      timeout_seconds: 300
+
+prompts:
+  - |
+      You are operating inside James's video pipeline.
+      Return ONLY valid JSON. Preserve science fidelity, viewer autonomy, grounding,
+      supplied narration, and the lower-model visual contract.
+
+      Task type: {{task_type}}
+      Task:
+      {{task}}
+
+defaultTest:
+  assert:
+    - type: is-json
+    - type: python
+      value: file://assertions.py:validate
+
+tests:
+  - description: Build a complete Concept Engine script
+    vars:
+      case_id: script_baseline
+      task_type: script
+      task: >-
+        Build an 18–26 scene, 300–400 word consciousness video. Hold one ruling
+        metaphor throughout, label science fidelity, state the evidence boundary,
+        keep human-heavy imagery under half, ground near the end, and finish with
+        an open question.
+
+  - description: Produce an anatomy-safe hero plan
+    vars:
+      case_id: visual_plan_baseline
+      task_type: visual_plan
+      task: >-
+        Plan a photoreal visual for a rubber-hand-illusion threat scene. Use one
+        subject, one action, one impossible element, deterministic seed, and at
+        least four explicit negative constraints. Route to stock, nonhuman geometry,
+        or a versioned ComfyUI workflow.
+
+  - description: Revise a failed visual without changing narration
+    vars:
+      case_id: revision_baseline
+      task_type: revision
+      original_narration: "Then I lift a hammer over the rubber one — and you flinch. For something made of silicone."
+      task: >-
+        The rendered hand and hammer are deformed. Revise only the visual plan.
+        Preserve the supplied narration exactly, protect approved scenes, and choose
+        a lower-model-safe route.
