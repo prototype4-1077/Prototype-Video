@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-07-23T02:40:48+00:00",
+  "generated_at": "2026-07-23T03:10:05+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {},
   "recommendations": [
     {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=75.2s, p95=1109.4s",
+      "evidence": "p50=73.2s, p95=1032.4s",
       "priority": "medium",
       "stage": "build_pass"
     }
@@ -19,13 +19,13 @@
       "attempts": 1,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.002,
-      "p95_success_s": 1.002,
+      "p50_success_s": 1.003,
+      "p95_success_s": 1.003,
       "sample_count": 1,
       "successes": 1,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1.002
+      "total_duration_s": 1.003
     },
     "altsheet": {
       "attempts": 1,
@@ -43,25 +43,25 @@
       "attempts": 19,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 64.443,
-      "p95_success_s": 91.491,
+      "p50_success_s": 63.439,
+      "p95_success_s": 91.628,
       "sample_count": 19,
       "successes": 19,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1277.846
+      "total_duration_s": 1260.703
     },
     "build_pass": {
-      "attempts": 5,
+      "attempts": 6,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 75.216,
-      "p95_success_s": 1109.384,
-      "sample_count": 5,
-      "successes": 5,
+      "p50_success_s": 73.225,
+      "p95_success_s": 1032.363,
+      "sample_count": 6,
+      "successes": 6,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1630.618
+      "total_duration_s": 1618.753
     },
     "credits": {
       "attempts": 2,
@@ -79,49 +79,49 @@
       "attempts": 4,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 5.598,
-      "p95_success_s": 24.029,
+      "p50_success_s": 5.521,
+      "p95_success_s": 24.86,
       "sample_count": 4,
       "successes": 4,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 39.385
+      "total_duration_s": 40.237
     },
     "footage": {
       "attempts": 1,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 121.173,
-      "p95_success_s": 121.173,
+      "p50_success_s": 108.187,
+      "p95_success_s": 108.187,
       "sample_count": 1,
       "successes": 1,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 121.173
+      "total_duration_s": 108.187
     },
     "hero": {
-      "attempts": 3,
+      "attempts": 5,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 21.077,
-      "p95_success_s": 23.767,
-      "sample_count": 3,
-      "successes": 3,
+      "p50_success_s": 17.056,
+      "p95_success_s": 20.87,
+      "sample_count": 5,
+      "successes": 5,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 61.196
+      "total_duration_s": 87.297
     },
     "prep": {
       "attempts": 1,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 12.034,
-      "p95_success_s": 12.034,
+      "p50_success_s": 11.033,
+      "p95_success_s": 11.033,
       "sample_count": 1,
       "successes": 1,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 12.034
+      "total_duration_s": 11.033
     },
     "probe": {
       "attempts": 20,
@@ -133,43 +133,43 @@
       "successes": 20,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 20.211
+      "total_duration_s": 20.204
     },
     "quality": {
       "attempts": 1,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 29.212,
-      "p95_success_s": 29.212,
+      "p50_success_s": 30.187,
+      "p95_success_s": 30.187,
       "sample_count": 1,
       "successes": 1,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 29.212
+      "total_duration_s": 30.187
     },
     "transcribe": {
       "attempts": 1,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 19.013,
-      "p95_success_s": 19.013,
+      "p50_success_s": 19.019,
+      "p95_success_s": 19.019,
       "sample_count": 1,
       "successes": 1,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 19.013
+      "total_duration_s": 19.019
     },
     "tts": {
       "attempts": 1,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 54.022,
-      "p95_success_s": 54.022,
+      "p50_success_s": 45.211,
+      "p95_success_s": 45.211,
       "sample_count": 1,
       "successes": 1,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 54.022
+      "total_duration_s": 45.211
     }
   },
   "statuses": {
