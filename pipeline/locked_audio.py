@@ -102,6 +102,12 @@ def extract(source_video: str | Path, build_dir: str | Path) -> dict[str, Any]:
 def apply(video: str | Path, build_dir: str | Path) -> dict[str, Any]:
     video = Path(video).resolve()
     build_dir = Path(build_dir).resolve()
+    if "short" in video.stem.lower():
+        return {
+            "video": video.name,
+            "skipped": True,
+            "reason": "short cuts have their own narration edit and music master",
+        }
     locked = build_dir / LOCKED_NAME
     manifest_path = build_dir / MANIFEST_NAME
     if not locked.exists() or not manifest_path.exists():
