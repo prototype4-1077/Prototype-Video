@@ -100,7 +100,24 @@ jobs:
           python3 pipeline/run_governed.py "build/$SLUG" \
             --max-passes 200 --overall-timeout ${{ inputs.long_render && '4680' || '2700' }}
 
-      - name: Prove approved scenes and narration were preserved
+      - name: Restore exact approved delivery audio
+        if: steps.mode.outputs.selective == 'true'
+        env:
+          SLUG: ${{ inputs.slug }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          shopt -s nullglob
+          finals=(build/$SLUG/final*.mp4)
+          test "${#finals[@]}" -ge 1
+          for video in "${finals[@]}"; do
+            [[ "$(basename "$video")" == *short* ]] && continue
+            python3 pipeline/locked_audio.py apply "$video" "build/$SLUG"
+          done
+          python3 pipeline/locked_audio.py verify "build/$SLUG"
+          python3 pipeline/quality_gate.py "build/$SLUG"
+
+      - name: Prove approved scenes, narration, and audio were preserved
         if: steps.mode.outputs.selective == 'true'
         env:
           SLUG: ${{ inputs.slug }}
@@ -143,6 +160,7 @@ jobs:
             build/${{ inputs.slug }}/editorial.otio
             build/${{ inputs.slug }}/editorial_manifest.json
             build/${{ inputs.slug }}/editorial-verification.json
+            build/${{ inputs.slug }}/locked-audio-manifest.json
             build/${{ inputs.slug }}/selective-revision-result.json
             build/${{ inputs.slug }}/export-verification*.json
             build/${{ inputs.slug }}/detected-scenes*.csv
@@ -177,6 +195,7 @@ jobs:
             build/${{ inputs.slug }}/editorial.otio
             build/${{ inputs.slug }}/editorial_manifest.json
             build/${{ inputs.slug }}/editorial-verification.json
+            build/${{ inputs.slug }}/locked-audio-manifest.json
             build/${{ inputs.slug }}/revision-cache-manifest.json
 
       - name: Publish revised final and editorial records
@@ -196,6 +215,7 @@ jobs:
             "build/$SLUG/editorial.otio" \
             "build/$SLUG/editorial_manifest.json" \
             "build/$SLUG/editorial-verification.json" \
+            "build/$SLUG/locked-audio-manifest.json" \
             "build/$SLUG/selective-revision-result.json" \
             "build/$SLUG/revision-cache-manifest.json" \
             build/$SLUG/export-verification*.json \
@@ -224,6 +244,7 @@ jobs:
             "build/$SLUG/editorial.otio" \
             "build/$SLUG/editorial_manifest.json" \
             "build/$SLUG/editorial-verification.json" \
+            "build/$SLUG/locked-audio-manifest.json" \
             "build/$SLUG/revision-cache-manifest.json" \
             "build/$SLUG/quality_report.json" \
             "build/$SLUG/render-status.json" \
