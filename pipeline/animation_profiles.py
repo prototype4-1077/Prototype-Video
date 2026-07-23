@@ -244,6 +244,12 @@ def apply_defaults(script: dict, character_profile: str | None = None, strict: b
             if scene.get("animation_object_query") != render_base:
                 scene["animation_object_query"] = render_base
                 changed = True
+            # visual_symbols and footage both treat symbol_query as the deliberate
+            # override. Replace any stale human planner query with the same repaired
+            # object-led base used by the animation contract.
+            if scene.get("symbol_query") != render_base:
+                scene["symbol_query"] = render_base
+                changed = True
         elif "animation_object_query" in scene:
             scene.pop("animation_object_query", None)
             changed = True
