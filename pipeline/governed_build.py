@@ -47,6 +47,16 @@ def _apply_animation_contract(build_dir: Path) -> dict | None:
         changed = animation_profiles.apply_defaults(
             script, character_profile=character_profile, strict=True
         )
+        animation_name = animation_profiles.resolve(script, strict=True)
+        if animation_name:
+            # The literal author query remains in animation_base_query. The styled
+            # query becomes the actual acquisition query so the selected contract
+            # changes real footage selection rather than merely documenting intent.
+            for scene in script.get("scenes") or []:
+                styled = animation_profiles.effective_query(scene, animation_name)
+                if styled and scene.get("query") != styled:
+                    scene["query"] = styled
+                    changed = True
         errors = animation_profiles.validate(script, character_profile)
     except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
         raise ValueError(f"animation profile validation failed: {exc}") from exc
