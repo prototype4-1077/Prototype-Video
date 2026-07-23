@@ -2,6 +2,222 @@
   "experiments": [
     {
       "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for ffmpeg.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:ffmpeg",
+      "id": "experiment:4b0f1d52662705b6",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The ffmpeg stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only ffmpeg using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for assemble.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:assemble",
+      "id": "experiment:51be0c14d222375c",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The assemble stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only assemble using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for hero.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:hero",
+      "id": "experiment:856587c33fd6b641",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The hero stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only hero using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for quality.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:quality",
+      "id": "experiment:99d8ed7271364259",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The quality stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only quality using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for tts.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:tts",
+      "id": "experiment:e36378686fcea32f",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The tts stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only tts using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for build_pass.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:build_pass",
+      "id": "experiment:ed45401a3443f495",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The build_pass stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only build_pass using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
       "control": "Keep the current champion value for motion_quality.",
       "fixed_factors": [
         "core concept",
@@ -13,7 +229,7 @@
       ],
       "hypothesis_id": "visual_failure:motion_quality",
       "id": "experiment:0a7aa1bfc13076c7",
-      "information_value": 0.7159,
+      "information_value": 0.5727,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -49,7 +265,7 @@
       ],
       "hypothesis_id": "visual_failure:duplicate_object",
       "id": "experiment:65ba1564663d14fe",
-      "information_value": 0.7159,
+      "information_value": 0.5727,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -85,7 +301,7 @@
       ],
       "hypothesis_id": "visual_failure:semantic_mismatch",
       "id": "experiment:80c3149a747ad5d6",
-      "information_value": 0.7159,
+      "information_value": 0.5727,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -121,7 +337,7 @@
       ],
       "hypothesis_id": "visual_failure:reflection",
       "id": "experiment:8fa9edbe7513411f",
-      "information_value": 0.7159,
+      "information_value": 0.5727,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -157,7 +373,7 @@
       ],
       "hypothesis_id": "visual_failure:darkness",
       "id": "experiment:edc505a888ec6455",
-      "information_value": 0.7159,
+      "information_value": 0.5727,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -182,6 +398,402 @@
     },
     {
       "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for narration.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:narration:guided_2nd",
+      "id": "experiment:66141c7ac255f116",
+      "information_value": 0.4953,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The narration value 'guided_2nd' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only narration using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for narration.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:narration:teaching",
+      "id": "experiment:0742ac21ce95265a",
+      "information_value": 0.494,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The narration value 'teaching' may improves blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only narration using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:memory",
+      "id": "experiment:bf0e68fbaf71b596",
+      "information_value": 0.4888,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'memory' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:self",
+      "id": "experiment:0a1ece6f187c9de9",
+      "information_value": 0.4832,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'self' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:prediction",
+      "id": "experiment:bb9e91f116030a48",
+      "information_value": 0.4832,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'prediction' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for hook.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:hook:question",
+      "id": "experiment:dae9da720d0801c4",
+      "information_value": 0.483,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The hook value 'question' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only hook using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:grounding",
+      "id": "experiment:fc54261c235fce38",
+      "information_value": 0.483,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'grounding' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:machine",
+      "id": "experiment:bf9d41b2e87593f4",
+      "information_value": 0.4819,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'machine' may improves blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for hook.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:hook:plunge",
+      "id": "experiment:f06237bf0149f716",
+      "information_value": 0.4819,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The hook value 'plunge' may improves blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only hook using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:emotion",
+      "id": "experiment:bb071d9ce9275aac",
+      "information_value": 0.4784,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'emotion' may improves blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:attention",
+      "id": "experiment:ed6e9fea4d4d4fc4",
+      "information_value": 0.4768,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'attention' may improves blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
       "control": "Keep the current champion value for synthetic_contact.",
       "fixed_factors": [
         "core concept",
@@ -193,7 +805,7 @@
       ],
       "hypothesis_id": "visual_failure:synthetic_contact",
       "id": "experiment:95c33d77eb5813e9",
-      "information_value": 0.5114,
+      "information_value": 0.4091,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -229,7 +841,7 @@
       ],
       "hypothesis_id": "visual_failure:hand_anatomy",
       "id": "experiment:9749c3333ec5c8d5",
-      "information_value": 0.3068,
+      "information_value": 0.2455,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",

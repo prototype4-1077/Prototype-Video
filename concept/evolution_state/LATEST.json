@@ -55,8 +55,8 @@
         "evidence": [
           "pipeline/visual_risk.py",
           "intelligence_stack/comfy",
-          "intelligence_stack/comfy/examples",
-          "intelligence_stack/comfy/workflows"
+          "intelligence_stack/comfy/workflows",
+          "intelligence_stack/comfy/examples"
         ],
         "evidence_count": 4,
         "evidence_paths": [
@@ -133,9 +133,10 @@
       },
       {
         "evidence": [
-          "concept/perpetual_frontier.py"
+          "concept/perpetual_frontier.py",
+          "concept/evolution_state/experiment_queue.json"
         ],
-        "evidence_count": 1,
+        "evidence_count": 2,
         "evidence_paths": [
           "concept/perpetual_frontier.py",
           "concept/evolution_state/experiment_queue.json"
@@ -147,9 +148,11 @@
       },
       {
         "evidence": [
-          "concept/evolution_constitution.json"
+          "concept/evolution_constitution.json",
+          "concept/evolution_state/diversity_atlas.json",
+          "concept/evolution_state/multiple_selves.json"
         ],
-        "evidence_count": 1,
+        "evidence_count": 3,
         "evidence_paths": [
           "concept/evolution_constitution.json",
           "concept/evolution_state/diversity_atlas.json",
@@ -173,6 +176,17 @@
     "James retains final creative and production authority"
   ],
   "curiosity_queue": [
+    {
+      "curiosity_score": 0.9,
+      "id": "unknown:00113f7c838b3309",
+      "question": "The quality-diversity atlas is sparse; which absent region is both on-ethos and technically learnable?",
+      "source": "unknown_unknown",
+      "why_now": {
+        "coverage": 0.0143,
+        "kind": "creative_monoculture_risk",
+        "question": "The quality-diversity atlas is sparse; which absent region is both on-ethos and technically learnable?"
+      }
+    },
     {
       "curiosity_score": 0.9,
       "id": "unknown:0031fea43cc0b14a",
@@ -307,6 +321,17 @@
     },
     {
       "curiosity_score": 0.9,
+      "id": "unknown:39e7cf708c36a3a9",
+      "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+      "source": "unknown_unknown",
+      "why_now": {
+        "kind": "taxonomy_gap",
+        "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+        "slug": "june-oxley-left-the-vehicle"
+      }
+    },
+    {
+      "curiosity_score": 0.9,
       "id": "unknown:40dce3802c36f64a",
       "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
       "source": "unknown_unknown",
@@ -424,6 +449,17 @@
         "kind": "taxonomy_gap",
         "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
         "slug": "futures-fingerprints"
+      }
+    },
+    {
+      "curiosity_score": 0.9,
+      "id": "unknown:79780e7ccd2c0f3e",
+      "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+      "source": "unknown_unknown",
+      "why_now": {
+        "kind": "taxonomy_gap",
+        "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+        "slug": "the-emotion-scam-tier1"
       }
     },
     {
@@ -648,6 +684,28 @@
     },
     {
       "curiosity_score": 0.9,
+      "id": "unknown:ca8ed096afc827e1",
+      "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+      "source": "unknown_unknown",
+      "why_now": {
+        "kind": "taxonomy_gap",
+        "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+        "slug": "june-oxley-folks-aint-roadblocks-tier1"
+      }
+    },
+    {
+      "curiosity_score": 0.9,
+      "id": "unknown:cc04edd8d1c93c71",
+      "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+      "source": "unknown_unknown",
+      "why_now": {
+        "kind": "taxonomy_gap",
+        "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+        "slug": "belief-is-gravity"
+      }
+    },
+    {
+      "curiosity_score": 0.9,
       "id": "unknown:d124a677425efb01",
       "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
       "source": "unknown_unknown",
@@ -666,17 +724,6 @@
         "kind": "taxonomy_gap",
         "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
         "slug": "pattern-wearing-matter-semantic-pipeline"
-      }
-    },
-    {
-      "curiosity_score": 0.9,
-      "id": "unknown:d5cfb10963076406",
-      "question": "The quality-diversity atlas is sparse; which absent region is both on-ethos and technically learnable?",
-      "source": "unknown_unknown",
-      "why_now": {
-        "coverage": 0.0138,
-        "kind": "creative_monoculture_risk",
-        "question": "The quality-diversity atlas is sparse; which absent region is both on-ethos and technically learnable?"
       }
     },
     {
@@ -746,39 +793,46 @@
       }
     },
     {
-      "curiosity_score": 0.7159,
-      "id": "visual_failure:darkness",
-      "question": "Scenes involving darkness may have an elevated revision risk.",
+      "curiosity_score": 0.7364,
+      "id": "efficiency:assemble",
+      "question": "The assemble stage may be a high-leverage efficiency target without changing creative policy.",
       "source": "hypothesis",
-      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+      "why_now": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
     },
     {
-      "curiosity_score": 0.7159,
-      "id": "visual_failure:duplicate_object",
-      "question": "Scenes involving duplicate object may have an elevated revision risk.",
+      "curiosity_score": 0.7364,
+      "id": "efficiency:build_pass",
+      "question": "The build_pass stage may be a high-leverage efficiency target without changing creative policy.",
       "source": "hypothesis",
-      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+      "why_now": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
     },
     {
-      "curiosity_score": 0.7159,
-      "id": "visual_failure:motion_quality",
-      "question": "Scenes involving motion quality may have an elevated revision risk.",
+      "curiosity_score": 0.7364,
+      "id": "efficiency:ffmpeg",
+      "question": "The ffmpeg stage may be a high-leverage efficiency target without changing creative policy.",
       "source": "hypothesis",
-      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+      "why_now": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
     },
     {
-      "curiosity_score": 0.7159,
-      "id": "visual_failure:reflection",
-      "question": "Scenes involving reflection may have an elevated revision risk.",
+      "curiosity_score": 0.7364,
+      "id": "efficiency:hero",
+      "question": "The hero stage may be a high-leverage efficiency target without changing creative policy.",
       "source": "hypothesis",
-      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+      "why_now": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
     },
     {
-      "curiosity_score": 0.7159,
-      "id": "visual_failure:semantic_mismatch",
-      "question": "Scenes involving semantic mismatch may have an elevated revision risk.",
+      "curiosity_score": 0.7364,
+      "id": "efficiency:quality",
+      "question": "The quality stage may be a high-leverage efficiency target without changing creative policy.",
       "source": "hypothesis",
-      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+      "why_now": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "curiosity_score": 0.7364,
+      "id": "efficiency:tts",
+      "question": "The tts stage may be a high-leverage efficiency target without changing creative policy.",
+      "source": "hypothesis",
+      "why_now": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
     },
     {
       "curiosity_score": 0.635,
@@ -830,6 +884,41 @@
       "why_now": "A sugar pill you KNOW is a sugar pill can still dull real pain. Your beliefs have hands."
     },
     {
+      "curiosity_score": 0.5727,
+      "id": "visual_failure:darkness",
+      "question": "Scenes involving darkness may have an elevated revision risk.",
+      "source": "hypothesis",
+      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "curiosity_score": 0.5727,
+      "id": "visual_failure:duplicate_object",
+      "question": "Scenes involving duplicate object may have an elevated revision risk.",
+      "source": "hypothesis",
+      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "curiosity_score": 0.5727,
+      "id": "visual_failure:motion_quality",
+      "question": "Scenes involving motion quality may have an elevated revision risk.",
+      "source": "hypothesis",
+      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "curiosity_score": 0.5727,
+      "id": "visual_failure:reflection",
+      "question": "Scenes involving reflection may have an elevated revision risk.",
+      "source": "hypothesis",
+      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "curiosity_score": 0.5727,
+      "id": "visual_failure:semantic_mismatch",
+      "question": "Scenes involving semantic mismatch may have an elevated revision risk.",
+      "source": "hypothesis",
+      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
       "curiosity_score": 0.5115,
       "id": "frontier:memory_is_future",
       "question": "What can the channel learn by developing 'Memory Is a Time Machine Pointed Forward' without imitating a current winner?",
@@ -837,11 +926,116 @@
       "why_now": "The organ that remembers your childhood is the same one that dreams your next Tuesday."
     },
     {
-      "curiosity_score": 0.5114,
-      "id": "visual_failure:synthetic_contact",
-      "question": "Scenes involving synthetic contact may have an elevated revision risk.",
+      "curiosity_score": 0.5,
+      "id": "performance:profile:liam",
+      "question": "The profile value 'liam' may improves blended reach and retention in the present catalog.",
       "source": "hypothesis",
-      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only profile."
+    },
+    {
+      "curiosity_score": 0.5,
+      "id": "performance:visual_mode:default",
+      "question": "The visual_mode value 'default' may improves blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only visual_mode."
+    },
+    {
+      "curiosity_score": 0.4988,
+      "id": "performance:hook:confession",
+      "question": "The hook value 'confession' may reduces blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only hook."
+    },
+    {
+      "curiosity_score": 0.4988,
+      "id": "performance:narration:testimony_1st",
+      "question": "The narration value 'testimony_1st' may reduces blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only narration."
+    },
+    {
+      "curiosity_score": 0.4988,
+      "id": "performance:pillars:threshold",
+      "question": "The pillars value 'threshold' may reduces blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "curiosity_score": 0.4953,
+      "id": "performance:narration:guided_2nd",
+      "question": "The narration value 'guided_2nd' may reduces blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only narration."
+    },
+    {
+      "curiosity_score": 0.494,
+      "id": "performance:narration:teaching",
+      "question": "The narration value 'teaching' may improves blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only narration."
+    },
+    {
+      "curiosity_score": 0.4888,
+      "id": "performance:pillars:memory",
+      "question": "The pillars value 'memory' may reduces blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "curiosity_score": 0.4832,
+      "id": "performance:pillars:prediction",
+      "question": "The pillars value 'prediction' may reduces blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "curiosity_score": 0.4832,
+      "id": "performance:pillars:self",
+      "question": "The pillars value 'self' may reduces blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "curiosity_score": 0.483,
+      "id": "performance:hook:question",
+      "question": "The hook value 'question' may reduces blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only hook."
+    },
+    {
+      "curiosity_score": 0.483,
+      "id": "performance:pillars:grounding",
+      "question": "The pillars value 'grounding' may reduces blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "curiosity_score": 0.4819,
+      "id": "performance:hook:plunge",
+      "question": "The hook value 'plunge' may improves blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only hook."
+    },
+    {
+      "curiosity_score": 0.4819,
+      "id": "performance:pillars:machine",
+      "question": "The pillars value 'machine' may improves blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "curiosity_score": 0.4784,
+      "id": "performance:pillars:emotion",
+      "question": "The pillars value 'emotion' may improves blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "curiosity_score": 0.4768,
+      "id": "performance:pillars:attention",
+      "question": "The pillars value 'attention' may improves blended reach and retention in the present catalog.",
+      "source": "hypothesis",
+      "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
     },
     {
       "curiosity_score": 0.4372,
@@ -851,7 +1045,14 @@
       "why_now": "Say your own name thirty times. Watch it stop being yours."
     },
     {
-      "curiosity_score": 0.3068,
+      "curiosity_score": 0.4091,
+      "id": "visual_failure:synthetic_contact",
+      "question": "Scenes involving synthetic contact may have an elevated revision risk.",
+      "source": "hypothesis",
+      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "curiosity_score": 0.2455,
       "id": "visual_failure:hand_anatomy",
       "question": "Scenes involving hand anatomy may have an elevated revision risk.",
       "source": "hypothesis",
@@ -861,8 +1062,8 @@
   "cycle_date": "2026-07-23",
   "disagreement_observatory": [
     {
-      "candidate": "Scenes involving motion quality may have an elevated revision risk.",
-      "candidate_id": "experiment:0a7aa1bfc13076c7",
+      "candidate": "The ffmpeg stage may be a high-leverage efficiency target without changing creative policy.",
+      "candidate_id": "experiment:4b0f1d52662705b6",
       "positions": [
         {
           "challenge": "What evidence supports this, what would falsify it, and is the fidelity label honest?",
@@ -904,8 +1105,8 @@
       "resolution_policy": "Preserve the disagreement map; do not average it into a vote. A human decides which tensions the artifact must hold."
     },
     {
-      "candidate": "Scenes involving duplicate object may have an elevated revision risk.",
-      "candidate_id": "experiment:65ba1564663d14fe",
+      "candidate": "The assemble stage may be a high-leverage efficiency target without changing creative policy.",
+      "candidate_id": "experiment:51be0c14d222375c",
       "positions": [
         {
           "challenge": "What evidence supports this, what would falsify it, and is the fidelity label honest?",
@@ -947,8 +1148,8 @@
       "resolution_policy": "Preserve the disagreement map; do not average it into a vote. A human decides which tensions the artifact must hold."
     },
     {
-      "candidate": "Scenes involving semantic mismatch may have an elevated revision risk.",
-      "candidate_id": "experiment:80c3149a747ad5d6",
+      "candidate": "The hero stage may be a high-leverage efficiency target without changing creative policy.",
+      "candidate_id": "experiment:856587c33fd6b641",
       "positions": [
         {
           "challenge": "What evidence supports this, what would falsify it, and is the fidelity label honest?",
@@ -990,8 +1191,8 @@
       "resolution_policy": "Preserve the disagreement map; do not average it into a vote. A human decides which tensions the artifact must hold."
     },
     {
-      "candidate": "Scenes involving reflection may have an elevated revision risk.",
-      "candidate_id": "experiment:8fa9edbe7513411f",
+      "candidate": "The quality stage may be a high-leverage efficiency target without changing creative policy.",
+      "candidate_id": "experiment:99d8ed7271364259",
       "positions": [
         {
           "challenge": "What evidence supports this, what would falsify it, and is the fidelity label honest?",
@@ -1033,8 +1234,8 @@
       "resolution_policy": "Preserve the disagreement map; do not average it into a vote. A human decides which tensions the artifact must hold."
     },
     {
-      "candidate": "Scenes involving darkness may have an elevated revision risk.",
-      "candidate_id": "experiment:edc505a888ec6455",
+      "candidate": "The tts stage may be a high-leverage efficiency target without changing creative policy.",
+      "candidate_id": "experiment:e36378686fcea32f",
       "positions": [
         {
           "challenge": "What evidence supports this, what would falsify it, and is the fidelity label honest?",
@@ -1076,8 +1277,8 @@
       "resolution_policy": "Preserve the disagreement map; do not average it into a vote. A human decides which tensions the artifact must hold."
     },
     {
-      "candidate": "Scenes involving synthetic contact may have an elevated revision risk.",
-      "candidate_id": "experiment:95c33d77eb5813e9",
+      "candidate": "The build_pass stage may be a high-leverage efficiency target without changing creative policy.",
+      "candidate_id": "experiment:ed45401a3443f495",
       "positions": [
         {
           "challenge": "What evidence supports this, what would falsify it, and is the fidelity label honest?",
@@ -1380,6 +1581,97 @@
   "diversity_atlas": {
     "cells": [
       {
+        "cell": "pillars=machine|fidelity=unknown|hook=plunge|narration=guided_2nd|human_band=medium|generation_band=low",
+        "descriptors": {
+          "fidelity": "unknown",
+          "generation_band": "low",
+          "hook": "plunge",
+          "human_band": "medium",
+          "narration": "guided_2nd",
+          "pillars": "machine"
+        },
+        "elite_slug": "the-reality-machine-dmt-v3",
+        "score": 138.1712
+      },
+      {
+        "cell": "pillars=threshold|fidelity=unknown|hook=confession|narration=testimony_1st|human_band=medium|generation_band=medium",
+        "descriptors": {
+          "fidelity": "unknown",
+          "generation_band": "medium",
+          "hook": "confession",
+          "human_band": "medium",
+          "narration": "testimony_1st",
+          "pillars": "threshold"
+        },
+        "elite_slug": "i-became-everything",
+        "score": 135.5945
+      },
+      {
+        "cell": "pillars=prediction|fidelity=unknown|hook=plunge|narration=guided_2nd|human_band=medium|generation_band=medium",
+        "descriptors": {
+          "fidelity": "unknown",
+          "generation_band": "medium",
+          "hook": "plunge",
+          "human_band": "medium",
+          "narration": "guided_2nd",
+          "pillars": "prediction"
+        },
+        "elite_slug": "the-lag",
+        "score": 110.6886
+      },
+      {
+        "cell": "pillars=self|fidelity=unknown|hook=question|narration=teaching|human_band=medium|generation_band=low",
+        "descriptors": {
+          "fidelity": "unknown",
+          "generation_band": "low",
+          "hook": "question",
+          "human_band": "medium",
+          "narration": "teaching",
+          "pillars": "self"
+        },
+        "elite_slug": "collapse-of-gravity",
+        "score": 110.4472
+      },
+      {
+        "cell": "pillars=memory|fidelity=unknown|hook=plunge|narration=guided_2nd|human_band=medium|generation_band=medium",
+        "descriptors": {
+          "fidelity": "unknown",
+          "generation_band": "medium",
+          "hook": "plunge",
+          "human_band": "medium",
+          "narration": "guided_2nd",
+          "pillars": "memory"
+        },
+        "elite_slug": "the-save-file",
+        "score": 82.8403
+      },
+      {
+        "cell": "pillars=self|fidelity=unknown|hook=confession|narration=testimony_1st|human_band=high|generation_band=low",
+        "descriptors": {
+          "fidelity": "unknown",
+          "generation_band": "low",
+          "hook": "confession",
+          "human_band": "high",
+          "narration": "testimony_1st",
+          "pillars": "self"
+        },
+        "elite_slug": "jester-who-knew-my-name",
+        "score": 64.0456
+      },
+      {
+        "cell": "pillars=prediction|fidelity=unknown|hook=question|narration=guided_2nd|human_band=medium|generation_band=low",
+        "descriptors": {
+          "fidelity": "unknown",
+          "generation_band": "low",
+          "hook": "question",
+          "human_band": "medium",
+          "narration": "guided_2nd",
+          "pillars": "prediction"
+        },
+        "elite_slug": "the-unopened-mail",
+        "score": 63.8415
+      },
+      {
         "cell": "pillars=belief|fidelity=unknown|hook=confession|narration=teaching|human_band=low|generation_band=low",
         "descriptors": {
           "fidelity": "unknown",
@@ -1419,19 +1711,6 @@
         "score": null
       },
       {
-        "cell": "pillars=machine|fidelity=unknown|hook=plunge|narration=guided_2nd|human_band=medium|generation_band=low",
-        "descriptors": {
-          "fidelity": "unknown",
-          "generation_band": "low",
-          "hook": "plunge",
-          "human_band": "medium",
-          "narration": "guided_2nd",
-          "pillars": "machine"
-        },
-        "elite_slug": "the-reality-machine-dmt-v3",
-        "score": null
-      },
-      {
         "cell": "pillars=machine|fidelity=unknown|hook=plunge|narration=teaching|human_band=low|generation_band=low",
         "descriptors": {
           "fidelity": "unknown",
@@ -1458,19 +1737,6 @@
         "score": null
       },
       {
-        "cell": "pillars=memory|fidelity=unknown|hook=plunge|narration=guided_2nd|human_band=medium|generation_band=medium",
-        "descriptors": {
-          "fidelity": "unknown",
-          "generation_band": "medium",
-          "hook": "plunge",
-          "human_band": "medium",
-          "narration": "guided_2nd",
-          "pillars": "memory"
-        },
-        "elite_slug": "the-museum-that-repaints-itself",
-        "score": null
-      },
-      {
         "cell": "pillars=memory|fidelity=unknown|hook=question|narration=guided_2nd|human_band=low|generation_band=medium",
         "descriptors": {
           "fidelity": "unknown",
@@ -1494,6 +1760,19 @@
           "pillars": "none"
         },
         "elite_slug": "how-you-doing",
+        "score": null
+      },
+      {
+        "cell": "pillars=none|fidelity=unknown|hook=unknown|narration=june_oxley|human_band=low|generation_band=low",
+        "descriptors": {
+          "fidelity": "unknown",
+          "generation_band": "low",
+          "hook": "unknown",
+          "human_band": "low",
+          "narration": "june_oxley",
+          "pillars": "none"
+        },
+        "elite_slug": "june-oxley-left-the-vehicle",
         "score": null
       },
       {
@@ -1571,33 +1850,7 @@
           "narration": "unknown",
           "pillars": "none"
         },
-        "elite_slug": "dmt-the-understudy",
-        "score": null
-      },
-      {
-        "cell": "pillars=prediction|fidelity=unknown|hook=plunge|narration=guided_2nd|human_band=medium|generation_band=medium",
-        "descriptors": {
-          "fidelity": "unknown",
-          "generation_band": "medium",
-          "hook": "plunge",
-          "human_band": "medium",
-          "narration": "guided_2nd",
-          "pillars": "prediction"
-        },
-        "elite_slug": "the-lag",
-        "score": null
-      },
-      {
-        "cell": "pillars=prediction|fidelity=unknown|hook=question|narration=guided_2nd|human_band=medium|generation_band=low",
-        "descriptors": {
-          "fidelity": "unknown",
-          "generation_band": "low",
-          "hook": "question",
-          "human_band": "medium",
-          "narration": "guided_2nd",
-          "pillars": "prediction"
-        },
-        "elite_slug": "the-unopened-mail",
+        "elite_slug": "belief-is-gravity",
         "score": null
       },
       {
@@ -1637,19 +1890,6 @@
           "pillars": "self"
         },
         "elite_slug": "the-person-you-replaced",
-        "score": null
-      },
-      {
-        "cell": "pillars=self|fidelity=unknown|hook=confession|narration=testimony_1st|human_band=high|generation_band=low",
-        "descriptors": {
-          "fidelity": "unknown",
-          "generation_band": "low",
-          "hook": "confession",
-          "human_band": "high",
-          "narration": "testimony_1st",
-          "pillars": "self"
-        },
-        "elite_slug": "jester-who-knew-my-name",
         "score": null
       },
       {
@@ -1705,19 +1945,6 @@
         "score": null
       },
       {
-        "cell": "pillars=self|fidelity=unknown|hook=question|narration=teaching|human_band=medium|generation_band=low",
-        "descriptors": {
-          "fidelity": "unknown",
-          "generation_band": "low",
-          "hook": "question",
-          "human_band": "medium",
-          "narration": "teaching",
-          "pillars": "self"
-        },
-        "elite_slug": "collapse-of-gravity",
-        "score": null
-      },
-      {
         "cell": "pillars=threshold|fidelity=unknown|hook=confession|narration=testimony_1st|human_band=high|generation_band=low",
         "descriptors": {
           "fidelity": "unknown",
@@ -1729,22 +1956,9 @@
         },
         "elite_slug": "room-before-birth",
         "score": null
-      },
-      {
-        "cell": "pillars=threshold|fidelity=unknown|hook=confession|narration=testimony_1st|human_band=medium|generation_band=medium",
-        "descriptors": {
-          "fidelity": "unknown",
-          "generation_band": "medium",
-          "hook": "confession",
-          "human_band": "medium",
-          "narration": "testimony_1st",
-          "pillars": "threshold"
-        },
-        "elite_slug": "i-became-everything",
-        "score": null
       }
     ],
-    "coverage": 0.0138,
+    "coverage": 0.0143,
     "dimensions": [
       "pillars",
       "fidelity",
@@ -1794,7 +2008,7 @@
         "threshold"
       ]
     },
-    "occupied_cells": 28
+    "occupied_cells": 29
   },
   "dreams": [
     {
@@ -2029,6 +2243,222 @@
   "experiments": [
     {
       "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for ffmpeg.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:ffmpeg",
+      "id": "experiment:4b0f1d52662705b6",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The ffmpeg stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only ffmpeg using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for assemble.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:assemble",
+      "id": "experiment:51be0c14d222375c",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The assemble stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only assemble using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for hero.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:hero",
+      "id": "experiment:856587c33fd6b641",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The hero stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only hero using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for quality.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:quality",
+      "id": "experiment:99d8ed7271364259",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The quality stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only quality using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for tts.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:tts",
+      "id": "experiment:e36378686fcea32f",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The tts stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only tts using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for build_pass.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "efficiency:build_pass",
+      "id": "experiment:ed45401a3443f495",
+      "information_value": 0.7364,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The build_pass stage may be a high-leverage efficiency target without changing creative policy.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only build_pass using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
       "control": "Keep the current champion value for motion_quality.",
       "fixed_factors": [
         "core concept",
@@ -2040,7 +2470,7 @@
       ],
       "hypothesis_id": "visual_failure:motion_quality",
       "id": "experiment:0a7aa1bfc13076c7",
-      "information_value": 0.7159,
+      "information_value": 0.5727,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -2076,7 +2506,7 @@
       ],
       "hypothesis_id": "visual_failure:duplicate_object",
       "id": "experiment:65ba1564663d14fe",
-      "information_value": 0.7159,
+      "information_value": 0.5727,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -2112,7 +2542,7 @@
       ],
       "hypothesis_id": "visual_failure:semantic_mismatch",
       "id": "experiment:80c3149a747ad5d6",
-      "information_value": 0.7159,
+      "information_value": 0.5727,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -2148,7 +2578,7 @@
       ],
       "hypothesis_id": "visual_failure:reflection",
       "id": "experiment:8fa9edbe7513411f",
-      "information_value": 0.7159,
+      "information_value": 0.5727,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -2184,7 +2614,7 @@
       ],
       "hypothesis_id": "visual_failure:darkness",
       "id": "experiment:edc505a888ec6455",
-      "information_value": 0.7159,
+      "information_value": 0.5727,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -2209,6 +2639,402 @@
     },
     {
       "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for narration.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:narration:guided_2nd",
+      "id": "experiment:66141c7ac255f116",
+      "information_value": 0.4953,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The narration value 'guided_2nd' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only narration using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for narration.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:narration:teaching",
+      "id": "experiment:0742ac21ce95265a",
+      "information_value": 0.494,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The narration value 'teaching' may improves blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only narration using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:memory",
+      "id": "experiment:bf0e68fbaf71b596",
+      "information_value": 0.4888,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'memory' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:self",
+      "id": "experiment:0a1ece6f187c9de9",
+      "information_value": 0.4832,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'self' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:prediction",
+      "id": "experiment:bb9e91f116030a48",
+      "information_value": 0.4832,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'prediction' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for hook.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:hook:question",
+      "id": "experiment:dae9da720d0801c4",
+      "information_value": 0.483,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The hook value 'question' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only hook using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:grounding",
+      "id": "experiment:fc54261c235fce38",
+      "information_value": 0.483,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'grounding' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:machine",
+      "id": "experiment:bf9d41b2e87593f4",
+      "information_value": 0.4819,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'machine' may improves blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for hook.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:hook:plunge",
+      "id": "experiment:f06237bf0149f716",
+      "information_value": 0.4819,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The hook value 'plunge' may improves blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only hook using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:emotion",
+      "id": "experiment:bb071d9ce9275aac",
+      "information_value": 0.4784,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'emotion' may improves blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:attention",
+      "id": "experiment:ed6e9fea4d4d4fc4",
+      "information_value": 0.4768,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'attention' may improves blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
       "control": "Keep the current champion value for synthetic_contact.",
       "fixed_factors": [
         "core concept",
@@ -2220,7 +3046,7 @@
       ],
       "hypothesis_id": "visual_failure:synthetic_contact",
       "id": "experiment:95c33d77eb5813e9",
-      "information_value": 0.5114,
+      "information_value": 0.4091,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -2256,7 +3082,7 @@
       ],
       "hypothesis_id": "visual_failure:hand_anatomy",
       "id": "experiment:9749c3333ec5c8d5",
-      "information_value": 0.3068,
+      "information_value": 0.2455,
       "primary_metrics": [
         "first-3-second retention",
         "average view percentage",
@@ -2282,7 +3108,7 @@
   ],
   "external_signal_count": 0,
   "external_signal_digest": [],
-  "generated_at": "2026-07-23T11:43:34.543601+00:00",
+  "generated_at": "2026-07-23T22:42:40.762796+00:00",
   "hypotheses": [
     {
       "alternatives": [
@@ -2325,8 +3151,8 @@
       "id": "visual_failure:hand_anatomy",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.625,
       "statement": "Scenes involving hand anatomy may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -2363,8 +3189,8 @@
       "id": "visual_failure:synthetic_contact",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.375,
       "statement": "Scenes involving synthetic contact may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -2393,8 +3219,8 @@
       "id": "visual_failure:darkness",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.125,
       "statement": "Scenes involving darkness may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -2423,8 +3249,8 @@
       "id": "visual_failure:duplicate_object",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.125,
       "statement": "Scenes involving duplicate object may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -2453,8 +3279,8 @@
       "id": "visual_failure:motion_quality",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.125,
       "statement": "Scenes involving motion quality may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -2483,8 +3309,8 @@
       "id": "visual_failure:reflection",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.125,
       "statement": "Scenes involving reflection may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -2513,10 +3339,614 @@
       "id": "visual_failure:semantic_mismatch",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.125,
       "statement": "Scenes involving semantic mismatch may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "assemble"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 1447.493,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:assemble",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The assemble stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "build_pass"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 1708.932,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:build_pass",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The build_pass stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "ffmpeg"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 46.16,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:ffmpeg",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The ffmpeg stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "hero"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 69.113,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:hero",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The hero stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "quality"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 36.135,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:quality",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The quality stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "tts"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 58.039,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:tts",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The tts stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0463,
+      "context": {
+        "field": "pillars",
+        "value": "attention"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 37.3671,
+        "mean_score": 138.1712,
+        "sample_count": 1
+      },
+      "id": "performance:pillars:attention",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'attention' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0431,
+      "context": {
+        "field": "pillars",
+        "value": "emotion"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 34.7904,
+        "mean_score": 135.5945,
+        "sample_count": 1
+      },
+      "id": "performance:pillars:emotion",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'emotion' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0363,
+      "context": {
+        "field": "hook",
+        "value": "plunge"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 9.7626,
+        "mean_score": 110.5667,
+        "sample_count": 3
+      },
+      "id": "performance:hook:plunge",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The hook value 'plunge' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only hook."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0363,
+      "context": {
+        "field": "pillars",
+        "value": "machine"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 9.7626,
+        "mean_score": 110.5667,
+        "sample_count": 3
+      },
+      "id": "performance:pillars:machine",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'machine' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0339,
+      "context": {
+        "field": "hook",
+        "value": "question"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -13.6598,
+        "mean_score": 87.1444,
+        "sample_count": 2
+      },
+      "id": "performance:hook:question",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The hook value 'question' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only hook."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0339,
+      "context": {
+        "field": "pillars",
+        "value": "grounding"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -13.6598,
+        "mean_score": 87.1444,
+        "sample_count": 2
+      },
+      "id": "performance:pillars:grounding",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'grounding' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0336,
+      "context": {
+        "field": "pillars",
+        "value": "prediction"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -13.5391,
+        "mean_score": 87.2651,
+        "sample_count": 2
+      },
+      "id": "performance:pillars:prediction",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'prediction' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0336,
+      "context": {
+        "field": "pillars",
+        "value": "self"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -13.5577,
+        "mean_score": 87.2464,
+        "sample_count": 2
+      },
+      "id": "performance:pillars:self",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'self' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0223,
+      "context": {
+        "field": "pillars",
+        "value": "memory"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -17.9638,
+        "mean_score": 82.8403,
+        "sample_count": 1
+      },
+      "id": "performance:pillars:memory",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'memory' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.012,
+      "context": {
+        "field": "narration",
+        "value": "teaching"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 9.6431,
+        "mean_score": 110.4472,
+        "sample_count": 1
+      },
+      "id": "performance:narration:teaching",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The narration value 'teaching' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only narration."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0095,
+      "context": {
+        "field": "narration",
+        "value": "guided_2nd"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -1.9187,
+        "mean_score": 98.8854,
+        "sample_count": 4
+      },
+      "id": "performance:narration:guided_2nd",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The narration value 'guided_2nd' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only narration."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0024,
+      "context": {
+        "field": "hook",
+        "value": "confession"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -0.9841,
+        "mean_score": 99.8201,
+        "sample_count": 2
+      },
+      "id": "performance:hook:confession",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The hook value 'confession' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only hook."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0024,
+      "context": {
+        "field": "narration",
+        "value": "testimony_1st"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -0.9841,
+        "mean_score": 99.8201,
+        "sample_count": 2
+      },
+      "id": "performance:narration:testimony_1st",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The narration value 'testimony_1st' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only narration."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0024,
+      "context": {
+        "field": "pillars",
+        "value": "threshold"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -0.9841,
+        "mean_score": 99.8201,
+        "sample_count": 2
+      },
+      "id": "performance:pillars:threshold",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'threshold' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0,
+      "context": {
+        "field": "profile",
+        "value": "liam"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 0.0,
+        "mean_score": 100.8041,
+        "sample_count": 7
+      },
+      "id": "performance:profile:liam",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The profile value 'liam' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only profile."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0,
+      "context": {
+        "field": "visual_mode",
+        "value": "default"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 0.0,
+        "mean_score": 100.8041,
+        "sample_count": 7
+      },
+      "id": "performance:visual_mode:default",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The visual_mode value 'default' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only visual_mode."
     }
   ],
   "lineage": {
@@ -2962,6 +4392,12 @@
         "title": "Before Your Words"
       },
       {
+        "id": "video:belief-is-gravity",
+        "kind": "video",
+        "score": null,
+        "title": "Belief Is Gravity"
+      },
+      {
         "id": "video:can-you-fly",
         "kind": "video",
         "score": null,
@@ -2982,7 +4418,7 @@
       {
         "id": "video:collapse-of-gravity",
         "kind": "video",
-        "score": null,
+        "score": 110.4472,
         "title": "The Collapse of Gravity"
       },
       {
@@ -3036,7 +4472,7 @@
       {
         "id": "video:i-became-everything",
         "kind": "video",
-        "score": null,
+        "score": 135.5945,
         "title": "I Became Everything"
       },
       {
@@ -3048,8 +4484,20 @@
       {
         "id": "video:jester-who-knew-my-name",
         "kind": "video",
-        "score": null,
+        "score": 64.0456,
         "title": "DMT: The Jester Who Knew My Name"
+      },
+      {
+        "id": "video:june-oxley-folks-aint-roadblocks-tier1",
+        "kind": "video",
+        "score": null,
+        "title": "Folks Ain't Roadblocks"
+      },
+      {
+        "id": "video:june-oxley-left-the-vehicle",
+        "kind": "video",
+        "score": null,
+        "title": "The Night Clyde Left the Vehicle"
       },
       {
         "id": "video:message-from-your-future-20260716",
@@ -3202,6 +4650,12 @@
         "title": "The Ego's Halo"
       },
       {
+        "id": "video:the-emotion-scam-tier1",
+        "kind": "video",
+        "score": null,
+        "title": "The Emotion Scam"
+      },
+      {
         "id": "video:the-forecast-in-your-chest",
         "kind": "video",
         "score": null,
@@ -3210,7 +4664,7 @@
       {
         "id": "video:the-lag",
         "kind": "video",
-        "score": null,
+        "score": 110.6886,
         "title": "The Lag"
       },
       {
@@ -3258,7 +4712,7 @@
       {
         "id": "video:the-reality-machine-dmt-v3",
         "kind": "video",
-        "score": null,
+        "score": 138.1712,
         "title": "DMT: The Reality Machine"
       },
       {
@@ -3282,7 +4736,7 @@
       {
         "id": "video:the-save-file",
         "kind": "video",
-        "score": null,
+        "score": 82.8403,
         "title": "The Save File"
       },
       {
@@ -3324,7 +4778,7 @@
       {
         "id": "video:the-unopened-mail",
         "kind": "video",
-        "score": null,
+        "score": 63.8415,
         "title": "The Unopened Mail"
       },
       {
@@ -3712,6 +5166,126 @@
         "blockers": [
           "scientific"
         ],
+        "candidate_id": "experiment:4b0f1d52662705b6",
+        "layers": {
+          "audience": 0.6,
+          "catalog_novelty": 0.8824,
+          "channel": 0.95,
+          "conceptual": 0.9,
+          "emotional": 0.6,
+          "ethical": 1.0,
+          "operational": 0.8,
+          "scientific": 0.55,
+          "temporal": 0.75,
+          "visual": 0.65
+        },
+        "overall": 0.7682,
+        "status": "needs_revision"
+      },
+      {
+        "blockers": [
+          "scientific"
+        ],
+        "candidate_id": "experiment:51be0c14d222375c",
+        "layers": {
+          "audience": 0.6,
+          "catalog_novelty": 0.8824,
+          "channel": 0.95,
+          "conceptual": 0.9,
+          "emotional": 0.6,
+          "ethical": 1.0,
+          "operational": 0.8,
+          "scientific": 0.55,
+          "temporal": 0.75,
+          "visual": 0.65
+        },
+        "overall": 0.7682,
+        "status": "needs_revision"
+      },
+      {
+        "blockers": [
+          "scientific"
+        ],
+        "candidate_id": "experiment:856587c33fd6b641",
+        "layers": {
+          "audience": 0.6,
+          "catalog_novelty": 0.8824,
+          "channel": 0.95,
+          "conceptual": 0.9,
+          "emotional": 0.6,
+          "ethical": 1.0,
+          "operational": 0.8,
+          "scientific": 0.55,
+          "temporal": 0.75,
+          "visual": 0.65
+        },
+        "overall": 0.7682,
+        "status": "needs_revision"
+      },
+      {
+        "blockers": [
+          "scientific"
+        ],
+        "candidate_id": "experiment:99d8ed7271364259",
+        "layers": {
+          "audience": 0.6,
+          "catalog_novelty": 0.8824,
+          "channel": 0.95,
+          "conceptual": 0.9,
+          "emotional": 0.6,
+          "ethical": 1.0,
+          "operational": 0.8,
+          "scientific": 0.55,
+          "temporal": 0.75,
+          "visual": 0.65
+        },
+        "overall": 0.7682,
+        "status": "needs_revision"
+      },
+      {
+        "blockers": [
+          "scientific"
+        ],
+        "candidate_id": "experiment:e36378686fcea32f",
+        "layers": {
+          "audience": 0.6,
+          "catalog_novelty": 0.8824,
+          "channel": 0.95,
+          "conceptual": 0.9,
+          "emotional": 0.6,
+          "ethical": 1.0,
+          "operational": 0.8,
+          "scientific": 0.55,
+          "temporal": 0.75,
+          "visual": 0.65
+        },
+        "overall": 0.7682,
+        "status": "needs_revision"
+      },
+      {
+        "blockers": [
+          "scientific"
+        ],
+        "candidate_id": "experiment:ed45401a3443f495",
+        "layers": {
+          "audience": 0.6,
+          "catalog_novelty": 0.8889,
+          "channel": 0.95,
+          "conceptual": 0.9,
+          "emotional": 0.6,
+          "ethical": 1.0,
+          "operational": 0.8,
+          "scientific": 0.55,
+          "temporal": 0.75,
+          "visual": 0.65
+        },
+        "overall": 0.7689,
+        "status": "needs_revision"
+      },
+      {
+        "blockers": [
+          "scientific"
+        ],
         "candidate_id": "experiment:0a7aa1bfc13076c7",
         "layers": {
           "audience": 0.6,
@@ -3733,106 +5307,6 @@
           "scientific"
         ],
         "candidate_id": "experiment:65ba1564663d14fe",
-        "layers": {
-          "audience": 0.6,
-          "catalog_novelty": 1.0,
-          "channel": 0.95,
-          "conceptual": 0.9,
-          "emotional": 0.6,
-          "ethical": 1.0,
-          "operational": 0.8,
-          "scientific": 0.55,
-          "temporal": 0.75,
-          "visual": 0.65
-        },
-        "overall": 0.78,
-        "status": "needs_revision"
-      },
-      {
-        "blockers": [
-          "scientific"
-        ],
-        "candidate_id": "experiment:80c3149a747ad5d6",
-        "layers": {
-          "audience": 0.6,
-          "catalog_novelty": 1.0,
-          "channel": 0.95,
-          "conceptual": 0.9,
-          "emotional": 0.6,
-          "ethical": 1.0,
-          "operational": 0.8,
-          "scientific": 0.55,
-          "temporal": 0.75,
-          "visual": 0.65
-        },
-        "overall": 0.78,
-        "status": "needs_revision"
-      },
-      {
-        "blockers": [
-          "scientific"
-        ],
-        "candidate_id": "experiment:8fa9edbe7513411f",
-        "layers": {
-          "audience": 0.6,
-          "catalog_novelty": 1.0,
-          "channel": 0.95,
-          "conceptual": 0.9,
-          "emotional": 0.6,
-          "ethical": 1.0,
-          "operational": 0.8,
-          "scientific": 0.55,
-          "temporal": 0.75,
-          "visual": 0.65
-        },
-        "overall": 0.78,
-        "status": "needs_revision"
-      },
-      {
-        "blockers": [
-          "scientific"
-        ],
-        "candidate_id": "experiment:edc505a888ec6455",
-        "layers": {
-          "audience": 0.6,
-          "catalog_novelty": 1.0,
-          "channel": 0.95,
-          "conceptual": 0.9,
-          "emotional": 0.6,
-          "ethical": 1.0,
-          "operational": 0.8,
-          "scientific": 0.55,
-          "temporal": 0.75,
-          "visual": 0.65
-        },
-        "overall": 0.78,
-        "status": "needs_revision"
-      },
-      {
-        "blockers": [
-          "scientific"
-        ],
-        "candidate_id": "experiment:95c33d77eb5813e9",
-        "layers": {
-          "audience": 0.6,
-          "catalog_novelty": 1.0,
-          "channel": 0.95,
-          "conceptual": 0.9,
-          "emotional": 0.6,
-          "ethical": 1.0,
-          "operational": 0.8,
-          "scientific": 0.55,
-          "temporal": 0.75,
-          "visual": 0.65
-        },
-        "overall": 0.78,
-        "status": "needs_revision"
-      },
-      {
-        "blockers": [
-          "scientific"
-        ],
-        "candidate_id": "experiment:9749c3333ec5c8d5",
         "layers": {
           "audience": 0.6,
           "catalog_novelty": 1.0,
@@ -4055,32 +5529,38 @@
         "self_count": 5
       },
       {
-        "candidate_id": "experiment:80c3149a747ad5d6",
-        "mean_score": 0.7922,
+        "candidate_id": "experiment:ed45401a3443f495",
+        "mean_score": 0.7811,
         "minimum_self_score": 0.75,
         "self_count": 5
       },
       {
-        "candidate_id": "experiment:8fa9edbe7513411f",
-        "mean_score": 0.7922,
+        "candidate_id": "experiment:4b0f1d52662705b6",
+        "mean_score": 0.7805,
         "minimum_self_score": 0.75,
         "self_count": 5
       },
       {
-        "candidate_id": "experiment:95c33d77eb5813e9",
-        "mean_score": 0.7922,
+        "candidate_id": "experiment:51be0c14d222375c",
+        "mean_score": 0.7805,
         "minimum_self_score": 0.75,
         "self_count": 5
       },
       {
-        "candidate_id": "experiment:9749c3333ec5c8d5",
-        "mean_score": 0.7922,
+        "candidate_id": "experiment:856587c33fd6b641",
+        "mean_score": 0.7805,
         "minimum_self_score": 0.75,
         "self_count": 5
       },
       {
-        "candidate_id": "experiment:edc505a888ec6455",
-        "mean_score": 0.7922,
+        "candidate_id": "experiment:99d8ed7271364259",
+        "mean_score": 0.7805,
+        "minimum_self_score": 0.75,
+        "self_count": 5
+      },
+      {
+        "candidate_id": "experiment:e36378686fcea32f",
+        "mean_score": 0.7805,
         "minimum_self_score": 0.75,
         "self_count": 5
       }
@@ -4138,29 +5618,34 @@
           "score": 0.8687
         },
         {
-          "candidate_id": "experiment:80c3149a747ad5d6",
+          "candidate_id": "experiment:ed45401a3443f495",
           "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
-          "score": 0.8687
+          "score": 0.8132
         },
         {
-          "candidate_id": "experiment:8fa9edbe7513411f",
+          "candidate_id": "experiment:4b0f1d52662705b6",
           "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
-          "score": 0.8687
+          "score": 0.8099
         },
         {
-          "candidate_id": "experiment:95c33d77eb5813e9",
+          "candidate_id": "experiment:51be0c14d222375c",
           "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
-          "score": 0.8687
+          "score": 0.8099
         },
         {
-          "candidate_id": "experiment:9749c3333ec5c8d5",
+          "candidate_id": "experiment:856587c33fd6b641",
           "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
-          "score": 0.8687
+          "score": 0.8099
         },
         {
-          "candidate_id": "experiment:edc505a888ec6455",
+          "candidate_id": "experiment:99d8ed7271364259",
           "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
-          "score": 0.8687
+          "score": 0.8099
+        },
+        {
+          "candidate_id": "experiment:e36378686fcea32f",
+          "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
+          "score": 0.8099
         }
       ],
       "midnight": [
@@ -4210,32 +5695,37 @@
           "score": 0.75
         },
         {
+          "candidate_id": "experiment:4b0f1d52662705b6",
+          "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
+          "score": 0.75
+        },
+        {
+          "candidate_id": "experiment:51be0c14d222375c",
+          "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
+          "score": 0.75
+        },
+        {
           "candidate_id": "experiment:65ba1564663d14fe",
           "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
           "score": 0.75
         },
         {
-          "candidate_id": "experiment:80c3149a747ad5d6",
+          "candidate_id": "experiment:856587c33fd6b641",
           "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
           "score": 0.75
         },
         {
-          "candidate_id": "experiment:8fa9edbe7513411f",
+          "candidate_id": "experiment:99d8ed7271364259",
           "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
           "score": 0.75
         },
         {
-          "candidate_id": "experiment:95c33d77eb5813e9",
+          "candidate_id": "experiment:e36378686fcea32f",
           "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
           "score": 0.75
         },
         {
-          "candidate_id": "experiment:9749c3333ec5c8d5",
-          "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
-          "score": 0.75
-        },
-        {
-          "candidate_id": "experiment:edc505a888ec6455",
+          "candidate_id": "experiment:ed45401a3443f495",
           "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
           "score": 0.75
         }
@@ -4287,32 +5777,37 @@
           "score": 0.7875
         },
         {
+          "candidate_id": "experiment:4b0f1d52662705b6",
+          "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
+          "score": 0.7875
+        },
+        {
+          "candidate_id": "experiment:51be0c14d222375c",
+          "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
+          "score": 0.7875
+        },
+        {
           "candidate_id": "experiment:65ba1564663d14fe",
           "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
           "score": 0.7875
         },
         {
-          "candidate_id": "experiment:80c3149a747ad5d6",
+          "candidate_id": "experiment:856587c33fd6b641",
           "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
           "score": 0.7875
         },
         {
-          "candidate_id": "experiment:8fa9edbe7513411f",
+          "candidate_id": "experiment:99d8ed7271364259",
           "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
           "score": 0.7875
         },
         {
-          "candidate_id": "experiment:95c33d77eb5813e9",
+          "candidate_id": "experiment:e36378686fcea32f",
           "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
           "score": 0.7875
         },
         {
-          "candidate_id": "experiment:9749c3333ec5c8d5",
-          "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
-          "score": 0.7875
-        },
-        {
-          "candidate_id": "experiment:edc505a888ec6455",
+          "candidate_id": "experiment:ed45401a3443f495",
           "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
           "score": 0.7875
         }
@@ -4364,32 +5859,37 @@
           "score": 0.8
         },
         {
+          "candidate_id": "experiment:4b0f1d52662705b6",
+          "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
+          "score": 0.8
+        },
+        {
+          "candidate_id": "experiment:51be0c14d222375c",
+          "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
+          "score": 0.8
+        },
+        {
           "candidate_id": "experiment:65ba1564663d14fe",
           "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
           "score": 0.8
         },
         {
-          "candidate_id": "experiment:80c3149a747ad5d6",
+          "candidate_id": "experiment:856587c33fd6b641",
           "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
           "score": 0.8
         },
         {
-          "candidate_id": "experiment:8fa9edbe7513411f",
+          "candidate_id": "experiment:99d8ed7271364259",
           "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
           "score": 0.8
         },
         {
-          "candidate_id": "experiment:95c33d77eb5813e9",
+          "candidate_id": "experiment:e36378686fcea32f",
           "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
           "score": 0.8
         },
         {
-          "candidate_id": "experiment:9749c3333ec5c8d5",
-          "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
-          "score": 0.8
-        },
-        {
-          "candidate_id": "experiment:edc505a888ec6455",
+          "candidate_id": "experiment:ed45401a3443f495",
           "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
           "score": 0.8
         }
@@ -4441,32 +5941,37 @@
           "score": 0.755
         },
         {
+          "candidate_id": "experiment:4b0f1d52662705b6",
+          "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
+          "score": 0.755
+        },
+        {
+          "candidate_id": "experiment:51be0c14d222375c",
+          "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
+          "score": 0.755
+        },
+        {
           "candidate_id": "experiment:65ba1564663d14fe",
           "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
           "score": 0.755
         },
         {
-          "candidate_id": "experiment:80c3149a747ad5d6",
+          "candidate_id": "experiment:856587c33fd6b641",
           "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
           "score": 0.755
         },
         {
-          "candidate_id": "experiment:8fa9edbe7513411f",
+          "candidate_id": "experiment:99d8ed7271364259",
           "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
           "score": 0.755
         },
         {
-          "candidate_id": "experiment:95c33d77eb5813e9",
+          "candidate_id": "experiment:e36378686fcea32f",
           "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
           "score": 0.755
         },
         {
-          "candidate_id": "experiment:9749c3333ec5c8d5",
-          "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
-          "score": 0.755
-        },
-        {
-          "candidate_id": "experiment:edc505a888ec6455",
+          "candidate_id": "experiment:ed45401a3443f495",
           "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
           "score": 0.755
         }
@@ -4763,7 +6268,7 @@
     "revisit_question": "What was a good idea paired with immature evidence, tooling, timing, packaging, or model capability?",
     "rules_awaiting_retest": [],
     "sparse_atlas": {
-      "coverage": 0.0138,
+      "coverage": 0.0143,
       "observed_values": {
         "fidelity": [
           "unknown"
@@ -4900,7 +6405,7 @@
     ]
   },
   "production_files_modified": false,
-  "record_count": 74,
+  "record_count": 78,
   "requires_human_selection": true,
   "rule_review": {
     "retest_queue": [],
@@ -5015,11 +6520,166 @@
       "wild": 0.1
     },
     "policy": "The wild lane cannot be removed by short-term performance optimization; James decides whether any proposal becomes production work.",
-    "proven_lane": [],
+    "proven_lane": [
+      {
+        "descriptors": {
+          "fidelity": "unknown",
+          "frontier": "render_distance",
+          "generated_ratio": 0.1667,
+          "hero_ratio": 0.0,
+          "hook": "plunge",
+          "human_ratio": 0.4333,
+          "narration": "guided_2nd",
+          "pillars": [
+            "machine",
+            "attention"
+          ],
+          "profile": "liam",
+          "scene_count": 30,
+          "series": "DMT",
+          "visual_mode": "default",
+          "word_count": 439
+        },
+        "score": 138.1712,
+        "slug": "the-reality-machine-dmt-v3"
+      },
+      {
+        "descriptors": {
+          "fidelity": "unknown",
+          "frontier": null,
+          "generated_ratio": 0.2917,
+          "hero_ratio": 0.2917,
+          "hook": "confession",
+          "human_ratio": 0.375,
+          "narration": "testimony_1st",
+          "pillars": [
+            "threshold",
+            "emotion"
+          ],
+          "profile": "liam",
+          "scene_count": 24,
+          "series": "DMT",
+          "visual_mode": "default",
+          "word_count": 376
+        },
+        "score": 135.5945,
+        "slug": "i-became-everything"
+      },
+      {
+        "descriptors": {
+          "fidelity": "unknown",
+          "frontier": null,
+          "generated_ratio": 0.3478,
+          "hero_ratio": 0.3043,
+          "hook": "plunge",
+          "human_ratio": 0.3043,
+          "narration": "guided_2nd",
+          "pillars": [
+            "prediction",
+            "machine"
+          ],
+          "profile": "liam",
+          "scene_count": 23,
+          "series": "The Reality Machine",
+          "visual_mode": "default",
+          "word_count": 378
+        },
+        "score": 110.6886,
+        "slug": "the-lag"
+      },
+      {
+        "descriptors": {
+          "fidelity": "unknown",
+          "frontier": null,
+          "generated_ratio": 0.0811,
+          "hero_ratio": 0.0811,
+          "hook": "question",
+          "human_ratio": 0.4865,
+          "narration": "teaching",
+          "pillars": [
+            "self",
+            "grounding"
+          ],
+          "profile": "liam",
+          "scene_count": 37,
+          "series": "standalone",
+          "visual_mode": "default",
+          "word_count": 389
+        },
+        "score": 110.4472,
+        "slug": "collapse-of-gravity"
+      },
+      {
+        "descriptors": {
+          "fidelity": "unknown",
+          "frontier": null,
+          "generated_ratio": 0.2917,
+          "hero_ratio": 0.2917,
+          "hook": "plunge",
+          "human_ratio": 0.25,
+          "narration": "guided_2nd",
+          "pillars": [
+            "memory",
+            "machine"
+          ],
+          "profile": "liam",
+          "scene_count": 24,
+          "series": "The Reality Machine",
+          "visual_mode": "default",
+          "word_count": 385
+        },
+        "score": 82.8403,
+        "slug": "the-save-file"
+      },
+      {
+        "descriptors": {
+          "fidelity": "unknown",
+          "frontier": null,
+          "generated_ratio": 0.1316,
+          "hero_ratio": 0.0,
+          "hook": "confession",
+          "human_ratio": 0.5789,
+          "narration": "testimony_1st",
+          "pillars": [
+            "self",
+            "threshold"
+          ],
+          "profile": "liam",
+          "scene_count": 38,
+          "series": "DMT",
+          "visual_mode": "default",
+          "word_count": 660
+        },
+        "score": 64.0456,
+        "slug": "jester-who-knew-my-name"
+      },
+      {
+        "descriptors": {
+          "fidelity": "unknown",
+          "frontier": null,
+          "generated_ratio": 0.0571,
+          "hero_ratio": 0.0571,
+          "hook": "question",
+          "human_ratio": 0.4286,
+          "narration": "guided_2nd",
+          "pillars": [
+            "prediction",
+            "grounding"
+          ],
+          "profile": "liam",
+          "scene_count": 35,
+          "series": "standalone",
+          "visual_mode": "default",
+          "word_count": 392
+        },
+        "score": 63.8415,
+        "slug": "the-unopened-mail"
+      }
+    ],
     "uncertainty_lane": [
       {
         "budget_lane": "uncertainty",
-        "control": "Keep the current champion value for motion_quality.",
+        "control": "Keep the current champion value for ffmpeg.",
         "fixed_factors": [
           "core concept",
           "narration text",
@@ -5028,16 +6688,16 @@
           "publication window",
           "motion ratio where possible"
         ],
-        "hypothesis_id": "visual_failure:motion_quality",
-        "id": "experiment:0a7aa1bfc13076c7",
-        "information_value": 0.7159,
+        "hypothesis_id": "efficiency:ffmpeg",
+        "id": "experiment:4b0f1d52662705b6",
+        "information_value": 0.7364,
         "primary_metrics": [
           "first-3-second retention",
           "average view percentage",
           "James scene approval",
           "revision count"
         ],
-        "question": "Scenes involving motion quality may have an elevated revision risk.",
+        "question": "The ffmpeg stage may be a high-leverage efficiency target without changing creative policy.",
         "requires_human_approval": true,
         "secondary_metrics": [
           "render cost",
@@ -5051,11 +6711,11 @@
           "approved narration changed",
           "visual quality below floor"
         ],
-        "treatment": "Change only motion_quality using the challenger condition."
+        "treatment": "Change only ffmpeg using the challenger condition."
       },
       {
         "budget_lane": "uncertainty",
-        "control": "Keep the current champion value for duplicate_object.",
+        "control": "Keep the current champion value for assemble.",
         "fixed_factors": [
           "core concept",
           "narration text",
@@ -5064,16 +6724,16 @@
           "publication window",
           "motion ratio where possible"
         ],
-        "hypothesis_id": "visual_failure:duplicate_object",
-        "id": "experiment:65ba1564663d14fe",
-        "information_value": 0.7159,
+        "hypothesis_id": "efficiency:assemble",
+        "id": "experiment:51be0c14d222375c",
+        "information_value": 0.7364,
         "primary_metrics": [
           "first-3-second retention",
           "average view percentage",
           "James scene approval",
           "revision count"
         ],
-        "question": "Scenes involving duplicate object may have an elevated revision risk.",
+        "question": "The assemble stage may be a high-leverage efficiency target without changing creative policy.",
         "requires_human_approval": true,
         "secondary_metrics": [
           "render cost",
@@ -5087,11 +6747,11 @@
           "approved narration changed",
           "visual quality below floor"
         ],
-        "treatment": "Change only duplicate_object using the challenger condition."
+        "treatment": "Change only assemble using the challenger condition."
       },
       {
         "budget_lane": "uncertainty",
-        "control": "Keep the current champion value for semantic_mismatch.",
+        "control": "Keep the current champion value for hero.",
         "fixed_factors": [
           "core concept",
           "narration text",
@@ -5100,16 +6760,16 @@
           "publication window",
           "motion ratio where possible"
         ],
-        "hypothesis_id": "visual_failure:semantic_mismatch",
-        "id": "experiment:80c3149a747ad5d6",
-        "information_value": 0.7159,
+        "hypothesis_id": "efficiency:hero",
+        "id": "experiment:856587c33fd6b641",
+        "information_value": 0.7364,
         "primary_metrics": [
           "first-3-second retention",
           "average view percentage",
           "James scene approval",
           "revision count"
         ],
-        "question": "Scenes involving semantic mismatch may have an elevated revision risk.",
+        "question": "The hero stage may be a high-leverage efficiency target without changing creative policy.",
         "requires_human_approval": true,
         "secondary_metrics": [
           "render cost",
@@ -5123,11 +6783,11 @@
           "approved narration changed",
           "visual quality below floor"
         ],
-        "treatment": "Change only semantic_mismatch using the challenger condition."
+        "treatment": "Change only hero using the challenger condition."
       },
       {
         "budget_lane": "uncertainty",
-        "control": "Keep the current champion value for reflection.",
+        "control": "Keep the current champion value for quality.",
         "fixed_factors": [
           "core concept",
           "narration text",
@@ -5136,16 +6796,16 @@
           "publication window",
           "motion ratio where possible"
         ],
-        "hypothesis_id": "visual_failure:reflection",
-        "id": "experiment:8fa9edbe7513411f",
-        "information_value": 0.7159,
+        "hypothesis_id": "efficiency:quality",
+        "id": "experiment:99d8ed7271364259",
+        "information_value": 0.7364,
         "primary_metrics": [
           "first-3-second retention",
           "average view percentage",
           "James scene approval",
           "revision count"
         ],
-        "question": "Scenes involving reflection may have an elevated revision risk.",
+        "question": "The quality stage may be a high-leverage efficiency target without changing creative policy.",
         "requires_human_approval": true,
         "secondary_metrics": [
           "render cost",
@@ -5159,7 +6819,7 @@
           "approved narration changed",
           "visual quality below floor"
         ],
-        "treatment": "Change only reflection using the challenger condition."
+        "treatment": "Change only quality using the challenger condition."
       }
     ],
     "wild_lane": [
@@ -5231,6 +6891,11 @@
     {
       "kind": "taxonomy_gap",
       "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+      "slug": "belief-is-gravity"
+    },
+    {
+      "kind": "taxonomy_gap",
+      "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
       "slug": "can-you-fly"
     },
     {
@@ -5277,6 +6942,16 @@
       "kind": "taxonomy_gap",
       "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
       "slug": "inner-search"
+    },
+    {
+      "kind": "taxonomy_gap",
+      "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+      "slug": "june-oxley-folks-aint-roadblocks-tier1"
+    },
+    {
+      "kind": "taxonomy_gap",
+      "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+      "slug": "june-oxley-left-the-vehicle"
     },
     {
       "kind": "taxonomy_gap",
@@ -5396,6 +7071,11 @@
     {
       "kind": "taxonomy_gap",
       "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
+      "slug": "the-emotion-scam-tier1"
+    },
+    {
+      "kind": "taxonomy_gap",
+      "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
       "slug": "the-last-unobserved-room"
     },
     {
@@ -5479,7 +7159,7 @@
       "slug": "you-were-always-source-new-voice"
     },
     {
-      "coverage": 0.0138,
+      "coverage": 0.0143,
       "kind": "creative_monoculture_risk",
       "question": "The quality-diversity atlas is sparse; which absent region is both on-ethos and technically learnable?"
     }

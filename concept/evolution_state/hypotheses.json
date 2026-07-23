@@ -41,8 +41,8 @@
       "id": "visual_failure:hand_anatomy",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.625,
       "statement": "Scenes involving hand anatomy may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -79,8 +79,8 @@
       "id": "visual_failure:synthetic_contact",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.375,
       "statement": "Scenes involving synthetic contact may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -109,8 +109,8 @@
       "id": "visual_failure:darkness",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.125,
       "statement": "Scenes involving darkness may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -139,8 +139,8 @@
       "id": "visual_failure:duplicate_object",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.125,
       "statement": "Scenes involving duplicate object may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -169,8 +169,8 @@
       "id": "visual_failure:motion_quality",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.125,
       "statement": "Scenes involving motion quality may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -199,8 +199,8 @@
       "id": "visual_failure:reflection",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.125,
       "statement": "Scenes involving reflection may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
@@ -229,10 +229,614 @@
       "id": "visual_failure:semantic_mismatch",
       "kind": "visual_reliability",
       "last_tested": "2026-07-23",
-      "learning_progress": null,
-      "previous_confidence": null,
+      "learning_progress": 0.0,
+      "previous_confidence": 0.125,
       "statement": "Scenes involving semantic mismatch may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "assemble"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 1447.493,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:assemble",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The assemble stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "build_pass"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 1708.932,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:build_pass",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The build_pass stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "ffmpeg"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 46.16,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:ffmpeg",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The ffmpeg stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "hero"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 69.113,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:hero",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The hero stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "quality"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 36.135,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:quality",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The quality stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Provider latency",
+        "Cache miss",
+        "Necessary model load"
+      ],
+      "confidence": 0.1,
+      "context": {
+        "stage": "tts"
+      },
+      "evidence_against": [
+        "Slow stages may be purchasing quality rather than wasting time."
+      ],
+      "evidence_for": {
+        "mean_duration_s": 58.039,
+        "runs": 1,
+        "stage_baseline_s": 311.563
+      },
+      "id": "efficiency:tts",
+      "kind": "efficiency",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The tts stage may be a high-leverage efficiency target without changing creative policy.",
+      "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0463,
+      "context": {
+        "field": "pillars",
+        "value": "attention"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 37.3671,
+        "mean_score": 138.1712,
+        "sample_count": 1
+      },
+      "id": "performance:pillars:attention",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'attention' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0431,
+      "context": {
+        "field": "pillars",
+        "value": "emotion"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 34.7904,
+        "mean_score": 135.5945,
+        "sample_count": 1
+      },
+      "id": "performance:pillars:emotion",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'emotion' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0363,
+      "context": {
+        "field": "hook",
+        "value": "plunge"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 9.7626,
+        "mean_score": 110.5667,
+        "sample_count": 3
+      },
+      "id": "performance:hook:plunge",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The hook value 'plunge' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only hook."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0363,
+      "context": {
+        "field": "pillars",
+        "value": "machine"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 9.7626,
+        "mean_score": 110.5667,
+        "sample_count": 3
+      },
+      "id": "performance:pillars:machine",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'machine' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0339,
+      "context": {
+        "field": "hook",
+        "value": "question"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -13.6598,
+        "mean_score": 87.1444,
+        "sample_count": 2
+      },
+      "id": "performance:hook:question",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The hook value 'question' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only hook."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0339,
+      "context": {
+        "field": "pillars",
+        "value": "grounding"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -13.6598,
+        "mean_score": 87.1444,
+        "sample_count": 2
+      },
+      "id": "performance:pillars:grounding",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'grounding' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0336,
+      "context": {
+        "field": "pillars",
+        "value": "prediction"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -13.5391,
+        "mean_score": 87.2651,
+        "sample_count": 2
+      },
+      "id": "performance:pillars:prediction",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'prediction' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0336,
+      "context": {
+        "field": "pillars",
+        "value": "self"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -13.5577,
+        "mean_score": 87.2464,
+        "sample_count": 2
+      },
+      "id": "performance:pillars:self",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'self' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0223,
+      "context": {
+        "field": "pillars",
+        "value": "memory"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -17.9638,
+        "mean_score": 82.8403,
+        "sample_count": 1
+      },
+      "id": "performance:pillars:memory",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'memory' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.012,
+      "context": {
+        "field": "narration",
+        "value": "teaching"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 9.6431,
+        "mean_score": 110.4472,
+        "sample_count": 1
+      },
+      "id": "performance:narration:teaching",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The narration value 'teaching' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only narration."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0095,
+      "context": {
+        "field": "narration",
+        "value": "guided_2nd"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -1.9187,
+        "mean_score": 98.8854,
+        "sample_count": 4
+      },
+      "id": "performance:narration:guided_2nd",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The narration value 'guided_2nd' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only narration."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0024,
+      "context": {
+        "field": "hook",
+        "value": "confession"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -0.9841,
+        "mean_score": 99.8201,
+        "sample_count": 2
+      },
+      "id": "performance:hook:confession",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The hook value 'confession' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only hook."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0024,
+      "context": {
+        "field": "narration",
+        "value": "testimony_1st"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -0.9841,
+        "mean_score": 99.8201,
+        "sample_count": 2
+      },
+      "id": "performance:narration:testimony_1st",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The narration value 'testimony_1st' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only narration."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0024,
+      "context": {
+        "field": "pillars",
+        "value": "threshold"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": -0.9841,
+        "mean_score": 99.8201,
+        "sample_count": 2
+      },
+      "id": "performance:pillars:threshold",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The pillars value 'threshold' may reduces blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only pillars."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0,
+      "context": {
+        "field": "profile",
+        "value": "liam"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 0.0,
+        "mean_score": 100.8041,
+        "sample_count": 7
+      },
+      "id": "performance:profile:liam",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The profile value 'liam' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only profile."
+    },
+    {
+      "alternatives": [
+        "Selection bias",
+        "Small sample",
+        "Confounded production quality"
+      ],
+      "confidence": 0.0,
+      "context": {
+        "field": "visual_mode",
+        "value": "default"
+      },
+      "evidence_against": [
+        "Topic demand, hook strength, visual quality, and publication timing may explain the same result."
+      ],
+      "evidence_for": {
+        "global_mean": 100.8041,
+        "lift": 0.0,
+        "mean_score": 100.8041,
+        "sample_count": 7
+      },
+      "id": "performance:visual_mode:default",
+      "kind": "performance",
+      "last_tested": "2026-07-23",
+      "learning_progress": null,
+      "previous_confidence": null,
+      "statement": "The visual_mode value 'default' may improves blended reach and retention in the present catalog.",
+      "test": "Hold topic, duration, voice, and visual-motion ratio constant while changing only visual_mode."
     }
   ]
 }
