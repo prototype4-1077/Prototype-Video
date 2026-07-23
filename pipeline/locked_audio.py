@@ -127,7 +127,7 @@ def apply(video: str | Path, build_dir: str | Path) -> dict[str, Any]:
             [
                 "ffmpeg", "-v", "error", "-y", "-i", str(video), "-i", str(locked),
                 "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "copy",
-                "-shortest", "-movflags", "+faststart", str(temporary),
+                "-movflags", "+faststart", str(temporary),
             ],
             capture_output=True,
             text=True,
