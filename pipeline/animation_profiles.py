@@ -217,6 +217,12 @@ def apply_defaults(script: dict, character_profile: str | None = None, strict: b
         "max_still_source_ratio": data["max_still_source_ratio"],
         "minimum_true_motion_ratio": data["minimum_true_motion_ratio"],
     }
+    for _extra in ("animation_medium", "cartoon_only", "continuity_required",
+                   "stock_allowed", "generic_stock_allowed", "motion_graphics_primary_allowed",
+                   "abstract_visual_only_allowed", "generated_temporal_video_required",
+                   "target_still_source_ratio", "stable_character_models_required"):
+        if data.get(_extra) is not None:
+            desired_top[_extra] = data[_extra]
     for key, value in desired_top.items():
         if value is None:
             continue
@@ -378,4 +384,18 @@ def validate(script: dict, character_profile: str | None = None) -> list[str]:
             errors.append(
                 f"scene {index} is human_role={role} but requests the recurring character"
             )
+    if script.get("cartoon_only"):
+        _stock_fields = ("stock_id", "pexels_id", "source_url", "stock_frame_url",
+                         "stock_frame_url_checked", "clip", "clip_fingerprint", "motion_evidence")
+        _gen = bool(script.get("generated_temporal_video_required"))
+        for index, scene in enumerate(script.get("scenes") or []):
+            present = [f for f in _stock_fields if scene.get(f) not in (None, "", [], {})]
+            if present:
+                errors.append(f"scene {index} cartoon_only: forbidden stock fields present: {present}")
+            if _gen and scene.get("motion_kind") != "video":
+                errors.append(f"scene {index} generated_temporal_video_required: motion_kind must be 'video'")
+        _cap = float(script.get("max_still_source_ratio", data["max_still_source_ratio"]))
+        _tgt = script.get("target_still_source_ratio")
+        if _tgt is not None and float(_tgt) > _cap + 1e-9:
+            errors.append("target_still_source_ratio exceeds max_still_source_ratio")
     return errors
