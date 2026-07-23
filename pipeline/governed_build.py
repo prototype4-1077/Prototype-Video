@@ -36,17 +36,58 @@ def _install_storyline_router(governor: PipelineGovernor):
     return governed_runner
 
 
+def _apply_character_voice(script: dict, character_profile: str | None) -> bool:
+    """Pin a canonical character voice before TTS without requiring voice-library access."""
+    if not character_profile:
+        return False
+    bible = profiles.character_bible(character_profile)
+    voice = bible.get("voice") if isinstance(bible, dict) else None
+    if not isinstance(voice, dict):
+        return False
+    voice_id = str(voice.get("voice_id") or "").strip()
+    voice_name = str(voice.get("voice_display_name") or "").strip()
+    if not voice_id:
+        raise ValueError(
+            f"character profile {character_profile!r} has no canonical voice_id; "
+            "refusing voice substitution"
+        )
+    existing_id = str(script.get("elevenlabs_voice_id") or "").strip()
+    if existing_id and existing_id != voice_id:
+        raise ValueError(
+            f"character profile {character_profile!r} requires voice {voice_id}; "
+            f"script requested {existing_id}"
+        )
+    existing_name = str(script.get("elevenlabs_voice_name") or "").strip()
+    if existing_name and voice_name and existing_name.casefold() != voice_name.casefold():
+        raise ValueError(
+            f"character profile {character_profile!r} requires voice name {voice_name!r}; "
+            f"script requested {existing_name!r}"
+        )
+    changed = False
+    if script.get("elevenlabs_voice_id") != voice_id:
+        script["elevenlabs_voice_id"] = voice_id
+        changed = True
+    if voice_name and script.get("elevenlabs_voice_name") != voice_name:
+        script["elevenlabs_voice_name"] = voice_name
+        changed = True
+    return changed
+
+
 def _apply_animation_contract(build_dir: Path) -> dict | None:
-    """Persist a requested animation profile before any production stage runs."""
+    """Persist character and animation contracts before any production stage runs."""
     script_path = build_dir / "script.json"
     if not script_path.exists():
         return None
     try:
         script = json.loads(script_path.read_text(encoding="utf-8"))
-        character_profile = profiles.resolve(script, strict=True)
+        initial_character = profiles.resolve(script, strict=True)
         changed = animation_profiles.apply_defaults(
-            script, character_profile=character_profile, strict=True
+            script, character_profile=initial_character, strict=True
         )
+        # A June-specific animation profile may establish profile: june_oxley.
+        # Resolve again before pinning the canonical voice.
+        character_profile = profiles.resolve(script, strict=True)
+        changed = _apply_character_voice(script, character_profile) or changed
         animation_name = animation_profiles.resolve(script, strict=True)
         if animation_name:
             # The literal author query remains in animation_base_query. The styled
@@ -59,7 +100,7 @@ def _apply_animation_contract(build_dir: Path) -> dict | None:
                     changed = True
         errors = animation_profiles.validate(script, character_profile)
     except (OSError, ValueError, TypeError, json.JSONDecodeError) as exc:
-        raise ValueError(f"animation profile validation failed: {exc}") from exc
+        raise ValueError(f"production profile validation failed: {exc}") from exc
     if errors:
         raise ValueError("animation profile validation failed: " + "; ".join(errors))
     if changed:
@@ -123,7 +164,7 @@ def main(argv: list[str] | None = None) -> int:
     try:
         prepared = _apply_animation_contract(build_dir)
     except ValueError as exc:
-        print(f"ERROR: {exc} | FIX: choose a supported animation_profile and repair its contract", file=sys.stderr)
+        print(f"ERROR: {exc} | FIX: repair the requested character or animation contract", file=sys.stderr)
         return 1
     # Covers direct network work performed inside build.py itself (currently
     # font acquisition). Child stages are bounded independently by the Governor.
@@ -149,6 +190,8 @@ def main(argv: list[str] | None = None) -> int:
         narrative_fidelity=str(Path(__file__).with_name("editorial_memory.json")),
         animation_profile=animation_name,
         animation_quality_tier=(prepared or {}).get("animation_quality_tier"),
+        character_profile=profiles.resolve(prepared or {}),
+        voice_id=(prepared or {}).get("elevenlabs_voice_id"),
     )
     try:
         build.main(str(build_dir))

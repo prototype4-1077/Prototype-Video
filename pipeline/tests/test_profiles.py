@@ -75,12 +75,27 @@ class ProfileTests(unittest.TestCase):
         self.assertNotIn("June Oxley", profiles.query_variants(
             "woman standing in a country church", profiles.JUNE_OXLEY)[0])
 
+    def test_june_hero_style_does_not_force_character_into_object_shots(self):
+        style = profiles.hero_style(profiles.JUNE_OXLEY)
+        self.assertIn("recurring town art direction", style)
+        self.assertNotIn("elderly white rural man", style)
+        self.assertNotIn("June Oxley character", style)
+        self.assertEqual(
+            profiles.hero_prompt("wooden fence flexing in wind", profiles.JUNE_OXLEY),
+            "wooden fence flexing in wind",
+        )
+        self.assertIn(
+            "June Oxley, elderly white rural man",
+            profiles.hero_prompt("man sitting on porch", profiles.JUNE_OXLEY),
+        )
+
     def test_writer_context_preserves_canon(self):
         context = profiles.writer_context(profiles.JUNE_OXLEY)
         self.assertIn("Granpa Spuds Oxley", context)
         self.assertIn("no political identity", context)
         self.assertIn("never silently substitute Liam", context)
         self.assertIn("open question", context)
+        self.assertIn("object, animal, weather", context)
 
 
 if __name__ == "__main__":
