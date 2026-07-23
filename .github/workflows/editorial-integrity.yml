@@ -7,6 +7,7 @@ on:
       - "pipeline/revision_cache.py"
       - "pipeline/selective_revision.py"
       - "pipeline/export_verify.py"
+      - "pipeline/locked_audio.py"
       - "pipeline/tests/test_editorial_revision.py"
       - "pipeline/requirements.txt"
       - ".github/workflows/editorial-*.yml"
@@ -19,6 +20,7 @@ on:
       - "pipeline/revision_cache.py"
       - "pipeline/selective_revision.py"
       - "pipeline/export_verify.py"
+      - "pipeline/locked_audio.py"
       - "pipeline/tests/test_editorial_revision.py"
       - "pipeline/requirements.txt"
       - ".github/workflows/editorial-*.yml"
@@ -53,10 +55,11 @@ jobs:
             pipeline/editorial_cache_build.py \
             pipeline/revision_cache.py \
             pipeline/selective_revision.py \
-            pipeline/export_verify.py
+            pipeline/export_verify.py \
+            pipeline/locked_audio.py
           python3 -m unittest pipeline.tests.test_editorial_revision -v
 
-      - name: Exercise OTIO, cache, selective replacement, and scene detection
+      - name: Exercise OTIO, cache, selective replacement, exact audio, and scene detection
         shell: bash
         run: |
           set -euo pipefail
@@ -89,6 +92,12 @@ jobs:
           ffmpeg -v error -y -i "$build/noaudio.mp4" \
             -f lavfi -i "sine=frequency=220:sample_rate=48000:duration=3" \
             -map 0:v -map 1:a -c:v copy -c:a aac -shortest "$build/final_youtube.mp4"
+          python3 pipeline/locked_audio.py extract "$build/final_youtube.mp4" "$build"
+          original_audio_md5="$(python3 - "$build/locked-audio-manifest.json" <<'PY'
+          import json, sys
+          print(json.load(open(sys.argv[1]))["locked_audio_stream_md5"])
+          PY
+          )"
 
           python3 pipeline/editorial_timeline.py build "$build"
           python3 pipeline/editorial_timeline.py verify "$build"
@@ -106,9 +115,9 @@ jobs:
           }
           JSON
           python3 pipeline/selective_revision.py prepare "$build"
-          test -s "$build/youtube_seg_00.mp4"
+          approved_zero_before="$(sha256sum "$build/youtube_seg_00.mp4" | cut -d' ' -f1)"
+          approved_two_before="$(sha256sum "$build/youtube_seg_02.mp4" | cut -d' ' -f1)"
           test ! -e "$build/youtube_seg_01.mp4"
-          test -s "$build/youtube_seg_02.mp4"
 
           ffmpeg -v error -y -f lavfi \
             -i "smptebars=size=640x360:rate=30:duration=1" \
@@ -121,8 +130,18 @@ jobs:
             "$build/youtube_seg_02.mp4" > "$build/list.txt"
           ffmpeg -v error -y -f concat -safe 0 -i "$build/list.txt" -c copy "$build/noaudio.mp4"
           ffmpeg -v error -y -i "$build/noaudio.mp4" \
-            -f lavfi -i "sine=frequency=220:sample_rate=48000:duration=3" \
+            -f lavfi -i "sine=frequency=880:sample_rate=48000:duration=3" \
             -map 0:v -map 1:a -c:v copy -c:a aac -shortest "$build/final_youtube.mp4"
+          python3 pipeline/locked_audio.py apply "$build/final_youtube.mp4" "$build" \
+            | tee "$build/locked-apply.json"
+          grep -q '"exact_audio_match": true' "$build/locked-apply.json"
+          test "$approved_zero_before" = "$(sha256sum "$build/youtube_seg_00.mp4" | cut -d' ' -f1)"
+          test "$approved_two_before" = "$(sha256sum "$build/youtube_seg_02.mp4" | cut -d' ' -f1)"
+          test "$original_audio_md5" = "$(python3 - "$build/locked-apply.json" <<'PY'
+          import json, sys
+          print(json.load(open(sys.argv[1]))["video_audio_stream_md5"])
+          PY
+          )"
           python3 pipeline/selective_revision.py finalize "$build"
           python3 pipeline/editorial_timeline.py build "$build"
           python3 pipeline/editorial_timeline.py verify "$build"
