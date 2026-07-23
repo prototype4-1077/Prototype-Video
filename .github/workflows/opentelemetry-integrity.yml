@@ -58,7 +58,7 @@ jobs:
       - name: Run tracing invariants
         run: python3 -m unittest pipeline.tests.test_observability -v
 
-      - name: Exercise one-trace multi-process fixture
+      - name: Exercise one-trace scene fixture
         shell: bash
         run: |
           set -euo pipefail
@@ -82,6 +82,9 @@ jobs:
             ]
           }
           JSON
+          cat > /tmp/hero.py <<'PY'
+          print('fixture hero command')
+          PY
           export VIDEO_TRACE_ID=0123456789abcdef0123456789abcdef
           export GOVERNOR_CONSOLE_HEARTBEATS=0
           PYTHONPATH=pipeline python3 - "$build" <<'PY'
@@ -90,8 +93,7 @@ jobs:
           build = sys.argv[1]
           governor = PipelineGovernor(build, heartbeat_seconds=0.1)
           result = governor.run(
-              [sys.executable, '-c', "print('fixture')"],
-              stage_override='hero',
+              [sys.executable, '/tmp/hero.py', build, '0'],
               timeout=10,
           )
           assert result.returncode == 0
@@ -104,6 +106,7 @@ jobs:
           spans = open(sys.argv[2], encoding='utf-8').read()
           assert summary['single_trace'] is True, summary
           assert summary['trace_ids'] == ['0123456789abcdef0123456789abcdef']
+          assert summary['scene_span_count'] == 1, summary
           assert summary['privacy']['prompt_text_recorded'] is False
           assert 'this prompt must be hashed' not in spans
           assert 'video.prompt.sha256' in spans
