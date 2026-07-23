@@ -46,8 +46,12 @@ jobs:
           python-version: "3.11"
 
       - name: Validate narration, ethos, voice, animation, and motion contracts
+        id: package_tests
+        continue-on-error: true
+        shell: bash
         run: |
-          python3 - <<'PY'
+          set -o pipefail
+          python3 - <<'PY' 2>&1 | tee legacy-remake-package-tests.log
           import copy
           import json
           from pathlib import Path
@@ -111,8 +115,6 @@ jobs:
               check(filename, animation == expected['animation'],
                     f"animation {animation!r} != {expected['animation']!r}")
 
-              # Exercise the exact production preflight in memory. This repairs old
-              # expanded animation queries and pins a canonical character voice.
               prepared = copy.deepcopy(script)
               voice_changed = governed_build._apply_character_voice(prepared, character)
               animation_changed = animation_profiles.apply_defaults(
@@ -144,9 +146,6 @@ jobs:
                   check(filename, animation_changed is False,
                         f'ordinary June unexpectedly changed by animation preflight: {animation_changed!r}')
 
-              # Analyze the post-preflight production plan, not the authoring draft.
-              # This specifically guards against town-wide style suffixes turning
-              # every object scene into a recurring-character portrait.
               report = visual_symbols.analyze(copy.deepcopy(prepared), character)
               check(filename, not report['violations'], f"visual violations {report['violations']}")
               check(filename, report['symbol_family_count'] >= 6,
@@ -167,3 +166,18 @@ jobs:
               raise SystemExit(1)
           print('ALL THREE REMAKE PACKAGES PASSED PRODUCTION PREFLIGHT')
           PY
+
+      - name: Upload package test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: legacy-remake-package-tests-${{ github.run_id }}
+          retention-days: 30
+          if-no-files-found: error
+          path: legacy-remake-package-tests.log
+
+      - name: Enforce package test result
+        if: steps.package_tests.outcome != 'success'
+        run: |
+          tail -120 legacy-remake-package-tests.log
+          exit 1
