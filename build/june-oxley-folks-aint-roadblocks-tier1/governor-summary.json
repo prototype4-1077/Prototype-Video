@@ -1,0 +1,54 @@
+{
+  "finished_at": "2026-07-23T14:24:49+00:00",
+  "github_run_id": "30015535867",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "ac79b673fe475420",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "error: visual symbol plan: only <n> symbol families across <n> scenes; use at least <n>; human imagery occupies <n>%; target <= <n>%; pathway repeats for <n> consecutive scenes starting at scene <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=38fd5ff3096e0de4. ERROR: visual symbol plan: only 4 symbol families across 24 scenes; use at least 5; human imagery occupies 100%; target <= 58%; pathway repeats for 16 consecutive scenes starting at scene 2 | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
+  "mode": "recover",
+  "passes": 2,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "ac79b673fe475420",
+      "priority": "high",
+      "reason": "2 occurrence(s): error: visual symbol plan: only <n> symbol families across <n> scenes; use at least <n>; human imagery occupies <n>%; target <= <n>%; pathway repeats for <n> consecutive scenes starting at scene <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "aa98f673422147099ac980338c9b7ce1",
+  "schema_version": 1,
+  "slug": "june-oxley-folks-aint-roadblocks-tier1",
+  "stages": {
+    "build_pass": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.003
+    }
+  },
+  "status": "failed"
+}
