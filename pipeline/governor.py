@@ -1,9 +1,10 @@
 """Public API for the video Pipeline Governor.
 
 Implementation is split into small modules so process supervision, incident
-analysis, and shared policy utilities remain independently testable.
+analysis, shared policy utilities, and observability remain independently
+testable.
 """
-from governor_runtime import PipelineGovernor
+from governor_observed import PipelineGovernor
 from governor_types import (
     MEDIA_SUFFIXES,
     POLICIES,
