@@ -34,6 +34,16 @@ _ALIASES = {
     "regular_june_oxley_animated": JUNE_STANDARD,
 }
 
+_CHARACTER_ROLES = {
+    "narrator", "observer", "chooser", "creator", "explorer", "guardian",
+    "performer", "relationship", "collective", "scale_reference",
+}
+_NON_CHARACTER_ROLES = {"", "none", "no_human", "object", "environment", "unspecified"}
+_CHARACTER_CUES = (
+    "june oxley", "june", "earl", "clyde", "neighbor", "waitress",
+    "man", "woman", "person", "people", "driver", "hand", "hands", "face",
+)
+
 
 def _key(value: Any) -> str:
     return re.sub(r"[^a-z0-9]+", "_", str(value).strip().lower()).strip("_")
@@ -87,6 +97,34 @@ def _append_once(text: str, suffix: str) -> str:
     return f"{base}, {suffix}"
 
 
+def _has_word(text: str, cue: str) -> bool:
+    return bool(re.search(rf"(?<![a-z0-9]){re.escape(cue)}(?![a-z0-9])", text))
+
+
+def _scene_needs_character(scene: dict, required_character: str | None, base_query: str) -> bool:
+    """Return whether the requested shot actually contains the recurring character.
+
+    A June animation profile defines a shared town-wide art direction. It must not
+    inject an elderly man into tractors, fences, squirrels, weather, or other
+    object-led metaphor scenes. Explicit human roles and literal visual cues opt a
+    scene into the locked character suffix.
+    """
+    if not required_character:
+        return False
+    explicit = scene.get("animation_character_required")
+    if isinstance(explicit, bool):
+        return explicit
+    role = _key(scene.get("human_role") or "")
+    if role in _CHARACTER_ROLES:
+        return True
+    if role not in _NON_CHARACTER_ROLES:
+        return True
+    visual = " ".join(str(
+        scene.get("symbol_query") or base_query or scene.get("image_prompt") or ""
+    ).lower().split())
+    return any(_has_word(visual, cue) for cue in _CHARACTER_CUES)
+
+
 def _merge_visual_policy(script: dict, data: dict) -> bool:
     changed = False
     raw = script.get("visual_policy")
@@ -120,6 +158,7 @@ def apply_defaults(script: dict, character_profile: str | None = None, strict: b
         return False
     data = contract(name)
     assert data is not None
+    changed = False
     required_character = data.get("character_profile")
     if required_character:
         existing = character_profile or script.get("profile")
@@ -127,16 +166,18 @@ def apply_defaults(script: dict, character_profile: str | None = None, strict: b
             raise ValueError(
                 f"animation_profile {name!r} requires profile: june_oxley; got {existing!r}"
             )
-        script["profile"] = required_character
+        if script.get("profile") != required_character:
+            script["profile"] = required_character
+            changed = True
     elif character_profile == "june_oxley":
-        # A regular Tier 1 animation may contain June, but the explicit June modes
-        # should be selected when character continuity is intended.
-        script.setdefault("animation_profile_note", (
+        note = (
             "June Oxley detected with regular Tier 1 animation; use a June-specific "
             "animation profile when recurring character continuity is required."
-        ))
+        )
+        if script.get("animation_profile_note") != note:
+            script["animation_profile_note"] = note
+            changed = True
 
-    changed = False
     canonical = name
     desired_top = {
         "animation_profile": canonical,
@@ -159,44 +200,63 @@ def apply_defaults(script: dict, character_profile: str | None = None, strict: b
             changed = True
     changed = _merge_visual_policy(script, data) or changed
 
-    suffix = data["prompt_suffix"]
+    general_suffix = data["prompt_suffix"]
+    character_suffix = data.get("character_prompt_suffix") or ""
     for index, scene in enumerate(script.get("scenes") or []):
+        base_query = (
+            scene.get("animation_base_query") or scene.get("symbol_query")
+            or scene.get("query") or scene.get("image_prompt") or scene.get("text") or ""
+        )
+        character_required = _scene_needs_character(
+            scene, required_character, str(base_query)
+        )
         desired_scene = {
             "animation_profile": canonical,
             "animation_quality_tier": data["quality_tier"],
             "animation_source_preference": data["source_priority"],
             "animation_camera_language": data["camera_language"],
             "animation_design_language": data["design_language"],
-            "animation_character_reference_id": data.get("character_reference_id"),
             "animation_scene_index": index,
+            "animation_character_required": character_required,
         }
         for key, value in desired_scene.items():
-            if value is None:
-                continue
             if scene.get(key) != value:
                 scene[key] = value
                 changed = True
-        # Preserve the human-authored literal query while giving every downstream
-        # generator and stock search a separate styled query.
-        base_query = scene.get("animation_base_query") or scene.get("query") or scene.get("image_prompt") or scene.get("text") or ""
+        reference_id = data.get("character_reference_id") if character_required else None
+        if reference_id:
+            if scene.get("animation_character_reference_id") != reference_id:
+                scene["animation_character_reference_id"] = reference_id
+                changed = True
+        elif "animation_character_reference_id" in scene:
+            scene.pop("animation_character_reference_id", None)
+            changed = True
+
         if scene.get("animation_base_query") != base_query:
             scene["animation_base_query"] = base_query
             changed = True
-        styled = _append_once(base_query, suffix)
+        styled = _append_once(str(base_query), general_suffix)
+        if character_required and character_suffix:
+            styled = _append_once(styled, character_suffix)
         if scene.get("animation_query") != styled:
             scene["animation_query"] = styled
             changed = True
+
         if scene.get("hero") or scene.get("image_prompt"):
-            base_prompt = scene.get("animation_base_prompt") or scene.get("image_prompt") or base_query
+            base_prompt = (
+                scene.get("animation_base_prompt") or scene.get("image_prompt")
+                or base_query
+            )
             if scene.get("animation_base_prompt") != base_prompt:
                 scene["animation_base_prompt"] = base_prompt
                 changed = True
-            styled_prompt = _append_once(base_prompt, suffix)
+            styled_prompt = _append_once(str(base_prompt), general_suffix)
+            if character_required and character_suffix:
+                styled_prompt = _append_once(styled_prompt, character_suffix)
             if scene.get("image_prompt") != styled_prompt:
                 scene["image_prompt"] = styled_prompt
                 changed = True
-        # Animated profiles favor genuine temporal footage. Existing explicit still
-        # and keyframe contracts are respected and counted under the stricter cap.
+
         if not scene.get("motion_kind") and scene.get("query"):
             scene["motion_kind"] = "video"
             scene.setdefault("motion_mode", "stock")
@@ -227,6 +287,7 @@ def writer_context(name: str | None) -> str:
         f"{data['max_still_source_ratio']:.0%}.\n"
         f"- Captions: {data['caption_policy']}.\n"
         "- Use one ruling visual system, one strong symbol per beat, and no cheap template animation.\n"
+        "- Recurring-character anatomy belongs only in scenes that actually show the character.\n"
         f"- Set top-level JSON field exactly to \"animation_profile\": \"{name}\"."
     )
 
@@ -255,4 +316,11 @@ def validate(script: dict, character_profile: str | None = None) -> list[str]:
             errors.append(f"scene {index} missing canonical animation_profile")
         if not scene.get("animation_query"):
             errors.append(f"scene {index} missing animation_query")
+        needs_character = bool(scene.get("animation_character_required"))
+        has_reference = bool(scene.get("animation_character_reference_id"))
+        if needs_character != has_reference and is_june(name):
+            errors.append(
+                f"scene {index} character/reference mismatch: "
+                f"required={needs_character}, reference={has_reference}"
+            )
     return errors
