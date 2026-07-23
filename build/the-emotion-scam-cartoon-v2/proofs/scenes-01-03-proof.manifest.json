@@ -1,0 +1,44 @@
+{
+ "background": "build/the-emotion-scam-cartoon-v2/refs/control-booth.png",
+ "fps": 20,
+ "duration_seconds": 6.0,
+ "camera": {
+  "move": "track_to_door",
+  "depth_parallax": true
+ },
+ "layers": [
+  {
+   "id": "dj_body",
+   "asset": "build/the-emotion-scam-cartoon-v2/cartoon-assets/dj-solid.png",
+   "depth": 4,
+   "motion": "subtle_breath",
+   "x": -40,
+   "y": 150
+  },
+  {
+   "id": "dj_eyes",
+   "asset": "build/the-emotion-scam-cartoon-v2/cartoon-assets/dj-eyes.png",
+   "depth": 6,
+   "motion": "blink_and_glance",
+   "x": -40,
+   "y": -40
+  },
+  {
+   "id": "protagonist",
+   "asset": "build/the-emotion-scam-cartoon-v2/cartoon-assets/prot-solid.png",
+   "depth": 4,
+   "motion": "sway",
+   "x": 150,
+   "y": 170
+  },
+  {
+   "id": "cue_token",
+   "asset": "build/the-emotion-scam-cartoon-v2/cartoon-assets/cue-token.png",
+   "depth": 8,
+   "motion": "slide_in",
+   "x": 120,
+   "y": -60
+  }
+ ],
+ "output": "build/the-emotion-scam-cartoon-v2/proofs/scenes-01-03-proof.mp4"
+}

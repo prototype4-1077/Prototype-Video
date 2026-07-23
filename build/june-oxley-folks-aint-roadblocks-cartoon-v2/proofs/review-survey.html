@@ -1,0 +1,20 @@
+<!doctype html><meta charset=utf-8><title>Folks Ain't Roadblocks — cartoon proof review</title>
+<style>body{font:15px/1.5 system-ui;max-width:680px;margin:2rem auto;padding:0 1rem}
+video{width:100%;border-radius:10px;background:#000}label{display:block;margin:.5rem 0}
+.b{padding:.5rem 1rem;border-radius:8px;border:1px solid #ccc;cursor:pointer;margin-right:.5rem}</style>
+<h1>Folks Ain't Roadblocks — cartoon proof</h1>
+<video controls src="scenes-01-04-proof.mp4"></video>
+<p><b>Narration covered:</b> scenes 1, 2, 3, 4 · <b>render:</b> limited_2_5d (local, $0)</p>
+<p><b>Characters:</b> june-oxley, earl · <b>Locations:</b> diner</p>
+<p><b>Independent motion layers:</b> earl_body (subtle_breath), june_body (sway), earl_eyes (blink_and_glance), june_eyes (blink_and_glance), coffee_steam (steam_rise)</p>
+<p><b>Why chosen:</b> Establish the recurring diner: June + Earl at the same booth, biscuits/steam, June's line, Earl's reaction — one coherent world for narration scenes 1-4.</p>
+<p><b>Stock clips:</b> 0 · <b>Paid API requests:</b> 0</p>
+<h3>Decision</h3>
+<button class=b onclick="d('approve')">Approve</button><button class=b onclick="d('revise')">Revise</button>
+<label>Comments:<br><textarea id=c rows=4 style=width:100%></textarea></label>
+<button class=b onclick="ex()">Export feedback</button>
+<pre id=o></pre>
+<script>let D='';function d(x){D=x;document.getElementById('o').textContent='decision: '+x}
+function ex(){const f={slug:'june-oxley-folks-aint-roadblocks-cartoon-v2',decision:D,comment:document.getElementById('c').value};
+const a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(f,null,1));
+a.download='june-oxley-folks-aint-roadblocks-cartoon-v2-feedback.json';a.click()}</script>

@@ -1,0 +1,20 @@
+<!doctype html><meta charset=utf-8><title>The Emotion Scam — cartoon proof review</title>
+<style>body{font:15px/1.5 system-ui;max-width:680px;margin:2rem auto;padding:0 1rem}
+video{width:100%;border-radius:10px;background:#000}label{display:block;margin:.5rem 0}
+.b{padding:.5rem 1rem;border-radius:8px;border:1px solid #ccc;cursor:pointer;margin-right:.5rem}</style>
+<h1>The Emotion Scam — cartoon proof</h1>
+<video controls src="scenes-01-03-proof.mp4"></video>
+<p><b>Narration covered:</b> scenes 1, 2, 3 · <b>render:</b> limited_2_5d (local, $0)</p>
+<p><b>Characters:</b> protagonist, dj-operator · <b>Locations:</b> control-booth, club-door</p>
+<p><b>Independent motion layers:</b> dj_body (subtle_breath), dj_eyes (blink_and_glance), protagonist (sway), cue_token (slide_in)</p>
+<p><b>Why chosen:</b> Establish the emotion-DJ control booth: protagonist + inner DJ, cue-token entering, tracking to the same door — one coherent world for narration scenes 1-3.</p>
+<p><b>Stock clips:</b> 0 · <b>Paid API requests:</b> 0</p>
+<h3>Decision</h3>
+<button class=b onclick="d('approve')">Approve</button><button class=b onclick="d('revise')">Revise</button>
+<label>Comments:<br><textarea id=c rows=4 style=width:100%></textarea></label>
+<button class=b onclick="ex()">Export feedback</button>
+<pre id=o></pre>
+<script>let D='';function d(x){D=x;document.getElementById('o').textContent='decision: '+x}
+function ex(){const f={slug:'the-emotion-scam-cartoon-v2',decision:D,comment:document.getElementById('c').value};
+const a=document.createElement('a');a.href='data:application/json,'+encodeURIComponent(JSON.stringify(f,null,1));
+a.download='the-emotion-scam-cartoon-v2-feedback.json';a.click()}</script>

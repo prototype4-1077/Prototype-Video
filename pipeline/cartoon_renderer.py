@@ -44,7 +44,12 @@ def moving_layers(manifest):
     return [l for l in manifest.get("layers", []) if (l.get("motion") or "still") != "still"]
 
 
-def validate(manifest, min_layers=3, min_regions=2, static_pan_zoom_allowed=False):
+CHARACTER_MOTIONS = {"subtle_breath","nod_and_turn","blink_and_glance","shoulder_shift",
+                     "arm_gesture","coffee_gesture","sway","rock"}
+OBJECT_MOTIONS = {"loop_upward","steam_rise","light_flicker","passing_shadow","curtain_move",
+                  "slide_in","door_open","object_rotate"}
+
+def validate(manifest, min_layers=3, min_regions=2, static_pan_zoom_allowed=False, scene_kind=None):
     errs = []
     mov = moving_layers(manifest)
     if len(mov) < min_layers:
@@ -60,6 +65,11 @@ def validate(manifest, min_layers=3, min_regions=2, static_pan_zoom_allowed=Fals
     real = [l for l in mov if l.get("motion") not in ("still",)]
     if not real:
         errs.append("no real subject/prop/environment motion present")
+    kinds = {l.get("motion") for l in mov}
+    if scene_kind == "character" and not (kinds & CHARACTER_MOTIONS):
+        errs.append("character scene requires subject motion (face/head/hand/torso)")
+    if scene_kind == "object" and not (kinds & OBJECT_MOTIONS):
+        errs.append("object scene requires object or environmental motion")
     return errs
 
 
