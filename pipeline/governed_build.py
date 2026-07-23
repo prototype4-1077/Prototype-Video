@@ -80,11 +80,14 @@ def _apply_animation_contract(build_dir: Path) -> dict | None:
         return None
     try:
         script = json.loads(script_path.read_text(encoding="utf-8"))
-        character_profile = profiles.resolve(script, strict=True)
-        changed = _apply_character_voice(script, character_profile)
+        initial_character = profiles.resolve(script, strict=True)
         changed = animation_profiles.apply_defaults(
-            script, character_profile=character_profile, strict=True
-        ) or changed
+            script, character_profile=initial_character, strict=True
+        )
+        # A June-specific animation profile may establish profile: june_oxley.
+        # Resolve again before pinning the canonical voice.
+        character_profile = profiles.resolve(script, strict=True)
+        changed = _apply_character_voice(script, character_profile) or changed
         animation_name = animation_profiles.resolve(script, strict=True)
         if animation_name:
             # The literal author query remains in animation_base_query. The styled
