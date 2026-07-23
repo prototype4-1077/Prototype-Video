@@ -30,6 +30,8 @@ jobs:
   verify:
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    env:
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - uses: actions/checkout@v4
 
@@ -75,5 +77,6 @@ jobs:
           forbidden = list(Path('build').glob('*/render.request')) if Path('build').exists() else []
           assert not forbidden, forbidden
           PY
+          find concept -type d -name __pycache__ -prune -exec rm -rf {} +
           changed="$(git status --porcelain | awk '{print $2}' | grep -v '^concept/evolution_state/' || true)"
           test -z "$changed" || { echo "unexpected changed paths:"; echo "$changed"; exit 1; }
