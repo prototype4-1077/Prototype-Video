@@ -131,7 +131,11 @@ def prep(bd):
                 )
     with open(f"{bd}/script.json", "w") as f:
         json.dump(s, f, indent=1, ensure_ascii=False)
+    # Yellow series bug only for genuine series episodes (DMT, June Oxley, Reality Machine...).
+    # Standalone videos show the core title only.
     eyebrow = s.get("title_eyebrow") or s.get("series_label")
+    if (s.get("title_mode") == "standalone") or s.get("series_label") in (None, "", "null"):
+        eyebrow = None
     if portrait_assets:
         title_png(s["title"], f"{bd}/title.png", eyebrow=eyebrow)
     if youtube_assets:

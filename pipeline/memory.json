@@ -2397,7 +2397,7 @@
   "survey(the-room-behind-you) scene 17 revise: Do a Still image that represents what's being said. The still image should have special effects.",
   "survey(the-room-behind-you) scene 18 revise: Do a Still image that represents what's being said. The still image should have special effects.",
   "survey(the-room-behind-you) overall revise: Lets replace the Text Boxes with still images with any special effects.",
-  "STANDING RULE (fallback visuals): when genuine stock footage cannot be found for a scene, the pipeline auto-generates an APPEALING SPECIAL-EFFECTS STILL IMAGE that represents the line (via hero.py effects style) \u2014 never a plain text/label graphic box. Implemented in storyline_footage._render_storyboard.",
+  "STANDING RULE (fallback visuals): when genuine stock footage cannot be found for a scene, the pipeline auto-generates an APPEALING SPECIAL-EFFECTS STILL IMAGE that represents the line (via hero.py effects style) — never a plain text/label graphic box. Implemented in storyline_footage._render_storyboard.",
   "STORYLINE STANDARD (set by the approved 'The Room Behind You'): the viewer must be able to SEE the storyline scene by scene. Every visual literally depicts its spoken line's object/mechanism (game render-distance -> game footage; blind spot -> eye with void pupil; brain faking it -> painted-over wall). Concrete beats use genuine moving stock; abstract beats use effects stills. Keep this bar on every video.",
   "EFFECTS STILLS: James wants generated stills to carry HEAVY, layered special effects (god rays, dense particles, energy trails, mist, bokeh, flares, iridescent glow) - maximally cinematic, never plain. Style lives in storyline_footage.EFFECTS_STILL_STYLE.",
   "ART DIRECTION (per James, after The Voice): effects stills must use a VARIETY of colors, palettes and themes derived from each story and scene - the white/gold mystical look is one option, not the default. Choose palettes that serve the narrative (e.g. deep ocean blues for sleep, glitch violets for memory, warm ambers for nostalgia).",
@@ -5946,6 +5946,12 @@
     "22": 0.00445,
     "23": 0.0
    }
+  }
+ ],
+ "rules": [
+  {
+   "rule": "title_eyebrow",
+   "text": "Yellow series eyebrow at top of title card ONLY for series episodes (DMT, June Oxley, The Reality Machine, or any named series). Standalone videos (title_mode=standalone or series_label null) show only the core title. Enforced in prep.py."
   }
  ]
 }
