@@ -12,7 +12,7 @@ import datetime as dt
 import json
 import os
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 SCHEMA_VERSION = 1
 ROOT = Path(__file__).resolve().parents[1]
@@ -107,14 +107,23 @@ def aggregate_current_reports(root: Path) -> dict[str, Any]:
         if not build.is_dir():
             continue
         quality = load(build / "quality_report.json", {}) or {}
+        if not isinstance(quality, dict):
+            quality = {}
         for item in quality.get("warnings") or []:
-            quality_warning_counts[str(item.get("code") or "unknown")] += 1
+            if isinstance(item, dict):
+                quality_warning_counts[str(item.get("code") or "unknown")] += 1
         for item in quality.get("failures") or []:
-            quality_failure_counts[str(item.get("code") or "unknown")] += 1
+            if isinstance(item, dict):
+                quality_failure_counts[str(item.get("code") or "unknown")] += 1
         telemetry = load(build / "telemetry-summary.json", {}) or {}
+        if not isinstance(telemetry, dict):
+            telemetry = {}
         for item in telemetry.get("recommendations") or []:
-            telemetry_recommendations[str(item.get("category") or "unknown")] += 1
+            if isinstance(item, dict):
+                telemetry_recommendations[str(item.get("category") or "unknown")] += 1
         for stage, metrics in (telemetry.get("stages") or {}).items():
+            if not isinstance(metrics, dict):
+                continue
             try:
                 value = metrics.get("p95_duration_s") or metrics.get("total_duration_s")
                 if value is not None:
@@ -122,10 +131,13 @@ def aggregate_current_reports(root: Path) -> dict[str, Any]:
             except (TypeError, ValueError):
                 pass
         governor = load(build / "governor-review.json", {}) or {}
+        if not isinstance(governor, dict):
+            governor = {}
         for item in governor.get("recommendations") or []:
-            governor_recommendations[str(item.get("category") or "unknown")] += 1
+            if isinstance(item, dict):
+                governor_recommendations[str(item.get("category") or "unknown")] += 1
         summary = load(build / "governor-summary.json", {}) or {}
-        if summary:
+        if isinstance(summary, dict) and summary:
             statuses[str(summary.get("status") or "unknown")] += 1
 
     return {
@@ -147,13 +159,18 @@ def aggregate_current_reports(root: Path) -> dict[str, Any]:
 
 def memory_snapshot(root: Path) -> dict[str, Any]:
     memory = load(root / "pipeline" / "memory.json", {}) or {}
+    if not isinstance(memory, dict):
+        memory = {}
     profile_weights = memory.get("profile_query_weights") or {}
+    if not isinstance(profile_weights, dict):
+        profile_weights = {}
     return {
         "used_ids": len(memory.get("used_ids") or []),
         "banned_ids": len(memory.get("banned_ids") or []),
         "query_weights": len(memory.get("query_weights") or {}),
         "profile_query_weights": {
             profile: len(values or {}) for profile, values in profile_weights.items()
+            if isinstance(values, dict)
         },
         "notes": len(memory.get("notes") or []),
         "scene_feedback": len(memory.get("scene_feedback") or []),
@@ -186,14 +203,33 @@ def publishing_snapshot(root: Path) -> dict[str, Any]:
 
 def evolution_snapshot(root: Path) -> dict[str, Any]:
     state = load(root / "concept" / "evolution_state" / "LATEST.json", {}) or {}
-    queue = state.get("curiosity_queue") or []
-    taxonomy = [item for item in queue if (item.get("why_now") or {}).get("kind") == "taxonomy_gap"]
+    if not isinstance(state, dict):
+        state = {}
+    raw_queue = state.get("curiosity_queue") or []
+    queue = raw_queue if isinstance(raw_queue, list) else []
+    structured = [item for item in queue if isinstance(item, dict)]
+    legacy = [item for item in queue if not isinstance(item, dict)]
+    taxonomy = []
+    for item in structured:
+        why_now = item.get("why_now") or {}
+        if isinstance(why_now, dict) and why_now.get("kind") == "taxonomy_gap":
+            taxonomy.append(item)
     capabilities = state.get("capability_report") or {}
+    if not isinstance(capabilities, dict):
+        capabilities = {}
+    slugs = set()
+    for item in taxonomy:
+        why_now = item.get("why_now") or {}
+        if isinstance(why_now, dict) and why_now.get("slug"):
+            slugs.add(str(why_now["slug"]))
     return {
         "state_exists": bool(state),
         "curiosity_items": len(queue),
+        "structured_curiosity_items": len(structured),
+        "legacy_curiosity_items": len(legacy),
+        "legacy_curiosity_examples": [str(item)[:180] for item in legacy[:20]],
         "taxonomy_gap_items": len(taxonomy),
-        "taxonomy_gap_slugs": sorted({str((item.get("why_now") or {}).get("slug")) for item in taxonomy if (item.get("why_now") or {}).get("slug")})[:100],
+        "taxonomy_gap_slugs": sorted(slugs)[:100],
         "capabilities_demonstrated": capabilities.get("demonstrated"),
         "capabilities_total": capabilities.get("total"),
         "requires_human_selection": state.get("requires_human_selection"),
@@ -208,10 +244,20 @@ def diagnostic(root: Path = ROOT) -> dict[str, Any]:
     publishing = publishing_snapshot(root)
     evolution = evolution_snapshot(root)
     operational = load(root / "pipeline" / "operational_memory" / "index.json", {}) or {}
+    if not isinstance(operational, dict):
+        operational = {}
     operational_actions = load(root / "pipeline" / "operational_memory" / "action_queue.json", {}) or {}
+    if not isinstance(operational_actions, dict):
+        operational_actions = {}
     visual = load(root / "concept" / "visual_memory" / "action_report.json", {}) or {}
+    if not isinstance(visual, dict):
+        visual = {}
     visual_summary = load(root / "concept" / "visual_memory" / "summary.json", {}) or {}
+    if not isinstance(visual_summary, dict):
+        visual_summary = {}
     whisperx = load(root / "pipeline" / "whisperx-benchmark-ledger.json", {}) or {}
+    if not isinstance(whisperx, dict):
+        whisperx = {}
 
     if coverage["build_count"] and coverage["coverage"]["telemetry_summary"] < 0.50:
         finding(
@@ -246,6 +292,8 @@ def diagnostic(root: Path = ROOT) -> dict[str, Any]:
         )
     elif visual:
         for action in visual.get("actions") or []:
+            if not isinstance(action, dict):
+                continue
             finding(
                 findings,
                 code=f"visual:{action.get('category')}:{action.get('key', 'general')}",
@@ -256,6 +304,8 @@ def diagnostic(root: Path = ROOT) -> dict[str, Any]:
                 action=str(action.get("action") or "Review the visual evidence cohort."),
             )
     for action in operational_actions.get("actions") or operational.get("action_queue") or []:
+        if not isinstance(action, dict):
+            continue
         finding(
             findings,
             code=f"operational:{action.get('category')}:{action.get('key')}",
@@ -320,6 +370,16 @@ def diagnostic(root: Path = ROOT) -> dict[str, Any]:
                 action="Persist and commit platform video IDs after every successful upload; refuse duplicates by default.",
                 automatic_patch=True,
             )
+    if evolution["legacy_curiosity_items"]:
+        finding(
+            findings,
+            code="evolution_legacy_queue_entries",
+            priority="medium",
+            area="concept_engine",
+            title="The evolution queue mixes legacy strings with structured records",
+            evidence={"count": evolution["legacy_curiosity_items"], "examples": evolution["legacy_curiosity_examples"][:10]},
+            action="Migrate legacy queue strings into explicit proposal records or archive them; do not count them as structured taxonomy evidence.",
+        )
     if evolution["taxonomy_gap_items"] >= 10:
         finding(
             findings,
@@ -342,7 +402,7 @@ def diagnostic(root: Path = ROOT) -> dict[str, Any]:
         )
     provisional = [
         solution_id for solution_id, proof in (operational.get("solution_evidence") or {}).items()
-        if proof.get("catalog_status") != "verified"
+        if isinstance(proof, dict) and proof.get("catalog_status") != "verified"
     ]
     if provisional:
         finding(
