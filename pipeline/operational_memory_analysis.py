@@ -34,7 +34,11 @@ def multiplicity(row: Mapping[str, Any]) -> int:
         return 1
 
 
-def relation_ids(row: Mapping[str, Any], catalog: Mapping[str, Any]) -> tuple[list[str], list[str]]:
+def relation_ids(
+    row: Mapping[str, Any],
+    catalog: Mapping[str, Any],
+    store: str | os.PathLike[str],
+) -> tuple[list[str], list[str]]:
     status = str(row.get("status") or "")
     verified = list(row.get("verified_solution_ids") or [])
     regressed = list(row.get("regressed_solution_ids") or [])
@@ -47,6 +51,7 @@ def relation_ids(row: Mapping[str, Any], catalog: Mapping[str, Any]) -> tuple[li
             code=str(row.get("code") or "") or None,
             fingerprint=str(row.get("fingerprint") or "") or None,
             message=str(row.get("normalized_error") or row.get("message") or ""),
+            store=store,
         )
     return sorted({item for item in verified if item in catalog}), sorted({item for item in regressed if item in catalog})
 
@@ -85,7 +90,7 @@ def build(store: str | os.PathLike[str] = operational_memory.DEFAULT_STORE) -> d
 
     for row in rows:
         count = multiplicity(row)
-        verified, regressed = relation_ids(row, catalog)
+        verified, regressed = relation_ids(row, catalog, root)
         row["_verified_solution_ids"] = verified
         row["_regressed_solution_ids"] = regressed
         key = incident_key(row)
