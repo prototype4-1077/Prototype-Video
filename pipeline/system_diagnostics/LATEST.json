@@ -4,23 +4,23 @@
     "all_package_file_coverage": {
       "build_count": 82,
       "counts": {
-        "governor_summary": 9,
+        "governor_summary": 10,
         "preflight_report": 3,
-        "quality_report": 8,
+        "quality_report": 9,
         "scene_feedback": 2,
         "scene_feedback_request": 1,
-        "scene_review": 8,
-        "telemetry_summary": 9,
+        "scene_review": 9,
+        "telemetry_summary": 10,
         "youtube_stats": 24
       },
       "coverage": {
-        "governor_summary": 0.1098,
+        "governor_summary": 0.122,
         "preflight_report": 0.0366,
-        "quality_report": 0.0976,
+        "quality_report": 0.1098,
         "scene_feedback": 0.0244,
         "scene_feedback_request": 0.0122,
-        "scene_review": 0.0976,
-        "telemetry_summary": 0.1098,
+        "scene_review": 0.1098,
+        "telemetry_summary": 0.122,
         "youtube_stats": 0.2927
       },
       "human_feedback_count": 2,
@@ -30,44 +30,47 @@
       "belief-is-gravity",
       "the-edge-of-you-is-negotiable"
     ],
-    "governor_summary_count": 9,
+    "governor_summary_count": 10,
     "human_feedback_count": 2,
-    "human_feedback_coverage_of_reviewable": 0.25,
+    "human_feedback_coverage_of_reviewable": 0.2222,
     "inventory_boundary": "package_count includes experiments and abandoned builds; telemetry, feedback, and audience coverage use render-observed, reviewable, or verified-published denominators.",
     "package_count": 82,
-    "quality_report_count": 8,
-    "render_observed_count": 9,
+    "quality_report_count": 9,
+    "render_observed_count": 10,
     "render_observed_slugs": [
       "a-chair-not-a-throne",
       "belief-is-gravity",
       "june-oxley-folks-aint-roadblocks-tier1",
       "june-oxley-left-the-vehicle",
+      "the-adjacent-mind",
       "the-edge-of-you-is-negotiable",
       "the-emotion-scam-tier1",
       "the-infinite-library",
       "the-reality-machine-dmt-v3",
       "who-wrote-the-menu"
     ],
-    "reviewable_count": 8,
+    "reviewable_count": 9,
     "reviewable_slugs": [
       "a-chair-not-a-throne",
       "belief-is-gravity",
       "june-oxley-left-the-vehicle",
+      "the-adjacent-mind",
       "the-edge-of-you-is-negotiable",
       "the-emotion-scam-tier1",
       "the-infinite-library",
       "the-reality-machine-dmt-v3",
       "who-wrote-the-menu"
     ],
-    "telemetry_count": 9,
+    "telemetry_count": 10,
     "telemetry_coverage_of_render_observed": 1.0,
     "youtube_missing_stats_slugs": [
       "a-chair-not-a-throne",
-      "belief-is-gravity"
+      "belief-is-gravity",
+      "the-infinite-library"
     ],
-    "youtube_published_receipt_count": 26,
+    "youtube_published_receipt_count": 27,
     "youtube_stats_count": 24,
-    "youtube_stats_coverage_of_published": 0.9231,
+    "youtube_stats_coverage_of_published": 0.8889,
     "youtube_stats_slugs": [
       "been-here-before",
       "before-your-words",
@@ -108,102 +111,103 @@
   },
   "current_reports": {
     "governor_recommendation_counts": {
-      "recurring_incident": 13,
-      "tail_latency": 9
+      "recurring_incident": 15,
+      "tail_latency": 10
     },
     "quality_failure_counts": {},
     "quality_warning_counts": {
       "low_bitrate": 2
     },
     "render_statuses": {
-      "done": 8,
+      "done": 9,
       "failed": 1
     },
     "stage_signals": {
       "align": {
         "max_s": 1.005,
         "mean_s": 1.002,
-        "samples": 9
+        "samples": 10
       },
       "altsheet": {
         "max_s": 6.051,
-        "mean_s": 3.026,
-        "samples": 5
+        "mean_s": 2.689,
+        "samples": 6
       },
       "assemble": {
         "max_s": 94.471,
-        "mean_s": 73.503,
-        "samples": 8
+        "mean_s": 71.074,
+        "samples": 9
       },
       "build_pass": {
         "max_s": 1249.102,
-        "mean_s": 921.659,
-        "samples": 9
+        "mean_s": 908.705,
+        "samples": 10
       },
       "credits": {
         "max_s": 1.016,
-        "mean_s": 1.011,
-        "samples": 8
+        "mean_s": 1.01,
+        "samples": 9
       },
       "ffmpeg": {
         "max_s": 29.201,
-        "mean_s": 24.688,
-        "samples": 8
+        "mean_s": 24.114,
+        "samples": 9
       },
       "footage": {
         "max_s": 235.325,
-        "mean_s": 154.204,
-        "samples": 7
+        "mean_s": 138.182,
+        "samples": 8
       },
       "hero": {
         "max_s": 49.497,
-        "mean_s": 34.956,
-        "samples": 4
+        "mean_s": 30.748,
+        "samples": 5
       },
       "prep": {
         "max_s": 19.065,
-        "mean_s": 13.914,
-        "samples": 8
+        "mean_s": 13.481,
+        "samples": 9
       },
       "probe": {
-        "max_s": 1.021,
-        "mean_s": 1.012,
-        "samples": 8
+        "max_s": 1.037,
+        "mean_s": 1.015,
+        "samples": 9
       },
       "quality": {
         "max_s": 36.243,
-        "mean_s": 31.188,
-        "samples": 8
+        "mean_s": 30.289,
+        "samples": 9
       },
       "transcribe": {
         "max_s": 24.016,
-        "mean_s": 20.016,
-        "samples": 9
+        "mean_s": 19.316,
+        "samples": 10
       },
       "tts": {
         "max_s": 71.055,
-        "mean_s": 58.921,
-        "samples": 9
+        "mean_s": 57.531,
+        "samples": 10
       }
     },
     "telemetry_recommendation_counts": {
       "latency": 2,
-      "recurring_incident": 9,
-      "tail_latency": 7
+      "recurring_incident": 11,
+      "tail_latency": 8
     }
   },
   "denominator_policy": "package_count includes experiments and abandoned builds; telemetry, feedback, and audience coverage use render-observed, reviewable, or verified-published denominators.",
   "evolution": {
     "capabilities_demonstrated": 9,
     "capabilities_total": 9,
-    "curiosity_items": 94,
+    "curiosity_items": 105,
     "legacy_curiosity_examples": [],
     "legacy_curiosity_items": 0,
     "requires_human_selection": true,
     "state_exists": true,
-    "structured_curiosity_items": 94,
-    "taxonomy_gap_items": 55,
+    "structured_curiosity_items": 105,
+    "taxonomy_gap_items": 59,
     "taxonomy_gap_slugs": [
+      "a-chair-not-a-throne",
       "awake-inside-the-dream",
       "belief-is-gravity",
       "can-you-fly",
@@ -237,11 +241,13 @@
       "social-weather-voice-memo-guy-motion",
       "social-weather-voice-memo-guy-stock-slides",
       "test-sync",
+      "the-adjacent-mind",
       "the-belief-filter",
       "the-crossword",
       "the-editor",
       "the-egos-halo",
       "the-emotion-scam-tier1",
+      "the-infinite-library",
       "the-last-unobserved-room",
       "the-night-crew",
       "the-other-versions-of-you",
@@ -256,6 +262,7 @@
       "trained-not-to-look",
       "wall-of-doors",
       "where-you-end",
+      "who-wrote-the-menu",
       "you-were-always-source",
       "you-were-always-source-final",
       "you-were-always-source-new-voice"
@@ -271,7 +278,7 @@
       "area": "visual_memory",
       "automatic_patch": false,
       "code": "visual:evidence_coverage:general",
-      "evidence": "Only 43 of 2290 scene records have a human decision (1.9%).",
+      "evidence": "Only 43 of 2314 scene records have a human decision (1.9%).",
       "priority": "high",
       "status": "open",
       "title": "Evidence Coverage"
@@ -286,11 +293,11 @@
           "banned_ids": 102,
           "used_ids": 1021
         },
-        "fallback_rate": 0.15,
-        "low_supply_rate": 0.15,
+        "fallback_rate": 0.0732,
+        "low_supply_rate": 0.0732,
         "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.",
-        "reports_analyzed": 1,
-        "scenes_analyzed": 20,
+        "reports_analyzed": 2,
+        "scenes_analyzed": 41,
         "state": "insufficient_evidence"
       },
       "priority": "medium",
@@ -303,8 +310,9 @@
       "automatic_patch": false,
       "code": "evolution_taxonomy_gap_flood",
       "evidence": {
-        "count": 55,
+        "count": 59,
         "examples": [
+          "a-chair-not-a-throne",
           "awake-inside-the-dream",
           "belief-is-gravity",
           "can-you-fly",
@@ -318,8 +326,7 @@
           "how-you-doing",
           "inner-search",
           "june-oxley-folks-aint-roadblocks-tier1",
-          "june-oxley-left-the-vehicle",
-          "message-from-your-future-20260716"
+          "june-oxley-left-the-vehicle"
         ]
       },
       "priority": "medium",
@@ -397,17 +404,18 @@
       "automatic_patch": false,
       "code": "human_feedback_coverage_low",
       "evidence": {
-        "coverage": 0.25,
+        "coverage": 0.2222,
         "feedback_count": 2,
         "feedback_slugs": [
           "belief-is-gravity",
           "the-edge-of-you-is-negotiable"
         ],
-        "reviewable_count": 8,
+        "reviewable_count": 9,
         "reviewable_slugs": [
           "a-chair-not-a-throne",
           "belief-is-gravity",
           "june-oxley-left-the-vehicle",
+          "the-adjacent-mind",
           "the-edge-of-you-is-negotiable",
           "the-emotion-scam-tier1",
           "the-infinite-library",
@@ -441,6 +449,7 @@
         "a-chair-not-a-throne",
         "the-edge-of-you-is-negotiable",
         "the-forecast-in-your-chest",
+        "the-infinite-library",
         "the-museum-that-repaints-itself",
         "the-person-you-replaced",
         "the-press-secretary-in-your-skull",
@@ -469,7 +478,7 @@
       "area": "visual_memory",
       "automatic_patch": false,
       "code": "visual:asset_coverage:general",
-      "evidence": "Only 127 of 2290 records retain a reviewable asset (5.5%).",
+      "evidence": "Only 127 of 2314 records retain a reviewable asset (5.5%).",
       "priority": "medium",
       "status": "open",
       "title": "Asset Coverage"
@@ -495,7 +504,7 @@
       "title": "The WhisperX challenger has no materialized benchmark ledger"
     }
   ],
-  "generated_at": "2026-07-24T16:47:43+00:00",
+  "generated_at": "2026-07-24T20:39:16+00:00",
   "operational_memory": {
     "advisory_counts": {},
     "occurrence_count": 10,
@@ -513,11 +522,12 @@
       "receipt_file_exists": true
     },
     "youtube": {
-      "published_receipts": 26,
+      "published_receipts": 27,
       "published_still_in_queue": [
         "a-chair-not-a-throne",
         "the-edge-of-you-is-negotiable",
         "the-forecast-in-your-chest",
+        "the-infinite-library",
         "the-museum-that-repaints-itself",
         "the-person-you-replaced",
         "the-press-secretary-in-your-skull",
@@ -525,9 +535,9 @@
         "who-wrote-the-menu",
         "you-are-a-flame-wearing-a-name-tag"
       ],
-      "queued": 10,
+      "queued": 11,
       "queued_without_receipt": [
-        "the-infinite-library"
+        "the-adjacent-mind"
       ],
       "receipt_file_exists": true
     }
@@ -535,34 +545,34 @@
   "schema_version": 1,
   "stock_supply": {
     "anchor_coverage_buckets": {
-      "high": 1,
-      "low": 465,
-      "medium": 9
+      "high": 4,
+      "low": 1028,
+      "medium": 32
     },
-    "candidate_count_samples": 17,
+    "candidate_count_samples": 38,
     "evidence_strength": "developing",
     "fallback_count": 3,
-    "fallback_rate": 0.15,
-    "generated_at": "2026-07-24T16:47:43+00:00",
+    "fallback_rate": 0.0732,
+    "generated_at": "2026-07-24T20:39:16+00:00",
     "low_candidate_scenes": 0,
-    "low_supply_rate": 0.15,
-    "mean_candidate_count_when_recorded": 27.941,
+    "low_supply_rate": 0.0732,
+    "mean_candidate_count_when_recorded": 28.0,
     "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.",
     "permanent_exclusion_counts": {
       "banned_ids": 102,
       "used_ids": 1021
     },
     "recommended_action": "Persist candidate-decision reports for more completed renders before evaluating a cooldown. The exclusion-set size alone is not evidence of starvation.",
-    "reports_analyzed": 1,
+    "reports_analyzed": 2,
     "result_counts": {
       "literal_storyboard": 3,
-      "stock": 17
+      "stock": 38
     },
-    "scenes_analyzed": 20,
+    "scenes_analyzed": 41,
     "schema_version": 1,
     "state": "insufficient_evidence",
     "top_rejection_reasons": {
-      "advisory": 475
+      "advisory": 1064
     },
     "zero_candidate_fallbacks": 3
   },
@@ -577,10 +587,10 @@
     }
   },
   "visual_memory": {
-    "asset_coverage": 0.0555,
-    "records": 2290,
+    "asset_coverage": 0.0549,
+    "records": 2314,
     "reviewed": 43,
-    "reviewed_coverage": 0.0188
+    "reviewed_coverage": 0.0186
   },
   "whisperx": null
 }

@@ -1,6 +1,6 @@
 # System Diagnostic
 
-Generated: 2026-07-24T16:47:43+00:00
+Generated: 2026-07-24T20:39:16+00:00
 
 Findings: 11 — priorities {"high": 1, "low": 1, "medium": 9}
 
@@ -9,19 +9,19 @@ Findings: 11 — priorities {"high": 1, "low": 1, "medium": 9}
 ### [HIGH] Evidence Coverage
 - Area: `visual_memory`
 - Code: `visual:evidence_coverage:general`
-- Evidence: "Only 43 of 2290 scene records have a human decision (1.9%)."
+- Evidence: "Only 43 of 2314 scene records have a human decision (1.9%)."
 - Action: Do not convert automated risk frequency into house rules. Review the highest-risk asset-backed queue first.
 
 ### [MEDIUM] Permanent stock exclusion now has a measured supply signal
 - Area: `asset_selection`
 - Code: `stock_supply:insufficient_evidence`
-- Evidence: {"exclusions": {"banned_ids": 102, "used_ids": 1021}, "fallback_rate": 0.15, "low_supply_rate": 0.15, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 1, "scenes_analyzed": 20, "state": "insufficient_evidence"}
+- Evidence: {"exclusions": {"banned_ids": 102, "used_ids": 1021}, "fallback_rate": 0.0732, "low_supply_rate": 0.0732, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 2, "scenes_analyzed": 41, "state": "insufficient_evidence"}
 - Action: Persist candidate-decision reports for more completed renders before evaluating a cooldown. The exclusion-set size alone is not evidence of starvation.
 
 ### [MEDIUM] The evolution queue is flooded with taxonomy gaps
 - Area: `concept_engine`
 - Code: `evolution_taxonomy_gap_flood`
-- Evidence: {"count": 55, "examples": ["awake-inside-the-dream", "belief-is-gravity", "can-you-fly", "can-you-fly-v3", "deepest-sleep", "dmt-customs", "dmt-loading-screen", "dmt-other-side-of-the-door", "dmt-the-understudy", "futures-fingerprints", "how-you-doing", "inner-search", "june-oxley-folks-aint-roadblocks-tier1", "june-oxley-left-the-vehicle", "message-from-your-future-20260716"]}
+- Evidence: {"count": 59, "examples": ["a-chair-not-a-throne", "awake-inside-the-dream", "belief-is-gravity", "can-you-fly", "can-you-fly-v3", "deepest-sleep", "dmt-customs", "dmt-loading-screen", "dmt-other-side-of-the-door", "dmt-the-understudy", "futures-fingerprints", "how-you-doing", "inner-search", "june-oxley-folks-aint-roadblocks-tier1", "june-oxley-left-the-vehicle"]}
 - Action: Separate legacy packages missing metadata from genuinely novel concepts before treating every uncataloged slug as a map failure.
 
 ### [MEDIUM] Stored feedback has been organized into provisional rule candidates
@@ -33,7 +33,7 @@ Findings: 11 — priorities {"high": 1, "low": 1, "medium": 9}
 ### [MEDIUM] Too few reviewable videos have exported human feedback
 - Area: `learning`
 - Code: `human_feedback_coverage_low`
-- Evidence: {"coverage": 0.25, "feedback_count": 2, "feedback_slugs": ["belief-is-gravity", "the-edge-of-you-is-negotiable"], "reviewable_count": 8, "reviewable_slugs": ["a-chair-not-a-throne", "belief-is-gravity", "june-oxley-left-the-vehicle", "the-edge-of-you-is-negotiable", "the-emotion-scam-tier1", "the-infinite-library", "the-reality-machine-dmt-v3", "who-wrote-the-menu"]}
+- Evidence: {"coverage": 0.2222, "feedback_count": 2, "feedback_slugs": ["belief-is-gravity", "the-edge-of-you-is-negotiable"], "reviewable_count": 9, "reviewable_slugs": ["a-chair-not-a-throne", "belief-is-gravity", "june-oxley-left-the-vehicle", "the-adjacent-mind", "the-edge-of-you-is-negotiable", "the-emotion-scam-tier1", "the-infinite-library", "the-reality-machine-dmt-v3", "who-wrote-the-menu"]}
 - Action: Review the highest-value completed videos first. Keep automated risk tags as screening evidence until James supplies a decision.
 
 ### [MEDIUM] Some operational solutions still need verification
@@ -45,7 +45,7 @@ Findings: 11 — priorities {"high": 1, "low": 1, "medium": 9}
 ### [MEDIUM] Youtube queue contains already-published videos
 - Area: `publishing`
 - Code: `youtube_published_still_queued`
-- Evidence: ["a-chair-not-a-throne", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "who-wrote-the-menu", "you-are-a-flame-wearing-a-name-tag"]
+- Evidence: ["a-chair-not-a-throne", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-infinite-library", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "who-wrote-the-menu", "you-are-a-flame-wearing-a-name-tag"]
 - Action: Keep the metadata queue if useful, but rely on durable receipt checks and make duplicate posting require an explicit force flag.
 
 ### [MEDIUM] Quality warning repeats: low_bitrate
@@ -57,7 +57,7 @@ Findings: 11 — priorities {"high": 1, "low": 1, "medium": 9}
 ### [MEDIUM] Asset Coverage
 - Area: `visual_memory`
 - Code: `visual:asset_coverage:general`
-- Evidence: "Only 127 of 2290 records retain a reviewable asset (5.5%)."
+- Evidence: "Only 127 of 2314 records retain a reviewable asset (5.5%)."
 - Action: Persist representative frames or durable release references for completed scenes so historical feedback remains inspectable.
 
 ### [MEDIUM] Low Approval Cohort
