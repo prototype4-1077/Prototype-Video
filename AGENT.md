@@ -1,18 +1,18 @@
 # AGENT.md — Instructions for any AI operating this repo
 
-> CANONICAL REPO: This project lives at 1974jwatson/TikTok-Video-Pipeline. James makes ALL videos here. Do every video request in this repo; never use jameswatson1077/tiktok-videos.
+> CANONICAL REPO: This project lives at prototype-video/Prototype-Video. James makes ALL videos here. Do every video request in this repo; never use jameswatson1077/tiktok-videos or 1974jwatson/TikTok-Video-Pipeline (both are retired earlier homes of this pipeline).
 
 
 You are making a mystical-philosophical TikTok video for James using this repo's
 cloud render farm. You need NO video tools — GitHub Actions renders everything.
 You only need: (1) the connected GitHub app, (2) this file.
 
-REPO: 1974jwatson/TikTok-Video-Pipeline (private)
+REPO: prototype-video/Prototype-Video (private)
 ACCESS: Use the workspace's connected GitHub app. This connection is persistent across
 ChatGPT/Codex instances. Never ask James to paste a personal access token and never put a
 credential in a file, command, commit, or response. If the GitHub app is unavailable, report
 that connection as the blocker instead of requesting a secret.
-API BASE: https://api.github.com/repos/1974jwatson/TikTok-Video-Pipeline
+API BASE: https://api.github.com/repos/prototype-video/Prototype-Video
 MEDIA POLICY: never commit video/audio/base64 media except the documented
 build/<slug>/vo.mp3 connector path; finished media belongs in Releases/artifacts.
 
