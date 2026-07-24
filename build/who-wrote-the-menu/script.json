@@ -1,366 +1,535 @@
 {
-  "title": "Who Wrote the Menu?",
-  "slug": "who-wrote-the-menu",
-  "series_label": null,
-  "title_mode": "standalone",
-  "genre": "concept",
-  "science_fidelity": "metaphor",
-  "evidence_boundary": "The restaurant, casino, and streaming-service comparisons are metaphors for constrained political choice and institutional power. The script does not claim that voting is meaningless, elections are predetermined, or every political system operates identically.",
-  "desired_movement": "From equating ballot choice with complete control to examining who defines the available options, while preserving the value of voting and other forms of participation.",
-  "grounding": "The ordinary menu, table, meal, kitchen, and shrinking portion keep the analysis anchored in familiar daily life.",
-  "invitation": "When a political menu is handed to you, what would you ask about the kitchen?",
-  "end_card_question": "When they hand you the menu, what would you ask about the kitchen?",
-  "optimization_target": "belief_analysis",
-  "target_duration_seconds": 198,
-  "estimated_words_per_second": 2.1,
-  "render_outputs": [
-    "youtube"
-  ],
-  "supplied_script": true,
-  "source_script_verbatim": true,
-  "political_visual_boundary": "No real candidate likenesses, party logos, campaign slogans, flags used as partisan identifiers, or claims about a specific election. Red and blue are used only as abstract plate colors from the supplied metaphor.",
-  "elevenlabs_model": "eleven_v3",
-  "elevenlabs_voice_id": "TX3LPaxmHKxFdv7VOQHJ",
-  "elevenlabs_voice_name": "Liam - Energetic, Social Media Creator",
-  "elevenlabs_stability_mode": "creative",
-  "auto_audio_tags": false,
-  "voice_settings": {
-    "similarity_boost": 0.75,
-    "speed": 0.94
+ "title": "Who Wrote the Menu?",
+ "slug": "who-wrote-the-menu",
+ "series_label": null,
+ "title_mode": "standalone",
+ "genre": "concept",
+ "science_fidelity": "metaphor",
+ "evidence_boundary": "The restaurant, casino, and streaming-service comparisons are metaphors for constrained political choice and institutional power. The script does not claim that voting is meaningless, elections are predetermined, or every political system operates identically.",
+ "desired_movement": "From equating ballot choice with complete control to examining who defines the available options, while preserving the value of voting and other forms of participation.",
+ "grounding": "The ordinary menu, table, meal, kitchen, and shrinking portion keep the analysis anchored in familiar daily life.",
+ "invitation": "When a political menu is handed to you, what would you ask about the kitchen?",
+ "end_card_question": "When they hand you the menu, what would you ask about the kitchen?",
+ "optimization_target": "belief_analysis",
+ "target_duration_seconds": 198,
+ "estimated_words_per_second": 2.1,
+ "render_outputs": [
+  "youtube"
+ ],
+ "supplied_script": true,
+ "source_script_verbatim": true,
+ "political_visual_boundary": "No real candidate likenesses, party logos, campaign slogans, flags used as partisan identifiers, or claims about a specific election. Red and blue are used only as abstract plate colors from the supplied metaphor.",
+ "elevenlabs_model": "eleven_v3",
+ "elevenlabs_voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+ "elevenlabs_voice_name": "Liam - Energetic, Social Media Creator",
+ "elevenlabs_stability_mode": "creative",
+ "auto_audio_tags": false,
+ "voice_settings": {
+  "similarity_boost": 0.75,
+  "speed": 0.94
+ },
+ "voice_standard": "Liam — warm, sly, lucid, and slightly incredulous; dry humor around the dinner argument, lower and more intimate on the structural questions, nearly a whisper on the final reveal.",
+ "visual_policy": "diverse_symbols",
+ "max_still_source_ratio": 0.35,
+ "still_image_policy": "closest_stock_frame_full_enhancement",
+ "music_choice": 3,
+ "music_variant_count": 1,
+ "caption_policy": "minimal_keywords_only",
+ "hero_art_policy": "committed_before_render",
+ "hero_art_status": "missing_due_to_image_generation_failure",
+ "scenes": [
+  {
+   "text": "They hand you a menu every few years and call it power. Two entrees. Red plate. Blue plate. Pick one.",
+   "epistemic_role": "metaphor",
+   "audio_tags": [
+    "dry",
+    "measured"
+   ],
+   "keywords": [
+    "menu",
+    "power",
+    "red plate",
+    "blue plate"
+   ],
+   "semantic_anchor": "two-option menu presented as power",
+   "visual_function": "hook",
+   "symbol_family": "restaurant",
+   "primary_symbol": "red and blue plates",
+   "narrative_mode": "hero",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "cinematic photoreal restaurant at night, a formal waiter places one red plate and one blue plate beside a closed menu in front of a diner, locked kitchen doors visible far behind, deep three-plane composition, dramatic warm practical light, subtle red and blue accents, no party logos, no politicians, no readable text",
+   "human_role": "customer"
   },
-  "voice_standard": "Liam — warm, sly, lucid, and slightly incredulous; dry humor around the dinner argument, lower and more intimate on the structural questions, nearly a whisper on the final reveal.",
-  "visual_policy": "diverse_symbols",
-  "max_still_source_ratio": 0.35,
-  "still_image_policy": "closest_stock_frame_full_enhancement",
-  "music_choice": 3,
-  "music_variant_count": 1,
-  "caption_policy": "minimal_keywords_only",
-  "hero_art_policy": "committed_before_render",
-  "hero_art_status": "missing_due_to_image_generation_failure",
-  "scenes": [
-    {
-      "text": "They hand you a menu every few years and call it power. Two entrees. Red plate. Blue plate. Pick one.",
-      "epistemic_role": "metaphor",
-      "audio_tags": ["dry", "measured"],
-      "keywords": ["menu", "power", "red plate", "blue plate"],
-      "semantic_anchor": "two-option menu presented as power",
-      "visual_function": "hook",
-      "symbol_family": "restaurant",
-      "primary_symbol": "red and blue plates",
-      "narrative_mode": "hero",
-      "hero": true,
-      "hero_style": "effects",
-      "image_prompt": "cinematic photoreal restaurant at night, a formal waiter places one red plate and one blue plate beside a closed menu in front of a diner, locked kitchen doors visible far behind, deep three-plane composition, dramatic warm practical light, subtle red and blue accents, no party logos, no politicians, no readable text",
-      "human_role": "customer"
-    },
-    {
-      "text": "Then everybody starts arguing across the table like the fate of civilization depends on whether the chicken came with mashed potatoes or rice.",
-      "epistemic_role": "metaphor",
-      "audio_tags": ["wry", "building"],
-      "keywords": ["arguing", "chicken", "potatoes", "rice"],
-      "semantic_anchor": "diners arguing over nearly identical meals",
-      "visual_function": "humor",
-      "symbol_family": "human",
-      "primary_symbol": "split dinner table",
-      "narrative_mode": "stock_ok",
-      "query": "diverse adults arguing across a restaurant table over two similar chicken dinners, one with mashed potatoes and one with rice, animated gestures and napkins, no party logos, no politicians, genuine motion",
-      "human_role": "diners"
-    },
-    {
-      "text": "Meanwhile, nobody is allowed in the kitchen. You did not choose the ingredients. You did not hire the cooks.",
-      "epistemic_role": "metaphor",
-      "audio_tags": ["lower", "direct"],
-      "keywords": ["kitchen", "ingredients", "cooks"],
-      "semantic_anchor": "customers excluded from the kitchen",
-      "visual_function": "mechanism",
-      "symbol_family": "architecture",
-      "primary_symbol": "locked kitchen door",
-      "narrative_mode": "stock_ok",
-      "query": "restaurant customers stopped outside a closed kitchen door while ingredients and cooks move behind frosted glass, visible separation between dining room and kitchen, no logos, real motion",
-      "human_role": "customers"
-    },
-    {
-      "text": "You did not select the suppliers. You did not set the prices. You did not decide who owns the building.",
-      "epistemic_role": "metaphor",
-      "audio_tags": ["measured"],
-      "keywords": ["suppliers", "prices", "owns"],
-      "semantic_anchor": "supply trucks, price board, and ownership keys controlled elsewhere",
-      "visual_function": "structure",
-      "symbol_family": "commerce",
-      "primary_symbol": "keys and invoices",
-      "narrative_mode": "stock_ok",
-      "query": "restaurant delivery crates arrive at a back entrance, a manager changes prices, and building keys pass between owners, customers remain separated, no readable brand names, real motion",
-      "human_role": "staff"
-    },
-    {
-      "text": "But because someone placed a menu in your hand, you are told the restaurant belongs to you. That is the illusion.",
-      "epistemic_role": "interpretation",
-      "audio_tags": ["slow", "revealing"],
-      "keywords": ["menu", "belongs", "illusion"],
-      "semantic_anchor": "menu mistaken for ownership",
-      "visual_function": "turn",
-      "symbol_family": "objects",
-      "primary_symbol": "menu and deed",
-      "narrative_mode": "hero",
-      "hero": true,
-      "hero_style": "effects",
-      "image_prompt": "cinematic photoreal close-up of a diner holding an elegant menu while a restaurant deed, master keys, and ownership ledger remain locked behind glass in the manager office, visual contrast between participation and ownership, deep perspective, warm moody light, no readable text, no logos",
-      "human_role": "customer"
-    },
-    {
-      "text": "Political choice is often presented as control, when sometimes it is only participation inside boundaries you never agreed to.",
-      "epistemic_role": "interpretation",
-      "audio_tags": ["thoughtful"],
-      "keywords": ["choice", "control", "boundaries"],
-      "semantic_anchor": "choice inside a prebuilt dining boundary",
-      "visual_function": "mechanism",
-      "symbol_family": "architecture",
-      "primary_symbol": "velvet rope",
-      "narrative_mode": "stock_ok",
-      "query": "restaurant guest choosing between two marked tables inside a dining room enclosed by velvet ropes and fixed walls, staff controls all other doors, no political logos, real motion",
-      "human_role": "customer"
-    },
-    {
-      "text": "You are free to choose. As long as you choose from what has already been chosen for you.",
-      "epistemic_role": "interpretation",
-      "audio_tags": ["low", "knife line"],
-      "keywords": ["free", "choose", "chosen"],
-      "semantic_anchor": "two visible options and many hidden ones",
-      "visual_function": "contrast",
-      "symbol_family": "menu",
-      "primary_symbol": "narrow menu",
-      "narrative_mode": "hero",
-      "hero": true,
-      "hero_style": "effects",
-      "image_prompt": "photoreal restaurant menu open to only two illuminated dishes while many other covered dishes sit behind a locked kitchen pass, elegant cinematic light, strong depth, visual clarity, no readable text, no party symbols, no people required"
-    },
-    {
-      "text": "And the menu is designed carefully. Not just to feed you. To divide the table.",
-      "epistemic_role": "metaphor",
-      "audio_tags": ["building"],
-      "keywords": ["menu", "divide", "table"],
-      "semantic_anchor": "menu physically dividing one table",
-      "visual_function": "mechanism",
-      "symbol_family": "objects",
-      "primary_symbol": "menu divider",
-      "narrative_mode": "stock_ok",
-      "query": "a long restaurant menu unfolds into a divider splitting one shared dining table into red-lit and blue-lit halves, diners separated while food remains similar, no logos, genuine motion",
-      "human_role": "diners"
-    },
-    {
-      "text": "One side is told the other side wants to poison the meal. The other side is told your side is trying to shut down the restaurant.",
-      "epistemic_role": "metaphor",
-      "audio_tags": ["tense", "controlled"],
-      "keywords": ["poison", "shut down", "restaurant"],
-      "semantic_anchor": "two sides receiving conflicting warnings",
-      "visual_function": "conflict",
-      "symbol_family": "language",
-      "primary_symbol": "warning cards",
-      "narrative_mode": "stock_ok",
-      "query": "two groups at opposite restaurant tables receive different sealed warning cards and react suspiciously toward each other, covered dishes between them, no readable slogans, no logos, no politicians, real motion",
-      "human_role": "diners"
-    },
-    {
-      "text": "Now everybody is yelling, throwing napkins, and accusing strangers of destroying dinner while the owner quietly raises the prices.",
-      "epistemic_role": "metaphor",
-      "audio_tags": ["faster", "wry"],
-      "keywords": ["yelling", "napkins", "owner", "prices"],
-      "semantic_anchor": "chaotic dining room while owner raises prices",
-      "visual_function": "humor",
-      "symbol_family": "human",
-      "primary_symbol": "price board",
-      "narrative_mode": "stock_ok",
-      "query": "chaotic restaurant argument with napkins flying while a calm owner in the background quietly changes a price board upward, no readable numbers needed, no political logos, real motion",
-      "human_role": "diners and owner"
-    },
-    {
-      "text": "And somehow, after every election, the kitchen gets bigger, the dining room gets louder, and the people eating are still asking why the portions keep shrinking.",
-      "epistemic_role": "metaphor",
-      "audio_tags": ["measured", "weighty"],
-      "keywords": ["election", "kitchen", "louder", "portions"],
-      "semantic_anchor": "expanding kitchen and shrinking meals",
-      "visual_function": "turn",
-      "symbol_family": "scale",
-      "primary_symbol": "shrinking plate",
-      "narrative_mode": "hero",
-      "hero": true,
-      "hero_style": "effects",
-      "image_prompt": "cinematic photoreal restaurant cross-section, industrial kitchen expanding into a huge complex behind glass while the dining room grows crowded and noisy and tiny portions sit on large plates, dramatic scale contrast, deep perspective, no logos, no politicians, no readable text",
-      "human_role": "diners"
-    },
-    {
-      "text": "That does not mean your vote has no value. It means a vote is not the entire structure.",
-      "epistemic_role": "boundary",
-      "audio_tags": ["calm", "clear"],
-      "keywords": ["vote", "value", "structure"],
-      "semantic_anchor": "ballot token beside full restaurant blueprint",
-      "visual_function": "fidelity",
-      "symbol_family": "civic",
-      "primary_symbol": "ballot and floor plan",
-      "narrative_mode": "stock_ok",
-      "query": "a single ballot-like choice card placed meaningfully on a restaurant table beside a large architectural floor plan and operating manual, visual contrast between one choice and full structure, no party logos, no candidate names, real motion"
-    },
-    {
-      "text": "Choosing the meal is not the same as deciding how the restaurant operates. Real power asks deeper questions.",
-      "epistemic_role": "interpretation",
-      "audio_tags": ["thoughtful", "building"],
-      "keywords": ["meal", "operates", "power", "questions"],
-      "semantic_anchor": "customer chooses meal while management controls operations",
-      "visual_function": "mechanism",
-      "symbol_family": "management",
-      "primary_symbol": "control room",
-      "narrative_mode": "stock_ok",
-      "query": "customer points to a meal on a menu while behind glass managers control staffing, supply schedules, kitchen equipment, and building systems, no logos, real motion",
-      "human_role": "customer and managers"
-    },
-    {
-      "text": "Who writes the menu? Who funds the kitchen?",
-      "epistemic_role": "invitation",
-      "audio_tags": ["slower", "probing"],
-      "keywords": ["writes", "menu", "funds", "kitchen"],
-      "semantic_anchor": "menu writer and financial ledger",
-      "visual_function": "belief_analysis",
-      "symbol_family": "archive",
-      "primary_symbol": "pen and ledger",
-      "narrative_mode": "stock_ok",
-      "query": "close-up of unseen hands drafting a restaurant menu beside funding ledgers, invoices, and kitchen plans, names obscured, no readable text, cinematic real motion",
-      "human_role": "administration"
-    },
-    {
-      "text": "Who owns the land beneath the building?",
-      "epistemic_role": "invitation",
-      "audio_tags": ["low", "probing"],
-      "keywords": ["owns", "land", "building"],
-      "semantic_anchor": "restaurant sitting above visible land title and foundations",
-      "visual_function": "belief_analysis",
-      "symbol_family": "architecture",
-      "primary_symbol": "foundation deed",
-      "narrative_mode": "hero",
-      "hero": true,
-      "hero_style": "effects",
-      "image_prompt": "cinematic photoreal cutaway of a restaurant building above deep foundations, property lines, keys, and a sealed land title below the floor, customers dining unaware above, strong vertical depth, no readable text, no logos",
-      "human_role": "diners"
-    },
-    {
-      "text": "Who benefits when the customers hate each other more than they question the management?",
-      "epistemic_role": "invitation",
-      "audio_tags": ["quiet", "knife line"],
-      "keywords": ["benefits", "customers", "management"],
-      "semantic_anchor": "owner watching divided customers through one-way glass",
-      "visual_function": "belief_analysis",
-      "symbol_family": "power",
-      "primary_symbol": "one-way glass",
-      "narrative_mode": "stock_ok",
-      "query": "restaurant owner calmly watching two groups of customers argue through one-way glass while accounting totals rise in the foreground, no readable figures, no logos, genuine motion",
-      "human_role": "owner and customers"
-    },
-    {
-      "text": "Because a system can offer choice and still control the range of outcomes.",
-      "epistemic_role": "interpretation",
-      "audio_tags": ["direct"],
-      "keywords": ["system", "choice", "range"],
-      "semantic_anchor": "choice wheel bounded by fixed rails",
-      "visual_function": "mechanism",
-      "symbol_family": "systems",
-      "primary_symbol": "bounded selector",
-      "narrative_mode": "stock_ok",
-      "query": "restaurant ordering dial moves freely between two meals but is physically blocked from all other kitchen paths by fixed rails, clear mechanical metaphor, no text, real motion"
-    },
-    {
-      "text": "A casino lets you choose the machine. That does not mean you own the casino.",
-      "epistemic_role": "metaphor",
-      "audio_tags": ["wry"],
-      "keywords": ["casino", "machine", "own"],
-      "semantic_anchor": "player choosing a slot machine under casino ownership",
-      "visual_function": "analogy",
-      "symbol_family": "casino",
-      "primary_symbol": "slot machines",
-      "narrative_mode": "stock_ok",
-      "query": "casino guest walks past many slot machines and chooses one while the vast casino control room and security network remain overhead, no brand names, genuine motion",
-      "human_role": "player"
-    },
-    {
-      "text": "A streaming service lets you choose the movie. That does not mean you control what gets produced.",
-      "epistemic_role": "metaphor",
-      "audio_tags": ["measured"],
-      "keywords": ["streaming", "movie", "produced"],
-      "semantic_anchor": "viewer chooses from finished catalog while studio produces elsewhere",
-      "visual_function": "analogy",
-      "symbol_family": "media",
-      "primary_symbol": "streaming catalog",
-      "narrative_mode": "stock_ok",
-      "query": "viewer scrolls through a streaming catalog while a distant studio soundstage produces and removes titles behind a glass wall, no recognizable brand interface, real motion",
-      "human_role": "viewer and production crew"
-    },
-    {
-      "text": "And politics may let you choose a representative without ever letting you touch the machinery that decides which choices are considered realistic in the first place.",
-      "epistemic_role": "interpretation",
-      "audio_tags": ["slow", "weighty"],
-      "keywords": ["representative", "machinery", "realistic"],
-      "semantic_anchor": "representative selected in dining room while hidden machinery sets available menu",
-      "visual_function": "mechanism",
-      "symbol_family": "machine",
-      "primary_symbol": "menu machinery",
-      "narrative_mode": "hero",
-      "hero": true,
-      "hero_style": "effects",
-      "image_prompt": "cinematic photoreal dining hall where a customer selects one representative figure at the table while enormous hidden machinery behind the kitchen wall prints and limits the available menus, no real politicians, no party logos, no readable text, dramatic depth and scale",
-      "human_role": "customer and symbolic representative"
-    },
-    {
-      "text": "Maybe that is why the arguments feel endless.",
-      "epistemic_role": "interpretation",
-      "audio_tags": ["quieter"],
-      "keywords": ["arguments", "endless"],
-      "semantic_anchor": "circular table argument looping back on itself",
-      "visual_function": "reflection",
-      "symbol_family": "recursion",
-      "primary_symbol": "circular table",
-      "narrative_mode": "stock_ok",
-      "query": "diners arguing around a circular restaurant table as the camera completes a loop and returns to the same positions, no logos, genuine continuous motion",
-      "human_role": "diners"
-    },
-    {
-      "text": "We keep fighting over what to order instead of asking why the kitchen never serves what most people actually need.",
-      "epistemic_role": "interpretation",
-      "audio_tags": ["grounded", "direct"],
-      "keywords": ["fighting", "order", "need"],
-      "semantic_anchor": "customers debate menu while basic pantry shelves remain empty",
-      "visual_function": "grounding",
-      "symbol_family": "ordinary",
-      "primary_symbol": "empty pantry",
-      "narrative_mode": "stock_ok",
-      "query": "restaurant customers debate menus at tables while the camera reveals empty basic-food shelves and simple needed meals missing behind the kitchen pass, no logos, real motion",
-      "human_role": "customers"
-    },
-    {
-      "text": "Because being handed a menu feels like freedom—",
-      "epistemic_role": "turn",
-      "audio_tags": ["slow", "soft"],
-      "keywords": ["menu", "freedom"],
-      "semantic_anchor": "menu glowing like a symbol of freedom",
-      "visual_function": "turn",
-      "symbol_family": "objects",
-      "primary_symbol": "glowing menu",
-      "narrative_mode": "hero",
-      "hero": true,
-      "hero_style": "effects",
-      "image_prompt": "cinematic photoreal close-up of an elegant menu opening in warm light like a promise of freedom, deep restaurant background, subtle red and blue reflections on the paper, beautiful but ambiguous, no readable text, no logos"
-    },
-    {
-      "text": "until you realize every option was written by someone who never planned to eat with you.",
-      "epistemic_role": "interpretation",
-      "audio_tags": ["whisper", "knife line"],
-      "keywords": ["option", "written", "eat with you"],
-      "semantic_anchor": "menu writer alone behind glass with empty place at shared table",
-      "visual_function": "final_reveal",
-      "symbol_family": "power",
-      "primary_symbol": "empty chair",
-      "narrative_mode": "hero",
-      "hero": true,
-      "hero_style": "effects",
-      "image_prompt": "cinematic photoreal private office above a restaurant, an unseen menu writer finishes pages behind glass while downstairs a long communal table has one conspicuously empty chair, moody warm light, deep perspective, no readable text, no logos, no politicians",
-      "human_role": "menu writer"
-    }
-  ]
+  {
+   "text": "Then everybody starts arguing across the table like the fate of civilization depends on whether the chicken came with mashed potatoes or rice.",
+   "epistemic_role": "metaphor",
+   "audio_tags": [
+    "wry",
+    "building"
+   ],
+   "keywords": [
+    "arguing",
+    "chicken",
+    "potatoes",
+    "rice"
+   ],
+   "semantic_anchor": "diners arguing over nearly identical meals",
+   "visual_function": "humor",
+   "symbol_family": "human",
+   "primary_symbol": "split dinner table",
+   "narrative_mode": "stock_ok",
+   "query": "diverse adults arguing across a restaurant table over two similar chicken dinners, one with mashed potatoes and one with rice, animated gestures and napkins, no party logos, no politicians, genuine motion",
+   "human_role": "diners"
+  },
+  {
+   "text": "Meanwhile, nobody is allowed in the kitchen. You did not choose the ingredients. You did not hire the cooks.",
+   "epistemic_role": "metaphor",
+   "audio_tags": [
+    "lower",
+    "direct"
+   ],
+   "keywords": [
+    "kitchen",
+    "ingredients",
+    "cooks"
+   ],
+   "semantic_anchor": "customers excluded from the kitchen",
+   "visual_function": "mechanism",
+   "symbol_family": "architecture",
+   "primary_symbol": "locked kitchen door",
+   "narrative_mode": "stock_ok",
+   "query": "restaurant customers stopped outside a closed kitchen door while ingredients and cooks move behind frosted glass, visible separation between dining room and kitchen, no logos, real motion",
+   "human_role": "customers"
+  },
+  {
+   "text": "You did not select the suppliers. You did not set the prices. You did not decide who owns the building.",
+   "epistemic_role": "metaphor",
+   "audio_tags": [
+    "measured"
+   ],
+   "keywords": [
+    "suppliers",
+    "prices",
+    "owns"
+   ],
+   "semantic_anchor": "supply trucks, price board, and ownership keys controlled elsewhere",
+   "visual_function": "structure",
+   "symbol_family": "commerce",
+   "primary_symbol": "keys and invoices",
+   "narrative_mode": "stock_ok",
+   "query": "restaurant delivery crates arrive at a back entrance, a manager changes prices, and building keys pass between owners, customers remain separated, no readable brand names, real motion",
+   "human_role": "staff"
+  },
+  {
+   "text": "But because someone placed a menu in your hand, you are told the restaurant belongs to you. That is the illusion.",
+   "epistemic_role": "interpretation",
+   "audio_tags": [
+    "slow",
+    "revealing"
+   ],
+   "keywords": [
+    "menu",
+    "belongs",
+    "illusion"
+   ],
+   "semantic_anchor": "menu mistaken for ownership",
+   "visual_function": "turn",
+   "symbol_family": "objects",
+   "primary_symbol": "menu and deed",
+   "narrative_mode": "hero",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "cinematic photoreal close-up of a diner holding an elegant menu while a restaurant deed, master keys, and ownership ledger remain locked behind glass in the manager office, visual contrast between participation and ownership, deep perspective, warm moody light, no readable text, no logos",
+   "human_role": "customer"
+  },
+  {
+   "text": "Political choice is often presented as control, when sometimes it is only participation inside boundaries you never agreed to.",
+   "epistemic_role": "interpretation",
+   "audio_tags": [
+    "thoughtful"
+   ],
+   "keywords": [
+    "choice",
+    "control",
+    "boundaries"
+   ],
+   "semantic_anchor": "choice inside a prebuilt dining boundary",
+   "visual_function": "mechanism",
+   "symbol_family": "architecture",
+   "primary_symbol": "velvet rope",
+   "narrative_mode": "stock_ok",
+   "query": "restaurant guest choosing between two marked tables inside a dining room enclosed by velvet ropes and fixed walls, staff controls all other doors, no political logos, real motion",
+   "human_role": "customer"
+  },
+  {
+   "text": "You are free to choose. As long as you choose from what has already been chosen for you.",
+   "epistemic_role": "interpretation",
+   "audio_tags": [
+    "low",
+    "knife line"
+   ],
+   "keywords": [
+    "free",
+    "choose",
+    "chosen"
+   ],
+   "semantic_anchor": "two visible options and many hidden ones",
+   "visual_function": "contrast",
+   "symbol_family": "menu",
+   "primary_symbol": "narrow menu",
+   "narrative_mode": "hero",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "photoreal restaurant menu open to only two illuminated dishes while many other covered dishes sit behind a locked kitchen pass, elegant cinematic light, strong depth, visual clarity, no readable text, no party symbols, no people required"
+  },
+  {
+   "text": "And the menu is designed carefully. Not just to feed you. To divide the table.",
+   "epistemic_role": "metaphor",
+   "audio_tags": [
+    "building"
+   ],
+   "keywords": [
+    "menu",
+    "divide",
+    "table"
+   ],
+   "semantic_anchor": "menu physically dividing one table",
+   "visual_function": "mechanism",
+   "symbol_family": "objects",
+   "primary_symbol": "menu divider",
+   "narrative_mode": "stock_ok",
+   "query": "a long restaurant menu unfolds into a divider splitting one shared dining table into red-lit and blue-lit halves, diners separated while food remains similar, no logos, genuine motion",
+   "human_role": "diners"
+  },
+  {
+   "text": "One side is told the other side wants to poison the meal. The other side is told your side is trying to shut down the restaurant.",
+   "epistemic_role": "metaphor",
+   "audio_tags": [
+    "tense",
+    "controlled"
+   ],
+   "keywords": [
+    "poison",
+    "shut down",
+    "restaurant"
+   ],
+   "semantic_anchor": "two sides receiving conflicting warnings",
+   "visual_function": "conflict",
+   "symbol_family": "language",
+   "primary_symbol": "warning cards",
+   "narrative_mode": "stock_ok",
+   "query": "two groups at opposite restaurant tables receive different sealed warning cards and react suspiciously toward each other, covered dishes between them, no readable slogans, no logos, no politicians, real motion",
+   "human_role": "diners"
+  },
+  {
+   "text": "Now everybody is yelling, throwing napkins, and accusing strangers of destroying dinner while the owner quietly raises the prices.",
+   "epistemic_role": "metaphor",
+   "audio_tags": [
+    "faster",
+    "wry"
+   ],
+   "keywords": [
+    "yelling",
+    "napkins",
+    "owner",
+    "prices"
+   ],
+   "semantic_anchor": "chaotic dining room while owner raises prices",
+   "visual_function": "humor",
+   "symbol_family": "human",
+   "primary_symbol": "price board",
+   "narrative_mode": "stock_ok",
+   "query": "chaotic restaurant argument with napkins flying while a calm owner in the background quietly changes a price board upward, no readable numbers needed, no political logos, real motion",
+   "human_role": "diners and owner"
+  },
+  {
+   "text": "And somehow, after every election, the kitchen gets bigger, the dining room gets louder, and the people eating are still asking why the portions keep shrinking.",
+   "epistemic_role": "metaphor",
+   "audio_tags": [
+    "measured",
+    "weighty"
+   ],
+   "keywords": [
+    "election",
+    "kitchen",
+    "louder",
+    "portions"
+   ],
+   "semantic_anchor": "expanding kitchen and shrinking meals",
+   "visual_function": "turn",
+   "symbol_family": "scale",
+   "primary_symbol": "shrinking plate",
+   "narrative_mode": "hero",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "cinematic photoreal restaurant cross-section, industrial kitchen expanding into a huge complex behind glass while the dining room grows crowded and noisy and tiny portions sit on large plates, dramatic scale contrast, deep perspective, no logos, no politicians, no readable text",
+   "human_role": "diners"
+  },
+  {
+   "text": "That does not mean your vote has no value. It means a vote is not the entire structure.",
+   "epistemic_role": "boundary",
+   "audio_tags": [
+    "calm",
+    "clear"
+   ],
+   "keywords": [
+    "vote",
+    "value",
+    "structure"
+   ],
+   "semantic_anchor": "ballot token beside full restaurant blueprint",
+   "visual_function": "fidelity",
+   "symbol_family": "civic",
+   "primary_symbol": "ballot and floor plan",
+   "narrative_mode": "stock_ok",
+   "query": "a single ballot-like choice card placed meaningfully on a restaurant table beside a large architectural floor plan and operating manual, visual contrast between one choice and full structure, no party logos, no candidate names, real motion",
+   "human_role": "chooser"
+  },
+  {
+   "text": "Choosing the meal is not the same as deciding how the restaurant operates. Real power asks deeper questions.",
+   "epistemic_role": "interpretation",
+   "audio_tags": [
+    "thoughtful",
+    "building"
+   ],
+   "keywords": [
+    "meal",
+    "operates",
+    "power",
+    "questions"
+   ],
+   "semantic_anchor": "customer chooses meal while management controls operations",
+   "visual_function": "mechanism",
+   "symbol_family": "management",
+   "primary_symbol": "control room",
+   "narrative_mode": "stock_ok",
+   "query": "customer points to a meal on a menu while behind glass managers control staffing, supply schedules, kitchen equipment, and building systems, no logos, real motion",
+   "human_role": "customer and managers"
+  },
+  {
+   "text": "Who writes the menu? Who funds the kitchen?",
+   "epistemic_role": "invitation",
+   "audio_tags": [
+    "slower",
+    "probing"
+   ],
+   "keywords": [
+    "writes",
+    "menu",
+    "funds",
+    "kitchen"
+   ],
+   "semantic_anchor": "menu writer and financial ledger",
+   "visual_function": "belief_analysis",
+   "symbol_family": "archive",
+   "primary_symbol": "pen and ledger",
+   "narrative_mode": "stock_ok",
+   "query": "close-up of unseen hands drafting a restaurant menu beside funding ledgers, invoices, and kitchen plans, names obscured, no readable text, cinematic real motion",
+   "human_role": "administration"
+  },
+  {
+   "text": "Who owns the land beneath the building?",
+   "epistemic_role": "invitation",
+   "audio_tags": [
+    "low",
+    "probing"
+   ],
+   "keywords": [
+    "owns",
+    "land",
+    "building"
+   ],
+   "semantic_anchor": "restaurant sitting above visible land title and foundations",
+   "visual_function": "belief_analysis",
+   "symbol_family": "architecture",
+   "primary_symbol": "foundation deed",
+   "narrative_mode": "hero",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "cinematic photoreal cutaway of a restaurant building above deep foundations, property lines, keys, and a sealed land title below the floor, customers dining unaware above, strong vertical depth, no readable text, no logos",
+   "human_role": "diners"
+  },
+  {
+   "text": "Who benefits when the customers hate each other more than they question the management?",
+   "epistemic_role": "invitation",
+   "audio_tags": [
+    "quiet",
+    "knife line"
+   ],
+   "keywords": [
+    "benefits",
+    "customers",
+    "management"
+   ],
+   "semantic_anchor": "owner watching divided customers through one-way glass",
+   "visual_function": "belief_analysis",
+   "symbol_family": "power",
+   "primary_symbol": "one-way glass",
+   "narrative_mode": "stock_ok",
+   "query": "restaurant owner calmly watching two groups of customers argue through one-way glass while accounting totals rise in the foreground, no readable figures, no logos, genuine motion",
+   "human_role": "owner and customers"
+  },
+  {
+   "text": "Because a system can offer choice and still control the range of outcomes.",
+   "epistemic_role": "interpretation",
+   "audio_tags": [
+    "direct"
+   ],
+   "keywords": [
+    "system",
+    "choice",
+    "range"
+   ],
+   "semantic_anchor": "choice wheel bounded by fixed rails",
+   "visual_function": "mechanism",
+   "symbol_family": "pathway",
+   "primary_symbol": "bounded selector",
+   "narrative_mode": "stock_ok",
+   "query": "restaurant ordering dial moves freely between two meals but is physically blocked from all other kitchen paths by fixed rails, clear mechanical metaphor, no text, real motion",
+   "symbol_query": "hand draws two arrows pointing different directions on paper soft window light close up",
+   "symbol_family_source": "planner",
+   "human_role": "chooser"
+  },
+  {
+   "text": "A casino lets you choose the machine. That does not mean you own the casino.",
+   "epistemic_role": "metaphor",
+   "audio_tags": [
+    "wry"
+   ],
+   "keywords": [
+    "casino",
+    "machine",
+    "own"
+   ],
+   "semantic_anchor": "player choosing a slot machine under casino ownership",
+   "visual_function": "analogy",
+   "symbol_family": "casino",
+   "primary_symbol": "slot machines",
+   "narrative_mode": "stock_ok",
+   "query": "casino guest walks past many slot machines and chooses one while the vast casino control room and security network remain overhead, no brand names, genuine motion",
+   "human_role": "player"
+  },
+  {
+   "text": "A streaming service lets you choose the movie. That does not mean you control what gets produced.",
+   "epistemic_role": "metaphor",
+   "audio_tags": [
+    "measured"
+   ],
+   "keywords": [
+    "streaming",
+    "movie",
+    "produced"
+   ],
+   "semantic_anchor": "viewer chooses from finished catalog while studio produces elsewhere",
+   "visual_function": "analogy",
+   "symbol_family": "media",
+   "primary_symbol": "streaming catalog",
+   "narrative_mode": "stock_ok",
+   "query": "viewer scrolls through a streaming catalog while a distant studio soundstage produces and removes titles behind a glass wall, no recognizable brand interface, real motion",
+   "human_role": "viewer and production crew"
+  },
+  {
+   "text": "And politics may let you choose a representative without ever letting you touch the machinery that decides which choices are considered realistic in the first place.",
+   "epistemic_role": "interpretation",
+   "audio_tags": [
+    "slow",
+    "weighty"
+   ],
+   "keywords": [
+    "representative",
+    "machinery",
+    "realistic"
+   ],
+   "semantic_anchor": "representative selected in dining room while hidden machinery sets available menu",
+   "visual_function": "mechanism",
+   "symbol_family": "machine",
+   "primary_symbol": "menu machinery",
+   "narrative_mode": "hero",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "cinematic photoreal dining hall where a customer selects one representative figure at the table while enormous hidden machinery behind the kitchen wall prints and limits the available menus, no real politicians, no party logos, no readable text, dramatic depth and scale",
+   "human_role": "customer and symbolic representative"
+  },
+  {
+   "text": "Maybe that is why the arguments feel endless.",
+   "epistemic_role": "interpretation",
+   "audio_tags": [
+    "quieter"
+   ],
+   "keywords": [
+    "arguments",
+    "endless"
+   ],
+   "semantic_anchor": "circular table argument looping back on itself",
+   "visual_function": "reflection",
+   "symbol_family": "recursion",
+   "primary_symbol": "circular table",
+   "narrative_mode": "stock_ok",
+   "query": "diners arguing around a circular restaurant table as the camera completes a loop and returns to the same positions, no logos, genuine continuous motion",
+   "human_role": "diners"
+  },
+  {
+   "text": "We keep fighting over what to order instead of asking why the kitchen never serves what most people actually need.",
+   "epistemic_role": "interpretation",
+   "audio_tags": [
+    "grounded",
+    "direct"
+   ],
+   "keywords": [
+    "fighting",
+    "order",
+    "need"
+   ],
+   "semantic_anchor": "customers debate menu while basic pantry shelves remain empty",
+   "visual_function": "grounding",
+   "symbol_family": "ordinary",
+   "primary_symbol": "empty pantry",
+   "narrative_mode": "stock_ok",
+   "query": "restaurant customers debate menus at tables while the camera reveals empty basic-food shelves and simple needed meals missing behind the kitchen pass, no logos, real motion",
+   "human_role": "customers"
+  },
+  {
+   "text": "Because being handed a menu feels like freedom—",
+   "epistemic_role": "turn",
+   "audio_tags": [
+    "slow",
+    "soft"
+   ],
+   "keywords": [
+    "menu",
+    "freedom"
+   ],
+   "semantic_anchor": "menu glowing like a symbol of freedom",
+   "visual_function": "turn",
+   "symbol_family": "objects",
+   "primary_symbol": "glowing menu",
+   "narrative_mode": "hero",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "cinematic photoreal close-up of an elegant menu opening in warm light like a promise of freedom, deep restaurant background, subtle red and blue reflections on the paper, beautiful but ambiguous, no readable text, no logos"
+  },
+  {
+   "text": "until you realize every option was written by someone who never planned to eat with you.",
+   "epistemic_role": "interpretation",
+   "audio_tags": [
+    "whisper",
+    "knife line"
+   ],
+   "keywords": [
+    "option",
+    "written",
+    "eat with you"
+   ],
+   "semantic_anchor": "menu writer alone behind glass with empty place at shared table",
+   "visual_function": "final_reveal",
+   "symbol_family": "power",
+   "primary_symbol": "empty chair",
+   "narrative_mode": "hero",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "cinematic photoreal private office above a restaurant, an unseen menu writer finishes pages behind glass while downstairs a long communal table has one conspicuously empty chair, moody warm light, deep perspective, no readable text, no logos, no politicians",
+   "human_role": "menu writer"
+  }
+ ]
 }

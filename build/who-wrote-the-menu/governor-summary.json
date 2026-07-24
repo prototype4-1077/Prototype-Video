@@ -1,0 +1,54 @@
+{
+  "finished_at": "2026-07-24T02:34:52+00:00",
+  "github_run_id": "30061909325",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "77b1a79e3bf22e98",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "error: visual symbol plan: only <n> symbol families across <n> scenes; use at least <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=b9cf587cb1a7d00d. ERROR: visual symbol plan: only 5 symbol families across 24 scenes; use at least 6 | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
+  "mode": "recover",
+  "passes": 2,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "77b1a79e3bf22e98",
+      "priority": "high",
+      "reason": "2 occurrence(s): error: visual symbol plan: only <n> symbol families across <n> scenes; use at least <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "c575a57cc5754582abe2a6708b0abca0",
+  "schema_version": 1,
+  "slug": "who-wrote-the-menu",
+  "stages": {
+    "build_pass": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.003
+    }
+  },
+  "status": "failed"
+}
