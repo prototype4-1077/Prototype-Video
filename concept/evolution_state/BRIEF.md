@@ -13,14 +13,14 @@ The evolution laboratory generated observations and proposals only. It did not a
 - **0.900** — This video fits no declared pillar or frontier concept; is the map missing a dimension?
 
 ## Best uncertainty-reducing experiments
-- **Scenes involving uncategorized revision may have an elevated revision risk.**  
-  Control: Keep the current champion value for uncategorized_revision. Treatment: Change only uncategorized_revision using the challenger condition.
-- **The hero stage may be a high-leverage efficiency target without changing creative policy.**  
-  Control: Keep the current champion value for hero. Treatment: Change only hero using the challenger condition.
 - **Scenes involving motion quality may have an elevated revision risk.**  
   Control: Keep the current champion value for motion_quality. Treatment: Change only motion_quality using the challenger condition.
 - **Scenes involving duplicate object may have an elevated revision risk.**  
   Control: Keep the current champion value for duplicate_object. Treatment: Change only duplicate_object using the challenger condition.
+- **Scenes involving uncategorized revision may have an elevated revision risk.**  
+  Control: Keep the current champion value for uncategorized_revision. Treatment: Change only uncategorized_revision using the challenger condition.
+- **Scenes involving semantic mismatch may have an elevated revision risk.**  
+  Control: Keep the current champion value for semantic_mismatch. Treatment: Change only semantic_mismatch using the challenger condition.
 
 ## Wild frontier proposals
 - **Exaptation: self × emotion** — What if exaptation is already happening inside the way you experience self & identity as constructed?
