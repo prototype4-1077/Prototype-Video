@@ -1,6 +1,6 @@
 # System Diagnostic
 
-Generated: 2026-07-24T14:53:59+00:00
+Generated: 2026-07-24T14:54:02+00:00
 
 Findings: 9 — priorities {"high": 1, "low": 1, "medium": 7}
 
@@ -39,7 +39,7 @@ Findings: 9 — priorities {"high": 1, "low": 1, "medium": 7}
 ### [MEDIUM] Some operational solutions still need verification
 - Area: `operations`
 - Code: `provisional_operational_solutions`
-- Evidence: ["sol-animation-contract-preflight-v1", "sol-hero-readiness-v1", "sol-planned-still-budget-v1"]
+- Evidence: ["sol-animation-contract-preflight-v1", "sol-hero-readiness-v1"]
 - Action: Satisfy each stated verification requirement before marking it verified; do not promote by elapsed time alone.
 
 ### [MEDIUM] Youtube queue contains already-published videos
