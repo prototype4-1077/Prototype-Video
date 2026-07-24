@@ -211,7 +211,7 @@ jobs:
           git commit -m "feedback $SLUG: learn survey and queue selective revision"
           for attempt in 1 2 3 4 5; do
             git push && exit 0
-            git pull --rebase origin main || git rebase --abort || true
+            git add -A; git pull --rebase --autostash origin main || git rebase --abort || true
             sleep $((attempt * 2))
           done
           exit 1
