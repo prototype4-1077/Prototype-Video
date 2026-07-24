@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "rules": [
+    {
+      "id": "rule-visual-symbol-plan",
+      "solution_id": "sol-visual-symbol-diversity-v1",
+      "check": "visual_symbols.analyze",
+      "action": "block",
+      "safe_auto_fix": false,
+      "reason": "Changing labels alone cannot make the effective visual plan diverse."
+    },
+    {
+      "id": "rule-planned-still-budget",
+      "solution_id": "sol-planned-still-budget-v1",
+      "check": "word_weighted_still_ratio",
+      "action": "block_over_cap_warn_near_cap",
+      "safe_auto_fix": false,
+      "near_cap_margin": 0.03
+    },
+    {
+      "id": "rule-june-canonical-voice",
+      "solution_id": "sol-june-canonical-voice-v1",
+      "check": "character_bible_voice",
+      "action": "fill_missing_block_conflict",
+      "safe_auto_fix": true
+    },
+    {
+      "id": "rule-animation-contract",
+      "solution_id": "sol-june-scene-character-scope-v1",
+      "check": "animation_profiles.apply_defaults_and_validate",
+      "action": "safe_fix_then_block",
+      "safe_auto_fix": true
+    },
+    {
+      "id": "rule-standalone-title",
+      "solution_id": "sol-standalone-title-eyebrow-v1",
+      "check": "standalone_series_label",
+      "action": "set_series_label_null",
+      "safe_auto_fix": true
+    },
+    {
+      "id": "rule-hero-readiness",
+      "solution_id": "sol-hero-readiness-v1",
+      "check": "hero_policy_resolution",
+      "action": "block",
+      "safe_auto_fix": false
+    },
+    {
+      "id": "rule-source-narration-integrity",
+      "solution_id": null,
+      "check": "source_narration_token_fingerprint",
+      "action": "block",
+      "safe_auto_fix": false
+    }
+  ]
+}
