@@ -121,13 +121,36 @@ jobs:
           PY
 
       - name: Exercise diagnostic against repository evidence
+        shell: bash
         run: |
-          python3 intelligence_stack/fiftyone/analyze_visual_memory.py
-          python3 pipeline/system_diagnostics.py
-          python3 - <<'PY'
+          set -o pipefail
+          mkdir -p /tmp/system-diagnostic-debug
+          python3 intelligence_stack/fiftyone/analyze_visual_memory.py \
+            > /tmp/system-diagnostic-debug/visual.stdout.txt \
+            2> /tmp/system-diagnostic-debug/visual.stderr.txt
+          python3 pipeline/system_diagnostics.py \
+            > /tmp/system-diagnostic-debug/system.stdout.txt \
+            2> /tmp/system-diagnostic-debug/system.stderr.txt
+          python3 - <<'PY' \
+            > /tmp/system-diagnostic-debug/validation.stdout.txt \
+            2> /tmp/system-diagnostic-debug/validation.stderr.txt
           import json
           report = json.load(open("pipeline/system_diagnostics/LATEST.json", encoding="utf-8"))
           assert report["authority_boundary"]
           assert report["summary"]["finding_count"] == len(report["findings"])
           print("diagnostic", report["summary"])
           PY
+
+      - name: Upload diagnostic traceback and materialized reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: system-hardening-debug-${{ github.run_id }}
+          retention-days: 30
+          if-no-files-found: warn
+          path: |
+            /tmp/system-diagnostic-debug/**
+            concept/visual_memory/action_report.json
+            pipeline/system_diagnostics/**
+            pipeline/operational_memory/action_queue.json
+            pipeline/operational_memory/index.json
