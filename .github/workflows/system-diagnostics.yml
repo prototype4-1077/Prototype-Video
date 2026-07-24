@@ -11,6 +11,9 @@ on:
       - "pipeline/operational_memory/action_queue.json"
       - "concept/visual_memory/action_report.json"
       - "pipeline/memory.json"
+      - "pipeline/feedback_rule_candidates.json"
+      - "pipeline/stock_supply_report.json"
+      - "pipeline/youtube_stats_status.json"
       - "pipeline/*_publish_queue.json"
       - "pipeline/*_published_result.json"
       - "pipeline/whisperx-benchmark-ledger.json"
@@ -18,6 +21,8 @@ on:
       - "build/*/governor-summary.json"
       - "build/*/telemetry-summary.json"
       - "build/*/quality_report.json"
+      - "build/*/narrative_fidelity_report.json"
+      - "build/*/yt_stats.json"
 
 permissions:
   contents: write
@@ -45,6 +50,9 @@ jobs:
             pipeline/system_diagnostics.py \
             pipeline/system_diagnostic_policy.py \
             pipeline/backfill_observability.py \
+            pipeline/feedback_rule_candidates.py \
+            pipeline/stock_supply_analysis.py \
+            pipeline/yt_stats_refresh.py \
             pipeline/operational_memory_analysis.py \
             pipeline/record_operational_run.py \
             pipeline/package_integrity.py \
@@ -52,6 +60,12 @@ jobs:
 
       - name: Backfill honest historical telemetry summaries
         run: python3 pipeline/backfill_observability.py
+
+      - name: Materialize provisional feedback candidates
+        run: python3 pipeline/feedback_rule_candidates.py
+
+      - name: Measure stock candidate supply
+        run: python3 pipeline/stock_supply_analysis.py
 
       - name: Build calibrated diagnostic and action report
         run: python3 pipeline/system_diagnostic_policy.py
@@ -61,17 +75,29 @@ jobs:
           python3 - <<'PY'
           import json
           report = json.load(open('pipeline/system_diagnostics/LATEST.json', encoding='utf-8'))
+          feedback = json.load(open('pipeline/feedback_rule_candidates.json', encoding='utf-8'))
+          stock = json.load(open('pipeline/stock_supply_report.json', encoding='utf-8'))
           assert report['authority_boundary']
           assert report['denominator_policy']
           assert 'findings' in report
           assert 'coverage' in report
           assert 'publishing' in report
+          assert feedback['authority_boundary']
+          assert stock['measurement_boundary']
           coverage = report['coverage']
           assert coverage['render_observed_count'] >= coverage['telemetry_count']
           assert coverage['reviewable_count'] >= coverage['human_feedback_count']
+          assert coverage['youtube_published_receipt_count'] >= coverage['youtube_stats_count']
           priorities = report['summary']['priorities']
           print('diagnostic findings', report['summary']['finding_count'], priorities)
-          print('calibrated coverage', coverage['telemetry_coverage_of_render_observed'], coverage['human_feedback_coverage_of_reviewable'])
+          print(
+              'calibrated coverage',
+              coverage['telemetry_coverage_of_render_observed'],
+              coverage['human_feedback_coverage_of_reviewable'],
+              coverage['youtube_stats_coverage_of_published'],
+          )
+          print('feedback candidates', feedback['candidate_count'])
+          print('stock supply', stock['state'], stock['evidence_strength'])
           PY
 
       - uses: actions/upload-artifact@v4
@@ -80,9 +106,12 @@ jobs:
           retention-days: 90
           path: |
             pipeline/system_diagnostics/**
+            pipeline/feedback_rule_candidates.json
+            pipeline/stock_supply_report.json
+            pipeline/youtube_stats_status.json
             build/*/telemetry-summary.json
 
-      - name: Commit diagnostic report and honest historical backfill
+      - name: Commit diagnostic report and analyzed evidence
         shell: bash
         run: |
           set -euo pipefail
@@ -91,18 +120,24 @@ jobs:
           git add \
             pipeline/system_diagnostics/LATEST.json \
             pipeline/system_diagnostics/LATEST.md \
+            pipeline/feedback_rule_candidates.json \
+            pipeline/stock_supply_report.json \
             build/*/telemetry-summary.json
-          git commit -m "diagnostic: refresh calibrated actions and observability backfill" || exit 0
+          git commit -m "diagnostic: refresh calibrated evidence and actions" || exit 0
           for i in 1 2 3 4 5; do
             git push && exit 0
             git pull --rebase origin main || { git rebase --abort || true; }
             python3 pipeline/backfill_observability.py
+            python3 pipeline/feedback_rule_candidates.py
+            python3 pipeline/stock_supply_analysis.py
             python3 pipeline/system_diagnostic_policy.py
             git add \
               pipeline/system_diagnostics/LATEST.json \
               pipeline/system_diagnostics/LATEST.md \
+              pipeline/feedback_rule_candidates.json \
+              pipeline/stock_supply_report.json \
               build/*/telemetry-summary.json
-            git commit -m "diagnostic: refresh calibrated actions and observability backfill" || true
+            git commit -m "diagnostic: refresh calibrated evidence and actions" || true
             sleep $((i * 2))
           done
           echo "unable to persist system diagnostic" >&2
