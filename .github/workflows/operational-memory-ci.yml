@@ -1,0 +1,64 @@
+name: Operational memory integrity
+
+on:
+  pull_request:
+    paths:
+      - "pipeline/operational_memory.py"
+      - "pipeline/preflight.py"
+      - "pipeline/operational_memory/**"
+      - "pipeline/tests/test_operational_memory.py"
+      - ".github/workflows/render-request.yml"
+      - ".github/workflows/operational-memory-*.yml"
+  push:
+    branches: [main]
+    paths:
+      - "pipeline/operational_memory.py"
+      - "pipeline/preflight.py"
+      - "pipeline/operational_memory/**"
+      - "pipeline/tests/test_operational_memory.py"
+      - ".github/workflows/render-request.yml"
+      - ".github/workflows/operational-memory-*.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Compile and validate catalogs
+        run: |
+          python3 -m py_compile pipeline/operational_memory.py pipeline/preflight.py
+          python3 - <<'PY'
+          import json
+          for path in (
+              "pipeline/operational_memory/solutions.json",
+              "pipeline/operational_memory/prevention_rules.json",
+              "pipeline/operational_memory/incidents.json",
+              "pipeline/operational_memory/index.json",
+          ):
+              json.load(open(path, encoding="utf-8"))
+              print("valid", path)
+          PY
+
+      - name: Run operational memory tests
+        run: python3 -m unittest pipeline.tests.test_operational_memory -v
+
+      - name: Rebuild index and validate materialized evidence
+        run: |
+          python3 pipeline/operational_memory.py rebuild-index
+          python3 - <<'PY'
+          import json
+          index = json.load(open("pipeline/operational_memory/index.json", encoding="utf-8"))
+          assert index["occurrence_count"] >= 8
+          assert index["solution_count"] >= 7
+          assert "solution_evidence" in index
+          print("indexed", index["occurrence_count"], "occurrences")
+          PY

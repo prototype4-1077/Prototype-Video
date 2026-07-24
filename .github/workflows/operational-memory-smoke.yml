@@ -1,0 +1,17 @@
+name: Operational memory smoke fixture
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Exercise historical materialization and preflight CLI
+        run: |
+          python3 pipeline/operational_memory.py rebuild-index
+          python3 pipeline/preflight.py build/who-wrote-the-menu --json
