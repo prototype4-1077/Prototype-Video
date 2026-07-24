@@ -27,9 +27,17 @@ def _talk_weight(t, talking=True):
     gate = 1.0 if pause>0.25 else 0.15
     return max(0.0,min(1.0, syl*gate))
 
-def render_host(frameA, frameB, out, dur=8.0, fps=18, W=540, H=960, push=0.045):
+def _mouth_mask(W,H,cx,cy,rx,ry,feather=14):
+    m=Image.new("L",(W,H),0); d=ImageDraw.Draw(m)
+    d.ellipse([cx-rx,cy-ry,cx+rx,cy+ry],fill=255)
+    return np.asarray(m.filter(ImageFilter.GaussianBlur(feather))).astype(np.float32)/255.0
+
+def render_host(frameA, frameB, out, dur=8.0, fps=18, W=540, H=960, push=0.045,
+                mouth=(0.63,0.30,0.075,0.065)):
     A=_load(frameA,(W,H)); B=_load(frameB,(W,H))
     a=np.asarray(A).astype(np.float32); b=np.asarray(B).astype(np.float32)
+    mcx,mcy,mrx,mry=int(mouth[0]*W),int(mouth[1]*H),int(mouth[2]*W),int(mouth[3]*W)
+    mask=_mouth_mask(W,H,mcx,mcy,mrx,mry)[:,:,None]
     dust=_dust((W,H))
     ff=subprocess.Popen(["ffmpeg","-y","-loglevel","error","-f","rawvideo","-pix_fmt","rgb24",
         "-s",f"{W}x{H}","-r",str(fps),"-i","-","-an","-c:v","libx264","-pix_fmt","yuv420p","-crf","19",out],
@@ -38,20 +46,14 @@ def render_host(frameA, frameB, out, dur=8.0, fps=18, W=540, H=960, push=0.045):
     for f in range(frames):
         t=f/fps
         w=_talk_weight(t)
-        # A/B blend only in the lower-right host region; scene stays from A (stability)
-        mix=a.copy()
-        y0,x0=int(H*0.30),int(W*0.38)   # host region (lower-right; generous)
-        mix[y0:,x0:] = a[y0:,x0:]*(1-w) + b[y0:,x0:]*w
+        # blend ONLY the feathered mouth/jaw ellipse; rest stays frame A (rock solid)
+        mix=a*(1-mask*w)+b*(mask*w)
         im=Image.fromarray(mix.astype(np.uint8))
         # deep-page camera: slow push + micro drift; parallax via asymmetric crop
         s=1.0+push*(t/dur); drift=3.0*math.sin(2*math.pi*0.11*t)
         cw,ch=int(W/s),int(H/s)
         cx=int((W-cw)/2 + drift); cy=int((H-ch)/2 + 0.5*drift)
         im=im.crop((max(0,cx),max(0,cy),max(0,cx)+cw,max(0,cy)+ch)).resize((W,H),Image.LANCZOS)
-        # background plane counter-drift (top 55% shifts slightly opposite -> page depth)
-        top=im.crop((0,0,W,int(H*0.55)))
-        off=int(round(-drift*0.6))
-        im.paste(top,(off,0))
         # foreground dust drifts fastest (near plane)
         dd=dust.rotate(0); ddx=int(10*math.sin(2*math.pi*0.07*t)); ddy=int(-(t*7)%H)
         im=im.convert("RGBA"); im.alpha_composite(dd,(ddx,ddy-H)); im.alpha_composite(dd,(ddx,ddy))
