@@ -4,7 +4,8 @@ This analyzer is intentionally stricter than the compatibility indexer:
 - occurrence multiplicity honors ``reported_count``;
 - a successful run verifies only ``verified_solution_ids``;
 - a failed run regresses only ``regressed_solution_ids`` or exact catalog matches;
-- warnings and telemetry advisories become an action queue without being treated as failures.
+- warnings and telemetry advisories become an action queue without being treated as failures;
+- current state follows event order, while lifetime recurrence counts remain visible.
 """
 from __future__ import annotations
 
@@ -43,8 +44,6 @@ def relation_ids(
     verified = list(row.get("verified_solution_ids") or [])
     regressed = list(row.get("regressed_solution_ids") or [])
     if not verified and status in {"passed", "done", "success"}:
-        # Backward-compatible historical records were curated and explicitly
-        # linked. New records should always use verified_solution_ids.
         verified = list(row.get("matched_solution_ids") or [])
     if not regressed and status in {"blocked", "failed", "quality_failed", "error"}:
         regressed = operational_memory.match_solutions(
@@ -68,7 +67,7 @@ def incident_key(row: Mapping[str, Any]) -> str:
 
 def build(store: str | os.PathLike[str] = operational_memory.DEFAULT_STORE) -> dict[str, Any]:
     root = Path(store)
-    rows = operational_memory._read_occurrences(root)  # compatibility reader
+    rows = operational_memory._read_occurrences(root)
     catalog = operational_memory.load_catalog(root)
     grouped: dict[str, dict[str, Any]] = {}
     evidence = {
@@ -91,8 +90,6 @@ def build(store: str | os.PathLike[str] = operational_memory.DEFAULT_STORE) -> d
     for row in rows:
         count = multiplicity(row)
         verified, regressed = relation_ids(row, catalog, root)
-        row["_verified_solution_ids"] = verified
-        row["_regressed_solution_ids"] = regressed
         key = incident_key(row)
         item = grouped.setdefault(key, {
             "incident_key": key,
@@ -160,6 +157,16 @@ def build(store: str | os.PathLike[str] = operational_memory.DEFAULT_STORE) -> d
                 except (TypeError, ValueError):
                     pass
 
+    for proof in evidence.values():
+        proof["affected_slugs"] = sorted(proof["affected_slugs"])
+        last_verified = str(proof.get("last_verified_at") or "")
+        last_recurrence = str(proof.get("last_recurrence_at") or "")
+        proof["evidence_state"] = (
+            "verified" if last_verified and last_verified >= last_recurrence else
+            "regressed" if last_recurrence else
+            "awaiting_evidence"
+        )
+
     incidents: list[dict[str, Any]] = []
     open_failure_count = 0
     failure_occurrence_count = 0
@@ -170,29 +177,25 @@ def build(store: str | os.PathLike[str] = operational_memory.DEFAULT_STORE) -> d
         item["phases"] = dict(sorted(item["phases"].items()))
         failures = sum(int(item["statuses"].get(name, 0)) for name in ("failed", "blocked", "quality_failed", "error"))
         failure_occurrence_count += failures
+        candidates = sorted(set(item["verified_solution_ids"]) | set(item["regressed_solution_ids"]))
         resolved = []
-        for solution_id in item["verified_solution_ids"]:
+        for solution_id in candidates:
             proof = evidence.get(solution_id) or {}
-            if str(proof.get("last_verified_at") or "") >= str(item.get("last_seen") or ""):
+            if (
+                proof.get("evidence_state") == "verified"
+                and str(proof.get("last_verified_at") or "") >= str(item.get("last_seen") or "")
+            ):
                 resolved.append(solution_id)
         if failures == 0:
             item["current_state"] = "informational"
-        elif resolved and not item["regressed_solution_ids"]:
+        elif resolved:
             item["current_state"] = "resolved"
-            item["resolved_by_solution_ids"] = sorted(resolved)
+            item["resolved_by_solution_ids"] = resolved
         else:
             item["current_state"] = "open"
             open_failure_count += 1
         incidents.append(item)
     incidents.sort(key=lambda item: (-int(item["occurrence_count"]), str(item["incident_key"])))
-
-    for proof in evidence.values():
-        proof["affected_slugs"] = sorted(proof["affected_slugs"])
-        proof["evidence_state"] = (
-            "regressed" if proof["recurrences_after_fix"] else
-            "verified" if proof["successful_verifications"] else
-            "awaiting_evidence"
-        )
 
     actions: list[dict[str, Any]] = []
     for item in incidents:
@@ -202,7 +205,7 @@ def build(store: str | os.PathLike[str] = operational_memory.DEFAULT_STORE) -> d
                 "category": "open_incident",
                 "key": item["incident_key"],
                 "evidence": f"{item['occurrence_count']} occurrence(s)",
-                "action": "Resolve the root cause and attach a verification occurrence before promotion.",
+                "action": "Resolve the root cause and attach a later verification occurrence before promotion.",
             })
     for code, count in sorted(warning_counts.items(), key=lambda pair: (-pair[1], pair[0])):
         actions.append({
@@ -221,12 +224,15 @@ def build(store: str | os.PathLike[str] = operational_memory.DEFAULT_STORE) -> d
             "action": "Investigate the cohort by provider, cache state, scene type, and artifact size.",
         })
     for solution_id, proof in evidence.items():
-        if proof["catalog_status"] != "verified" and proof["successful_verifications"] > 0 and proof["recurrences_after_fix"] == 0:
+        if proof["catalog_status"] != "verified" and proof["evidence_state"] == "verified":
             actions.append({
                 "priority": "medium",
                 "category": "solution_promotion_candidate",
                 "key": solution_id,
-                "evidence": f"{proof['successful_verifications']} successful verification(s), no recurrence",
+                "evidence": (
+                    f"{proof['successful_verifications']} successful verification(s); "
+                    f"latest verification follows latest recurrence"
+                ),
                 "action": "Review the verification requirement and promote the catalog status only if it is satisfied.",
             })
 
