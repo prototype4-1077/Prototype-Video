@@ -17,10 +17,10 @@ The evolution laboratory generated observations and proposals only. It did not a
   Control: Keep the current champion value for motion_quality. Treatment: Change only motion_quality using the challenger condition.
 - **Scenes involving duplicate object may have an elevated revision risk.**  
   Control: Keep the current champion value for duplicate_object. Treatment: Change only duplicate_object using the challenger condition.
-- **Scenes involving uncategorized revision may have an elevated revision risk.**  
-  Control: Keep the current champion value for uncategorized_revision. Treatment: Change only uncategorized_revision using the challenger condition.
 - **Scenes involving semantic mismatch may have an elevated revision risk.**  
   Control: Keep the current champion value for semantic_mismatch. Treatment: Change only semantic_mismatch using the challenger condition.
+- **Scenes involving reflection may have an elevated revision risk.**  
+  Control: Keep the current champion value for reflection. Treatment: Change only reflection using the challenger condition.
 
 ## Wild frontier proposals
 - **Exaptation: self × emotion** — What if exaptation is already happening inside the way you experience self & identity as constructed?

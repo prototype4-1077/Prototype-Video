@@ -74,42 +74,6 @@
     },
     {
       "budget_lane": "uncertainty",
-      "control": "Keep the current champion value for uncategorized_revision.",
-      "fixed_factors": [
-        "core concept",
-        "narration text",
-        "voice",
-        "duration",
-        "publication window",
-        "motion ratio where possible"
-      ],
-      "hypothesis_id": "visual_failure:uncategorized_revision",
-      "id": "experiment:74fd1480f3c8d11d",
-      "information_value": 0.5727,
-      "primary_metrics": [
-        "first-3-second retention",
-        "average view percentage",
-        "James scene approval",
-        "revision count"
-      ],
-      "question": "Scenes involving uncategorized revision may have an elevated revision risk.",
-      "requires_human_approval": true,
-      "secondary_metrics": [
-        "render cost",
-        "render duration",
-        "visual-risk incidents",
-        "comments indicating belief analysis"
-      ],
-      "stop_conditions": [
-        "science-fidelity violation",
-        "grounding removed",
-        "approved narration changed",
-        "visual quality below floor"
-      ],
-      "treatment": "Change only uncategorized_revision using the challenger condition."
-    },
-    {
-      "budget_lane": "uncertainty",
       "control": "Keep the current champion value for semantic_mismatch.",
       "fixed_factors": [
         "core concept",
@@ -290,6 +254,42 @@
     },
     {
       "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:mediation",
+      "id": "experiment:dd82755644ced2ad",
+      "information_value": 0.363,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'mediation' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
       "control": "Keep the current champion value for hook.",
       "fixed_factors": [
         "core concept",
@@ -323,6 +323,42 @@
         "visual quality below floor"
       ],
       "treatment": "Change only hook using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for hand_anatomy.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "visual_failure:hand_anatomy",
+      "id": "experiment:9749c3333ec5c8d5",
+      "information_value": 0.3222,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "Scenes involving hand anatomy may have an elevated revision risk.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only hand_anatomy using the challenger condition."
     },
     {
       "budget_lane": "uncertainty",
@@ -611,42 +647,6 @@
         "visual quality below floor"
       ],
       "treatment": "Change only footage using the challenger condition."
-    },
-    {
-      "budget_lane": "uncertainty",
-      "control": "Keep the current champion value for hand_anatomy.",
-      "fixed_factors": [
-        "core concept",
-        "narration text",
-        "voice",
-        "duration",
-        "publication window",
-        "motion ratio where possible"
-      ],
-      "hypothesis_id": "visual_failure:hand_anatomy",
-      "id": "experiment:9749c3333ec5c8d5",
-      "information_value": 0.1636,
-      "primary_metrics": [
-        "first-3-second retention",
-        "average view percentage",
-        "James scene approval",
-        "revision count"
-      ],
-      "question": "Scenes involving hand anatomy may have an elevated revision risk.",
-      "requires_human_approval": true,
-      "secondary_metrics": [
-        "render cost",
-        "render duration",
-        "visual-risk incidents",
-        "comments indicating belief analysis"
-      ],
-      "stop_conditions": [
-        "science-fidelity violation",
-        "grounding removed",
-        "approved narration changed",
-        "visual quality below floor"
-      ],
-      "treatment": "Change only hand_anatomy using the challenger condition."
     },
     {
       "budget_lane": "uncertainty",

@@ -300,27 +300,6 @@
     },
     {
       "curiosity_score": 0.9,
-      "id": "unknown:27252e009b7be171",
-      "question": "Revision comments exist outside the current failure vocabulary; cluster them before adding another rule.",
-      "source": "unknown_unknown",
-      "why_now": {
-        "count": 1,
-        "kind": "unclassified_feedback",
-        "known_tags": [
-          "darkness",
-          "duplicate_object",
-          "hand_anatomy",
-          "motion_quality",
-          "reflection",
-          "semantic_mismatch",
-          "synthetic_contact",
-          "uncategorized_revision"
-        ],
-        "question": "Revision comments exist outside the current failure vocabulary; cluster them before adding another rule."
-      }
-    },
-    {
-      "curiosity_score": 0.9,
       "id": "unknown:2f19a1dc9c9e743a",
       "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
       "source": "unknown_unknown",
@@ -978,13 +957,6 @@
       "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
     {
-      "curiosity_score": 0.5727,
-      "id": "visual_failure:uncategorized_revision",
-      "question": "Scenes involving uncategorized revision may have an elevated revision risk.",
-      "source": "hypothesis",
-      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
-    },
-    {
       "curiosity_score": 0.5115,
       "id": "frontier:memory_is_future",
       "question": "What can the channel learn by developing 'Memory Is a Time Machine Pointed Forward' without imitating a current winner?",
@@ -1090,6 +1062,13 @@
       "why_now": "Hold topic, duration, voice, and visual-motion ratio constant while changing only hook."
     },
     {
+      "curiosity_score": 0.3222,
+      "id": "visual_failure:hand_anatomy",
+      "question": "Scenes involving hand anatomy may have an elevated revision risk.",
+      "source": "hypothesis",
+      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
+    },
+    {
       "curiosity_score": 0.3082,
       "id": "performance:pillars:grounding",
       "question": "The pillars value 'grounding' may reduces blended reach and retention in the present catalog.",
@@ -1144,13 +1123,6 @@
       "question": "The footage stage may be a high-leverage efficiency target without changing creative policy.",
       "source": "hypothesis",
       "why_now": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
-    },
-    {
-      "curiosity_score": 0.1636,
-      "id": "visual_failure:hand_anatomy",
-      "question": "Scenes involving hand anatomy may have an elevated revision risk.",
-      "source": "hypothesis",
-      "why_now": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
     {
       "curiosity_score": 0.1524,
@@ -1284,49 +1256,6 @@
       "resolution_policy": "Preserve the disagreement map; do not average it into a vote. A human decides which tensions the artifact must hold."
     },
     {
-      "candidate": "Scenes involving uncategorized revision may have an elevated revision risk.",
-      "candidate_id": "experiment:74fd1480f3c8d11d",
-      "positions": [
-        {
-          "challenge": "What evidence supports this, what would falsify it, and is the fidelity label honest?",
-          "role": "scientist"
-        },
-        {
-          "challenge": "What is the largest meaningful reading without pretending it is established fact?",
-          "role": "mystic"
-        },
-        {
-          "challenge": "Which assumption is being smuggled in, and what is the strongest opposite explanation?",
-          "role": "skeptic"
-        },
-        {
-          "challenge": "How might different viewers hear blame, dread, comfort, or invitation in this?",
-          "role": "audience_anthropologist"
-        },
-        {
-          "challenge": "Can one concrete moving subject express the mechanism without fragile anatomy or impossible contact?",
-          "role": "visual_physicist"
-        },
-        {
-          "challenge": "Where does attention rise, where does the mechanism reveal, and where does the piece earn its turn?",
-          "role": "editor"
-        },
-        {
-          "challenge": "Would this make sense to someone tired at midnight without specialized vocabulary?",
-          "role": "ordinary_person"
-        },
-        {
-          "challenge": "Have we already made this in another costume, and what is genuinely new?",
-          "role": "archivist"
-        },
-        {
-          "challenge": "What becomes visible if the proposed interpretation is reversed?",
-          "role": "contrarian"
-        }
-      ],
-      "resolution_policy": "Preserve the disagreement map; do not average it into a vote. A human decides which tensions the artifact must hold."
-    },
-    {
       "candidate": "Scenes involving semantic mismatch may have an elevated revision risk.",
       "candidate_id": "experiment:80c3149a747ad5d6",
       "positions": [
@@ -1415,6 +1344,49 @@
     {
       "candidate": "Scenes involving darkness may have an elevated revision risk.",
       "candidate_id": "experiment:edc505a888ec6455",
+      "positions": [
+        {
+          "challenge": "What evidence supports this, what would falsify it, and is the fidelity label honest?",
+          "role": "scientist"
+        },
+        {
+          "challenge": "What is the largest meaningful reading without pretending it is established fact?",
+          "role": "mystic"
+        },
+        {
+          "challenge": "Which assumption is being smuggled in, and what is the strongest opposite explanation?",
+          "role": "skeptic"
+        },
+        {
+          "challenge": "How might different viewers hear blame, dread, comfort, or invitation in this?",
+          "role": "audience_anthropologist"
+        },
+        {
+          "challenge": "Can one concrete moving subject express the mechanism without fragile anatomy or impossible contact?",
+          "role": "visual_physicist"
+        },
+        {
+          "challenge": "Where does attention rise, where does the mechanism reveal, and where does the piece earn its turn?",
+          "role": "editor"
+        },
+        {
+          "challenge": "Would this make sense to someone tired at midnight without specialized vocabulary?",
+          "role": "ordinary_person"
+        },
+        {
+          "challenge": "Have we already made this in another costume, and what is genuinely new?",
+          "role": "archivist"
+        },
+        {
+          "challenge": "What becomes visible if the proposed interpretation is reversed?",
+          "role": "contrarian"
+        }
+      ],
+      "resolution_policy": "Preserve the disagreement map; do not average it into a vote. A human decides which tensions the artifact must hold."
+    },
+    {
+      "candidate": "Scenes involving synthetic contact may have an elevated revision risk.",
+      "candidate_id": "experiment:95c33d77eb5813e9",
       "positions": [
         {
           "challenge": "What evidence supports this, what would falsify it, and is the fidelity label honest?",
@@ -2451,42 +2423,6 @@
     },
     {
       "budget_lane": "uncertainty",
-      "control": "Keep the current champion value for uncategorized_revision.",
-      "fixed_factors": [
-        "core concept",
-        "narration text",
-        "voice",
-        "duration",
-        "publication window",
-        "motion ratio where possible"
-      ],
-      "hypothesis_id": "visual_failure:uncategorized_revision",
-      "id": "experiment:74fd1480f3c8d11d",
-      "information_value": 0.5727,
-      "primary_metrics": [
-        "first-3-second retention",
-        "average view percentage",
-        "James scene approval",
-        "revision count"
-      ],
-      "question": "Scenes involving uncategorized revision may have an elevated revision risk.",
-      "requires_human_approval": true,
-      "secondary_metrics": [
-        "render cost",
-        "render duration",
-        "visual-risk incidents",
-        "comments indicating belief analysis"
-      ],
-      "stop_conditions": [
-        "science-fidelity violation",
-        "grounding removed",
-        "approved narration changed",
-        "visual quality below floor"
-      ],
-      "treatment": "Change only uncategorized_revision using the challenger condition."
-    },
-    {
-      "budget_lane": "uncertainty",
       "control": "Keep the current champion value for semantic_mismatch.",
       "fixed_factors": [
         "core concept",
@@ -2667,6 +2603,42 @@
     },
     {
       "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for pillars.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "performance:pillars:mediation",
+      "id": "experiment:dd82755644ced2ad",
+      "information_value": 0.363,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "The pillars value 'mediation' may reduces blended reach and retention in the present catalog.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only pillars using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
       "control": "Keep the current champion value for hook.",
       "fixed_factors": [
         "core concept",
@@ -2700,6 +2672,42 @@
         "visual quality below floor"
       ],
       "treatment": "Change only hook using the challenger condition."
+    },
+    {
+      "budget_lane": "uncertainty",
+      "control": "Keep the current champion value for hand_anatomy.",
+      "fixed_factors": [
+        "core concept",
+        "narration text",
+        "voice",
+        "duration",
+        "publication window",
+        "motion ratio where possible"
+      ],
+      "hypothesis_id": "visual_failure:hand_anatomy",
+      "id": "experiment:9749c3333ec5c8d5",
+      "information_value": 0.3222,
+      "primary_metrics": [
+        "first-3-second retention",
+        "average view percentage",
+        "James scene approval",
+        "revision count"
+      ],
+      "question": "Scenes involving hand anatomy may have an elevated revision risk.",
+      "requires_human_approval": true,
+      "secondary_metrics": [
+        "render cost",
+        "render duration",
+        "visual-risk incidents",
+        "comments indicating belief analysis"
+      ],
+      "stop_conditions": [
+        "science-fidelity violation",
+        "grounding removed",
+        "approved narration changed",
+        "visual quality below floor"
+      ],
+      "treatment": "Change only hand_anatomy using the challenger condition."
     },
     {
       "budget_lane": "uncertainty",
@@ -2991,42 +2999,6 @@
     },
     {
       "budget_lane": "uncertainty",
-      "control": "Keep the current champion value for hand_anatomy.",
-      "fixed_factors": [
-        "core concept",
-        "narration text",
-        "voice",
-        "duration",
-        "publication window",
-        "motion ratio where possible"
-      ],
-      "hypothesis_id": "visual_failure:hand_anatomy",
-      "id": "experiment:9749c3333ec5c8d5",
-      "information_value": 0.1636,
-      "primary_metrics": [
-        "first-3-second retention",
-        "average view percentage",
-        "James scene approval",
-        "revision count"
-      ],
-      "question": "Scenes involving hand anatomy may have an elevated revision risk.",
-      "requires_human_approval": true,
-      "secondary_metrics": [
-        "render cost",
-        "render duration",
-        "visual-risk incidents",
-        "comments indicating belief analysis"
-      ],
-      "stop_conditions": [
-        "science-fidelity violation",
-        "grounding removed",
-        "approved narration changed",
-        "visual quality below floor"
-      ],
-      "treatment": "Change only hand_anatomy using the challenger condition."
-    },
-    {
-      "budget_lane": "uncertainty",
       "control": "Keep the current champion value for hook.",
       "fixed_factors": [
         "core concept",
@@ -3244,7 +3216,7 @@
   ],
   "external_signal_count": 0,
   "external_signal_digest": [],
-  "generated_at": "2026-07-24T17:58:41.609229+00:00",
+  "generated_at": "2026-07-24T18:49:42.664079+00:00",
   "hypotheses": [
     {
       "alternatives": [
@@ -3380,56 +3352,6 @@
     },
     {
       "alternatives": [
-        "Model version",
-        "Prompt complexity",
-        "Source image quality"
-      ],
-      "confidence": 0.75,
-      "context": {
-        "failure_tag": "hand_anatomy"
-      },
-      "evidence_against": [
-        "The failure may be provider-specific or caused by one prompt family."
-      ],
-      "evidence_for": {
-        "examples": [
-          {
-            "scene_index": 10,
-            "slug": "the-adjacent-mind"
-          },
-          {
-            "scene_index": 1,
-            "slug": "the-edge-of-you-is-negotiable"
-          },
-          {
-            "scene_index": 2,
-            "slug": "the-edge-of-you-is-negotiable"
-          },
-          {
-            "scene_index": 7,
-            "slug": "the-edge-of-you-is-negotiable"
-          },
-          {
-            "scene_index": 10,
-            "slug": "the-edge-of-you-is-negotiable"
-          },
-          {
-            "scene_index": 16,
-            "slug": "the-edge-of-you-is-negotiable"
-          }
-        ],
-        "revision_count": 6
-      },
-      "id": "visual_failure:hand_anatomy",
-      "kind": "visual_reliability",
-      "last_tested": "2026-07-24",
-      "learning_progress": 0.0,
-      "previous_confidence": 0.75,
-      "statement": "Scenes involving hand anatomy may have an elevated revision risk.",
-      "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
-    },
-    {
-      "alternatives": [
         "Provider latency",
         "Cache miss",
         "Necessary model load"
@@ -3453,6 +3375,52 @@
       "previous_confidence": 0.7,
       "statement": "The footage stage may be a high-leverage efficiency target without changing creative policy.",
       "test": "Run champion/challenger timing with output hashes and James approval held as acceptance gates."
+    },
+    {
+      "alternatives": [
+        "Model version",
+        "Prompt complexity",
+        "Source image quality"
+      ],
+      "confidence": 0.625,
+      "context": {
+        "failure_tag": "hand_anatomy"
+      },
+      "evidence_against": [
+        "The failure may be provider-specific or caused by one prompt family."
+      ],
+      "evidence_for": {
+        "examples": [
+          {
+            "scene_index": 1,
+            "slug": "the-edge-of-you-is-negotiable"
+          },
+          {
+            "scene_index": 2,
+            "slug": "the-edge-of-you-is-negotiable"
+          },
+          {
+            "scene_index": 7,
+            "slug": "the-edge-of-you-is-negotiable"
+          },
+          {
+            "scene_index": 10,
+            "slug": "the-edge-of-you-is-negotiable"
+          },
+          {
+            "scene_index": 16,
+            "slug": "the-edge-of-you-is-negotiable"
+          }
+        ],
+        "revision_count": 5
+      },
+      "id": "visual_failure:hand_anatomy",
+      "kind": "visual_reliability",
+      "last_tested": "2026-07-24",
+      "learning_progress": 0.125,
+      "previous_confidence": 0.75,
+      "statement": "Scenes involving hand anatomy may have an elevated revision risk.",
+      "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
     {
       "alternatives": [
@@ -3890,36 +3858,6 @@
       "learning_progress": 0.0,
       "previous_confidence": 0.125,
       "statement": "Scenes involving semantic mismatch may have an elevated revision risk.",
-      "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
-    },
-    {
-      "alternatives": [
-        "Model version",
-        "Prompt complexity",
-        "Source image quality"
-      ],
-      "confidence": 0.125,
-      "context": {
-        "failure_tag": "uncategorized_revision"
-      },
-      "evidence_against": [
-        "The failure may be provider-specific or caused by one prompt family."
-      ],
-      "evidence_for": {
-        "examples": [
-          {
-            "scene_index": 21,
-            "slug": "the-adjacent-mind"
-          }
-        ],
-        "revision_count": 1
-      },
-      "id": "visual_failure:uncategorized_revision",
-      "kind": "visual_reliability",
-      "last_tested": "2026-07-24",
-      "learning_progress": 0.0,
-      "previous_confidence": 0.125,
-      "statement": "Scenes involving uncategorized revision may have an elevated revision risk.",
       "test": "Compare stock, constrained workflow, and unconstrained generation for the same visual mechanism."
     },
     {
@@ -5512,26 +5450,6 @@
         "blockers": [
           "scientific"
         ],
-        "candidate_id": "experiment:74fd1480f3c8d11d",
-        "layers": {
-          "audience": 0.6,
-          "catalog_novelty": 1.0,
-          "channel": 0.95,
-          "conceptual": 0.9,
-          "emotional": 0.6,
-          "ethical": 1.0,
-          "operational": 0.8,
-          "scientific": 0.55,
-          "temporal": 0.75,
-          "visual": 0.65
-        },
-        "overall": 0.78,
-        "status": "needs_revision"
-      },
-      {
-        "blockers": [
-          "scientific"
-        ],
         "candidate_id": "experiment:80c3149a747ad5d6",
         "layers": {
           "audience": 0.6,
@@ -5626,6 +5544,26 @@
           "visual": 0.65
         },
         "overall": 0.7682,
+        "status": "needs_revision"
+      },
+      {
+        "blockers": [
+          "scientific"
+        ],
+        "candidate_id": "experiment:dd82755644ced2ad",
+        "layers": {
+          "audience": 0.6,
+          "catalog_novelty": 0.875,
+          "channel": 0.95,
+          "conceptual": 0.9,
+          "emotional": 0.6,
+          "ethical": 1.0,
+          "operational": 0.8,
+          "scientific": 0.55,
+          "temporal": 0.75,
+          "visual": 0.65
+        },
+        "overall": 0.7675,
         "status": "needs_revision"
       },
       {
@@ -5835,12 +5773,6 @@
         "self_count": 5
       },
       {
-        "candidate_id": "experiment:74fd1480f3c8d11d",
-        "mean_score": 0.7922,
-        "minimum_self_score": 0.75,
-        "self_count": 5
-      },
-      {
         "candidate_id": "experiment:80c3149a747ad5d6",
         "mean_score": 0.7922,
         "minimum_self_score": 0.75,
@@ -5867,6 +5799,12 @@
       {
         "candidate_id": "experiment:856587c33fd6b641",
         "mean_score": 0.7805,
+        "minimum_self_score": 0.75,
+        "self_count": 5
+      },
+      {
+        "candidate_id": "experiment:dd82755644ced2ad",
+        "mean_score": 0.7797,
         "minimum_self_score": 0.75,
         "self_count": 5
       }
@@ -5924,11 +5862,6 @@
           "score": 0.8687
         },
         {
-          "candidate_id": "experiment:74fd1480f3c8d11d",
-          "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
-          "score": 0.8687
-        },
-        {
           "candidate_id": "experiment:80c3149a747ad5d6",
           "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
           "score": 0.8687
@@ -5952,6 +5885,11 @@
           "candidate_id": "experiment:856587c33fd6b641",
           "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
           "score": 0.8099
+        },
+        {
+          "candidate_id": "experiment:dd82755644ced2ad",
+          "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
+          "score": 0.8062
         }
       ],
       "midnight": [
@@ -6006,11 +5944,6 @@
           "score": 0.75
         },
         {
-          "candidate_id": "experiment:74fd1480f3c8d11d",
-          "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
-          "score": 0.75
-        },
-        {
           "candidate_id": "experiment:80c3149a747ad5d6",
           "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
           "score": 0.75
@@ -6027,6 +5960,11 @@
         },
         {
           "candidate_id": "experiment:95c33d77eb5813e9",
+          "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
+          "score": 0.75
+        },
+        {
+          "candidate_id": "experiment:dd82755644ced2ad",
           "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
           "score": 0.75
         },
@@ -6088,11 +6026,6 @@
           "score": 0.7875
         },
         {
-          "candidate_id": "experiment:74fd1480f3c8d11d",
-          "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
-          "score": 0.7875
-        },
-        {
           "candidate_id": "experiment:80c3149a747ad5d6",
           "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
           "score": 0.7875
@@ -6109,6 +6042,11 @@
         },
         {
           "candidate_id": "experiment:95c33d77eb5813e9",
+          "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
+          "score": 0.7875
+        },
+        {
+          "candidate_id": "experiment:dd82755644ced2ad",
           "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
           "score": 0.7875
         },
@@ -6170,11 +6108,6 @@
           "score": 0.8
         },
         {
-          "candidate_id": "experiment:74fd1480f3c8d11d",
-          "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
-          "score": 0.8
-        },
-        {
           "candidate_id": "experiment:80c3149a747ad5d6",
           "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
           "score": 0.8
@@ -6191,6 +6124,11 @@
         },
         {
           "candidate_id": "experiment:95c33d77eb5813e9",
+          "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
+          "score": 0.8
+        },
+        {
+          "candidate_id": "experiment:dd82755644ced2ad",
           "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
           "score": 0.8
         },
@@ -6252,11 +6190,6 @@
           "score": 0.755
         },
         {
-          "candidate_id": "experiment:74fd1480f3c8d11d",
-          "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
-          "score": 0.755
-        },
-        {
           "candidate_id": "experiment:80c3149a747ad5d6",
           "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
           "score": 0.755
@@ -6273,6 +6206,11 @@
         },
         {
           "candidate_id": "experiment:95c33d77eb5813e9",
+          "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
+          "score": 0.755
+        },
+        {
+          "candidate_id": "experiment:dd82755644ced2ad",
           "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
           "score": 0.755
         },
@@ -6517,22 +6455,6 @@
     ],
     "quality_failures": [],
     "rejected_scene_ideas": [
-      {
-        "classification": "execution_failure_until_proven_bad_concept",
-        "comment": "Morphed hand. Hard to tell it's a hand. ",
-        "failure_tags": [
-          "hand_anatomy"
-        ],
-        "scene_index": 10,
-        "slug": "the-adjacent-mind"
-      },
-      {
-        "classification": "execution_failure_until_proven_bad_concept",
-        "comment": "Has a different feel from the rest of the video. This slide can be chosen for the symbol being presented, but also has a little bit of the sexual attraction symbol in it. Which is not bad, just distracting. ",
-        "failure_tags": [],
-        "scene_index": 21,
-        "slug": "the-adjacent-mind"
-      },
       {
         "classification": "execution_failure_until_proven_bad_concept",
         "comment": "Generated rubber hand is anatomically deformed with extra/fused fingers. Replace with a lower-model-safe single prosthetic hand setup: only one visible silicone hand, real hand completely hidden, no human fingers in frame, brush resting across the divider rather than touching anatomy.",
@@ -7113,42 +7035,6 @@
       },
       {
         "budget_lane": "uncertainty",
-        "control": "Keep the current champion value for uncategorized_revision.",
-        "fixed_factors": [
-          "core concept",
-          "narration text",
-          "voice",
-          "duration",
-          "publication window",
-          "motion ratio where possible"
-        ],
-        "hypothesis_id": "visual_failure:uncategorized_revision",
-        "id": "experiment:74fd1480f3c8d11d",
-        "information_value": 0.5727,
-        "primary_metrics": [
-          "first-3-second retention",
-          "average view percentage",
-          "James scene approval",
-          "revision count"
-        ],
-        "question": "Scenes involving uncategorized revision may have an elevated revision risk.",
-        "requires_human_approval": true,
-        "secondary_metrics": [
-          "render cost",
-          "render duration",
-          "visual-risk incidents",
-          "comments indicating belief analysis"
-        ],
-        "stop_conditions": [
-          "science-fidelity violation",
-          "grounding removed",
-          "approved narration changed",
-          "visual quality below floor"
-        ],
-        "treatment": "Change only uncategorized_revision using the challenger condition."
-      },
-      {
-        "budget_lane": "uncertainty",
         "control": "Keep the current champion value for semantic_mismatch.",
         "fixed_factors": [
           "core concept",
@@ -7182,6 +7068,42 @@
           "visual quality below floor"
         ],
         "treatment": "Change only semantic_mismatch using the challenger condition."
+      },
+      {
+        "budget_lane": "uncertainty",
+        "control": "Keep the current champion value for reflection.",
+        "fixed_factors": [
+          "core concept",
+          "narration text",
+          "voice",
+          "duration",
+          "publication window",
+          "motion ratio where possible"
+        ],
+        "hypothesis_id": "visual_failure:reflection",
+        "id": "experiment:8fa9edbe7513411f",
+        "information_value": 0.5727,
+        "primary_metrics": [
+          "first-3-second retention",
+          "average view percentage",
+          "James scene approval",
+          "revision count"
+        ],
+        "question": "Scenes involving reflection may have an elevated revision risk.",
+        "requires_human_approval": true,
+        "secondary_metrics": [
+          "render cost",
+          "render duration",
+          "visual-risk incidents",
+          "comments indicating belief analysis"
+        ],
+        "stop_conditions": [
+          "science-fidelity violation",
+          "grounding removed",
+          "approved narration changed",
+          "visual quality below floor"
+        ],
+        "treatment": "Change only reflection using the challenger condition."
       }
     ],
     "wild_lane": [
@@ -7557,21 +7479,6 @@
       "kind": "taxonomy_gap",
       "question": "This video fits no declared pillar or frontier concept; is the map missing a dimension?",
       "slug": "you-were-always-source-new-voice"
-    },
-    {
-      "count": 1,
-      "kind": "unclassified_feedback",
-      "known_tags": [
-        "darkness",
-        "duplicate_object",
-        "hand_anatomy",
-        "motion_quality",
-        "reflection",
-        "semantic_mismatch",
-        "synthetic_contact",
-        "uncategorized_revision"
-      ],
-      "question": "Revision comments exist outside the current failure vocabulary; cluster them before adding another rule."
     },
     {
       "coverage": 0.0143,

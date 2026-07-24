@@ -44,26 +44,6 @@
       "blockers": [
         "scientific"
       ],
-      "candidate_id": "experiment:74fd1480f3c8d11d",
-      "layers": {
-        "audience": 0.6,
-        "catalog_novelty": 1.0,
-        "channel": 0.95,
-        "conceptual": 0.9,
-        "emotional": 0.6,
-        "ethical": 1.0,
-        "operational": 0.8,
-        "scientific": 0.55,
-        "temporal": 0.75,
-        "visual": 0.65
-      },
-      "overall": 0.78,
-      "status": "needs_revision"
-    },
-    {
-      "blockers": [
-        "scientific"
-      ],
       "candidate_id": "experiment:80c3149a747ad5d6",
       "layers": {
         "audience": 0.6,
@@ -158,6 +138,26 @@
         "visual": 0.65
       },
       "overall": 0.7682,
+      "status": "needs_revision"
+    },
+    {
+      "blockers": [
+        "scientific"
+      ],
+      "candidate_id": "experiment:dd82755644ced2ad",
+      "layers": {
+        "audience": 0.6,
+        "catalog_novelty": 0.875,
+        "channel": 0.95,
+        "conceptual": 0.9,
+        "emotional": 0.6,
+        "ethical": 1.0,
+        "operational": 0.8,
+        "scientific": 0.55,
+        "temporal": 0.75,
+        "visual": 0.65
+      },
+      "overall": 0.7675,
       "status": "needs_revision"
     },
     {
@@ -367,12 +367,6 @@
       "self_count": 5
     },
     {
-      "candidate_id": "experiment:74fd1480f3c8d11d",
-      "mean_score": 0.7922,
-      "minimum_self_score": 0.75,
-      "self_count": 5
-    },
-    {
       "candidate_id": "experiment:80c3149a747ad5d6",
       "mean_score": 0.7922,
       "minimum_self_score": 0.75,
@@ -399,6 +393,12 @@
     {
       "candidate_id": "experiment:856587c33fd6b641",
       "mean_score": 0.7805,
+      "minimum_self_score": 0.75,
+      "self_count": 5
+    },
+    {
+      "candidate_id": "experiment:dd82755644ced2ad",
+      "mean_score": 0.7797,
       "minimum_self_score": 0.75,
       "self_count": 5
     }
@@ -456,11 +456,6 @@
         "score": 0.8687
       },
       {
-        "candidate_id": "experiment:74fd1480f3c8d11d",
-        "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
-        "score": 0.8687
-      },
-      {
         "candidate_id": "experiment:80c3149a747ad5d6",
         "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
         "score": 0.8687
@@ -484,6 +479,11 @@
         "candidate_id": "experiment:856587c33fd6b641",
         "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
         "score": 0.8099
+      },
+      {
+        "candidate_id": "experiment:dd82755644ced2ad",
+        "reason": "Maximize conceptual distance, productive strangeness, and cross-domain transfer.",
+        "score": 0.8062
       }
     ],
     "midnight": [
@@ -538,11 +538,6 @@
         "score": 0.75
       },
       {
-        "candidate_id": "experiment:74fd1480f3c8d11d",
-        "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
-        "score": 0.75
-      },
-      {
         "candidate_id": "experiment:80c3149a747ad5d6",
         "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
         "score": 0.75
@@ -559,6 +554,11 @@
       },
       {
         "candidate_id": "experiment:95c33d77eb5813e9",
+        "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
+        "score": 0.75
+      },
+      {
+        "candidate_id": "experiment:dd82755644ced2ad",
         "reason": "Maximize intimacy, warmth, sly intelligence, emotional movement, and felt invitation.",
         "score": 0.75
       },
@@ -620,11 +620,6 @@
         "score": 0.7875
       },
       {
-        "candidate_id": "experiment:74fd1480f3c8d11d",
-        "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
-        "score": 0.7875
-      },
-      {
         "candidate_id": "experiment:80c3149a747ad5d6",
         "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
         "score": 0.7875
@@ -641,6 +636,11 @@
       },
       {
         "candidate_id": "experiment:95c33d77eb5813e9",
+        "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
+        "score": 0.7875
+      },
+      {
+        "candidate_id": "experiment:dd82755644ced2ad",
         "reason": "Reject anything that cannot return clearly to an ordinary room, object, body, or breath.",
         "score": 0.7875
       },
@@ -702,11 +702,6 @@
         "score": 0.8
       },
       {
-        "candidate_id": "experiment:74fd1480f3c8d11d",
-        "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
-        "score": 0.8
-      },
-      {
         "candidate_id": "experiment:80c3149a747ad5d6",
         "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
         "score": 0.8
@@ -723,6 +718,11 @@
       },
       {
         "candidate_id": "experiment:95c33d77eb5813e9",
+        "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
+        "score": 0.8
+      },
+      {
+        "candidate_id": "experiment:dd82755644ced2ad",
         "reason": "Maximize evidence integrity, mechanism clarity, falsifiability, and humility.",
         "score": 0.8
       },
@@ -784,11 +784,6 @@
         "score": 0.755
       },
       {
-        "candidate_id": "experiment:74fd1480f3c8d11d",
-        "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
-        "score": 0.755
-      },
-      {
         "candidate_id": "experiment:80c3149a747ad5d6",
         "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
         "score": 0.755
@@ -805,6 +800,11 @@
       },
       {
         "candidate_id": "experiment:95c33d77eb5813e9",
+        "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
+        "score": 0.755
+      },
+      {
+        "candidate_id": "experiment:dd82755644ced2ad",
         "reason": "Think in concrete moving subjects, material physics, visual mechanisms, and legibility.",
         "score": 0.755
       },
