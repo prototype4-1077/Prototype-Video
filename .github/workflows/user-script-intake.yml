@@ -74,6 +74,53 @@ jobs:
           for slug in ${{ steps.slugs.outputs.slugs }}; do
             build="build/$slug"
             rm -f "$build/intake-ready.txt" "$build/intake-blocked.txt"
+
+            # An overwrite request may refresh only a package created by this intake
+            # system. It may never replace a hand-built, approved, or legacy package.
+            if [[ -f "$build/script.json" && "${{ steps.slugs.outputs.overwrite }}" == "true" ]]; then
+              if ! python3 - "$build/script.json" <<'PY'
+          import json, pathlib, sys
+          path = pathlib.Path(sys.argv[1])
+          script = json.loads(path.read_text(encoding="utf-8"))
+          if script.get("script_origin") != "user_supplied_plain_text":
+              raise SystemExit("refusing to overwrite a non-intake script.json")
+          PY
+              then
+                python3 - "$build" <<'PY'
+          import json, pathlib, sys
+          build = pathlib.Path(sys.argv[1])
+          report = {
+              "schema_version": 1,
+              "status": "blocked",
+              "passed": False,
+              "error": "Refusing to overwrite a non-intake script.json. Use a new isolated slug.",
+          }
+          (build / "intake-report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+          (build / "intake-blocked.txt").write_text(
+              "USER SCRIPT INTAKE BLOCKED\nRefusing to overwrite a non-intake script.json. Use a new isolated slug.\n",
+              encoding="utf-8",
+          )
+          PY
+                blocked="$blocked $slug"
+                continue
+              fi
+            fi
+
+            # The channel's normal package remains 24 scenes. A user can explicitly
+            # override this in submission.json, but an omitted value never triggers
+            # late long-script policy mutation inside the render job.
+            python3 - "$build/submission.json" <<'PY'
+          import json, pathlib, sys
+          path = pathlib.Path(sys.argv[1])
+          payload = {}
+          if path.exists():
+              payload = json.loads(path.read_text(encoding="utf-8"))
+              if not isinstance(payload, dict):
+                  raise SystemExit("submission.json must contain one JSON object")
+          payload.setdefault("target_scenes", 24)
+          path.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+          PY
+
             args=("$build")
             [[ "${{ steps.slugs.outputs.overwrite }}" == "true" ]] && args+=(--overwrite)
             if python3 pipeline/user_script_intake.py "${args[@]}" \
