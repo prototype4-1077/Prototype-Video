@@ -8,6 +8,9 @@ on:
       - "pipeline/record_operational_run.py"
       - "pipeline/package_integrity.py"
       - "pipeline/backfill_observability.py"
+      - "pipeline/feedback_rule_candidates.py"
+      - "pipeline/stock_supply_analysis.py"
+      - "pipeline/yt_stats_refresh.py"
       - "pipeline/system_diagnostics.py"
       - "pipeline/system_diagnostic_policy.py"
       - "pipeline/preflight.py"
@@ -17,12 +20,14 @@ on:
       - "pipeline/tests/test_operational_memory.py"
       - "pipeline/tests/test_system_hardening.py"
       - "pipeline/tests/test_diagnostic_policy.py"
+      - "pipeline/tests/test_learning_evidence.py"
       - "intelligence_stack/fiftyone/analyze_visual_memory.py"
       - ".github/workflows/render-request.yml"
       - ".github/workflows/render.yml"
       - ".github/workflows/visual-memory.yml"
       - ".github/workflows/youtube_publish.yml"
       - ".github/workflows/facebook_publish.yml"
+      - ".github/workflows/youtube-stats.yml"
       - ".github/workflows/system-diagnostics.yml"
       - ".github/workflows/operational-memory-*.yml"
   push:
@@ -33,6 +38,9 @@ on:
       - "pipeline/record_operational_run.py"
       - "pipeline/package_integrity.py"
       - "pipeline/backfill_observability.py"
+      - "pipeline/feedback_rule_candidates.py"
+      - "pipeline/stock_supply_analysis.py"
+      - "pipeline/yt_stats_refresh.py"
       - "pipeline/system_diagnostics.py"
       - "pipeline/system_diagnostic_policy.py"
       - "pipeline/preflight.py"
@@ -42,12 +50,14 @@ on:
       - "pipeline/tests/test_operational_memory.py"
       - "pipeline/tests/test_system_hardening.py"
       - "pipeline/tests/test_diagnostic_policy.py"
+      - "pipeline/tests/test_learning_evidence.py"
       - "intelligence_stack/fiftyone/analyze_visual_memory.py"
       - ".github/workflows/render-request.yml"
       - ".github/workflows/render.yml"
       - ".github/workflows/visual-memory.yml"
       - ".github/workflows/youtube_publish.yml"
       - ".github/workflows/facebook_publish.yml"
+      - ".github/workflows/youtube-stats.yml"
       - ".github/workflows/system-diagnostics.yml"
       - ".github/workflows/operational-memory-*.yml"
   workflow_dispatch:
@@ -76,6 +86,9 @@ jobs:
             pipeline/record_operational_run.py \
             pipeline/package_integrity.py \
             pipeline/backfill_observability.py \
+            pipeline/feedback_rule_candidates.py \
+            pipeline/stock_supply_analysis.py \
+            pipeline/yt_stats_refresh.py \
             pipeline/system_diagnostics.py \
             pipeline/system_diagnostic_policy.py \
             pipeline/preflight.py \
@@ -99,6 +112,7 @@ jobs:
               ".github/workflows/visual-memory.yml",
               ".github/workflows/youtube_publish.yml",
               ".github/workflows/facebook_publish.yml",
+              ".github/workflows/youtube-stats.yml",
               ".github/workflows/system-diagnostics.yml",
               ".github/workflows/operational-memory-capture.yml",
               ".github/workflows/operational-memory-materialize.yml",
@@ -112,6 +126,7 @@ jobs:
           python3 -m unittest pipeline.tests.test_operational_memory -v
           python3 -m unittest pipeline.tests.test_system_hardening -v
           python3 -m unittest pipeline.tests.test_diagnostic_policy -v
+          python3 -m unittest pipeline.tests.test_learning_evidence -v
 
       - name: Rebuild causal index and validate materialized evidence
         run: |
@@ -140,6 +155,12 @@ jobs:
           python3 pipeline/backfill_observability.py \
             > /tmp/system-diagnostic-debug/backfill.stdout.txt \
             2> /tmp/system-diagnostic-debug/backfill.stderr.txt
+          python3 pipeline/feedback_rule_candidates.py \
+            > /tmp/system-diagnostic-debug/feedback.stdout.txt \
+            2> /tmp/system-diagnostic-debug/feedback.stderr.txt
+          python3 pipeline/stock_supply_analysis.py \
+            > /tmp/system-diagnostic-debug/stock.stdout.txt \
+            2> /tmp/system-diagnostic-debug/stock.stderr.txt
           python3 pipeline/system_diagnostic_policy.py \
             > /tmp/system-diagnostic-debug/system.stdout.txt \
             2> /tmp/system-diagnostic-debug/system.stderr.txt
@@ -148,14 +169,21 @@ jobs:
             2> /tmp/system-diagnostic-debug/validation.stderr.txt
           import json
           report = json.load(open("pipeline/system_diagnostics/LATEST.json", encoding="utf-8"))
+          feedback = json.load(open("pipeline/feedback_rule_candidates.json", encoding="utf-8"))
+          stock = json.load(open("pipeline/stock_supply_report.json", encoding="utf-8"))
           assert report["authority_boundary"]
           assert report["denominator_policy"]
           assert report["summary"]["finding_count"] == len(report["findings"])
           coverage = report["coverage"]
           assert coverage["render_observed_count"] >= coverage["telemetry_count"]
           assert coverage["reviewable_count"] >= coverage["human_feedback_count"]
+          assert coverage["youtube_published_receipt_count"] >= coverage["youtube_stats_count"]
+          assert feedback["authority_boundary"]
+          assert stock["measurement_boundary"]
           print("diagnostic", report["summary"])
           print("coverage", coverage)
+          print("feedback", feedback["candidate_count"])
+          print("stock", stock["state"], stock["evidence_strength"])
           PY
 
       - name: Upload diagnostic traceback and materialized reports
@@ -169,6 +197,9 @@ jobs:
             /tmp/system-diagnostic-debug/**
             concept/visual_memory/action_report.json
             pipeline/system_diagnostics/**
+            pipeline/feedback_rule_candidates.json
+            pipeline/stock_supply_report.json
+            pipeline/youtube_stats_status.json
             pipeline/operational_memory/action_queue.json
             pipeline/operational_memory/index.json
             build/*/telemetry-summary.json
