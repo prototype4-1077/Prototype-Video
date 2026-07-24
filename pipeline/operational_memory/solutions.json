@@ -1,0 +1,161 @@
+{
+  "schema_version": 1,
+  "solutions": [
+    {
+      "id": "sol-visual-symbol-diversity-v1",
+      "title": "Validate observed visual families before render dispatch",
+      "status": "verified",
+      "category": "deterministic_preflight",
+      "root_cause": "Author-facing symbol labels can use noncanonical names or describe intent while the effective visual query collapses into too few canonical families. The production validator audits observed queries, so trusting labels alone allows a package to pass review and fail after dispatch.",
+      "repair_action": "Run the canonical visual_symbols planner and analyzer before dispatch. Repair effective query or image_prompt language until the observed family count and consecutive-family limits pass; do not change narration merely to satisfy the gate.",
+      "fix_commits": [
+        "ed0e7084c43fa9e3193ec2611232cc7b673ee80f",
+        "f5802ff422b3bc607257a6bb10214890cc0e0acd"
+      ],
+      "fixed_at": "2026-07-24T09:36:31+00:00",
+      "prevention_rule_id": "rule-visual-symbol-plan",
+      "safe_to_auto_apply": false,
+      "verification_requirement": "One passing canonical preflight and one real render that advances beyond build validation.",
+      "match": {
+        "codes": ["visual_symbol_plan"],
+        "fingerprints": ["77b1a79e3bf22e98"],
+        "contains_any": [
+          "visual symbol plan",
+          "symbol families across",
+          "use at least"
+        ]
+      }
+    },
+    {
+      "id": "sol-planned-still-budget-v1",
+      "title": "Estimate still-derived duration before dispatch",
+      "status": "provisional",
+      "category": "deterministic_preflight",
+      "root_cause": "A script can appear below the still cap by scene count yet exceed it after narration timing because hero scenes are longer than stock scenes.",
+      "repair_action": "Estimate each scene duration from exact timing when available or narration word weight otherwise. Convert enough hero or still scenes to genuine motion before dispatch and warn when the estimate is within three percentage points of the cap.",
+      "fix_commits": ["f7aeffb8dc0ac697cb4f3d014d82d30d38bf6212"],
+      "fixed_at": "2026-07-24T10:00:00+00:00",
+      "prevention_rule_id": "rule-planned-still-budget",
+      "safe_to_auto_apply": false,
+      "verification_requirement": "One successful delivery render after the preflight estimate passes.",
+      "match": {
+        "codes": ["planned_still_budget"],
+        "contains_any": [
+          "still-derived",
+          "motion-budget",
+          "max_still_source_ratio",
+          "still ratio"
+        ]
+      }
+    },
+    {
+      "id": "sol-june-canonical-voice-v1",
+      "title": "Pin June Oxley's public canonical voice without library lookup",
+      "status": "verified",
+      "category": "safe_auto_fix",
+      "root_cause": "The configured ElevenLabs key can synthesize speech without voices_read permission, so resolving a display name through the voice library fails even though the canonical public voice is usable.",
+      "repair_action": "Fill a missing June voice ID and display name from the character bible before TTS. Block conflicts and never fall back to Liam.",
+      "fix_commits": ["c7930a0d544899562a8fa41a2241f89bd7500cac"],
+      "fixed_at": "2026-07-23T15:29:17+00:00",
+      "prevention_rule_id": "rule-june-canonical-voice",
+      "safe_to_auto_apply": true,
+      "verification_requirement": "Canonical ID survives preflight and a real June render completes TTS.",
+      "match": {
+        "codes": [
+          "character_voice_missing_from_bible",
+          "character_voice_conflict",
+          "character_voice_name_conflict"
+        ],
+        "contains_any": [
+          "voices_read",
+          "canonical voice",
+          "requires voice"
+        ]
+      }
+    },
+    {
+      "id": "sol-june-scene-character-scope-v1",
+      "title": "Apply June character continuity only to character scenes",
+      "status": "verified",
+      "category": "safe_auto_fix",
+      "root_cause": "June's anatomy and reference suffix were previously appended to object, vehicle, weather, animal, and architecture scenes, turning an object-led plan into a 100 percent human plan.",
+      "repair_action": "Run animation_profiles.apply_defaults before render. Respect human_role none/object/environment, remove stale character references from object scenes, and keep the shared town style separate from June anatomy.",
+      "fix_commits": ["c7930a0d544899562a8fa41a2241f89bd7500cac"],
+      "fixed_at": "2026-07-23T15:29:17+00:00",
+      "prevention_rule_id": "rule-animation-contract",
+      "safe_to_auto_apply": true,
+      "verification_requirement": "Object-only regression fixture plus one completed June animation render.",
+      "match": {
+        "codes": ["animation_contract_invalid"],
+        "contains_any": [
+          "character/reference mismatch",
+          "100% human",
+          "object-only",
+          "animation_character_required"
+        ]
+      }
+    },
+    {
+      "id": "sol-standalone-title-eyebrow-v1",
+      "title": "Remove series eyebrows from standalone videos",
+      "status": "verified",
+      "category": "safe_auto_fix",
+      "root_cause": "Standalone videos inherited a yellow series label from older defaults, making unrelated videos look like named series episodes.",
+      "repair_action": "When title_mode is standalone, set series_label to null before title generation.",
+      "fix_commits": ["562cf758c1bbd6df22b804f6b2c352d30191ec43"],
+      "fixed_at": "2026-07-23T21:40:09+00:00",
+      "prevention_rule_id": "rule-standalone-title",
+      "safe_to_auto_apply": true,
+      "verification_requirement": "Title preflight plus one completed standalone render.",
+      "match": {
+        "codes": ["standalone_series_label"],
+        "contains_any": [
+          "standalone video",
+          "series label",
+          "yellow series eyebrow"
+        ]
+      }
+    },
+    {
+      "id": "sol-animation-contract-preflight-v1",
+      "title": "Apply and validate animation contracts before dispatch",
+      "status": "provisional",
+      "category": "safe_auto_fix",
+      "root_cause": "Animation profile defaults and scene-level contracts were historically applied only inside the render job, allowing deterministic profile defects to consume a runner.",
+      "repair_action": "Apply canonical animation profile defaults in mandatory preflight, preserve narration, then block any remaining validation errors.",
+      "fix_commits": [],
+      "fixed_at": "2026-07-24T00:00:00+00:00",
+      "prevention_rule_id": "rule-animation-contract",
+      "safe_to_auto_apply": true,
+      "verification_requirement": "CI fixture and three real animation packages passing preflight.",
+      "match": {
+        "codes": ["animation_contract_invalid"],
+        "contains_any": [
+          "animation profile validation failed",
+          "production profile validation failed"
+        ]
+      }
+    },
+    {
+      "id": "sol-hero-readiness-v1",
+      "title": "Resolve hero-art mode before dispatch",
+      "status": "provisional",
+      "category": "deterministic_preflight",
+      "root_cause": "A package can declare committed-before-render art while no committed hero exists and no approved runtime-generation mode is recorded.",
+      "repair_action": "Require committed hero art, motion-only policy, or an explicit runtime scene-generation mode with scene prompts before accepting render.request.",
+      "fix_commits": ["81282199a1ef95ad907145896fad94e6ccfd2e6b"],
+      "fixed_at": "2026-07-24T02:32:24+00:00",
+      "prevention_rule_id": "rule-hero-readiness",
+      "safe_to_auto_apply": false,
+      "verification_requirement": "Preflight blocks a missing-art fixture and passes a valid runtime-generation fixture.",
+      "match": {
+        "codes": ["hero_art_not_ready"],
+        "contains_any": [
+          "hero art",
+          "runtime scene-generation",
+          "committed before render"
+        ]
+      }
+    }
+  ]
+}
