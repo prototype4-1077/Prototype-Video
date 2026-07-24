@@ -13,6 +13,7 @@ on:
       - "pipeline/yt_stats_refresh.py"
       - "pipeline/system_diagnostics.py"
       - "pipeline/system_diagnostic_policy.py"
+      - "pipeline/user_script_intake.py"
       - "pipeline/preflight.py"
       - "pipeline/yt_publish.py"
       - "pipeline/fb_publish.py"
@@ -21,9 +22,11 @@ on:
       - "pipeline/tests/test_system_hardening.py"
       - "pipeline/tests/test_diagnostic_policy.py"
       - "pipeline/tests/test_learning_evidence.py"
+      - "pipeline/tests/test_user_script_intake.py"
       - "intelligence_stack/fiftyone/analyze_visual_memory.py"
       - ".github/workflows/render-request.yml"
       - ".github/workflows/render.yml"
+      - ".github/workflows/user-script-intake.yml"
       - ".github/workflows/visual-memory.yml"
       - ".github/workflows/youtube_publish.yml"
       - ".github/workflows/facebook_publish.yml"
@@ -43,6 +46,7 @@ on:
       - "pipeline/yt_stats_refresh.py"
       - "pipeline/system_diagnostics.py"
       - "pipeline/system_diagnostic_policy.py"
+      - "pipeline/user_script_intake.py"
       - "pipeline/preflight.py"
       - "pipeline/yt_publish.py"
       - "pipeline/fb_publish.py"
@@ -51,9 +55,11 @@ on:
       - "pipeline/tests/test_system_hardening.py"
       - "pipeline/tests/test_diagnostic_policy.py"
       - "pipeline/tests/test_learning_evidence.py"
+      - "pipeline/tests/test_user_script_intake.py"
       - "intelligence_stack/fiftyone/analyze_visual_memory.py"
       - ".github/workflows/render-request.yml"
       - ".github/workflows/render.yml"
+      - ".github/workflows/user-script-intake.yml"
       - ".github/workflows/visual-memory.yml"
       - ".github/workflows/youtube_publish.yml"
       - ".github/workflows/facebook_publish.yml"
@@ -91,6 +97,7 @@ jobs:
             pipeline/yt_stats_refresh.py \
             pipeline/system_diagnostics.py \
             pipeline/system_diagnostic_policy.py \
+            pipeline/user_script_intake.py \
             pipeline/preflight.py \
             pipeline/yt_publish.py \
             pipeline/fb_publish.py \
@@ -109,6 +116,7 @@ jobs:
           for path in (
               ".github/workflows/render-request.yml",
               ".github/workflows/render.yml",
+              ".github/workflows/user-script-intake.yml",
               ".github/workflows/visual-memory.yml",
               ".github/workflows/youtube_publish.yml",
               ".github/workflows/facebook_publish.yml",
@@ -127,6 +135,7 @@ jobs:
           python3 -m unittest pipeline.tests.test_system_hardening -v
           python3 -m unittest pipeline.tests.test_diagnostic_policy -v
           python3 -m unittest pipeline.tests.test_learning_evidence -v
+          python3 -m unittest pipeline.tests.test_user_script_intake -v
 
       - name: Rebuild causal index and validate materialized evidence
         run: |
@@ -185,6 +194,12 @@ jobs:
           print("feedback", feedback["candidate_count"])
           print("stock", stock["state"], stock["evidence_strength"])
           PY
+
+      - name: Validate user-script authority boundary
+        run: |
+          grep -q 'source_script_lock' .github/workflows/render-request.yml
+          grep -q 'test ! -f "build/$slug/render.request"' .github/workflows/user-script-intake.yml
+          grep -q 'never starts a render' pipeline/USER_SCRIPT_INTAKE.md
 
       - name: Upload diagnostic traceback and materialized reports
         if: always()
