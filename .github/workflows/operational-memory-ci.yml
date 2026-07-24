@@ -1,22 +1,48 @@
-name: Operational memory integrity
+name: Operational memory and system hardening integrity
 
 on:
   pull_request:
     paths:
       - "pipeline/operational_memory.py"
+      - "pipeline/operational_memory_analysis.py"
+      - "pipeline/record_operational_run.py"
+      - "pipeline/package_integrity.py"
+      - "pipeline/system_diagnostics.py"
       - "pipeline/preflight.py"
+      - "pipeline/yt_publish.py"
+      - "pipeline/fb_publish.py"
       - "pipeline/operational_memory/**"
       - "pipeline/tests/test_operational_memory.py"
+      - "pipeline/tests/test_system_hardening.py"
+      - "intelligence_stack/fiftyone/analyze_visual_memory.py"
       - ".github/workflows/render-request.yml"
+      - ".github/workflows/render.yml"
+      - ".github/workflows/visual-memory.yml"
+      - ".github/workflows/youtube_publish.yml"
+      - ".github/workflows/facebook_publish.yml"
+      - ".github/workflows/system-diagnostics.yml"
       - ".github/workflows/operational-memory-*.yml"
   push:
     branches: [main]
     paths:
       - "pipeline/operational_memory.py"
+      - "pipeline/operational_memory_analysis.py"
+      - "pipeline/record_operational_run.py"
+      - "pipeline/package_integrity.py"
+      - "pipeline/system_diagnostics.py"
       - "pipeline/preflight.py"
+      - "pipeline/yt_publish.py"
+      - "pipeline/fb_publish.py"
       - "pipeline/operational_memory/**"
       - "pipeline/tests/test_operational_memory.py"
+      - "pipeline/tests/test_system_hardening.py"
+      - "intelligence_stack/fiftyone/analyze_visual_memory.py"
       - ".github/workflows/render-request.yml"
+      - ".github/workflows/render.yml"
+      - ".github/workflows/visual-memory.yml"
+      - ".github/workflows/youtube_publish.yml"
+      - ".github/workflows/facebook_publish.yml"
+      - ".github/workflows/system-diagnostics.yml"
       - ".github/workflows/operational-memory-*.yml"
   workflow_dispatch:
 
@@ -33,11 +59,24 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Install lightweight validation dependency
+        run: python3 -m pip install --quiet PyYAML
+
       - name: Compile and validate catalogs
         run: |
-          python3 -m py_compile pipeline/operational_memory.py pipeline/preflight.py
+          python3 -m py_compile \
+            pipeline/operational_memory.py \
+            pipeline/operational_memory_analysis.py \
+            pipeline/record_operational_run.py \
+            pipeline/package_integrity.py \
+            pipeline/system_diagnostics.py \
+            pipeline/preflight.py \
+            pipeline/yt_publish.py \
+            pipeline/fb_publish.py \
+            intelligence_stack/fiftyone/analyze_visual_memory.py
           python3 - <<'PY'
           import json
+          import yaml
           for path in (
               "pipeline/operational_memory/solutions.json",
               "pipeline/operational_memory/prevention_rules.json",
@@ -46,19 +85,49 @@ jobs:
           ):
               json.load(open(path, encoding="utf-8"))
               print("valid", path)
+          for path in (
+              ".github/workflows/render-request.yml",
+              ".github/workflows/render.yml",
+              ".github/workflows/visual-memory.yml",
+              ".github/workflows/youtube_publish.yml",
+              ".github/workflows/facebook_publish.yml",
+              ".github/workflows/system-diagnostics.yml",
+              ".github/workflows/operational-memory-capture.yml",
+              ".github/workflows/operational-memory-materialize.yml",
+          ):
+              yaml.safe_load(open(path, encoding="utf-8"))
+              print("valid yaml", path)
           PY
 
-      - name: Run operational memory tests
-        run: python3 -m unittest pipeline.tests.test_operational_memory -v
-
-      - name: Rebuild index and validate materialized evidence
+      - name: Run operational and system hardening tests
         run: |
-          python3 pipeline/operational_memory.py rebuild-index
+          python3 -m unittest pipeline.tests.test_operational_memory -v
+          python3 -m unittest pipeline.tests.test_system_hardening -v
+
+      - name: Rebuild causal index and validate materialized evidence
+        run: |
+          python3 pipeline/operational_memory_analysis.py
           python3 - <<'PY'
           import json
           index = json.load(open("pipeline/operational_memory/index.json", encoding="utf-8"))
+          actions = json.load(open("pipeline/operational_memory/action_queue.json", encoding="utf-8"))
           assert index["occurrence_count"] >= 8
           assert index["solution_count"] >= 7
           assert "solution_evidence" in index
-          print("indexed", index["occurrence_count"], "occurrences")
+          assert "warning_counts" in index
+          assert "advisory_counts" in index
+          assert "actions" in actions
+          print("indexed", index["occurrence_count"], "occurrences and", len(actions["actions"]), "actions")
+          PY
+
+      - name: Exercise diagnostic against repository evidence
+        run: |
+          python3 intelligence_stack/fiftyone/analyze_visual_memory.py
+          python3 pipeline/system_diagnostics.py
+          python3 - <<'PY'
+          import json
+          report = json.load(open("pipeline/system_diagnostics/LATEST.json", encoding="utf-8"))
+          assert report["authority_boundary"]
+          assert report["summary"]["finding_count"] == len(report["findings"])
+          print("diagnostic", report["summary"])
           PY
