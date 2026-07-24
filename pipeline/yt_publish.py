@@ -44,15 +44,18 @@ def _record(value: Any) -> dict[str, Any] | None:
     if not isinstance(value, dict):
         return None
     video_id = value.get("video_id") or value.get("youtube_id")
-    if not video_id:
+    if not video_id and not value.get("published_without_id"):
         return None
-    return {
-        **value,
-        "video_id": str(video_id),
-        "url": value.get("url") or f"https://youtube.com/watch?v={video_id}",
-        "published_at": value.get("published_at") or value.get("published"),
-        "receipt_source": value.get("receipt_source") or "legacy_analytics_registry",
-    }
+    record = dict(value)
+    if video_id:
+        record["video_id"] = str(video_id)
+        record["url"] = value.get("url") or f"https://youtube.com/watch?v={video_id}"
+    else:
+        record["published_without_id"] = True
+        record.setdefault("url", None)
+    record["published_at"] = value.get("published_at") or value.get("published")
+    record["receipt_source"] = value.get("receipt_source") or "legacy_analytics_registry"
+    return record
 
 
 def normalized_history() -> dict[str, dict[str, Any]]:
@@ -82,7 +85,6 @@ def access_token() -> str:
 def download_final(slug: str) -> str:
     out = f"/tmp/{slug}.mp4"
     last: subprocess.CalledProcessError | None = None
-    # The landscape YouTube master is the canonical platform asset.
     for pattern in ("final_youtube.mp4", "final.mp4"):
         try:
             subprocess.run(
@@ -150,9 +152,9 @@ def publish(slugs: list[str], *, force: bool = False) -> dict[str, dict[str, Any
     pending = [slug for slug in slugs if force or slug not in history]
     for slug in slugs:
         if slug not in pending:
-            print(f"SKIP already published {slug} -> {history[slug].get('url')}", flush=True)
+            destination = history[slug].get("url") or "verified prior upload; video ID not recorded"
+            print(f"SKIP already published {slug} -> {destination}", flush=True)
     if not pending:
-        # Materialize legacy analytics receipts into the dedicated publish ledger.
         atomic_json(RESULT, history)
         return history
 
