@@ -16,6 +16,7 @@ on:
       - "pipeline/operational_memory/**"
       - "pipeline/tests/test_operational_memory.py"
       - "pipeline/tests/test_system_hardening.py"
+      - "pipeline/tests/test_diagnostic_policy.py"
       - "intelligence_stack/fiftyone/analyze_visual_memory.py"
       - ".github/workflows/render-request.yml"
       - ".github/workflows/render.yml"
@@ -40,6 +41,7 @@ on:
       - "pipeline/operational_memory/**"
       - "pipeline/tests/test_operational_memory.py"
       - "pipeline/tests/test_system_hardening.py"
+      - "pipeline/tests/test_diagnostic_policy.py"
       - "intelligence_stack/fiftyone/analyze_visual_memory.py"
       - ".github/workflows/render-request.yml"
       - ".github/workflows/render.yml"
@@ -109,6 +111,7 @@ jobs:
         run: |
           python3 -m unittest pipeline.tests.test_operational_memory -v
           python3 -m unittest pipeline.tests.test_system_hardening -v
+          python3 -m unittest pipeline.tests.test_diagnostic_policy -v
 
       - name: Rebuild causal index and validate materialized evidence
         run: |
