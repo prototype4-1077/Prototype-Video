@@ -1,0 +1,142 @@
+{
+  "credits_used": null,
+  "estimated_cost_usd": null,
+  "failure_count": 0,
+  "finished_at": "2026-07-23T12:17:14+00:00",
+  "generated_at": "2026-07-24T14:53:56+00:00",
+  "github_run_id": "30004638374",
+  "historical_limitations": [
+    "No OpenTelemetry spans were emitted for this historical run.",
+    "Provider calls, scene spans, costs, and credits cannot be reconstructed from Governor summaries."
+  ],
+  "recommendations": [
+    {
+      "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
+      "category": "tail_latency",
+      "priority": "medium",
+      "reason": "p50=22.0s, p95=1129.9s",
+      "source": "governor_review_backfill",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "51b5eab9167e4d9098885f95634318a3",
+  "scene_span_count": 0,
+  "schema_version": 1,
+  "single_trace": false,
+  "slug": "the-edge-of-you-is-negotiable",
+  "source": "governor_summary_backfill",
+  "span_count": 0,
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 1.003,
+      "p95_duration_s": 1.003,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.003
+    },
+    "assemble": {
+      "attempts": 19,
+      "failures": 0,
+      "p50_duration_s": 67.289,
+      "p95_duration_s": 90.868,
+      "sample_count": 19,
+      "source": "governor_summary_backfill",
+      "successes": 19,
+      "timeouts": 0,
+      "total_duration_s": 1315.259
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_duration_s": 22.02,
+      "p95_duration_s": 1129.894,
+      "sample_count": 5,
+      "source": "governor_summary_backfill",
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 1492.693
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_duration_s": 1.004,
+      "p95_duration_s": 1.005,
+      "sample_count": 2,
+      "source": "governor_summary_backfill",
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.008
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_duration_s": 6.013,
+      "p95_duration_s": 26.503,
+      "sample_count": 4,
+      "source": "governor_summary_backfill",
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 43.151
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 11.017,
+      "p95_duration_s": 11.017,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 11.017
+    },
+    "probe": {
+      "attempts": 20,
+      "failures": 0,
+      "p50_duration_s": 1.006,
+      "p95_duration_s": 1.006,
+      "sample_count": 20,
+      "source": "governor_summary_backfill",
+      "successes": 20,
+      "timeouts": 0,
+      "total_duration_s": 20.121
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 33.145,
+      "p95_duration_s": 33.145,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 33.145
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 19.021,
+      "p95_duration_s": 19.021,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 19.021
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 58.045,
+      "p95_duration_s": 58.045,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 58.045
+    }
+  },
+  "status": "done"
+}

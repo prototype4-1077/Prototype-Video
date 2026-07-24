@@ -1,0 +1,960 @@
+{
+  "schema_version": 1,
+  "generated_at": "2026-07-24T14:53:57+00:00",
+  "source_note_count": 124,
+  "source_scene_feedback_count": 150,
+  "unique_commented_evidence": 124,
+  "candidate_count": 14,
+  "candidates": [
+    {
+      "id": "effects_still_preference",
+      "title": "Use a strong still with effects when stock cannot explain the beat",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 13,
+      "affected_slugs": [
+        "jester-who-knew-my-name",
+        "the-loop",
+        "the-room-behind-you"
+      ],
+      "decisions": {
+        "approved": 1,
+        "overall revise": 1,
+        "revise": 6,
+        "unknown": 5
+      },
+      "examples": [
+        {
+          "source": "scene_feedback",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 5,
+          "decision": "approved",
+          "comment": "Since we introduce this person as the Jester, I would keep the same (or like) appearance of this person as the Jester throughout the video. Even if it meant still images based on this individual scene.",
+          "query": "fully clothed theatrical jester in red and teal costume sits in an ornate carnival chair surrounded by flickering vintage television screens, expressive face, genuine body and screen motion, no nudity",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 24,
+          "decision": "revise",
+          "comment": "I would find one of the bells that sit on the counter that you ring when the hotel attendant is not at her desk. I would look for a hand that just keeps tapping the bell. If not still image.",
+          "query": "same red-and-teal jester watches someone begin an elaborate explanation then raises one tiny polished brass handbell and rings it exactly once, mouth stops mid-sentence, vivid palace, close-up genuine motion",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "the-loop",
+          "scene_number": 2,
+          "decision": "revise",
+          "comment": "this is not a hamster in a wheel. not sure what's in the cage. Lets try a still image that depicts the loop. Keep it magical and eerie.",
+          "query": "hamster running on a spinning hamster wheel cage",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "the-room-behind-you",
+          "scene_number": 8,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": "thumb held up at arm's length against bright sky",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "the-room-behind-you",
+          "scene_number": 14,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": "camera cable plugging into port macro close up",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "the-room-behind-you",
+          "scene_number": 17,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": "torn photo pieces assembling into a collage",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "the-room-behind-you",
+          "scene_number": 18,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": "light rays streaming slowly through darkness",
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Correction: no more than 35% of finished runtime may come from still images in any form. Static slides, Ken Burns, depth animation, cinemagraph treatment, and staged keyframe animation all count toward the same still-derived 35%. At least 65% must be genuine recorded or generated temporal footage with people, objects, or environments actually moving; the permitted stills should still receive the motion treatment.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": null,
+          "decision": "overall revise",
+          "comment": "Lets replace the Text Boxes with still images with any special effects.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "STANDING RULE (fallback visuals): when genuine stock footage cannot be found for a scene, the pipeline auto-generates an APPEALING SPECIAL-EFFECTS STILL IMAGE that represents the line (via hero.py effects style) — never a plain text/label graphic box. Implemented in storyline_footage._render_storyboard.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "STORYLINE STANDARD (set by the approved 'The Room Behind You'): the viewer must be able to SEE the storyline scene by scene. Every visual literally depicts its spoken line's object/mechanism (game render-distance -> game footage; blind spot -> eye with void pupil; brain faking it -> painted-over wall). Concrete beats use genuine moving stock; abstract beats use effects stills. Keep this bar on every video.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "EFFECTS STILLS: James wants generated stills to carry HEAVY, layered special effects (god rays, dense particles, energy trails, mist, bokeh, flares, iridescent glow) - maximally cinematic, never plain. Style lives in storyline_footage.EFFECTS_STILL_STYLE.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "caption_restraint",
+      "title": "Do not print performance tags or dense paragraph captions",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 6,
+      "affected_slugs": [
+        "the-room-behind-you"
+      ],
+      "decisions": {
+        "overall revise": 1,
+        "revise": 1,
+        "unknown": 4
+      },
+      "examples": [
+        {
+          "source": "scene_feedback",
+          "slug": "the-room-behind-you",
+          "scene_number": 1,
+          "decision": "revise",
+          "comment": "With the text box you can't can see it because of the title. Not sure about text boxes as the first scene.",
+          "query": "dark empty living room dim doorway lamplight",
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "James liked the How_Reality_Works reference slides: letterboxed band, mystical/surreal footage, captions on the black bar. That is now the default look.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "v5: word-synced captions (whisper), CLIP footage matching (CI), -14 LUFS master, GitHub Actions render farm option.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Title card: 2x size (190px Baloo ExtraBold), ALL-CAPS, multi-line stack allowed, may extend past the letterbox band but never into captions.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Visual-symbol training from the 2026-07-14 reference: match the mechanism of each spoken line, not merely its mood. People are valid symbols only when they have a clear role; do not default to generic thoughtful-person footage. Deliberately alternate human, collective, perception, language, architecture, pathway, identity, time/memory, tool, nature, world-scale, geometry, transformation, and light/atmosphere symbols. Prefer one precise physical metaphor, limit repeated families and props, and ask whether the idea would remain legible with captions hidden.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": null,
+          "decision": "overall revise",
+          "comment": "Lets replace the Text Boxes with still images with any special effects.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "character_lip_sync",
+      "title": "Visible speaking character requires mouth movement",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 5,
+      "affected_slugs": [
+        "jester-who-knew-my-name"
+      ],
+      "decisions": {
+        "revise": 2,
+        "unknown": 3
+      },
+      "examples": [
+        {
+          "source": "scene_feedback",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 10,
+          "decision": "revise",
+          "comment": "Tv would be fine if it was the person from scene 5 sitting on it. Maybe an enhanced still clip (with motion effects) of a Jester.",
+          "query": "same fully clothed red-and-teal jester on the television throne suddenly turns and looks directly into camera, points knowingly and speaks one name, vivid palace screens flicker, expressive realistic performance",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 29,
+          "decision": "revise",
+          "comment": "Maybe a slide of just a mouth laughing. Make sure it matches the person's color of the rest of the slides.",
+          "query": "adult laughs with relief as several fully covering theatrical identity masks loosen and gently lift away without revealing skin beyond the normal face, bright cinematic light, genuine facial and object motion",
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "v5: word-synced captions (whisper), CLIP footage matching (CI), -14 LUFS master, GitHub Actions render farm option.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Music bed at 0.21 (slightly louder). Clips must never visibly restart/loop mid-scene: pipeline stretches or boomerangs short clips and prefers clips >= scene duration.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Tricky props (e.g. dominoes): if a query misfires twice, curate manually - search the Pexels API, eyeball thumbnails, then PIN the clip by setting scene pexels_id (re-fetch-by-id makes it deterministic).",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "dmt_motion_language",
+      "title": "DMT videos benefit from psychedelic moving graphics in moderation",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 5,
+      "affected_slugs": [
+        "jester-who-knew-my-name"
+      ],
+      "decisions": {
+        "revise": 4,
+        "unknown": 1
+      },
+      "examples": [
+        {
+          "source": "scene_feedback",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 2,
+          "decision": "revise",
+          "comment": "Not Bad but since this is a DMT video I would try to make the scenery look like the rest of the video. Maybe mystical folding walls.",
+          "query": "real furnished bedroom visibly folds inward like collapsing paper walls around an empty chair, furniture sliding as the room transforms, vivid cyan magenta and emerald edges, genuine temporal motion, unoccupied scene, no silhouette",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 1,
+          "decision": "revise",
+          "comment": "For DMT Boxes with labels don't come across right. We can make it a rule to start dmt videos with exquisite psychedelic visuals.",
+          "query": "same fully clothed red-and-teal theatrical jester from the television throne faces one adult male narrator seen only from behind inside a vivid DMT carnival palace, no narrator face, luminous geometry and moving television light",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 16,
+          "decision": "revise",
+          "comment": "Boxes with text should not be in DMT videos.",
+          "query": "vast vivid universe of moving galaxies and stars expands peacefully while one tiny delayed package drifts through orbit, comic contrast between cosmic trust and petty panic, no people, faces, labels or diagrams",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 24,
+          "decision": "revise",
+          "comment": "Again, Boxes with labels probably not in DMt videos. Other videos are fine.",
+          "query": "tight close-up of the same adult narrator hand repeatedly tapping a polished hotel service desk bell on a colorful counter, no face or body, each press clearly compresses and releases the bell, genuine motion",
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Approved DMT: The Room Before Birth. Psychedelic moving graphics strongly enhance DMT videos and should remain a signature accent. For a roughly 2.5-minute, 25-scene DMT video, use one or two fewer abstract psychedelic-motion scenes than this cut, preserving more contrast with grounded or literal footage.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "stock_first_preference",
+      "title": "Prefer genuine moving stock when a direct match exists",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 5,
+      "affected_slugs": [
+        "the-edge-of-you-is-negotiable"
+      ],
+      "decisions": {
+        "revise": 1,
+        "unknown": 4
+      },
+      "examples": [
+        {
+          "source": "scene_feedback",
+          "slug": "the-edge-of-you-is-negotiable",
+          "scene_number": 11,
+          "decision": "revise",
+          "comment": "Hand/cane fusion looks synthetic and risks malformed fingers. Replace with real stock footage of a gloved hand using a cane or tool, emphasizing repeated controlled motion; no morphing, dissolving, or exposed fingers.",
+          "query": "",
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Default still and hero slides must look like natural photographic frames that match the surrounding stock footage. Avoid gold fog, heavy volumetric haze, silhouetted figures, theatrical fantasy lighting, and visibly synthetic staging unless explicitly requested.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Still-image training from 2026-07-14: acquire genuine stock slides first, then choose the closest related selected stock-video frame and use that exact frame as the generated still's visual reference. Every still receives the full natural-photo, exposure/detail, depth/background, internal-motion, practical-light, grade, and grain treatment; preserve supplied originals, reject pan/zoom-only slides, keep all still-derived time inside the 35% cap, and fall back to genuine footage rather than emit an unreferenced generated still.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Other Versions of You was fully rejected. Start ordinary videos from genuine literal stock footage for every scene. Avoid multiple unrelated faces; prefer consistent hands, rear views, objects, places, and physical actions. Do not use deterministic symbolic graphics, generic low-grade graphics, hero images, or stills unless exact stock searching has genuinely failed and James explicitly accepts a substantially higher-grade fallback. Narrative correspondence and premium photographic realism outrank abstract visual cleverness.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "STANDING RULE (fallback visuals): when genuine stock footage cannot be found for a scene, the pipeline auto-generates an APPEALING SPECIAL-EFFECTS STILL IMAGE that represents the line (via hero.py effects style) — never a plain text/label graphic box. Implemented in storyline_footage._render_storyboard.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "visual_semantic_match",
+      "title": "Visual must clearly represent the spoken concept",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 5,
+      "affected_slugs": [
+        "the-room-behind-you"
+      ],
+      "decisions": {
+        "revise": 4,
+        "unknown": 1
+      },
+      "examples": [
+        {
+          "source": "scene_feedback",
+          "slug": "the-room-behind-you",
+          "scene_number": 8,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": "thumb held up at arm's length against bright sky",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "the-room-behind-you",
+          "scene_number": 14,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": "camera cable plugging into port macro close up",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "the-room-behind-you",
+          "scene_number": 17,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": "torn photo pieces assembling into a collage",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "the-room-behind-you",
+          "scene_number": 18,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": "light rays streaming slowly through darkness",
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Other Versions of You was fully rejected. Start ordinary videos from genuine literal stock footage for every scene. Avoid multiple unrelated faces; prefer consistent hands, rear views, objects, places, and physical actions. Do not use deterministic symbolic graphics, generic low-grade graphics, hero images, or stills unless exact stock searching has genuinely failed and James explicitly accepts a substantially higher-grade fallback. Narrative correspondence and premium photographic realism outrank abstract visual cleverness.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "title_safe_zone",
+      "title": "Titles must remain readable inside platform crop zones",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 3,
+      "affected_slugs": [],
+      "decisions": {
+        "unknown": 3
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Scene 0 is the thumbnail: it must show picture + title from frame one (no fade-in), and its query should be an especially striking LIT visual.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Tricky props (e.g. dominoes): if a query misfires twice, curate manually - search the Pexels API, eyeball thumbnails, then PIN the clip by setting scene pexels_id (re-fetch-by-id makes it deterministic).",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Hero shots exist: scene flag hero:true + image_prompt generates free AI imagery (pollinations, keyless) animated with 2.5D depth parallax. Use on 2-4 impossible-metaphor beats, the thumbnail scene, and closers.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "deep_parallax",
+      "title": "Concept backgrounds should use strong layered depth",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 2,
+      "affected_slugs": [],
+      "decisions": {
+        "unknown": 2
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Hero shots exist: scene flag hero:true + image_prompt generates free AI imagery (pollinations, keyless) animated with 2.5D depth parallax. Use on 2-4 impossible-metaphor beats, the thumbnail scene, and closers.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "PHOTOREAL DOCTRINE: hero stills are now photographs-of-the-impossible (see pipeline/PHOTOREAL_STYLE.md). Film-still language, one impossible element lit by scene light, mandatory three-plane depth (near occluder / mid subject / far haze). Never 'digital art'. DMT trance slides keep the stylized aura. Motion engine multiplane-v1 gives dolly-zoom/orbit/push-in/rack-focus deep parallax.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "literal_action_accuracy",
+      "title": "Literal actions must visibly perform the stated action",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 2,
+      "affected_slugs": [
+        "the-loop",
+        "the-room-behind-you"
+      ],
+      "decisions": {
+        "revise": 2
+      },
+      "examples": [
+        {
+          "source": "scene_feedback",
+          "slug": "the-loop",
+          "scene_number": 12,
+          "decision": "revise",
+          "comment": "Doesn't look like it painting a door. Looks like its painting the ground.",
+          "query": "hand rolling fresh paint onto door close up",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "the-room-behind-you",
+          "scene_number": 2,
+          "decision": "revise",
+          "comment": "I would do a person actually walking through a house.",
+          "query": "person walking slowly through dim home hallway",
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "cartoon_animation_definition",
+      "title": "Animated requests mean coherent cartoon animation",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 1,
+      "affected_slugs": [],
+      "decisions": {
+        "unknown": 1
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Approved Can You Fly?. Keep question marks, exclamation points, and ACCESS DENIED graphics in a cohesive shared color and template, but avoid flat or cartoonish treatment. Future punctuation and warning beats should use slick high-resolution 3D dimensional materials, realistic cinematic light, depth, and motion, or literal human interaction such as a person holding a question mark. Preserve visual-system cohesion while making the result tactile, premium, and photographic.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "dramatic_object_specificity",
+      "title": "Use the most conceptually specific version of a physical object",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 1,
+      "affected_slugs": [
+        "the-loop"
+      ],
+      "decisions": {
+        "revise": 1
+      },
+      "examples": [
+        {
+          "source": "scene_feedback",
+          "slug": "the-loop",
+          "scene_number": 27,
+          "decision": "revise",
+          "comment": "I like the rocking chair idea, but an empty wooden rocking chair on a front porch rocking would increase the dramatic effect. It highlights the point of the rocking chair.",
+          "query": "empty rocking chair rocking gently warm light",
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "graphics_quality_floor",
+      "title": "Reject low-grade or unclear generic graphics",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 1,
+      "affected_slugs": [
+        "the-loop"
+      ],
+      "decisions": {
+        "revise": 1
+      },
+      "examples": [
+        {
+          "source": "scene_feedback",
+          "slug": "the-loop",
+          "scene_number": 11,
+          "decision": "revise",
+          "comment": "Again terrible graphics, we really need to upgrade that.",
+          "query": "metronome arm ticking back and forth warm light",
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "scene_continuity",
+      "title": "Adjacent conceptual beats should share a coherent visual world",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 1,
+      "affected_slugs": [],
+      "decisions": {
+        "unknown": 1
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Permanent title layout rule (2026-07-16): use at most 2 words per title line; allow 3 only when one is a short connector/function word such as \"I\", \"a\", \"the\", \"on\", \"of\", or \"to\".",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "voice_identity",
+      "title": "Preserve the exact requested narrator and supplied audio",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 1,
+      "affected_slugs": [],
+      "decisions": {
+        "unknown": 1
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Approved Other Versions of You stock-first rebuild: genuine moving stock in all 16 scenes, literal premium-realistic visual matches, no generated graphics or stills, and exact supplied narration bytes. Preserve this successful standard for ordinary stock-only rerenders.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    }
+  ],
+  "uncategorized_count": 83,
+  "uncategorized_examples": [
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 1,
+      "decision": "revise",
+      "comment": "Maybe an animated still frame of a Jester (DMT Style) and a man standing in front of him or her. I would probable use the person in frame 5 (slide 5) as the Jester. Because that person seemingly have more scenes in the slide.",
+      "query": "adult man sits on a couch in a warm lived-in room talking animatedly to a friend, leans forward and gestures with both hands while curtains move in window light, genuine documentary footage with continuous body and environmental motion",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 3,
+      "decision": "approved",
+      "comment": "Very DMTish.",
+      "query": "hyper-saturated liquid color pours through a ceiling and becomes a fast moving kaleidoscopic tunnel of rotating theatrical faces and blinking eye patterns, playful vivid DMT motion graphics, deep black contrast, continuous forward travel",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 4,
+      "decision": "approved",
+      "comment": "I like this it fits",
+      "query": "camera glides through a colorful carnival funhouse interior with moving checkerboard floor, spinning pillars, swaying chairs and vivid practical lights, genuine environmental motion, no text or diagrams",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 6,
+      "decision": "approved",
+      "comment": "It goes with the last slide.",
+      "query": "wall of vintage television screens rapidly switches among mundane embarrassing home moments while major milestone footage is ignored, playful carnival colors, authentic moving video on every screen, no readable text",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 7,
+      "decision": "revise",
+      "comment": "I wouldn't show a face on this. We are talking about one person who is narrating the story so many different faces looses the idea of identifying with the narrator. To the viewer if may become another fluff slide. I would look for a slide of a hand checking their banking account. No face in the slide. Like scene 8 which would complement this slide.",
+      "query": "a mobile banking screen visibly refreshes exactly three times while the balance remains unchanged, each refresh triggers a smaller hopeful sparkle that immediately fades, bright realistic kitchen setting, continuous screen motion, no legible private information",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 9,
+      "decision": "revise",
+      "comment": "again, different faces, especially when there are only seemingly two entities in the whole video conversation.",
+      "query": "fully clothed adult safely acts out a triumphant imaginary argument beside a steamy bathroom shower, pointing at nobody, while a cosmic security camera swivels overhead, comedic realistic motion, no nudity, no exposed body",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 11,
+      "decision": "revise",
+      "comment": "Maybe some depiction of an older woman wagging her finger at the viewer, as to be upset and calling out the person's entire name.",
+      "query": "comic family tableau where a mother slowly turns with the unmistakable disappointed full-name expression while framed ancestors seem to look on, warm lived-in home, genuine facial and camera motion, no text",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 12,
+      "decision": "revise",
+      "comment": "same, to many different faces. maybe some abstract mystical light face doing something. Perferably, jester looking.",
+      "query": "same red-and-teal jester rises from the television throne and gives an extravagantly formal bow with a sarcastic smile, brass bells swing, vivid carnival palace in continuous motion, fully clothed",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 13,
+      "decision": "approved",
+      "comment": "Matches scene 5",
+      "query": "wall of vintage televisions rapidly changes channels while a fully clothed laughing theatrical performer gestures in front, vivid carnival lights, genuine screen and body motion, no nudity or readable text",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 14,
+      "decision": "approved",
+      "comment": "I approve it, but it could be better.",
+      "query": "rotating theatrical masks pass in front of microphones and megaphones under bright stage lights, each mask moving into the spotlight, genuine object and camera motion, no text or diagrams",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 15,
+      "decision": "approved",
+      "comment": "I still would show any faces. As if I was the inside the person's body witnessing me do something. I wouldnt be looking at my face. I would be not looking at my face, maybe show my hand driving or painting.",
+      "query": "multiple television screens show an empty meditation cushion being repeatedly repositioned for a ring light while incense, crystals and a camera arrange themselves into an increasingly performative spiritual display, bright studio, comedic genuine object motion",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 16,
+      "decision": "revise",
+      "comment": "I would use some type of universe slide.",
+      "query": "split-screen moving footage contrasts serene stars with a package tracker refreshing repeatedly beside an empty porch and unopened front door, bright realistic home, comic continuity, unoccupied porch, no readable private data",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 17,
+      "decision": "revise",
+      "comment": "another different face. I would probably show a hand holding a necklace with a cross. Be careful not to show different color hands. We want to make it seem as though the same person is in all the slides.",
+      "query": "same red-and-teal jester leans toward camera from the television throne and gives one painfully slow sarcastic clap with an exaggerated solemn face, vivid carnival palace, genuine expressive motion",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 20,
+      "decision": "revise",
+      "comment": "Maybe an enhanced still slide of a person in a meditating position turn away from us with mystical lights swirling around.",
+      "query": "fully clothed office worker wearing a long sleeve business jacket stands behind a colorful counter and sarcastically presents one plain paper folder, continuous hand and facial motion, no exposed shoulders or chest, no nudity or readable text",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 21,
+      "decision": "approved",
+      "comment": "Goes with the story",
+      "query": "dozens of moving vintage television screens simultaneously liquefy and transform into clear mirrors reflecting the same viewer from different angles, vivid cyan magenta carnival light, continuous literal transformation",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 22,
+      "decision": "approved",
+      "comment": "Probably could change the character",
+      "query": "three complete theatrical masks rotate inside connected mirrors, one with spectacles, one cracked protective mask and one hooded mask, each loosens and turns away, bright cinematic object motion, no text or diagrams",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 23,
+      "decision": "approved",
+      "comment": "This is fine.",
+      "query": "close-up of a hand repeatedly opening the same social media profile on a smartphone, scrolling briefly, closing the app and immediately reopening it, bright realistic room, continuous finger and screen motion, no readable personal data",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 25,
+      "decision": "revise",
+      "comment": "another slide or picture like slide 24",
+      "query": "close-up of a hand ringing one small polished brass desk bell three distinct times in a clear rhythm, each strike visibly moves the bell and hand, bright premium cinematic tabletop footage, no text or diagrams",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 26,
+      "decision": "revise",
+      "comment": "I would look for a mystical laughing Jester. Or a still jester.",
+      "query": "angry narrator gestures toward the same jester, then all carnival motion abruptly stops and the jester freezes completely while one brass bell settles, clear dramatic eye contact, vivid but readable lighting",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 27,
+      "decision": "approved",
+      "comment": "this could be the person as a child so it can stay.",
+      "query": "same jester calmly holds up a clear mirror that reflects the viewer flinching from a smiling truth, carnival background becomes quiet and sharply focused, subtle prismatic movement, serious expressive performance",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 28,
+      "decision": "approved",
+      "comment": "Love the psychedelic graphics for DMt",
+      "query": "layers of ornate theatrical masks peel from an invisible face and dissolve into vivid moving particles one by one, each comic ripple reveals a clearer center beneath, elegant DMT motion graphics, no body or nudity",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 30,
+      "decision": "approved",
+      "comment": "Fits the TV scenes",
+      "query": "a raised defensive shield slowly lowers while rows of vintage televisions switch off one at a time in a clear sequence, reflections fade across an unoccupied room, genuine practical screen and object motion",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 31,
+      "decision": "approved",
+      "comment": "fits the TV scenes",
+      "query": "camera moves through a darkened wall of silent vintage televisions toward the only remaining glowing screen, which shows the same red-and-teal jester sitting alone on his throne, vivid focused motion",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 32,
+      "decision": "revise",
+      "comment": "I like the scene but the jester look changed. If would be perfect if it matched the person in slide 5.",
+      "query": "fully clothed theatrical performer slowly removes a complete jester mask and reveals a surprised natural face, bright vivid stage light, genuine hand and face motion, no nudity",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 33,
+      "decision": "revise",
+      "comment": "same as the comment in slide 32",
+      "query": "same natural face appears beneath a moving sequence of unlabeled masks and costumes from different life stages, then smiles and laughs as every outer layer falls away, vivid but intimate cinematic motion, no readable text",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 34,
+      "decision": "revise",
+      "comment": "Mystical collapse of something into a single ban of light.",
+      "query": "vivid carnival palace folds rapidly into one brilliant prismatic point that fades into the same realistic bedroom where the narrator opens their eyes and laughs uncontrollably, warm lamp and curtains moving, seamless genuine motion",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 35,
+      "decision": "revise",
+      "comment": "Make sure we are not showing different faces when there is a story line. Same color body parts with no face so it seems like it is the same person.",
+      "query": "same narrator sits calmly in the original warm bedroom after laughing, watches a small television reflection of the jester soften rather than mock, thoughtful but active hands and changing window light, realistic integration footage",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 36,
+      "decision": "revise",
+      "comment": "I would do a slide with many different shadows doing different things. no faces.",
+      "query": "grand stone monuments shaped like different temporary outfits and life roles crack open to reveal simple removable masks inside, sunlight and vines move across them through passing years, cinematic genuine transformation",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 37,
+      "decision": "approved",
+      "comment": "This is fine",
+      "query": "an empty ceremonial seat sits inside soft golden light, then the solemn light moves aside to reveal a colorful brass jester bell rolling into frame, premium realistic cinematic motion, unoccupied scene, no silhouette",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 38,
+      "decision": "revise",
+      "comment": "Another distinction that the person changed. would show a face here.",
+      "query": "relieved adult sits alone in a warm bedroom smiling while a small brass jester bell and dark television reflection move behind them, curtains shifting, genuine room motion, no nudity",
+      "profile": null
+    }
+  ],
+  "authority_boundary": "These are candidate rules, not production policy. No candidate may alter scripts, visual routing, voices, or publishing until a human reviews scope and a regression test exists."
+}
