@@ -11,7 +11,6 @@ import hashlib
 import json
 import os
 from pathlib import Path
-from typing import Iterable
 
 SCHEMA_VERSION = 1
 EXACT_EXCLUDES = {
@@ -40,7 +39,6 @@ EXACT_EXCLUDES = {
 EXCLUDED_DIRS = {"governor", "telemetry", "alts", "__pycache__"}
 EXCLUDED_PREFIXES = (
     "clip_", "seg_", "youtube_seg_", "final", "emb_", "cap_", "youtube_cap_",
-    "hero_",  # generated scene heroes; committed top-level hero.* remains included
 )
 EXCLUDED_SUFFIXES = (
     ".partial", ".part", ".quality-rejected", ".tmp",
@@ -55,9 +53,6 @@ def _is_generated(path: Path, root: Path) -> bool:
     if name in EXACT_EXCLUDES:
         return True
     if any(name.startswith(prefix) for prefix in EXCLUDED_PREFIXES):
-        # A committed package-level hero is a source asset, not a generated scene hero.
-        if name in {"hero.png", "hero.jpg", "hero.jpeg", "hero.webp"}:
-            return False
         return True
     if any(name.endswith(suffix) for suffix in EXCLUDED_SUFFIXES):
         return True
