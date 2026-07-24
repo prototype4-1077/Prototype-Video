@@ -43,6 +43,7 @@ jobs:
         run: |
           python3 -m py_compile \
             pipeline/system_diagnostics.py \
+            pipeline/system_diagnostic_policy.py \
             pipeline/backfill_observability.py \
             pipeline/operational_memory_analysis.py \
             pipeline/record_operational_run.py \
@@ -52,8 +53,8 @@ jobs:
       - name: Backfill honest historical telemetry summaries
         run: python3 pipeline/backfill_observability.py
 
-      - name: Build full diagnostic and action report
-        run: python3 pipeline/system_diagnostics.py
+      - name: Build calibrated diagnostic and action report
+        run: python3 pipeline/system_diagnostic_policy.py
 
       - name: Validate report contract
         run: |
@@ -61,11 +62,16 @@ jobs:
           import json
           report = json.load(open('pipeline/system_diagnostics/LATEST.json', encoding='utf-8'))
           assert report['authority_boundary']
+          assert report['denominator_policy']
           assert 'findings' in report
           assert 'coverage' in report
           assert 'publishing' in report
+          coverage = report['coverage']
+          assert coverage['render_observed_count'] >= coverage['telemetry_count']
+          assert coverage['reviewable_count'] >= coverage['human_feedback_count']
           priorities = report['summary']['priorities']
           print('diagnostic findings', report['summary']['finding_count'], priorities)
+          print('calibrated coverage', coverage['telemetry_coverage_of_render_observed'], coverage['human_feedback_coverage_of_reviewable'])
           PY
 
       - uses: actions/upload-artifact@v4
@@ -86,17 +92,17 @@ jobs:
             pipeline/system_diagnostics/LATEST.json \
             pipeline/system_diagnostics/LATEST.md \
             build/*/telemetry-summary.json
-          git commit -m "diagnostic: refresh system actions and observability backfill" || exit 0
+          git commit -m "diagnostic: refresh calibrated actions and observability backfill" || exit 0
           for i in 1 2 3 4 5; do
             git push && exit 0
             git pull --rebase origin main || { git rebase --abort || true; }
             python3 pipeline/backfill_observability.py
-            python3 pipeline/system_diagnostics.py
+            python3 pipeline/system_diagnostic_policy.py
             git add \
               pipeline/system_diagnostics/LATEST.json \
               pipeline/system_diagnostics/LATEST.md \
               build/*/telemetry-summary.json
-            git commit -m "diagnostic: refresh system actions and observability backfill" || true
+            git commit -m "diagnostic: refresh calibrated actions and observability backfill" || true
             sleep $((i * 2))
           done
           echo "unable to persist system diagnostic" >&2
