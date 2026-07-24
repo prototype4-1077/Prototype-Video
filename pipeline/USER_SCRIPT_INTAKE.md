@@ -50,8 +50,11 @@ The intake blocks rather than guessing.
 - Scene boundaries may change whitespace only; they may not change the spoken text.
 - Existing non-intake `script.json` packages are never overwritten.
 - Intake does not create `render.request` or start a render.
+- The standard scene count is 24 unless an explicit alternative is requested.
+- Short scripts are valid and do not require a 60-second voiceover.
 - The render dispatcher rechecks the source lock after safe preflight normalization and before package fingerprinting.
 - A package edit after preflight causes the render job to reject the package fingerprint.
+- The regression suite proves a representative plain-text submission passes the same production preflight used by real renders.
 
 ## Results
 
