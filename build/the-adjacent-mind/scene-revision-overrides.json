@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "slug": "the-adjacent-mind",
+  "common_remove": [
+    "hero_raw_signature",
+    "motion_kind",
+    "motion_mode",
+    "motion_source",
+    "motion_verified",
+    "motion_evidence",
+    "clip_fingerprint",
+    "clip",
+    "enhanced_source_image",
+    "still_reference_signature",
+    "pure_generated_still",
+    "still_enhancement_steps",
+    "hero_generated",
+    "motion_recipe",
+    "motion_compiled",
+    "still_reference_generation_model",
+    "still_enhancement_version",
+    "still_enhanced",
+    "kw_overlays",
+    "youtube_kw_overlays",
+    "stock_id",
+    "pexels_id",
+    "stock_frame_url",
+    "stock_frame_url_checked",
+    "source_url",
+    "image_prompt",
+    "hero_style"
+  ],
+  "revisions": [
+    {
+      "scene_index": 10,
+      "remove": [
+        "hero"
+      ],
+      "set": {
+        "semantic_anchor": "A shared library table holds two distinct work positions: an open notebook beside one chair and a softly glowing terminal beside the adjacent chair.",
+        "visual_function": "define the relational space without showing a malformed hand",
+        "symbol_family": "architecture",
+        "primary_symbol": "adjacent work positions",
+        "narrative_mode": "stock_ok",
+        "query": "camera glides along a real library table showing an open notebook and pencil before one chair and a softly glowing computer terminal before the adjacent chair, pages move gently in practical light, no people, no hands, no readable text, genuine motion",
+        "human_role": "none",
+        "lower_model_safe": true,
+        "generation_constraints": [
+          "use genuine stock footage",
+          "no visible hands",
+          "no people or faces",
+          "two clearly adjacent chairs",
+          "one notebook and one terminal",
+          "no readable screen text"
+        ]
+      }
+    },
+    {
+      "scene_index": 21,
+      "remove": [
+        "hero"
+      ],
+      "set": {
+        "semantic_anchor": "An ordinary hand rests near a dim screen while a plain chair and gently moving curtain ground the scene without suggestive body framing.",
+        "visual_function": "ground in the ordinary body and room without sexualized visual cues",
+        "symbol_family": "object_tool",
+        "primary_symbol": "hand, screen, chair and moving curtain",
+        "narrative_mode": "stock_ok",
+        "query": "wide neutral documentary shot of an ordinary home desk, one relaxed adult hand resting flat beside a dim laptop keyboard, plain upright chair clearly visible, curtain moving gently in soft daylight, no face, no body close-up, no suggestive posture, no readable text, genuine motion",
+        "human_role": "observer",
+        "lower_model_safe": true,
+        "generation_constraints": [
+          "use genuine stock footage",
+          "one relaxed hand only",
+          "no face or torso",
+          "neutral non-suggestive framing",
+          "plain upright chair visible",
+          "soft ordinary daylight"
+        ]
+      }
+    }
+  ]
+}
