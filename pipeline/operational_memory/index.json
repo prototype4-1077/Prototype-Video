@@ -1,18 +1,24 @@
 {
+  "action_queue": [],
+  "advisory_counts": {},
   "failure_occurrence_count": 4,
-  "generated_at": "2026-07-24T10:47:54+00:00",
+  "generated_at": "2026-07-24T14:53:58+00:00",
   "incident_count": 6,
-  "occurrence_count": 9,
+  "occurrence_count": 10,
   "open_failure_count": 0,
-  "schema_version": 1,
+  "record_file_count": 10,
+  "schema_version": 2,
   "solution_count": 7,
   "solution_evidence": {
     "sol-animation-contract-preflight-v1": {
-      "affected_slugs": [],
+      "affected_slugs": [
+        "june-oxley-folks-aint-roadblocks-tier1"
+      ],
       "catalog_status": "provisional",
-      "last_recurrence_at": null,
+      "evidence_state": "regressed",
+      "last_recurrence_at": "2026-07-23T14:24:52+00:00",
       "last_verified_at": null,
-      "recurrences_after_fix": 0,
+      "recurrences_after_fix": 1,
       "solution_id": "sol-animation-contract-preflight-v1",
       "successful_verifications": 0,
       "verification_requirement": "CI fixture and three real animation packages passing preflight."
@@ -20,6 +26,7 @@
     "sol-hero-readiness-v1": {
       "affected_slugs": [],
       "catalog_status": "provisional",
+      "evidence_state": "awaiting_evidence",
       "last_recurrence_at": null,
       "last_verified_at": null,
       "recurrences_after_fix": 0,
@@ -32,9 +39,10 @@
         "june-oxley-left-the-vehicle"
       ],
       "catalog_status": "verified",
-      "last_recurrence_at": null,
+      "evidence_state": "verified",
+      "last_recurrence_at": "2026-07-23T14:24:40+00:00",
       "last_verified_at": "2026-07-23T15:37:45+00:00",
-      "recurrences_after_fix": 0,
+      "recurrences_after_fix": 1,
       "solution_id": "sol-june-canonical-voice-v1",
       "successful_verifications": 1,
       "verification_requirement": "Canonical ID survives preflight and a real June render completes TTS."
@@ -44,9 +52,10 @@
         "june-oxley-folks-aint-roadblocks-tier1"
       ],
       "catalog_status": "verified",
-      "last_recurrence_at": null,
+      "evidence_state": "verified",
+      "last_recurrence_at": "2026-07-23T14:24:52+00:00",
       "last_verified_at": "2026-07-23T15:37:40+00:00",
-      "recurrences_after_fix": 0,
+      "recurrences_after_fix": 1,
       "solution_id": "sol-june-scene-character-scope-v1",
       "successful_verifications": 1,
       "verification_requirement": "Object-only regression fixture plus one completed June animation render."
@@ -55,7 +64,8 @@
       "affected_slugs": [
         "who-wrote-the-menu"
       ],
-      "catalog_status": "provisional",
+      "catalog_status": "verified",
+      "evidence_state": "verified",
       "last_recurrence_at": "2026-07-24T10:10:00+00:00",
       "last_verified_at": "2026-07-24T10:31:51+00:00",
       "recurrences_after_fix": 1,
@@ -68,6 +78,7 @@
         "belief-is-gravity"
       ],
       "catalog_status": "verified",
+      "evidence_state": "verified",
       "last_recurrence_at": null,
       "last_verified_at": "2026-07-23T22:11:13+00:00",
       "recurrences_after_fix": 0,
@@ -80,14 +91,16 @@
         "who-wrote-the-menu"
       ],
       "catalog_status": "verified",
-      "last_recurrence_at": null,
+      "evidence_state": "verified",
+      "last_recurrence_at": "2026-07-24T02:34:52+00:00",
       "last_verified_at": "2026-07-24T10:00:00+00:00",
-      "recurrences_after_fix": 0,
+      "recurrences_after_fix": 1,
       "solution_id": "sol-visual-symbol-diversity-v1",
       "successful_verifications": 1,
       "verification_requirement": "One passing canonical preflight and one real render that advances beyond build validation."
     }
   },
+  "stage_performance_signals": {},
   "top_incidents": [
     {
       "code": "render_success",
@@ -97,17 +110,12 @@
       "incident_key": "status:done",
       "last_seen": "2026-07-24T10:31:51+00:00",
       "latest_record": "occurrences/render-30084595748-who-wrote-the-menu-still-budget-verification.json",
-      "matched_solution_ids": [
-        "sol-june-canonical-voice-v1",
-        "sol-june-scene-character-scope-v1",
-        "sol-planned-still-budget-v1",
-        "sol-standalone-title-eyebrow-v1"
-      ],
       "normalized_error": "Delivery render completed after scenes 15 and 23 were converted from still-derived hero treatment to genuine stock motion; the 35 percent still cap passed and the final YouTube MP4 was produced.",
       "occurrence_count": 4,
       "phases": {
         "render": 4
       },
+      "regressed_solution_ids": [],
       "slugs": [
         "belief-is-gravity",
         "june-oxley-folks-aint-roadblocks-tier1",
@@ -119,7 +127,41 @@
       ],
       "statuses": {
         "done": 4
-      }
+      },
+      "verified_solution_ids": [
+        "sol-june-canonical-voice-v1",
+        "sol-june-scene-character-scope-v1",
+        "sol-planned-still-budget-v1",
+        "sol-standalone-title-eyebrow-v1"
+      ]
+    },
+    {
+      "code": "preflight_pass",
+      "current_state": "informational",
+      "fingerprints": [],
+      "first_seen": "2026-07-24T10:00:00+00:00",
+      "incident_key": "status:passed",
+      "last_seen": "2026-07-24T14:22:52+00:00",
+      "latest_record": "occurrences/preflight-30100756173-a-chair-not-a-throne-af139fa584c5c29c.json",
+      "normalized_error": "Mandatory render readiness preflight passed.",
+      "occurrence_count": 2,
+      "phases": {
+        "preflight": 2
+      },
+      "regressed_solution_ids": [],
+      "slugs": [
+        "a-chair-not-a-throne",
+        "who-wrote-the-menu"
+      ],
+      "stages": [
+        "preflight"
+      ],
+      "statuses": {
+        "passed": 2
+      },
+      "verified_solution_ids": [
+        "sol-visual-symbol-diversity-v1"
+      ]
     },
     {
       "code": "animation_contract_invalid",
@@ -129,14 +171,15 @@
       "incident_key": "code:animation_contract_invalid",
       "last_seen": "2026-07-23T14:24:52+00:00",
       "latest_record": "occurrences/historical-seed.json",
-      "matched_solution_ids": [
-        "sol-june-scene-character-scope-v1"
-      ],
       "normalized_error": "june anatomy appended to object-only scenes produced <n> percent human plan",
       "occurrence_count": 1,
       "phases": {
         "render": 1
       },
+      "regressed_solution_ids": [
+        "sol-animation-contract-preflight-v1",
+        "sol-june-scene-character-scope-v1"
+      ],
       "resolved_by_solution_ids": [
         "sol-june-scene-character-scope-v1"
       ],
@@ -148,7 +191,8 @@
       ],
       "statuses": {
         "failed": 1
-      }
+      },
+      "verified_solution_ids": []
     },
     {
       "code": "character_voice_library_permission",
@@ -158,14 +202,14 @@
       "incident_key": "code:character_voice_library_permission",
       "last_seen": "2026-07-23T14:24:40+00:00",
       "latest_record": "occurrences/historical-seed.json",
-      "matched_solution_ids": [
-        "sol-june-canonical-voice-v1"
-      ],
       "normalized_error": "elevenlabs key lacked voices_read permission",
       "occurrence_count": 1,
       "phases": {
         "render": 1
       },
+      "regressed_solution_ids": [
+        "sol-june-canonical-voice-v1"
+      ],
       "resolved_by_solution_ids": [
         "sol-june-canonical-voice-v1"
       ],
@@ -177,7 +221,8 @@
       ],
       "statuses": {
         "failed": 1
-      }
+      },
+      "verified_solution_ids": []
     },
     {
       "code": "planned_still_budget",
@@ -187,14 +232,14 @@
       "incident_key": "code:planned_still_budget",
       "last_seen": "2026-07-24T10:10:00+00:00",
       "latest_record": "occurrences/historical-seed.json",
-      "matched_solution_ids": [
-        "sol-planned-still-budget-v1"
-      ],
       "normalized_error": "still-derived footage reached <n> percent against a <n> percent cap",
       "occurrence_count": 1,
       "phases": {
         "render": 1
       },
+      "regressed_solution_ids": [
+        "sol-planned-still-budget-v1"
+      ],
       "resolved_by_solution_ids": [
         "sol-planned-still-budget-v1"
       ],
@@ -206,7 +251,8 @@
       ],
       "statuses": {
         "quality_failed": 1
-      }
+      },
+      "verified_solution_ids": []
     },
     {
       "code": "visual_symbol_plan",
@@ -218,14 +264,14 @@
       "incident_key": "code:visual_symbol_plan",
       "last_seen": "2026-07-24T02:34:52+00:00",
       "latest_record": "occurrences/historical-seed.json",
-      "matched_solution_ids": [
-        "sol-visual-symbol-diversity-v1"
-      ],
       "normalized_error": "visual symbol plan: only <n> symbol families across <n> scenes; use at least <n>",
       "occurrence_count": 1,
       "phases": {
         "render": 1
       },
+      "regressed_solution_ids": [
+        "sol-visual-symbol-diversity-v1"
+      ],
       "resolved_by_solution_ids": [
         "sol-visual-symbol-diversity-v1"
       ],
@@ -237,34 +283,9 @@
       ],
       "statuses": {
         "failed": 1
-      }
-    },
-    {
-      "code": "preflight_pass",
-      "current_state": "informational",
-      "fingerprints": [],
-      "first_seen": "2026-07-24T10:00:00+00:00",
-      "incident_key": "status:passed",
-      "last_seen": "2026-07-24T10:00:00+00:00",
-      "latest_record": "occurrences/historical-seed.json",
-      "matched_solution_ids": [
-        "sol-visual-symbol-diversity-v1"
-      ],
-      "normalized_error": "Canonical visual plan passed with eight observed families and longest family run two.",
-      "occurrence_count": 1,
-      "phases": {
-        "preflight": 1
       },
-      "slugs": [
-        "who-wrote-the-menu"
-      ],
-      "stages": [
-        "preflight"
-      ],
-      "statuses": {
-        "passed": 1
-      }
+      "verified_solution_ids": []
     }
   ],
-  "unresolved_solution_count": 2
+  "warning_counts": {}
 }
