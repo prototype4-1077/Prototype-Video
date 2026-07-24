@@ -11,7 +11,7 @@
         "scene_feedback_request": 1,
         "scene_review": 7,
         "telemetry_summary": 8,
-        "youtube_stats": 7
+        "youtube_stats": 24
       },
       "coverage": {
         "governor_summary": 0.1,
@@ -21,7 +21,7 @@
         "scene_feedback_request": 0.0125,
         "scene_review": 0.0875,
         "telemetry_summary": 0.1,
-        "youtube_stats": 0.0875
+        "youtube_stats": 0.3
       },
       "human_feedback_count": 2,
       "human_feedback_coverage": 0.025
@@ -60,36 +60,36 @@
     "telemetry_count": 8,
     "telemetry_coverage_of_render_observed": 1.0,
     "youtube_missing_stats_slugs": [
+      "belief-is-gravity"
+    ],
+    "youtube_published_receipt_count": 25,
+    "youtube_stats_count": 24,
+    "youtube_stats_coverage_of_published": 0.96,
+    "youtube_stats_slugs": [
       "been-here-before",
       "before-your-words",
-      "belief-is-gravity",
       "cartographers-confession",
+      "collapse-of-gravity",
       "eye-cannot-see-itself",
+      "i-became-everything",
+      "jester-who-knew-my-name",
       "room-before-birth",
       "the-edge-of-you-is-negotiable",
       "the-forecast-in-your-chest",
+      "the-lag",
       "the-loop",
       "the-museum-that-repaints-itself",
       "the-person-you-replaced",
       "the-press-secretary-in-your-skull",
+      "the-reality-machine-dmt-v3",
       "the-room-behind-you",
+      "the-save-file",
+      "the-unopened-mail",
       "the-voice",
       "two-ships",
       "where-the-years-go",
       "who-wrote-the-menu",
       "you-are-a-flame-wearing-a-name-tag"
-    ],
-    "youtube_published_receipt_count": 25,
-    "youtube_stats_count": 7,
-    "youtube_stats_coverage_of_published": 0.28,
-    "youtube_stats_slugs": [
-      "collapse-of-gravity",
-      "i-became-everything",
-      "jester-who-knew-my-name",
-      "the-lag",
-      "the-reality-machine-dmt-v3",
-      "the-save-file",
-      "the-unopened-mail"
     ]
   },
   "creative_memory": {
@@ -263,40 +263,6 @@
     "candidate_count": 14
   },
   "findings": [
-    {
-      "action": "Refresh public YouTube statistics for every verified receipt on a schedule, then compare creative cohorts only after normalizing for video age.",
-      "area": "audience_learning",
-      "automatic_patch": false,
-      "code": "youtube_audience_analytics_coverage_low",
-      "evidence": {
-        "coverage": 0.28,
-        "missing_stats_slugs": [
-          "been-here-before",
-          "before-your-words",
-          "belief-is-gravity",
-          "cartographers-confession",
-          "eye-cannot-see-itself",
-          "room-before-birth",
-          "the-edge-of-you-is-negotiable",
-          "the-forecast-in-your-chest",
-          "the-loop",
-          "the-museum-that-repaints-itself",
-          "the-person-you-replaced",
-          "the-press-secretary-in-your-skull",
-          "the-room-behind-you",
-          "the-voice",
-          "two-ships",
-          "where-the-years-go",
-          "who-wrote-the-menu",
-          "you-are-a-flame-wearing-a-name-tag"
-        ],
-        "published_receipts": 25,
-        "stats_count": 7
-      },
-      "priority": "high",
-      "status": "open",
-      "title": "Most verified YouTube posts have no stored performance snapshot"
-    },
     {
       "action": "Run the visual-memory analyzer and commit its reviewed feedback cohorts and review queue.",
       "area": "visual_memory",
@@ -512,7 +478,7 @@
       "title": "The WhisperX challenger has no materialized benchmark ledger"
     }
   ],
-  "generated_at": "2026-07-24T14:53:57+00:00",
+  "generated_at": "2026-07-24T14:53:59+00:00",
   "operational_memory": {
     "advisory_counts": {},
     "occurrence_count": 9,
@@ -553,7 +519,7 @@
     "evidence_strength": "developing",
     "fallback_count": 0,
     "fallback_rate": 0.0,
-    "generated_at": "2026-07-24T14:53:57+00:00",
+    "generated_at": "2026-07-24T14:53:59+00:00",
     "low_candidate_scenes": 0,
     "low_supply_rate": 0.0,
     "mean_candidate_count_when_recorded": null,
@@ -573,10 +539,10 @@
   },
   "summary": {
     "automatic_patch_candidates": 2,
-    "finding_count": 10,
-    "open_count": 10,
+    "finding_count": 9,
+    "open_count": 9,
     "priorities": {
-      "high": 2,
+      "high": 1,
       "low": 1,
       "medium": 7
     }

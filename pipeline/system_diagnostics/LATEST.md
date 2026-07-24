@@ -1,16 +1,10 @@
 # System Diagnostic
 
-Generated: 2026-07-24T14:53:57+00:00
+Generated: 2026-07-24T14:53:59+00:00
 
-Findings: 10 — priorities {"high": 2, "low": 1, "medium": 7}
+Findings: 9 — priorities {"high": 1, "low": 1, "medium": 7}
 
 ## Action queue
-
-### [HIGH] Most verified YouTube posts have no stored performance snapshot
-- Area: `audience_learning`
-- Code: `youtube_audience_analytics_coverage_low`
-- Evidence: {"coverage": 0.28, "missing_stats_slugs": ["been-here-before", "before-your-words", "belief-is-gravity", "cartographers-confession", "eye-cannot-see-itself", "room-before-birth", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-loop", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-room-behind-you", "the-voice", "two-ships", "where-the-years-go", "who-wrote-the-menu", "you-are-a-flame-wearing-a-name-tag"], "published_receipts": 25, "stats_count": 7}
-- Action: Refresh public YouTube statistics for every verified receipt on a schedule, then compare creative cohorts only after normalizing for video age.
 
 ### [HIGH] Visual-memory data exists without a reviewed-evidence action report
 - Area: `visual_memory`
