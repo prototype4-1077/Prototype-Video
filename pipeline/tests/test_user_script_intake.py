@@ -8,6 +8,7 @@ import unittest
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
+import preflight
 import user_script_intake
 
 
@@ -110,6 +111,35 @@ class UserScriptIntakeTests(unittest.TestCase):
             (build / "script.json").write_text('{"title":"Existing","slug":"protected","scenes":[{"text":"Approved words."}]}', encoding="utf-8")
             with self.assertRaisesRegex(FileExistsError, "non-intake"):
                 user_script_intake.build_package(build)
+
+    def test_representative_plain_text_package_passes_production_preflight(self):
+        with tempfile.TemporaryDirectory() as temp:
+            build = Path(temp) / "ready-script"
+            build.mkdir()
+            source = " ".join([
+                "An alarm clock rings beside an unopened notebook.",
+                "A wooden door opens into a bright hallway.",
+                "A river carries one leaf around a stone.",
+                "A paper map folds until two roads touch.",
+                "A mirror catches a room from another angle.",
+                "A train changes tracks beneath a signal light.",
+                "A seed splits and pushes through dark soil.",
+                "A balance scale settles after one weight moves.",
+                "A lighthouse beam turns across moving water.",
+                "A key rests beside a lock on a workbench.",
+                "The room grows quiet enough to hear your breath.",
+                "Which ordinary object would you test first?",
+            ])
+            (build / "source-script.txt").write_text(source, encoding="utf-8")
+            (build / "submission.json").write_text(json.dumps({
+                "title": "Ready Script",
+                "target_scenes": 12,
+                "science_fidelity": "metaphor",
+            }), encoding="utf-8")
+            user_script_intake.build_package(build)
+            report = preflight.assess(build, fix_safe=True)
+            self.assertTrue(report["passed"], report)
+            self.assertTrue(user_script_intake.verify_lock(build)["passed"])
 
 
 if __name__ == "__main__":
