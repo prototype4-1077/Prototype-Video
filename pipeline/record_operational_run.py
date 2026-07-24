@@ -18,7 +18,6 @@ import operational_memory
 from governor import failure_fingerprint, normalize_error
 
 SUCCESS = {"done", "success", "passed"}
-FAILURE = {"failed", "quality_failed", "error", "overall_timeout", "stalled"}
 
 
 def load(path: Path, default: Any) -> Any:
@@ -63,26 +62,47 @@ def warning_records(build: Path, common: dict[str, Any], store: Path) -> list[Pa
 
 def telemetry_records(build: Path, common: dict[str, Any], store: Path) -> list[Path]:
     telemetry = load(build / "telemetry-summary.json", {}) or {}
+    if not telemetry:
+        return []
     paths: list[Path] = []
+    message = (
+        f"Telemetry summary: {int(telemetry.get('span_count') or 0)} spans, "
+        f"{int(telemetry.get('failure_count') or 0)} traced failures."
+    )
+    paths.append(operational_memory.write_occurrence({
+        **common,
+        "phase": "telemetry",
+        "status": "informational",
+        "code": "telemetry_summary",
+        "stage": "telemetry",
+        "message": message,
+        "normalized_error": normalize_error(message),
+        "stage_metrics": telemetry.get("stages") or {},
+        "scene_span_count": telemetry.get("scene_span_count"),
+        "single_trace": telemetry.get("single_trace"),
+        "estimated_cost_usd": telemetry.get("estimated_cost_usd"),
+        "credits_used": telemetry.get("credits_used"),
+        "matched_solution_ids": [],
+    }, store=store))
     for index, item in enumerate(telemetry.get("recommendations") or []):
         category = str(item.get("category") or "telemetry")
         stage = str(item.get("stage") or "telemetry")
-        message = str(item.get("reason") or item.get("action") or item)
+        recommendation_message = str(item.get("reason") or item.get("action") or item)
         code = f"telemetry_recommendation:{category}"
-        fingerprint = failure_fingerprint(stage, code, message)
+        fingerprint = failure_fingerprint(stage, code, recommendation_message)
         paths.append(operational_memory.write_occurrence({
             **common,
             "phase": "telemetry",
             "status": "advisory",
             "code": code,
             "stage": stage,
-            "message": message,
-            "normalized_error": normalize_error(message),
+            "message": recommendation_message,
+            "normalized_error": normalize_error(recommendation_message),
             "fingerprint": fingerprint,
             "priority": item.get("priority"),
             "recommendation": item,
             "item": index,
-            "matched_solution_ids": exact_matches(code, fingerprint, message, store),
+            "matched_solution_ids": exact_matches(code, fingerprint, recommendation_message, store),
         }, store=store))
     return paths
 
