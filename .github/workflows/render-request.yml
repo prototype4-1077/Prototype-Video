@@ -1,8 +1,8 @@
 name: Render queued video request
 
-# Drop build/<slug>/render.request on main. A mandatory zero-cost preflight now
-# runs before render.yml. Deterministic package defects are recorded and blocked
-# without consuming a render runner.
+# Drop build/<slug>/render.request on main. A mandatory zero-cost preflight runs
+# before render.yml. The exact package inputs are fingerprinted so a package edit
+# between preflight and the render checkout cannot silently bypass validation.
 
 on:
   push:
@@ -40,7 +40,7 @@ jobs:
           done
           echo "slugs=$(echo "$slugs" | xargs)" >> "$GITHUB_OUTPUT"
 
-      - name: Mandatory render-readiness preflight
+      - name: Mandatory user-script lock, render preflight, and package lock
         id: preflight
         if: steps.slugs.outputs.slugs != ''
         shell: bash
@@ -50,7 +50,63 @@ jobs:
           blocked=""
           for slug in ${{ steps.slugs.outputs.slugs }}; do
             echo "preflighting $slug"
-            if python3 pipeline/preflight.py "build/$slug" --fix-safe --record; then
+            build="build/$slug"
+            requires_lock="$(python3 - "$build/script.json" <<'PY'
+          import json, pathlib, sys
+          path = pathlib.Path(sys.argv[1])
+          try:
+              script = json.loads(path.read_text(encoding="utf-8"))
+          except Exception:
+              script = {}
+          print("true" if script.get("source_script_verbatim") else "false")
+          PY
+            )"
+            if [[ "$requires_lock" == "true" ]]; then
+              lock_report="$(mktemp)"
+              if ! python3 pipeline/user_script_intake.py "$build" --verify-only > "$lock_report"; then
+                python3 - "$slug" "$lock_report" <<'PY'
+          import json, pathlib, sys
+          slug = sys.argv[1]
+          lock_path = pathlib.Path(sys.argv[2])
+          try:
+              lock = json.loads(lock_path.read_text(encoding="utf-8"))
+          except Exception:
+              lock = {"passed": False, "message": lock_path.read_text(encoding="utf-8", errors="replace")[-1000:]}
+          report = {
+              "schema_version": 1,
+              "slug": slug,
+              "passed": False,
+              "fix_safe": False,
+              "script_changed": False,
+              "blockers": [{
+                  "code": "source_script_lock",
+                  "stage": "preflight",
+                  "message": lock.get("message") or "User-supplied narration differs from its authoritative source.",
+                  "matched_solution_ids": [],
+              }],
+              "warnings": [],
+              "checks": {"source_script_lock": lock},
+              "applied_solution_ids": [],
+              "matched_solution_ids": [],
+              "prevention_rule_version": 1,
+          }
+          pathlib.Path(f"build/{slug}/preflight-report.json").write_text(
+              json.dumps(report, indent=2, ensure_ascii=False, sort_keys=True) + "\n",
+              encoding="utf-8",
+          )
+          PY
+                blocked="$blocked $slug"
+                continue
+              fi
+            fi
+            if python3 pipeline/preflight.py "$build" --fix-safe --record; then
+              # Safe fixes may normalize non-narration fields. Reconfirm the source
+              # lock after those changes before fingerprinting the exact package.
+              if [[ "$requires_lock" == "true" ]]; then
+                python3 pipeline/user_script_intake.py "$build" --verify-only
+              fi
+              python3 pipeline/package_integrity.py snapshot "$build" \
+                --output "$build/package-fingerprint.json"
               passed="$passed $slug"
             else
               blocked="$blocked $slug"
@@ -59,7 +115,7 @@ jobs:
           echo "passed=$(echo "$passed" | xargs)" >> "$GITHUB_OUTPUT"
           echo "blocked=$(echo "$blocked" | xargs)" >> "$GITHUB_OUTPUT"
 
-      - name: Commit preflight evidence and safe fixes
+      - name: Commit preflight evidence, safe fixes, and package lock
         if: steps.slugs.outputs.slugs != ''
         shell: bash
         run: |
@@ -67,19 +123,28 @@ jobs:
           git config user.name "render-preflight-bot"
           git config user.email "render-preflight@users.noreply.github.com"
           for slug in ${{ steps.slugs.outputs.slugs }}; do
-            git add "build/$slug/script.json" "build/$slug/preflight-report.json" 2>/dev/null || true
+            git add \
+              "build/$slug/script.json" \
+              "build/$slug/preflight-report.json" \
+              "build/$slug/package-fingerprint.json" 2>/dev/null || true
           done
           git add pipeline/operational_memory/occurrences 2>/dev/null || true
-          git commit -m "preflight: validate ${{ steps.slugs.outputs.slugs }}" || exit 0
-          for i in 1 2 3 4 5; do
-            git push && exit 0
-            git pull --rebase origin main || { git rebase --abort || true; }
-            sleep $((i * 2))
-          done
-          echo "preflight evidence could not be persisted; refusing render dispatch" >&2
-          exit 1
+          if git diff --cached --quiet; then
+            echo "preflight produced no repository changes"
+          else
+            git commit -m "preflight: validate and lock ${{ steps.slugs.outputs.slugs }}"
+            for i in 1 2 3 4 5; do
+              git push && break
+              git pull --rebase origin main || { git rebase --abort || true; }
+              sleep $((i * 2))
+              if [ "$i" -eq 5 ]; then
+                echo "preflight evidence could not be persisted; refusing render dispatch" >&2
+                exit 1
+              fi
+            done
+          fi
 
-      - name: Fire render.yml only for ready slugs
+      - name: Fire render.yml only for the exact ready package
         if: steps.preflight.outputs.passed != ''
         env:
           GH_TOKEN: ${{ github.token }}
@@ -87,8 +152,18 @@ jobs:
         run: |
           set -euo pipefail
           for slug in ${{ steps.preflight.outputs.passed }}; do
-            echo "dispatching render.yml for $slug (long_render=true)"
-            gh workflow run render.yml -f slug="$slug" -f long_render=true
+            fingerprint="$(python3 - "$slug" <<'PY'
+          import json, pathlib, sys
+          slug = sys.argv[1]
+          payload = json.loads(pathlib.Path(f"build/{slug}/package-fingerprint.json").read_text(encoding="utf-8"))
+          print(payload["fingerprint"])
+          PY
+            )"
+            echo "dispatching render.yml for $slug package=$fingerprint (long_render=true)"
+            gh workflow run render.yml \
+              -f slug="$slug" \
+              -f long_render=true \
+              -f package_fingerprint="$fingerprint"
           done
 
       - name: Acknowledge passed and blocked requests
@@ -99,16 +174,20 @@ jobs:
           git config user.name "render-request-bot"
           git config user.email "render-request@users.noreply.github.com"
           for slug in ${{ steps.preflight.outputs.passed }}; do
-            printf 'preflight passed; dispatched render.yml at %s (dispatcher run %s)\n' \
-              "$(date -u +%FT%TZ)" "$GITHUB_RUN_ID" > "build/$slug/render-started.txt"
+            fingerprint="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["fingerprint"])' "build/$slug/package-fingerprint.json")"
+            printf 'preflight passed; dispatched render.yml at %s (dispatcher run %s, package %s)\n' \
+              "$(date -u +%FT%TZ)" "$GITHUB_RUN_ID" "$fingerprint" > "build/$slug/render-started.txt"
           done
           for slug in ${{ steps.preflight.outputs.blocked }}; do
             python3 - "$slug" <<'PY'
           import json, pathlib, sys
           slug = sys.argv[1]
-          report = json.loads(pathlib.Path(f"build/{slug}/preflight-report.json").read_text(encoding="utf-8"))
-          lines = [f"preflight blocked at {report.get('slug')}"]
+          report_path = pathlib.Path(f"build/{slug}/preflight-report.json")
+          report = json.loads(report_path.read_text(encoding="utf-8")) if report_path.exists() else {}
+          lines = [f"preflight blocked at {report.get('slug') or slug}"]
           lines.extend(f"{item.get('code')}: {item.get('message')}" for item in report.get("blockers") or [])
+          if len(lines) == 1:
+              lines.append("No detailed preflight report was produced; inspect the dispatcher log.")
           pathlib.Path(f"build/{slug}/render-blocked.txt").write_text("\n".join(lines) + "\n", encoding="utf-8")
           PY
           done

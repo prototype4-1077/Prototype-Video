@@ -7,6 +7,7 @@ on:
       - "build/*/governor-summary.json"
       - "build/*/render-status.json"
       - "build/*/quality_report.json"
+      - "build/*/telemetry-summary.json"
 
 permissions:
   contents: write
@@ -31,7 +32,7 @@ jobs:
           slugs=""
           while read -r file; do
             case "$file" in
-              build/*/governor-summary.json|build/*/render-status.json|build/*/quality_report.json)
+              build/*/governor-summary.json|build/*/render-status.json|build/*/quality_report.json|build/*/telemetry-summary.json)
                 slug="${file#build/}"; slug="${slug%%/*}"
                 case " $slugs " in *" $slug "*) ;; *) slugs="$slugs $slug" ;; esac
                 ;;
@@ -39,7 +40,7 @@ jobs:
           done < <(git diff-tree --no-commit-id --name-only --diff-filter=AM -r "$GITHUB_SHA")
           echo "slugs=$(echo "$slugs" | xargs)" >> "$GITHUB_OUTPUT"
 
-      - name: Record immutable run occurrences
+      - name: Record immutable run, warning, and telemetry occurrences
         if: steps.slugs.outputs.slugs != ''
         shell: bash
         run: |
@@ -47,7 +48,7 @@ jobs:
           for slug in ${{ steps.slugs.outputs.slugs }}; do
             run_id=""
             [ -f "build/$slug/run-id.txt" ] && run_id="$(cat "build/$slug/run-id.txt")"
-            python3 pipeline/operational_memory.py record-run "build/$slug" \
+            python3 pipeline/record_operational_run.py "build/$slug" \
               --github-run-id "$run_id" --commit-sha "$GITHUB_SHA"
           done
 
