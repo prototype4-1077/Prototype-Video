@@ -29,12 +29,20 @@
     {
       "id": "sol-planned-still-budget-v1",
       "title": "Estimate still-derived duration before dispatch",
-      "status": "provisional",
+      "status": "verified",
       "category": "deterministic_preflight",
       "root_cause": "A script can appear below the still cap by scene count yet exceed it after narration timing because hero scenes are longer than stock scenes.",
       "repair_action": "Estimate each scene duration from exact timing when available or narration word weight otherwise. Convert enough hero or still scenes to genuine motion before dispatch and warn when the estimate is within three percentage points of the cap.",
       "fix_commits": ["f7aeffb8dc0ac697cb4f3d014d82d30d38bf6212"],
       "fixed_at": "2026-07-24T10:00:00+00:00",
+      "verified_at": "2026-07-24T10:31:51+00:00",
+      "verification_evidence": {
+        "slug": "who-wrote-the-menu",
+        "github_run_id": "30084595748",
+        "outcome": "done",
+        "quality_passed": true,
+        "final_output": "final_youtube.mp4"
+      },
       "prevention_rule_id": "rule-planned-still-budget",
       "safe_to_auto_apply": false,
       "verification_requirement": "One successful delivery render after the preflight estimate passes.",
