@@ -3,6 +3,8 @@
 Publishing is idempotent by default. A committed receipt is checked before any
 upload, updated atomically after every successful video, and may be bypassed only
 with the explicit ``--force`` flag. The YouTube-specific master is preferred.
+The established analytics registry is imported as legacy receipt evidence so the
+existing catalog is protected immediately.
 """
 from __future__ import annotations
 
@@ -20,6 +22,7 @@ HERE = Path(__file__).resolve().parent
 REPO = os.environ.get("GH_REPO", "prototype-video/Prototype-Video")
 QUEUE = HERE / "yt_publish_queue.json"
 RESULT = HERE / "yt_published_result.json"
+LEGACY_RESULT = HERE / "published_videos.json"
 
 
 def load_json(path: Path, default: Any) -> Any:
@@ -35,14 +38,32 @@ def atomic_json(path: Path, payload: Any) -> None:
     os.replace(temp, path)
 
 
+def _record(value: Any) -> dict[str, Any] | None:
+    if isinstance(value, str):
+        return {"video_id": value, "url": f"https://youtube.com/watch?v={value}"}
+    if not isinstance(value, dict):
+        return None
+    video_id = value.get("video_id") or value.get("youtube_id")
+    if not video_id:
+        return None
+    return {
+        **value,
+        "video_id": str(video_id),
+        "url": value.get("url") or f"https://youtube.com/watch?v={video_id}",
+        "published_at": value.get("published_at") or value.get("published"),
+        "receipt_source": value.get("receipt_source") or "legacy_analytics_registry",
+    }
+
+
 def normalized_history() -> dict[str, dict[str, Any]]:
-    raw = load_json(RESULT, {}) or {}
     output: dict[str, dict[str, Any]] = {}
-    for slug, value in raw.items() if isinstance(raw, dict) else []:
-        if isinstance(value, str):
-            output[str(slug)] = {"video_id": value, "url": f"https://youtube.com/watch?v={value}"}
-        elif isinstance(value, dict) and value.get("video_id"):
-            output[str(slug)] = dict(value)
+    for source in (load_json(LEGACY_RESULT, {}) or {}, load_json(RESULT, {}) or {}):
+        if not isinstance(source, dict):
+            continue
+        for slug, value in source.items():
+            record = _record(value)
+            if record:
+                output[str(slug)] = record
     return output
 
 
@@ -131,6 +152,8 @@ def publish(slugs: list[str], *, force: bool = False) -> dict[str, dict[str, Any
         if slug not in pending:
             print(f"SKIP already published {slug} -> {history[slug].get('url')}", flush=True)
     if not pending:
+        # Materialize legacy analytics receipts into the dedicated publish ledger.
+        atomic_json(RESULT, history)
         return history
 
     token = access_token()
@@ -144,6 +167,7 @@ def publish(slugs: list[str], *, force: bool = False) -> dict[str, dict[str, Any
             "published_at": dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat(),
             "title": meta.get("title"),
             "forced": bool(force),
+            "receipt_source": "publisher",
         }
         history[slug] = record
         atomic_json(RESULT, history)
