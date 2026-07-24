@@ -258,6 +258,7 @@ jobs:
             build/${{ inputs.slug }}/quality_report.json
             build/${{ inputs.slug }}/preflight-report.json
             build/${{ inputs.slug }}/package-fingerprint.json
+            build/${{ inputs.slug }}/narrative_fidelity_report.json
 
       - name: Upload final video
         if: success()
@@ -270,6 +271,7 @@ jobs:
             build/${{ inputs.slug }}/motion_report.json
             build/${{ inputs.slug }}/motion_report_short.json
             build/${{ inputs.slug }}/visual_symbol_report.json
+            build/${{ inputs.slug }}/narrative_fidelity_report.json
             build/${{ inputs.slug }}/still_reference_report.json
             build/${{ inputs.slug }}/music_variants.json
             build/${{ inputs.slug }}/coherence_report.json
@@ -298,6 +300,8 @@ jobs:
             "build/${{ inputs.slug }}/CREDITS.txt" --clobber || true
           test -f "build/${{ inputs.slug }}/visual_symbol_report.json" && gh release upload "$TAG" \
             "build/${{ inputs.slug }}/visual_symbol_report.json" --clobber || true
+          test -f "build/${{ inputs.slug }}/narrative_fidelity_report.json" && gh release upload "$TAG" \
+            "build/${{ inputs.slug }}/narrative_fidelity_report.json" --clobber || true
           test -f "build/${{ inputs.slug }}/still_reference_report.json" && gh release upload "$TAG" \
             "build/${{ inputs.slug }}/still_reference_report.json" --clobber || true
           test -f "build/${{ inputs.slug }}/music_variants.json" && gh release upload "$TAG" \
@@ -324,6 +328,7 @@ jobs:
             "build/${{ inputs.slug }}/governor-review.json" \
             "build/${{ inputs.slug }}/render-status.json" \
             "build/${{ inputs.slug }}/quality_report.json" \
+            "build/${{ inputs.slug }}/narrative_fidelity_report.json" \
             "build/${{ inputs.slug }}/scene-review.json" \
             "build/${{ inputs.slug }}"/emb_*.npy; do
             git add "$f" 2>/dev/null || true
