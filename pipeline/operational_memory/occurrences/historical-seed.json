@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "occurrences": [
+    {
+      "schema_version": 1,
+      "recorded_at": "2026-07-23T14:24:52+00:00",
+      "phase": "render",
+      "github_run_id": "historical-june-animation",
+      "slug": "june-oxley-folks-aint-roadblocks-tier1",
+      "status": "failed",
+      "code": "animation_contract_invalid",
+      "stage": "build_pass",
+      "failure_class": "deterministic",
+      "message": "June anatomy was appended to object-led scenes, producing a 100 percent human visual plan.",
+      "normalized_error": "june anatomy appended to object-only scenes produced <n> percent human plan",
+      "matched_solution_ids": ["sol-june-scene-character-scope-v1"],
+      "resolution_commits": ["c7930a0d544899562a8fa41a2241f89bd7500cac"]
+    },
+    {
+      "schema_version": 1,
+      "recorded_at": "2026-07-23T15:37:40+00:00",
+      "phase": "render",
+      "github_run_id": "historical-june-animation-rerender",
+      "slug": "june-oxley-folks-aint-roadblocks-tier1",
+      "status": "done",
+      "code": "render_success",
+      "stage": "render",
+      "message": "June animation render completed after scene-level character scope repair.",
+      "matched_solution_ids": ["sol-june-scene-character-scope-v1"]
+    },
+    {
+      "schema_version": 1,
+      "recorded_at": "2026-07-23T14:24:40+00:00",
+      "phase": "render",
+      "github_run_id": "historical-june-voice",
+      "slug": "june-oxley-left-the-vehicle",
+      "status": "failed",
+      "code": "character_voice_library_permission",
+      "stage": "tts",
+      "failure_class": "deterministic",
+      "message": "ElevenLabs key could synthesize speech but lacked voices_read permission for name lookup.",
+      "normalized_error": "elevenlabs key lacked voices_read permission",
+      "matched_solution_ids": ["sol-june-canonical-voice-v1"],
+      "resolution_commits": ["c7930a0d544899562a8fa41a2241f89bd7500cac"]
+    },
+    {
+      "schema_version": 1,
+      "recorded_at": "2026-07-23T15:37:45+00:00",
+      "phase": "render",
+      "github_run_id": "historical-june-rerender",
+      "slug": "june-oxley-left-the-vehicle",
+      "status": "done",
+      "code": "render_success",
+      "stage": "render",
+      "message": "June render completed using the pinned canonical Spuds voice ID.",
+      "matched_solution_ids": ["sol-june-canonical-voice-v1"]
+    },
+    {
+      "schema_version": 1,
+      "recorded_at": "2026-07-23T22:11:13+00:00",
+      "phase": "render",
+      "github_run_id": "30047098717",
+      "slug": "belief-is-gravity",
+      "status": "done",
+      "code": "render_success",
+      "stage": "render",
+      "message": "Standalone render completed with the series eyebrow removed.",
+      "matched_solution_ids": ["sol-standalone-title-eyebrow-v1"]
+    },
+    {
+      "schema_version": 1,
+      "recorded_at": "2026-07-24T10:10:00+00:00",
+      "phase": "render",
+      "github_run_id": "historical-motion-budget",
+      "slug": "who-wrote-the-menu",
+      "status": "quality_failed",
+      "code": "planned_still_budget",
+      "stage": "quality",
+      "failure_class": "deterministic",
+      "message": "Still-derived footage reached 36.9 percent against a 35 percent cap.",
+      "normalized_error": "still-derived footage reached <n> percent against a <n> percent cap",
+      "matched_solution_ids": ["sol-planned-still-budget-v1"],
+      "resolution_commits": ["f7aeffb8dc0ac697cb4f3d014d82d30d38bf6212"]
+    },
+    {
+      "schema_version": 1,
+      "recorded_at": "2026-07-24T10:00:00+00:00",
+      "phase": "preflight",
+      "github_run_id": "historical-repair",
+      "slug": "who-wrote-the-menu",
+      "status": "passed",
+      "code": "preflight_pass",
+      "stage": "preflight",
+      "message": "Canonical visual plan passed with eight observed families and longest family run two.",
+      "matched_solution_ids": ["sol-visual-symbol-diversity-v1"]
+    },
+    {
+      "schema_version": 1,
+      "recorded_at": "2026-07-24T02:34:52+00:00",
+      "phase": "render",
+      "github_run_id": "30061909325",
+      "slug": "who-wrote-the-menu",
+      "status": "failed",
+      "code": "visual_symbol_plan",
+      "stage": "build_pass",
+      "failure_class": "deterministic",
+      "fingerprint": "77b1a79e3bf22e98",
+      "message": "Visual symbol plan had only five observed families across 24 scenes; at least six were required.",
+      "normalized_error": "visual symbol plan: only <n> symbol families across <n> scenes; use at least <n>",
+      "matched_solution_ids": ["sol-visual-symbol-diversity-v1"],
+      "resolution_commits": [
+        "ed0e7084c43fa9e3193ec2611232cc7b673ee80f",
+        "f5802ff422b3bc607257a6bb10214890cc0e0acd"
+      ]
+    }
+  ]
+}
