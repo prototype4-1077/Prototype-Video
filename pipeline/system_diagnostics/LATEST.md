@@ -1,21 +1,21 @@
 # System Diagnostic
 
-Generated: 2026-07-24T15:03:22+00:00
+Generated: 2026-07-24T16:47:40+00:00
 
-Findings: 9 — priorities {"high": 1, "low": 1, "medium": 7}
+Findings: 11 — priorities {"high": 1, "low": 1, "medium": 9}
 
 ## Action queue
 
-### [HIGH] Visual-memory data exists without a reviewed-evidence action report
+### [HIGH] Evidence Coverage
 - Area: `visual_memory`
-- Code: `visual_memory_unanalyzed`
-- Evidence: {"decisions": {"approved": 38, "revise": 5, "unreviewed": 2223}, "records": 2266}
-- Action: Run the visual-memory analyzer and commit its reviewed feedback cohorts and review queue.
+- Code: `visual:evidence_coverage:general`
+- Evidence: "Only 43 of 2290 scene records have a human decision (1.9%)."
+- Action: Do not convert automated risk frequency into house rules. Review the highest-risk asset-backed queue first.
 
 ### [MEDIUM] Permanent stock exclusion now has a measured supply signal
 - Area: `asset_selection`
 - Code: `stock_supply:insufficient_evidence`
-- Evidence: {"exclusions": {"banned_ids": 102, "used_ids": 1021}, "fallback_rate": 0.0, "low_supply_rate": 0.0, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 0, "scenes_analyzed": 0, "state": "insufficient_evidence"}
+- Evidence: {"exclusions": {"banned_ids": 102, "used_ids": 1021}, "fallback_rate": 0.15, "low_supply_rate": 0.15, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 1, "scenes_analyzed": 20, "state": "insufficient_evidence"}
 - Action: Persist candidate-decision reports for more completed renders before evaluating a cooldown. The exclusion-set size alone is not evidence of starvation.
 
 ### [MEDIUM] The evolution queue is flooded with taxonomy gaps
@@ -33,7 +33,7 @@ Findings: 9 — priorities {"high": 1, "low": 1, "medium": 7}
 ### [MEDIUM] Too few reviewable videos have exported human feedback
 - Area: `learning`
 - Code: `human_feedback_coverage_low`
-- Evidence: {"coverage": 0.2857, "feedback_count": 2, "feedback_slugs": ["belief-is-gravity", "the-edge-of-you-is-negotiable"], "reviewable_count": 7, "reviewable_slugs": ["a-chair-not-a-throne", "belief-is-gravity", "june-oxley-left-the-vehicle", "the-edge-of-you-is-negotiable", "the-emotion-scam-tier1", "the-reality-machine-dmt-v3", "who-wrote-the-menu"]}
+- Evidence: {"coverage": 0.25, "feedback_count": 2, "feedback_slugs": ["belief-is-gravity", "the-edge-of-you-is-negotiable"], "reviewable_count": 8, "reviewable_slugs": ["a-chair-not-a-throne", "belief-is-gravity", "june-oxley-left-the-vehicle", "the-edge-of-you-is-negotiable", "the-emotion-scam-tier1", "the-infinite-library", "the-reality-machine-dmt-v3", "who-wrote-the-menu"]}
 - Action: Review the highest-value completed videos first. Keep automated risk tags as screening evidence until James supplies a decision.
 
 ### [MEDIUM] Some operational solutions still need verification
@@ -45,7 +45,7 @@ Findings: 9 — priorities {"high": 1, "low": 1, "medium": 7}
 ### [MEDIUM] Youtube queue contains already-published videos
 - Area: `publishing`
 - Code: `youtube_published_still_queued`
-- Evidence: ["the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "who-wrote-the-menu", "you-are-a-flame-wearing-a-name-tag"]
+- Evidence: ["a-chair-not-a-throne", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "who-wrote-the-menu", "you-are-a-flame-wearing-a-name-tag"]
 - Action: Keep the metadata queue if useful, but rely on durable receipt checks and make duplicate posting require an explicit force flag.
 
 ### [MEDIUM] Quality warning repeats: low_bitrate
@@ -53,6 +53,18 @@ Findings: 9 — priorities {"high": 1, "low": 1, "medium": 7}
 - Code: `repeated_quality_warning:low_bitrate`
 - Evidence: {"current_build_reports": 2}
 - Action: Run a targeted encoding or assembly challenger and require unchanged visual/audio quality before adoption.
+
+### [MEDIUM] Asset Coverage
+- Area: `visual_memory`
+- Code: `visual:asset_coverage:general`
+- Evidence: "Only 127 of 2290 records retain a reviewable asset (5.5%)."
+- Action: Persist representative frames or durable release references for completed scenes so historical feedback remains inspectable.
+
+### [MEDIUM] Low Approval Cohort
+- Area: `visual_memory`
+- Code: `visual:low_approval_cohort:symbol_family:cartography`
+- Evidence: "1/3 approved (33%)"
+- Action: Inspect the cohort before changing global routing; topic and scene difficulty may be confounders.
 
 ### [LOW] The WhisperX challenger has no materialized benchmark ledger
 - Area: `alignment`
