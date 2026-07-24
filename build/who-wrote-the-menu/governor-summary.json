@@ -1,21 +1,38 @@
 {
-  "finished_at": "2026-07-24T02:34:52+00:00",
-  "github_run_id": "30061909325",
+  "finished_at": "2026-07-24T09:51:37+00:00",
+  "github_run_id": "30083425884",
   "incidents": [
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "77b1a79e3bf22e98",
+      "fingerprint": "d6f48680ba983307",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "error: visual symbol plan: only <n> symbol families across <n> scenes; use at least <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "normalized_error": "governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success duration=<n>.0s rc=<n> credits: <n> stock clips -> <path> error: still-derived shots are <n>% of the film (<n>.0s<path> above the <n>% cap by <n>.0s; animated stills count toward this cap, so replace that duration with genuine moving footage | fix: replace still-derived scenes with verified moving footage",
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "7d2548ea1234feea",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "tage=hero:<n> state=running elapsed=15s idle=15s governor stage=hero:<n> state=running elapsed=30s idle=30s governor stage=hero:<n> state=running elapsed=45s idle=3s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (cinematic photoreal private office above a restaurant, an un...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=su",
       "stage": "build_pass"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=b9cf587cb1a7d00d. ERROR: visual symbol plan: only 5 symbol families across 24 scenes; use at least 6 | FIX: replace generic human queries with varied physical symbols or assign a concrete human_role",
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=20476b3b709e0ce8. ERROR: still-derived shots are 36.9% of the film (57.0s/154.4s), above the 35% cap by 3.0s; animated stills count toward this cap, so replace that duration with genuine moving footage | FIX: replace still-derived scenes with verified moving footage",
   "mode": "recover",
-  "passes": 2,
+  "passes": 6,
   "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 6,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -23,31 +40,169 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 33.04,
+      "sample_count": 10,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 180.0,
+      "sample_count": 3,
+      "soft_timeout_s": 300.0,
+      "source": "default"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 21.43,
+      "idle_timeout_s": 180.0,
+      "sample_count": 5,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 23.27,
+      "idle_timeout_s": 180.0,
+      "sample_count": 6,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 69.3,
+      "idle_timeout_s": 180.0,
+      "sample_count": 6,
+      "soft_timeout_s": 237.89,
+      "source": "history"
     }
   },
   "quality": {},
   "recommendations": [
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "77b1a79e3bf22e98",
+      "fingerprint": "7d2548ea1234feea",
+      "priority": "medium",
+      "reason": "1 occurrence(s): tage=hero:<n> state=running elapsed=15s idle=15s governor stage=hero:<n> state=running elapsed=30s idle=30s governor stage=hero:<n> state=running elapsed=45s idle=3s governor stage=hero:<n> state=success duration=<n>.1s rc=<n> hero <n>: generated from stock scene none (cinematic photoreal private office above a restaurant, an un...) governor stage=credits state=start soft=33s hard=300s governor stage=credits state=su",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "d6f48680ba983307",
       "priority": "high",
-      "reason": "2 occurrence(s): error: visual symbol plan: only <n> symbol families across <n> scenes; use at least <n> | fix: replace generic human queries with varied physical symbols or assign a concrete human_role",
+      "reason": "2 occurrence(s): governor stage=credits state=start soft=33s hard=300s governor stage=credits state=success duration=<n>.0s rc=<n> credits: <n> stock clips -> <path> error: still-derived shots are <n>% of the film (<n>.0s<path> above the <n>% cap by <n>.0s; animated stills count toward this cap, so replace that duration with genuine moving footage | fix: replace still-derived scenes with verified moving footage",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (563.9s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "c575a57cc5754582abe2a6708b0abca0",
+  "run_id": "147422493ab04752982c354a901d35b7",
   "schema_version": 1,
   "slug": "who-wrote-the-menu",
   "stages": {
-    "build_pass": {
-      "attempts": 2,
-      "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.001,
+      "p95_success_s": 1.001,
+      "success_durations_s": [
+        1.001
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 2.003
+      "total_duration_s": 1.001
+    },
+    "build_pass": {
+      "attempts": 6,
+      "failures": 3,
+      "p50_success_s": 64.025,
+      "p95_success_s": 130.782,
+      "success_durations_s": [
+        64.025,
+        23.014,
+        138.2
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 563.941
+    },
+    "credits": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.006,
+      "success_durations_s": [
+        1.006,
+        1.006,
+        1.006
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 3.018
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 137.174,
+      "p95_success_s": 137.174,
+      "success_durations_s": [
+        137.174
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 137.174
+    },
+    "hero": {
+      "attempts": 8,
+      "failures": 0,
+      "p50_success_s": 42.076,
+      "p95_success_s": 57.965,
+      "success_durations_s": [
+        27.082,
+        42.081,
+        42.071,
+        52.112,
+        30.05,
+        61.117,
+        29.065,
+        49.091
+      ],
+      "successes": 8,
+      "timeouts": 0,
+      "total_duration_s": 332.669
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 20.012,
+      "p95_success_s": 20.012,
+      "success_durations_s": [
+        20.012
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 20.012
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 63.024,
+      "p95_success_s": 63.024,
+      "success_durations_s": [
+        63.024
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 63.024
     }
   },
   "status": "failed"
