@@ -1,6 +1,6 @@
 # Protected User Script Intake
 
-This path is for scripts supplied directly by James. It packages and validates the script without rewriting the spoken narration and without starting a render.
+This path is for scripts supplied directly by James. It packages and validates the script without rewriting the spoken narration and without starting a render. **User-script intake never starts a render.**
 
 ## Required files
 
