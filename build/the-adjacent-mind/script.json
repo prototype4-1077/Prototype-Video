@@ -601,15 +601,12 @@
     "system",
     "table"
    ],
-   "semantic_anchor": "define the relational space",
-   "visual_function": "define the relational space",
+   "semantic_anchor": "A shared library table holds two distinct work positions: an open notebook beside one chair and a softly glowing terminal beside the adjacent chair.",
+   "visual_function": "define the relational space without showing a malformed hand",
    "symbol_family": "architecture",
-   "primary_symbol": "shared reading table",
-   "human_role": "reader",
-   "narrative_mode": "hero",
-   "hero": true,
-   "hero_style": "effects",
-   "image_prompt": "cinematic photoreal central library table with one human hand resting near one chair and a softly glowing terminal beside the adjacent chair, tall shelves and windows behind, no face, no readable text",
+   "primary_symbol": "adjacent work positions",
+   "human_role": "none",
+   "narrative_mode": "stock_ok",
    "start": 59.94,
    "duration": 5.64,
    "kw_times": {
@@ -617,44 +614,16 @@
     "system": 62.84,
     "table": 63.8
    },
-   "motion_kind": "animated_still",
-   "motion_mode": "cinemagraph",
    "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "enhanced_source_image": "hero_10.jpg",
-   "still_reference_signature": "cb1e1ce32a9c0eb0415c",
-   "pure_generated_still": true,
-   "still_enhancement_steps": [
-    "reference_conditioned_image_generation",
-    "depth_separated_layers",
-    "occlusion_background_completion",
-    "recipe_specific_internal_motion",
-    "restrained_practical_light_motion",
-    "cohesive_final_grade",
-    "subtle_film_grain"
-   ],
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-adjacent-mind/clip_10.mp4",
-   "clip_fingerprint": "e382881ccdaa7a67",
-   "hero_generated": true,
-   "hero_raw_signature": "d7224529a48e6383bbe5",
-   "motion_recipe": "reflection",
-   "motion_compiled": true,
-   "motion_source": "reference_conditioned_still",
-   "still_reference_generation_model": "pollinations_kontext",
-   "still_enhancement_version": 1,
-   "still_enhanced": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "mind",
-     "png": "youtube_cap_10_kw0.png"
-    },
-    {
-     "kw": "system",
-     "png": "youtube_cap_10_kw1.png"
-    },
-    {
-     "kw": "table",
-     "png": "youtube_cap_10_kw2.png"
-    }
+   "query": "camera glides along a real library table showing an open notebook and pencil before one chair and a softly glowing computer terminal before the adjacent chair, pages move gently in practical light, no people, no hands, no readable text, genuine motion",
+   "lower_model_safe": true,
+   "generation_constraints": [
+    "use genuine stock footage",
+    "no visible hands",
+    "no people or faces",
+    "two clearly adjacent chairs",
+    "one notebook and one terminal",
+    "no readable screen text"
    ]
   },
   {
@@ -1205,15 +1174,13 @@
     "breathing",
     "screen"
    ],
-   "semantic_anchor": "ground in the ordinary body",
-   "visual_function": "ground in the ordinary body",
+   "semantic_anchor": "An ordinary hand rests near a dim screen while a plain chair and gently moving curtain ground the scene without suggestive body framing.",
+   "visual_function": "ground in the ordinary body and room without sexualized visual cues",
    "symbol_family": "object_tool",
-   "primary_symbol": "hand screen chair",
+   "primary_symbol": "hand, screen, chair and moving curtain",
    "human_role": "observer",
    "narrative_mode": "stock_ok",
-   "query": "close-up adult hand rests beside a dim screen while a person settles into a chair and the fabric rises and falls subtly with breathing, warm ordinary room, genuine motion, no readable text",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "query": "wide neutral documentary shot of an ordinary home desk, one relaxed adult hand resting flat beside a dim laptop keyboard, plain upright chair clearly visible, curtain moving gently in soft daylight, no face, no body close-up, no suggestive posture, no readable text, genuine motion",
    "start": 125.64,
    "duration": 7.3,
    "kw_times": {
@@ -1221,35 +1188,14 @@
     "breathing": 129.06,
     "screen": 131.68
    },
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 7.8727,
-    "active_region_ratio": 0.9692,
-    "frame_difference": 23.0737
-   },
-   "clip_fingerprint": "5ee99a299a0431dc",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-adjacent-mind/clip_21.mp4",
-   "stock_id": 8116541,
-   "pexels_id": 8116541,
-   "stock_frame_url": "https://images.pexels.com/videos/8116541/adult-art-makeup-ballet-barefoot-8116541.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/knee-level-shot-of-a-woman-sitting-in-a-chair-8116541/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "chair",
-     "png": "youtube_cap_21_kw0.png"
-    },
-    {
-     "kw": "breathing",
-     "png": "youtube_cap_21_kw1.png"
-    },
-    {
-     "kw": "screen",
-     "png": "youtube_cap_21_kw2.png"
-    }
+   "lower_model_safe": true,
+   "generation_constraints": [
+    "use genuine stock footage",
+    "one relaxed hand only",
+    "no face or torso",
+    "neutral non-suggestive framing",
+    "plain upright chair visible",
+    "soft ordinary daylight"
    ]
   },
   {
