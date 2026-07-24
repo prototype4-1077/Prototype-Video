@@ -29,10 +29,21 @@ USER_PATTERNS = {
 }
 
 
-def load_json(path: Path, default: Any) -> Any:
+def safe_dict(value: Any) -> dict[str, Any]:
+    return value if isinstance(value, dict) else {}
+
+
+def safe_float(value: Any, default: float = 0.0) -> float:
     try:
-        return json.loads(path.read_text(encoding="utf-8"))
-    except (OSError, ValueError, TypeError):
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
+def safe_int(value: Any, default: int = 0) -> int:
+    try:
+        return int(value)
+    except (TypeError, ValueError):
         return default
 
 
@@ -55,9 +66,10 @@ def user_tags(comment: str) -> list[str]:
 
 
 def risk_tags(record: dict[str, Any]) -> list[str]:
+    risk = safe_dict(record.get("risk"))
     return sorted({
         str(item.get("code"))
-        for item in ((record.get("risk") or {}).get("findings") or [])
+        for item in (risk.get("findings") or [])
         if isinstance(item, dict) and item.get("code")
     })
 
@@ -115,8 +127,8 @@ def build(memory_dir: Path = DEFAULT_DIR) -> dict[str, Any]:
     for row in records:
         if str(row.get("decision") or "unreviewed").lower() in REVIEWED or not row.get("asset_path"):
             continue
-        risk = row.get("risk") or {}
-        score = float(risk.get("effective_risk_score") or risk.get("risk_score") or 0.0)
+        risk = safe_dict(row.get("risk"))
+        score = safe_float(risk.get("effective_risk_score") or risk.get("risk_score"))
         review_queue.append({
             "slug": row.get("slug"),
             "scene_number": row.get("scene_number"),
@@ -127,7 +139,13 @@ def build(memory_dir: Path = DEFAULT_DIR) -> dict[str, Any]:
             "provider": row.get("provider"),
             "generation_route": row.get("generation_route"),
         })
-    review_queue.sort(key=lambda item: (-item["risk_score"], str(item["slug"]), int(item["scene_number"] or 0)))
+    review_queue.sort(
+        key=lambda item: (
+            -safe_float(item.get("risk_score")),
+            str(item.get("slug") or ""),
+            safe_int(item.get("scene_number")),
+        )
+    )
 
     actions: list[dict[str, Any]] = []
     total = len(records)
