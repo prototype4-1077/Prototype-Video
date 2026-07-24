@@ -7,7 +7,9 @@ on:
       - "pipeline/operational_memory_analysis.py"
       - "pipeline/record_operational_run.py"
       - "pipeline/package_integrity.py"
+      - "pipeline/backfill_observability.py"
       - "pipeline/system_diagnostics.py"
+      - "pipeline/system_diagnostic_policy.py"
       - "pipeline/preflight.py"
       - "pipeline/yt_publish.py"
       - "pipeline/fb_publish.py"
@@ -29,7 +31,9 @@ on:
       - "pipeline/operational_memory_analysis.py"
       - "pipeline/record_operational_run.py"
       - "pipeline/package_integrity.py"
+      - "pipeline/backfill_observability.py"
       - "pipeline/system_diagnostics.py"
+      - "pipeline/system_diagnostic_policy.py"
       - "pipeline/preflight.py"
       - "pipeline/yt_publish.py"
       - "pipeline/fb_publish.py"
@@ -69,7 +73,9 @@ jobs:
             pipeline/operational_memory_analysis.py \
             pipeline/record_operational_run.py \
             pipeline/package_integrity.py \
+            pipeline/backfill_observability.py \
             pipeline/system_diagnostics.py \
+            pipeline/system_diagnostic_policy.py \
             pipeline/preflight.py \
             pipeline/yt_publish.py \
             pipeline/fb_publish.py \
@@ -120,7 +126,7 @@ jobs:
           print("indexed", index["occurrence_count"], "occurrences and", len(actions["actions"]), "actions")
           PY
 
-      - name: Exercise diagnostic against repository evidence
+      - name: Exercise calibrated diagnostic against repository evidence
         shell: bash
         run: |
           set -o pipefail
@@ -128,7 +134,10 @@ jobs:
           python3 intelligence_stack/fiftyone/analyze_visual_memory.py \
             > /tmp/system-diagnostic-debug/visual.stdout.txt \
             2> /tmp/system-diagnostic-debug/visual.stderr.txt
-          python3 pipeline/system_diagnostics.py \
+          python3 pipeline/backfill_observability.py \
+            > /tmp/system-diagnostic-debug/backfill.stdout.txt \
+            2> /tmp/system-diagnostic-debug/backfill.stderr.txt
+          python3 pipeline/system_diagnostic_policy.py \
             > /tmp/system-diagnostic-debug/system.stdout.txt \
             2> /tmp/system-diagnostic-debug/system.stderr.txt
           python3 - <<'PY' \
@@ -137,8 +146,13 @@ jobs:
           import json
           report = json.load(open("pipeline/system_diagnostics/LATEST.json", encoding="utf-8"))
           assert report["authority_boundary"]
+          assert report["denominator_policy"]
           assert report["summary"]["finding_count"] == len(report["findings"])
+          coverage = report["coverage"]
+          assert coverage["render_observed_count"] >= coverage["telemetry_count"]
+          assert coverage["reviewable_count"] >= coverage["human_feedback_count"]
           print("diagnostic", report["summary"])
+          print("coverage", coverage)
           PY
 
       - name: Upload diagnostic traceback and materialized reports
@@ -154,3 +168,4 @@ jobs:
             pipeline/system_diagnostics/**
             pipeline/operational_memory/action_queue.json
             pipeline/operational_memory/index.json
+            build/*/telemetry-summary.json
