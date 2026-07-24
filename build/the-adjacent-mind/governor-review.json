@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-24T17:08:05+00:00",
+  "generated_at": "2026-07-24T19:13:33+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "low_bitrate": 2
@@ -24,7 +24,7 @@
     {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=64.0s, p95=1437.1s",
+      "evidence": "p50=59.1s, p95=1434.2s",
       "priority": "medium",
       "stage": "build_pass"
     }
@@ -77,7 +77,7 @@
       "successes": 10,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 10.019
+      "total_duration_s": 10.02
     },
     "altsheet": {
       "attempts": 6,
@@ -89,43 +89,43 @@
       "successes": 6,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 16.13
+      "total_duration_s": 16.127
     },
     "assemble": {
       "attempts": 213,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 48.331,
+      "p50_success_s": 46.199,
       "p95_success_s": 83.358,
       "sample_count": 213,
       "successes": 213,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 10448.82
+      "total_duration_s": 10259.241
     },
     "build_pass": {
-      "attempts": 50,
-      "failure_rate": 0.06,
+      "attempts": 51,
+      "failure_rate": 0.0588,
       "failures": 3,
-      "p50_success_s": 64.029,
-      "p95_success_s": 1437.054,
-      "sample_count": 47,
-      "successes": 47,
+      "p50_success_s": 59.111,
+      "p95_success_s": 1434.236,
+      "sample_count": 48,
+      "successes": 48,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 14044.735
+      "total_duration_s": 13617.262
     },
     "credits": {
       "attempts": 18,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.007,
+      "p50_success_s": 1.006,
       "p95_success_s": 1.013,
       "sample_count": 18,
       "successes": 18,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 18.133
+      "total_duration_s": 18.129
     },
     "ffmpeg": {
       "attempts": 36,
@@ -137,7 +137,7 @@
       "successes": 36,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 361.901
+      "total_duration_s": 358.832
     },
     "footage": {
       "attempts": 10,
@@ -149,19 +149,19 @@
       "successes": 7,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1212.565
+      "total_duration_s": 1105.45
     },
     "hero": {
-      "attempts": 23,
+      "attempts": 22,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 22.049,
-      "p95_success_s": 46.982,
-      "sample_count": 23,
-      "successes": 23,
+      "p50_success_s": 21.05,
+      "p95_success_s": 46.097,
+      "sample_count": 22,
+      "successes": 22,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 637.22
+      "total_duration_s": 525.018
     },
     "prep": {
       "attempts": 9,
@@ -173,7 +173,7 @@
       "successes": 9,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 121.324
+      "total_duration_s": 121.319
     },
     "probe": {
       "attempts": 222,
@@ -185,7 +185,7 @@
       "successes": 222,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 224.116
+      "total_duration_s": 224.234
     },
     "quality": {
       "attempts": 9,
@@ -197,7 +197,7 @@
       "successes": 9,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 276.656
+      "total_duration_s": 272.59
     },
     "transcribe": {
       "attempts": 10,
@@ -209,19 +209,19 @@
       "successes": 10,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 192.145
+      "total_duration_s": 193.152
     },
     "tts": {
       "attempts": 10,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 59.55,
+      "p50_success_s": 58.041,
       "p95_success_s": 67.892,
       "sample_count": 10,
       "successes": 10,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 591.339
+      "total_duration_s": 575.309
     }
   },
   "statuses": {
