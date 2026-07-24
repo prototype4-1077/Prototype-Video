@@ -1,0 +1,400 @@
+{
+  "finished_at": "2026-07-24T17:08:04+00:00",
+  "github_run_id": "30109823793",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-adjacent-mind/final_youtube.mp4",
+  "mode": "recover",
+  "passes": 5,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 9,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.05,
+      "idle_timeout_s": 48.15,
+      "sample_count": 5,
+      "soft_timeout_s": 48.15,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 84.94,
+      "idle_timeout_s": 240.0,
+      "sample_count": 189,
+      "soft_timeout_s": 284.81,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 33.04,
+      "sample_count": 16,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 31.11,
+      "idle_timeout_s": 123.33,
+      "sample_count": 32,
+      "soft_timeout_s": 123.33,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 227.82,
+      "idle_timeout_s": 255.0,
+      "sample_count": 6,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 46.5,
+      "idle_timeout_s": 180.0,
+      "sample_count": 19,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 17.66,
+      "idle_timeout_s": 120.0,
+      "sample_count": 8,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 197,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 23.62,
+      "idle_timeout_s": 180.0,
+      "sample_count": 9,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 68.24,
+      "idle_timeout_s": 180.0,
+      "sample_count": 9,
+      "soft_timeout_s": 234.73,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-adjacent-mind",
+    "checked_at": "2026-07-24T17:08:04+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 147.729,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "youtube": {
+        "avg_kbps": 6127,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.019,
+        "exists": true,
+        "expected_duration_s": 147.729,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-adjacent-mind/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 147.748005,
+          "bit_rate": 6127178.0,
+          "duration_s": 147.748005,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 147.733333,
+          "width": 1920
+        },
+        "size_bytes": 113159808,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
+  "recommendations": [
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (1607.8s).",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "cb2e90efd37a429bac47263f0c0e09af",
+  "schema_version": 1,
+  "slug": "the-adjacent-mind",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.001,
+      "p95_success_s": 1.001,
+      "success_durations_s": [
+        1.001
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.001
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.009,
+      "success_durations_s": [
+        1.009
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.009
+    },
+    "assemble": {
+      "attempts": 24,
+      "failures": 0,
+      "p50_success_s": 49.787,
+      "p95_success_s": 65.096,
+      "success_durations_s": [
+        45.245,
+        33.199,
+        51.321,
+        54.348,
+        35.189,
+        43.24,
+        63.401,
+        69.427,
+        57.312,
+        31.184,
+        41.243,
+        24.125,
+        49.287,
+        53.313,
+        36.191,
+        56.32,
+        40.234,
+        47.292,
+        39.228,
+        50.288,
+        61.359,
+        56.328,
+        65.395,
+        50.288
+      ],
+      "successes": 24,
+      "timeouts": 0,
+      "total_duration_s": 1154.757
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 134.144,
+      "p95_success_s": 1019.298,
+      "success_durations_s": [
+        62.023,
+        15.01,
+        134.144,
+        163.275,
+        1233.304
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 1607.756
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.008,
+      "success_durations_s": [
+        1.005,
+        1.008
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.013
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 4.516,
+      "p95_success_s": 22.12,
+      "success_durations_s": [
+        1.009,
+        4.015,
+        25.138,
+        5.018
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 35.18
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 133.141,
+      "p95_success_s": 133.141,
+      "success_durations_s": [
+        133.141
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 133.141
+    },
+    "hero": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 43.066,
+      "p95_success_s": 46.628,
+      "success_durations_s": [
+        18.045,
+        42.062,
+        47.08,
+        44.07
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 151.257
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 10.022,
+      "p95_success_s": 10.022,
+      "success_durations_s": [
+        10.022
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 10.022
+    },
+    "probe": {
+      "attempts": 25,
+      "failures": 0,
+      "p50_success_s": 1.008,
+      "p95_success_s": 1.009,
+      "success_durations_s": [
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.009,
+        1.008,
+        1.008,
+        1.008,
+        1.009,
+        1.008,
+        1.008,
+        1.009,
+        1.008,
+        1.008,
+        1.009,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.009,
+        1.009,
+        1.008,
+        1.009,
+        1.008
+      ],
+      "successes": 25,
+      "timeouts": 0,
+      "total_duration_s": 25.207
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 27.163,
+      "p95_success_s": 27.163,
+      "success_durations_s": [
+        27.163
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 27.163
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 12.006,
+      "p95_success_s": 12.006,
+      "success_durations_s": [
+        12.006
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 12.006
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 61.056,
+      "p95_success_s": 61.056,
+      "success_durations_s": [
+        61.056
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 61.056
+    }
+  },
+  "status": "done"
+}
