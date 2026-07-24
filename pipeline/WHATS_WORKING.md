@@ -1,6 +1,6 @@
 # What's working (auto-generated: learn.py digest)
 
-_Updated 2026-07-23 from 33 recorded videos._
+_Updated 2026-07-24 from 33 recorded videos._
 
 ## Queries that keep winning
 
@@ -31,3 +31,4 @@ _Updated 2026-07-23 from 33 recorded videos._
 - the-lag: scenes [4, 8] held viewers, scenes [1, 0] bled them
 - the-save-file: scenes [3, 4] held viewers, scenes [0, 1] bled them
 - i-became-everything: scenes [19, 11] held viewers, scenes [1, 0] bled them
+- the-lag: scenes [4, 8] held viewers, scenes [1, 0] bled them
