@@ -1,187 +1,380 @@
 {
-  "finished_at": "2026-07-25T16:02:09+00:00",
-  "github_run_id": "30162164275",
-  "incidents": [
-    {
-      "count": 17,
-      "failure_class": "transient",
-      "fingerprint": "d2015c8809351471",
-      "kind": "timeout",
-      "last_item": null,
-      "normalized_error": "governortimeout: transcribe stalled after <n>.1s; last useful progress <n>.1s ago.",
-      "stage": "transcribe"
-    },
-    {
-      "count": 1,
-      "failure_class": "transient",
-      "fingerprint": "aec2fd8c5f9c13d5",
-      "kind": "timeout",
-      "last_item": null,
-      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
-      "stage": "build_pass"
-    },
-    {
-      "count": 1,
-      "failure_class": "transient",
-      "fingerprint": "7a4386a0861df724",
-      "kind": "timeout",
-      "last_item": null,
-      "normalized_error": "warning: you are sending unauthenticated requests to the hf hub. please set a hf_token to enable higher rate limits and faster downloads. governortimeout: transcribe stalled after <n>.1s; last useful progress <n>.1s ago.",
-      "stage": "transcribe"
-    }
-  ],
-  "last_message": "build failed (transient); retry budget 2 exhausted. fingerprint=df6678837ac31a1f. GovernorTimeout: build_pass hard_timeout after 160.1s; last useful progress 8.0s ago.",
+  "finished_at": "2026-07-25T23:15:37+00:00",
+  "github_run_id": "30178089676",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/wonder-is-a-glitch/final_youtube.mp4",
   "mode": "recover",
-  "passes": 20,
+  "passes": 5,
   "policy": {
     "align": {
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.0,
       "idle_timeout_s": 33.01,
-      "sample_count": 10,
+      "sample_count": 29,
       "soft_timeout_s": 33.01,
       "source": "history"
     },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.05,
+      "idle_timeout_s": 48.14,
+      "sample_count": 7,
+      "soft_timeout_s": 48.14,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 84.38,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 283.13,
+      "source": "history"
+    },
     "build_pass": {
-      "hard_timeout_s": 159.25384262700027,
+      "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
-      "idle_timeout_s": 159.25384262700027,
+      "idle_timeout_s": 1800.0,
       "sample_count": 0,
-      "soft_timeout_s": 159.25384262700027,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 33.04,
+      "sample_count": 20,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 30.32,
+      "idle_timeout_s": 120.95,
+      "sample_count": 40,
+      "soft_timeout_s": 120.95,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 224.82,
+      "idle_timeout_s": 255.0,
+      "sample_count": 8,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 49.34,
+      "idle_timeout_s": 180.0,
+      "sample_count": 26,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 17.25,
+      "idle_timeout_s": 120.0,
+      "sample_count": 10,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
       "source": "explicit"
     },
     "transcribe": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 23.57,
+      "historical_p95_s": 23.52,
       "idle_timeout_s": 180.0,
-      "sample_count": 10,
+      "sample_count": 11,
       "soft_timeout_s": 180.0,
       "source": "history"
     },
     "tts": {
       "hard_timeout_s": 480.0,
-      "historical_p95_s": 67.89,
+      "historical_p95_s": 70.49,
       "idle_timeout_s": 180.0,
-      "sample_count": 10,
-      "soft_timeout_s": 233.67,
+      "sample_count": 12,
+      "soft_timeout_s": 241.47,
       "source": "history"
     }
   },
-  "quality": {},
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/wonder-is-a-glitch",
+    "checked_at": "2026-07-25T23:15:37+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 173.407,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "youtube": {
+        "avg_kbps": 6376,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.023,
+        "exists": true,
+        "expected_duration_s": 173.407,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/wonder-is-a-glitch/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 173.43,
+          "bit_rate": 6376166.0,
+          "duration_s": 173.43,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 173.366667,
+          "width": 1920
+        },
+        "size_bytes": 138227320,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
   "recommendations": [
-    {
-      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
-      "fingerprint": "7a4386a0861df724",
-      "priority": "medium",
-      "reason": "1 occurrence(s): warning: you are sending unauthenticated requests to the hf hub. please set a hf_token to enable higher rate limits and faster downloads. governortimeout: transcribe stalled after <n>.1s; last useful progress <n>.1s ago.",
-      "stage": "transcribe"
-    },
-    {
-      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
-      "fingerprint": "d2015c8809351471",
-      "priority": "high",
-      "reason": "17 occurrence(s): governortimeout: transcribe stalled after <n>.1s; last useful progress <n>.1s ago.",
-      "stage": "transcribe"
-    },
-    {
-      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
-      "fingerprint": "aec2fd8c5f9c13d5",
-      "priority": "medium",
-      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
-      "stage": "build_pass"
-    },
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (4660.7s).",
+      "reason": "Largest measured latency contribution in this run (1817.3s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "7eca8427c3744015817b2b676fe1ebf3",
+  "run_id": "866e670df4504daa8c4d64bbcb79db5f",
   "schema_version": 1,
   "slug": "wonder-is-a-glitch",
   "stages": {
     "align": {
-      "attempts": 18,
+      "attempts": 1,
       "failures": 0,
       "p50_success_s": 1.001,
       "p95_success_s": 1.001,
       "success_durations_s": [
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
-        1.001,
         1.001
       ],
-      "successes": 18,
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 18.018
+      "total_duration_s": 1.001
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.006,
+      "success_durations_s": [
+        1.006
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.006
+    },
+    "assemble": {
+      "attempts": 14,
+      "failures": 0,
+      "p50_success_s": 101.394,
+      "p95_success_s": 127.18,
+      "success_durations_s": [
+        102.388,
+        87.372,
+        100.399,
+        126.458,
+        91.393,
+        82.326,
+        119.469,
+        50.181,
+        92.342,
+        104.411,
+        104.432,
+        117.455,
+        89.389,
+        128.521
+      ],
+      "successes": 14,
+      "timeouts": 0,
+      "total_duration_s": 1396.536
     },
     "build_pass": {
-      "attempts": 20,
-      "failures": 1,
-      "p50_success_s": 246.09,
-      "p95_success_s": 246.092,
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 89.068,
+      "p95_success_s": 1216.371,
       "success_durations_s": [
-        71.026,
-        246.091,
-        246.091,
-        246.09,
-        246.089,
-        246.09,
-        246.091,
-        246.087,
-        246.089,
-        246.089,
-        246.089,
-        246.088,
-        246.091,
-        246.09,
-        246.092,
-        246.092,
-        246.09,
-        246.087,
-        246.089
+        50.018,
+        18.009,
+        89.068,
+        186.278,
+        1473.894
       ],
-      "successes": 19,
-      "timeouts": 1,
-      "total_duration_s": 4660.716
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 1817.267
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 1.005,
+      "p95_success_s": 1.006,
+      "success_durations_s": [
+        1.004,
+        1.006
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.01
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 6.013,
+      "p95_success_s": 27.351,
+      "success_durations_s": [
+        1.006,
+        6.012,
+        31.116,
+        6.014
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 44.148
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 88.092,
+      "p95_success_s": 88.092,
+      "success_durations_s": [
+        88.092
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 88.092
+    },
+    "hero": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 44.078,
+      "p95_success_s": 50.13,
+      "success_durations_s": [
+        38.063,
+        34.049,
+        50.137,
+        50.092
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 172.341
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 12.023,
+      "p95_success_s": 12.023,
+      "success_durations_s": [
+        12.023
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 12.023
+    },
+    "probe": {
+      "attempts": 15,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.031,
+      "success_durations_s": [
+        1.089,
+        1.005,
+        1.006,
+        1.005,
+        1.005,
+        1.006,
+        1.005,
+        1.006,
+        1.005,
+        1.006,
+        1.006,
+        1.006,
+        1.005,
+        1.006,
+        1.006
+      ],
+      "successes": 15,
+      "timeouts": 0,
+      "total_duration_s": 15.167
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 34.126,
+      "p95_success_s": 34.126,
+      "success_durations_s": [
+        34.126
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 34.126
     },
     "transcribe": {
-      "attempts": 18,
-      "failures": 18,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
-      "timeouts": 18,
-      "total_duration_s": 4375.864
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 15.008,
+      "p95_success_s": 15.008,
+      "success_durations_s": [
+        15.008
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 15.008
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 70.026,
-      "p95_success_s": 70.026,
+      "p50_success_s": 49.019,
+      "p95_success_s": 49.019,
       "success_durations_s": [
-        70.026
+        49.019
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 70.026
+      "total_duration_s": 49.019
     }
   },
-  "status": "failed"
+  "status": "done"
 }
