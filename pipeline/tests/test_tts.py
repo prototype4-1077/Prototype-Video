@@ -68,20 +68,25 @@ class ElevenV3TTSTests(unittest.TestCase):
         self.assertEqual(tags, [["whispers"], ["curious"]])
         self.assertEqual(script, original)
 
-    def test_auto_tags_leave_plain_opener_neutral(self) -> None:
+    def test_auto_tags_use_intention_based_arc(self) -> None:
         script = {
             "scenes": [
                 {"text": "You think this is ordinary."},
-                {"text": "Could it be something else?"},
+                {"text": "The prediction is compared with incoming signal.", "visual_function": "mechanism"},
                 {"text": "The pattern turns inside out!", "visual_function": "transformation"},
-                {"text": "And then you notice the silence."},
+                {"text": "What do you notice now?"},
             ]
         }
         _text, tags = tts.build_tts_text(script, tts.DEFAULT_MODEL_ID)
-        self.assertEqual(tags[0], [])
-        self.assertEqual(tags[1], ["curious"])
-        self.assertEqual(tags[2], ["excited"])
-        self.assertEqual(tags[3], ["whispers"])
+        self.assertEqual(tags[0], ["curious"])
+        self.assertEqual(tags[1], ["matter-of-fact"])
+        self.assertEqual(tags[2], ["slower"])
+        self.assertEqual(tags[3], ["curious"])
+
+    def test_non_question_final_scene_returns_to_grounding(self) -> None:
+        script = {"scenes": [{"text": "Opening."}, {"text": "Feel the chair beneath you."}]}
+        _text, tags = tts.build_tts_text(script, tts.DEFAULT_MODEL_ID)
+        self.assertEqual(tags[-1], ["calm"])
 
     def test_opening_mood_selects_delivery_instead_of_fixed_hook(self) -> None:
         cases = {
@@ -110,12 +115,57 @@ class ElevenV3TTSTests(unittest.TestCase):
         script = {
             "scenes": [
                 {"text": "Is this neutral?", "audio_tags": []},
-                {"text": "Close."},
+                {"text": "Close?"},
             ]
         }
         _text, tags = tts.build_tts_text(script, tts.DEFAULT_MODEL_ID)
         self.assertEqual(tags[0], [])
-        self.assertEqual(tags[1], ["whispers"])
+        self.assertEqual(tags[1], ["curious"])
+
+    def test_semantic_delivery_fields_build_ordered_tags(self) -> None:
+        scene = {
+            "text": "Apparently, certainty has a legal department.",
+            "pause_before": "beat",
+            "delivery_role": "comic",
+            "reaction": "chuckle",
+        }
+        self.assertEqual(
+            tts.infer_audio_tags(scene, 4, 10),
+            ["pause", "mischievously", "chuckles"],
+        )
+
+    def test_knife_line_requires_explicit_intention(self) -> None:
+        scene = {
+            "text": "You may be remembering the remembering.",
+            "is_knife_line": True,
+        }
+        self.assertEqual(tts.infer_audio_tags(scene, 5, 10), ["whispers"])
+
+    def test_profile_can_be_disabled_without_disabling_explicit_tags(self) -> None:
+        script = {
+            "liam_delivery_profile": False,
+            "scenes": [
+                {"text": "Opening."},
+                {"text": "Knife.", "audio_tags": ["whispers"]},
+            ],
+        }
+        _text, tags = tts.build_tts_text(script, tts.DEFAULT_MODEL_ID)
+        self.assertEqual(tags, [[], ["whispers"]])
+
+    def test_delivery_analytics_warns_about_overdirection(self) -> None:
+        script = {"scenes": [{"text": str(i)} for i in range(4)]}
+        analytics = tts.delivery_analytics(
+            script,
+            [
+                ["whispers", "chuckles"],
+                ["whispers", "laughs"],
+                ["whispers", "sighs"],
+                ["chuckles", "laughs"],
+            ],
+        )
+        self.assertEqual(analytics["profile"], "liam-intention-v1")
+        self.assertEqual(analytics["nonverbal_reaction_count"], 5)
+        self.assertGreaterEqual(len(analytics["warnings"]), 3)
 
     def test_alignment_finds_spoken_text_after_tag_characters(self) -> None:
         aligned_text = "[curious] Hello there. [whispers] Stay awake."
@@ -193,6 +243,15 @@ class ElevenV3TTSTests(unittest.TestCase):
         self.assertNotEqual(
             tts.tts_fingerprint(first, tts.DEFAULT_MODEL_ID),
             tts.tts_fingerprint(second, tts.DEFAULT_MODEL_ID),
+        )
+
+    def test_delivery_profile_changes_tts_fingerprint(self) -> None:
+        base = {"scenes": [{"text": "Hello."}]}
+        disabled = copy.deepcopy(base)
+        disabled["liam_delivery_profile"] = False
+        self.assertNotEqual(
+            tts.tts_fingerprint(base, tts.DEFAULT_MODEL_ID),
+            tts.tts_fingerprint(disabled, tts.DEFAULT_MODEL_ID),
         )
 
     def test_reality_machine_tags_never_enter_caption_text(self) -> None:
