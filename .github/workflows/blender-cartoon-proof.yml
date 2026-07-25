@@ -61,7 +61,9 @@ jobs:
         run: /opt/blender/blender --background --version
 
       - name: Motion-plan contract tests
-        run: python3 -m unittest pipeline.tests.test_cartoon_motion -v
+        run: |
+          python3 -m pip install --quiet pytest
+          python3 -m pytest pipeline/tests/test_cartoon_motion.py -q
 
       - name: Render Phase 1 proof frame
         env:
