@@ -1,0 +1,54 @@
+{
+  "finished_at": "2026-07-25T14:38:25+00:00",
+  "github_run_id": "30161981457",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "bfc74cc230fe4fca",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=7bd8b2f5106aafb5. ERROR: scene 6 text too long (225 chars) | FIX: split it into two scenes",
+  "mode": "recover",
+  "passes": 2,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "bfc74cc230fe4fca",
+      "priority": "high",
+      "reason": "2 occurrence(s): note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "645791c303bb4356aa8d3e96645a35e0",
+  "schema_version": 1,
+  "slug": "wonder-is-a-glitch",
+  "stages": {
+    "build_pass": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.006
+    }
+  },
+  "status": "failed"
+}
