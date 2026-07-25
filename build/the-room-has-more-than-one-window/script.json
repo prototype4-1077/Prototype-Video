@@ -62,7 +62,53 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal interior of one vast circular room at night, ten distinct windows around the walls showing different weather and landscapes, no people, practical architectural light"
+   "image_prompt": "cinematic photoreal interior of one vast circular room at night, ten distinct windows around the walls showing different weather and landscapes, no people, practical architectural light",
+   "start": 0.0,
+   "duration": 5.3,
+   "kw_times": {
+    "right": 0.46,
+    "wrong": 2.78,
+    "room": 3.64
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_00.jpg",
+   "still_reference_signature": "f923b05c9cc3e9b3a959",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_00.mp4",
+   "clip_fingerprint": "f12621f2fd15569f",
+   "hero_generated": true,
+   "hero_raw_signature": "d74b26f47d3f1552bb04",
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "youtube_kw_overlays": [
+    {
+     "kw": "right",
+     "png": "youtube_cap_00_kw0.png"
+    },
+    {
+     "kw": "wrong",
+     "png": "youtube_cap_00_kw1.png"
+    },
+    {
+     "kw": "room",
+     "png": "youtube_cap_00_kw2.png"
+    }
+   ]
   },
   {
    "text": "Imagine standing in one enormous room with ten windows cut into different walls.",
@@ -82,7 +128,39 @@
    "narrative_mode": "stock_ok",
    "query": "camera slowly circles inside a large room lined with many windows, each window facing a different direction, genuine architectural motion, no people",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 5.3,
+   "duration": 5.9,
+   "kw_times": {
+    "enormous room": 6.66,
+    "ten windows": 8.34
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.3154,
+    "active_region_ratio": 0.9927,
+    "frame_difference": 46.5878
+   },
+   "clip_fingerprint": "48083b908bac9e67",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_01.mp4",
+   "stock_id": 5703626,
+   "pexels_id": 5703626,
+   "stock_frame_url": "https://images.pexels.com/videos/5703626/pexels-photo-5703626.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-looking-and-checking-at-the-window-5703626/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "enormous room",
+     "png": "youtube_cap_01_kw0.png"
+    },
+    {
+     "kw": "ten windows",
+     "png": "youtube_cap_01_kw1.png"
+    }
+   ]
   },
   {
    "text": "One faces a storm. Rain claws the glass like it has a complaint.",
@@ -102,7 +180,39 @@
    "narrative_mode": "stock_ok",
    "query": "violent rain and howling wind lash across dark glass, storm clouds churning, curtains and droplets in constant motion, cinematic interior",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 11.2,
+   "duration": 5.08,
+   "kw_times": {
+    "storm": 12.06,
+    "complaint": 14.96
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.8762,
+    "active_region_ratio": 0.985,
+    "frame_difference": 23.4328
+   },
+   "clip_fingerprint": "f48a78db4dc7bc88",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_02.mp4",
+   "stock_id": 12680275,
+   "pexels_id": 12680275,
+   "stock_frame_url": "https://images.pexels.com/videos/12680275/pexels-photo-12680275.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/rainfall-on-car-window-12680275/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "storm",
+     "png": "youtube_cap_02_kw0.png"
+    },
+    {
+     "kw": "complaint",
+     "png": "youtube_cap_02_kw1.png"
+    }
+   ]
   },
   {
    "text": "Another catches sunrise spilling gold across rooftops that survived the night.",
@@ -122,7 +232,39 @@
    "narrative_mode": "stock_ok",
    "query": "golden sunrise glow pours over rooftops, moving clouds and shifting warm sun rays spilling across the sky",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 16.28,
+   "duration": 5.4,
+   "kw_times": {
+    "sunrise": 17.08,
+    "gold": 18.16
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.2877,
+    "active_region_ratio": 0.8481,
+    "frame_difference": 4.4027
+   },
+   "clip_fingerprint": "8a5133eeeb553a0d",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_03.mp4",
+   "stock_id": 33440164,
+   "pexels_id": 33440164,
+   "stock_frame_url": "https://images.pexels.com/videos/33440164/pexels-photo-33440164.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/beautiful-urban-sunrise-over-tree-lined-streets-33440164/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "sunrise",
+     "png": "youtube_cap_03_kw0.png"
+    },
+    {
+     "kw": "gold",
+     "png": "youtube_cap_03_kw1.png"
+    }
+   ]
   },
   {
    "text": "One looks into an alley. One opens toward an ocean. One sees traffic arguing with itself.",
@@ -143,7 +285,44 @@
    "narrative_mode": "stock_ok",
    "query": "three adjacent windows reveal a narrow city alley, rolling ocean and busy traffic in continuous motion, cinematic multi-view composition",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 21.68,
+   "duration": 6.86,
+   "kw_times": {
+    "alley": 22.44,
+    "ocean": 24.5,
+    "traffic": 26.12
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.2811,
+    "active_region_ratio": 0.1787,
+    "frame_difference": 7.6165
+   },
+   "clip_fingerprint": "d82c5e4cf32f02d5",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_04.mp4",
+   "stock_id": 35735034,
+   "pexels_id": 35735034,
+   "stock_frame_url": "https://images.pexels.com/videos/35735034/pexels-photo-35735034.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/narrow-street-view-in-urban-alleyway-35735034/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "alley",
+     "png": "youtube_cap_04_kw0.png"
+    },
+    {
+     "kw": "ocean",
+     "png": "youtube_cap_04_kw1.png"
+    },
+    {
+     "kw": "traffic",
+     "png": "youtube_cap_04_kw2.png"
+    }
+   ]
   },
   {
    "text": "Every window is real. None of them is the building.",
@@ -163,7 +342,39 @@
    "narrative_mode": "stock_ok",
    "query": "architectural floor plan rotates beneath a small window frame model, showing the frame is only one part of the building, clean moving geometry, no people",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 28.54,
+   "duration": 4.18,
+   "kw_times": {
+    "real": 29.74,
+    "building": 31.52
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.6433,
+    "active_region_ratio": 0.9697,
+    "frame_difference": 16.1036
+   },
+   "clip_fingerprint": "18fd2faadc5584b2",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_05.mp4",
+   "stock_id": 6615508,
+   "pexels_id": 6615508,
+   "stock_frame_url": "https://images.pexels.com/videos/6615508/pexels-photo-6615508.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-using-compass-to-measure-6615508/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "real",
+     "png": "youtube_cap_05_kw0.png"
+    },
+    {
+     "kw": "building",
+     "png": "youtube_cap_05_kw1.png"
+    }
+   ]
   },
   {
    "text": "But people plant themselves at one pane and announce the official condition of existence.",
@@ -183,7 +394,39 @@
    "narrative_mode": "stock_ok",
    "query": "single empty chair bolted directly in front of one window while the room rotates around it, visible physical motion, no person",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 32.72,
+   "duration": 5.48,
+   "kw_times": {
+    "one pane": 34.2,
+    "official condition": 35.56
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.4181,
+    "active_region_ratio": 0.9959,
+    "frame_difference": 62.9819
+   },
+   "clip_fingerprint": "ea7f29a3cf73b4c3",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_06.mp4",
+   "stock_id": 37825698,
+   "pexels_id": 37825698,
+   "stock_frame_url": "https://images.pexels.com/videos/37825698/pexels-photo-37825698.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/eerie-black-and-white-rainy-window-view-37825698/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "one pane",
+     "png": "youtube_cap_06_kw0.png"
+    },
+    {
+     "kw": "official condition",
+     "png": "youtube_cap_06_kw1.png"
+    }
+   ]
   },
   {
    "text": "The storm-window person says life is dangerous. The sunrise person says everything is secretly beautiful.",
@@ -204,7 +447,39 @@
    "query": "two adults seen only from behind stand at opposite windows, one watching a storm and one watching sunrise, restrained body motion, faces absent",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 38.2,
+   "duration": 7.22,
+   "kw_times": {
+    "dangerous": 40.1,
+    "beautiful": 43.82
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.1473,
+    "active_region_ratio": 0.7139,
+    "frame_difference": 4.83
+   },
+   "clip_fingerprint": "5bad940e81190a8f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_07.mp4",
+   "stock_id": 6690024,
+   "pexels_id": 6690024,
+   "stock_frame_url": "https://images.pexels.com/videos/6690024/adult-alone-anxiety-at-home-6690024.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-woman-hugging-and-comforting-another-woman-6690024/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "dangerous",
+     "png": "youtube_cap_07_kw0.png"
+    },
+    {
+     "kw": "beautiful",
+     "png": "youtube_cap_07_kw1.png"
+    }
+   ]
   },
   {
    "text": "The alley says trust nobody. The ocean says breathe. Traffic says turn signals are classified information.",
@@ -225,7 +500,44 @@
    "narrative_mode": "stock_ok",
    "query": "camera moves from a shadowed alley to ocean waves to chaotic traffic with blinking indicators, fast clean montage",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 45.42,
+   "duration": 8.46,
+   "kw_times": {
+    "trust nobody": 46.18,
+    "breathe": 48.74,
+    "turn signals": 50.78
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.9261,
+    "active_region_ratio": 0.54,
+    "frame_difference": 24.1835
+   },
+   "clip_fingerprint": "86de5d40f90e5f7f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_08.mp4",
+   "stock_id": 854108,
+   "pexels_id": 854108,
+   "stock_frame_url": "https://images.pexels.com/videos/854108/free-video-854108.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/blurry-footage-of-cars-854108/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "trust nobody",
+     "png": "youtube_cap_08_kw0.png"
+    },
+    {
+     "kw": "breathe",
+     "png": "youtube_cap_08_kw1.png"
+    },
+    {
+     "kw": "turn signals",
+     "png": "youtube_cap_08_kw2.png"
+    }
+   ]
   },
   {
    "text": "Then the argument begins—not because anyone invented their view, but because each view has missing walls.",
@@ -245,7 +557,48 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal cutaway of a vast room where two opposite windows show storm and sunrise while unseen walls continue beyond both views, precise architecture, no people"
+   "image_prompt": "cinematic photoreal cutaway of a vast room where two opposite windows show storm and sunrise while unseen walls continue beyond both views, precise architecture, no people",
+   "start": 53.88,
+   "duration": 8.04,
+   "kw_times": {
+    "argument": 54.84,
+    "missing walls": 60.06
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_09.jpg",
+   "still_reference_signature": "28f44c5b143c37f3f28e",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_09.mp4",
+   "clip_fingerprint": "d1e1ca2571f4e3e2",
+   "hero_generated": true,
+   "hero_raw_signature": "f6872f022b0911cb83d6",
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "youtube_kw_overlays": [
+    {
+     "kw": "argument",
+     "png": "youtube_cap_09_kw0.png"
+    },
+    {
+     "kw": "missing walls",
+     "png": "youtube_cap_09_kw1.png"
+    }
+   ]
   },
   {
    "text": "Perspective is not necessarily a lie. It is a location.",
@@ -265,7 +618,39 @@
    "narrative_mode": "stock_ok",
    "query": "a marker travels across a gridded floor-plan model, each stop tracing a different geometric sightline as clean lines shift",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 61.92,
+   "duration": 5.28,
+   "kw_times": {
+    "Perspective": 61.92,
+    "location": 65.28
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.2658,
+    "active_region_ratio": 0.9675,
+    "frame_difference": 12.2744
+   },
+   "clip_fingerprint": "13a30a58852c4266",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_10.mp4",
+   "stock_id": 9056552,
+   "pexels_id": 9056552,
+   "stock_frame_url": "https://images.pexels.com/videos/9056552/pexels-photo-9056552.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-drawing-floor-plan-on-a-white-paper-9056552/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "Perspective",
+     "png": "youtube_cap_10_kw0.png"
+    },
+    {
+     "kw": "location",
+     "png": "youtube_cap_10_kw1.png"
+    }
+   ]
   },
   {
    "text": "Your history chooses where you stood. Culture labels certain windows respectable and boards others shut.",
@@ -286,7 +671,44 @@
    "narrative_mode": "stock_ok",
    "query": "old photographs and family keepsakes glide along a track past a sealed opening while a clock advances, genuine object motion",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 67.2,
+   "duration": 7.4,
+   "kw_times": {
+    "history": 67.28,
+    "Culture": 69.66,
+    "boards": 72.22
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.0436,
+    "active_region_ratio": 0.9978,
+    "frame_difference": 39.4334
+   },
+   "clip_fingerprint": "90e93bd58a8fdf50",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_11.mp4",
+   "stock_id": 6798784,
+   "pexels_id": 6798784,
+   "stock_frame_url": "https://images.pexels.com/videos/6798784/astro-astrologer-astrologia-astrology-6798784.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-putting-the-old-photos-on-a-table-6798784/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "history",
+     "png": "youtube_cap_11_kw0.png"
+    },
+    {
+     "kw": "Culture",
+     "png": "youtube_cap_11_kw1.png"
+    },
+    {
+     "kw": "boards",
+     "png": "youtube_cap_11_kw2.png"
+    }
+   ]
   },
   {
    "text": "Pain can keep you watching one storm long after the clouds have moved.",
@@ -306,7 +728,39 @@
    "narrative_mode": "stock_ok",
    "query": "rain loops endlessly over one dark pane while a clock on the sill ticks forward and the sky beyond clears",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 74.6,
+   "duration": 4.82,
+   "kw_times": {
+    "Pain": 74.6,
+    "storm": 76.2
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.2175,
+    "active_region_ratio": 0.1247,
+    "frame_difference": 1.748
+   },
+   "clip_fingerprint": "f2833c0ddd02270f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_12.mp4",
+   "stock_id": 33938640,
+   "pexels_id": 33938640,
+   "stock_frame_url": "https://images.pexels.com/videos/33938640/pexels-photo-33938640.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/raindrops-on-a-window-pane-close-up-33938640/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "Pain",
+     "png": "youtube_cap_12_kw0.png"
+    },
+    {
+     "kw": "storm",
+     "png": "youtube_cap_12_kw1.png"
+    }
+   ]
   },
   {
    "text": "Love may lead you to a brighter pane, convincing you brightness exists everywhere.",
@@ -326,7 +780,39 @@
    "narrative_mode": "stock_ok",
    "query": "warm light spills from a single bright source, a moving glow spreading across a dim floor then stopping before the dark corners",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 79.42,
+   "duration": 6.06,
+   "kw_times": {
+    "Love": 79.42,
+    "brighter pane": 81.02
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.2484,
+    "active_region_ratio": 0.4102,
+    "frame_difference": 26.1167
+   },
+   "clip_fingerprint": "86a4f8c7c2477836",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_13.mp4",
+   "stock_id": 35906862,
+   "pexels_id": 35906862,
+   "stock_frame_url": "https://images.pexels.com/videos/35906862/close-up-view-combustion-dark-background-fire-35906862.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-view-of-a-burning-matchstick-35906862/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "Love",
+     "png": "youtube_cap_13_kw0.png"
+    },
+    {
+     "kw": "brighter pane",
+     "png": "youtube_cap_13_kw1.png"
+    }
+   ]
   },
   {
    "text": "Politics is often two windows hiring lawyers and claiming the whole room.",
@@ -347,7 +833,44 @@
    "narrative_mode": "stock_ok",
    "query": "two miniature frames on a small balance scale push blank folders toward a tabletop model, playful object motion",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 85.48,
+   "duration": 5.4,
+   "kw_times": {
+    "Politics": 85.48,
+    "lawyers": 87.7,
+    "whole room": 89.12
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.2297,
+    "active_region_ratio": 0.1757,
+    "frame_difference": 2.3248
+   },
+   "clip_fingerprint": "1c7a37a6ac590055",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_14.mp4",
+   "stock_id": 7189803,
+   "pexels_id": 7189803,
+   "stock_frame_url": "https://images.pexels.com/videos/7189803/architecture-art-asian-business-7189803.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/metal-craft-and-a-globe-7189803/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "Politics",
+     "png": "youtube_cap_14_kw0.png"
+    },
+    {
+     "kw": "lawyers",
+     "png": "youtube_cap_14_kw1.png"
+    },
+    {
+     "kw": "whole room",
+     "png": "youtube_cap_14_kw2.png"
+    }
+   ]
   },
   {
    "text": "Belief analysis begins when you stop asking, “Is my window real?” and ask, “What can it not show me?”",
@@ -367,7 +890,39 @@
    "narrative_mode": "stock_ok",
    "query": "a magnifying lens drifts around a frame and reveals hidden corners outside its sightline, deliberate inspection",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 90.88,
+   "duration": 7.5,
+   "kw_times": {
+    "Belief analysis": 90.88,
+    "not show me": 96.38
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.516,
+    "active_region_ratio": 0.4532,
+    "frame_difference": 11.1588
+   },
+   "clip_fingerprint": "dd97f87690f9f2a0",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_15.mp4",
+   "stock_id": 37538783,
+   "pexels_id": 37538783,
+   "stock_frame_url": "https://images.pexels.com/videos/37538783/35mm-analog-archive-art-37538783.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/analog-film-inspection-on-light-table-close-up-37538783/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "Belief analysis",
+     "png": "youtube_cap_15_kw0.png"
+    },
+    {
+     "kw": "not show me",
+     "png": "youtube_cap_15_kw1.png"
+    }
+   ]
   },
   {
    "text": "That question does not require abandoning your view.",
@@ -388,7 +943,39 @@
    "query": "a hand loosens its grip on a latch and sets a small brass key beside it, calm motion, face absent",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 98.38,
+   "duration": 3.84,
+   "kw_times": {
+    "question": 98.7,
+    "abandoning": 100.26
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.173,
+    "active_region_ratio": 0.6027,
+    "frame_difference": 26.742
+   },
+   "clip_fingerprint": "aab33d4a8b602d1a",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_16.mp4",
+   "stock_id": 6091716,
+   "pexels_id": 6091716,
+   "stock_frame_url": "https://images.pexels.com/videos/6091716/pexels-photo-6091716.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/female-loading-bullets-in-a-riffle-s-magazine-6091716/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "question",
+     "png": "youtube_cap_16_kw0.png"
+    },
+    {
+     "kw": "abandoning",
+     "png": "youtube_cap_16_kw1.png"
+    }
+   ]
   },
   {
    "text": "It only asks you to loosen your grip on the frame enough to walk.",
@@ -408,7 +995,39 @@
    "narrative_mode": "stock_ok",
    "query": "a camera glides along a clear walking path and route markers across a wide floor, moving light and drifting curtains",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 102.22,
+   "duration": 4.64,
+   "kw_times": {
+    "loosen": 103.48,
+    "walk": 105.52
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.4535,
+    "active_region_ratio": 0.6576,
+    "frame_difference": 13.3126
+   },
+   "clip_fingerprint": "c59261419b9cc060",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_17.mp4",
+   "stock_id": 35767993,
+   "pexels_id": 35767993,
+   "stock_frame_url": "https://images.pexels.com/videos/35767993/pexels-photo-35767993.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/people-walking-on-indoor-floor-path-35767993/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "loosen",
+     "png": "youtube_cap_17_kw0.png"
+    },
+    {
+     "kw": "walk",
+     "png": "youtube_cap_17_kw1.png"
+    }
+   ]
   },
   {
    "text": "Cross the room. Notice how the alley and ocean belong to the same architecture.",
@@ -429,7 +1048,44 @@
    "narrative_mode": "stock_ok",
    "query": "camera tracks along one continuous exterior wall connecting an alley-facing window to an ocean-facing window, architectural motion, no people",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 106.86,
+   "duration": 6.3,
+   "kw_times": {
+    "alley": 109.56,
+    "ocean": 110.1,
+    "architecture": 111.48
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.3536,
+    "active_region_ratio": 0.9648,
+    "frame_difference": 19.8229
+   },
+   "clip_fingerprint": "f6c6c2b38744d7c6",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_18.mp4",
+   "stock_id": 5667130,
+   "pexels_id": 5667130,
+   "stock_frame_url": "https://images.pexels.com/videos/5667130/pexels-photo-5667130.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-sun-glare-5667130/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "alley",
+     "png": "youtube_cap_18_kw0.png"
+    },
+    {
+     "kw": "ocean",
+     "png": "youtube_cap_18_kw1.png"
+    },
+    {
+     "kw": "architecture",
+     "png": "youtube_cap_18_kw2.png"
+    }
+   ]
   },
   {
    "text": "Notice how sunrise does not cancel the storm—and the storm does not own the sky.",
@@ -450,7 +1106,53 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal panoramic sky seen through two windows in the same room, storm clouds on one side and sunrise on the other blending into one continuous atmosphere, no people"
+   "image_prompt": "cinematic photoreal panoramic sky seen through two windows in the same room, storm clouds on one side and sunrise on the other blending into one continuous atmosphere, no people",
+   "start": 113.16,
+   "duration": 6.62,
+   "kw_times": {
+    "sunrise": 113.74,
+    "storm": 116.52,
+    "sky": 118.0
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_19.jpg",
+   "still_reference_signature": "9c39e8d6b3c3cbaef5e5",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_19.mp4",
+   "clip_fingerprint": "5273580d27f88b60",
+   "hero_generated": true,
+   "hero_raw_signature": "92b1730f5d9e72d24518",
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "youtube_kw_overlays": [
+    {
+     "kw": "sunrise",
+     "png": "youtube_cap_19_kw0.png"
+    },
+    {
+     "kw": "storm",
+     "png": "youtube_cap_19_kw1.png"
+    },
+    {
+     "kw": "sky",
+     "png": "youtube_cap_19_kw2.png"
+    }
+   ]
   },
   {
    "text": "The turn is not finding the perfect window.",
@@ -469,7 +1171,34 @@
    "narrative_mode": "stock_ok",
    "query": "blank brass label marked only by a simple check symbol slides away from a row of unequal window frames, restrained object motion",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 119.78,
+   "duration": 2.96,
+   "kw_times": {
+    "perfect window": 121.42
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.3416,
+    "active_region_ratio": 0.9935,
+    "frame_difference": 50.7112
+   },
+   "clip_fingerprint": "d04e8c643d44f1c0",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_20.mp4",
+   "stock_id": 6175387,
+   "pexels_id": 6175387,
+   "stock_frame_url": "https://images.pexels.com/videos/6175387/pexels-photo-6175387.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-close-up-shot-of-glass-windows-6175387/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "perfect window",
+     "png": "youtube_cap_20_kw0.png"
+    }
+   ]
   },
   {
    "text": "It is remembering that truth may need movement: another angle, another person, another pane.",
@@ -491,7 +1220,44 @@
    "query": "camera moves between several windows and the visible landscape changes with every step, continuous first-person architectural motion, no people",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "performer"
+   "human_role": "performer",
+   "start": 122.74,
+   "duration": 7.7,
+   "kw_times": {
+    "truth": 123.82,
+    "movement": 124.84,
+    "another pane": 125.98
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.2281,
+    "active_region_ratio": 0.5437,
+    "frame_difference": 11.9978
+   },
+   "clip_fingerprint": "63ec35224dcb4fd1",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_21.mp4",
+   "stock_id": 6503967,
+   "pexels_id": 6503967,
+   "stock_frame_url": "https://images.pexels.com/videos/6503967/pexels-photo-6503967.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/window-view-of-snow-falling-6503967/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "truth",
+     "png": "youtube_cap_21_kw0.png"
+    },
+    {
+     "kw": "movement",
+     "png": "youtube_cap_21_kw1.png"
+    },
+    {
+     "kw": "another pane",
+     "png": "youtube_cap_21_kw2.png"
+    }
+   ]
   },
   {
    "text": "Then come back here—to the chair under you, the screen in front of you, an ordinary breath moving through the room.",
@@ -513,7 +1279,44 @@
    "narrative_mode": "stock_ok",
    "query": "ordinary chair beside a dim screen in a quiet room, curtain rises and falls gently with airflow, subtle breathing-like motion",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 130.44,
+   "duration": 8.0,
+   "kw_times": {
+    "chair": 132.24,
+    "screen": 133.48,
+    "breath": 135.9
+   },
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.4735,
+    "active_region_ratio": 0.9806,
+    "frame_difference": 9.4132
+   },
+   "clip_fingerprint": "a6e2146b2fe5588e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_22.mp4",
+   "stock_id": 8860233,
+   "pexels_id": 8860233,
+   "stock_frame_url": "https://images.pexels.com/videos/8860233/pexels-photo-8860233.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-silhouette-of-a-man-with-a-cane-sitting-down-8860233/",
+   "youtube_kw_overlays": [
+    {
+     "kw": "chair",
+     "png": "youtube_cap_22_kw0.png"
+    },
+    {
+     "kw": "screen",
+     "png": "youtube_cap_22_kw1.png"
+    },
+    {
+     "kw": "breath",
+     "png": "youtube_cap_22_kw2.png"
+    }
+   ]
   },
   {
    "text": "The next time someone describes a world you cannot see, would you defend your window—or walk and look through theirs?",
@@ -534,7 +1337,74 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal dawn interior of one calm room with two neighboring open windows and a clear walking path between them, ordinary chair in foreground, moving curtains, no people"
+   "image_prompt": "cinematic photoreal dawn interior of one calm room with two neighboring open windows and a clear walking path between them, ordinary chair in foreground, moving curtains, no people",
+   "start": 138.44,
+   "duration": 9.211,
+   "kw_times": {
+    "defend your window": 142.36,
+    "look through theirs": 144.74
+   },
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_23.jpg",
+   "still_reference_signature": "3d3d4dd44400c3b84b87",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-room-has-more-than-one-window/clip_23.mp4",
+   "clip_fingerprint": "bd28183273754c0f",
+   "hero_generated": true,
+   "hero_raw_signature": "717bbdb86ce02a267365",
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true,
+   "youtube_kw_overlays": [
+    {
+     "kw": "defend your window",
+     "png": "youtube_cap_23_kw0.png"
+    },
+    {
+     "kw": "look through theirs",
+     "png": "youtube_cap_23_kw1.png"
+    }
+   ]
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.97
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
