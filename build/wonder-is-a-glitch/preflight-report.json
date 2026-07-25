@@ -13,17 +13,17 @@
       "passed": true,
       "policy": "runtime_generated",
       "runtime_scene_generation": true,
-      "scene_prompt_count": 13
+      "scene_prompt_count": 14
     },
     "planned_still_budget": {
       "cap": 0.35,
-      "estimated_ratio": 0.329032,
+      "estimated_ratio": 0.303226,
       "passed": true,
       "still_scene_indexes": [
         3,
         4,
         6,
-        10
+        11
       ],
       "used_exact_durations": true
     },
@@ -36,6 +36,7 @@
     "visual_symbols": {
       "family_counts": {
         "architecture": 3,
+        "identity": 1,
         "language": 1,
         "nature": 7,
         "object_tool": 1,
@@ -63,6 +64,7 @@
         "strict": true
       },
       "primary_symbol_counts": {
+        "a hand seen as a worn object": 1,
         "a label lifting off a jar": 1,
         "a mirror reversing its reflection": 1,
         "a sound dissolving": 1,
@@ -77,7 +79,7 @@
         "spoken name as a wavelength": 1,
         "the ordinary opening into a galaxy": 1
       },
-      "scene_count": 13,
+      "scene_count": 14,
       "scenes": [
         {
           "effective_query": "a glowing wavelength of a spoken name",
@@ -181,15 +183,30 @@
           "selected_family": null,
           "semantic_anchor": "hand the test to the body",
           "symbol_family": "human",
-          "text": "You can do it with your own hand. Look at it. Really look. Past 'my hand' into the thing itself — five soft hooks, wet joints, a fold that opens and closes. Stare long enough and it becomes an object you happen to be wearing.",
+          "text": "You can do it with your own hand. Look at it. Really look. Past 'my hand' into the thing itself — five soft hooks, wet joints, a fold that opens and closes.",
           "visual_function": "hand the test to the body"
+        },
+        {
+          "effective_query": "a mannequin hand resting on a plain surface",
+          "generic_human": false,
+          "human_present": true,
+          "human_role": "unspecified",
+          "index": 7,
+          "original_query": null,
+          "primary_symbol": "a hand seen as a worn object",
+          "query_family": "identity",
+          "selected_family": null,
+          "semantic_anchor": "the hand becomes a thing",
+          "symbol_family": "identity",
+          "text": "Stare long enough and it becomes an object you happen to be wearing.",
+          "visual_function": "the hand becomes a thing"
         },
         {
           "effective_query": "an ordinary kitchen room with a window, uncanny",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
-          "index": 7,
+          "index": 8,
           "original_query": null,
           "primary_symbol": "an ordinary kitchen made strange",
           "query_family": "architecture",
@@ -204,7 +221,7 @@
           "generic_human": false,
           "human_present": false,
           "human_role": null,
-          "index": 8,
+          "index": 9,
           "original_query": null,
           "primary_symbol": "an airport gate at night",
           "query_family": "architecture",
@@ -219,7 +236,7 @@
           "generic_human": false,
           "human_present": false,
           "human_role": null,
-          "index": 9,
+          "index": 10,
           "original_query": null,
           "primary_symbol": "a veil over the ordinary",
           "query_family": "nature",
@@ -234,7 +251,7 @@
           "generic_human": false,
           "human_present": false,
           "human_role": null,
-          "index": 10,
+          "index": 11,
           "original_query": null,
           "primary_symbol": "the ordinary opening into a galaxy",
           "query_family": "nature",
@@ -249,7 +266,7 @@
           "generic_human": false,
           "human_present": false,
           "human_role": null,
-          "index": 11,
+          "index": 12,
           "original_query": null,
           "primary_symbol": "empty chair by a window",
           "query_family": "architecture",
@@ -264,7 +281,7 @@
           "generic_human": false,
           "human_present": true,
           "human_role": "observer",
-          "index": 12,
+          "index": 13,
           "original_query": null,
           "primary_symbol": "light moving across a hand",
           "query_family": "nature",
@@ -276,19 +293,19 @@
         }
       ],
       "score": 100.0,
-      "symbol_family_count": 5,
+      "symbol_family_count": 6,
       "violations": [],
       "warnings": []
     }
   },
   "fix_safe": true,
   "matched_solution_ids": [],
-  "narration_fingerprint": "cb74a5adf13953464b06e358f5e716bbc0ff488fe234030fb14cf3ff7ac27914",
+  "narration_fingerprint": "50c35cb6ed8b1f8fea8c43b8c22ceef1e1f5b6d26569e41d4618d61f5ec8af68",
   "passed": true,
   "prevention_rule_version": 1,
-  "scene_count": 13,
+  "scene_count": 14,
   "schema_version": 1,
-  "script_changed": true,
+  "script_changed": false,
   "slug": "wonder-is-a-glitch",
   "title": "Wonder Is a Glitch",
   "warnings": [],
