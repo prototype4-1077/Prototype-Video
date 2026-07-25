@@ -2,6 +2,43 @@
 
 The Liam voice is treated as a warm, sly, brilliant friend speaking with the viewer at midnight. The delivery system directs communicative intention rather than applying broad emotion to every scene.
 
+## Script-source precedence
+
+A complete script supplied by James remains authoritative. Do not silently rewrite, restructure, shorten, or force it into the default arc. Delivery metadata may be added only when the spoken words remain unchanged and the request permits a delivery pass.
+
+The writing template below is a preference only when no complete script is supplied.
+
+## Default script-and-voice arc
+
+For a new Concept Engine script, target approximately 24 short scenes and 330–340 spoken words. Hold one ruling metaphor throughout and write the prose so it still performs naturally after every tag is removed.
+
+| Scenes | Writing job | Delivery role |
+|---|---|---|
+| 1–2 | One-breath concrete hook; surprising without explaining | `hook` |
+| 3–5 | State the ordinary viewer assumption fairly | `setup` |
+| 6–7 | Release pressure with humor from the ruling metaphor | `comic` |
+| 8–12 | Explain one causal step at a time; reduce poetry | `mechanism` |
+| 13–16 | Reinterpret what the mechanism means personally | `turn` |
+| 17–18 | One or two short whisperable knife lines | `knife` |
+| 19–20 | Restore warmth, remove shame, return agency | `setup` or `turn` |
+| 21–22 | Return to room, body, hands, breath, or an ordinary object | `grounding` |
+| 23–24 | Hand over one open, testable question | `invitation` |
+
+Science claims must be labeled `established`, `emerging`, or `metaphor`. The mechanism must become clearer than the poetry. The final invitation is not whispered by default.
+
+## Writing for the voice
+
+- Write in speakable breath groups rather than dense paragraphs.
+- Vary sentence lengths; do not ask tags to manufacture emphasis.
+- Put important words near phrase endings.
+- Build pauses at real thought boundaries, not every visual cut.
+- Use serious setup → absurd extension → clean exit for humor.
+- Prefer amused delivery over audible laughter.
+- Place a chuckle after the payoff, never before it.
+- Keep the knife line brief, nontechnical, and free of immediate jokes.
+- Restore ordinary warmth after a whisper.
+- End with a genuine question the script does not answer.
+
 ## Scene fields
 
 - `delivery_role`: `hook`, `setup`, `comic`, `mechanism`, `turn`, `knife`, `grounding`, or `invitation`
@@ -10,7 +47,18 @@ The Liam voice is treated as a warm, sly, brilliant friend speaking with the vie
 - `is_knife_line`: forces the sparse whisper treatment
 - `audio_tags`: remains the exact per-scene override and takes precedence over semantic fields
 
-## Default arc
+Scene metadata should describe an intention already present in the prose, not compensate for weak writing.
+
+```json
+{
+  "text": "You may not be defending reality.",
+  "delivery_role": "knife",
+  "pause_before": "beat",
+  "is_knife_line": true
+}
+```
+
+## Default delivery arc
 
 1. Hook: curious and slightly forward-moving.
 2. Setup: thoughtful baseline.
