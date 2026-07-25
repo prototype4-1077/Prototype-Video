@@ -1,21 +1,21 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-25T14:52:53+00:00",
-  "records": 2352,
+  "generated_at": "2026-07-25T23:47:53+00:00",
+  "records": 2400,
   "with_assets": 127,
-  "asset_coverage": 0.054,
+  "asset_coverage": 0.0529,
   "reviewed": 43,
   "approved": 38,
   "revised": 5,
-  "reviewed_coverage": 0.0183,
+  "reviewed_coverage": 0.0179,
   "reviewed_feedback_tags": {
     "synthetic_appearance": 1
   },
   "automated_risk_tags": {
-    "reflection": 138,
-    "complex_simultaneity": 57,
+    "reflection": 140,
+    "complex_simultaneity": 58,
     "hand_contact": 46,
-    "anatomy_transform": 40,
+    "anatomy_transform": 44,
     "body_plus_effect": 26,
     "crowd_or_many_subjects": 25,
     "medical_contact": 18,
@@ -1315,13 +1315,13 @@
     {
       "priority": "high",
       "category": "evidence_coverage",
-      "evidence": "Only 43 of 2352 scene records have a human decision (1.8%).",
+      "evidence": "Only 43 of 2400 scene records have a human decision (1.8%).",
       "action": "Do not convert automated risk frequency into house rules. Review the highest-risk asset-backed queue first."
     },
     {
       "priority": "medium",
       "category": "asset_coverage",
-      "evidence": "Only 127 of 2352 records retain a reviewable asset (5.4%).",
+      "evidence": "Only 127 of 2400 records retain a reviewable asset (5.3%).",
       "action": "Persist representative frames or durable release references for completed scenes so historical feedback remains inspectable."
     },
     {
