@@ -4,7 +4,7 @@ The Liam voice is treated as a warm, sly, brilliant friend speaking with the vie
 
 ## Script-source precedence
 
-A complete script supplied by James remains authoritative. Do not silently rewrite, restructure, shorten, or force it into the default arc. Delivery metadata may be added only when the spoken words remain unchanged and the request permits a delivery pass.
+A complete script supplied by James remains authoritative. Do not silently rewrite, restructure, shorten, or force it into the default arc. Delivery metadata may be added only when the spoken words remain unchanged and the request permits a delivery pass. An attached or pasted full script takes precedence over a concept brief, outline, house template, or automatic role inference.
 
 The writing template below is a preference only when no complete script is supplied.
 
