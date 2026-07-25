@@ -1,10 +1,18 @@
 {
-  "generated_at": "2026-07-25T14:38:26+00:00",
+  "generated_at": "2026-07-25T16:02:09+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "low_bitrate": 2
   },
   "recommendations": [
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "17 occurrence(s) across 1 build(s)",
+      "fingerprint": "d2015c8809351471",
+      "priority": "high",
+      "stage": "transcribe"
+    },
     {
       "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
       "category": "recurring_incident",
@@ -17,14 +25,6 @@
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
       "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "bfc74cc230fe4fca",
-      "priority": "medium",
-      "stage": "build_pass"
-    },
-    {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
       "fingerprint": "d7bdfb546a04d76f",
       "priority": "medium",
       "stage": "build_pass"
@@ -32,12 +32,30 @@
     {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=59.1s, p95=1434.2s",
+      "evidence": "p50=135.2s, p95=1333.2s",
       "priority": "medium",
       "stage": "build_pass"
+    },
+    {
+      "action": "Profile waiting versus active progress, then add a provider fallback or split this stage into smaller checkpoints.",
+      "category": "timeout_rate",
+      "evidence": "64.3% timeout rate over 28 attempt(s)",
+      "priority": "high",
+      "stage": "transcribe"
     }
   ],
   "recurring_incidents": [
+    {
+      "count": 17,
+      "failure_class": "transient",
+      "fingerprint": "d2015c8809351471",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: transcribe stalled after <n>.1s; last useful progress <n>.1s ago.",
+      "slugs": [
+        "wonder-is-a-glitch"
+      ],
+      "stage": "transcribe"
+    },
     {
       "count": 3,
       "failure_class": "transient",
@@ -52,22 +70,22 @@
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "bfc74cc230fe4fca",
-      "kind": "failure",
-      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
-      "slugs": [
-        "wonder-is-a-glitch"
-      ],
-      "stage": "build_pass"
-    },
-    {
-      "count": 2,
-      "failure_class": "unknown",
       "fingerprint": "d7bdfb546a04d76f",
       "kind": "failure",
       "normalized_error": "governor stage=footage state=start soft=300s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=667cc43ce3238cd7 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: py\", line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.http",
       "slugs": [
         "june-oxley-folks-aint-roadblocks-tier1"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "wonder-is-a-glitch"
       ],
       "stage": "build_pass"
     },
@@ -81,22 +99,33 @@
         "june-oxley-folks-aint-roadblocks-tier1"
       ],
       "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "7a4386a0861df724",
+      "kind": "timeout",
+      "normalized_error": "warning: you are sending unauthenticated requests to the hf hub. please set a hf_token to enable higher rate limits and faster downloads. governortimeout: transcribe stalled after <n>.1s; last useful progress <n>.1s ago.",
+      "slugs": [
+        "wonder-is-a-glitch"
+      ],
+      "stage": "transcribe"
     }
   ],
   "runs_analyzed": 11,
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 10,
+      "attempts": 28,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.002,
+      "p50_success_s": 1.001,
       "p95_success_s": 1.003,
-      "sample_count": 10,
-      "successes": 10,
+      "sample_count": 28,
+      "successes": 28,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 10.02
+      "total_duration_s": 28.038
     },
     "altsheet": {
       "attempts": 6,
@@ -123,16 +152,16 @@
       "total_duration_s": 10259.241
     },
     "build_pass": {
-      "attempts": 53,
-      "failure_rate": 0.0943,
-      "failures": 5,
-      "p50_success_s": 59.111,
-      "p95_success_s": 1434.236,
-      "sample_count": 48,
-      "successes": 48,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 13619.268
+      "attempts": 71,
+      "failure_rate": 0.0563,
+      "failures": 4,
+      "p50_success_s": 135.246,
+      "p95_success_s": 1333.223,
+      "sample_count": 67,
+      "successes": 67,
+      "timeout_rate": 0.0141,
+      "timeouts": 1,
+      "total_duration_s": 18277.978
     },
     "credits": {
       "attempts": 18,
@@ -219,28 +248,28 @@
       "total_duration_s": 272.59
     },
     "transcribe": {
-      "attempts": 10,
-      "failure_rate": 0.0,
-      "failures": 0,
+      "attempts": 28,
+      "failure_rate": 0.6429,
+      "failures": 18,
       "p50_success_s": 20.014,
       "p95_success_s": 23.566,
       "sample_count": 10,
       "successes": 10,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 193.152
+      "timeout_rate": 0.6429,
+      "timeouts": 18,
+      "total_duration_s": 4569.016
     },
     "tts": {
-      "attempts": 10,
+      "attempts": 11,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 58.041,
-      "p95_success_s": 67.892,
-      "sample_count": 10,
-      "successes": 10,
+      "p50_success_s": 58.045,
+      "p95_success_s": 70.541,
+      "sample_count": 11,
+      "successes": 11,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 575.309
+      "total_duration_s": 645.335
     }
   },
   "statuses": {

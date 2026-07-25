@@ -1,53 +1,186 @@
 {
-  "finished_at": "2026-07-25T14:38:25+00:00",
-  "github_run_id": "30161981457",
+  "finished_at": "2026-07-25T16:02:09+00:00",
+  "github_run_id": "30162164275",
   "incidents": [
     {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "bfc74cc230fe4fca",
-      "kind": "failure",
+      "count": 17,
+      "failure_class": "transient",
+      "fingerprint": "d2015c8809351471",
+      "kind": "timeout",
       "last_item": null,
-      "normalized_error": "note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "normalized_error": "governortimeout: transcribe stalled after <n>.1s; last useful progress <n>.1s ago.",
+      "stage": "transcribe"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "kind": "timeout",
+      "last_item": null,
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "7a4386a0861df724",
+      "kind": "timeout",
+      "last_item": null,
+      "normalized_error": "warning: you are sending unauthenticated requests to the hf hub. please set a hf_token to enable higher rate limits and faster downloads. governortimeout: transcribe stalled after <n>.1s; last useful progress <n>.1s ago.",
+      "stage": "transcribe"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=7bd8b2f5106aafb5. ERROR: scene 6 text too long (225 chars) | FIX: split it into two scenes",
+  "last_message": "build failed (transient); retry budget 2 exhausted. fingerprint=df6678837ac31a1f. GovernorTimeout: build_pass hard_timeout after 160.1s; last useful progress 8.0s ago.",
   "mode": "recover",
-  "passes": 2,
+  "passes": 20,
   "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 10,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
     "build_pass": {
-      "hard_timeout_s": 1800.0,
+      "hard_timeout_s": 159.25384262700027,
       "historical_p95_s": null,
-      "idle_timeout_s": 1800.0,
+      "idle_timeout_s": 159.25384262700027,
       "sample_count": 0,
-      "soft_timeout_s": 1800.0,
+      "soft_timeout_s": 159.25384262700027,
       "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 23.57,
+      "idle_timeout_s": 180.0,
+      "sample_count": 10,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 67.89,
+      "idle_timeout_s": 180.0,
+      "sample_count": 10,
+      "soft_timeout_s": 233.67,
+      "source": "history"
     }
   },
   "quality": {},
   "recommendations": [
     {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "bfc74cc230fe4fca",
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "7a4386a0861df724",
+      "priority": "medium",
+      "reason": "1 occurrence(s): warning: you are sending unauthenticated requests to the hf hub. please set a hf_token to enable higher rate limits and faster downloads. governortimeout: transcribe stalled after <n>.1s; last useful progress <n>.1s ago.",
+      "stage": "transcribe"
+    },
+    {
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "d2015c8809351471",
       "priority": "high",
-      "reason": "2 occurrence(s): note: <n> scenes (aim for <n>-<n> scenes (one sentence<path> each)) - allowed, supplied<path> script error: scene <n> text too long (<n> chars) | fix: split it into two scenes",
+      "reason": "17 occurrence(s): governortimeout: transcribe stalled after <n>.1s; last useful progress <n>.1s ago.",
+      "stage": "transcribe"
+    },
+    {
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (4660.7s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "645791c303bb4356aa8d3e96645a35e0",
+  "run_id": "7eca8427c3744015817b2b676fe1ebf3",
   "schema_version": 1,
   "slug": "wonder-is-a-glitch",
   "stages": {
+    "align": {
+      "attempts": 18,
+      "failures": 0,
+      "p50_success_s": 1.001,
+      "p95_success_s": 1.001,
+      "success_durations_s": [
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001,
+        1.001
+      ],
+      "successes": 18,
+      "timeouts": 0,
+      "total_duration_s": 18.018
+    },
     "build_pass": {
-      "attempts": 2,
-      "failures": 2,
+      "attempts": 20,
+      "failures": 1,
+      "p50_success_s": 246.09,
+      "p95_success_s": 246.092,
+      "success_durations_s": [
+        71.026,
+        246.091,
+        246.091,
+        246.09,
+        246.089,
+        246.09,
+        246.091,
+        246.087,
+        246.089,
+        246.089,
+        246.089,
+        246.088,
+        246.091,
+        246.09,
+        246.092,
+        246.092,
+        246.09,
+        246.087,
+        246.089
+      ],
+      "successes": 19,
+      "timeouts": 1,
+      "total_duration_s": 4660.716
+    },
+    "transcribe": {
+      "attempts": 18,
+      "failures": 18,
       "p50_success_s": null,
       "p95_success_s": null,
       "success_durations_s": [],
       "successes": 0,
+      "timeouts": 18,
+      "total_duration_s": 4375.864
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 70.026,
+      "p95_success_s": 70.026,
+      "success_durations_s": [
+        70.026
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 2.006
+      "total_duration_s": 70.026
     }
   },
   "status": "failed"
