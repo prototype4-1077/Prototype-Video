@@ -81,6 +81,55 @@ Take the hook + ruling metaphor + the turn + the invitation, and develop it into
 script in the house voice. The brief already enforces the ethos (ends on an
 invitation, honors a structural signature, lands in the ordinary).
 
+### Script-source precedence
+A complete script supplied by James is authoritative. Preserve its narration,
+structure, and intended performance unless he explicitly asks for rewriting,
+restructuring, or a delivery pass. Never silently force a supplied script into the
+fallback template below. Delivery metadata may be added only when it does not alter
+the spoken words and the request permits it.
+
+### Default Liam script template — only when no complete script is supplied
+When James provides an idea, concept, notes, or a request to build without supplying
+a complete script, write approximately 24 short scenes and 330–340 spoken words as
+one thought unfolding beside the viewer. Use one ruling metaphor throughout and
+shape the prose so the performance works even with every audio tag removed.
+
+Preferred arc:
+1. **Scenes 1–2 — Hook:** one-breath, concrete, surprising; curious and slightly brisk.
+2. **Scenes 3–5 — Recognition/setup:** state the viewer's ordinary assumption fairly.
+3. **Scenes 6–7 — Comic pressure release:** humor grows from the ruling metaphor;
+   laugh with the viewer, never at them.
+4. **Scenes 8–12 — Mechanism:** temporarily reduce poetry; explain one causal step at
+   a time and label the science `established`, `emerging`, or `metaphor`.
+5. **Scenes 13–16 — Turn:** reinterpret what the mechanism means personally; do not
+   merely repeat the claim.
+6. **Scenes 17–18 — Knife line:** one or two short, whisperable sentences; no joke or
+   technical language immediately after.
+7. **Scenes 19–20 — Compassionate release:** restore normal warmth, remove shame, and
+   turn toward agency without declaring an answer for the viewer.
+8. **Scenes 21–22 — Grounding:** return to the room, body, hands, breath, or an
+   ordinary object using simple concrete language.
+9. **Scenes 23–24 — Invitation:** end with one genuinely open, ordinary-life test or
+   question; do not whisper it by default and do not answer it.
+
+Writing preferences:
+- Write in speakable breath groups; avoid stacked abstract nouns.
+- Vary sentence length so emphasis exists before tags are added.
+- Put important words near phrase endings.
+- Use serious setup → absurd extension → clean exit for humor.
+- Build pauses at real thought boundaries, not every visual cut.
+- Keep reactions sparse: amused delivery is preferred over audible laughter;
+  chuckles belong after a payoff.
+- The mechanism must become clearer than the poetry.
+- Restore warmth after any whisper.
+- A script should still sound natural when all delivery metadata is removed.
+
+Scene delivery metadata should describe the intention already present in the prose,
+not compensate for weak writing. Use `delivery_role` values `hook`, `setup`,
+`comic`, `mechanism`, `turn`, `knife`, `grounding`, and `invitation`; add
+`pause_before`, `reaction`, or `is_knife_line` only when the meaning requires it.
+Explicit `audio_tags` remain the highest-priority manual override.
+
 **For a recurring character script:**
 1. Load the character JSON and companion bible under `concept/characters/`.
 2. Preserve the character's exact voice provider/name and do not silently substitute
