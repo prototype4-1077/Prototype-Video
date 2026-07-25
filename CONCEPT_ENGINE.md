@@ -86,7 +86,9 @@ A complete script supplied by James is authoritative. Preserve its narration,
 structure, and intended performance unless he explicitly asks for rewriting,
 restructuring, or a delivery pass. Never silently force a supplied script into the
 fallback template below. Delivery metadata may be added only when it does not alter
-the spoken words and the request permits it.
+the spoken words and the request permits it. An attached or pasted full script also
+takes precedence over a concept brief, outline, house template, or automatic role
+inference.
 
 ### Default Liam script template — only when no complete script is supplied
 When James provides an idea, concept, notes, or a request to build without supplying
