@@ -1,0 +1,73 @@
+name: Expand Think Tank submission
+
+# The Think Tank (GPT) commits ONE small file: build/<slug>/submission.json
+# This expands it into a full pipeline package, validates it, and drops
+# render.request so the guarded render workflow fires. GPT never has to write
+# a large script.json through its Action.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "build/**/submission.json"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: submission-expand-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  expand:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Identify submitted slug(s)
+        id: slugs
+        shell: bash
+        run: |
+          set -euo pipefail
+          files="$(git diff --name-only HEAD^ HEAD -- 'build/*/submission.json' || true)"
+          [ -z "$files" ] && files="$(git ls-files 'build/*/submission.json')"
+          slugs=""
+          for f in $files; do
+            s="${f#build/}"; s="${s%/submission.json}"
+            [ -f "build/$s/script.json" ] && [ -f "build/$s/render-started.txt" ] && continue
+            slugs="$slugs $s"
+          done
+          echo "slugs=$(echo "$slugs" | xargs)" >> "$GITHUB_OUTPUT"
+          echo "found: $slugs"
+
+      - name: Expand, validate, and request render
+        if: steps.slugs.outputs.slugs != ''
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "submission-bot"
+          git config user.email "submission@users.noreply.github.com"
+          for slug in ${{ steps.slugs.outputs.slugs }}; do
+            echo "::group::$slug"
+            python3 pipeline/expand_submission.py "$slug"
+            if python3 pipeline/preflight.py "build/$slug" --fix-safe --record; then
+              printf 'go\n' > "build/$slug/render.request"
+              git add -f "build/$slug"
+              echo "$slug ready"
+            else
+              echo "preflight blocked $slug" > "build/$slug/expand-blocked.txt"
+              git add -f "build/$slug/expand-blocked.txt" "build/$slug" || true
+            fi
+            echo "::endgroup::"
+          done
+          git commit -m "submission: expand + request render for ${{ steps.slugs.outputs.slugs }}" || exit 0
+          for i in 1 2 3 4 5; do
+            git push && exit 0
+            git pull --rebase --autostash origin main || { git rebase --abort || true; }
+            sleep $((i * 2))
+          done
+          echo "expansion could not be pushed" >&2
+          exit 1
