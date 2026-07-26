@@ -52,7 +52,7 @@ def _fetch_base(prompt: str, seed: int = 7):
     import io
     full = prompt + ", cinematic photoreal, dramatic practical light, moody, 35mm, no text, no words, no letters, no watermark"
     enc = urllib.parse.quote(full)
-    url = f"https://image.pollinations.ai/prompt/{enc}?width=1280&height=720&nologo=true&enhance=true&seed={seed}&model=flux"
+    url = f"https://image.pollinations.ai/prompt/{enc}?width={W}&height={H}&nologo=true&enhance=true&seed={seed}&model=flux"
     try:
         req = urllib.request.Request(url, headers={"User-Agent": "pipeline"})
         data = urllib.request.urlopen(req, timeout=90).read()
@@ -72,7 +72,7 @@ def _wrap(title: str, font_path: str, max_w: int, max_lines: int = 3):
     from PIL import ImageFont, ImageDraw, Image
     d = ImageDraw.Draw(Image.new("RGB", (10, 10)))
     words = title.upper().split()
-    for size in range(132, 60, -6):
+    for size in range(160, 54, -6):
         f = ImageFont.truetype(font_path, size)
         lines, cur = [], ""
         for w in words:
@@ -91,8 +91,13 @@ def _wrap(title: str, font_path: str, max_w: int, max_lines: int = 3):
     return f, 66, words[:max_lines]
 
 
-def generate(slug: str, build_dir, out=None) -> str:
+def generate(slug: str, build_dir, out=None, portrait: bool = False) -> str:
     from PIL import Image, ImageDraw, ImageFont, ImageEnhance
+    global W, H
+    if portrait:
+        W, H = 1080, 1920
+    else:
+        W, H = 1280, 720
     build_dir = Path(build_dir)
     script = json.loads((build_dir / "script.json").read_text())
     title = script.get("title") or slug.replace("-", " ").title()
@@ -111,7 +116,7 @@ def generate(slug: str, build_dir, out=None) -> str:
     d = ImageDraw.Draw(img)
     fp = _font_path()
     margin = 70
-    f, size, lines = _wrap(title, fp, W - 2 * margin, 3)
+    f, size, lines = _wrap(title, fp, W - 2 * margin, 4 if portrait else 3)
     lh = int(size * 1.02)
     cy = H - margin - lh * len(lines) + 6
     for i, t in enumerate(lines):
