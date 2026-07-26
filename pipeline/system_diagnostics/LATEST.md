@@ -1,6 +1,6 @@
 # System Diagnostic
 
-Generated: 2026-07-26T12:35:11+00:00
+Generated: 2026-07-26T13:05:56+00:00
 
 Findings: 11 — priorities {"high": 1, "low": 2, "medium": 8}
 
@@ -39,7 +39,7 @@ Findings: 11 — priorities {"high": 1, "low": 2, "medium": 8}
 ### [MEDIUM] Youtube queue contains already-published videos
 - Area: `publishing`
 - Code: `youtube_published_still_queued`
-- Evidence: ["a-chair-not-a-throne", "the-adjacent-mind", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-infinite-library", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "who-wrote-the-menu", "you-are-a-flame-wearing-a-name-tag"]
+- Evidence: ["a-chair-not-a-throne", "the-adjacent-mind", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-infinite-library", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "the-room-has-more-than-one-window", "who-wrote-the-menu", "you-are-a-flame-wearing-a-name-tag"]
 - Action: Keep the metadata queue if useful, but rely on durable receipt checks and make duplicate posting require an explicit force flag.
 
 ### [MEDIUM] Quality warning repeats: low_bitrate
