@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-25T23:15:37+00:00",
+  "generated_at": "2026-07-26T13:14:02+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "low_bitrate": 2
@@ -24,7 +24,7 @@
     {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=61.6s, p95=1456.9s",
+      "evidence": "p50=58.5s, p95=1411.9s",
       "priority": "medium",
       "stage": "build_pass"
     }
@@ -64,168 +64,168 @@
       "stage": "build_pass"
     }
   ],
-  "runs_analyzed": 12,
+  "runs_analyzed": 14,
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 12,
+      "attempts": 14,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.002,
       "p95_success_s": 1.003,
-      "sample_count": 12,
-      "successes": 12,
+      "sample_count": 14,
+      "successes": 14,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 12.022
+      "total_duration_s": 14.028
     },
     "altsheet": {
-      "attempts": 8,
+      "attempts": 9,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.01,
+      "p50_success_s": 1.011,
       "p95_success_s": 6.046,
-      "sample_count": 8,
-      "successes": 8,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 18.142
-    },
-    "assemble": {
-      "attempts": 251,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 46.452,
-      "p95_success_s": 90.391,
-      "sample_count": 251,
-      "successes": 251,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 12692.391
-    },
-    "build_pass": {
-      "attempts": 61,
-      "failure_rate": 0.0492,
-      "failures": 3,
-      "p50_success_s": 61.605,
-      "p95_success_s": 1456.949,
-      "sample_count": 58,
-      "successes": 58,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 16963.516
-    },
-    "credits": {
-      "attempts": 22,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 1.006,
-      "p95_success_s": 1.012,
-      "sample_count": 22,
-      "successes": 22,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 22.152
-    },
-    "ffmpeg": {
-      "attempts": 44,
-      "failure_rate": 0.0,
-      "failures": 0,
-      "p50_success_s": 6.014,
-      "p95_success_s": 30.981,
-      "sample_count": 44,
-      "successes": 44,
-      "timeout_rate": 0.0,
-      "timeouts": 0,
-      "total_duration_s": 437.149
-    },
-    "footage": {
-      "attempts": 12,
-      "failure_rate": 0.25,
-      "failures": 3,
-      "p50_success_s": 158.223,
-      "p95_success_s": 223.321,
       "sample_count": 9,
       "successes": 9,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1351.765
+      "total_duration_s": 19.166
+    },
+    "assemble": {
+      "attempts": 299,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 47.324,
+      "p95_success_s": 90.39,
+      "sample_count": 299,
+      "successes": 299,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 15066.627
+    },
+    "build_pass": {
+      "attempts": 73,
+      "failure_rate": 0.0411,
+      "failures": 3,
+      "p50_success_s": 58.532,
+      "p95_success_s": 1411.873,
+      "sample_count": 70,
+      "successes": 70,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 19987.333
+    },
+    "credits": {
+      "attempts": 26,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.007,
+      "p95_success_s": 1.014,
+      "sample_count": 26,
+      "successes": 26,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 26.194
+    },
+    "ffmpeg": {
+      "attempts": 52,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.012,
+      "p95_success_s": 30.614,
+      "sample_count": 52,
+      "successes": 52,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 513.778
+    },
+    "footage": {
+      "attempts": 15,
+      "failure_rate": 0.2,
+      "failures": 3,
+      "p50_success_s": 156.735,
+      "p95_success_s": 218.819,
+      "sample_count": 12,
+      "successes": 12,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1668.373
     },
     "hero": {
-      "attempts": 30,
+      "attempts": 38,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 22.541,
-      "p95_success_s": 50.119,
-      "sample_count": 30,
-      "successes": 30,
+      "p50_success_s": 19.551,
+      "p95_success_s": 47.527,
+      "sample_count": 38,
+      "successes": 38,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 870.631
+      "total_duration_s": 828.507
     },
     "prep": {
-      "attempts": 11,
+      "attempts": 13,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 12.023,
-      "p95_success_s": 17.053,
-      "sample_count": 11,
-      "successes": 11,
+      "p50_success_s": 14.042,
+      "p95_success_s": 16.663,
+      "sample_count": 13,
+      "successes": 13,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 144.372
+      "total_duration_s": 175.488
     },
     "probe": {
-      "attempts": 262,
+      "attempts": 312,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.009,
-      "p95_success_s": 1.014,
-      "sample_count": 262,
-      "successes": 262,
+      "p50_success_s": 1.01,
+      "p95_success_s": 1.015,
+      "sample_count": 312,
+      "successes": 312,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 264.651
+      "total_duration_s": 315.336
     },
     "quality": {
-      "attempts": 11,
+      "attempts": 13,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 32.213,
-      "p95_success_s": 36.183,
-      "sample_count": 11,
-      "successes": 11,
+      "p50_success_s": 29.277,
+      "p95_success_s": 36.172,
+      "sample_count": 13,
+      "successes": 13,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 332.858
+      "total_duration_s": 390.392
     },
     "transcribe": {
-      "attempts": 12,
+      "attempts": 14,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 19.517,
-      "p95_success_s": 23.465,
-      "sample_count": 12,
-      "successes": 12,
+      "p95_success_s": 24.018,
+      "sample_count": 14,
+      "successes": 14,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 227.171
+      "total_duration_s": 274.214
     },
     "tts": {
-      "attempts": 12,
+      "attempts": 14,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 57.531,
-      "p95_success_s": 67.189,
-      "sample_count": 12,
-      "successes": 12,
+      "p95_success_s": 72.803,
+      "sample_count": 14,
+      "successes": 14,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 671.346
+      "total_duration_s": 784.415
     }
   },
   "statuses": {
-    "done": 11,
+    "done": 13,
     "failed": 1
   }
 }
