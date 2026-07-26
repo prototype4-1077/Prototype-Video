@@ -1,33 +1,36 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-24T20:39:16+00:00",
-  "reports_analyzed": 2,
-  "scenes_analyzed": 41,
+  "generated_at": "2026-07-26T12:35:10+00:00",
+  "reports_analyzed": 6,
+  "scenes_analyzed": 119,
   "result_counts": {
-    "stock": 38,
-    "literal_storyboard": 3
+    "stock": 108,
+    "literal_storyboard": 11
   },
-  "candidate_count_samples": 38,
-  "mean_candidate_count_when_recorded": 28.0,
-  "zero_candidate_fallbacks": 3,
+  "candidate_count_samples": 113,
+  "mean_candidate_count_when_recorded": 27.407,
+  "zero_candidate_fallbacks": 6,
   "low_candidate_scenes": 0,
-  "fallback_count": 3,
-  "fallback_rate": 0.0732,
-  "low_supply_rate": 0.0732,
+  "fallback_count": 11,
+  "fallback_rate": 0.0924,
+  "low_supply_rate": 0.0504,
   "top_rejection_reasons": {
-    "advisory": 1064
+    "advisory": 2701,
+    "anchor coverage 0.00 below 0.18": 235,
+    "anchor coverage 0.00 below 0.10": 111,
+    "direct match": 50
   },
   "anchor_coverage_buckets": {
-    "low": 1028,
-    "medium": 32,
-    "high": 4
+    "low": 2891,
+    "medium": 179,
+    "high": 27
   },
   "permanent_exclusion_counts": {
     "used_ids": 1021,
     "banned_ids": 102
   },
-  "evidence_strength": "developing",
-  "state": "insufficient_evidence",
-  "recommended_action": "Persist candidate-decision reports for more completed renders before evaluating a cooldown. The exclusion-set size alone is not evidence of starvation.",
+  "evidence_strength": "sufficient",
+  "state": "no_current_starvation_signal",
+  "recommended_action": "Keep permanent exclusion unchanged; continue monitoring candidate supply and fallback rate.",
   "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate."
 }
