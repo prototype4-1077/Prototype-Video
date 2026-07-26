@@ -63,6 +63,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          python3 -m pip install --quiet pillow
           force_flag=""
           [[ "${{ steps.request.outputs.force }}" == "true" ]] && force_flag="--force"
           python3 pipeline/yt_publish.py $force_flag ${{ steps.request.outputs.slugs }}

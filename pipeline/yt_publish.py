@@ -140,6 +140,26 @@ def upload(path: str, meta: dict[str, Any], token: str) -> str:
     return str(response["id"])
 
 
+def set_thumbnail(video_id: str, slug: str, token: str) -> bool:
+    """Best-effort: generate + set a custom thumbnail. Never breaks a publish."""
+    try:
+        import thumbnail
+        thumb = thumbnail.generate(slug, HERE.parent / "build" / slug)
+        with open(thumb, "rb") as handle:
+            data = handle.read()
+        req = urllib.request.Request(
+            f"https://www.googleapis.com/upload/youtube/v3/thumbnails/set?videoId={video_id}",
+            data=data, method="POST",
+            headers={"Authorization": "Bearer " + token, "Content-Type": "image/jpeg"},
+        )
+        urllib.request.urlopen(req, timeout=120)
+        print(f"THUMBNAIL set for {slug}", flush=True)
+        return True
+    except Exception as error:  # noqa: BLE001
+        print(f"WARN thumbnail failed for {slug}: {error}", flush=True)
+        return False
+
+
 def publish(slugs: list[str], *, force: bool = False) -> dict[str, dict[str, Any]]:
     if not slugs:
         raise ValueError("explicit slug required; refusing to publish the entire queue")
@@ -174,6 +194,7 @@ def publish(slugs: list[str], *, force: bool = False) -> dict[str, dict[str, Any
         history[slug] = record
         atomic_json(RESULT, history)
         print(f"PUBLISHED {slug} -> {record['url']}", flush=True)
+        set_thumbnail(video_id, slug, token)
     return history
 
 
