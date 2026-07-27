@@ -1,6 +1,6 @@
 # System Diagnostic
 
-Generated: 2026-07-26T16:55:54+00:00
+Generated: 2026-07-27T00:07:23+00:00
 
 Findings: 11 — priorities {"high": 1, "low": 2, "medium": 8}
 
@@ -39,13 +39,13 @@ Findings: 11 — priorities {"high": 1, "low": 2, "medium": 8}
 ### [MEDIUM] Youtube queue contains already-published videos
 - Area: `publishing`
 - Code: `youtube_published_still_queued`
-- Evidence: ["a-chair-not-a-throne", "the-adjacent-mind", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-infinite-library", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "the-room-has-more-than-one-window", "who-wrote-the-menu", "wonder-is-a-glitch", "you-are-a-flame-wearing-a-name-tag", "your-emergency-contact", "your-inner-bodyguard"]
+- Evidence: ["a-chair-not-a-throne", "beliefs-are-software-updates", "the-adjacent-mind", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-infinite-library", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "the-room-has-more-than-one-window", "who-wrote-the-menu", "wonder-is-a-glitch", "you-are-a-flame-wearing-a-name-tag", "your-emergency-contact", "your-inner-bodyguard"]
 - Action: Keep the metadata queue if useful, but rely on durable receipt checks and make duplicate posting require an explicit force flag.
 
 ### [MEDIUM] Quality warning repeats: low_bitrate
 - Area: `quality`
 - Code: `repeated_quality_warning:low_bitrate`
-- Evidence: {"current_build_reports": 2}
+- Evidence: {"current_build_reports": 3}
 - Action: Run a targeted encoding or assembly challenger and require unchanged visual/audio quality before adoption.
 
 ### [MEDIUM] Asset Coverage
