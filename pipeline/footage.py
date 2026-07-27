@@ -195,12 +195,24 @@ def search(q, genre=None, profile=None, per_page=15, stock_tag=None):
         extra = []
     found = list(extra)
     if KEY:
+        # One provider must never discard another provider's usable results.
+        # Pexels 401/403 (access) and 429/5xx (transient) are isolated so the
+        # keyless Coverr/Mixkit candidates already in `found` survive.
         for variant in profiles.query_variants(q, profile) or [q]:
             qq = urllib.parse.quote(variant)
-            res = api(
-                f"https://api.pexels.com/v1/videos/search?query={qq}"
-                f"&per_page={per_page}&orientation=landscape"
-            )
+            try:
+                res = api(
+                    f"https://api.pexels.com/v1/videos/search?query={qq}"
+                    f"&per_page={per_page}&orientation=landscape"
+                )
+            except Exception as exc:  # noqa: BLE001 - provider isolation is the point
+                status = getattr(exc, "code", None)
+                print(f"WARN pexels search failed for {variant!r} "
+                      f"(status={status}): {exc}; keeping {len(found)} keyless candidate(s)",
+                      flush=True)
+                if status in (401, 403):
+                    break  # deterministic access failure: stop asking Pexels
+                continue
             found.extend(res.get("videos") or [])
     # Styled and literal searches can return the same clip. Keep its first occurrence.
     out, seen = [], set()

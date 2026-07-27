@@ -244,6 +244,20 @@ def assess(
     slug = str(script.get("slug") or build.name)
     if not script.get("title") or not script.get("slug"):
         blockers.append(_block("missing_title_or_slug", "script.json must contain title and slug", store=store))
+    # build.py hard-fails any scene text over 220 characters. Catch it here, at
+    # zero cost, instead of discovering it mid-render after paid TTS/footage work.
+    overlong = [
+        (index, len(str(scene.get("text") or "")))
+        for index, scene in enumerate(script.get("scenes") or [])
+        if len(str(scene.get("text") or "")) > 220
+    ]
+    if overlong:
+        detail = ", ".join(f"scene {index} is {length} chars" for index, length in overlong[:5])
+        blockers.append(_block(
+            "scene_text_too_long",
+            f"scene text must be 220 characters or fewer ({detail}); split on a sentence boundary",
+            store=store,
+        ))
     if script.get("slug") and script.get("slug") != build.name:
         blockers.append(_block(
             "slug_directory_mismatch",
