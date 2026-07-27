@@ -1,0 +1,183 @@
+{
+  "applied_solution_ids": [],
+  "blockers": [
+    {
+      "code": "visual_symbol_plan",
+      "fingerprint": "f5afafeb33f23151",
+      "matched_solution_ids": [
+        "sol-visual-symbol-diversity-v1"
+      ],
+      "message": "human imagery occupies 75%; target <= 45%",
+      "stage": "preflight"
+    },
+    {
+      "code": "visual_symbol_plan",
+      "fingerprint": "5d20dc55cdcdc309",
+      "matched_solution_ids": [
+        "sol-visual-symbol-diversity-v1"
+      ],
+      "message": "generic human filler repeats for 2 consecutive scenes starting at scene 2",
+      "stage": "preflight"
+    },
+    {
+      "code": "hero_art_not_ready",
+      "fingerprint": "d115646baf6f946c",
+      "matched_solution_ids": [
+        "sol-hero-readiness-v1"
+      ],
+      "message": "Hero-art policy requires committed art or an explicitly approved runtime scene-generation mode.",
+      "stage": "preflight"
+    }
+  ],
+  "checks": {
+    "animation_contract": {
+      "errors": [],
+      "passed": true,
+      "profile": null
+    },
+    "hero_readiness": {
+      "applicable": true,
+      "committed_hero": false,
+      "passed": false,
+      "policy": "runtime_generated",
+      "runtime_scene_generation": true,
+      "scene_prompt_count": 0
+    },
+    "planned_still_budget": {
+      "cap": 0.35,
+      "estimated_ratio": 0.0,
+      "passed": true,
+      "still_scene_indexes": [],
+      "used_exact_durations": false
+    },
+    "source_narration": {
+      "applicable": false,
+      "passed": true
+    },
+    "visual_symbols": {
+      "family_counts": {
+        "light_atmosphere": 3,
+        "perception": 1
+      },
+      "generic_human_ratio": 0.5,
+      "human_presence_ratio": 0.75,
+      "longest_family_run": {
+        "length": 2,
+        "start": 2,
+        "value": "light_atmosphere"
+      },
+      "longest_generic_human_run": {
+        "length": 2,
+        "start": 2,
+        "value": "generic_human"
+      },
+      "passes": false,
+      "policy": {
+        "max_family_run": 3,
+        "max_generic_human_run": 1,
+        "max_human_ratio": 0.45,
+        "min_families": 6,
+        "mode": "diverse_symbols",
+        "strict": true
+      },
+      "primary_symbol_counts": {
+        "man reflection window city night": 1,
+        "person silhouette fog street light": 1,
+        "shadow face profile dark moody": 1,
+        "silhouette night sky stars surreal": 1
+      },
+      "scene_count": 4,
+      "scenes": [
+        {
+          "effective_query": "silhouette night sky stars surreal",
+          "generic_human": false,
+          "human_present": false,
+          "human_role": null,
+          "index": 0,
+          "original_query": "silhouette night sky stars surreal",
+          "primary_symbol": "silhouette night sky stars surreal",
+          "query_family": "light_atmosphere",
+          "selected_family": null,
+          "semantic_anchor": "beat 1",
+          "symbol_family": "object_tool",
+          "text": "What if life is not ignoring you… what if it is answering the wrong question perfectly?",
+          "visual_function": "beat 1"
+        },
+        {
+          "effective_query": "man reflection window city night",
+          "generic_human": false,
+          "human_present": true,
+          "human_role": "observer",
+          "index": 1,
+          "original_query": "man reflection window city night",
+          "primary_symbol": "man reflection window city night",
+          "query_family": "perception",
+          "selected_family": null,
+          "semantic_anchor": "beat 2",
+          "symbol_family": "geometry",
+          "text": "You think reality is responding to what you want.",
+          "visual_function": "beat 2"
+        },
+        {
+          "effective_query": "person silhouette fog street light",
+          "generic_human": true,
+          "human_present": true,
+          "human_role": "unspecified",
+          "index": 2,
+          "original_query": "person silhouette fog street light",
+          "primary_symbol": "person silhouette fog street light",
+          "query_family": "light_atmosphere",
+          "selected_family": null,
+          "semantic_anchor": "beat 3",
+          "symbol_family": "time_memory",
+          "text": "But most of the time, reality is responding to the question you keep carrying under your skin.",
+          "visual_function": "beat 3"
+        },
+        {
+          "effective_query": "shadow face profile dark moody",
+          "generic_human": true,
+          "human_present": true,
+          "human_role": "unspecified",
+          "index": 3,
+          "original_query": "shadow face profile dark moody",
+          "primary_symbol": "shadow face profile dark moody",
+          "query_family": "light_atmosphere",
+          "selected_family": null,
+          "semantic_anchor": "beat 4",
+          "symbol_family": "light_atmosphere",
+          "text": "Not the clean question you say out loud. The hidden one.",
+          "visual_function": "beat 4"
+        }
+      ],
+      "score": 68.3,
+      "symbol_family_count": 2,
+      "violations": [
+        "human imagery occupies 75%; target <= 45%",
+        "generic human filler repeats for 2 consecutive scenes starting at scene 2"
+      ],
+      "warnings": [
+        "generic human filler occupies 50%; people should have a named symbolic role"
+      ]
+    }
+  },
+  "fix_safe": true,
+  "matched_solution_ids": [
+    "sol-hero-readiness-v1",
+    "sol-visual-symbol-diversity-v1"
+  ],
+  "narration_fingerprint": "aa775ab5d6f180268b6f92fb8dd673b21a8552feab407f7624b7262f38fade0e",
+  "passed": false,
+  "prevention_rule_version": 1,
+  "scene_count": 4,
+  "schema_version": 1,
+  "script_changed": true,
+  "slug": "test-sync",
+  "title": "Sync Test",
+  "warnings": [
+    {
+      "code": "visual_symbol_warning",
+      "message": "generic human filler occupies 50%; people should have a named symbolic role"
+    }
+  ],
+  "word_count": 53
+}
