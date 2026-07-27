@@ -1,16 +1,6 @@
 {
   "applied_solution_ids": [],
-  "blockers": [
-    {
-      "code": "visual_symbol_plan",
-      "fingerprint": "2db185d2f06419df",
-      "matched_solution_ids": [
-        "sol-visual-symbol-diversity-v1"
-      ],
-      "message": "nature repeats for 5 consecutive scenes starting at scene 10",
-      "stage": "preflight"
-    }
-  ],
+  "blockers": [],
   "checks": {
     "animation_contract": {
       "errors": [],
@@ -43,29 +33,30 @@
     },
     "visual_symbols": {
       "family_counts": {
-        "architecture": 1,
+        "architecture": 2,
         "collective": 1,
         "light_atmosphere": 3,
-        "nature": 10,
+        "nature": 8,
         "object_tool": 1,
         "pathway": 2,
         "perception": 1,
+        "time_memory": 1,
         "transformation": 2,
         "world_scale": 3
       },
       "generic_human_ratio": 0.0,
       "human_presence_ratio": 0.1667,
       "longest_family_run": {
-        "length": 5,
-        "start": 10,
-        "value": "nature"
+        "length": 2,
+        "start": 2,
+        "value": "light_atmosphere"
       },
       "longest_generic_human_run": {
         "length": 0,
         "start": 0,
         "value": null
       },
-      "passes": false,
+      "passes": true,
       "policy": {
         "max_family_run": 3,
         "max_generic_human_run": 1,
@@ -83,8 +74,8 @@
         "a darkroom photograph developing beside a musical instrument": 1,
         "a green leaf unfolding into a cathedral while heavy sound ri": 1,
         "a human silhouette formed from stained glass dividing white": 1,
-        "a library, garden, workshop, and night sky flowing together": 1,
         "a lone listener standing inside a storm made from symbols, c": 1,
+        "a mechanical sorting machine opening every gate as tools, bo": 1,
         "a person at the edge of a vast horizon loosening a safety ro": 1,
         "a person carefully polishing a transparent visor while the s": 1,
         "a quiet still-life room with sunbeams, gentle sound ripples,": 1,
@@ -94,7 +85,7 @@
         "a tightly wound camera lens opening as several overlapping i": 1,
         "a tiny circular aperture framing one perfectly coherent gard": 1,
         "an antique radio surrounded by beautiful but warped luminous": 1,
-        "an immense ocean curving through a glass vessel and settling": 1,
+        "an immense archive of glass drawers collapsing into one cera": 1,
         "an ordinary city street revealed as precisely aligned layers": 1,
         "many streams of abstract light condensing into several expre": 1,
         "streams of color, sound, and texture passing through a narro": 1,
@@ -274,8 +265,8 @@
           "human_role": null,
           "index": 11,
           "original_query": null,
-          "primary_symbol": "an immense ocean curving through a glass vessel and settling",
-          "query_family": "nature",
+          "primary_symbol": "an immense archive of glass drawers collapsing into one cera",
+          "query_family": "time_memory",
           "selected_family": null,
           "semantic_anchor": "beat 12",
           "symbol_family": "identity",
@@ -283,14 +274,14 @@
           "visual_function": "beat 12"
         },
         {
-          "effective_query": "a library, garden, workshop, and night sky flowing together through an opened floodgate",
+          "effective_query": "a mechanical sorting machine opening every gate as tools, books, clocks, and models tumble together",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 12,
-          "original_query": "a library, garden, workshop, and night sky flowing together through an opened floodgate",
-          "primary_symbol": "a library, garden, workshop, and night sky flowing together",
-          "query_family": "nature",
+          "original_query": "a mechanical sorting machine opening every gate as tools, books, clocks, and models tumble together",
+          "primary_symbol": "a mechanical sorting machine opening every gate as tools, bo",
+          "query_family": "architecture",
           "selected_family": null,
           "semantic_anchor": "beat 13",
           "symbol_family": "object_tool",
@@ -463,20 +454,16 @@
           "visual_function": "beat 24"
         }
       ],
-      "score": 92.0,
-      "symbol_family_count": 9,
-      "violations": [
-        "nature repeats for 5 consecutive scenes starting at scene 10"
-      ],
+      "score": 100.0,
+      "symbol_family_count": 10,
+      "violations": [],
       "warnings": []
     }
   },
   "fix_safe": true,
-  "matched_solution_ids": [
-    "sol-visual-symbol-diversity-v1"
-  ],
+  "matched_solution_ids": [],
   "narration_fingerprint": "cc1258422635b9f25f0e473cd26aaa076e2496c27ee7aeb305554d5533eb2b0d",
-  "passed": false,
+  "passed": true,
   "prevention_rule_version": 1,
   "scene_count": 24,
   "schema_version": 1,
