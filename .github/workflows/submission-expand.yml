@@ -44,18 +44,24 @@ jobs:
           echo "found: $slugs"
 
       - name: Expand, validate, and request render
+        id: expand
         if: steps.slugs.outputs.slugs != ''
         shell: bash
         run: |
           set -euo pipefail
+          ready=""
           git config user.name "submission-bot"
           git config user.email "submission@users.noreply.github.com"
           for slug in ${{ steps.slugs.outputs.slugs }}; do
             echo "::group::$slug"
             python3 pipeline/expand_submission.py "$slug"
             if python3 pipeline/preflight.py "build/$slug" --fix-safe --record; then
+              # lock the exact package so render.yml can verify what it renders
+              python3 pipeline/package_integrity.py snapshot "build/$slug" \
+                --output "build/$slug/package-fingerprint.json"
               printf 'go\n' > "build/$slug/render.request"
               git add -f "build/$slug"
+              ready="$ready $slug"
               echo "$slug ready"
             else
               echo "preflight blocked $slug" > "build/$slug/expand-blocked.txt"
@@ -63,11 +69,28 @@ jobs:
             fi
             echo "::endgroup::"
           done
-          git commit -m "submission: expand + request render for ${{ steps.slugs.outputs.slugs }}" || exit 0
+          echo "ready=$(echo "$ready" | xargs)" >> "$GITHUB_OUTPUT"
+          git commit -m "submission: expand + request render for ${{ steps.slugs.outputs.slugs }}" || true
           for i in 1 2 3 4 5; do
-            git push && exit 0
+            git push && break
             git pull --rebase --autostash origin main || { git rebase --abort || true; }
             sleep $((i * 2))
           done
-          echo "expansion could not be pushed" >&2
-          exit 1
+
+      - name: Dispatch render for each expanded package
+        if: steps.expand.outputs.ready != ''
+        env:
+          GH_TOKEN: ${{ github.token }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          # A commit made with GITHUB_TOKEN does not trigger render-request.yml
+          # (GitHub blocks workflow-triggered workflow runs), so dispatch directly.
+          for slug in ${{ steps.expand.outputs.ready }}; do
+            fingerprint="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))["fingerprint"])' "build/$slug/package-fingerprint.json")"
+            echo "dispatching render.yml for $slug package=$fingerprint"
+            gh workflow run render.yml \
+              -f slug="$slug" \
+              -f long_render=true \
+              -f package_fingerprint="$fingerprint"
+          done
