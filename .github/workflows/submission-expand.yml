@@ -13,6 +13,7 @@ on:
 
 permissions:
   contents: write
+  actions: write   # required to dispatch render.yml
 
 concurrency:
   group: submission-expand-${{ github.ref }}
