@@ -82,13 +82,22 @@ def access_token() -> str:
     return str(response["access_token"])
 
 
-def download_final(slug: str) -> str:
+def download_final(slug: str, meta: dict[str, Any] | None = None) -> str:
+    """Download the finished video for a queue entry.
+
+    A Short reuses another slug's release: set "release_tag" and "source_asset"
+    in the queue entry (e.g. final_portrait.mp4) and it will be fetched instead.
+    """
+    meta = meta or {}
+    tag = str(meta.get("release_tag") or f"video-{slug}")
+    patterns = ([str(meta["source_asset"])] if meta.get("source_asset")
+                else ["final_youtube.mp4", "final.mp4"])
     out = f"/tmp/{slug}.mp4"
     last: subprocess.CalledProcessError | None = None
-    for pattern in ("final_youtube.mp4", "final.mp4"):
+    for pattern in patterns:
         try:
             subprocess.run(
-                ["gh", "release", "download", f"video-{slug}", "-R", REPO,
+                ["gh", "release", "download", tag, "-R", REPO,
                  "-p", pattern, "-O", out, "--clobber"],
                 check=True,
                 env={**os.environ},
@@ -140,11 +149,14 @@ def upload(path: str, meta: dict[str, Any], token: str) -> str:
     return str(response["id"])
 
 
-def set_thumbnail(video_id: str, slug: str, token: str) -> bool:
+def set_thumbnail(video_id: str, slug: str, token: str, meta: dict[str, Any] | None = None) -> bool:
     """Best-effort: generate + set a custom thumbnail. Never breaks a publish."""
     try:
         import thumbnail
-        thumb = thumbnail.generate(slug, HERE.parent / "build" / slug)
+        meta_local = meta or {}
+        build_slug = str(meta_local.get("build_slug") or slug)
+        thumb = thumbnail.generate(build_slug, HERE.parent / "build" / build_slug,
+                                   portrait=bool(meta_local.get("portrait")))
         with open(thumb, "rb") as handle:
             data = handle.read()
         req = urllib.request.Request(
@@ -181,7 +193,7 @@ def publish(slugs: list[str], *, force: bool = False) -> dict[str, dict[str, Any
     token = access_token()
     for slug in pending:
         meta = queue[slug]
-        path = download_final(slug)
+        path = download_final(slug, meta)
         video_id = upload(path, meta, token)
         record = {
             "video_id": video_id,
@@ -194,7 +206,7 @@ def publish(slugs: list[str], *, force: bool = False) -> dict[str, dict[str, Any
         history[slug] = record
         atomic_json(RESULT, history)
         print(f"PUBLISHED {slug} -> {record['url']}", flush=True)
-        set_thumbnail(video_id, slug, token)
+        set_thumbnail(video_id, slug, token, meta)
     return history
 
 
