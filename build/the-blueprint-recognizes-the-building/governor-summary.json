@@ -1,0 +1,526 @@
+{
+  "finished_at": "2026-07-27T16:00:39+00:00",
+  "github_run_id": "30278753165",
+  "incidents": [
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "7e1d511cec319c51",
+      "kind": "timeout",
+      "last_item": null,
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.5s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-blueprint-recognizes-the-building/final_youtube.mp4 + /home/runner/work/Prototype-Video/Prototype-Video/build/the-blueprint-recognizes-the-building/final.mp4",
+  "mode": "recover",
+  "passes": 6,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 17,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.05,
+      "idle_timeout_s": 48.14,
+      "sample_count": 10,
+      "soft_timeout_s": 48.14,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 84.38,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 283.13,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.02,
+      "idle_timeout_s": 33.05,
+      "sample_count": 34,
+      "soft_timeout_s": 33.05,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 30.61,
+      "idle_timeout_s": 121.84,
+      "sample_count": 72,
+      "soft_timeout_s": 121.84,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 217.32,
+      "idle_timeout_s": 255.0,
+      "sample_count": 13,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 46.83,
+      "idle_timeout_s": 180.0,
+      "sample_count": 46,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 16.06,
+      "idle_timeout_s": 120.0,
+      "sample_count": 16,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 24.02,
+      "idle_timeout_s": 180.0,
+      "sample_count": 17,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 77.05,
+      "idle_timeout_s": 180.0,
+      "sample_count": 17,
+      "soft_timeout_s": 261.15,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-blueprint-recognizes-the-building",
+    "checked_at": "2026-07-27T16:00:39+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 156.428,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "portrait": {
+        "avg_kbps": 3826,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.005,
+        "exists": true,
+        "expected_duration_s": 156.428,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-blueprint-recognizes-the-building/final.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 156.432993,
+          "bit_rate": 3825934.0,
+          "duration_s": 156.432993,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1920,
+          "video_codec": "h264",
+          "video_duration_s": 156.366667,
+          "width": 1080
+        },
+        "size_bytes": 74812798,
+        "warnings": [
+          {
+            "code": "low_bitrate",
+            "message": "Average bitrate 3826 kbps is unusually low for 1080p; check for over-compression",
+            "target": "portrait"
+          }
+        ]
+      },
+      "youtube": {
+        "avg_kbps": 8335,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.005,
+        "exists": true,
+        "expected_duration_s": 156.428,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-blueprint-recognizes-the-building/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 156.432993,
+          "bit_rate": 8334995.0,
+          "duration_s": 156.432993,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 156.366667,
+          "width": 1920
+        },
+        "size_bytes": 162983534,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": [
+      {
+        "code": "low_bitrate",
+        "message": "Average bitrate 3826 kbps is unusually low for 1080p; check for over-compression",
+        "target": "portrait"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "7e1d511cec319c51",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.5s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (2817.6s).",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Review warnings before allowing any speed-oriented policy to become the champion.",
+      "priority": "medium",
+      "reason": "Quality gate emitted 1 warning(s).",
+      "stage": "quality"
+    }
+  ],
+  "run_id": "7dd2aeb43de14a64bf4c3de1684880c5",
+  "schema_version": 1,
+  "slug": "the-blueprint-recognizes-the-building",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 6.028,
+      "p95_success_s": 6.028,
+      "success_durations_s": [
+        6.028
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 6.028
+    },
+    "assemble": {
+      "attempts": 47,
+      "failures": 0,
+      "p50_success_s": 44.283,
+      "p95_success_s": 71.259,
+      "success_durations_s": [
+        42.268,
+        28.181,
+        44.282,
+        39.279,
+        29.224,
+        41.273,
+        53.398,
+        26.156,
+        36.242,
+        43.306,
+        36.273,
+        32.217,
+        44.283,
+        43.268,
+        26.208,
+        33.255,
+        33.241,
+        30.221,
+        33.242,
+        45.355,
+        44.307,
+        32.214,
+        34.247,
+        35.285,
+        53.416,
+        43.328,
+        70.47,
+        58.386,
+        45.306,
+        64.488,
+        77.508,
+        40.248,
+        57.47,
+        66.5,
+        55.39,
+        50.344,
+        71.551,
+        64.498,
+        43.31,
+        73.864,
+        46.367,
+        51.374,
+        70.577,
+        67.473,
+        51.347,
+        54.388,
+        54.422
+      ],
+      "successes": 47,
+      "timeouts": 0,
+      "total_duration_s": 2219.25
+    },
+    "build_pass": {
+      "attempts": 6,
+      "failures": 1,
+      "p50_success_s": 156.257,
+      "p95_success_s": 518.981,
+      "success_durations_s": [
+        59.026,
+        23.015,
+        156.257,
+        173.385,
+        605.38
+      ],
+      "successes": 5,
+      "timeouts": 1,
+      "total_duration_s": 2817.577
+    },
+    "credits": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.021,
+      "success_durations_s": [
+        1.006,
+        1.009,
+        1.022
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 3.037
+    },
+    "ffmpeg": {
+      "attempts": 8,
+      "failures": 0,
+      "p50_success_s": 5.523,
+      "p95_success_s": 29.705,
+      "success_durations_s": [
+        1.011,
+        5.021,
+        23.184,
+        6.023,
+        1.011,
+        5.023,
+        33.217,
+        6.024
+      ],
+      "successes": 8,
+      "timeouts": 0,
+      "total_duration_s": 80.514
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 155.227,
+      "p95_success_s": 155.227,
+      "success_durations_s": [
+        155.227
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 155.227
+    },
+    "hero": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 41.594,
+      "p95_success_s": 48.207,
+      "success_durations_s": [
+        25.072,
+        43.09,
+        49.11,
+        40.098
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 157.37
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 14.039,
+      "p95_success_s": 14.039,
+      "success_durations_s": [
+        14.039
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 14.039
+    },
+    "probe": {
+      "attempts": 50,
+      "failures": 0,
+      "p50_success_s": 1.011,
+      "p95_success_s": 1.011,
+      "success_durations_s": [
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.011,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.012
+      ],
+      "successes": 50,
+      "timeouts": 0,
+      "total_duration_s": 50.528
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 63.385,
+      "p95_success_s": 63.385,
+      "success_durations_s": [
+        63.385
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 63.385
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 20.015,
+      "p95_success_s": 20.015,
+      "success_durations_s": [
+        20.015
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 20.015
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 58.026,
+      "p95_success_s": 58.026,
+      "success_durations_s": [
+        58.026
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 58.026
+    }
+  },
+  "status": "done"
+}
