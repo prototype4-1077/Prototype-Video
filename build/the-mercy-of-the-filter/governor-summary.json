@@ -1,0 +1,537 @@
+{
+  "finished_at": "2026-07-27T16:09:27+00:00",
+  "github_run_id": "30278949791",
+  "incidents": [
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "2c243482baacee93",
+      "kind": "timeout",
+      "last_item": null,
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.0s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-mercy-of-the-filter/final_youtube.mp4 + /home/runner/work/Prototype-Video/Prototype-Video/build/the-mercy-of-the-filter/final.mp4",
+  "mode": "recover",
+  "passes": 6,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 17,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.05,
+      "idle_timeout_s": 48.14,
+      "sample_count": 10,
+      "soft_timeout_s": 48.14,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 84.38,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 283.13,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.02,
+      "idle_timeout_s": 33.05,
+      "sample_count": 34,
+      "soft_timeout_s": 33.05,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 30.61,
+      "idle_timeout_s": 121.84,
+      "sample_count": 72,
+      "soft_timeout_s": 121.84,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 217.32,
+      "idle_timeout_s": 255.0,
+      "sample_count": 13,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 46.83,
+      "idle_timeout_s": 180.0,
+      "sample_count": 46,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 16.06,
+      "idle_timeout_s": 120.0,
+      "sample_count": 16,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1490.6776849200005,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1490.6776849200005,
+      "sample_count": 0,
+      "soft_timeout_s": 1490.6776849200005,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 24.02,
+      "idle_timeout_s": 180.0,
+      "sample_count": 17,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 77.05,
+      "idle_timeout_s": 180.0,
+      "sample_count": 17,
+      "soft_timeout_s": 261.15,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-mercy-of-the-filter",
+    "checked_at": "2026-07-27T16:09:27+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 169.959,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "portrait": {
+        "avg_kbps": 4178,
+        "deep_scan": {
+          "black_intervals": 1,
+          "black_longest_s": 8.0,
+          "black_total_s": 8.0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.011,
+        "exists": true,
+        "expected_duration_s": 169.959,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-mercy-of-the-filter/final.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 169.97,
+          "bit_rate": 4178245.0,
+          "duration_s": 169.97,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1920,
+          "video_codec": "h264",
+          "video_duration_s": 169.9,
+          "width": 1080
+        },
+        "size_bytes": 88772039,
+        "warnings": [
+          {
+            "code": "long_black_interval",
+            "message": "Detected a 8.00s near-black interval; review intentionally dark scenes",
+            "target": "portrait"
+          }
+        ]
+      },
+      "youtube": {
+        "avg_kbps": 9121,
+        "deep_scan": {
+          "black_intervals": 1,
+          "black_longest_s": 8.0,
+          "black_total_s": 8.0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.011,
+        "exists": true,
+        "expected_duration_s": 169.959,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-mercy-of-the-filter/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 169.97,
+          "bit_rate": 9121341.0,
+          "duration_s": 169.97,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 169.9,
+          "width": 1920
+        },
+        "size_bytes": 193794299,
+        "warnings": [
+          {
+            "code": "long_black_interval",
+            "message": "Detected a 8.00s near-black interval; review intentionally dark scenes",
+            "target": "youtube"
+          }
+        ]
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": [
+      {
+        "code": "long_black_interval",
+        "message": "Detected a 8.00s near-black interval; review intentionally dark scenes",
+        "target": "youtube"
+      },
+      {
+        "code": "long_black_interval",
+        "message": "Detected a 8.00s near-black interval; review intentionally dark scenes",
+        "target": "portrait"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "2c243482baacee93",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.0s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (3176.1s).",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Review warnings before allowing any speed-oriented policy to become the champion.",
+      "priority": "medium",
+      "reason": "Quality gate emitted 2 warning(s).",
+      "stage": "quality"
+    }
+  ],
+  "run_id": "17208ae903a54cb39d5cd516e6a1e11f",
+  "schema_version": 1,
+  "slug": "the-mercy-of-the-filter",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 6.039,
+      "p95_success_s": 6.039,
+      "success_durations_s": [
+        6.039
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 6.039
+    },
+    "assemble": {
+      "attempts": 47,
+      "failures": 0,
+      "p50_success_s": 50.423,
+      "p95_success_s": 78.849,
+      "success_durations_s": [
+        46.414,
+        46.39,
+        29.206,
+        35.279,
+        42.355,
+        39.307,
+        39.3,
+        32.254,
+        39.339,
+        32.244,
+        43.34,
+        48.393,
+        36.306,
+        45.422,
+        43.352,
+        48.438,
+        50.423,
+        38.31,
+        30.275,
+        45.388,
+        60.552,
+        42.35,
+        39.328,
+        51.453,
+        60.545,
+        71.486,
+        44.389,
+        59.573,
+        70.639,
+        58.505,
+        60.467,
+        51.45,
+        58.518,
+        52.474,
+        64.542,
+        71.732,
+        79.814,
+        75.707,
+        73.697,
+        79.738,
+        61.553,
+        46.412,
+        67.646,
+        95.977,
+        69.622,
+        60.574,
+        76.775
+      ],
+      "successes": 47,
+      "timeouts": 0,
+      "total_duration_s": 2517.253
+    },
+    "build_pass": {
+      "attempts": 6,
+      "failures": 1,
+      "p50_success_s": 177.507,
+      "p95_success_s": 786.07,
+      "success_durations_s": [
+        50.024,
+        23.014,
+        189.36,
+        177.507,
+        935.247
+      ],
+      "successes": 5,
+      "timeouts": 1,
+      "total_duration_s": 3176.134
+    },
+    "credits": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 1.011,
+      "p95_success_s": 1.031,
+      "success_durations_s": [
+        1.008,
+        1.011,
+        1.033
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 3.052
+    },
+    "ffmpeg": {
+      "attempts": 8,
+      "failures": 0,
+      "p50_success_s": 6.53,
+      "p95_success_s": 33.057,
+      "success_durations_s": [
+        1.013,
+        6.028,
+        25.225,
+        7.032,
+        1.013,
+        6.027,
+        37.274,
+        7.032
+      ],
+      "successes": 8,
+      "timeouts": 0,
+      "total_duration_s": 90.644
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 188.334,
+      "p95_success_s": 188.334,
+      "success_durations_s": [
+        188.334
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 188.334
+    },
+    "hero": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 45.623,
+      "p95_success_s": 46.988,
+      "success_durations_s": [
+        22.084,
+        45.13,
+        46.117,
+        47.142
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 160.473
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 15.049,
+      "p95_success_s": 15.049,
+      "success_durations_s": [
+        15.049
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 15.049
+    },
+    "probe": {
+      "attempts": 50,
+      "failures": 0,
+      "p50_success_s": 1.013,
+      "p95_success_s": 1.013,
+      "success_durations_s": [
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.013,
+        1.012,
+        1.012,
+        1.012,
+        1.013,
+        1.012,
+        1.013,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.013,
+        1.014,
+        1.013
+      ],
+      "successes": 50,
+      "timeouts": 0,
+      "total_duration_s": 50.63
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 67.531,
+      "p95_success_s": 67.531,
+      "success_durations_s": [
+        67.531
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 67.531
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 20.015,
+      "p95_success_s": 20.015,
+      "success_durations_s": [
+        20.015
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 20.015
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 49.024,
+      "p95_success_s": 49.024,
+      "success_durations_s": [
+        49.024
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 49.024
+    }
+  },
+  "status": "done"
+}
