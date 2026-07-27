@@ -58,6 +58,10 @@ That is the **entire** submission. A workflow automatically:
 
 You do **not** need to write `script.json`, `source-script.txt`, or `render.request` yourself.
 
+**Every video ships twice.** Each render produces a landscape long-form *and* a
+vertical Short, and publishing posts both — each with its own generated
+thumbnail. You do not request this; it is the default.
+
 ### Fields
 | field | required | notes |
 |---|---|---|

@@ -172,6 +172,36 @@ def set_thumbnail(video_id: str, slug: str, token: str, meta: dict[str, Any] | N
         return False
 
 
+def short_meta(slug: str, meta: dict[str, Any]) -> dict[str, Any]:
+    """Derive the Short's metadata from the long-form entry."""
+    title = str(meta.get("title") or slug)
+    desc = str(meta.get("description") or "")
+    head = desc.split("\n")[0][:400]
+    tags = list(meta.get("tags") or [])
+    return {
+        "title": (title + " #Shorts")[:100],
+        "description": (head + "\n#Shorts " + " ".join("#" + str(x).replace(" ", "")
+                                                        for x in tags[:5]))[:4900],
+        "tags": (["Shorts"] + tags)[:15],
+        "release_tag": f"video-{slug}",
+        "source_asset": "final.mp4",
+        "build_slug": slug,
+        "portrait": True,
+    }
+
+
+def release_has_portrait(slug: str) -> bool:
+    try:
+        out = subprocess.run(
+            ["gh", "release", "view", f"video-{slug}", "-R", REPO, "--json", "assets"],
+            check=True, capture_output=True, text=True, env={**os.environ},
+        )
+        names = {a.get("name") for a in json.loads(out.stdout).get("assets", [])}
+        return "final.mp4" in names
+    except Exception:  # noqa: BLE001
+        return False
+
+
 def publish(slugs: list[str], *, force: bool = False) -> dict[str, dict[str, Any]]:
     if not slugs:
         raise ValueError("explicit slug required; refusing to publish the entire queue")
@@ -207,6 +237,28 @@ def publish(slugs: list[str], *, force: bool = False) -> dict[str, dict[str, Any
         atomic_json(RESULT, history)
         print(f"PUBLISHED {slug} -> {record['url']}", flush=True)
         set_thumbnail(video_id, slug, token, meta)
+
+        # Standing rule: every video also ships as a vertical Short.
+        short_slug = f"{slug}-short"
+        if (not slug.endswith("-short") and short_slug not in history
+                and release_has_portrait(slug)):
+            try:
+                smeta = queue.get(short_slug) or short_meta(slug, meta)
+                spath = download_final(short_slug, smeta)
+                svid = upload(spath, smeta, token)
+                history[short_slug] = {
+                    "video_id": svid,
+                    "url": f"https://youtube.com/watch?v={svid}",
+                    "published_at": dt.datetime.now(dt.timezone.utc).replace(microsecond=0).isoformat(),
+                    "title": smeta.get("title"),
+                    "forced": bool(force),
+                    "receipt_source": "publisher_auto_short",
+                }
+                atomic_json(RESULT, history)
+                print(f"PUBLISHED {short_slug} -> {history[short_slug]['url']}", flush=True)
+                set_thumbnail(svid, short_slug, token, smeta)
+            except Exception as error:  # noqa: BLE001 - Short must not break the main post
+                print(f"WARN auto-Short failed for {slug}: {error}", flush=True)
     return history
 
 
