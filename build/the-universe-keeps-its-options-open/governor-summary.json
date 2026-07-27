@@ -1,0 +1,491 @@
+{
+  "finished_at": "2026-07-27T15:35:30+00:00",
+  "github_run_id": "30276985142",
+  "incidents": [
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "kind": "timeout",
+      "last_item": null,
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-universe-keeps-its-options-open/final_youtube.mp4 + /home/runner/work/Prototype-Video/Prototype-Video/build/the-universe-keeps-its-options-open/final.mp4",
+  "mode": "recover",
+  "passes": 6,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 17,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.04,
+      "idle_timeout_s": 48.13,
+      "sample_count": 11,
+      "soft_timeout_s": 48.13,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 84.38,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 283.13,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 33.04,
+      "sample_count": 33,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 30.79,
+      "idle_timeout_s": 122.37,
+      "sample_count": 68,
+      "soft_timeout_s": 122.37,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 215.82,
+      "idle_timeout_s": 255.0,
+      "sample_count": 14,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 49.35,
+      "idle_timeout_s": 180.0,
+      "sample_count": 46,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 16.06,
+      "idle_timeout_s": 120.0,
+      "sample_count": 16,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 24.02,
+      "idle_timeout_s": 180.0,
+      "sample_count": 17,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 72.05,
+      "idle_timeout_s": 180.0,
+      "sample_count": 17,
+      "soft_timeout_s": 246.16,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-universe-keeps-its-options-open",
+    "checked_at": "2026-07-27T15:35:30+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 136.758,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "portrait": {
+        "avg_kbps": 4482,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.042,
+        "exists": true,
+        "expected_duration_s": 136.758,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-universe-keeps-its-options-open/final.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 136.765011,
+          "bit_rate": 4482155.0,
+          "duration_s": 136.8,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1920,
+          "video_codec": "h264",
+          "video_duration_s": 136.8,
+          "width": 1080
+        },
+        "size_bytes": 76644851,
+        "warnings": []
+      },
+      "youtube": {
+        "avg_kbps": 10226,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.042,
+        "exists": true,
+        "expected_duration_s": 136.758,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-universe-keeps-its-options-open/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 136.765011,
+          "bit_rate": 10226283.0,
+          "duration_s": 136.8,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 136.8,
+          "width": 1920
+        },
+        "size_bytes": 174869450,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
+  "recommendations": [
+    {
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (2586.0s).",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "0a727204017b4ce1afed9013ba3b0db8",
+  "schema_version": 1,
+  "slug": "the-universe-keeps-its-options-open",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 6.038,
+      "p95_success_s": 6.038,
+      "success_durations_s": [
+        6.038
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 6.038
+    },
+    "assemble": {
+      "attempts": 39,
+      "failures": 0,
+      "p50_success_s": 51.38,
+      "p95_success_s": 80.273,
+      "success_durations_s": [
+        62.385,
+        39.276,
+        39.271,
+        47.308,
+        44.306,
+        33.219,
+        41.288,
+        34.24,
+        42.288,
+        35.251,
+        33.242,
+        37.263,
+        34.254,
+        45.333,
+        34.266,
+        40.271,
+        45.331,
+        37.302,
+        39.291,
+        47.365,
+        85.597,
+        61.485,
+        62.498,
+        73.636,
+        69.526,
+        51.391,
+        65.439,
+        54.423,
+        65.54,
+        55.438,
+        52.386,
+        57.425,
+        53.404,
+        79.681,
+        51.38,
+        101.155,
+        57.449,
+        66.496,
+        72.585
+      ],
+      "successes": 39,
+      "timeouts": 0,
+      "total_duration_s": 2049.684
+    },
+    "build_pass": {
+      "attempts": 6,
+      "failures": 1,
+      "p50_success_s": 127.314,
+      "p95_success_s": 370.915,
+      "success_durations_s": [
+        56.026,
+        21.015,
+        157.234,
+        127.314,
+        424.335
+      ],
+      "successes": 5,
+      "timeouts": 1,
+      "total_duration_s": 2585.975
+    },
+    "credits": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.028,
+      "success_durations_s": [
+        1.007,
+        1.009,
+        1.03
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 3.046
+    },
+    "ffmpeg": {
+      "attempts": 8,
+      "failures": 0,
+      "p50_success_s": 5.03,
+      "p95_success_s": 28.691,
+      "success_durations_s": [
+        1.012,
+        5.036,
+        22.144,
+        5.024,
+        1.012,
+        5.023,
+        32.216,
+        6.024
+      ],
+      "successes": 8,
+      "timeouts": 0,
+      "total_duration_s": 77.491
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 156.255,
+      "p95_success_s": 156.255,
+      "success_durations_s": [
+        156.255
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 156.255
+    },
+    "hero": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 38.1,
+      "p95_success_s": 54.327,
+      "success_durations_s": [
+        19.067,
+        56.13,
+        38.1
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 113.297
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 12.034,
+      "p95_success_s": 12.034,
+      "success_durations_s": [
+        12.034
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 12.034
+    },
+    "probe": {
+      "attempts": 42,
+      "failures": 0,
+      "p50_success_s": 1.011,
+      "p95_success_s": 1.012,
+      "success_durations_s": [
+        1.01,
+        1.01,
+        1.011,
+        1.011,
+        1.011,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.011,
+        1.011,
+        1.012,
+        1.011,
+        1.011,
+        1.012,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.012,
+        1.012,
+        1.012,
+        1.012,
+        1.011,
+        1.012,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.011,
+        1.012,
+        1.012
+      ],
+      "successes": 42,
+      "timeouts": 0,
+      "total_duration_s": 42.456
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 58.394,
+      "p95_success_s": 58.394,
+      "success_durations_s": [
+        58.394
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 58.394
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 17.017,
+      "p95_success_s": 17.017,
+      "success_durations_s": [
+        17.017
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 17.017
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 55.026,
+      "p95_success_s": 55.026,
+      "success_durations_s": [
+        55.026
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 55.026
+    }
+  },
+  "status": "done"
+}
