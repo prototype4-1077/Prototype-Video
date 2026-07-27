@@ -61,7 +61,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a human silhouette stepping out of its own framed portrait into a vast dark gallery, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a human silhouette stepping out of its own framed portrait into a vast dark gallery, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 0.0,
+   "duration": 8.48,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_00.jpg",
+   "still_reference_signature": "31970044f7925f9c351d",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_00.mp4",
+   "clip_fingerprint": "565e947a7605cce6",
+   "hero_generated": true,
+   "hero_raw_signature": "a84fde70901959674555",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "At first, the familiar pieces loosen: your name, your age, the room, the reason you came.",
@@ -78,7 +105,25 @@
    "narrative_mode": "stock_ok",
    "query": "an identity card, pocket watch, room key, and empty chair drifting apart above a table",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 8.48,
+   "duration": 6.2,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.0452,
+    "active_region_ratio": 0.1113,
+    "frame_difference": 2.1666
+   },
+   "clip_fingerprint": "bb8698b196219351",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_01.mp4",
+   "stock_id": 5095965,
+   "pexels_id": 5095965,
+   "stock_frame_url": "https://images.pexels.com/videos/5095965/pexels-photo-5095965.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-is-writing-on-a-table-with-a-pen-5095965/"
   },
   {
    "text": "We usually imagine those things are masks, and beneath them waits a truer face.",
@@ -95,7 +140,25 @@
    "narrative_mode": "stock_ok",
    "query": "a row of theater masks being lifted from a blank mannequin head",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 14.68,
+   "duration": 5.8,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.6456,
+    "active_region_ratio": 0.9219,
+    "frame_difference": 2.9631
+   },
+   "clip_fingerprint": "8999feef0eebd629",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_02.mp4",
+   "stock_id": 6536340,
+   "pexels_id": 6536340,
+   "stock_frame_url": "https://images.pexels.com/videos/6536340/pexels-photo-6536340.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/fencing-masks-and-epees-on-display-6536340/"
   },
   {
    "text": "But what if the final layer is not another face?",
@@ -112,7 +175,25 @@
    "narrative_mode": "stock_ok",
    "query": "a featureless polished mask suspended alone inside a black display case",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 20.48,
+   "duration": 3.76,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.2711,
+    "active_region_ratio": 0.9896,
+    "frame_difference": 16.3841
+   },
+   "clip_fingerprint": "61c0fb924ed3d53e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_03.mp4",
+   "stock_id": 20134047,
+   "pexels_id": 20134047,
+   "stock_frame_url": "https://images.pexels.com/videos/20134047/baby-dark-dark-green-embrion-20134047.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-room-with-several-glass-tubes-filled-with-water-20134047/"
   },
   {
    "text": "Your biography disappears first, like a passport dropped into deep water.",
@@ -129,7 +210,25 @@
    "narrative_mode": "stock_ok",
    "query": "an open passport sinking underwater as its ink dissolves into blue currents",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 24.24,
+   "duration": 5.42,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.1464,
+    "active_region_ratio": 0.338,
+    "frame_difference": 10.8698
+   },
+   "clip_fingerprint": "a1c889a1d6e6764f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_04.mp4",
+   "stock_id": 26647658,
+   "pexels_id": 26647658,
+   "stock_frame_url": "https://images.pexels.com/videos/26647658/pexels-photo-26647658.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-bird-s-eye-view-of-a-large-body-of-water-26647658/"
   },
   {
    "text": "Then the body becomes a rumor being repeated somewhere very far away.",
@@ -146,7 +245,25 @@
    "narrative_mode": "stock_ok",
    "query": "a distant human outline made from radio static fading across an empty salt flat",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 29.66,
+   "duration": 5.24,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.0481,
+    "active_region_ratio": 0.5461,
+    "frame_difference": 8.9405
+   },
+   "clip_fingerprint": "9656c4e2e2532d6f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_05.mp4",
+   "stock_id": 33603728,
+   "pexels_id": 33603728,
+   "stock_frame_url": "https://images.pexels.com/videos/33603728/4k-video-nature-4x4-4x4-vehicle-american-wilderness-33603728.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/desolate-journey-across-salar-de-uyuni-salt-flats-33603728/"
   },
   {
    "text": "Time loses its sequence. Before and after spill from their containers and mix on the floor.",
@@ -163,7 +280,25 @@
    "narrative_mode": "stock_ok",
    "query": "broken clocks and hourglasses spilling gears and colored sand across a tiled floor",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 34.9,
+   "duration": 6.46,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.6304,
+    "active_region_ratio": 0.6197,
+    "frame_difference": 3.7986
+   },
+   "clip_fingerprint": "c8fde15a96760691",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_06.mp4",
+   "stock_id": 7121136,
+   "pexels_id": 7121136,
+   "stock_frame_url": "https://images.pexels.com/videos/7121136/abstract-backdrop-background-bright-7121136.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/spilled-sprinkles-from-a-drinking-glass-7121136/"
   },
   {
    "text": "And still, somehow, the disappearance is being noticed.",
@@ -180,7 +315,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a single glowing ember suspended at the center of an immense unlit chamber, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a single glowing ember suspended at the center of an immense unlit chamber, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 41.36,
+   "duration": 4.56,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_07.jpg",
+   "still_reference_signature": "410d59eed854688e4253",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_07.mp4",
+   "clip_fingerprint": "832381fa4ee202b3",
+   "hero_generated": true,
+   "hero_raw_signature": "e667361cb108d86af46a",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "That is the impossible little ember at the center of the experience.",
@@ -197,7 +359,25 @@
    "narrative_mode": "stock_ok",
    "query": "a tiny coal glowing beneath layers of pale ash while the surrounding hearth is cold",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 45.92,
+   "duration": 4.54,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.9653,
+    "active_region_ratio": 0.9962,
+    "frame_difference": 32.7011
+   },
+   "clip_fingerprint": "8f0a5d52edf97b56",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_08.mp4",
+   "stock_id": 3987735,
+   "pexels_id": 3987735,
+   "stock_frame_url": "https://images.pexels.com/videos/3987735/pexels-photo-3987735.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/the-flame-of-a-burning-firewood-in-a-fireplace-3987735/"
   },
   {
    "text": "Something witnesses the self vanish, but it cannot introduce itself without building a new self.",
@@ -215,7 +395,25 @@
    "query": "an empty wooden chair facing a projection of a person that is breaking into particles",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 50.46,
+   "duration": 6.68,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.8555,
+    "active_region_ratio": 0.3528,
+    "frame_difference": 9.9732
+   },
+   "clip_fingerprint": "39f0492e27d1822a",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_09.mp4",
+   "stock_id": 2996079,
+   "pexels_id": 2996079,
+   "stock_frame_url": "https://images.pexels.com/videos/2996079/free-video-2996079.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-dining-room-with-wooden-chairs-and-table-2996079/"
   },
   {
    "text": "Ask the witness its name, and you have already handed it a mask.",
@@ -233,7 +431,25 @@
    "query": "two hands placing an ornate mask onto a smooth faceless sculpture",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 57.14,
+   "duration": 4.28,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.0912,
+    "active_region_ratio": 0.4185,
+    "frame_difference": 10.4251
+   },
+   "clip_fingerprint": "1479c2dbb5954b22",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_10.mp4",
+   "stock_id": 3959711,
+   "pexels_id": 3959711,
+   "stock_frame_url": "https://images.pexels.com/videos/3959711/pexels-photo-3959711.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/hands-head-safe-face-3959711/"
   },
   {
    "text": "It is like a flashlight trying to turn around and illuminate the bulb producing its light.",
@@ -250,7 +466,25 @@
    "narrative_mode": "stock_ok",
    "query": "a flashlight beam curving through a cave and bending back toward its own glass lens",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 61.42,
+   "duration": 5.22,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.2071,
+    "active_region_ratio": 0.982,
+    "frame_difference": 15.561
+   },
+   "clip_fingerprint": "4cf6b28214a3ddab",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_11.mp4",
+   "stock_id": 18898292,
+   "pexels_id": 18898292,
+   "stock_frame_url": "https://images.pexels.com/videos/18898292/man-in-a-cave-18898292.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-in-a-cave-18898292/"
   },
   {
    "text": "Or a mirror searching its own surface for the reflection that makes reflection possible.",
@@ -267,7 +501,25 @@
    "narrative_mode": "stock_ok",
    "query": "a corridor of standing mirrors reflecting only other mirrors and pale daylight",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 66.64,
+   "duration": 5.88,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.2188,
+    "active_region_ratio": 0.5321,
+    "frame_difference": 14.9187
+   },
+   "clip_fingerprint": "025ab95d687f6bb3",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_12.mp4",
+   "stock_id": 8070864,
+   "pexels_id": 8070864,
+   "stock_frame_url": "https://images.pexels.com/videos/8070864/adult-bastille-day-blur-champagne-8070864.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/reflection-of-a-woman-smoking-on-a-side-mirror-8070864/"
   },
   {
    "text": "Imagine a house going dark room by room: childhood, ambition, fear, even the room marked me.",
@@ -284,7 +536,25 @@
    "narrative_mode": "stock_ok",
    "query": "a cutaway dollhouse whose rooms switch off one by one from top floor to basement",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 72.52,
+   "duration": 8.56,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.9594,
+    "active_region_ratio": 0.9989,
+    "frame_difference": 36.0973
+   },
+   "clip_fingerprint": "7f7a0ede401583f8",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_13.mp4",
+   "stock_id": 8206350,
+   "pexels_id": 8206350,
+   "stock_frame_url": "https://images.pexels.com/videos/8206350/pexels-photo-8206350.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/kids-playing-with-a-dollhouse-8206350/"
   },
   {
    "text": "At the end, one open window remains, watching a sunrise with nobody standing behind it.",
@@ -301,7 +571,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, an abandoned house interior with one open window framing a brilliant sunrise, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, an abandoned house interior with one open window framing a brilliant sunrise, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 81.08,
+   "duration": 6.82,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_14.jpg",
+   "still_reference_signature": "cabf13227a8cd55ea0b2",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_14.mp4",
+   "clip_fingerprint": "ed348d1446338332",
+   "hero_generated": true,
+   "hero_raw_signature": "f89e2d9c5da7a52849d3",
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Is that window a soul, a brain process, or simply what awareness feels like without its furniture?",
@@ -318,7 +615,25 @@
    "narrative_mode": "stock_ok",
    "query": "an empty laboratory chair beside quiet neural monitors and a sunlit window",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 87.9,
+   "duration": 8.4,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.4181,
+    "active_region_ratio": 0.9959,
+    "frame_difference": 62.9819
+   },
+   "clip_fingerprint": "726075750a724e2e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_15.mp4",
+   "stock_id": 37825698,
+   "pexels_id": 37825698,
+   "stock_frame_url": "https://images.pexels.com/videos/37825698/pexels-photo-37825698.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/eerie-black-and-white-rainy-window-view-37825698/"
   },
   {
    "text": "DMT cannot settle that argument. It may only remove the furniture faster than language can replace it.",
@@ -335,7 +650,25 @@
    "narrative_mode": "stock_ok",
    "query": "a fast conveyor carrying chairs and books into a dissolving prism while blank labels lag behind",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 96.3,
+   "duration": 7.2,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.3607,
+    "active_region_ratio": 0.4633,
+    "frame_difference": 10.2984
+   },
+   "clip_fingerprint": "0e228d6c8ab85a68",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_16.mp4",
+   "stock_id": 37533330,
+   "pexels_id": 37533330,
+   "stock_frame_url": "https://images.pexels.com/videos/37533330/pexels-photo-37533330.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/efficient-book-printing-on-modern-conveyor-37533330/"
   },
   {
    "text": "The mind then rushes to decorate the emptiness with gods, machines, ancestors, and impossible beings.",
@@ -352,7 +685,25 @@
    "narrative_mode": "stock_ok",
    "query": "a rotating carousel crowded with miniature deities, clockwork figures, and ancestral masks",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 103.5,
+   "duration": 7.54,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.2723,
+    "active_region_ratio": 0.1802,
+    "frame_difference": 12.8728
+   },
+   "clip_fingerprint": "5a57d71c5128ec5d",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_17.mp4",
+   "stock_id": 34362781,
+   "pexels_id": 34362781,
+   "stock_frame_url": "https://images.pexels.com/videos/34362781/pexels-photo-34362781.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/miniature-winter-wonderland-carnival-scene-34362781/"
   },
   {
    "text": "Perhaps those figures are visitors. Perhaps they are shadows cast when awareness meets its own depth.",
@@ -369,7 +720,25 @@
    "narrative_mode": "stock_ok",
    "query": "enormous unfamiliar shadows converging around a small lamp at the bottom of a stone well",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 111.04,
+   "duration": 6.5,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.6209,
+    "active_region_ratio": 0.6232,
+    "frame_difference": 6.5972
+   },
+   "clip_fingerprint": "769bec7ce6860593",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_18.mp4",
+   "stock_id": 36436353,
+   "pexels_id": 36436353,
+   "stock_frame_url": "https://images.pexels.com/videos/36436353/ambient-lighting-beautiful-light-catacombs-dark-and-light-contrast-36436353.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/exploring-mysterious-parisian-catacombs-underground-36436353/"
   },
   {
    "text": "Either way, the witness itself never appears as an object in the room.",
@@ -386,7 +755,25 @@
    "narrative_mode": "stock_ok",
    "query": "an art gallery with illuminated objects surrounding one empty central pedestal",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 117.54,
+   "duration": 5.3,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.6837,
+    "active_region_ratio": 0.994,
+    "frame_difference": 35.8681
+   },
+   "clip_fingerprint": "fe1c662705bc83bf",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_19.mp4",
+   "stock_id": 32336448,
+   "pexels_id": 32336448,
+   "stock_frame_url": "https://images.pexels.com/videos/32336448/pexels-photo-32336448.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/dynamic-light-installation-with-abstract-patterns-32336448/"
   },
   {
    "text": "Music can fill a cathedral without becoming another instrument on the stage.",
@@ -403,7 +790,25 @@
    "narrative_mode": "stock_ok",
    "query": "a cathedral nave filled with visible ripples of sound above a single violin",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 122.84,
+   "duration": 4.9,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.516,
+    "active_region_ratio": 0.592,
+    "frame_difference": 13.4246
+   },
+   "clip_fingerprint": "c042b5a701f7c76f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_20.mp4",
+   "stock_id": 37227252,
+   "pexels_id": 37227252,
+   "stock_frame_url": "https://images.pexels.com/videos/37227252/pexels-photo-37227252.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/elegant-violin-in-luxurious-ballroom-setting-37227252/"
   },
   {
    "text": "Then ordinary consciousness returns, rebuilding the walls, hanging your name back above the door.",
@@ -420,7 +825,25 @@
    "narrative_mode": "stock_ok",
    "query": "workers rebuilding a small room while a framed portrait is returned above the doorway",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 127.74,
+   "duration": 6.9,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.178,
+    "active_region_ratio": 0.9686,
+    "frame_difference": 16.0654
+   },
+   "clip_fingerprint": "83fc1f74fc15d2f2",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_21.mp4",
+   "stock_id": 18883023,
+   "pexels_id": 18883023,
+   "stock_frame_url": "https://images.pexels.com/videos/18883023/asian-calcutta-cloth-clothes-18883023.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/an-old-indian-tailor-working-in-an-old-shop-of-old-calcutta-or-kolkata-in-west-bengal-india-18883023/"
   },
   {
    "text": "You feel as though the witness returned with you. But perhaps it was the one thing that never traveled.",
@@ -438,7 +861,25 @@
    "query": "a trail of footprints circling a lighthouse that has remained fixed through changing weather",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 134.64,
+   "duration": 6.44,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.3107,
+    "active_region_ratio": 0.6407,
+    "frame_difference": 17.1547
+   },
+   "clip_fingerprint": "fb697cc9fd385787",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_22.mp4",
+   "stock_id": 6335862,
+   "pexels_id": 6335862,
+   "stock_frame_url": "https://images.pexels.com/videos/6335862/pexels-photo-6335862.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/aerial-view-of-shoreline-and-lighthouse-6335862/"
   },
   {
    "text": "If your face can disappear while seeing remains, which one have you been calling yourself?",
@@ -455,7 +896,60 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a fogged mirror with no reflection except a steady eye-shaped point of light, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a fogged mirror with no reflection except a steady eye-shaped point of light, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 141.08,
+   "duration": 7.276,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_23.jpg",
+   "still_reference_signature": "acc5688acba1730b09bb",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-witness-without-a-face/clip_23.mp4",
+   "clip_fingerprint": "b5930dc2d801be27",
+   "hero_generated": true,
+   "hero_raw_signature": "1adf02fb22792b1839d4",
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.97
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
