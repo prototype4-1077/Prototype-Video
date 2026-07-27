@@ -1,16 +1,6 @@
 {
   "applied_solution_ids": [],
-  "blockers": [
-    {
-      "code": "hero_art_not_ready",
-      "fingerprint": "d115646baf6f946c",
-      "matched_solution_ids": [
-        "sol-hero-readiness-v1"
-      ],
-      "message": "Hero-art policy requires committed art or an explicitly approved runtime scene-generation mode.",
-      "stage": "preflight"
-    }
-  ],
+  "blockers": [],
   "checks": {
     "animation_contract": {
       "errors": [],
@@ -18,12 +8,9 @@
       "profile": null
     },
     "hero_readiness": {
-      "applicable": true,
-      "committed_hero": false,
-      "passed": false,
-      "policy": "runtime_generated",
-      "runtime_scene_generation": true,
-      "scene_prompt_count": 0
+      "applicable": false,
+      "passed": true,
+      "policy": "motion_only_no_static_hero"
     },
     "planned_still_budget": {
       "cap": 0.35,
@@ -38,7 +25,7 @@
     },
     "visual_symbols": {
       "family_counts": {
-        "language": 1,
+        "architecture": 1,
         "object_tool": 1,
         "time_memory": 1
       },
@@ -65,8 +52,8 @@
       },
       "primary_symbol_counts": {
         "a single lamp on an empty desk": 1,
-        "an open notebook beside a glass of water": 1,
-        "dawn light spreading across a plain floor": 1
+        "dawn light spreading across a plain floor": 1,
+        "rain moving across a dark window": 1
       },
       "scene_count": 3,
       "scenes": [
@@ -86,18 +73,18 @@
           "visual_function": "beat 1"
         },
         {
-          "effective_query": "an open notebook beside a glass of water",
+          "effective_query": "rain moving across a dark window",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 1,
-          "original_query": "an open notebook beside a glass of water",
-          "primary_symbol": "an open notebook beside a glass of water",
-          "query_family": "language",
+          "original_query": "rain moving across a dark window",
+          "primary_symbol": "rain moving across a dark window",
+          "query_family": "architecture",
           "selected_family": null,
           "semantic_anchor": "beat 2",
           "symbol_family": "geometry",
-          "text": "No encoding was required to send it.",
+          "text": "No encoding was required to send it, which is the point of the test.",
           "visual_function": "beat 2"
         },
         {
@@ -112,7 +99,7 @@
           "selected_family": null,
           "semantic_anchor": "beat 3",
           "symbol_family": "time_memory",
-          "text": "If a package appears, the path is working.",
+          "text": "If a package appears and preflight passes, the path is working.",
           "visual_function": "beat 3"
         }
       ],
@@ -123,11 +110,9 @@
     }
   },
   "fix_safe": true,
-  "matched_solution_ids": [
-    "sol-hero-readiness-v1"
-  ],
-  "narration_fingerprint": "ae0c817a74edec2b5ef33e062d309e38cbc5aebadd06ccf1a30f003b9ce71ff0",
-  "passed": false,
+  "matched_solution_ids": [],
+  "narration_fingerprint": "db650040997d61112f370c92bd70c58498f92095f6e17d6e1b9cf319281379ea",
+  "passed": true,
   "prevention_rule_version": 1,
   "scene_count": 3,
   "schema_version": 1,
@@ -135,5 +120,5 @@
   "slug": "dispatch-path-selftest",
   "title": "Dispatch Path Selftest",
   "warnings": [],
-  "word_count": 26
+  "word_count": 36
 }
