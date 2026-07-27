@@ -1,0 +1,398 @@
+{
+  "finished_at": "2026-07-27T13:02:55+00:00",
+  "github_run_id": "30266030282",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/tomorrow-uses-old-footage/final_youtube.mp4",
+  "mode": "recover",
+  "passes": 5,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 15,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.05,
+      "idle_timeout_s": 48.14,
+      "sample_count": 9,
+      "soft_timeout_s": 48.14,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 84.38,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 283.13,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.02,
+      "idle_timeout_s": 33.05,
+      "sample_count": 29,
+      "soft_timeout_s": 33.05,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 30.26,
+      "idle_timeout_s": 120.79,
+      "sample_count": 60,
+      "soft_timeout_s": 120.79,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 218.82,
+      "idle_timeout_s": 255.0,
+      "sample_count": 12,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 47.02,
+      "idle_timeout_s": 180.0,
+      "sample_count": 42,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 16.46,
+      "idle_timeout_s": 120.0,
+      "sample_count": 14,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 24.02,
+      "idle_timeout_s": 180.0,
+      "sample_count": 15,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 72.55,
+      "idle_timeout_s": 180.0,
+      "sample_count": 15,
+      "soft_timeout_s": 247.66,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/tomorrow-uses-old-footage",
+    "checked_at": "2026-07-27T13:02:54+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 158.518,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "youtube": {
+        "avg_kbps": 7329,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.004,
+        "exists": true,
+        "expected_duration_s": 158.518,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/tomorrow-uses-old-footage/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 158.521995,
+          "bit_rate": 7328619.0,
+          "duration_s": 158.521995,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 158.5,
+          "width": 1920
+        },
+        "size_bytes": 145218416,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
+  "recommendations": [
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (1952.0s).",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "8b4c6b02cdb645c0a2fab99153022172",
+  "schema_version": 1,
+  "slug": "tomorrow-uses-old-footage",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.01,
+      "p95_success_s": 1.01,
+      "success_durations_s": [
+        1.01
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.01
+    },
+    "assemble": {
+      "attempts": 23,
+      "failures": 0,
+      "p50_success_s": 62.449,
+      "p95_success_s": 84.606,
+      "success_durations_s": [
+        72.493,
+        59.356,
+        59.353,
+        84.61,
+        39.264,
+        58.391,
+        31.202,
+        90.563,
+        84.57,
+        67.434,
+        49.324,
+        37.223,
+        81.578,
+        66.434,
+        45.296,
+        71.535,
+        71.539,
+        61.453,
+        59.388,
+        40.265,
+        62.449,
+        66.492,
+        67.567
+      ],
+      "successes": 23,
+      "timeouts": 0,
+      "total_duration_s": 1427.779
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 166.271,
+      "p95_success_s": 1250.735,
+      "success_durations_s": [
+        68.031,
+        25.018,
+        166.271,
+        172.393,
+        1520.32
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 1952.033
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 1.008,
+      "p95_success_s": 1.009,
+      "success_durations_s": [
+        1.007,
+        1.009
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.016
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 6.522,
+      "p95_success_s": 28.442,
+      "success_durations_s": [
+        1.01,
+        6.02,
+        32.222,
+        7.025
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 46.277
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 165.282,
+      "p95_success_s": 165.282,
+      "success_durations_s": [
+        165.282
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 165.282
+    },
+    "hero": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 42.598,
+      "p95_success_s": 53.932,
+      "success_durations_s": [
+        18.053,
+        38.078,
+        55.134,
+        47.118
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 158.383
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 12.034,
+      "p95_success_s": 12.034,
+      "success_durations_s": [
+        12.034
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 12.034
+    },
+    "probe": {
+      "attempts": 24,
+      "failures": 0,
+      "p50_success_s": 1.01,
+      "p95_success_s": 1.011,
+      "success_durations_s": [
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.012,
+        1.01,
+        1.01,
+        1.01,
+        1.011
+      ],
+      "successes": 24,
+      "timeouts": 0,
+      "total_duration_s": 24.243
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 34.23,
+      "p95_success_s": 34.23,
+      "success_durations_s": [
+        34.23
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 34.23
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 22.016,
+      "p95_success_s": 22.016,
+      "success_durations_s": [
+        22.016
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 22.016
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 67.029,
+      "p95_success_s": 67.029,
+      "success_durations_s": [
+        67.029
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 67.029
+    }
+  },
+  "status": "done"
+}
