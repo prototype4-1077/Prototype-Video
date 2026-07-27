@@ -1,6 +1,41 @@
 {
-  "generated_at": "2026-07-24T14:53:59+00:00",
+  "generated_at": "2026-07-27T17:22:45+00:00",
   "incidents": [
+    {
+      "code": "preflight_pass",
+      "current_state": "informational",
+      "fingerprints": [],
+      "first_seen": "2026-07-24T10:00:00+00:00",
+      "incident_key": "status:passed",
+      "last_seen": "2026-07-26T16:58:54+00:00",
+      "latest_record": "occurrences/preflight-30211602609-beliefs-are-software-updates-19f5745553b6da41.json",
+      "normalized_error": "Mandatory render readiness preflight passed.",
+      "occurrence_count": 14,
+      "phases": {
+        "preflight": 14
+      },
+      "regressed_solution_ids": [],
+      "slugs": [
+        "a-chair-not-a-throne",
+        "beliefs-are-software-updates",
+        "the-adjacent-mind",
+        "the-infinite-library",
+        "the-room-has-more-than-one-window",
+        "who-wrote-the-menu",
+        "wonder-is-a-glitch",
+        "your-emergency-contact",
+        "your-inner-bodyguard"
+      ],
+      "stages": [
+        "preflight"
+      ],
+      "statuses": {
+        "passed": 14
+      },
+      "verified_solution_ids": [
+        "sol-visual-symbol-diversity-v1"
+      ]
+    },
     {
       "code": "render_success",
       "current_state": "informational",
@@ -35,32 +70,38 @@
       ]
     },
     {
-      "code": "preflight_pass",
-      "current_state": "informational",
-      "fingerprints": [],
-      "first_seen": "2026-07-24T10:00:00+00:00",
-      "incident_key": "status:passed",
-      "last_seen": "2026-07-24T14:22:52+00:00",
-      "latest_record": "occurrences/preflight-30100756173-a-chair-not-a-throne-af139fa584c5c29c.json",
-      "normalized_error": "Mandatory render readiness preflight passed.",
+      "code": "visual_symbol_plan",
+      "current_state": "open",
+      "fingerprints": [
+        "77b1a79e3bf22e98",
+        "9e5fffb804d5856b"
+      ],
+      "first_seen": "2026-07-24T02:34:52+00:00",
+      "incident_key": "code:visual_symbol_plan",
+      "last_seen": "2026-07-24T15:45:38+00:00",
+      "latest_record": "occurrences/preflight-30106650526-the-infinite-library-f80394b8b4013780.json",
+      "normalized_error": "language repeats for <n> consecutive scenes starting at scene <n>",
       "occurrence_count": 2,
       "phases": {
-        "preflight": 2
+        "preflight": 1,
+        "render": 1
       },
-      "regressed_solution_ids": [],
+      "regressed_solution_ids": [
+        "sol-visual-symbol-diversity-v1"
+      ],
       "slugs": [
-        "a-chair-not-a-throne",
+        "the-infinite-library",
         "who-wrote-the-menu"
       ],
       "stages": [
+        "build_pass",
         "preflight"
       ],
       "statuses": {
-        "passed": 2
+        "blocked": 1,
+        "failed": 1
       },
-      "verified_solution_ids": [
-        "sol-visual-symbol-diversity-v1"
-      ]
+      "verified_solution_ids": []
     },
     {
       "code": "animation_contract_invalid",
@@ -152,40 +193,8 @@
         "quality_failed": 1
       },
       "verified_solution_ids": []
-    },
-    {
-      "code": "visual_symbol_plan",
-      "current_state": "resolved",
-      "fingerprints": [
-        "77b1a79e3bf22e98"
-      ],
-      "first_seen": "2026-07-24T02:34:52+00:00",
-      "incident_key": "code:visual_symbol_plan",
-      "last_seen": "2026-07-24T02:34:52+00:00",
-      "latest_record": "occurrences/historical-seed.json",
-      "normalized_error": "visual symbol plan: only <n> symbol families across <n> scenes; use at least <n>",
-      "occurrence_count": 1,
-      "phases": {
-        "render": 1
-      },
-      "regressed_solution_ids": [
-        "sol-visual-symbol-diversity-v1"
-      ],
-      "resolved_by_solution_ids": [
-        "sol-visual-symbol-diversity-v1"
-      ],
-      "slugs": [
-        "who-wrote-the-menu"
-      ],
-      "stages": [
-        "build_pass"
-      ],
-      "statuses": {
-        "failed": 1
-      },
-      "verified_solution_ids": []
     }
   ],
-  "occurrence_count": 10,
+  "occurrence_count": 23,
   "schema_version": 2
 }
