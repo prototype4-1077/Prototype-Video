@@ -333,6 +333,9 @@ jobs:
             "build/${{ inputs.slug }}"/emb_*.npy; do
             git add "$f" 2>/dev/null || true
           done
+          # capture the pre-render memory as the merge base BEFORE committing
+          MEMBASE=$(mktemp)
+          git show HEAD:pipeline/memory.json > "$MEMBASE" 2>/dev/null || echo '{}' > "$MEMBASE"
           git commit -m "render ${{ inputs.slug }}: persist outcome and governor telemetry" || echo "nothing to commit"
           # conflict-proof retry: snapshot our outcome files, replay them on fresh remote tip
           SNAP=$(mktemp -d)
@@ -346,6 +349,16 @@ jobs:
             (cd "$SNAP" && find . -type f | while read -r f; do
               mkdir -p "$GITHUB_WORKSPACE/$(dirname "$f")" && cp "$f" "$GITHUB_WORKSPACE/$f"
             done)
+            # pipeline/memory.json is SHARED across concurrent renders. Replaying our
+            # snapshot wholesale would erase whatever the other render just learned,
+            # so three-way merge it against the tip we just reset onto instead.
+            if [ -f "$SNAP/pipeline/memory.json" ]; then
+              git show origin/main:pipeline/memory.json > /tmp/memory.theirs.json 2>/dev/null || echo '{}' > /tmp/memory.theirs.json
+              python3 pipeline/merge_memory.py \
+                "$MEMBASE" "$SNAP/pipeline/memory.json" /tmp/memory.theirs.json \
+                pipeline/memory.json \
+                || cp "$SNAP/pipeline/memory.json" pipeline/memory.json
+            fi
             (cd "$SNAP" && find . -type f | sed 's|^\./||') | while read -r f; do
               git add "$f" || true
             done

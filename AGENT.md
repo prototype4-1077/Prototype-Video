@@ -136,8 +136,13 @@ music_variants.json before delivery.
   request and must be listed in render_outputs/music_choices.
 - Scripts must echo ONE motif from memory.json "motifs" as a brief mid-video callback.
 - Retention feedback: python3 pipeline/learn.py retention build/<slug> "<t1,t2>" then push memory.
-- Zero-effort mode: open a GitHub issue labeled "video" with the idea; CI does everything
-  (requires ANTHROPIC_API_KEY secret). Comment on the issue = feedback; close = approve.
+- RETIRED: issue-based "zero-effort mode". Opening a GitHub issue labeled "video" does
+  NOT build or render anything on this repository. (idea.yml only reacts to issues titled
+  "Render existing:", and ANTHROPIC_API_KEY is not configured here.) Issues #1-#3 predate
+  this change and were never processed - treat them as idea notes, not queued work.
+- CURRENT submission path: commit build/<slug>/submission.json. A workflow expands it into
+  the full package, preserves narration exactly, and triggers the render on its own.
+  The authoritative spec is THINK_TANK_CONTRACT.md at the repository root.
 
 ## Parallel operators
 Multiple AIs may work simultaneously, each on its OWN slug. Rules:

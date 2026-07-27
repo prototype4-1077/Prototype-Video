@@ -1,4 +1,6 @@
 name: Idea to video
+# NOTE: this reacts ONLY to issues titled "Render existing:" and needs ANTHROPIC_API_KEY.
+# It is NOT the submission path. Use build/<slug>/submission.json (see THINK_TANK_CONTRACT.md).
 on:
   issues:
     types: [opened, labeled]
