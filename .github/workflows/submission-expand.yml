@@ -10,6 +10,11 @@ on:
     branches: [main]
     paths:
       - "build/**/submission.json"
+  # No-encoding path: POST /repos/.../dispatches with
+  #   {"event_type":"submission","client_payload":{"slug":"my-slug","submission":{...}}}
+  # The submission is plain JSON - no Base64, no file write by the caller.
+  repository_dispatch:
+    types: [submission]
 
 permissions:
   contents: write
@@ -28,17 +33,48 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Materialize dispatched submission
+        if: github.event_name == 'repository_dispatch'
+        shell: bash
+        env:
+          PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import json, os, pathlib, re
+          payload = json.loads(os.environ["PAYLOAD"])
+          submission = payload.get("submission") or payload
+          slug = payload.get("slug") or submission.get("slug") or submission.get("title") or ""
+          slug = re.sub(r"[^a-z0-9]+", "-", str(slug).lower()).strip("-")
+          if not slug:
+              raise SystemExit("dispatch payload needs a slug or title")
+          submission.pop("slug", None)
+          out = pathlib.Path("build") / slug
+          out.mkdir(parents=True, exist_ok=True)
+          (out / "submission.json").write_text(
+              json.dumps(submission, indent=1, ensure_ascii=False) + "\n", encoding="utf-8")
+          print(f"wrote build/{slug}/submission.json "
+                f"({len(submission.get('scenes') or [])} scenes)")
+          PY
+
       - name: Identify submitted slug(s)
         id: slugs
         shell: bash
         run: |
           set -euo pipefail
-          files="$(git diff --name-only HEAD^ HEAD -- 'build/*/submission.json' || true)"
-          [ -z "$files" ] && files="$(git ls-files 'build/*/submission.json')"
+          if [ "${{ github.event_name }}" = "repository_dispatch" ]; then
+            files="$(find build -name submission.json -newer .git/HEAD 2>/dev/null || true)"
+            [ -z "$files" ] && files="$(git status --porcelain --untracked-files=all build | awk '{print $2}' | grep 'submission.json$' || true)"
+          else
+            files="$(git diff --name-only HEAD^ HEAD -- 'build/*/submission.json' || true)"
+            [ -z "$files" ] && files="$(git ls-files 'build/*/submission.json')"
+          fi
           slugs=""
           for f in $files; do
             s="${f#build/}"; s="${s%/submission.json}"
-            [ -f "build/$s/script.json" ] && [ -f "build/$s/render-started.txt" ] && continue
+            if [ "${{ github.event_name }}" != "repository_dispatch" ]; then
+              [ -f "build/$s/script.json" ] && [ -f "build/$s/render-started.txt" ] && continue
+            fi
             slugs="$slugs $s"
           done
           echo "slugs=$(echo "$slugs" | xargs)" >> "$GITHUB_OUTPUT"
