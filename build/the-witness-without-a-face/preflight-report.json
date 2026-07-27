@@ -1,16 +1,6 @@
 {
   "applied_solution_ids": [],
-  "blockers": [
-    {
-      "code": "visual_symbol_plan",
-      "fingerprint": "303254187f11e1c0",
-      "matched_solution_ids": [
-        "sol-visual-symbol-diversity-v1"
-      ],
-      "message": "architecture repeats for 4 consecutive scenes starting at scene 14",
-      "stage": "preflight"
-    }
-  ],
+  "blockers": [],
   "checks": {
     "animation_contract": {
       "errors": [],
@@ -43,12 +33,12 @@
     },
     "visual_symbols": {
       "family_counts": {
-        "architecture": 6,
+        "architecture": 5,
         "geometry": 1,
         "identity": 4,
         "light_atmosphere": 1,
         "nature": 1,
-        "object_tool": 3,
+        "object_tool": 4,
         "pathway": 2,
         "perception": 4,
         "world_scale": 2
@@ -56,16 +46,16 @@
       "generic_human_ratio": 0.0,
       "human_presence_ratio": 0.0833,
       "longest_family_run": {
-        "length": 4,
-        "start": 14,
-        "value": "architecture"
+        "length": 2,
+        "start": 2,
+        "value": "identity"
       },
       "longest_generic_human_run": {
         "length": 0,
         "start": 0,
         "value": null
       },
-      "passes": false,
+      "passes": true,
       "policy": {
         "max_family_run": 3,
         "max_generic_human_run": 1,
@@ -75,17 +65,17 @@
         "strict": true
       },
       "primary_symbol_counts": {
-        "a bright white room where a sofa, bookshelf, and lamp dissol": 1,
         "a cathedral nave filled with visible ripples of sound above": 1,
         "a corridor of standing mirrors reflecting only other mirrors": 1,
         "a cutaway dollhouse whose rooms switch off one by one from t": 1,
         "a distant human outline made from radio static fading across": 1,
+        "a fast conveyor carrying chairs and books into a dissolving": 1,
         "a featureless polished mask suspended alone inside a black d": 1,
         "a flashlight beam curving through a cave and bending back to": 1,
         "a fogged mirror with no reflection except a steady eye-shape": 1,
         "a human silhouette stepping out of its own framed portrait i": 1,
+        "a rotating carousel crowded with miniature deities, clockwor": 1,
         "a row of theater masks being lifted from a blank mannequin h": 1,
-        "a sculpture studio crowded with unfinished deities, clockwor": 1,
         "a single glowing ember suspended at the center of an immense": 1,
         "a tiny coal glowing beneath layers of pale ash while the sur": 1,
         "a trail of footprints circling a lighthouse that has remaine": 1,
@@ -343,14 +333,14 @@
           "visual_function": "beat 16"
         },
         {
-          "effective_query": "a bright white room where a sofa, bookshelf, and lamp dissolve into dust",
+          "effective_query": "a fast conveyor carrying chairs and books into a dissolving prism while blank labels lag behind",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 16,
-          "original_query": "a bright white room where a sofa, bookshelf, and lamp dissolve into dust",
-          "primary_symbol": "a bright white room where a sofa, bookshelf, and lamp dissol",
-          "query_family": "architecture",
+          "original_query": "a fast conveyor carrying chairs and books into a dissolving prism while blank labels lag behind",
+          "primary_symbol": "a fast conveyor carrying chairs and books into a dissolving",
+          "query_family": "object_tool",
           "selected_family": null,
           "semantic_anchor": "beat 17",
           "symbol_family": "pathway",
@@ -358,13 +348,13 @@
           "visual_function": "beat 17"
         },
         {
-          "effective_query": "a sculpture studio crowded with unfinished deities, clockwork figures, and ancestral busts",
+          "effective_query": "a rotating carousel crowded with miniature deities, clockwork figures, and ancestral masks",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 17,
-          "original_query": "a sculpture studio crowded with unfinished deities, clockwork figures, and ancestral busts",
-          "primary_symbol": "a sculpture studio crowded with unfinished deities, clockwor",
+          "original_query": "a rotating carousel crowded with miniature deities, clockwork figures, and ancestral masks",
+          "primary_symbol": "a rotating carousel crowded with miniature deities, clockwor",
           "query_family": "architecture",
           "selected_family": null,
           "semantic_anchor": "beat 18",
@@ -463,20 +453,16 @@
           "visual_function": "beat 24"
         }
       ],
-      "score": 95.0,
+      "score": 100.0,
       "symbol_family_count": 9,
-      "violations": [
-        "architecture repeats for 4 consecutive scenes starting at scene 14"
-      ],
+      "violations": [],
       "warnings": []
     }
   },
   "fix_safe": true,
-  "matched_solution_ids": [
-    "sol-visual-symbol-diversity-v1"
-  ],
+  "matched_solution_ids": [],
   "narration_fingerprint": "8f85bbe07a2a7aff14ada33d22ae77720c789b101da3e03cafb3104adf3c510e",
-  "passed": false,
+  "passed": true,
   "prevention_rule_version": 1,
   "scene_count": 24,
   "schema_version": 1,
