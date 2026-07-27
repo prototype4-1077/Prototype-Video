@@ -134,7 +134,10 @@ def expand(slug: str, build_dir=None) -> dict:
         "still_image_policy": "closest_stock_frame_full_enhancement",
         "music_choice": 3, "music_variant_count": 1,
         "caption_policy": "minimal_keywords_only",
-        "hero_art_policy": "runtime_generated",
+        # A submission with no hero scenes has no image_prompt anywhere, so the
+        # hero-art gate would block a package that legitimately needs no hero art.
+        "hero_art_policy": ("runtime_generated" if any(s.get("hero") for s in scenes)
+                            else "motion_only_no_static_hero"),
         "hero_art_status": "runtime_generation_allowed",
         "scenes": scenes,
     }

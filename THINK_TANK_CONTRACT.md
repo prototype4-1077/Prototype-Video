@@ -8,7 +8,31 @@ Do **not** use the GitHub connector or the `gh` CLI — neither is available.
 
 ---
 
-## The easy path (use this)
+## Easiest path: send plain JSON (no Base64)
+
+If encoding a file body is unreliable for you, skip files entirely. POST the
+submission as plain JSON:
+
+    POST /repos/prototype4-1077/Prototype-Video/dispatches
+    {
+      "event_type": "submission",
+      "client_payload": {
+        "slug": "tomorrow-uses-old-footage",
+        "submission": {
+          "title": "Tomorrow Uses Old Footage",
+          "voice": "liam",
+          "series_label": null,
+          "scenes": [
+            { "text": "...", "visual": "..." }
+          ]
+        }
+      }
+    }
+
+Nothing is Base64-encoded. The workflow writes the file, expands it, runs
+preflight, and dispatches the render. Confirm with `listRenderRuns`.
+
+## Alternative: commit the file yourself
 
 Commit **one small file**: `build/<slug>/submission.json`
 
