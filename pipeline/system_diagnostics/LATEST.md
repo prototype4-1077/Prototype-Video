@@ -1,15 +1,21 @@
 # System Diagnostic
 
-Generated: 2026-07-27T13:39:32+00:00
+Generated: 2026-07-27T18:13:26+00:00
 
-Findings: 11 — priorities {"high": 1, "low": 2, "medium": 8}
+Findings: 13 — priorities {"high": 2, "low": 2, "medium": 9}
 
 ## Action queue
+
+### [HIGH] Open Incident
+- Area: `operations`
+- Code: `operational:open_incident:code:visual_symbol_plan`
+- Evidence: "2 occurrence(s)"
+- Action: Resolve the root cause and attach a later verification occurrence before promotion.
 
 ### [HIGH] Evidence Coverage
 - Area: `visual_memory`
 - Code: `visual:evidence_coverage:general`
-- Evidence: "Only 43 of 2469 scene records have a human decision (1.7%)."
+- Evidence: "Only 43 of 2472 scene records have a human decision (1.7%)."
 - Action: Do not convert automated risk frequency into house rules. Review the highest-risk asset-backed queue first.
 
 ### [MEDIUM] The evolution queue is flooded with taxonomy gaps
@@ -27,7 +33,7 @@ Findings: 11 — priorities {"high": 1, "low": 2, "medium": 8}
 ### [MEDIUM] Too few reviewable videos have exported human feedback
 - Area: `learning`
 - Code: `human_feedback_coverage_low`
-- Evidence: {"coverage": 0.125, "feedback_count": 2, "feedback_slugs": ["belief-is-gravity", "the-edge-of-you-is-negotiable"], "reviewable_count": 16, "reviewable_slugs": ["a-chair-not-a-throne", "belief-is-gravity", "beliefs-are-software-updates", "dispatch-path-selftest", "june-oxley-left-the-vehicle", "the-adjacent-mind", "the-edge-of-you-is-negotiable", "the-emotion-scam-tier1", "the-infinite-library", "the-reality-machine-dmt-v3", "the-room-has-more-than-one-window", "tomorrow-uses-old-footage", "who-wrote-the-menu", "wonder-is-a-glitch", "your-emergency-contact", "your-inner-bodyguard"]}
+- Evidence: {"coverage": 0.1, "feedback_count": 2, "feedback_slugs": ["belief-is-gravity", "the-edge-of-you-is-negotiable"], "reviewable_count": 20, "reviewable_slugs": ["a-chair-not-a-throne", "belief-is-gravity", "beliefs-are-software-updates", "dispatch-path-selftest", "june-oxley-left-the-vehicle", "the-adjacent-mind", "the-blueprint-recognizes-the-building", "the-edge-of-you-is-negotiable", "the-emotion-scam-tier1", "the-infinite-library", "the-mercy-of-the-filter", "the-reality-machine-dmt-v3", "the-room-has-more-than-one-window", "the-universe-keeps-its-options-open", "the-witness-without-a-face", "tomorrow-uses-old-footage", "who-wrote-the-menu", "wonder-is-a-glitch", "your-emergency-contact", "your-inner-bodyguard"]}
 - Action: Review the highest-value completed videos first. Keep automated risk tags as screening evidence until James supplies a decision.
 
 ### [MEDIUM] Some operational solutions still need verification
@@ -39,19 +45,25 @@ Findings: 11 — priorities {"high": 1, "low": 2, "medium": 8}
 ### [MEDIUM] Youtube queue contains already-published videos
 - Area: `publishing`
 - Code: `youtube_published_still_queued`
-- Evidence: ["a-chair-not-a-throne", "beliefs-are-software-updates", "beliefs-are-software-updates-short", "the-adjacent-mind", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-infinite-library", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "the-room-has-more-than-one-window", "who-wrote-the-menu", "wonder-is-a-glitch", "you-are-a-flame-wearing-a-name-tag", "your-emergency-contact", "your-inner-bodyguard"]
+- Evidence: ["a-chair-not-a-throne", "beliefs-are-software-updates", "beliefs-are-software-updates-short", "the-adjacent-mind", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-infinite-library", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "the-room-has-more-than-one-window", "tomorrow-uses-old-footage", "who-wrote-the-menu", "wonder-is-a-glitch", "you-are-a-flame-wearing-a-name-tag", "your-emergency-contact", "your-inner-bodyguard"]
 - Action: Keep the metadata queue if useful, but rely on durable receipt checks and make duplicate posting require an explicit force flag.
+
+### [MEDIUM] Quality warning repeats: long_black_interval
+- Area: `quality`
+- Code: `repeated_quality_warning:long_black_interval`
+- Evidence: {"current_build_reports": 2}
+- Action: Run a targeted encoding or assembly challenger and require unchanged visual/audio quality before adoption.
 
 ### [MEDIUM] Quality warning repeats: low_bitrate
 - Area: `quality`
 - Code: `repeated_quality_warning:low_bitrate`
-- Evidence: {"current_build_reports": 3}
+- Evidence: {"current_build_reports": 6}
 - Action: Run a targeted encoding or assembly challenger and require unchanged visual/audio quality before adoption.
 
 ### [MEDIUM] Asset Coverage
 - Area: `visual_memory`
 - Code: `visual:asset_coverage:general`
-- Evidence: "Only 127 of 2469 records retain a reviewable asset (5.1%)."
+- Evidence: "Only 127 of 2472 records retain a reviewable asset (5.1%)."
 - Action: Persist representative frames or durable release references for completed scenes so historical feedback remains inspectable.
 
 ### [MEDIUM] Low Approval Cohort
@@ -69,7 +81,7 @@ Findings: 11 — priorities {"high": 1, "low": 2, "medium": 8}
 ### [LOW] Permanent stock exclusion now has a measured supply signal
 - Area: `asset_selection`
 - Code: `stock_supply:no_current_starvation_signal`
-- Evidence: {"exclusions": {"banned_ids": 102, "used_ids": 1021}, "fallback_rate": 0.0692, "low_supply_rate": 0.0377, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 9, "scenes_analyzed": 159, "state": "no_current_starvation_signal"}
+- Evidence: {"exclusions": {"banned_ids": 102, "used_ids": 1021}, "fallback_rate": 0.0466, "low_supply_rate": 0.0254, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 13, "scenes_analyzed": 236, "state": "no_current_starvation_signal"}
 - Action: Keep permanent exclusion unchanged; continue monitoring candidate supply and fallback rate.
 
 ## Authority boundary
