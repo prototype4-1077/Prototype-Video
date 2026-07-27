@@ -1,44 +1,44 @@
 # Perpetual Frontier Brief
 
-_Cycle: 2026-07-24 · Records: 82 · External signals: 0_
+_Cycle: 2026-07-27 · Records: 94 · External signals: 0_
 
 ## Constitutional status
 The evolution laboratory generated observations and proposals only. It did not alter scripts, frontier truth, render requests, or permanent ethos rules.
 
 ## Highest-curiosity questions
-- **0.900** — The quality-diversity atlas is sparse; which absent region is both on-ethos and technically learnable?
+- **0.900** — This video fits no declared pillar or frontier concept; is the map missing a dimension?
 - **0.900** — This video fits no declared pillar or frontier concept; is the map missing a dimension?
 - **0.900** — This video fits no declared pillar or frontier concept; is the map missing a dimension?
 - **0.900** — Which unmodeled feature explains why this video performed far from the current category expectation?
 - **0.900** — This video fits no declared pillar or frontier concept; is the map missing a dimension?
 
 ## Best uncertainty-reducing experiments
-- **Scenes involving motion quality may have an elevated revision risk.**  
-  Control: Keep the current champion value for motion_quality. Treatment: Change only motion_quality using the challenger condition.
-- **Scenes involving duplicate object may have an elevated revision risk.**  
-  Control: Keep the current champion value for duplicate_object. Treatment: Change only duplicate_object using the challenger condition.
-- **Scenes involving semantic mismatch may have an elevated revision risk.**  
-  Control: Keep the current champion value for semantic_mismatch. Treatment: Change only semantic_mismatch using the challenger condition.
-- **Scenes involving reflection may have an elevated revision risk.**  
-  Control: Keep the current champion value for reflection. Treatment: Change only reflection using the challenger condition.
+- **The pillars value 'prediction' may improves blended reach and retention in the present catalog.**  
+  Control: Keep the current champion value for pillars. Treatment: Change only pillars using the challenger condition.
+- **The hook value 'demonstration' may improves blended reach and retention in the present catalog.**  
+  Control: Keep the current champion value for hook. Treatment: Change only hook using the challenger condition.
+- **The pillars value 'memory' may improves blended reach and retention in the present catalog.**  
+  Control: Keep the current champion value for pillars. Treatment: Change only pillars using the challenger condition.
+- **The pillars value 'threshold' may improves blended reach and retention in the present catalog.**  
+  Control: Keep the current champion value for pillars. Treatment: Change only pillars using the challenger condition.
 
 ## Wild frontier proposals
-- **Exaptation: self × emotion** — What if exaptation is already happening inside the way you experience self & identity as constructed?
-  Fidelity: metaphor. Invitation: Where might exaptation be shaping what you call 'self' or 'emotion' right now?
-- **Counterpoint: belief × threshold** — What if counterpoint is already happening inside the way you experience belief analysis / how you know?
-  Fidelity: metaphor. Invitation: Where might counterpoint be shaping what you call 'belief' or 'threshold' right now?
-- **Misdirection: memory × emotion** — What if misdirection is already happening inside the way you experience memory as construction, not recording?
-  Fidelity: metaphor. Invitation: Where might misdirection be shaping what you call 'memory' or 'emotion' right now?
+- **Symbiosis: machine × threshold** — What if symbiosis is already happening inside the way you experience mind as machine / rendering engine?
+  Fidelity: metaphor. Invitation: Where might symbiosis be shaping what you call 'machine' or 'threshold' right now?
+- **Overshoot: emotion × machine** — What if overshoot is already happening inside the way you experience emotion, love, and the turn?
+  Fidelity: metaphor. Invitation: Where might overshoot be shaping what you call 'emotion' or 'machine' right now?
+- **Negative Space: self × memory** — What if negative space is already happening inside the way you experience self & identity as constructed?
+  Fidelity: metaphor. Invitation: Where might negative space be shaping what you call 'self' or 'memory' right now?
 
 ## Unknown unknowns
 - Which unmodeled feature explains why this video performed far from the current category expectation?
 - Which unmodeled feature explains why this video performed far from the current category expectation?
 - Which unmodeled feature explains why this video performed far from the current category expectation?
-- This video fits no declared pillar or frontier concept; is the map missing a dimension?
-- This video fits no declared pillar or frontier concept; is the map missing a dimension?
+- Which unmodeled feature explains why this video performed far from the current category expectation?
+- Which unmodeled feature explains why this video performed far from the current category expectation?
 
 ## Rule review
-- `hook_immediate_plunge` → **retest** (effective confidence 0.5437)
+- `hook_immediate_plunge` → **retest** (effective confidence 0.5252)
 
 ## Human gate
 Nothing in this brief is a command. The next act is a choice: which uncertainty is worth spending a real video to examine?
