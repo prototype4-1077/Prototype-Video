@@ -1,0 +1,242 @@
+{
+  "generated_at": "2026-07-27T12:42:07+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {
+    "low_bitrate": 3
+  },
+  "recommendations": [
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "3 occurrence(s) across 1 build(s)",
+      "fingerprint": "667cc43ce3238cd7",
+      "priority": "medium",
+      "stage": "footage"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "d7bdfb546a04d76f",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
+      "category": "tail_latency",
+      "evidence": "p50=54.5s, p95=1398.9s",
+      "priority": "medium",
+      "stage": "build_pass"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 3,
+      "failure_class": "transient",
+      "fingerprint": "667cc43ce3238cd7",
+      "kind": "failure",
+      "normalized_error": "n response = meth(req, response) ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in http_response response = self.parent.error( ^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in error return self._call_chain(*args) ^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: ",
+      "slugs": [
+        "june-oxley-folks-aint-roadblocks-tier1"
+      ],
+      "stage": "footage"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "d7bdfb546a04d76f",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=300s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=667cc43ce3238cd7 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: py\", line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.http",
+      "slugs": [
+        "june-oxley-folks-aint-roadblocks-tier1"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "59b6f6839df57e9c",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=300s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=running elapsed=45s idle=0s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=667cc43ce3238cd7 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>",
+      "slugs": [
+        "june-oxley-folks-aint-roadblocks-tier1"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "2c243482baacee93",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.0s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "beliefs-are-software-updates"
+      ],
+      "stage": "build_pass"
+    }
+  ],
+  "runs_analyzed": 16,
+  "schema_version": 1,
+  "stages": {
+    "align": {
+      "attempts": 16,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.003,
+      "sample_count": 16,
+      "successes": 16,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 16.033
+    },
+    "altsheet": {
+      "attempts": 10,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.011,
+      "p95_success_s": 6.045,
+      "sample_count": 10,
+      "successes": 10,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 20.169
+    },
+    "assemble": {
+      "attempts": 345,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 46.455,
+      "p95_success_s": 89.368,
+      "sample_count": 345,
+      "successes": 345,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 17280.112
+    },
+    "build_pass": {
+      "attempts": 84,
+      "failure_rate": 0.0476,
+      "failures": 4,
+      "p50_success_s": 54.531,
+      "p95_success_s": 1398.905,
+      "sample_count": 80,
+      "successes": 80,
+      "timeout_rate": 0.0119,
+      "timeouts": 1,
+      "total_duration_s": 22621.53
+    },
+    "credits": {
+      "attempts": 31,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.015,
+      "sample_count": 31,
+      "successes": 31,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 31.242
+    },
+    "ffmpeg": {
+      "attempts": 64,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 5.031,
+      "p95_success_s": 30.203,
+      "sample_count": 64,
+      "successes": 64,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 594.133
+    },
+    "footage": {
+      "attempts": 16,
+      "failure_rate": 0.1875,
+      "failures": 3,
+      "p50_success_s": 155.247,
+      "p95_success_s": 217.318,
+      "sample_count": 13,
+      "successes": 13,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1702.398
+    },
+    "hero": {
+      "attempts": 42,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 18.046,
+      "p95_success_s": 47.024,
+      "sample_count": 42,
+      "successes": 42,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 890.624
+    },
+    "prep": {
+      "attempts": 15,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 14.022,
+      "p95_success_s": 16.263,
+      "sample_count": 15,
+      "successes": 15,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 190.515
+    },
+    "probe": {
+      "attempts": 362,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.015,
+      "sample_count": 362,
+      "successes": 362,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 365.71
+    },
+    "quality": {
+      "attempts": 15,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 29.277,
+      "p95_success_s": 41.951,
+      "sample_count": 15,
+      "successes": 15,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 449.69
+    },
+    "transcribe": {
+      "attempts": 16,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 19.018,
+      "p95_success_s": 24.018,
+      "sample_count": 16,
+      "successes": 16,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 297.238
+    },
+    "tts": {
+      "attempts": 16,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 56.525,
+      "p95_success_s": 72.303,
+      "sample_count": 16,
+      "successes": 16,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 841.457
+    }
+  },
+  "statuses": {
+    "done": 15,
+    "failed": 1
+  }
+}
