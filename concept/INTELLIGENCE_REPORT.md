@@ -1,10 +1,10 @@
 # Concept Engine — Intelligence Report
 
-_Joined 23 videos with performance data (31 stat files present; grows nightly)._
+_Joined 23 videos with performance data (34 stat files present; grows nightly)._
 
 ## Realized performance (blended reach x retention)
 - i-became-everything: 53 views @ 78%  → score 135.6  (threshold+emotion, testimony_1st, confession)
-- you-are-a-flame-wearing-a-name-tag: 35 views @ 84%  → score 130.2  (self+machine, guided_2nd, demonstration)
+- you-are-a-flame-wearing-a-name-tag: 36 views @ 84%  → score 131.2  (self+machine, guided_2nd, demonstration)
 - the-museum-that-repaints-itself: 81 views @ 63%  → score 121.3  (memory+machine, guided_2nd, plunge)
 - the-lag: 87 views @ 60%  → score 115.8  (prediction+machine, guided_2nd, plunge)
 - collapse-of-gravity: 61 views @ 62%  → score 110.4  (self+grounding, teaching, question)
@@ -13,14 +13,14 @@ _Joined 23 videos with performance data (31 stat files present; grows nightly)._
 - the-unopened-mail: 19 views @ 49%  → score 63.8  (prediction+grounding, guided_2nd, question)
 - the-voice: 31 views @ 20%  → score 29.9  (self+recursion, guided_2nd, question)
 - cartographers-confession: 10 views @ 26%  → score 27.0  (belief+mediation, teaching, confession)
-- the-reality-machine-dmt-v3: 848 views @ 0%  → score 0.0  (machine+attention, guided_2nd, plunge)
+- the-reality-machine-dmt-v3: 909 views @ 0%  → score 0.0  (machine+attention, guided_2nd, plunge)
 - room-before-birth: 7 views @ 0%  → score 0.0  (threshold+emotion, testimony_1st, confession)
 - the-loop: 3 views @ 0%  → score 0.0  (recursion+grounding, guided_2nd, question)
 - eye-cannot-see-itself: 9 views @ 0%  → score 0.0  (recursion+mediation, teaching, demonstration)
 - two-ships: 5 views @ 0%  → score 0.0  (belief+emotion, teaching, demonstration)
 - the-room-behind-you: 4 views @ 0%  → score 0.0  (grounding+self, guided_2nd, plunge)
 - where-the-years-go: 3 views @ 0%  → score 0.0  (memory+prediction, guided_2nd, question)
-- been-here-before: 3 views @ 0%  → score 0.0  (memory+prediction, guided_2nd, question)
+- been-here-before: 5 views @ 0%  → score 0.0  (memory+prediction, guided_2nd, question)
 - before-your-words: 10 views @ 0%  → score 0.0  (self+mediation, teaching, question)
 - the-press-secretary-in-your-skull: 13 views @ 0%  → score 0.0  (self+recursion, guided_2nd, plunge)
 - the-person-you-replaced: 3 views @ 0%  → score 0.0  (self+memory, guided_2nd, confession)
@@ -28,9 +28,9 @@ _Joined 23 videos with performance data (31 stat files present; grows nightly)._
 - the-edge-of-you-is-negotiable: 2 views @ 0%  → score 0.0  (machine, teaching, plunge)
 
 ## Winning lanes
-- by pillars: threshold (67.3), machine (64.3), emotion (45.2)
-- by narration: testimony_1st (67.3), guided_2nd (41.8), teaching (19.6)
-- by hook: confession (45.8), demonstration (43.4), plunge (40.0)
+- by pillars: threshold (67.3), machine (64.4), emotion (45.2)
+- by narration: testimony_1st (67.3), guided_2nd (41.9), teaching (19.6)
+- by hook: confession (45.8), demonstration (43.7), plunge (40.0)
 
 ## What to make next (data-driven)
 - Proven pillar: **threshold** (avg score 67.3 over 3 videos) — keep feeding it.
