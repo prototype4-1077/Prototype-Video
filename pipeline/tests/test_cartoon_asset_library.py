@@ -15,8 +15,10 @@ from pipeline.cartoon_vertical_slice import compile_plan
 
 
 ROOT = Path(__file__).resolve().parents[2]
-MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v1.json"
+MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v2.json"
+V1_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v1.json"
 CONFIG_PATH = ROOT / "examples" / "june-porch-vertical-slice.json"
+BLENDER_SOURCE = ROOT / "pipeline" / "blender" / "render_vertical_slice.py"
 
 
 class CartoonAssetLibraryTests(unittest.TestCase):
@@ -26,16 +28,42 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         cls.config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
 
     def test_canonical_manifest_covers_full_biped_face_and_both_profiles(self):
-        self.assertEqual(self.manifest["asset_version"], "1.0.0")
+        self.assertEqual(self.manifest["asset_version"], "2.0.0")
         self.assertIn("foot.L", self.manifest["rig"]["required_bones"])
         self.assertEqual(set(self.manifest["face"]["visemes"]), set("ABCDEFGHX"))
         self.assertEqual(set(self.manifest["quality_gate"]["profiles"]), {"youtube", "portrait"})
+
+    def test_v1_manifest_remains_valid_for_reproducible_phase3_builds(self):
+        self.assertEqual(load_asset_manifest(V1_MANIFEST_PATH)["asset_version"], "1.0.0")
+
+    def test_v2_requires_smooth_modeling_correctives_and_independent_lids(self):
+        self.assertEqual(self.manifest["delivery"]["generation"], "artist_directed_runtime_build")
+        self.assertIn("smooth", self.manifest["modeling"]["surface_standard"])
+        self.assertEqual(
+            set(self.manifest["modeling"]["corrective_shapes"]),
+            {"brow_raise", "brow_knit", "squint", "cheek_raise"},
+        )
+        self.assertTrue(self.manifest["hands"]["segmented_digits"])
+        self.assertTrue(self.manifest["quality_gate"]["human_art_approval_required"])
+
+    def test_v2_builder_preserves_legacy_asset_and_never_scales_eyes_for_new_blinks(self):
+        source = BLENDER_SOURCE.read_text(encoding="utf-8")
+        self.assertIn("def _make_june_v1", source)
+        self.assertIn("def _make_june_v2", source)
+        self.assertIn('upper.location.z -= 0.038 * blend', source)
+        self.assertIn('rig["ce_surface_standard"]', source)
 
     def test_proxy_body_and_cowboy_regressions_are_rejected(self):
         invalid = copy.deepcopy(self.manifest)
         invalid["design_lock"]["body"] = "round spherical proxy"
         invalid["design_lock"]["forbidden"].remove("cowboy hat")
         with self.assertRaisesRegex(ValueError, "lean"):
+            validate_asset_manifest(invalid)
+
+    def test_v2_without_corrective_shapes_is_rejected(self):
+        invalid = copy.deepcopy(self.manifest)
+        invalid["modeling"]["corrective_shapes"] = ["brow_raise"]
+        with self.assertRaisesRegex(ValueError, "corrective"):
             validate_asset_manifest(invalid)
 
     def test_quality_frames_select_the_middle_of_each_authored_shot(self):

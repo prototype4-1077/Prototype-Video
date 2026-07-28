@@ -1,0 +1,77 @@
+{
+  "contract_version": 1,
+  "asset_id": "june_oxley_hero_rig",
+  "asset_version": "2.0.0",
+  "character_id": "june_oxley",
+  "display_name": "June Oxley Hero Rig v2",
+  "source_of_truth": [
+    "concept/characters/JUNE_OXLEY.md",
+    "concept/characters/june_oxley.json",
+    "concept/characters/june_oxley_animation_addendum.json"
+  ],
+  "look_target": "June Oxley Phase 3 turnaround, external human-review deliverable",
+  "delivery": {
+    "format": "blend",
+    "generation": "artist_directed_runtime_build",
+    "repository_policy": "The generated .blend is a workflow artifact, never a committed binary.",
+    "collections": ["CE_June_Oxley", "CE_June_Porch"]
+  },
+  "design_lock": {
+    "age_range": [78, 84],
+    "body": "lean wiry capable build with tapered torso and limbs",
+    "face": "lean asymmetrical weathered face, pale blue-gray eyes, deep smile lines, crooked friendly grin",
+    "hair": "short thinning white hair hugging the skull with a visible bald crown",
+    "facial_hair": "trimmed white beard and shaped mustache",
+    "wardrobe": ["faded procedural plaid work shirt", "tailored worn denim jacket", "dark clean overalls", "rounded worn brown work boots"],
+    "forbidden": ["cowboy hat", "huge belly", "spherical toy proportions", "redneck caricature", "preacher costume"]
+  },
+  "modeling": {
+    "style": "artist_directed_stylized_3d",
+    "surface_standard": "smooth subdivision-ready topology",
+    "head_topology": "expression-safe radial lip rim with separated cheek and jaw planes",
+    "asymmetry_landmarks": ["crooked nose", "offset cheek volumes", "uneven brow and eye height", "uneven hair mass"],
+    "corrective_shapes": ["brow_raise", "brow_knit", "squint", "cheek_raise"]
+  },
+  "rig": {
+    "required_bones": [
+      "root", "pelvis", "torso", "neck", "head",
+      "upper_arm.L", "forearm.L", "hand.L",
+      "upper_arm.R", "forearm.R", "hand.R",
+      "thigh.L", "shin.L", "foot.L",
+      "thigh.R", "shin.R", "foot.R"
+    ],
+    "action_library": [
+      "June_Breathing_Idle",
+      "June_Head_Performance",
+      "June_Gesture_Performance"
+    ]
+  },
+  "face": {
+    "visemes": ["A", "B", "C", "D", "E", "F", "G", "H", "X"],
+    "expression_controls": ["smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise"],
+    "independent_controls": ["blink.L.upper", "blink.L.lower", "blink.R.upper", "blink.R.lower", "brow.L", "brow.R", "eye_aim"],
+    "eyelid_model": "independent upper and lower lid curves; eyeballs never scale during blink"
+  },
+  "hands": {
+    "minimum_digits_per_hand": 5,
+    "segmented_digits": true,
+    "contact_safe": true
+  },
+  "materials": [
+    "June Skin", "June White Hair", "June Faded Denim", "June Dark Overalls",
+    "June Shirt Plaid", "Worn Boot Leather", "June Weathered Lip", "June Blue Gray Iris",
+    "Aged Brass", "Warm Cedar"
+  ],
+  "quality_gate": {
+    "profiles": ["youtube", "portrait"],
+    "fps": 30,
+    "full_resolution_keyframes_per_profile": 3,
+    "artifact_reopen_required": true,
+    "human_art_approval_required": true,
+    "required_checks": [
+      "stable identity", "lean tapered silhouette", "small readable eyes", "independent eyelid blink",
+      "segmented readable hands", "compact viseme mouth", "visible motivated light",
+      "safe landscape crop", "safe portrait crop", "no primitive faceting in hero close-up"
+    ]
+  }
+}
