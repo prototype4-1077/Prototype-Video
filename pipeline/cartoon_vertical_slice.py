@@ -115,25 +115,34 @@ def _require_executable(value: str, label: str) -> str:
     return resolved
 
 
-def _render_frames(blender: str, plan_path: Path, frames_dir: Path) -> None:
+def _render_frames(
+    blender: str,
+    plan_path: Path,
+    frames_dir: Path,
+    *,
+    asset_library: Path | None = None,
+    selected_frames: list[int] | None = None,
+) -> None:
     script = Path(__file__).resolve().parent / "blender" / "render_vertical_slice.py"
     frames_dir.mkdir(parents=True, exist_ok=True)
-    subprocess.run(
-        [
-            blender,
-            "--background",
-            "--python-exit-code",
-            "1",
-            "--python",
-            str(script),
-            "--",
-            "--plan",
-            str(plan_path),
-            "--output-dir",
-            str(frames_dir),
-        ],
-        check=True,
-    )
+    command = [
+        blender,
+        "--background",
+        "--python-exit-code",
+        "1",
+        "--python",
+        str(script),
+        "--",
+        "--plan",
+        str(plan_path),
+        "--output-dir",
+        str(frames_dir),
+    ]
+    if asset_library is not None:
+        command.extend(["--asset-library", str(Path(asset_library).resolve())])
+    if selected_frames:
+        command.extend(["--frames", ",".join(str(frame) for frame in selected_frames)])
+    subprocess.run(command, check=True)
 
 
 def _assemble_video(ffmpeg: str, plan: dict, frames_dir: Path, output: Path, audio: Path | None) -> None:
@@ -187,6 +196,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", default="build/june-porch-vertical-slice")
     parser.add_argument("--blender", default="blender")
     parser.add_argument("--ffmpeg", default="ffmpeg")
+    parser.add_argument("--asset-library", help="Optional runtime-built June .blend library")
     parser.add_argument("--plan-only", action="store_true")
     return parser.parse_args()
 
@@ -236,7 +246,12 @@ def main() -> None:
         frames_dir = output_dir / "frames" / profile
         video = output_dir / f"june-porch-dialogue-{profile}.mp4"
         contact_sheet = output_dir / f"june-porch-dialogue-{profile}-contact-sheet.png"
-        _render_frames(blender, plan_path, frames_dir)
+        _render_frames(
+            blender,
+            plan_path,
+            frames_dir,
+            asset_library=Path(args.asset_library) if args.asset_library else None,
+        )
         _assemble_video(ffmpeg, plan, frames_dir, video, audio)
         _contact_sheet(ffmpeg, plan, frames_dir, contact_sheet)
         manifest["outputs"].append(
