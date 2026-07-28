@@ -71,6 +71,14 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         self.assertEqual(len(entries), 16)
         self.assertTrue(all(shot["camera"] == "close" for shot in plan["shots"]))
         self.assertEqual(plan["render"]["width"], plan["render"]["height"])
+        self.assertEqual(self.manifest["quality_gate"]["review_engine"], "BLENDER_EEVEE_NEXT")
+        self.assertEqual(self.manifest["quality_gate"]["promotion_engine"], "CYCLES")
+
+    def test_v3_without_tiered_render_engines_is_rejected(self):
+        invalid = copy.deepcopy(self.manifest)
+        invalid["quality_gate"]["review_engine"] = "CYCLES"
+        with self.assertRaisesRegex(ValueError, "continuous review engine"):
+            validate_asset_manifest(invalid)
 
     def test_v3_without_single_head_surface_is_rejected(self):
         invalid = copy.deepcopy(self.manifest)

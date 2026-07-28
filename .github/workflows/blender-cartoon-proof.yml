@@ -114,7 +114,7 @@ jobs:
             --output-dir proof-out
           find proof-out -maxdepth 2 -type f -print
 
-      - name: Build asset library and render full-resolution quality keyframes
+      - name: Build asset library and render full-resolution review keyframes
         run: |
           set -euo pipefail
           python3 -m pipeline.cartoon_asset_library \
@@ -122,8 +122,8 @@ jobs:
             concept/characters/june_oxley_asset_v3.json \
             --blender /opt/blender/blender \
             --ffmpeg ffmpeg \
-            --engine CYCLES \
-            --samples 12 \
+            --engine BLENDER_EEVEE_NEXT \
+            --samples 16 \
             --output-dir asset-quality-out
           find asset-quality-out -maxdepth 3 -type f -print
 

@@ -66,6 +66,9 @@
   "quality_gate": {
     "profiles": ["youtube", "portrait"],
     "fps": 30,
+    "review_engine": "BLENDER_EEVEE_NEXT",
+    "promotion_engine": "CYCLES",
+    "tier_policy": "Every change must pass full-resolution Eevee review; selected releases receive the slower Cycles promotion render.",
     "full_resolution_keyframes_per_profile": 3,
     "artifact_reopen_required": true,
     "human_art_approval_required": true,

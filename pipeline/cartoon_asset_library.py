@@ -1,4 +1,4 @@
-"""Versioned Blender asset-library contract and full-resolution quality gate."""
+"""Versioned Blender asset-library contract and tiered visual-quality gate."""
 from __future__ import annotations
 
 import argparse
@@ -111,6 +111,10 @@ def validate_asset_manifest(manifest: dict) -> None:
         matrix_expressions = _string_set(gate.get("matrix_expressions"), "quality_gate.matrix_expressions")
         if matrix_visemes != set(FACIAL_GATE_VISEMES) or matrix_expressions != set(FACIAL_GATE_EXPRESSIONS):
             raise ValueError("Hero v3 facial matrix must expose every viseme and expression")
+        if gate.get("review_engine") != "BLENDER_EEVEE_NEXT":
+            raise ValueError("Hero v3 must declare Eevee as the continuous review engine")
+        if gate.get("promotion_engine") != "CYCLES":
+            raise ValueError("Hero v3 must retain Cycles as the final promotion engine")
 
 
 def load_asset_manifest(path: str | Path) -> dict:
@@ -342,6 +346,9 @@ def render_quality_gate(
         "library": str(library.relative_to(output)),
         "artifact_reopened_for_render": True,
         "human_art_approval_required": bool(manifest["quality_gate"].get("human_art_approval_required")),
+        "render_tier": (
+            "promotion" if engine == manifest["quality_gate"].get("promotion_engine") else "continuous_review"
+        ),
         "results": results,
         "facial_performance_gate": {
             "engine": face_plan["render"]["engine"],
@@ -362,7 +369,11 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--output-dir", default="build/june-asset-quality")
     parser.add_argument("--blender", default="blender")
     parser.add_argument("--ffmpeg", default="ffmpeg")
-    parser.add_argument("--engine", choices=("CYCLES", "BLENDER_WORKBENCH"), default="CYCLES")
+    parser.add_argument(
+        "--engine",
+        choices=("CYCLES", "BLENDER_EEVEE_NEXT", "BLENDER_WORKBENCH"),
+        default="CYCLES",
+    )
     parser.add_argument("--samples", type=int, default=16)
     return parser.parse_args()
 
