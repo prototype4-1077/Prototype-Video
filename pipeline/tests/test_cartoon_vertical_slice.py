@@ -1,9 +1,11 @@
 import copy
 import json
 from pathlib import Path
+import tempfile
 import unittest
+from unittest import mock
 
-from pipeline.cartoon_vertical_slice import compile_plan, validate_config
+from pipeline.cartoon_vertical_slice import _render_frames, compile_plan, validate_config
 
 
 EXAMPLE = Path(__file__).resolve().parents[2] / "examples" / "june-porch-vertical-slice.json"
@@ -51,6 +53,16 @@ class CartoonVerticalSliceTests(unittest.TestCase):
         invalid["shots"] = invalid["shots"][:2]
         with self.assertRaisesRegex(ValueError, "at least three"):
             validate_config(invalid)
+
+    def test_blender_python_failures_propagate_to_the_caller(self):
+        with tempfile.TemporaryDirectory() as temp_dir, mock.patch(
+            "pipeline.cartoon_vertical_slice.subprocess.run"
+        ) as run:
+            _render_frames("blender", Path("plan.json"), Path(temp_dir) / "frames")
+        command = run.call_args.args[0]
+        self.assertIn("--python-exit-code", command)
+        self.assertEqual(command[command.index("--python-exit-code") + 1], "1")
+        self.assertTrue(run.call_args.kwargs["check"])
 
 
 if __name__ == "__main__":

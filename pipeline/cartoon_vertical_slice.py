@@ -122,6 +122,8 @@ def _render_frames(blender: str, plan_path: Path, frames_dir: Path) -> None:
         [
             blender,
             "--background",
+            "--python-exit-code",
+            "1",
             "--python",
             str(script),
             "--",

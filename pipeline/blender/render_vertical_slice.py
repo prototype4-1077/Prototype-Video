@@ -506,7 +506,11 @@ def _configure_render(bpy, plan: dict, output_dir: Path) -> None:
         shading.show_cavity = True
         shading.cavity_type = "BOTH"
         shading.show_object_outline = True
-        shading.outline_color = (0.025, 0.018, 0.018)
+        # Blender 4.2 exposes the outline toggle but not ``outline_color`` on
+        # View3DShading. Newer builds may add it, so keep the richer setting
+        # feature-detected while retaining 4.2 worker compatibility.
+        if hasattr(shading, "outline_color"):
+            shading.outline_color = (0.025, 0.018, 0.018)
         shading.show_specular_highlight = True
     elif selected == "CYCLES":
         scene.cycles.device = "CPU"
