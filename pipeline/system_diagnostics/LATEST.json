@@ -146,9 +146,8 @@
   },
   "current_reports": {
     "governor_recommendation_counts": {
-      "recurring_incident": 42,
-      "tail_latency": 23,
-      "timeout_rate": 1
+      "recurring_incident": 45,
+      "tail_latency": 23
     },
     "quality_failure_counts": {},
     "quality_warning_counts": {
@@ -166,43 +165,43 @@
         "samples": 23
       },
       "altsheet": {
-        "max_s": 6.051,
-        "mean_s": 3.19,
+        "max_s": 7.051,
+        "mean_s": 3.247,
         "samples": 18
       },
       "assemble": {
         "max_s": 127.18,
-        "mean_s": 76.06,
+        "mean_s": 76.105,
         "samples": 22
       },
       "build_pass": {
-        "max_s": 1593.752,
-        "mean_s": 840.335,
+        "max_s": 1605.143,
+        "mean_s": 867.407,
         "samples": 23
       },
       "credits": {
-        "max_s": 1.036,
-        "mean_s": 1.015,
+        "max_s": 1.061,
+        "mean_s": 1.017,
         "samples": 22
       },
       "ffmpeg": {
-        "max_s": 34.694,
-        "mean_s": 24.908,
+        "max_s": 35.421,
+        "mean_s": 24.941,
         "samples": 22
       },
       "footage": {
         "max_s": 235.325,
-        "mean_s": 144.679,
+        "mean_s": 138.319,
         "samples": 20
       },
       "hero": {
         "max_s": 60.691,
-        "mean_s": 37.341,
+        "mean_s": 37.509,
         "samples": 17
       },
       "prep": {
         "max_s": 19.065,
-        "mean_s": 12.763,
+        "mean_s": 12.809,
         "samples": 22
       },
       "probe": {
@@ -211,27 +210,26 @@
         "samples": 22
       },
       "quality": {
-        "max_s": 75.561,
-        "mean_s": 39.106,
+        "max_s": 73.516,
+        "mean_s": 39.013,
         "samples": 22
       },
       "transcribe": {
         "max_s": 24.016,
-        "mean_s": 18.319,
+        "mean_s": 18.407,
         "samples": 23
       },
       "tts": {
         "max_s": 81.065,
-        "mean_s": 53.949,
+        "mean_s": 54.168,
         "samples": 23
       }
     },
     "telemetry_recommendation_counts": {
-      "latency": 3,
+      "latency": 4,
       "recurring_incident": 36,
-      "reliability": 1,
-      "tail_latency": 20,
-      "timeout_rate": 1
+      "reliability": 2,
+      "tail_latency": 19
     }
   },
   "denominator_policy": "package_count includes experiments and abandoned builds; telemetry, feedback, and audience coverage use render-observed, reviewable, or verified-published denominators.",
@@ -641,7 +639,7 @@
       "title": "Permanent stock exclusion now has a measured supply signal"
     }
   ],
-  "generated_at": "2026-07-28T17:17:40+00:00",
+  "generated_at": "2026-07-28T19:08:09+00:00",
   "operational_memory": {
     "advisory_counts": {},
     "occurrence_count": 23,
@@ -680,8 +678,10 @@
         "your-emergency-contact",
         "your-inner-bodyguard"
       ],
-      "queued": 18,
-      "queued_without_receipt": [],
+      "queued": 19,
+      "queued_without_receipt": [
+        "no-disagreement-here"
+      ],
       "receipt_file_exists": true
     }
   },
@@ -689,17 +689,17 @@
   "stock_supply": {
     "anchor_coverage_buckets": {
       "high": 27,
-      "low": 7134,
-      "medium": 179
+      "low": 7124,
+      "medium": 183
     },
     "candidate_count_samples": 268,
     "evidence_strength": "sufficient",
     "fallback_count": 11,
     "fallback_rate": 0.0401,
-    "generated_at": "2026-07-28T17:17:40+00:00",
+    "generated_at": "2026-07-28T19:08:09+00:00",
     "low_candidate_scenes": 0,
     "low_supply_rate": 0.0219,
-    "mean_candidate_count_when_recorded": 27.388,
+    "mean_candidate_count_when_recorded": 27.366,
     "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.",
     "permanent_exclusion_counts": {
       "banned_ids": 113,
@@ -715,7 +715,7 @@
     "schema_version": 1,
     "state": "no_current_starvation_signal",
     "top_rejection_reasons": {
-      "advisory": 6944,
+      "advisory": 6938,
       "anchor coverage 0.00 below 0.10": 111,
       "anchor coverage 0.00 below 0.18": 235,
       "direct match": 50
