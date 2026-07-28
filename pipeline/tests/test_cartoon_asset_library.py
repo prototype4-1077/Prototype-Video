@@ -7,6 +7,7 @@ from unittest import mock
 
 from pipeline.cartoon_asset_library import (
     build_asset_library,
+    deformation_pose_plan,
     facial_performance_plan,
     load_asset_manifest,
     shot_quality_frames,
@@ -16,7 +17,8 @@ from pipeline.cartoon_vertical_slice import compile_plan
 
 
 ROOT = Path(__file__).resolve().parents[2]
-MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v3.json"
+MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v4.json"
+V3_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v3.json"
 V2_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v2.json"
 V1_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v1.json"
 CONFIG_PATH = ROOT / "examples" / "june-porch-vertical-slice.json"
@@ -30,7 +32,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         cls.config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
 
     def test_canonical_manifest_covers_full_biped_face_and_both_profiles(self):
-        self.assertEqual(self.manifest["asset_version"], "3.0.0")
+        self.assertEqual(self.manifest["asset_version"], "4.0.0")
         self.assertIn("foot.L", self.manifest["rig"]["required_bones"])
         self.assertEqual(set(self.manifest["face"]["visemes"]), set("ABCDEFGHX"))
         self.assertEqual(set(self.manifest["quality_gate"]["profiles"]), {"youtube", "portrait"})
@@ -40,6 +42,9 @@ class CartoonAssetLibraryTests(unittest.TestCase):
 
     def test_v2_manifest_remains_valid_for_reproducible_phase4_builds(self):
         self.assertEqual(load_asset_manifest(V2_MANIFEST_PATH)["asset_version"], "2.0.0")
+
+    def test_v3_manifest_remains_valid_for_reproducible_phase5_builds(self):
+        self.assertEqual(load_asset_manifest(V3_MANIFEST_PATH)["asset_version"], "3.0.0")
 
     def test_v2_requires_smooth_modeling_correctives_and_independent_lids(self):
         self.assertEqual(self.manifest["delivery"]["generation"], "artist_directed_runtime_build")
@@ -56,6 +61,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         self.assertIn("def _make_june_v1", source)
         self.assertIn("def _make_june_v2", source)
         self.assertIn("def _make_june_v3", source)
+        self.assertIn("def _make_june_v4", source)
         self.assertIn('upper.location.z -= 0.038 * blend', source)
         self.assertIn('rig["ce_surface_standard"]', source)
 
@@ -92,11 +98,34 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         self.assertEqual((plan["render"]["width"], plan["render"]["height"]), (480, 480))
         self.assertEqual(plan["render"]["engine"], "BLENDER_WORKBENCH")
 
+    def test_v4_deformation_gate_exercises_elbows_knees_and_weight_transfer(self):
+        plan, entries = deformation_pose_plan(self.config)
+        self.assertEqual(len(entries), 4)
+        self.assertEqual([entry["frame"] for entry in entries], [10, 30, 50, 70])
+        self.assertEqual((plan["render"]["width"], plan["render"]["height"]), (960, 540))
+        self.assertIn("two handed", plan["shots"][1]["gesture"])
+        self.assertIn("seated to stand", plan["shots"][2]["gesture"])
+        self.assertIn("weight transfer", plan["shots"][3]["gesture"])
+
     def test_v3_without_single_head_surface_is_rejected(self):
         invalid = copy.deepcopy(self.manifest)
         invalid["modeling"]["head_topology"] = "separate cheek spheres"
         with self.assertRaisesRegex(ValueError, "one sculpted head"):
             validate_asset_manifest(invalid)
+
+    def test_v4_pins_identity_and_requires_weighted_deformation(self):
+        self.assertEqual(
+            self.manifest["canonical_identity_reference"]["sha256"],
+            "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9",
+        )
+        self.assertTrue(self.manifest["quality_gate"]["deformation_pose_matrix_required"])
+        self.assertEqual(
+            set(self.manifest["modeling"]["weighted_surfaces"]),
+            {"jacket_sleeve.L", "jacket_sleeve.R", "overall_leg.L", "overall_leg.R"},
+        )
+        source = BLENDER_SOURCE.read_text(encoding="utf-8")
+        self.assertIn('armature.use_deform_preserve_volume = True', source)
+        self.assertIn('corrective = obj.modifiers.new("CE_Joint_Corrective", "CORRECTIVE_SMOOTH")', source)
 
     def test_proxy_body_and_cowboy_regressions_are_rejected(self):
         invalid = copy.deepcopy(self.manifest)

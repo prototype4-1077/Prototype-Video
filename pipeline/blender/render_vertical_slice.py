@@ -124,6 +124,8 @@ def _plaid_shader(material, base_color, stripe_color) -> None:
 
 def _make_materials(bpy, *, asset_major: int = 2) -> dict:
     """Create the canonical tactile porch and June material library."""
+    plaid_base = (0.15, 0.25, 0.32, 1) if asset_major >= 4 else (0.46, 0.16, 0.10, 1)
+    plaid_cross = (0.055, 0.095, 0.14, 1) if asset_major >= 4 else (0.08, 0.13, 0.17, 1)
     materials = {
         "cedar": _material(bpy, "Warm Cedar", (0.38, 0.17, 0.075, 1), texture_scale=5.0, bump_strength=0.20),
         "dark_wood": _material(bpy, "Deep Wood", (0.16, 0.065, 0.032, 1), texture_scale=7.0, bump_strength=0.16),
@@ -141,7 +143,7 @@ def _make_materials(bpy, *, asset_major: int = 2) -> dict:
         "denim": _material(bpy, "June Faded Denim", (0.10, 0.22, 0.31, 1), texture_scale=45.0, bump_strength=0.13),
         "dark_denim": _material(bpy, "June Denim Shadow", (0.035, 0.075, 0.11, 1), texture_scale=45.0, bump_strength=0.12),
         "overalls": _material(bpy, "June Dark Overalls", (0.045, 0.10, 0.14, 1), texture_scale=48.0, bump_strength=0.14),
-        "plaid": _material(bpy, "June Shirt Plaid", (0.46, 0.16, 0.10, 1), texture_scale=35.0, bump_strength=0.09),
+        "plaid": _material(bpy, "June Shirt Plaid", plaid_base, texture_scale=35.0, bump_strength=0.09),
         "leather": _material(bpy, "Worn Boot Leather", (0.20, 0.09, 0.035, 1), texture_scale=9.0, bump_strength=0.22),
         "eye": _material(bpy, "Eye White", (0.90, 0.87, 0.77, 1), roughness=0.25),
         "iris": _material(bpy, "June Blue Gray Iris", (0.12, 0.30, 0.34, 1), roughness=0.16),
@@ -155,7 +157,7 @@ def _make_materials(bpy, *, asset_major: int = 2) -> dict:
         "sole": _material(bpy, "June Boot Sole", (0.055, 0.030, 0.022, 1), texture_scale=10.0, bump_strength=0.12),
     }
     if asset_major >= 2:
-        _plaid_shader(materials["plaid"], (0.46, 0.16, 0.10, 1), (0.08, 0.13, 0.17, 1))
+        _plaid_shader(materials["plaid"], plaid_base, plaid_cross)
         skin_principled = materials["skin"].node_tree.nodes.get("Principled BSDF")
         if skin_principled and skin_principled.inputs.get("Subsurface Weight") is not None:
             skin_principled.inputs["Subsurface Weight"].default_value = 0.08
@@ -438,6 +440,87 @@ def _parent_to_bone(obj, rig, bone_name: str) -> None:
     obj.parent_type = "BONE"
     obj.parent_bone = bone_name
     obj.matrix_world = matrix
+
+
+def _weighted_chain_surface(
+    bpy,
+    mathutils,
+    name: str,
+    points,
+    radii,
+    ring_weights,
+    rig,
+    material,
+    *,
+    radial_segments: int = 28,
+):
+    """Create a continuous preserve-volume limb driven by two or more bones."""
+    if not (len(points) == len(radii) == len(ring_weights)) or len(points) < 2:
+        raise ValueError("weighted chain points, radii, and weights must align")
+    path = [mathutils.Vector(point) for point in points]
+    vertices = []
+    vertex_weights = []
+    for ring_index, (point, radius, weights) in enumerate(zip(path, radii, ring_weights)):
+        if ring_index == 0:
+            tangent = path[1] - point
+        elif ring_index == len(path) - 1:
+            tangent = point - path[-2]
+        else:
+            tangent = path[ring_index + 1] - path[ring_index - 1]
+        tangent.normalize()
+        reference = mathutils.Vector((0.0, 0.0, 1.0))
+        if abs(tangent.dot(reference)) > 0.92:
+            reference = mathutils.Vector((0.0, 1.0, 0.0))
+        axis_u = tangent.cross(reference).normalized()
+        axis_v = tangent.cross(axis_u).normalized()
+        for segment in range(radial_segments):
+            angle = math.tau * segment / radial_segments
+            offset = axis_u * (math.cos(angle) * radius) + axis_v * (math.sin(angle) * radius)
+            vertices.append(tuple(point + offset))
+            vertex_weights.append(weights)
+    faces = []
+    for ring_index in range(len(path) - 1):
+        offset = ring_index * radial_segments
+        next_offset = offset + radial_segments
+        for segment in range(radial_segments):
+            following = (segment + 1) % radial_segments
+            faces.append((offset + segment, offset + following, next_offset + following, next_offset + segment))
+    start_center = len(vertices)
+    end_center = start_center + 1
+    vertices.extend((tuple(path[0]), tuple(path[-1])))
+    vertex_weights.extend((ring_weights[0], ring_weights[-1]))
+    for segment in range(radial_segments):
+        following = (segment + 1) % radial_segments
+        faces.append((start_center, following, segment))
+        last = (len(path) - 1) * radial_segments
+        faces.append((end_center, last + segment, last + following))
+
+    mesh = bpy.data.meshes.new(f"{name}_Data")
+    mesh.from_pydata(vertices, [], faces)
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    _assign(obj, material)
+    _smooth(obj)
+    group_names = sorted({bone for weights in ring_weights for bone in weights})
+    groups = {bone: obj.vertex_groups.new(name=bone) for bone in group_names}
+    for vertex_index, weights in enumerate(vertex_weights):
+        total = sum(max(0.0, float(weight)) for weight in weights.values())
+        if total <= 0:
+            raise ValueError(f"weighted chain vertex has no deformation weight: {name}")
+        for bone, weight in weights.items():
+            groups[bone].add([vertex_index], max(0.0, float(weight)) / total, "REPLACE")
+    armature = obj.modifiers.new("CE_Preserve_Volume_Rig", "ARMATURE")
+    armature.object = rig
+    armature.use_deform_preserve_volume = True
+    corrective = obj.modifiers.new("CE_Joint_Corrective", "CORRECTIVE_SMOOTH")
+    corrective.factor = 0.38
+    corrective.iterations = 4
+    subdivision = obj.modifiers.new("CE_Production_Subdivision", "SUBSURF")
+    subdivision.levels = 2
+    subdivision.render_levels = 2
+    obj["ce_deformation_standard"] = "weighted_chain_preserve_volume_corrective_smooth"
+    obj["ce_weighted_bones"] = ",".join(group_names)
+    return obj
 
 
 def _look_at(obj, target, mathutils) -> None:
@@ -1125,6 +1208,176 @@ def _make_june_v3(bpy, mathutils, materials: dict):
     return rig, mouth, face_controls
 
 
+def _make_june_v4(bpy, mathutils, materials: dict):
+    """Hero v4: canonical identity tuning plus continuous weighted deformation."""
+    rig, mouth, face_controls = _make_june_v3(bpy, mathutils, materials)
+
+    # Replace segmented tubes with continuous weighted surfaces. Closely spaced
+    # rings around elbows and knees provide a deformation zone rather than a
+    # rigid hinge; preserve-volume and corrective smoothing finish the bend.
+    legacy_limbs = {
+        "June_upper_arm.L", "June_forearm.L", "June_upper_arm.R", "June_forearm.R",
+        "June_thigh.L", "June_shin.L", "June_thigh.R", "June_shin.R",
+    }
+    for name in legacy_limbs:
+        obj = bpy.data.objects.get(name)
+        if obj is not None:
+            bpy.data.objects.remove(obj, do_unlink=True)
+
+    for side in ("L", "R"):
+        upper_name = f"upper_arm.{side}"
+        fore_name = f"forearm.{side}"
+        upper = rig.data.bones[upper_name]
+        fore = rig.data.bones[fore_name]
+        shoulder = upper.head_local.copy()
+        elbow = upper.tail_local.copy()
+        wrist = fore.tail_local.copy()
+        arm_points = (
+            shoulder,
+            shoulder.lerp(elbow, 0.48),
+            shoulder.lerp(elbow, 0.86),
+            elbow.lerp(wrist, 0.14),
+            elbow.lerp(wrist, 0.58),
+            wrist,
+        )
+        arm_radii = (0.112, 0.105, 0.090, 0.086, 0.076, 0.066)
+        arm_weights = (
+            {upper_name: 1.0},
+            {upper_name: 1.0},
+            {upper_name: 0.82, fore_name: 0.18},
+            {upper_name: 0.18, fore_name: 0.82},
+            {fore_name: 1.0},
+            {fore_name: 1.0},
+        )
+        sleeve = _weighted_chain_surface(
+            bpy,
+            mathutils,
+            f"June_Weighted_Jacket_Sleeve_{side}",
+            arm_points,
+            arm_radii,
+            arm_weights,
+            rig,
+            materials["denim"],
+            radial_segments=32,
+        )
+        sleeve["ce_joint"] = "continuous_elbow"
+
+        thigh_name = f"thigh.{side}"
+        shin_name = f"shin.{side}"
+        thigh = rig.data.bones[thigh_name]
+        shin = rig.data.bones[shin_name]
+        hip = thigh.head_local.copy()
+        knee = thigh.tail_local.copy()
+        ankle = shin.tail_local.copy()
+        leg_points = (
+            hip,
+            hip.lerp(knee, 0.48),
+            hip.lerp(knee, 0.86),
+            knee.lerp(ankle, 0.14),
+            knee.lerp(ankle, 0.58),
+            ankle,
+        )
+        leg_radii = (0.124, 0.116, 0.101, 0.098, 0.086, 0.073)
+        leg_weights = (
+            {thigh_name: 1.0},
+            {thigh_name: 1.0},
+            {thigh_name: 0.82, shin_name: 0.18},
+            {thigh_name: 0.18, shin_name: 0.82},
+            {shin_name: 1.0},
+            {shin_name: 1.0},
+        )
+        trouser = _weighted_chain_surface(
+            bpy,
+            mathutils,
+            f"June_Weighted_Overall_Leg_{side}",
+            leg_points,
+            leg_radii,
+            leg_weights,
+            rig,
+            materials["overalls"],
+            radial_segments=32,
+        )
+        trouser["ce_joint"] = "continuous_knee"
+
+    # Canonical June has large, emotionally legible blue-gray eyes. Scale the
+    # complete eye stack together and widen the lids around their own centers.
+    for side, center_x, center_z in (("L", -0.105, 2.715), ("R", 0.108, 2.709)):
+        for prefix, scale_x, scale_z in (
+            ("June_Eye_", 1.48, 1.45),
+            ("June_Iris_", 1.50, 1.50),
+            ("June_Pupil_", 1.38, 1.42),
+            ("June_Catchlight_", 1.35, 1.35),
+        ):
+            obj = bpy.data.objects.get(f"{prefix}{side}")
+            if obj is not None:
+                obj.scale.x *= scale_x
+                obj.scale.z *= scale_z
+        for prefix in ("June_Eyelid_Upper_", "June_Eyelid_Lower_", "June_Brow_"):
+            curve = bpy.data.objects.get(f"{prefix}{side}")
+            if curve is None:
+                continue
+            for spline in curve.data.splines:
+                for point in spline.bezier_points:
+                    point.co.x = center_x + (point.co.x - center_x) * 1.43
+                    point.co.z = center_z + (point.co.z - center_z) * 1.34
+            curve.data.bevel_depth *= 1.12
+
+    # Increase expression displacement while retaining the v3 sculpt as basis.
+    head = bpy.data.objects["June_Head"]
+    basis = head.data.shape_keys.key_blocks.get("Basis")
+    if basis is not None:
+        for key in head.data.shape_keys.key_blocks:
+            if key.name == "Basis":
+                continue
+            for base_point, target in zip(basis.data, key.data):
+                target.co = base_point.co + (target.co - base_point.co) * 1.65
+    head["ce_expression_readability_gain"] = 1.65
+
+    # A fuller, rounder beard and stronger mouth opening bring the face back to
+    # the canonical turnaround and make visemes survive medium-shot framing.
+    beard = bpy.data.objects.get("June_Fitted_Beard")
+    if beard is not None:
+        for vertex in beard.data.vertices:
+            vertex.co.x = 0.005 + (vertex.co.x - 0.005) * 1.16
+            vertex.co.z = 2.455 + (vertex.co.z - 2.455) * 1.30
+            vertex.co.y -= 0.012
+        beard["ce_beard_design"] = "canonical_full_rounded_fitted_patch"
+    mouth.scale.x *= 1.12
+    mouth.scale.z *= 1.58
+    mouth.location.y -= 0.018
+    mouth["ce_performance_scale"] = "canonical_large_eye_full_beard_closeup"
+    teeth = bpy.data.objects.get("June_Upper_Teeth")
+    if teeth is not None:
+        teeth.scale.z *= 0.72
+
+    # Soft side masses read as swept white hair from the front; the fitted v3
+    # shell remains underneath for profile continuity.
+    hair_specs = (
+        ("L_Temple", (-0.266, 0.020, 2.820), (0.080, 0.108, 0.120)),
+        ("R_Temple", (0.258, 0.024, 2.806), (0.076, 0.104, 0.114)),
+        ("L_Sweep", (-0.205, 0.035, 2.925), (0.110, 0.125, 0.070)),
+        ("R_Sweep", (0.190, 0.040, 2.915), (0.102, 0.120, 0.066)),
+    )
+    for label, location, scale in hair_specs:
+        tuft = _sphere(
+            bpy,
+            f"June_Canonical_Hair_{label}",
+            location,
+            scale,
+            materials["hair"],
+            segments=48,
+            rings=24,
+        )
+        _parent_to_bone(tuft, rig, "head")
+
+    rig["ce_asset_major"] = 4
+    rig["ce_identity_reference"] = "june-oxley-canonical-turnaround-v1.png"
+    rig["ce_body_deformation"] = "continuous_weighted_sleeves_and_trousers"
+    rig["ce_surface_standard"] = "canonical_identity_weighted_deformation_hero"
+    rig["ce_face_topology"] = "unified_sculpt_large_eye_full_beard_radial_lip"
+    return rig, mouth, face_controls
+
+
 def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
     if asset_major == 1:
         return _make_june_v1(bpy, mathutils, materials)
@@ -1132,6 +1385,8 @@ def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
         return _make_june_v2(bpy, mathutils, materials)
     if asset_major == 3:
         return _make_june_v3(bpy, mathutils, materials)
+    if asset_major == 4:
+        return _make_june_v4(bpy, mathutils, materials)
     raise ValueError(f"unsupported June asset major version: {asset_major}")
 
 
@@ -1234,6 +1489,24 @@ def _body_performance_pose(shot: dict, index: int) -> tuple[float, float]:
     return (lift, lean)
 
 
+def _leg_performance_pose(shot: dict, index: int) -> dict[str, float]:
+    """Translate weight-transfer direction into bounded hip and knee flexion."""
+    cue = _cue_text(shot.get("gesture"), shot.get("performance"))
+    if "seated to stand" in cue or "stand with mug" in cue:
+        return {"thigh.L": -24.0, "shin.L": 31.0, "thigh.R": -22.0, "shin.R": 29.0}
+    if "weight transfer" in cue or "step" in cue:
+        return {"thigh.L": -11.0, "shin.L": 15.0, "thigh.R": 5.0, "shin.R": -7.0}
+    if "settle" in cue or "sit" in cue:
+        return {"thigh.L": 8.0, "shin.L": -10.0, "thigh.R": 7.0, "shin.R": -9.0}
+    source = cue or f"grounded legs {index}"
+    return {
+        name: round(limit * _cue_signed_value(source, f"leg-{name}"), 3)
+        for name, limit in (
+            ("thigh.L", 5.0), ("shin.L", 7.0), ("thigh.R", 5.0), ("shin.R", 7.0)
+        )
+    }
+
+
 def _camera_motion_delta(shot: dict, index: int) -> dict[str, tuple[float, float, float]]:
     """Compile an authored camera move into deterministic location/target deltas."""
     cue = _cue_text(shot.get("camera_move")) or "slow push"
@@ -1301,6 +1574,10 @@ def _animate_rig(bpy, rig, plan: dict) -> None:
     upper_r = rig.pose.bones["upper_arm.R"]
     fore_r = rig.pose.bones["forearm.R"]
     hand_r = rig.pose.bones["hand.R"]
+    thigh_l = rig.pose.bones["thigh.L"]
+    shin_l = rig.pose.bones["shin.L"]
+    thigh_r = rig.pose.bones["thigh.R"]
+    shin_r = rig.pose.bones["shin.R"]
 
     def breathing():
         for frame in range(1, frame_end + 1, 30):
@@ -1334,6 +1611,10 @@ def _animate_rig(bpy, rig, plan: dict) -> None:
             "upper_arm.R": upper_r,
             "forearm.R": fore_r,
             "hand.R": hand_r,
+            "thigh.L": thigh_l,
+            "shin.L": shin_l,
+            "thigh.R": thigh_r,
+            "shin.R": shin_r,
         }
         for bone in gesture_bones.values():
             bone.rotation_euler = (0, 0, 0)
@@ -1346,12 +1627,15 @@ def _animate_rig(bpy, rig, plan: dict) -> None:
             start = int(shot["frame_start"])
             end = int(shot["frame_end"])
             midpoint = (start + end) // 2
-            pose = _gesture_pose(shot, index)
+            pose = {**_gesture_pose(shot, index), **_leg_performance_pose(shot, index)}
             lift, lean = _body_performance_pose(shot, index)
             for frame, strength in ((start, 0.0), (midpoint, 1.0), (end, 0.18)):
                 for name, bone in gesture_bones.items():
                     degrees = pose[name] * strength
-                    bone.rotation_euler = (0.0, math.radians(degrees), math.radians(degrees * 0.35))
+                    if name.startswith(("thigh.", "shin.")):
+                        bone.rotation_euler = (math.radians(degrees), 0.0, math.radians(degrees * 0.08))
+                    else:
+                        bone.rotation_euler = (0.0, math.radians(degrees), math.radians(degrees * 0.35))
                     bone.keyframe_insert(data_path="rotation_euler", frame=frame)
                 torso.location.z = lift * strength
                 torso.rotation_euler[1] = math.radians(lean * strength)

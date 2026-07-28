@@ -37,6 +37,7 @@ class _FakeRig:
         names = (
             "torso", "head", "upper_arm.L", "forearm.L", "hand.L",
             "upper_arm.R", "forearm.R", "hand.R",
+            "thigh.L", "shin.L", "thigh.R", "shin.R",
         )
         self.pose = type("Pose", (), {"bones": {name: _FakeBone() for name in names}})()
         self.animation_data = type("AnimationData", (), {"nla_tracks": _FakeTracks(), "action": None})()
@@ -130,7 +131,10 @@ class CartoonVerticalSliceTests(unittest.TestCase):
         }
         head_frames = {frame for path, frame in rig.pose.bones["head"].keyframes if path == "rotation_euler"}
         self.assertTrue(midpoints.issubset(head_frames))
-        for name in ("upper_arm.L", "forearm.L", "hand.L", "upper_arm.R", "forearm.R", "hand.R"):
+        for name in (
+            "upper_arm.L", "forearm.L", "hand.L", "upper_arm.R", "forearm.R", "hand.R",
+            "thigh.L", "shin.L", "thigh.R", "shin.R",
+        ):
             gesture_frames = {frame for path, frame in rig.pose.bones[name].keyframes if path == "rotation_euler"}
             self.assertTrue(midpoints.issubset(gesture_frames), name)
 
@@ -151,6 +155,12 @@ class CartoonVerticalSliceTests(unittest.TestCase):
         self.assertEqual(blender_studio._gesture_pose(authored, 5), blender_studio._gesture_pose(repeat, 5))
         self.assertNotEqual(blender_studio._gesture_pose(authored, 5), blender_studio._gesture_pose(default, 5))
         self.assertEqual(blender_studio._body_performance_pose(authored, 5), (-0.005, 2.4))
+        self.assertEqual(
+            blender_studio._leg_performance_pose(
+                {"gesture": "seated to stand with mug", "performance": "weight forward"}, 0
+            ),
+            {"thigh.L": -24.0, "shin.L": 31.0, "thigh.R": -22.0, "shin.R": 29.0},
+        )
         authored_move = blender_studio._camera_motion_delta(authored, 5)
         self.assertEqual(authored_move["target"], (0.0, 0.0, 0.0))
         self.assertAlmostEqual(authored_move["location"][0], 0.24)

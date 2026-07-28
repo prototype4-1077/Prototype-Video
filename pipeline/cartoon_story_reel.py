@@ -21,6 +21,10 @@ from pipeline.cartoon_vertical_slice import compile_plan, validate_config
 
 STORY_REEL_CONTRACT_VERSION = 1
 DEFAULT_LEAD_SECONDS = 0.10
+NONFINAL_STYLE_TARGET_STATUSES = {
+    "provisional_art_direction_targets",
+    "canonical_identity_aligned_targets",
+}
 
 
 def _require_executable(value: str | Path, label: str) -> str:
@@ -39,8 +43,10 @@ def load_story_reel_spec(scene_path: str | Path, style_manifest_path: str | Path
         raise ValueError("story reel requires a golden_scene benchmark")
     if styles.get("production") != scene.get("production"):
         raise ValueError("style manifest production does not match the scene")
-    if styles.get("status") != "provisional_art_direction_targets":
-        raise ValueError("style manifest must remain explicitly provisional")
+    if styles.get("status") not in NONFINAL_STYLE_TARGET_STATUSES:
+        raise ValueError("style manifest must remain an explicitly non-final target set")
+    if styles.get("approval_required") is not True:
+        raise ValueError("style targets must remain gated by explicit human approval")
     return scene, styles
 
 
@@ -350,8 +356,8 @@ def _mix_audio(voice: Path, duration: float, *, ffmpeg: str, destination: Path) 
         "anoisesrc=color=white:amplitude=0.030:duration=1.8:sample_rate=48000,"
         f"highpass=f=450,lowpass=f=2600,afade=t=in:d=0.20,afade=t=out:st=1.25:d=0.55,adelay={pour_delay_ms}:all=1[pour];"
         "[0:a]aformat=sample_rates=48000:channel_layouts=mono,"
-        "volume='if(between(t,18.8,22.6),0.56,if(between(t,7.5,13.2),0.88,"
-        "if(between(t,22.6,31.2),0.80+0.20*(t-22.6)/8.6,1.05)))':eval=frame[dx];"
+        "volume='if(between(t,18.8,22.6),0.40,if(between(t,7.5,13.2),0.82,"
+        "if(between(t,22.6,31.2),0.68+0.32*(t-22.6)/8.6,1.05)))':eval=frame[dx];"
         "[dx][amb][pour]amix=inputs=3:duration=first:normalize=0,"
         "loudnorm=I=-16.2:LRA=7:TP=-1,alimiter=limit=0.89[mix]"
     )
@@ -509,7 +515,7 @@ def render_story_reel(
         "known_limits": [
             "Style-frame motion is editorial camera motion, not final character deformation.",
             "The free local scratch voice is not June's canonical performance.",
-            *([] if loudness["loudness_range_pass"] else ["Scratch-voice loudness range remains below the 4–8 LU final-mix target."]),
+            *([] if loudness["loudness_range_pass"] else ["Scratch-voice loudness range remains outside the 4-8 LU final-mix target."]),
         ],
     }
     (output / "story-reel-report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")

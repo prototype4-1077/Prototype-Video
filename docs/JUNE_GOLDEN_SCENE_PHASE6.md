@@ -5,7 +5,7 @@ Phase 6 changes the unit of quality from a turntable or three generic dialogue s
 ## What is now executable
 
 - `examples/june-golden-scene-twelve-dollar-mug.json` is the locked story, performance, framing, prop, art, sound, and acceptance contract for 1,164 frames at 30 fps.
-- `concept/style_frames/june_golden_scene_style_targets_v1.json` registers byte-exact art-direction targets for every landscape shot and a separately composed portrait resolution frame.
+- `concept/style_frames/june_golden_scene_style_targets_v2.json` registers byte-exact, canonical-identity-aligned art-direction targets for every landscape shot and a separately composed portrait resolution frame. It also pins `june-oxley-canonical-turnaround-v1.png` as the hard identity and wardrobe reference.
 - `pipeline/cartoon_story_reel.py` turns those targets into a 1920×1080 timed reel with authored camera motion, six-word caption phrases, local scratch voice, procedural ambience/pour sound, a 48 kHz mix, and machine-readable delivery QA.
 - `pipeline/cartoon_shape_lab.py` creates immutable zero-cost June shape candidates and Pareto-frontier inputs without pretending that random search is reinforcement learning.
 - The Blender performance renderer now consumes every authored shot, gesture, performance direction, and camera move instead of indexing only three hard-coded beats.
@@ -17,7 +17,7 @@ The production build uses local FFmpeg and Piper 1.2.0 with the MIT-licensed `en
 ```text
 python -m pipeline.cartoon_story_reel \
   examples/june-golden-scene-twelve-dollar-mug.json \
-  concept/style_frames/june_golden_scene_style_targets_v1.json \
+  concept/style_frames/june_golden_scene_style_targets_v2.json \
   --output-dir build/june-golden-scene \
   --piper /path/to/piper \
   --voice-model /path/to/en_US-ryan-medium.onnx

@@ -9,13 +9,14 @@ from pipeline.cartoon_story_reel import (
     _parse_loudnorm_output,
     caption_chunks,
     caption_events,
+    load_story_reel_spec,
     style_frames_for_profile,
 )
 
 
 ROOT = Path(__file__).resolve().parents[2]
 SCENE_PATH = ROOT / "examples" / "june-golden-scene-twelve-dollar-mug.json"
-STYLE_MANIFEST_PATH = ROOT / "concept" / "style_frames" / "june_golden_scene_style_targets_v1.json"
+STYLE_MANIFEST_PATH = ROOT / "concept" / "style_frames" / "june_golden_scene_style_targets_v2.json"
 
 
 def _png_dimensions(path: Path) -> tuple[int, int]:
@@ -64,15 +65,26 @@ class GoldenSceneTests(unittest.TestCase):
     def test_story_props_sound_and_human_quality_gates_are_explicit(self):
         prop_ids = {prop["id"] for prop in self.scene["props"]}
         self.assertTrue({"returned_enamel_mug", "small_ledger", "short_pencil", "coffee_pot"}.issubset(prop_ids))
+        palette = self.scene["art_direction"]["palette_hex"]
+        self.assertIn("plaid_muted_navy", palette)
+        self.assertNotIn("plaid_muted_red", palette)
         self.assertEqual(self.scene["sound"]["music"], "none_intentional")
         self.assertEqual(self.scene["sound"]["target_lufs_i"], -16)
         self.assertEqual(self.scene["quality_gates"]["human_scores_minimum"], 4)
         self.assertIn("emotional_clarity", self.scene["quality_gates"]["human_score_dimensions"])
 
     def test_style_targets_are_versioned_and_byte_exact(self):
-        self.assertEqual(self.styles["status"], "provisional_art_direction_targets")
+        self.assertEqual(self.styles["version"], 2)
+        self.assertEqual(self.styles["status"], "canonical_identity_aligned_targets")
         self.assertTrue(self.styles["approval_required"])
         self.assertFalse(self.styles["generator"]["paid_runtime_dependency"])
+        canonical = self.styles["canonical_identity_reference"]
+        canonical_path = STYLE_MANIFEST_PATH.parent / canonical["path"]
+        self.assertTrue(canonical_path.is_file())
+        self.assertEqual(hashlib.sha256(canonical_path.read_bytes()).hexdigest(), canonical["sha256"])
+        self.assertEqual(_png_dimensions(canonical_path), (canonical["width"], canonical["height"]))
+        self.assertIn("blue-and-navy plaid", self.styles["identity_lock"]["wardrobe"])
+        self.assertIn("red plaid shirt", self.styles["identity_lock"]["forbidden"])
         self.assertEqual(
             {frame["shot"] for frame in self.styles["frames"]},
             {f"GS0{index}0" for index in range(1, 8)},
@@ -88,6 +100,9 @@ class GoldenSceneTests(unittest.TestCase):
             self.assertEqual(_png_dimensions(path), (frame["width"], frame["height"]))
 
     def test_story_reel_has_one_verified_landscape_target_per_shot(self):
+        loaded_scene, loaded_styles = load_story_reel_spec(SCENE_PATH, STYLE_MANIFEST_PATH)
+        self.assertEqual(loaded_scene["production"], self.scene["production"])
+        self.assertEqual(loaded_styles["status"], "canonical_identity_aligned_targets")
         frames = style_frames_for_profile(
             self.styles,
             profile="youtube",

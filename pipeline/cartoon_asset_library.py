@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 from pathlib import Path
 import re
@@ -117,11 +118,40 @@ def validate_asset_manifest(manifest: dict) -> None:
             raise ValueError("Hero v3 must declare Eevee as the lookdev review engine")
         if gate.get("promotion_engine") != "CYCLES":
             raise ValueError("Hero v3 must retain Cycles as the final promotion engine")
+    if asset_major >= 4:
+        canonical = manifest.get("canonical_identity_reference") or {}
+        if canonical.get("path") != "concept/style_frames/june-oxley-canonical-turnaround-v1.png":
+            raise ValueError("Hero v4 must pin the canonical June turnaround")
+        if not re.fullmatch(r"[0-9a-f]{64}", str(canonical.get("sha256", ""))):
+            raise ValueError("Hero v4 canonical identity reference must have a SHA-256")
+        design_text = " ".join(str(value) for value in design.values()).lower()
+        if "large" not in design_text or "blue-and-navy plaid" not in design_text:
+            raise ValueError("Hero v4 must lock canonical large eyes and blue-and-navy plaid")
+        modeling = manifest.get("modeling") or {}
+        weighted = _string_set(modeling.get("weighted_surfaces"), "modeling.weighted_surfaces")
+        required_weighted = {"jacket_sleeve.L", "jacket_sleeve.R", "overall_leg.L", "overall_leg.R"}
+        if not required_weighted.issubset(weighted):
+            raise ValueError("Hero v4 must provide continuous weighted arm and leg surfaces")
+        deformation = str(modeling.get("deformation_standard", "")).lower()
+        if "preserve-volume" not in deformation or "corrective-smooth" not in deformation:
+            raise ValueError("Hero v4 must declare preserve-volume corrective deformation")
+        if gate.get("deformation_pose_matrix_required") is not True:
+            raise ValueError("Hero v4 requires a deformation pose matrix")
 
 
 def load_asset_manifest(path: str | Path) -> dict:
-    manifest = json.loads(Path(path).read_text(encoding="utf-8"))
+    manifest_path = Path(path).resolve()
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     validate_asset_manifest(manifest)
+    if int(str(manifest["asset_version"]).split(".", 1)[0]) >= 4:
+        canonical = manifest["canonical_identity_reference"]
+        repo_root = manifest_path.parents[2]
+        reference = repo_root / canonical["path"]
+        if not reference.is_file():
+            raise ValueError(f"Hero v4 canonical identity reference is missing: {reference}")
+        digest = hashlib.sha256(reference.read_bytes()).hexdigest()
+        if digest != canonical["sha256"]:
+            raise ValueError("Hero v4 canonical identity reference hash does not match")
     return manifest
 
 
@@ -226,6 +256,58 @@ def facial_performance_plan(
         )
     plan["mouth_cues"] = mouth_cues
     plan["facial_performance_cues"] = facial_cues
+    return plan, entries
+
+
+def deformation_pose_plan(
+    config: dict,
+    *,
+    width: int = 960,
+    height: int = 540,
+    engine: str = "BLENDER_WORKBENCH",
+    samples: int = 1,
+) -> tuple[dict, list[dict]]:
+    """Build a four-pose matrix that exposes elbows, knees, and weight shift."""
+    if int(width) <= 0 or int(height) <= 0 or int(samples) <= 0:
+        raise ValueError("deformation gate dimensions and samples must be positive")
+    plan = compile_plan(config, profile="youtube", quality="production")
+    entries = [
+        {"label": "grounded_neutral", "gesture": "settle", "performance": "grounded seated neutral"},
+        {"label": "elbow_fold", "gesture": "two handed welcome", "performance": "both elbows bend clearly"},
+        {"label": "seated_to_stand", "gesture": "seated to stand with mug", "performance": "weight forward through both feet"},
+        {"label": "weight_transfer", "gesture": "weight transfer step left", "performance": "asymmetric planted weight transfer"},
+    ]
+    frame_span = 20
+    plan["frame_start"] = 1
+    plan["frame_end"] = len(entries) * frame_span
+    plan["duration_seconds"] = plan["frame_end"] / int(plan["render"]["fps"])
+    plan["render"].update(
+        {
+            "width": int(width),
+            "height": int(height),
+            "engine": engine,
+            "samples": int(samples),
+            "quality": "deformation-pose-gate",
+        }
+    )
+    plan["shots"] = []
+    for index, entry in enumerate(entries):
+        start = index * frame_span + 1
+        end = start + frame_span - 1
+        frame = (start + end) // 2
+        entry.update({"frame_start": start, "frame_end": end, "frame": frame})
+        plan["shots"].append(
+            {
+                "id": f"deform-{index + 1:02d}",
+                "camera": "medium",
+                "frame_start": start,
+                "frame_end": end,
+                "gesture": entry["gesture"],
+                "performance": entry["performance"],
+                "camera_move": "locked",
+            }
+        )
+    plan["mouth_cues"] = [{"frame_start": 1, "frame_end": plan["frame_end"], "shape": "X"}]
     return plan, entries
 
 
@@ -357,6 +439,33 @@ def render_quality_gate(
     )
     facial_matrix = output / "june-facial-performance-matrix.png"
     _facial_matrix(ffmpeg_bin, face_frames_dir, face_entries, facial_matrix)
+    deformation_gate = None
+    if manifest["quality_gate"].get("deformation_pose_matrix_required"):
+        deform_plan, deform_entries = deformation_pose_plan(config, engine=engine, samples=int(samples))
+        deform_plan["asset_library"] = {
+            "asset_id": manifest["asset_id"],
+            "asset_version": manifest["asset_version"],
+            "path": library.name,
+        }
+        deform_plan_path = plans_dir / "june-deformation-poses.json"
+        deform_plan_path.write_text(json.dumps(deform_plan, indent=2) + "\n", encoding="utf-8")
+        deform_frames_dir = frames_root / "deformation-poses"
+        _render_frames(
+            blender_bin,
+            deform_plan_path,
+            deform_frames_dir,
+            asset_library=library,
+            selected_frames=[int(entry["frame"]) for entry in deform_entries],
+        )
+        deformation_matrix = output / "june-deformation-pose-matrix.png"
+        _contact_sheet(ffmpeg_bin, deform_plan, deform_frames_dir, deformation_matrix)
+        deformation_gate = {
+            "engine": deform_plan["render"]["engine"],
+            "width": deform_plan["render"]["width"],
+            "height": deform_plan["render"]["height"],
+            "matrix": deformation_matrix.name,
+            "entries": deform_entries,
+        }
     report = {
         "contract_version": ASSET_CONTRACT_VERSION,
         "asset_id": manifest["asset_id"],
@@ -379,6 +488,7 @@ def render_quality_gate(
             "matrix": facial_matrix.name,
             "entries": face_entries,
         },
+        "deformation_pose_gate": deformation_gate,
     }
     (output / "asset-quality-report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     return report
