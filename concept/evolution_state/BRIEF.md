@@ -13,12 +13,12 @@ The evolution laboratory generated observations and proposals only. It did not a
 - **0.900** — This video fits no declared pillar or frontier concept; is the map missing a dimension?
 
 ## Best uncertainty-reducing experiments
-- **Scenes involving synthetic contact may have an elevated revision risk.**  
-  Control: Keep the current champion value for synthetic_contact. Treatment: Change only synthetic_contact using the challenger condition.
-- **The hook value 'demonstration' may improves blended reach and retention in the present catalog.**  
-  Control: Keep the current champion value for hook. Treatment: Change only hook using the challenger condition.
 - **The narration value 'teaching' may reduces blended reach and retention in the present catalog.**  
   Control: Keep the current champion value for narration. Treatment: Change only narration using the challenger condition.
+- **The hook value 'demonstration' may improves blended reach and retention in the present catalog.**  
+  Control: Keep the current champion value for hook. Treatment: Change only hook using the challenger condition.
+- **The pillars value 'mediation' may reduces blended reach and retention in the present catalog.**  
+  Control: Keep the current champion value for pillars. Treatment: Change only pillars using the challenger condition.
 - **The pillars value 'emotion' may improves blended reach and retention in the present catalog.**  
   Control: Keep the current champion value for pillars. Treatment: Change only pillars using the challenger condition.
 
