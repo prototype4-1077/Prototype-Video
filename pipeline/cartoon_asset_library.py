@@ -18,6 +18,10 @@ REQUIRED_CHARACTER = "june_oxley"
 REQUIRED_VISEMES = set("ABCDEFGHX")
 REQUIRED_EXPRESSIONS = {"smile", "thoughtful", "soft_chuckle"}
 REQUIRED_V2_CORRECTIVES = {"brow_raise", "brow_knit", "squint", "cheek_raise"}
+FACIAL_GATE_VISEMES = tuple("ABCDEFGHX")
+FACIAL_GATE_EXPRESSIONS = (
+    "smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise"
+)
 REQUIRED_BONES = {
     "root", "pelvis", "torso", "neck", "head",
     "upper_arm.L", "forearm.L", "hand.L", "upper_arm.R", "forearm.R", "hand.R",
@@ -94,6 +98,19 @@ def validate_asset_manifest(manifest: dict) -> None:
             raise ValueError("Hero v2 hands must use segmented digits")
         if gate.get("artifact_reopen_required") is not True or gate.get("human_art_approval_required") is not True:
             raise ValueError("Hero v2 requires artifact reopen and human art approval gates")
+    if asset_major >= 3:
+        modeling = manifest.get("modeling") or {}
+        if modeling.get("head_topology") != "single_sculpted_surface":
+            raise ValueError("Hero v3 must model the facial landmarks on one sculpted head surface")
+        unified = _string_set(modeling.get("unified_surfaces"), "modeling.unified_surfaces")
+        if not {"head", "plaid_torso", "open_denim_shell", "beard_patch"}.issubset(unified):
+            raise ValueError("Hero v3 is missing required unified surfaces")
+        if gate.get("facial_performance_matrix_required") is not True:
+            raise ValueError("Hero v3 requires a facial performance matrix")
+        matrix_visemes = _string_set(gate.get("matrix_visemes"), "quality_gate.matrix_visemes")
+        matrix_expressions = _string_set(gate.get("matrix_expressions"), "quality_gate.matrix_expressions")
+        if matrix_visemes != set(FACIAL_GATE_VISEMES) or matrix_expressions != set(FACIAL_GATE_EXPRESSIONS):
+            raise ValueError("Hero v3 facial matrix must expose every viseme and expression")
 
 
 def load_asset_manifest(path: str | Path) -> dict:
@@ -147,6 +164,98 @@ def shot_quality_frames(plan: dict) -> list[int]:
         (int(shot["frame_start"]) + int(shot["frame_end"])) // 2
         for shot in plan["shots"]
     ]
+
+
+def facial_performance_plan(config: dict) -> tuple[dict, list[dict]]:
+    """Build a deterministic close-up matrix plan for every facial control."""
+    plan = compile_plan(config, profile="youtube", quality="production")
+    entries = [
+        {"kind": "viseme", "label": shape, "viseme": shape, "expression": None}
+        for shape in FACIAL_GATE_VISEMES
+    ] + [
+        {"kind": "expression", "label": expression, "viseme": "X", "expression": expression}
+        for expression in FACIAL_GATE_EXPRESSIONS
+    ]
+    frame_span = 10
+    plan["frame_start"] = 1
+    plan["frame_end"] = len(entries) * frame_span
+    plan["duration_seconds"] = plan["frame_end"] / int(plan["render"]["fps"])
+    plan["render"].update(
+        {
+            "width": 960,
+            "height": 960,
+            "engine": "BLENDER_EEVEE_NEXT",
+            "samples": 32,
+            "quality": "facial-performance-gate",
+        }
+    )
+    plan["shots"] = [
+        {"id": "face-visemes-a", "camera": "close", "frame_start": 1, "frame_end": 60},
+        {"id": "face-visemes-b", "camera": "close", "frame_start": 61, "frame_end": 110},
+        {"id": "face-expressions", "camera": "close", "frame_start": 111, "frame_end": plan["frame_end"]},
+    ]
+    mouth_cues = []
+    facial_cues = []
+    for index, entry in enumerate(entries):
+        start = index * frame_span + 1
+        end = start + frame_span - 1
+        frame = start + frame_span // 2
+        entry.update({"frame_start": start, "frame_end": end, "frame": frame})
+        mouth_cues.append({"frame_start": start, "frame_end": end, "shape": entry["viseme"]})
+        facial_cues.append(
+            {
+                "frame_start": start,
+                "frame_end": end,
+                "expression": entry["expression"],
+                "strength": 1.0,
+            }
+        )
+    plan["mouth_cues"] = mouth_cues
+    plan["facial_performance_cues"] = facial_cues
+    return plan, entries
+
+
+def _facial_matrix(ffmpeg: str, frames_dir: Path, entries: list[dict], output: Path) -> None:
+    """Assemble a labeled 4x4 face matrix, with a portable unlabeled fallback."""
+    command = [ffmpeg, "-y"]
+    for entry in entries:
+        command.extend(["-i", str(frames_dir / f"frame_{entry['frame']:04d}.png")])
+    filters = []
+    labels = []
+    for index, entry in enumerate(entries):
+        label = f"f{index}"
+        labels.append(f"[{label}]")
+        safe_label = str(entry["label"]).replace("'", "")
+        filters.append(
+            f"[{index}:v]scale=320:320:force_original_aspect_ratio=decrease,"
+            f"pad=320:320:(ow-iw)/2:(oh-ih)/2,"
+            f"drawtext=text='{safe_label}':x=16:y=16:fontsize=30:fontcolor=white:"
+            f"box=1:boxcolor=black@0.62[{label}]"
+        )
+    layout = "|".join(f"{(index % 4) * 320}_{(index // 4) * 320}" for index in range(len(entries)))
+    filters.append("".join(labels) + f"xstack=inputs={len(entries)}:layout={layout}[matrix]")
+    command.extend(["-filter_complex", ";".join(filters), "-map", "[matrix]", "-frames:v", "1", str(output)])
+    try:
+        subprocess.run(command, check=True)
+    except subprocess.CalledProcessError:
+        # Some FFmpeg packages omit libfreetype. Keep the visual gate usable and
+        # rely on the adjacent JSON mapping rather than losing the matrix.
+        fallback = [ffmpeg, "-y"]
+        for entry in entries:
+            fallback.extend(["-i", str(frames_dir / f"frame_{entry['frame']:04d}.png")])
+        fallback_filters = [
+            f"[{index}:v]scale=320:320:force_original_aspect_ratio=decrease,"
+            f"pad=320:320:(ow-iw)/2:(oh-ih)/2[u{index}]"
+            for index in range(len(entries))
+        ]
+        fallback_filters.append(
+            "".join(f"[u{index}]" for index in range(len(entries)))
+            + f"xstack=inputs={len(entries)}:layout={layout}[matrix]"
+        )
+        fallback.extend(
+            ["-filter_complex", ";".join(fallback_filters), "-map", "[matrix]", "-frames:v", "1", str(output)]
+        )
+        subprocess.run(fallback, check=True)
 
 
 def render_quality_gate(
@@ -208,6 +317,24 @@ def render_quality_gate(
                 "contact_sheet": contact_sheet.name,
             }
         )
+    face_plan, face_entries = facial_performance_plan(config)
+    face_plan["asset_library"] = {
+        "asset_id": manifest["asset_id"],
+        "asset_version": manifest["asset_version"],
+        "path": library.name,
+    }
+    face_plan_path = plans_dir / "june-facial-performance.json"
+    face_plan_path.write_text(json.dumps(face_plan, indent=2) + "\n", encoding="utf-8")
+    face_frames_dir = frames_root / "facial-performance"
+    _render_frames(
+        blender_bin,
+        face_plan_path,
+        face_frames_dir,
+        asset_library=library,
+        selected_frames=[int(entry["frame"]) for entry in face_entries],
+    )
+    facial_matrix = output / "june-facial-performance-matrix.png"
+    _facial_matrix(ffmpeg_bin, face_frames_dir, face_entries, facial_matrix)
     report = {
         "contract_version": ASSET_CONTRACT_VERSION,
         "asset_id": manifest["asset_id"],
@@ -216,6 +343,13 @@ def render_quality_gate(
         "artifact_reopened_for_render": True,
         "human_art_approval_required": bool(manifest["quality_gate"].get("human_art_approval_required")),
         "results": results,
+        "facial_performance_gate": {
+            "engine": face_plan["render"]["engine"],
+            "width": face_plan["render"]["width"],
+            "height": face_plan["render"]["height"],
+            "matrix": facial_matrix.name,
+            "entries": face_entries,
+        },
     }
     (output / "asset-quality-report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     return report

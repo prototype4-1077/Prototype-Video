@@ -250,6 +250,187 @@ def _curve(bpy, name: str, points, material, *, bevel_depth: float = 0.008, cycl
     return _assign(obj, material)
 
 
+def _loft_mesh(bpy, name: str, rings, material, *, segments: int = 48):
+    """Build one closed, tapered surface from elliptical profile rings."""
+    vertices = []
+    for z, radius_x, radius_y, center_y in rings:
+        for index in range(segments):
+            angle = math.tau * index / segments
+            vertices.append((radius_x * math.cos(angle), center_y + radius_y * math.sin(angle), z))
+    faces = []
+    for ring_index in range(len(rings) - 1):
+        offset = ring_index * segments
+        next_offset = offset + segments
+        for index in range(segments):
+            following = (index + 1) % segments
+            faces.append((offset + index, offset + following, next_offset + following, next_offset + index))
+    bottom_center = len(vertices)
+    top_center = bottom_center + 1
+    vertices.extend(((0, rings[0][3], rings[0][0]), (0, rings[-1][3], rings[-1][0])))
+    for index in range(segments):
+        following = (index + 1) % segments
+        faces.append((bottom_center, following, index))
+        top_offset = (len(rings) - 1) * segments
+        faces.append((top_center, top_offset + index, top_offset + following))
+    mesh = bpy.data.meshes.new(f"{name}_Data")
+    mesh.from_pydata(vertices, [], faces)
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    bevel = obj.modifiers.new("CE_Loft_Soften", "BEVEL")
+    bevel.width = 0.014
+    bevel.segments = 3
+    return _smooth(_assign(obj, material))
+
+
+def _open_ellipsoid_shell(
+    bpy,
+    name: str,
+    rings,
+    material,
+    *,
+    arc_start: float,
+    arc_end: float,
+    segments: int = 48,
+    thickness: float = 0.012,
+):
+    """Build a fitted open shell for garments or hair without proxy spheres."""
+    vertices = []
+    for z, radius_x, radius_y, center_y in rings:
+        for index in range(segments + 1):
+            blend = index / segments
+            angle = arc_start + (arc_end - arc_start) * blend
+            vertices.append((radius_x * math.cos(angle), center_y + radius_y * math.sin(angle), z))
+    stride = segments + 1
+    faces = []
+    for ring_index in range(len(rings) - 1):
+        offset = ring_index * stride
+        next_offset = offset + stride
+        for index in range(segments):
+            faces.append((offset + index, offset + index + 1, next_offset + index + 1, next_offset + index))
+    mesh = bpy.data.meshes.new(f"{name}_Data")
+    mesh.from_pydata(vertices, [], faces)
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    solidify = obj.modifiers.new("CE_Fitted_Shell", "SOLIDIFY")
+    solidify.thickness = thickness
+    solidify.offset = 0.0
+    bevel = obj.modifiers.new("CE_Shell_Edges", "BEVEL")
+    bevel.width = thickness * 0.72
+    bevel.segments = 3
+    return _smooth(_assign(obj, material))
+
+
+def _sculpted_head_v3(bpy, material):
+    """Create June's nose, cheeks, jaw, and chin as one deformed head surface."""
+    head = _sphere(
+        bpy,
+        "June_Head",
+        (0, 0, 2.64),
+        (0.285, 0.245, 0.39),
+        material,
+        segments=96,
+        rings=64,
+    )
+
+    def field(x, z, center_x, center_z, width_x, width_z):
+        return math.exp(-(((x - center_x) / width_x) ** 2 + ((z - center_z) / width_z) ** 2))
+
+    for vertex in head.data.vertices:
+        x, y, z = vertex.co
+        if y >= 0:
+            continue
+        front = min(1.0, max(0.0, -y / 0.245))
+        nose = field(x, z, 0.010, -0.005, 0.052, 0.115)
+        bridge = field(x, z, 0.006, 0.115, 0.060, 0.150)
+        cheek_l = field(x, z, -0.158, -0.020, 0.090, 0.115)
+        cheek_r = field(x, z, 0.150, -0.040, 0.085, 0.110)
+        chin = field(x, z, 0.010, -0.245, 0.125, 0.085)
+        jaw_l = field(x, z, -0.145, -0.180, 0.105, 0.105)
+        jaw_r = field(x, z, 0.137, -0.190, 0.100, 0.100)
+        socket_l = field(x, z, -0.105, 0.075, 0.070, 0.055)
+        socket_r = field(x, z, 0.108, 0.069, 0.070, 0.055)
+        vertex.co.y -= front * (
+            0.102 * nose
+            + 0.030 * bridge
+            + 0.040 * cheek_l
+            + 0.035 * cheek_r
+            + 0.038 * chin
+            + 0.020 * jaw_l
+            + 0.017 * jaw_r
+            - 0.018 * socket_l
+            - 0.016 * socket_r
+        )
+        vertex.co.x += front * (0.004 * nose + 0.003 * cheek_r - 0.002 * cheek_l)
+        vertex.co.z -= front * 0.012 * nose
+
+    basis = head.shape_key_add(name="Basis")
+    expression_controls = ("smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise")
+    for control in expression_controls:
+        key = head.shape_key_add(name=control)
+        for source, target in zip(basis.data, key.data):
+            front = max(0.0, min(1.0, -source.co.y / 0.28))
+            lower = max(0.0, min(1.0, (0.08 - source.co.z) / 0.34))
+            upper = max(0.0, min(1.0, (source.co.z + 0.02) / 0.34))
+            center = max(0.0, 1.0 - abs(source.co.x) / 0.20)
+            if control == "smile":
+                target.co.x *= 1.0 + 0.055 * front * lower
+                target.co.z += 0.022 * front * lower * min(1.0, abs(source.co.x) / 0.18)
+            elif control == "thoughtful":
+                target.co.x += 0.010 * front * lower
+                target.co.z -= 0.010 * front * lower
+            elif control == "soft_chuckle":
+                target.co.x *= 1.0 + 0.040 * front
+                target.co.z += 0.018 * front * lower
+            elif control == "brow_raise":
+                target.co.z += 0.014 * front * upper
+            elif control == "brow_knit":
+                target.co.x *= 1.0 - 0.028 * front * upper * center
+            elif control == "squint":
+                target.co.z -= 0.011 * front * upper
+            elif control == "cheek_raise":
+                target.co.z += 0.016 * front * lower * (1.0 - center * 0.4)
+    head["ce_expression_controls"] = ",".join(expression_controls)
+    head["ce_unified_landmarks"] = "nose,bridge,cheeks,jaw,chin"
+    head["ce_surface_topology"] = "single_sculpted_head_surface"
+    return head
+
+
+def _beard_patch_v3(bpy, material):
+    """Create one fitted beard surface that follows the lower face and jaw."""
+    rows = (
+        (2.515, 0.170, -0.262),
+        (2.480, 0.205, -0.260),
+        (2.435, 0.190, -0.240),
+        (2.390, 0.145, -0.208),
+        (2.365, 0.072, -0.185),
+    )
+    columns = 20
+    vertices = []
+    for z, width, center_y in rows:
+        for index in range(columns + 1):
+            normalized = -1.0 + 2.0 * index / columns
+            x = width * normalized + 0.005
+            y = center_y + 0.085 * abs(normalized) ** 1.8
+            vertices.append((x, y, z - 0.010 * normalized))
+    faces = []
+    stride = columns + 1
+    for row in range(len(rows) - 1):
+        for index in range(columns):
+            offset = row * stride + index
+            faces.append((offset, offset + 1, offset + stride + 1, offset + stride))
+    mesh = bpy.data.meshes.new("June_Fitted_Beard_Data")
+    mesh.from_pydata(vertices, [], faces)
+    obj = bpy.data.objects.new("June_Fitted_Beard", mesh)
+    bpy.context.collection.objects.link(obj)
+    solidify = obj.modifiers.new("CE_Beard_Depth", "SOLIDIFY")
+    solidify.thickness = 0.018
+    solidify.offset = -0.2
+    subdivision = obj.modifiers.new("CE_Beard_Subdivision", "SUBSURF")
+    subdivision.levels = 2
+    subdivision.render_levels = 2
+    return _smooth(_assign(obj, material))
+
+
 def _parent_to_bone(obj, rig, bone_name: str) -> None:
     matrix = obj.matrix_world.copy()
     obj.parent = rig
@@ -835,11 +1016,121 @@ def _make_june_v2(bpy, mathutils, materials: dict):
     return rig, mouth, face_controls
 
 
+def _make_june_v3(bpy, mathutils, materials: dict):
+    """Hero v3: unified facial sculpture plus fitted hair, beard, and garments."""
+    rig, mouth, face_controls = _make_june_v2(bpy, mathutils, materials)
+
+    replace_names = {
+        "June_Head",
+        "June_Cheek_L",
+        "June_Cheek_R",
+        "June_Chin",
+        "June_Nose",
+        "June_Close_Beard",
+        "June_Plaid_Torso",
+        "June_Denim_Jacket_L",
+        "June_Denim_Jacket_R",
+    }
+    replace_names.update(
+        obj.name for obj in bpy.data.objects if obj.name.startswith("June_White_Hair_")
+    )
+    for name in replace_names:
+        obj = bpy.data.objects.get(name)
+        if obj is not None:
+            bpy.data.objects.remove(obj, do_unlink=True)
+
+    torso = _loft_mesh(
+        bpy,
+        "June_Plaid_Torso",
+        (
+            (1.22, 0.270, 0.185, 0.025),
+            (1.42, 0.300, 0.205, 0.020),
+            (1.72, 0.325, 0.215, 0.020),
+            (1.98, 0.315, 0.205, 0.015),
+            (2.16, 0.275, 0.185, 0.010),
+            (2.25, 0.205, 0.145, 0.005),
+        ),
+        materials["plaid"],
+        segments=56,
+    )
+    torso["ce_surface_topology"] = "single_tapered_torso_loft"
+    _parent_to_bone(torso, rig, "torso")
+
+    jacket = _open_ellipsoid_shell(
+        bpy,
+        "June_Denim_Jacket_Shell",
+        (
+            (1.34, 0.315, 0.220, 0.020),
+            (1.63, 0.355, 0.245, 0.020),
+            (1.92, 0.365, 0.245, 0.015),
+            (2.15, 0.315, 0.205, 0.010),
+        ),
+        materials["denim"],
+        arc_start=math.radians(-67),
+        arc_end=math.radians(247),
+        segments=64,
+        thickness=0.020,
+    )
+    jacket["ce_garment_pattern"] = "single_open_denim_shell"
+    _parent_to_bone(jacket, rig, "torso")
+
+    head = _sculpted_head_v3(bpy, materials["skin"])
+    _parent_to_bone(head, rig, "head")
+
+    hair_shell = _open_ellipsoid_shell(
+        bpy,
+        "June_White_Hair_Shell",
+        (
+            (2.625, 0.283, 0.238, 0.026),
+            (2.735, 0.278, 0.238, 0.030),
+            (2.835, 0.246, 0.216, 0.038),
+            (2.915, 0.190, 0.170, 0.045),
+            (2.970, 0.105, 0.095, 0.050),
+        ),
+        materials["hair"],
+        arc_start=math.radians(-18),
+        arc_end=math.radians(198),
+        segments=56,
+        thickness=0.014,
+    )
+    hair_shell["ce_hair_design"] = "fitted_horseshoe_shell_with_bald_crown"
+    _parent_to_bone(hair_shell, rig, "head")
+    for index, x in enumerate((-0.16, -0.09, 0.085, 0.15)):
+        wisp = _curve(
+            bpy,
+            f"June_Hair_Wisp_{index}",
+            ((x, -0.070, 2.935), (x * 1.04, -0.092, 2.975), (x * 1.10, -0.060, 3.005)),
+            materials["hair"],
+            bevel_depth=0.006,
+        )
+        _parent_to_bone(wisp, rig, "head")
+
+    beard = _beard_patch_v3(bpy, materials["hair"])
+    beard["ce_beard_design"] = "single_fitted_jaw_patch"
+    _parent_to_bone(beard, rig, "head")
+
+    # Keep the established viseme topology, but make its performance readable in
+    # a hero close-up and keep teeth tucked behind the lip rim.
+    mouth.scale.x *= 1.10
+    mouth.scale.z *= 1.18
+    teeth = bpy.data.objects.get("June_Upper_Teeth")
+    if teeth is not None:
+        teeth.scale.x *= 1.06
+
+    rig["ce_asset_major"] = 3
+    rig["ce_surface_standard"] = "unified_sculpted_hero_surfaces"
+    rig["ce_face_topology"] = "single_head_surface_radial_lip_rim_independent_lids"
+    rig["ce_garment_topology"] = "lofted_torso_open_denim_shell"
+    return rig, mouth, face_controls
+
+
 def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
     if asset_major == 1:
         return _make_june_v1(bpy, mathutils, materials)
     if asset_major == 2:
         return _make_june_v2(bpy, mathutils, materials)
+    if asset_major == 3:
+        return _make_june_v3(bpy, mathutils, materials)
     raise ValueError(f"unsupported June asset major version: {asset_major}")
 
 
@@ -949,12 +1240,27 @@ def _animate_mouth(mouth, plan: dict) -> None:
 
 def _animate_expressions(head, plan: dict, face_controls: dict | None = None) -> None:
     """Layer readable acting beats independently from phoneme mouth shapes."""
+    if head.data.shape_keys.animation_data:
+        head.data.shape_keys.animation_data_clear()
     keys = head.data.shape_keys.key_blocks
     controls = tuple(
         name
         for name in ("smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise")
         if keys.get(name) is not None
     )
+    facial_cues = plan.get("facial_performance_cues") or []
+    if facial_cues:
+        for cue in facial_cues:
+            active = cue.get("expression")
+            strength = float(cue.get("strength", 1.0))
+            for control in controls:
+                keys[control].value = strength if control == active else 0.0
+                keys[control].keyframe_insert(data_path="value", frame=int(cue["frame_start"]))
+        action = head.data.shape_keys.animation_data.action
+        for curve in action.fcurves:
+            for point in curve.keyframe_points:
+                point.interpolation = "CONSTANT"
+        return
     shots = plan["shots"][:3]
     assignments = ("smile", "thoughtful", "soft_chuckle")
     for shot, active in zip(shots, assignments):
@@ -1021,6 +1327,8 @@ def _make_cameras(bpy, mathutils, plan: dict) -> None:
         "medium": ((0.18, -7.2 if portrait else -5.9, 2.72), 62 if portrait else 58, (0, 0.05, 2.05)),
         "close": ((0.08, -5.1 if portrait else -3.9, 2.69), 72 if portrait else 68, (0, -0.02, 2.48)),
     }
+    if plan.get("facial_performance_cues"):
+        presets["close"] = ((0.02, -1.72, 2.70), 82, (0.0, -0.08, 2.66))
     scene = bpy.context.scene
     for index, shot in enumerate(plan["shots"]):
         preset = presets[shot["camera"]]
@@ -1136,7 +1444,7 @@ def main() -> None:
         _clear(bpy)
         materials = _make_materials(bpy)
         _make_porch(bpy, mathutils, materials, int(plan["frame_end"]))
-        rig, mouth, face_controls = _make_june(bpy, mathutils, materials, asset_major=2)
+        rig, mouth, face_controls = _make_june(bpy, mathutils, materials, asset_major=3)
     if args.asset_library:
         face_controls = {
             "eyes": [
