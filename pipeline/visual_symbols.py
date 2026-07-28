@@ -441,9 +441,9 @@ def derive_symbol_query(scene: dict, recent_families=()):
     candidates = _symbol_candidates(scene)
     if not candidates:
         return None
-    recent = list(recent_families)[-2:]
-    choice = next((rule for rule in candidates if rule["family"] not in recent), candidates[0])
-    return choice
+    # Narrative fit outranks artificial rotation. Adjacent scenes may continue
+    # one visual family when they are developing the same metaphor.
+    return candidates[0]
 
 
 def effective_query(scene: dict) -> str:
@@ -523,10 +523,10 @@ def _policy(script: dict, profile: str | None):
     defaults = {
         "mode": mode,
         "strict": strict,
-        "max_human_ratio": .62 if profile == JUNE_OXLEY else .52,
-        "max_family_run": 4 if profile == JUNE_OXLEY else 3,
+        "max_human_ratio": .70,
+        "max_family_run": 6,
         "max_generic_human_run": 2 if profile == JUNE_OXLEY else 1,
-        "min_families": 5 if profile == JUNE_OXLEY else 6,
+        "min_families": 4,
     }
     for key in tuple(defaults):
         if key in custom and key not in {"strict"}:

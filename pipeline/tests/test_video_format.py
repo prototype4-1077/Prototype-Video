@@ -79,6 +79,18 @@ class VideoFormatTests(unittest.TestCase):
             self.assertGreaterEqual(bbox[1], 720)
             self.assertLessEqual(bbox[3], 1056)
 
+    def test_performance_directions_are_hidden_from_captions(self):
+        self.assertEqual(
+            captions.visible_caption_text(
+                "[softly] [with quiet intensity] The whole can hear itself."
+            ),
+            "The whole can hear itself.",
+        )
+        self.assertEqual(
+            captions.visible_caption_text("A literal [bracketed] word remains."),
+            "A literal [bracketed] word remains.",
+        )
+
 
 if __name__ == "__main__":
     unittest.main()

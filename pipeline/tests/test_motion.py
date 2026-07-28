@@ -78,7 +78,7 @@ class MotionBudgetTests(unittest.TestCase):
             ],
         }
         self.assertTrue(motion.apply_motion_defaults(script))
-        self.assertEqual(script["max_still_source_ratio"], .35)
+        self.assertEqual(script["max_still_source_ratio"], .50)
         self.assertEqual(script["scenes"][0]["motion_kind"], motion.ANIMATED)
         self.assertEqual(script["scenes"][0]["motion_mode"], "cinemagraph")
         self.assertEqual(script["scenes"][1]["motion_kind"], motion.VIDEO)

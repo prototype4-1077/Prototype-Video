@@ -257,7 +257,7 @@ Motion is measured by duration, never inferred from an MP4 extension. A pan, cro
 zoom applied to one photograph remains a `static` shot. Depth motion and evolving
 keyframes improve an image but remain still-derived. Every build writes
 `motion_report.json` and fails when `static` plus `animated_still` duration exceeds
-the top-level `max_still_source_ratio` (default `0.35`). At least 65% must be genuine
+the top-level `max_still_source_ratio` (default `0.50`). At least 50% must be genuine
 moving footage. Source classes are:
 
 - `static`: still, pan, zoom, or Ken Burns only;

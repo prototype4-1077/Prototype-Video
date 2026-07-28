@@ -49,6 +49,7 @@ YT_TIKTOK_COVER_CROP_RIGHT = YT_TIKTOK_COVER_CROP_LEFT + YT_TIKTOK_COVER_CROP_W
 YT_TITLE_MAX_LINE_W = 700
 YT_TITLE_MAX_BLOCK_H = 610
 YT_TITLE_CENTER_Y = 445
+LEADING_PERFORMANCE_TAGS = re.compile(r"^\s*(?:\[[^\[\]\r\n]{1,80}\]\s*)+")
 
 
 def _font(path, size):
@@ -56,6 +57,11 @@ def _font(path, size):
     try: f.set_variation_by_axes([800])  # no-op for static fonts
     except Exception: pass
     return f
+
+
+def visible_caption_text(text):
+    """Hide leading voice directions while preserving the narrated script."""
+    return LEADING_PERFORMANCE_TAGS.sub("", str(text or "")).strip()
 
 
 def _split_overlong_word(word, font, draw, max_line_w):
@@ -146,7 +152,8 @@ def _caption_png(text, keywords, out_path, width, height, font_size,
     for j, k in enumerate(keywords):
         for wd in re.findall(r"[\w']+", k.lower()):
             kwmap.setdefault(wd, j)
-    words = [(w, kwmap.get(re.sub(r"[^\w']", "", w).lower())) for w in text.split()]
+    words = [(w, kwmap.get(re.sub(r"[^\w']", "", w).lower()))
+             for w in visible_caption_text(text).split()]
     lines = _wrap(words, font, d, max_line_w=max_line_w)
     ascent, descent = font.getmetrics()
     line_h = ascent + descent + 2 * LINE_PAD_Y

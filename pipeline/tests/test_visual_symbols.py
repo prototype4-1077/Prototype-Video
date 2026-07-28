@@ -52,6 +52,13 @@ class VisualSymbolPlannerTests(unittest.TestCase):
         self.assertEqual(scene["human_role"], "explorer")
         self.assertFalse(visual_symbols.is_generic_human(scene))
 
+    def test_symbol_fallback_prefers_semantics_over_forced_rotation(self):
+        suggestion = visual_symbols.derive_symbol_query(
+            {"text": "The belief changes the path."},
+            recent_families=["language", "language"],
+        )
+        self.assertEqual(suggestion["family"], "language")
+
     def test_explicit_editorial_choice_is_never_overwritten(self):
         scene = {
             "text": "The thought remains unfinished.",
@@ -115,6 +122,26 @@ class VisualSymbolAuditTests(unittest.TestCase):
         self.assertTrue(report["passes"])
         self.assertFalse(report["violations"])
         self.assertTrue(report["warnings"])
+
+    def test_default_policy_allows_a_coherent_five_scene_family_run(self):
+        script = {
+            "visual_policy": visual_symbols.POLICY_NAME,
+            "scenes": [
+                {"text": f"Beat {index}.", "query": "nested rings expand slowly"}
+                for index in range(5)
+            ] + [
+                {"text": "A doorway opens.", "query": "one door opens in a hallway"},
+                {"text": "A seed grows.", "query": "seed germinating in dark soil"},
+                {"text": "A map turns.", "query": "compass turns beside a folded map"},
+                {"text": "The record spins.", "query": "record needle beside old photographs"},
+                {"text": "The doorway closes.", "query": "one door closes in a hallway"},
+            ],
+        }
+        report = visual_symbols.analyze(script)
+        self.assertTrue(report["passes"])
+        self.assertEqual(report["longest_family_run"]["length"], 5)
+        self.assertEqual(report["policy"]["max_family_run"], 6)
+        self.assertEqual(report["policy"]["min_families"], 4)
 
     def test_labels_cannot_fake_visual_diversity(self):
         labels = [

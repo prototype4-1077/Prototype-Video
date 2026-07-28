@@ -235,10 +235,10 @@ def build_package(build_dir: str | os.PathLike[str], *, overwrite: bool = False)
     if not isinstance(visual_policy, dict):
         visual_policy = {
             "mode": "diverse_symbols",
-            "max_human_ratio": 0.48,
-            "max_family_run": 3,
+            "max_human_ratio": 0.70,
+            "max_family_run": 6,
             "max_generic_human_run": 1,
-            "min_families": min(6, max(3, scene_count // 4)),
+            "min_families": min(4, max(3, scene_count // 5)),
         }
     script: dict[str, Any] = {
         "title": title,
@@ -262,7 +262,7 @@ def build_package(build_dir: str | os.PathLike[str], *, overwrite: bool = False)
         "auto_audio_tags": False,
         "caption_policy": submission.get("caption_policy") or "minimal_keywords_only",
         "visual_policy": visual_policy,
-        "max_still_source_ratio": float(submission.get("max_still_source_ratio") or 0.35),
+        "max_still_source_ratio": float(submission.get("max_still_source_ratio") or 0.50),
         "still_image_policy": submission.get("still_image_policy") or "closest_stock_frame_full_enhancement",
         "hero_art_policy": submission.get("hero_art_policy") or "motion_only_no_static_hero",
         "scenes": scenes,

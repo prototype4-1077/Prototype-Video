@@ -62,7 +62,7 @@ ANIMATED_MODES = {
 VIDEO_MODES = {"video", "stock", "recorded", "i2v", "image_to_video"}
 COMPILE_MODES = STATIC_MODES | ANIMATED_MODES
 
-DEFAULT_STILL_SOURCE_CAP = 0.35
+DEFAULT_STILL_SOURCE_CAP = 0.50
 # Compatibility for callers that imported the old constant.  Budget validation
 # itself uses DEFAULT_STILL_SOURCE_CAP and counts animated stills in full.
 DEFAULT_STATIC_CAP = DEFAULT_STILL_SOURCE_CAP

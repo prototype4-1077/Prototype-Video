@@ -14,8 +14,8 @@ so it writes build/<slug>/submission.json:
     }
 
 This expands it into script.json + source-script.txt with narration preserved
-EXACTLY, assigns varied symbol families (so the classifier never sees a long
-run), splits any scene over the 220-char cap on a sentence boundary, and writes
+EXACTLY, lets the visual planner infer families from the authored imagery,
+splits any scene over the 220-char cap on a sentence boundary, and writes
 package-status.json.
 
     python3 pipeline/expand_submission.py <slug>
@@ -28,9 +28,6 @@ VOICES = {
     "liam": ("TX3LPaxmHKxFdv7VOQHJ", "Liam - Energetic, Social Media Creator"),
     "june": ("NOpBlnGInO9m6vDvFkFC", "June Oxley"),
 }
-FAMILY_CYCLE = ["object_tool", "geometry", "time_memory", "light_atmosphere", "pathway",
-                "architecture", "perception", "nature", "world_scale", "transformation",
-                "collective", "identity"]
 TAGS_CYCLE = [["curious", "dry"], ["warm", "inviting"], ["playful", "knowing"],
               ["measured", "precise"], ["intimate", "wondering"], ["sly", "amused"],
               ["spacious", "quiet"], ["hushed", "near-whisper"]]
@@ -41,6 +38,22 @@ def canonical_spoken_text(text: str) -> str:
     """Match pipeline/user_script_intake.py exactly so the verbatim lock passes."""
     normalized = unicodedata.normalize("NFC", str(text or "")).replace("\r\n", "\n").replace("\r", "\n")
     return re.sub(r"\s+", " ", normalized).strip()
+
+
+def extract_leading_performance_tags(text: str) -> tuple[str, list[str]]:
+    """Move leading ElevenLabs directions out of captioned narration."""
+    tags = []
+    remaining = str(text or "")
+    while match := re.match(r"^\s*\[([^\[\]\r\n]{1,80})\]\s*", remaining):
+        tags.append(match.group(1).strip())
+        remaining = remaining[match.end():]
+    return remaining.strip(), tags
+
+
+def _audio_tags(explicit, inline: list[str], fallback: list[str]) -> list[str]:
+    if isinstance(explicit, str):
+        explicit = [explicit]
+    return [str(tag).strip().strip("[]") for tag in (explicit or inline or fallback) if str(tag).strip()]
 
 
 
@@ -73,20 +86,25 @@ def expand(slug: str, build_dir=None) -> dict:
     for item in raw:
         if isinstance(item, str):
             item = {"text": item}
+        spoken, inline_tags = extract_leading_performance_tags(str(item.get("text", "")))
         visual = (item.get("visual") or item.get("query")
-                  or "cinematic evocative imagery for: " + str(item.get("text", ""))[:60])
-        for piece in _split_long(str(item.get("text", "")).strip()):
-            fam = item.get("symbol_family") or FAMILY_CYCLE[idx % len(FAMILY_CYCLE)]
+                  or "cinematic evocative imagery for: " + spoken[:60])
+        for part_index, piece in enumerate(_split_long(spoken)):
             scene = {
                 "text": piece,
                 "epistemic_role": "metaphor",
-                "audio_tags": item.get("audio_tags") or TAGS_CYCLE[idx % len(TAGS_CYCLE)],
+                "audio_tags": _audio_tags(
+                    item.get("audio_tags"),
+                    inline_tags if part_index == 0 else [],
+                    TAGS_CYCLE[idx % len(TAGS_CYCLE)],
+                ),
                 "keywords": [],
                 "semantic_anchor": "beat %d" % (idx + 1),
                 "visual_function": "beat %d" % (idx + 1),
-                "symbol_family": fam,
                 "primary_symbol": visual[:60],
             }
+            if item.get("symbol_family"):
+                scene["symbol_family"] = item["symbol_family"]
             if item.get("hero"):
                 scene.update({
                     "narrative_mode": "hero", "hero": True, "hero_style": "effects",
@@ -129,9 +147,9 @@ def expand(slug: str, build_dir=None) -> dict:
         "voice_settings": {"similarity_boost": 0.75, "speed": 0.97},
         "voice_standard": sub.get("voice_standard")
         or "Liam - warm, sly, a brilliant friend at midnight; spacious and intimate through the turn, near-whisper on the closing question.",
-        "visual_policy": {"mode": "diverse_symbols", "max_human_ratio": 0.45,
-                          "max_family_run": 3, "max_generic_human_run": 1, "min_families": 6},
-        "max_still_source_ratio": 0.35,
+        "visual_policy": {"mode": "diverse_symbols", "max_human_ratio": 0.70,
+                          "max_family_run": 6, "max_generic_human_run": 1, "min_families": 4},
+        "max_still_source_ratio": 0.50,
         "still_image_policy": "closest_stock_frame_full_enhancement",
         "music_choice": 3, "music_variant_count": 1,
         "caption_policy": "minimal_keywords_only",

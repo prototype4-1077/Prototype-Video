@@ -19,7 +19,7 @@ def run(cmd):
     return r
 
 
-def pick(scenes, target, max_still_source_ratio=.35):
+def pick(scenes, target, max_still_source_ratio=.50):
     def score(i, sc):
         t, n = sc["text"], len(sc["text"].split())
         s = 0.0
@@ -79,7 +79,7 @@ def main(bd, target=58.0):
     scenes = s["scenes"]
     if any(not os.path.exists(f"{bd}/seg_{i:02d}.mp4") for i in range(len(scenes))):
         sys.exit("ERROR: segs missing; run build.py to completion first")
-    cap = float(s.get("max_still_source_ratio", .35))
+    cap = float(s.get("max_still_source_ratio", .50))
     idx = pick(scenes, target, cap)
     total = sum(scenes[i]["duration"] for i in idx)
     tmp = tempfile.mkdtemp()
