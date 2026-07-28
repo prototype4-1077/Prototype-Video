@@ -85,12 +85,10 @@ jobs:
 
       - name: Cartoon contract tests
         run: |
-          python3 -m pip install --quiet pytest
-          python3 -m pytest \
-            pipeline/tests/test_cartoon_motion.py \
-            pipeline/tests/test_cartoon_lipsync.py \
-            pipeline/tests/test_cartoon_vertical_slice.py \
-            pipeline/tests/test_cartoon_asset_library.py -q
+          python3 -m unittest discover \
+            -s pipeline/tests \
+            -p 'test_cartoon_*.py' \
+            -q
 
       - name: Generate temporary proof dialogue
         run: |
@@ -114,7 +112,19 @@ jobs:
             --output-dir proof-out
           find proof-out -maxdepth 2 -type f -print
 
-      - name: Build asset library and render full-resolution review keyframes
+      - name: Upload animated proof products immediately
+        uses: actions/upload-artifact@v4
+        with:
+          name: blender-cartoon-proof-videos
+          path: |
+            proof-out/*.mp4
+            proof-out/*.png
+            proof-out/*.json
+            proof-out/plans/*.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Build asset library and render continuous geometry gates
         run: |
           set -euo pipefail
           python3 -m pipeline.cartoon_asset_library \
@@ -122,20 +132,19 @@ jobs:
             concept/characters/june_oxley_asset_v3.json \
             --blender /opt/blender/blender \
             --ffmpeg ffmpeg \
-            --engine BLENDER_EEVEE_NEXT \
-            --samples 16 \
+            --engine BLENDER_WORKBENCH \
+            --samples 1 \
+            --facial-engine BLENDER_WORKBENCH \
+            --facial-size 480 \
+            --facial-samples 1 \
             --output-dir asset-quality-out
           find asset-quality-out -maxdepth 3 -type f -print
 
-      - name: Upload proof videos, plans, and contact sheets
+      - name: Upload asset, geometry sheets, and facial matrix
         uses: actions/upload-artifact@v4
         with:
-          name: blender-cartoon-proof
+          name: blender-cartoon-asset-review
           path: |
-            proof-out/*.mp4
-            proof-out/*.png
-            proof-out/*.json
-            proof-out/plans/*.json
             asset-quality-out/*.png
             asset-quality-out/*.json
             asset-quality-out/plans/*.json
