@@ -129,7 +129,7 @@ jobs:
           set -euo pipefail
           python3 -m pipeline.cartoon_asset_library \
             examples/june-porch-vertical-slice.json \
-            concept/characters/june_oxley_asset_v3.json \
+            concept/characters/june_oxley_asset_v4.json \
             --blender /opt/blender/blender \
             --ffmpeg ffmpeg \
             --engine BLENDER_WORKBENCH \
@@ -143,7 +143,7 @@ jobs:
       - name: Upload asset, geometry sheets, and facial matrix
         uses: actions/upload-artifact@v4
         with:
-          name: blender-cartoon-asset-review
+          name: blender-cartoon-asset-review-v4
           path: |
             asset-quality-out/*.png
             asset-quality-out/*.json
@@ -152,3 +152,4 @@ jobs:
             asset-quality-out/frames/**/*.png
           if-no-files-found: error
           retention-days: 14
+
