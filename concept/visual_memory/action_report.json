@@ -1,65 +1,75 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-27T13:58:54+00:00",
-  "records": 2472,
+  "generated_at": "2026-07-28T16:05:22+00:00",
+  "records": 2614,
   "with_assets": 127,
-  "asset_coverage": 0.0514,
-  "reviewed": 43,
-  "approved": 38,
-  "revised": 5,
-  "reviewed_coverage": 0.0174,
+  "asset_coverage": 0.0486,
+  "reviewed": 69,
+  "approved": 51,
+  "revised": 18,
+  "reviewed_coverage": 0.0264,
   "reviewed_feedback_tags": {
-    "synthetic_appearance": 1
+    "depth_parallax": 1,
+    "synthetic_appearance": 1,
+    "title_layout": 1
   },
   "automated_risk_tags": {
-    "reflection": 142,
+    "reflection": 145,
     "complex_simultaneity": 58,
-    "anatomy_transform": 47,
-    "hand_contact": 46,
-    "body_plus_effect": 26,
+    "hand_contact": 51,
+    "anatomy_transform": 50,
+    "body_plus_effect": 27,
     "crowd_or_many_subjects": 25,
-    "tool_grasp": 19,
-    "medical_contact": 18,
-    "multiple_hands": 3
+    "medical_contact": 20,
+    "tool_grasp": 20,
+    "multiple_hands": 7
   },
   "cohorts": {
     "generation_route": [
       {
         "value": "stock",
-        "reviewed": 38,
-        "approved": 33,
-        "revised": 5,
-        "approval_rate": 0.8684,
+        "reviewed": 59,
+        "approved": 43,
+        "revised": 16,
+        "approval_rate": 0.7288,
         "evidence_strength": "developing"
       },
       {
         "value": "cinemagraph",
-        "reviewed": 5,
-        "approved": 5,
-        "revised": 0,
-        "approval_rate": 1.0,
+        "reviewed": 10,
+        "approved": 8,
+        "revised": 2,
+        "approval_rate": 0.8,
         "evidence_strength": "developing"
       }
     ],
     "provider": [
       {
         "value": "pexels",
-        "reviewed": 38,
-        "approved": 33,
-        "revised": 5,
-        "approval_rate": 0.8684,
+        "reviewed": 59,
+        "approved": 43,
+        "revised": 16,
+        "approval_rate": 0.7288,
         "evidence_strength": "developing"
       },
       {
         "value": "reference_conditioned_still",
-        "reviewed": 5,
-        "approved": 5,
-        "revised": 0,
-        "approval_rate": 1.0,
+        "reviewed": 10,
+        "approved": 8,
+        "revised": 2,
+        "approval_rate": 0.8,
         "evidence_strength": "developing"
       }
     ],
     "symbol_family": [
+      {
+        "value": "architecture",
+        "reviewed": 6,
+        "approved": 5,
+        "revised": 1,
+        "approval_rate": 0.8333,
+        "evidence_strength": "developing"
+      },
       {
         "value": "human",
         "reviewed": 6,
@@ -69,15 +79,39 @@
         "evidence_strength": "developing"
       },
       {
-        "value": "architecture",
-        "reviewed": 4,
-        "approved": 4,
+        "value": "cartography",
+        "reviewed": 3,
+        "approved": 1,
+        "revised": 2,
+        "approval_rate": 0.3333,
+        "evidence_strength": "developing"
+      },
+      {
+        "value": "geometry",
+        "reviewed": 3,
+        "approved": 2,
+        "revised": 1,
+        "approval_rate": 0.6667,
+        "evidence_strength": "developing"
+      },
+      {
+        "value": "light_atmosphere",
+        "reviewed": 3,
+        "approved": 3,
         "revised": 0,
         "approval_rate": 1.0,
         "evidence_strength": "developing"
       },
       {
-        "value": "cartography",
+        "value": "nature",
+        "reviewed": 3,
+        "approved": 2,
+        "revised": 1,
+        "approval_rate": 0.6667,
+        "evidence_strength": "developing"
+      },
+      {
+        "value": "object_tool",
         "reviewed": 3,
         "approved": 1,
         "revised": 2,
@@ -101,11 +135,27 @@
         "evidence_strength": "developing"
       },
       {
+        "value": "collective",
+        "reviewed": 2,
+        "approved": 2,
+        "revised": 0,
+        "approval_rate": 1.0,
+        "evidence_strength": "insufficient"
+      },
+      {
         "value": "cosmos",
         "reviewed": 2,
         "approved": 2,
         "revised": 0,
         "approval_rate": 1.0,
+        "evidence_strength": "insufficient"
+      },
+      {
+        "value": "identity",
+        "reviewed": 2,
+        "approved": 0,
+        "revised": 2,
+        "approval_rate": 0.0,
         "evidence_strength": "insufficient"
       },
       {
@@ -130,6 +180,46 @@
         "approved": 1,
         "revised": 1,
         "approval_rate": 0.5,
+        "evidence_strength": "insufficient"
+      },
+      {
+        "value": "pathway",
+        "reviewed": 2,
+        "approved": 1,
+        "revised": 1,
+        "approval_rate": 0.5,
+        "evidence_strength": "insufficient"
+      },
+      {
+        "value": "perception",
+        "reviewed": 2,
+        "approved": 0,
+        "revised": 2,
+        "approval_rate": 0.0,
+        "evidence_strength": "insufficient"
+      },
+      {
+        "value": "time_memory",
+        "reviewed": 2,
+        "approved": 1,
+        "revised": 1,
+        "approval_rate": 0.5,
+        "evidence_strength": "insufficient"
+      },
+      {
+        "value": "transformation",
+        "reviewed": 2,
+        "approved": 0,
+        "revised": 2,
+        "approval_rate": 0.0,
+        "evidence_strength": "insufficient"
+      },
+      {
+        "value": "world_scale",
+        "reviewed": 2,
+        "approved": 2,
+        "revised": 0,
+        "approval_rate": 1.0,
         "evidence_strength": "insufficient"
       },
       {
@@ -173,14 +263,6 @@
         "evidence_strength": "insufficient"
       },
       {
-        "value": "light_atmosphere",
-        "reviewed": 1,
-        "approved": 1,
-        "revised": 0,
-        "approval_rate": 1.0,
-        "evidence_strength": "insufficient"
-      },
-      {
         "value": "machine",
         "reviewed": 1,
         "approved": 1,
@@ -198,14 +280,6 @@
       },
       {
         "value": "medical",
-        "reviewed": 1,
-        "approved": 1,
-        "revised": 0,
-        "approval_rate": 1.0,
-        "evidence_strength": "insufficient"
-      },
-      {
-        "value": "nature",
         "reviewed": 1,
         "approved": 1,
         "revised": 0,
@@ -1315,19 +1389,26 @@
     {
       "priority": "high",
       "category": "evidence_coverage",
-      "evidence": "Only 43 of 2472 scene records have a human decision (1.7%).",
+      "evidence": "Only 69 of 2614 scene records have a human decision (2.6%).",
       "action": "Do not convert automated risk frequency into house rules. Review the highest-risk asset-backed queue first."
     },
     {
       "priority": "medium",
       "category": "asset_coverage",
-      "evidence": "Only 127 of 2472 records retain a reviewable asset (5.1%).",
+      "evidence": "Only 127 of 2614 records retain a reviewable asset (4.9%).",
       "action": "Persist representative frames or durable release references for completed scenes so historical feedback remains inspectable."
     },
     {
       "priority": "medium",
       "category": "low_approval_cohort",
       "key": "symbol_family:cartography",
+      "evidence": "1/3 approved (33%)",
+      "action": "Inspect the cohort before changing global routing; topic and scene difficulty may be confounders."
+    },
+    {
+      "priority": "medium",
+      "category": "low_approval_cohort",
+      "key": "symbol_family:object_tool",
       "evidence": "1/3 approved (33%)",
       "action": "Inspect the cohort before changing global routing; topic and scene difficulty may be confounders."
     }
