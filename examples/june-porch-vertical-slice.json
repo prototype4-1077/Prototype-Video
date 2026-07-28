@@ -1,0 +1,56 @@
+{
+  "version": 1,
+  "production": "june-porch-dialogue",
+  "character": {
+    "id": "june_oxley",
+    "profile": "june_oxley",
+    "display_name": "June Oxley",
+    "description": "An older white Southern man with thinning white hair, a short white beard, kind blue-gray eyes, and a weathered denim shirt. No cowboy hat and no costume-Southern shorthand."
+  },
+  "set": {
+    "id": "june_front_porch",
+    "time": "late afternoon",
+    "palette": ["warm cedar", "faded denim", "cream", "sage"],
+    "visible_light_source": "warm porch lantern",
+    "secondary_motion": ["wind chime sway", "porch plant drift", "slow rocking-chair settle"]
+  },
+  "dialogue": {
+    "text": "Folks ain't roadblocks. Half the time, they're mirrors with bad timing. And that will preach, even if the mirror needs wiping."
+  },
+  "shots": [
+    {
+      "id": "porch_establishing",
+      "camera": "wide",
+      "duration_seconds": 3.6,
+      "line": "Folks ain't roadblocks.",
+      "performance": "June settles in the porch chair, makes eye contact, and opens one hand.",
+      "gesture": "open_hand",
+      "camera_move": "slow_push"
+    },
+    {
+      "id": "mirror_turn",
+      "camera": "medium",
+      "duration_seconds": 4.7,
+      "line": "Half the time, they're mirrors with bad timing.",
+      "performance": "A small head turn lands on mirrors; his brows lift on bad timing.",
+      "gesture": "measured_point",
+      "camera_move": "gentle_drift"
+    },
+    {
+      "id": "porch_button",
+      "camera": "close",
+      "duration_seconds": 4.7,
+      "line": "And that will preach, even if the mirror needs wiping.",
+      "performance": "June leans toward us, lets the smile arrive late, then gives a compact nod.",
+      "gesture": "lean_and_nod",
+      "camera_move": "subtle_push"
+    }
+  ],
+  "animation": {
+    "action_library": ["breathing_idle", "natural_blink", "head_turn", "open_hand", "measured_point", "lean_and_nod"],
+    "lip_sync": "rhubarb_visemes",
+    "interpolation": "stepped_mouth_smooth_body",
+    "line_style": "clean_2_5d_toon",
+    "minimum_active_regions": 3
+  }
+}
