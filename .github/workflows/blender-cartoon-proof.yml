@@ -18,7 +18,7 @@ permissions:
 jobs:
   proof:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     env:
       BLENDER_VERSION: "4.2.0"
       BLENDER_SERIES: "Blender4.2"
@@ -89,7 +89,8 @@ jobs:
           python3 -m pytest \
             pipeline/tests/test_cartoon_motion.py \
             pipeline/tests/test_cartoon_lipsync.py \
-            pipeline/tests/test_cartoon_vertical_slice.py -q
+            pipeline/tests/test_cartoon_vertical_slice.py \
+            pipeline/tests/test_cartoon_asset_library.py -q
 
       - name: Generate temporary proof dialogue
         run: |
@@ -113,6 +114,19 @@ jobs:
             --output-dir proof-out
           find proof-out -maxdepth 2 -type f -print
 
+      - name: Build asset library and render full-resolution quality keyframes
+        run: |
+          set -euo pipefail
+          python3 -m pipeline.cartoon_asset_library \
+            examples/june-porch-vertical-slice.json \
+            concept/characters/june_oxley_asset_v1.json \
+            --blender /opt/blender/blender \
+            --ffmpeg ffmpeg \
+            --engine CYCLES \
+            --samples 12 \
+            --output-dir asset-quality-out
+          find asset-quality-out -maxdepth 3 -type f -print
+
       - name: Upload proof videos, plans, and contact sheets
         uses: actions/upload-artifact@v4
         with:
@@ -122,5 +136,10 @@ jobs:
             proof-out/*.png
             proof-out/*.json
             proof-out/plans/*.json
+            asset-quality-out/*.png
+            asset-quality-out/*.json
+            asset-quality-out/plans/*.json
+            asset-quality-out/assets/*.blend
+            asset-quality-out/frames/**/*.png
           if-no-files-found: error
           retention-days: 14

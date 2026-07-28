@@ -1,0 +1,63 @@
+{
+  "contract_version": 1,
+  "asset_id": "june_oxley_hero_rig",
+  "asset_version": "1.0.0",
+  "character_id": "june_oxley",
+  "display_name": "June Oxley Hero Rig",
+  "source_of_truth": [
+    "concept/characters/JUNE_OXLEY.md",
+    "concept/characters/june_oxley.json",
+    "concept/characters/june_oxley_animation_addendum.json"
+  ],
+  "delivery": {
+    "format": "blend",
+    "generation": "code_native_runtime_build",
+    "repository_policy": "The generated .blend is a workflow artifact, never a committed binary.",
+    "collections": ["CE_June_Oxley", "CE_June_Porch"]
+  },
+  "design_lock": {
+    "age_range": [78, 84],
+    "body": "lean wiry capable build",
+    "face": "lean weathered face, pale blue-gray eyes, deep smile lines, crooked friendly grin",
+    "hair": "short thinning white hair with a bald crown",
+    "facial_hair": "trimmed white beard and mustache",
+    "wardrobe": ["faded plaid work shirt", "worn denim jacket", "dark clean overalls", "worn brown work boots"],
+    "forbidden": ["cowboy hat", "huge belly", "spherical toy proportions", "redneck caricature", "preacher costume"]
+  },
+  "rig": {
+    "required_bones": [
+      "root", "pelvis", "torso", "neck", "head",
+      "upper_arm.L", "forearm.L", "hand.L",
+      "upper_arm.R", "forearm.R", "hand.R",
+      "thigh.L", "shin.L", "foot.L",
+      "thigh.R", "shin.R", "foot.R"
+    ],
+    "action_library": [
+      "June_Breathing_Idle",
+      "June_Head_Performance",
+      "June_Gesture_Performance"
+    ]
+  },
+  "face": {
+    "visemes": ["A", "B", "C", "D", "E", "F", "G", "H", "X"],
+    "expression_controls": ["smile", "thoughtful", "soft_chuckle"],
+    "independent_controls": ["blink.L", "blink.R", "brow.L", "brow.R", "eye_aim"]
+  },
+  "hands": {
+    "minimum_digits_per_hand": 5,
+    "contact_safe": true
+  },
+  "materials": [
+    "June Skin", "June White Hair", "June Faded Denim", "June Dark Overalls",
+    "June Shirt Plaid", "Worn Boot Leather", "Aged Brass", "Warm Cedar"
+  ],
+  "quality_gate": {
+    "profiles": ["youtube", "portrait"],
+    "fps": 30,
+    "full_resolution_keyframes_per_profile": 3,
+    "required_checks": [
+      "stable identity", "lean silhouette", "readable eyes", "readable hands",
+      "visible motivated light", "safe landscape crop", "safe portrait crop"
+    ]
+  }
+}

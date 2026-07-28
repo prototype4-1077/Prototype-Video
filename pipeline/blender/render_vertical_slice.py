@@ -19,6 +19,8 @@ def _args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--plan", required=True)
     parser.add_argument("--output-dir", required=True)
+    parser.add_argument("--asset-library", help="Optional runtime-built June + porch .blend library")
+    parser.add_argument("--frames", help="Comma-separated frames for a still-only quality gate")
     return parser.parse_args(argv)
 
 
@@ -39,7 +41,16 @@ def _clear(bpy) -> None:
                 blocks.remove(block)
 
 
-def _material(bpy, name: str, color, *, emission: float = 0.0, roughness: float = 0.75):
+def _material(
+    bpy,
+    name: str,
+    color,
+    *,
+    emission: float = 0.0,
+    roughness: float = 0.75,
+    texture_scale: float = 0.0,
+    bump_strength: float = 0.0,
+):
     material = bpy.data.materials.get(name) or bpy.data.materials.new(name)
     material.diffuse_color = (*color[:3], color[3] if len(color) > 3 else 1.0)
     material.use_nodes = True
@@ -54,7 +65,46 @@ def _material(bpy, name: str, color, *, emission: float = 0.0, roughness: float 
                 emission_input.default_value = material.diffuse_color
             if strength_input:
                 strength_input.default_value = emission
+        if texture_scale and bump_strength and not material.node_tree.nodes.get("CE_Tactile_Texture"):
+            noise = material.node_tree.nodes.new("ShaderNodeTexNoise")
+            noise.name = "CE_Tactile_Texture"
+            noise.inputs["Scale"].default_value = texture_scale
+            noise.inputs["Detail"].default_value = 3.0
+            noise.inputs["Roughness"].default_value = 0.7
+            bump = material.node_tree.nodes.new("ShaderNodeBump")
+            bump.name = "CE_Tactile_Bump"
+            bump.inputs["Strength"].default_value = bump_strength
+            bump.inputs["Distance"].default_value = 0.04
+            material.node_tree.links.new(noise.outputs["Fac"], bump.inputs["Height"])
+            material.node_tree.links.new(bump.outputs["Normal"], principled.inputs["Normal"])
     return material
+
+
+def _make_materials(bpy) -> dict:
+    """Create the canonical tactile porch and June material library."""
+    return {
+        "cedar": _material(bpy, "Warm Cedar", (0.38, 0.17, 0.075, 1), texture_scale=5.0, bump_strength=0.20),
+        "dark_wood": _material(bpy, "Deep Wood", (0.16, 0.065, 0.032, 1), texture_scale=7.0, bump_strength=0.16),
+        "cream": _material(bpy, "Porch Cream", (0.72, 0.66, 0.51, 1)),
+        "sage": _material(bpy, "Sage Door", (0.22, 0.34, 0.27, 1), texture_scale=4.0, bump_strength=0.08),
+        "metal": _material(bpy, "Aged Metal", (0.24, 0.27, 0.26, 1), roughness=0.35),
+        "brass": _material(bpy, "Aged Brass", (0.48, 0.29, 0.08, 1), roughness=0.28),
+        "window": _material(bpy, "Window Warmth", (0.95, 0.46, 0.15, 1), emission=2.2),
+        "lantern": _material(bpy, "Visible Lantern Glow", (1.0, 0.30, 0.055, 1), emission=4.0),
+        "terracotta": _material(bpy, "Terracotta", (0.44, 0.16, 0.08, 1), texture_scale=5.0, bump_strength=0.12),
+        "leaf": _material(bpy, "Porch Plant", (0.13, 0.34, 0.16, 1)),
+        "skin": _material(bpy, "June Skin", (0.72, 0.48, 0.34, 1), texture_scale=18.0, bump_strength=0.07),
+        "skin_shadow": _material(bpy, "June Skin Shadow", (0.58, 0.33, 0.24, 1), texture_scale=18.0, bump_strength=0.06),
+        "hair": _material(bpy, "June White Hair", (0.86, 0.84, 0.76, 1), roughness=0.9),
+        "denim": _material(bpy, "June Faded Denim", (0.10, 0.22, 0.31, 1), texture_scale=45.0, bump_strength=0.13),
+        "dark_denim": _material(bpy, "June Denim Shadow", (0.035, 0.075, 0.11, 1), texture_scale=45.0, bump_strength=0.12),
+        "overalls": _material(bpy, "June Dark Overalls", (0.045, 0.10, 0.14, 1), texture_scale=48.0, bump_strength=0.14),
+        "plaid": _material(bpy, "June Shirt Plaid", (0.46, 0.16, 0.10, 1), texture_scale=35.0, bump_strength=0.09),
+        "leather": _material(bpy, "Worn Boot Leather", (0.20, 0.09, 0.035, 1), texture_scale=9.0, bump_strength=0.22),
+        "eye": _material(bpy, "Eye White", (0.90, 0.87, 0.77, 1), roughness=0.25),
+        "pupil": _material(bpy, "June Blue Gray Eyes", (0.06, 0.16, 0.19, 1), roughness=0.18),
+        "mouth": _material(bpy, "June Mouth", (0.20, 0.025, 0.025, 1), roughness=0.45),
+    }
 
 
 def _assign(obj, material):
@@ -201,13 +251,23 @@ def _make_armature(bpy):
     rig.select_set(True)
     bpy.ops.object.mode_set(mode="EDIT")
     bones = {
-        "root": ((0, 0, 0.75), (0, 0, 1.20), None),
-        "torso": ((0, 0, 1.20), (0, 0, 2.30), "root"),
-        "head": ((0, 0, 2.30), (0, 0, 2.78), "torso"),
-        "upper_arm.L": ((-0.40, 0, 2.12), (-0.72, -0.04, 1.82), "torso"),
-        "forearm.L": ((-0.72, -0.04, 1.82), (-0.70, -0.42, 1.48), "upper_arm.L"),
-        "upper_arm.R": ((0.40, 0, 2.12), (0.72, -0.04, 1.82), "torso"),
-        "forearm.R": ((0.72, -0.04, 1.82), (0.70, -0.42, 1.48), "upper_arm.R"),
+        "root": ((0, 0, 0.72), (0, 0, 1.04), None),
+        "pelvis": ((0, 0, 1.04), (0, 0, 1.34), "root"),
+        "torso": ((0, 0, 1.34), (0, 0, 2.24), "pelvis"),
+        "neck": ((0, 0, 2.24), (0, 0, 2.40), "torso"),
+        "head": ((0, 0, 2.40), (0, 0, 2.82), "neck"),
+        "upper_arm.L": ((-0.35, 0, 2.10), (-0.62, -0.05, 1.82), "torso"),
+        "forearm.L": ((-0.62, -0.05, 1.82), (-0.64, -0.40, 1.50), "upper_arm.L"),
+        "hand.L": ((-0.64, -0.40, 1.50), (-0.64, -0.49, 1.35), "forearm.L"),
+        "upper_arm.R": ((0.35, 0, 2.10), (0.62, -0.05, 1.82), "torso"),
+        "forearm.R": ((0.62, -0.05, 1.82), (0.64, -0.40, 1.50), "upper_arm.R"),
+        "hand.R": ((0.64, -0.40, 1.50), (0.64, -0.49, 1.35), "forearm.R"),
+        "thigh.L": ((-0.19, 0, 1.16), (-0.22, -0.55, 1.00), "pelvis"),
+        "shin.L": ((-0.22, -0.55, 1.00), (-0.22, -0.60, 0.34), "thigh.L"),
+        "foot.L": ((-0.22, -0.60, 0.34), (-0.22, -0.90, 0.25), "shin.L"),
+        "thigh.R": ((0.19, 0, 1.16), (0.22, -0.55, 1.00), "pelvis"),
+        "shin.R": ((0.22, -0.55, 1.00), (0.22, -0.60, 0.34), "thigh.R"),
+        "foot.R": ((0.22, -0.60, 0.34), (0.22, -0.90, 0.25), "shin.R"),
     }
     created = {}
     for name, (head, tail, parent) in bones.items():
@@ -257,59 +317,130 @@ def _make_june(bpy, mathutils, materials: dict):
     denim = materials["denim"]
     dark_denim = materials["dark_denim"]
 
-    torso = _sphere(bpy, "June_Denim_Torso", (0, 0.02, 1.80), (0.60, 0.34, 0.70), denim)
+    # Phase 3 replaces the round integration proxy with June's canonical lean,
+    # wiry silhouette and a layered work-shirt / overalls / jacket wardrobe.
+    torso = _sphere(bpy, "June_Plaid_Torso", (0, 0.02, 1.78), (0.43, 0.255, 0.66), materials["plaid"])
     _parent_to_bone(torso, rig, "torso")
-    shirt_placket = _box(bpy, "June_Shirt_Placket", (0, -0.337, 1.86), (0.035, 0.018, 0.49), dark_denim, bevel=0.01)
+    bib = _box(bpy, "June_Overall_Bib", (0, -0.258, 1.70), (0.255, 0.025, 0.36), materials["overalls"], bevel=0.045)
+    _parent_to_bone(bib, rig, "torso")
+    for side, x in (("L", -0.23), ("R", 0.23)):
+        strap = _box(bpy, f"June_Overall_Strap_{side}", (x, -0.266, 2.00), (0.042, 0.018, 0.34), materials["overalls"], bevel=0.018)
+        strap.rotation_euler[1] = math.radians(-7 if side == "L" else 7)
+        _parent_to_bone(strap, rig, "torso")
+        button = _sphere(bpy, f"June_Overall_Button_{side}", (x, -0.292, 1.89), (0.037, 0.018, 0.037), materials["brass"])
+        _parent_to_bone(button, rig, "torso")
+    for side, x in (("L", -0.39), ("R", 0.39)):
+        jacket = _sphere(bpy, f"June_Denim_Jacket_{side}", (x, 0.025, 1.80), (0.16, 0.275, 0.62), denim)
+        _parent_to_bone(jacket, rig, "torso")
+    shirt_placket = _box(bpy, "June_Shirt_Placket", (0, -0.283, 1.92), (0.026, 0.014, 0.30), dark_denim, bevel=0.008)
     _parent_to_bone(shirt_placket, rig, "torso")
-    for index, z in enumerate((1.55, 1.76, 1.97, 2.18)):
-        stripe = _box(bpy, f"June_Plaid_Stripe_{index}", (0, -0.355, z), (0.48, 0.012, 0.018), materials["plaid"], bevel=0.008)
+    for index, z in enumerate((1.54, 1.74, 1.94, 2.14)):
+        stripe = _box(bpy, f"June_Plaid_Stripe_{index}", (0, -0.278, z), (0.34, 0.011, 0.014), dark_denim, bevel=0.006)
         _parent_to_bone(stripe, rig, "torso")
-    neck = _cylinder(bpy, "June_Neck", (0, 0, 2.25), 0.18, 0.28, skin)
-    _parent_to_bone(neck, rig, "head")
+    for index, x in enumerate((-0.26, 0.26)):
+        stripe = _box(bpy, f"June_Plaid_Vertical_{index}", (x, -0.279, 1.91), (0.012, 0.012, 0.31), dark_denim, bevel=0.004)
+        _parent_to_bone(stripe, rig, "torso")
+    neck = _cylinder(bpy, "June_Neck", (0, 0, 2.27), 0.145, 0.25, skin)
+    _parent_to_bone(neck, rig, "neck")
 
-    head = _sphere(bpy, "June_Head", (0, 0, 2.62), (0.36, 0.32, 0.43), skin, segments=32, rings=16)
+    head = _sphere(bpy, "June_Head", (0, 0, 2.63), (0.315, 0.275, 0.405), skin, segments=40, rings=20)
+    head_basis = head.shape_key_add(name="Basis")
+    for control in ("smile", "thoughtful", "soft_chuckle"):
+        key = head.shape_key_add(name=control)
+        for source, target in zip(head_basis.data, key.data):
+            front = max(0.0, min(1.0, -source.co.y / 0.27))
+            lower = max(0.0, min(1.0, (0.10 - source.co.z) / 0.34))
+            if control == "smile":
+                target.co.x *= 1.0 + 0.035 * front * lower
+                target.co.z += 0.012 * front * lower * min(1.0, abs(source.co.x) / 0.22)
+            elif control == "thoughtful":
+                target.co.x += 0.008 * front * lower
+                target.co.z -= 0.006 * front * lower
+            else:
+                target.co.x *= 1.0 + 0.025 * front
+                target.co.z += 0.010 * front * lower
+    head["ce_expression_controls"] = "smile,thoughtful,soft_chuckle"
     _parent_to_bone(head, rig, "head")
-    for x in (-0.36, 0.36):
-        ear = _sphere(bpy, f"June_Ear_{x}", (x, 0, 2.62), (0.075, 0.045, 0.11), skin_shadow)
+    for x in (-0.32, 0.32):
+        ear = _sphere(bpy, f"June_Ear_{x}", (x, 0, 2.63), (0.065, 0.042, 0.105), skin_shadow)
         _parent_to_bone(ear, rig, "head")
-    nose = _sphere(bpy, "June_Nose", (0, -0.355, 2.61), (0.075, 0.09, 0.12), skin_shadow)
+    nose = _sphere(bpy, "June_Nose", (0, -0.304, 2.61), (0.067, 0.084, 0.115), skin_shadow)
     _parent_to_bone(nose, rig, "head")
 
     # Thinning hair and a close beard match the June bible without cowboy shorthand.
-    for index, (x, z, sx) in enumerate(((-0.25, 2.91, 0.16), (0.25, 2.91, 0.16), (-0.31, 2.78, 0.11), (0.31, 2.78, 0.11))):
-        tuft = _sphere(bpy, f"June_White_Hair_{index}", (x, 0.03, z), (sx, 0.25, 0.13), hair)
+    for index, (x, z, sx) in enumerate(((-0.20, 2.94, 0.13), (0.20, 2.94, 0.13), (-0.285, 2.80, 0.095), (0.285, 2.80, 0.095))):
+        tuft = _sphere(bpy, f"June_White_Hair_{index}", (x, 0.04, z), (sx, 0.22, 0.105), hair)
         _parent_to_bone(tuft, rig, "head")
-    beard = _sphere(bpy, "June_Close_Beard", (0, -0.18, 2.39), (0.285, 0.19, 0.255), hair)
+    beard = _sphere(bpy, "June_Close_Beard", (0, -0.155, 2.42), (0.248, 0.16, 0.23), hair, segments=32, rings=16)
     _parent_to_bone(beard, rig, "head")
-    for index, x in enumerate((-0.095, 0.095)):
-        moustache = _sphere(bpy, f"June_Moustache_{index}", (x, -0.37, 2.535), (0.11, 0.025, 0.038), hair)
+    for index, x in enumerate((-0.085, 0.085)):
+        moustache = _sphere(bpy, f"June_Moustache_{index}", (x, -0.315, 2.535), (0.095, 0.022, 0.033), hair)
         moustache.rotation_euler[1] = math.radians((-1 if x < 0 else 1) * 10)
         _parent_to_bone(moustache, rig, "head")
 
     eyes = []
-    for side, x in (("L", -0.135), ("R", 0.135)):
-        eye = _sphere(bpy, f"June_Eye_{side}", (x, -0.315, 2.72), (0.077, 0.035, 0.055), materials["eye"])
-        pupil = _sphere(bpy, f"June_Pupil_{side}", (x, -0.351, 2.72), (0.029, 0.018, 0.032), materials["pupil"])
-        brow = _box(bpy, f"June_Brow_{side}", (x, -0.345, 2.82), (0.095, 0.018, 0.018), hair, bevel=0.012)
+    for side, x in (("L", -0.12), ("R", 0.12)):
+        eye = _sphere(bpy, f"June_Eye_{side}", (x, -0.269, 2.72), (0.062, 0.030, 0.046), materials["eye"])
+        pupil = _sphere(bpy, f"June_Pupil_{side}", (x, -0.300, 2.72), (0.023, 0.015, 0.027), materials["pupil"])
+        brow = _box(bpy, f"June_Brow_{side}", (x, -0.291, 2.81), (0.082, 0.015, 0.014), hair, bevel=0.010)
         brow.rotation_euler[1] = math.radians(5 if side == "L" else -5)
+        brow["ce_face_control"] = f"brow.{side}"
         for obj in (eye, pupil, brow):
             _parent_to_bone(obj, rig, "head")
         eyes.extend((eye, pupil))
 
+    # Fine silhouette marks make the weathered face readable without texture maps.
+    for index, z in enumerate((2.835, 2.865, 2.892)):
+        wrinkle = _box(bpy, f"June_Forehead_Line_{index}", (0, -0.277, z), (0.105 - index * 0.012, 0.006, 0.004), skin_shadow, bevel=0.003)
+        _parent_to_bone(wrinkle, rig, "head")
+    for side, x in (("L", -0.19), ("R", 0.19)):
+        smile_line = _cylinder_between(bpy, mathutils, f"June_Smile_Line_{side}", (x, -0.286, 2.56), (x * 0.92, -0.292, 2.47), 0.006, skin_shadow)
+        _parent_to_bone(smile_line, rig, "head")
+
     limb_specs = (
-        ("upper_arm.L", (-0.40, 0, 2.12), (-0.72, -0.04, 1.82), denim),
-        ("forearm.L", (-0.72, -0.04, 1.82), (-0.70, -0.42, 1.48), skin),
-        ("upper_arm.R", (0.40, 0, 2.12), (0.72, -0.04, 1.82), denim),
-        ("forearm.R", (0.72, -0.04, 1.82), (0.70, -0.42, 1.48), skin),
+        ("upper_arm.L", (-0.35, 0, 2.10), (-0.62, -0.05, 1.82), denim),
+        ("forearm.L", (-0.62, -0.05, 1.82), (-0.64, -0.40, 1.50), skin),
+        ("upper_arm.R", (0.35, 0, 2.10), (0.62, -0.05, 1.82), denim),
+        ("forearm.R", (0.62, -0.05, 1.82), (0.64, -0.40, 1.50), skin),
     )
     for bone, start, end, material in limb_specs:
-        limb = _cylinder_between(bpy, mathutils, f"June_{bone}", start, end, 0.13 if "upper" in bone else 0.105, material)
+        limb = _cylinder_between(bpy, mathutils, f"June_{bone}", start, end, 0.105 if "upper" in bone else 0.082, material)
         _parent_to_bone(limb, rig, bone)
-    for side, x in (("L", -0.70), ("R", 0.70)):
-        hand = _sphere(bpy, f"June_Hand_{side}", (x, -0.45, 1.43), (0.13, 0.08, 0.14), skin)
-        _parent_to_bone(hand, rig, f"forearm.{side}")
+    for side, x in (("L", -0.64), ("R", 0.64)):
+        palm = _sphere(bpy, f"June_Hand_{side}", (x, -0.445, 1.43), (0.092, 0.056, 0.115), skin)
+        _parent_to_bone(palm, rig, f"hand.{side}")
+        sign = -1 if side == "L" else 1
+        for digit, offset in enumerate((-0.060, -0.030, 0.0, 0.030)):
+            finger = _cylinder_between(
+                bpy,
+                mathutils,
+                f"June_Finger_{side}_{digit}",
+                (x + offset, -0.458, 1.40),
+                (x + offset * 1.08, -0.474, 1.305 + abs(offset) * 0.35),
+                0.014,
+                skin,
+            )
+            _parent_to_bone(finger, rig, f"hand.{side}")
+        thumb = _cylinder_between(bpy, mathutils, f"June_Thumb_{side}", (x + sign * 0.075, -0.45, 1.45), (x + sign * 0.125, -0.49, 1.39), 0.020, skin)
+        _parent_to_bone(thumb, rig, f"hand.{side}")
+
+    leg_specs = (
+        ("thigh.L", (-0.19, 0, 1.16), (-0.22, -0.55, 1.00)),
+        ("shin.L", (-0.22, -0.55, 1.00), (-0.22, -0.60, 0.34)),
+        ("thigh.R", (0.19, 0, 1.16), (0.22, -0.55, 1.00)),
+        ("shin.R", (0.22, -0.55, 1.00), (0.22, -0.60, 0.34)),
+    )
+    for bone, start, end in leg_specs:
+        leg = _cylinder_between(bpy, mathutils, f"June_{bone}", start, end, 0.115 if "thigh" in bone else 0.10, materials["overalls"])
+        _parent_to_bone(leg, rig, bone)
+    for side, x in (("L", -0.22), ("R", 0.22)):
+        boot = _box(bpy, f"June_Boot_{side}", (x, -0.76, 0.25), (0.13, 0.24, 0.10), materials["leather"], bevel=0.07)
+        _parent_to_bone(boot, rig, f"foot.{side}")
 
     mouth = _make_mouth(bpy, rig, materials["mouth"])
+    rig["ce_character_id"] = "june_oxley"
+    rig["ce_body_type"] = "lean_wiry"
+    rig["ce_hand_digits"] = 5
     return rig, mouth, eyes
 
 
@@ -328,6 +459,12 @@ def _stash_action(bpy, rig, name: str, animator) -> None:
 
 def _animate_rig(bpy, rig, plan: dict) -> None:
     frame_end = int(plan["frame_end"])
+    rig.animation_data_create()
+    # Runtime performances replace the library preview strips while the source
+    # actions remain stored in the .blend for reuse and inspection.
+    for track in list(rig.animation_data.nla_tracks):
+        rig.animation_data.nla_tracks.remove(track)
+    rig.animation_data.action = None
     torso = rig.pose.bones["torso"]
     head = rig.pose.bones["head"]
     upper_l = rig.pose.bones["upper_arm.L"]
@@ -390,6 +527,8 @@ def _animate_rig(bpy, rig, plan: dict) -> None:
 
 
 def _animate_mouth(mouth, plan: dict) -> None:
+    if mouth.data.shape_keys.animation_data:
+        mouth.data.shape_keys.animation_data_clear()
     keys = mouth.data.shape_keys.key_blocks
     shapes = tuple("ABCDEFGHX")
     cues = plan.get("mouth_cues") or [{"frame_start": 1, "frame_end": plan["frame_end"], "shape": "X"}]
@@ -409,8 +548,26 @@ def _animate_mouth(mouth, plan: dict) -> None:
             point.interpolation = "CONSTANT"
 
 
+def _animate_expressions(head, plan: dict) -> None:
+    """Layer readable acting beats independently from phoneme mouth shapes."""
+    keys = head.data.shape_keys.key_blocks
+    controls = ("smile", "thoughtful", "soft_chuckle")
+    shots = plan["shots"][:3]
+    assignments = ("smile", "thoughtful", "soft_chuckle")
+    for shot, active in zip(shots, assignments):
+        start = int(shot["frame_start"])
+        middle = (start + int(shot["frame_end"])) // 2
+        end = int(shot["frame_end"])
+        for frame, strength in ((start, 0.0), (middle, 0.75), (end, 0.20)):
+            for control in controls:
+                keys[control].value = strength if control == active else 0.0
+                keys[control].keyframe_insert(data_path="value", frame=frame)
+
+
 def _animate_blinks(eyes: list, frame_end: int) -> None:
     for eye_index, eye in enumerate(eyes):
+        if eye.animation_data:
+            eye.animation_data_clear()
         base = eye.scale.copy()
         for center in range(52 + eye_index % 2, frame_end, 83):
             for frame, factor in ((center - 2, 1.0), (center, 0.12), (center + 2, 1.0)):
@@ -530,37 +687,42 @@ def main() -> None:
     plan = json.loads(Path(args.plan).read_text(encoding="utf-8"))
     output_dir = Path(args.output_dir).resolve()
     output_dir.mkdir(parents=True, exist_ok=True)
-    _clear(bpy)
-
-    materials = {
-        "cedar": _material(bpy, "Warm Cedar", (0.38, 0.17, 0.075, 1)),
-        "dark_wood": _material(bpy, "Deep Wood", (0.16, 0.065, 0.032, 1)),
-        "cream": _material(bpy, "Porch Cream", (0.72, 0.66, 0.51, 1)),
-        "sage": _material(bpy, "Sage Door", (0.22, 0.34, 0.27, 1)),
-        "metal": _material(bpy, "Aged Metal", (0.24, 0.27, 0.26, 1), roughness=0.35),
-        "window": _material(bpy, "Window Warmth", (0.95, 0.46, 0.15, 1), emission=2.2),
-        "lantern": _material(bpy, "Visible Lantern Glow", (1.0, 0.30, 0.055, 1), emission=4.0),
-        "terracotta": _material(bpy, "Terracotta", (0.44, 0.16, 0.08, 1)),
-        "leaf": _material(bpy, "Porch Plant", (0.13, 0.34, 0.16, 1)),
-        "skin": _material(bpy, "June Skin", (0.67, 0.43, 0.31, 1)),
-        "skin_shadow": _material(bpy, "June Skin Shadow", (0.52, 0.29, 0.21, 1)),
-        "hair": _material(bpy, "June White Hair", (0.82, 0.82, 0.76, 1)),
-        "denim": _material(bpy, "June Faded Denim", (0.12, 0.27, 0.40, 1)),
-        "dark_denim": _material(bpy, "June Denim Shadow", (0.045, 0.11, 0.18, 1)),
-        "plaid": _material(bpy, "June Shirt Plaid", (0.58, 0.19, 0.11, 1)),
-        "eye": _material(bpy, "Eye White", (0.88, 0.84, 0.72, 1)),
-        "pupil": _material(bpy, "June Blue Gray Eyes", (0.075, 0.15, 0.18, 1)),
-        "mouth": _material(bpy, "June Mouth", (0.20, 0.025, 0.025, 1)),
-    }
-    _make_porch(bpy, mathutils, materials, int(plan["frame_end"]))
-    rig, mouth, eyes = _make_june(bpy, mathutils, materials)
+    if args.asset_library:
+        library = Path(args.asset_library).resolve()
+        if not library.is_file():
+            raise FileNotFoundError(f"asset library not found: {library}")
+        bpy.ops.wm.open_mainfile(filepath=str(library))
+        rig = bpy.data.objects["June_Oxley_Rig"]
+        mouth = bpy.data.objects["June_Mouth_Viseme"]
+        eyes = [
+            bpy.data.objects["June_Eye_L"],
+            bpy.data.objects["June_Pupil_L"],
+            bpy.data.objects["June_Eye_R"],
+            bpy.data.objects["June_Pupil_R"],
+        ]
+    else:
+        _clear(bpy)
+        materials = _make_materials(bpy)
+        _make_porch(bpy, mathutils, materials, int(plan["frame_end"]))
+        rig, mouth, eyes = _make_june(bpy, mathutils, materials)
+    head = bpy.data.objects["June_Head"]
     _animate_rig(bpy, rig, plan)
     _animate_mouth(mouth, plan)
+    _animate_expressions(head, plan)
     _animate_blinks(eyes, int(plan["frame_end"]))
     _make_cameras(bpy, mathutils, plan)
     _lighting(bpy, mathutils)
     _configure_render(bpy, plan, output_dir)
-    bpy.ops.render.render(animation=True)
+    if args.frames:
+        selected = sorted({int(frame) for frame in args.frames.split(",") if frame.strip()})
+        if not selected or any(frame < int(plan["frame_start"]) or frame > int(plan["frame_end"]) for frame in selected):
+            raise ValueError("--frames must contain in-range frame numbers")
+        for frame in selected:
+            bpy.context.scene.frame_set(frame)
+            bpy.context.scene.render.filepath = str(output_dir / f"frame_{frame:04d}.png")
+            bpy.ops.render.render(write_still=True)
+    else:
+        bpy.ops.render.render(animation=True)
 
 
 if __name__ == "__main__":
