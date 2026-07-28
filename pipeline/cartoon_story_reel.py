@@ -356,8 +356,8 @@ def _mix_audio(voice: Path, duration: float, *, ffmpeg: str, destination: Path) 
         "anoisesrc=color=white:amplitude=0.030:duration=1.8:sample_rate=48000,"
         f"highpass=f=450,lowpass=f=2600,afade=t=in:d=0.20,afade=t=out:st=1.25:d=0.55,adelay={pour_delay_ms}:all=1[pour];"
         "[0:a]aformat=sample_rates=48000:channel_layouts=mono,"
-        "volume='if(between(t,18.8,22.6),0.40,if(between(t,7.5,13.2),0.82,"
-        "if(between(t,22.6,31.2),0.68+0.32*(t-22.6)/8.6,1.05)))':eval=frame[dx];"
+        "volume='if(between(t,18.8,22.6),0.32,if(between(t,7.5,13.2),0.78,"
+        "if(between(t,22.6,31.2),0.62+0.38*(t-22.6)/8.6,1.05)))':eval=frame[dx];"
         "[dx][amb][pour]amix=inputs=3:duration=first:normalize=0,"
         "loudnorm=I=-16.2:LRA=7:TP=-1,alimiter=limit=0.89[mix]"
     )
