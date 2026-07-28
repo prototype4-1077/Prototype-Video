@@ -9,8 +9,24 @@ from __future__ import annotations
 from copy import deepcopy
 from typing import Any
 
-MOTION_CONTRACT_VERSION = 1
+from pipeline.video_format import FPS, HEIGHT, WIDTH, YOUTUBE_HEIGHT, YOUTUBE_WIDTH
+
+
+MOTION_CONTRACT_VERSION = 2
 BLENDER_BACKEND = "blender_2_5d"
+
+RENDER_PROFILES = {
+    "youtube": {
+        "width": YOUTUBE_WIDTH,
+        "height": YOUTUBE_HEIGHT,
+        "fps": FPS,
+    },
+    "portrait": {
+        "width": WIDTH,
+        "height": HEIGHT,
+        "fps": FPS,
+    },
+}
 
 STRATEGIES = {
     "rigged_character",
@@ -43,6 +59,20 @@ DEFAULT_ATMOSPHERE = {
 }
 
 
+def render_profile(name: str = "youtube", *, scale: float = 1.0) -> dict:
+    """Return one canonical output profile, optionally scaled for proof renders."""
+    if name not in RENDER_PROFILES:
+        raise ValueError(f"unknown cartoon render profile: {name!r}")
+    if not 0 < float(scale) <= 1:
+        raise ValueError("render profile scale must be within (0, 1]")
+    profile = deepcopy(RENDER_PROFILES[name])
+    for field in ("width", "height"):
+        value = max(2, round(profile[field] * float(scale)))
+        profile[field] = value if value % 2 == 0 else value + 1
+    profile["profile"] = name
+    return profile
+
+
 def _as_list(value: Any) -> list:
     if value is None:
         return []
@@ -54,6 +84,16 @@ def default_motion_plan(scene: dict, index: int = 0) -> dict:
     character = bool(scene.get("animation_character_required"))
     strategy = "rigged_character" if character else "layered_parallax"
     primary = scene.get("primary_action") or ("subtle idle performance" if character else "slow environmental drift")
+    profile_name = str(scene.get("render_profile") or "youtube")
+    render = render_profile(profile_name)
+    render.update(
+        {
+            "engine": "CYCLES",
+            "samples": 24,
+            "device": "CPU",
+            "transparent": False,
+        }
+    )
     return {
         "version": MOTION_CONTRACT_VERSION,
         "backend": BLENDER_BACKEND,
@@ -71,15 +111,7 @@ def default_motion_plan(scene: dict, index: int = 0) -> dict:
         "atmosphere": deepcopy(DEFAULT_ATMOSPHERE),
         "secondary_motion": [],
         "locked_elements": _as_list(scene.get("locked_elements")),
-        "render": {
-            "width": 1080,
-            "height": 1920,
-            "fps": 24,
-            "engine": "CYCLES",
-            "samples": 24,
-            "device": "CPU",
-            "transparent": False,
-        },
+        "render": render,
     }
 
 
@@ -160,6 +192,9 @@ def validate_motion_plan(plan: dict, scene_index: int = 0) -> list[str]:
                 errors.append(f"scene {scene_index} render.{field} must be positive")
         except (TypeError, ValueError):
             errors.append(f"scene {scene_index} render.{field} must be an integer")
+    profile_name = render.get("profile")
+    if profile_name is not None and profile_name not in RENDER_PROFILES:
+        errors.append(f"scene {scene_index} unknown render profile: {profile_name!r}")
     return errors
 
 

@@ -2,6 +2,7 @@ from pipeline.cartoon_motion import (
     BLENDER_BACKEND,
     apply_motion_defaults,
     normalize_motion_plan,
+    render_profile,
     validate_motion_plan,
     validate_script_motion,
 )
@@ -13,16 +14,17 @@ def test_existing_scene_is_untouched_without_opt_in():
     assert "motion_plan" not in script["scenes"][0]
 
 
-def test_top_level_backend_populates_vertical_plan():
+def test_top_level_backend_populates_default_youtube_plan():
     script = {
         "cartoon_motion_backend": BLENDER_BACKEND,
         "scenes": [{"text": "hello", "duration": 4}],
     }
     assert apply_motion_defaults(script) is True
     plan = script["scenes"][0]["motion_plan"]
-    assert plan["render"]["width"] == 1080
-    assert plan["render"]["height"] == 1920
-    assert plan["render"]["fps"] == 24
+    assert plan["render"]["width"] == 1920
+    assert plan["render"]["height"] == 1080
+    assert plan["render"]["fps"] == 30
+    assert plan["render"]["profile"] == "youtube"
     assert plan["duration_seconds"] == 4.0
     assert validate_script_motion(script) == []
 
@@ -65,3 +67,17 @@ def test_apply_defaults_is_idempotent():
     script = {"cartoon_motion_backend": BLENDER_BACKEND, "scenes": [{}]}
     assert apply_motion_defaults(script) is True
     assert apply_motion_defaults(script) is False
+
+
+def test_portrait_proof_profile_stays_even_and_keeps_pipeline_fps():
+    profile = render_profile("portrait", scale=0.25)
+    assert profile == {"width": 270, "height": 480, "fps": 30, "profile": "portrait"}
+
+
+def test_unknown_render_profile_is_rejected():
+    try:
+        render_profile("square")
+    except ValueError as exc:
+        assert "unknown cartoon render profile" in str(exc)
+    else:
+        raise AssertionError("unknown profile should fail")
