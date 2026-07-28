@@ -1,0 +1,212 @@
+{
+  "version": 1,
+  "production": "june-golden-scene-twelve-dollar-mug",
+  "title": "The Twelve-Dollar Mug",
+  "benchmark_class": "golden_scene",
+  "fps": 30,
+  "character": {
+    "id": "june_oxley",
+    "profile": "june_oxley",
+    "display_name": "June Oxley",
+    "asset_min_version": "3.0.0",
+    "description": "A lean, capable, weathered older Southern man with kind blue-gray eyes, thinning white hair, a short white beard, and no costume-Southern shorthand.",
+    "voice_canonical": false,
+    "voice_mode": "locally_recorded_human_prototype"
+  },
+  "story": {
+    "lane": "do_right_by_people",
+    "ruling_metaphor": "A ledger can record debt but cannot measure what a person is carrying.",
+    "comic_turn": "apologizing like he'd misplaced the courthouse",
+    "knife_line": "Keeping score tells you what you're owed. It can't tell you what a man is carrying.",
+    "viewer_question": "What are you carrying just because the ledger says so?"
+  },
+  "set": {
+    "id": "june_front_porch",
+    "time": "late_afternoon",
+    "weather": "dry_light_breeze",
+    "palette": ["warm cedar", "faded denim", "cream", "sage", "lantern amber", "sky blue-gray"],
+    "visible_light_source": "warm porch lantern",
+    "required_elements": ["porch_chair", "side_table", "porch_rail", "warm_lantern", "wind_chime", "porch_plant", "door", "distant_gravel_road"],
+    "secondary_motion": ["wind_chime_sway", "plant_drift", "chair_cushion_settle", "coffee_steam", "dust_in_key_light"]
+  },
+  "props": [
+    {
+      "id": "returned_enamel_mug",
+      "hero": true,
+      "description": "Cream enamel mug with faded blue rim and one stable chip at upper-right.",
+      "continuity_required": true
+    },
+    {"id": "small_ledger", "hero": true, "description": "Worn pocket ledger."},
+    {"id": "short_pencil", "hero": true},
+    {"id": "coffee_pot", "hero": true},
+    {"id": "covered_pie_tin", "hero": false}
+  ],
+  "dialogue": {
+    "text": "The fellow from the feed store borrowed twelve dollars—and this enamel mug—the same Tuesday. Returned neither. Three years later, he brought the mug back, plus a pie his wife made, apologizing like he'd misplaced the courthouse. I reached for my little ledger... then watched his hand shake. Keeping score tells you what you're owed. It can't tell you what a man is carrying. So I set the pencil down and poured him coffee. Funny thing: the account got lighter before the debt did. What are you carrying just because the ledger says so?",
+    "language": "en-US",
+    "rhubarb_extended_shapes": "GHX",
+    "required_silence_return_shape": "X"
+  },
+  "shots": [
+    {
+      "id": "GS010",
+      "beat": "setup",
+      "camera": "wide",
+      "duration_seconds": 4.3,
+      "line": "The fellow from the feed store borrowed twelve dollars—",
+      "performance": "June settles in the chair, looks from the road to camera, and loosely holds the mug.",
+      "gesture": "seated_mug_hold",
+      "camera_move": "slow_push_3_percent",
+      "required_visible": ["eyes", "mug", "chair", "boots", "lantern"],
+      "framing": {
+        "youtube": {"shot_size": "medium_wide", "lens_mm": 40, "subject_anchor": [0.36, 0.53], "caption_zone": "lower_center"},
+        "portrait": {"shot_size": "medium_full", "lens_mm": 52, "subject_anchor": [0.50, 0.51], "caption_zone": "lower_center"}
+      }
+    },
+    {
+      "id": "GS020",
+      "beat": "prop_gag",
+      "camera": "close",
+      "duration_seconds": 3.2,
+      "line": "and this enamel mug—the same Tuesday. Returned neither.",
+      "performance": "Thumb rubs the chip; mug rotates six degrees; movement stops on the final sentence.",
+      "gesture": "mug_chip_rub",
+      "camera_move": "locked",
+      "required_visible": ["mug_chip", "thumb_contact"],
+      "framing": {
+        "youtube": {"shot_size": "insert", "lens_mm": 85, "subject_anchor": [0.58, 0.55], "caption_zone": "lower_left"},
+        "portrait": {"shot_size": "insert", "lens_mm": 90, "subject_anchor": [0.50, 0.57], "caption_zone": "upper_center"}
+      }
+    },
+    {
+      "id": "GS030",
+      "beat": "return_story",
+      "camera": "wide",
+      "duration_seconds": 5.7,
+      "line": "Three years later, he brought the mug back, plus a pie his wife made,",
+      "performance": "June plants both boots, transfers weight over the support foot, presses the chair arm, and rises while protecting the mug.",
+      "gesture": "seated_to_stand_with_mug",
+      "camera_move": "locked_with_two_percent_vertical_settle",
+      "required_visible": ["head", "hands", "pelvis", "knees", "boots", "chair", "mug"],
+      "framing": {
+        "youtube": {"shot_size": "full_three_quarter", "lens_mm": 50, "subject_anchor": [0.43, 0.52], "caption_zone": "lower_right"},
+        "portrait": {"shot_size": "full", "lens_mm": 58, "subject_anchor": [0.50, 0.50], "caption_zone": "upper_center"}
+      }
+    },
+    {
+      "id": "GS040",
+      "beat": "ledger_joke",
+      "camera": "medium",
+      "duration_seconds": 5.6,
+      "line": "apologizing like he'd misplaced the courthouse. I reached for my little ledger...",
+      "performance": "The crooked smile arrives late; June retrieves ledger and pencil, then shifts his gaze to the visitor.",
+      "gesture": "retrieve_ledger",
+      "camera_move": "locked",
+      "required_visible": ["eyes", "both_hands", "ledger", "pencil", "mug"],
+      "framing": {
+        "youtube": {"shot_size": "medium", "lens_mm": 65, "subject_anchor": [0.45, 0.49], "caption_zone": "lower_right"},
+        "portrait": {"shot_size": "medium_tight", "lens_mm": 70, "subject_anchor": [0.50, 0.46], "caption_zone": "lower_center"}
+      }
+    },
+    {
+      "id": "GS050",
+      "beat": "emotional_turn",
+      "camera": "close",
+      "duration_seconds": 3.8,
+      "line": "then watched his hand shake.",
+      "performance": "Smile releases, eyes move down off-camera, lower eyelids engage, breath pauses, and the pencil hand becomes still.",
+      "gesture": "compassion_hold",
+      "camera_move": "slow_push_2_percent_after_dialogue",
+      "required_visible": ["eyes", "brows", "mouth", "pencil_hand"],
+      "minimum_post_dialogue_hold_frames": 24,
+      "framing": {
+        "youtube": {"shot_size": "close", "lens_mm": 85, "subject_anchor": [0.39, 0.43], "look_space": "right", "caption_zone": "lower_left"},
+        "portrait": {"shot_size": "close", "lens_mm": 90, "subject_anchor": [0.50, 0.38], "look_space": "lower_right", "caption_zone": "lower_center"}
+      }
+    },
+    {
+      "id": "GS060",
+      "beat": "moral_choice",
+      "camera": "medium",
+      "duration_seconds": 8.6,
+      "line": "Keeping score tells you what you're owed. It can't tell you what a man is carrying. So I set the pencil down and poured him coffee.",
+      "performance": "June places the pencil across the ledger, transfers weight toward the table, lifts the coffee pot, and pours into the returned mug.",
+      "gesture": "pencil_down_coffee_pour",
+      "camera_move": "subtle_lateral_drift",
+      "required_visible": ["face", "support_foot", "ledger", "pencil", "coffee_pot", "mug", "coffee_stream"],
+      "framing": {
+        "youtube": {"shot_size": "side_medium", "lens_mm": 55, "subject_anchor": [0.42, 0.49], "caption_zone": "lower_left"},
+        "portrait": {"shot_size": "medium_vertical", "lens_mm": 65, "subject_anchor": [0.50, 0.45], "caption_zone": "upper_center"}
+      }
+    },
+    {
+      "id": "GS070",
+      "beat": "resolution_question",
+      "camera": "close",
+      "duration_seconds": 7.6,
+      "line": "Funny thing: the account got lighter before the debt did. What are you carrying just because the ledger says so?",
+      "performance": "June slides the mug toward the visitor, releases it, returns his gaze to camera, lets the grin arrive, and gives one compact nod.",
+      "gesture": "offer_mug_and_question",
+      "camera_move": "slow_push_2_percent",
+      "required_visible": ["eyes", "mouth", "offering_hand", "mug"],
+      "end_hold_frames": 27,
+      "framing": {
+        "youtube": {"shot_size": "close_hero", "lens_mm": 85, "subject_anchor": [0.43, 0.42], "caption_zone": "lower_left"},
+        "portrait": {"shot_size": "close_hero", "lens_mm": 90, "subject_anchor": [0.50, 0.37], "caption_zone": "lower_center"}
+      }
+    }
+  ],
+  "animation": {
+    "action_library": ["seated_mug_hold", "mug_chip_rub", "seated_to_stand_with_mug", "retrieve_ledger", "compassion_hold", "pencil_down_coffee_pour", "offer_mug_and_question"],
+    "lip_sync": "rhubarb_visemes_with_coarticulation",
+    "interpolation": "designed_twelves_with_full_rate_face_contacts_and_fluids",
+    "line_style": "hybrid_toon_grease_pencil_ink",
+    "minimum_active_regions": 5,
+    "gaze_leads_head_frames": [2, 4],
+    "forbidden_motion": ["perpetual_procedural_bob", "random_blink_over_knife_line", "unconstrained_prop_contact"]
+  },
+  "art_direction": {
+    "palette_hex": {
+      "ink": "#2A211D",
+      "cedar": "#875E42",
+      "denim": "#496779",
+      "denim_shadow": "#304A59",
+      "shirt_cream": "#C9B692",
+      "plaid_muted_red": "#80564E",
+      "skin": "#C79A7E",
+      "skin_shadow": "#8E6656",
+      "hair_beard": "#D7D5CE",
+      "sage": "#78866A",
+      "lantern": "#F0B76D",
+      "sky_fill": "#8193A1"
+    },
+    "toon_bands": 2,
+    "outer_silhouette_px_at_1080": [3.5, 5.0],
+    "facial_line_px_at_1080": [1.25, 2.0],
+    "texture_luminance_contrast_max": 0.08,
+    "texture_feature_min_output_px": 4,
+    "background_line_reduction_portrait": 0.40,
+    "lighting": "warm 4300K back-left key, broad 7000K right sky fill, visible restrained 2700K lantern"
+  },
+  "sound": {
+    "music": "none_intentional",
+    "sample_rate_hz": 48000,
+    "target_lufs_i": -16,
+    "target_lufs_tolerance": 1,
+    "true_peak_dbtp_max": -1.0,
+    "target_lra_lu": [4, 8],
+    "required_stems": ["DX_JUNE_MONO", "FOLEY_PROP_MONO", "FOLEY_BODY_STEREO", "AMB_PORCH_STEREO", "MUSIC_EMPTY", "MIX_MASTER_STEREO"],
+    "required_foley": ["mug_thumb_rub", "mug_place_and_slide", "chair_creak", "clothing", "boot_plant", "ledger", "pencil", "coffee_pot", "coffee_pour"]
+  },
+  "quality_gates": {
+    "exact_frame_count": 1164,
+    "profiles": ["youtube", "portrait"],
+    "safe_crop_required": true,
+    "max_contact_drift_px_1080": 2,
+    "max_planted_foot_drift_px_1080": 2,
+    "minimum_held_ink_edge_retention": 0.92,
+    "human_scores_minimum": 4,
+    "human_score_dimensions": ["identity", "acting", "deformation", "composition", "ink", "lighting", "sound", "emotional_clarity"],
+    "promotion_rule": "No category may regress; at least one category must improve; no paid dependency may be introduced."
+  }
+}

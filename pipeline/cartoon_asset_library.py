@@ -111,8 +111,10 @@ def validate_asset_manifest(manifest: dict) -> None:
         matrix_expressions = _string_set(gate.get("matrix_expressions"), "quality_gate.matrix_expressions")
         if matrix_visemes != set(FACIAL_GATE_VISEMES) or matrix_expressions != set(FACIAL_GATE_EXPRESSIONS):
             raise ValueError("Hero v3 facial matrix must expose every viseme and expression")
+        if gate.get("continuous_engine") != "BLENDER_WORKBENCH":
+            raise ValueError("Hero v3 must declare Workbench as the continuous geometry engine")
         if gate.get("review_engine") != "BLENDER_EEVEE_NEXT":
-            raise ValueError("Hero v3 must declare Eevee as the continuous review engine")
+            raise ValueError("Hero v3 must declare Eevee as the lookdev review engine")
         if gate.get("promotion_engine") != "CYCLES":
             raise ValueError("Hero v3 must retain Cycles as the final promotion engine")
 
@@ -170,8 +172,16 @@ def shot_quality_frames(plan: dict) -> list[int]:
     ]
 
 
-def facial_performance_plan(config: dict) -> tuple[dict, list[dict]]:
+def facial_performance_plan(
+    config: dict,
+    *,
+    size: int = 960,
+    engine: str = "BLENDER_EEVEE_NEXT",
+    samples: int = 32,
+) -> tuple[dict, list[dict]]:
     """Build a deterministic close-up matrix plan for every facial control."""
+    if int(size) <= 0 or int(samples) <= 0:
+        raise ValueError("facial gate size and samples must be positive")
     plan = compile_plan(config, profile="youtube", quality="production")
     entries = [
         {"kind": "viseme", "label": shape, "viseme": shape, "expression": None}
@@ -186,10 +196,10 @@ def facial_performance_plan(config: dict) -> tuple[dict, list[dict]]:
     plan["duration_seconds"] = plan["frame_end"] / int(plan["render"]["fps"])
     plan["render"].update(
         {
-            "width": 960,
-            "height": 960,
-            "engine": "BLENDER_EEVEE_NEXT",
-            "samples": 32,
+            "width": int(size),
+            "height": int(size),
+            "engine": engine,
+            "samples": int(samples),
             "quality": "facial-performance-gate",
         }
     )
@@ -271,9 +281,12 @@ def render_quality_gate(
     ffmpeg: str = "ffmpeg",
     engine: str = "CYCLES",
     samples: int = 16,
+    facial_engine: str = "BLENDER_EEVEE_NEXT",
+    facial_size: int = 960,
+    facial_samples: int = 32,
 ) -> dict:
-    if int(samples) <= 0:
-        raise ValueError("samples must be positive")
+    if int(samples) <= 0 or int(facial_size) <= 0 or int(facial_samples) <= 0:
+        raise ValueError("samples and facial size must be positive")
     config = json.loads(Path(config_path).read_text(encoding="utf-8"))
     manifest = load_asset_manifest(manifest_path)
     output = Path(output_dir).resolve()
@@ -321,7 +334,12 @@ def render_quality_gate(
                 "contact_sheet": contact_sheet.name,
             }
         )
-    face_plan, face_entries = facial_performance_plan(config)
+    face_plan, face_entries = facial_performance_plan(
+        config,
+        size=int(facial_size),
+        engine=facial_engine,
+        samples=int(facial_samples),
+    )
     face_plan["asset_library"] = {
         "asset_id": manifest["asset_id"],
         "asset_version": manifest["asset_version"],
@@ -347,7 +365,11 @@ def render_quality_gate(
         "artifact_reopened_for_render": True,
         "human_art_approval_required": bool(manifest["quality_gate"].get("human_art_approval_required")),
         "render_tier": (
-            "promotion" if engine == manifest["quality_gate"].get("promotion_engine") else "continuous_review"
+            "promotion"
+            if engine == manifest["quality_gate"].get("promotion_engine")
+            else "lookdev_review"
+            if engine == manifest["quality_gate"].get("review_engine")
+            else "continuous_geometry"
         ),
         "results": results,
         "facial_performance_gate": {
@@ -375,6 +397,13 @@ def _parse_args() -> argparse.Namespace:
         default="CYCLES",
     )
     parser.add_argument("--samples", type=int, default=16)
+    parser.add_argument(
+        "--facial-engine",
+        choices=("CYCLES", "BLENDER_EEVEE_NEXT", "BLENDER_WORKBENCH"),
+        default="BLENDER_EEVEE_NEXT",
+    )
+    parser.add_argument("--facial-size", type=int, default=960)
+    parser.add_argument("--facial-samples", type=int, default=32)
     return parser.parse_args()
 
 
@@ -388,6 +417,9 @@ def main() -> None:
         ffmpeg=args.ffmpeg,
         engine=args.engine,
         samples=args.samples,
+        facial_engine=args.facial_engine,
+        facial_size=args.facial_size,
+        facial_samples=args.facial_samples,
     )
     print(json.dumps(report, indent=2))
 

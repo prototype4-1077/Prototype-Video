@@ -8,6 +8,7 @@ without changing the compiled plan contract.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -1134,6 +1135,143 @@ def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
     raise ValueError(f"unsupported June asset major version: {asset_major}")
 
 
+def _cue_text(*values) -> str:
+    """Normalize authored direction while preserving a deterministic fallback."""
+    text = " ".join(str(value or "") for value in values).lower()
+    return " ".join("".join(character if character.isalnum() else " " for character in text).split())
+
+
+def _cue_signed_value(cue: str, salt: str) -> float:
+    """Map free-form direction to a stable value in [-1, 1]."""
+    digest = hashlib.sha256(f"{salt}:{cue}".encode("utf-8")).digest()
+    integer = int.from_bytes(digest[:4], "big")
+    return (integer / 0xFFFFFFFF) * 2.0 - 1.0
+
+
+def _head_performance_poses(shot: dict, index: int) -> tuple[tuple[float, float], ...]:
+    """Return authored start, emphasis, and settle head poses in degrees."""
+    cue = _cue_text(shot.get("performance"), shot.get("gesture"))
+    turn = 3.0 * _cue_signed_value(cue or str(index), "head-turn")
+    nod = 2.2 * _cue_signed_value(cue or str(index), "head-nod")
+
+    if "turn" in cue or "glance" in cue or "look" in cue:
+        direction = -1.0 if "left" in cue else 1.0 if "right" in cue else (-1.0 if index % 2 else 1.0)
+        turn = 5.0 * direction
+    if "eye contact" in cue or "faces camera" in cue:
+        turn *= 0.25
+    if "nod" in cue:
+        nod = 4.5
+    elif "leans" in cue or "lean " in f"{cue} ":
+        nod = -3.0
+    elif "settle" in cue:
+        nod = 1.2
+
+    return (
+        (-0.20 * turn, -0.15 * nod),
+        (turn, nod),
+        (0.18 * turn, 0.22 * nod),
+    )
+
+
+def _gesture_pose(shot: dict, index: int) -> dict[str, float]:
+    """Translate an authored gesture into bounded degrees for every arm control."""
+    cue = _cue_text(shot.get("gesture"), shot.get("performance"))
+    presets = {
+        "open hand": {
+            "upper_arm.L": -18.0, "forearm.L": 12.0, "hand.L": -8.0,
+            "upper_arm.R": 8.0, "forearm.R": -5.0, "hand.R": 5.0,
+        },
+        "measured point": {
+            "upper_arm.L": -4.0, "forearm.L": 3.0, "hand.L": -2.0,
+            "upper_arm.R": 19.0, "forearm.R": -17.0, "hand.R": 11.0,
+        },
+        "lean and nod": {
+            "upper_arm.L": -9.0, "forearm.L": 7.0, "hand.L": -5.0,
+            "upper_arm.R": 10.0, "forearm.R": -6.0, "hand.R": 4.0,
+        },
+        "shrug": {
+            "upper_arm.L": -14.0, "forearm.L": 8.0, "hand.L": -10.0,
+            "upper_arm.R": 14.0, "forearm.R": -8.0, "hand.R": 10.0,
+        },
+        "two handed": {
+            "upper_arm.L": -16.0, "forearm.L": 13.0, "hand.L": -8.0,
+            "upper_arm.R": 16.0, "forearm.R": -13.0, "hand.R": 8.0,
+        },
+    }
+    for name, pose in presets.items():
+        if name in cue:
+            return dict(pose)
+
+    # Unknown prose remains useful instead of silently becoming the same stock
+    # gesture. SHA-256 keeps the choice stable across machines and Python runs.
+    names = ("upper_arm.L", "forearm.L", "hand.L", "upper_arm.R", "forearm.R", "hand.R")
+    limits = (14.0, 16.0, 9.0, 14.0, 16.0, 9.0)
+    source = cue or f"subtle gesture {index}"
+    pose = {
+        name: round(limit * _cue_signed_value(source, f"gesture-{name}"), 3)
+        for name, limit in zip(names, limits)
+    }
+    if "left" in cue and "right" not in cue:
+        for name in ("upper_arm.R", "forearm.R", "hand.R"):
+            pose[name] *= 0.25
+    elif "right" in cue and "left" not in cue:
+        for name in ("upper_arm.L", "forearm.L", "hand.L"):
+            pose[name] *= 0.25
+    return pose
+
+
+def _body_performance_pose(shot: dict, index: int) -> tuple[float, float]:
+    """Return a small torso lift and lean (meters, degrees) from direction."""
+    cue = _cue_text(shot.get("performance"), shot.get("gesture"))
+    lift = 0.006 * _cue_signed_value(cue or str(index), "torso-lift")
+    lean = 1.0 * _cue_signed_value(cue or str(index), "torso-lean")
+    if "leans toward" in cue or "leans forward" in cue or "lean and nod" in cue:
+        return (0.014, -2.8)
+    if "leans back" in cue:
+        return (-0.005, 2.4)
+    if "settle" in cue:
+        return (-0.008, 0.6)
+    return (lift, lean)
+
+
+def _camera_motion_delta(shot: dict, index: int) -> dict[str, tuple[float, float, float]]:
+    """Compile an authored camera move into deterministic location/target deltas."""
+    cue = _cue_text(shot.get("camera_move")) or "slow push"
+    camera = str(shot.get("camera") or "medium")
+    push = 0.22 if camera == "wide" else 0.16
+    drift = 0.045 * (-1.0 if index % 2 else 1.0)
+    location = [0.0, 0.0, 0.0]
+    target = [0.0, 0.0, 0.0]
+
+    if "locked" in cue or "static" in cue:
+        pass
+    elif "pull" in cue or "dolly out" in cue:
+        location[1] = -push
+    elif "pan left" in cue or "drift left" in cue:
+        location[0] = -0.18
+    elif "pan right" in cue or "drift right" in cue:
+        location[0] = 0.18
+    elif "orbit" in cue:
+        location[0] = -0.24 if "left" in cue else 0.24
+        location[1] = push * 0.35
+    elif "tilt up" in cue:
+        target[2] = 0.16
+    elif "tilt down" in cue:
+        target[2] = -0.16
+    elif "drift" in cue:
+        location[0] = drift
+        location[1] = push * 0.35
+    else:
+        scale = 0.55 if "subtle" in cue else 0.80 if "slow" in cue or "gentle" in cue else 1.0
+        location[0] = drift * scale
+        location[1] = push * scale
+        if not any(word in cue for word in ("push", "dolly", "track")):
+            location[0] = 0.08 * _cue_signed_value(cue, "camera-x")
+            location[1] = 0.08 * (0.5 + 0.5 * _cue_signed_value(cue, "camera-y"))
+
+    return {"location": tuple(location), "target": tuple(target)}
+
+
 def _stash_action(bpy, rig, name: str, animator) -> None:
     rig.animation_data_create()
     action = bpy.data.actions.new(name)
@@ -1159,8 +1297,10 @@ def _animate_rig(bpy, rig, plan: dict) -> None:
     head = rig.pose.bones["head"]
     upper_l = rig.pose.bones["upper_arm.L"]
     fore_l = rig.pose.bones["forearm.L"]
+    hand_l = rig.pose.bones["hand.L"]
     upper_r = rig.pose.bones["upper_arm.R"]
     fore_r = rig.pose.bones["forearm.R"]
+    hand_r = rig.pose.bones["hand.R"]
 
     def breathing():
         for frame in range(1, frame_end + 1, 30):
@@ -1174,42 +1314,49 @@ def _animate_rig(bpy, rig, plan: dict) -> None:
         torso.keyframe_insert(data_path="rotation_euler", frame=frame_end)
 
     def head_performance():
-        poses = [(1, 0, 0)]
+        poses = [(1, 0.0, 0.0)]
         for index, shot in enumerate(plan["shots"]):
             start = int(shot["frame_start"])
             end = int(shot["frame_end"])
             midpoint = (start + end) // 2
-            poses.extend(
-                [
-                    (start, (-2, 1, 1)[index], (0, 1, -1)[index]),
-                    (midpoint, (2, -3, 2)[index], (1, -1, 2)[index]),
-                    (end, (0, 1, -2)[index], (0, 0, 1)[index]),
-                ]
-            )
+            authored = _head_performance_poses(shot, index)
+            poses.extend((frame, turn, nod) for frame, (turn, nod) in zip((start, midpoint, end), authored))
         for frame, turn, nod in poses:
             head.rotation_euler[2] = math.radians(turn)
             head.rotation_euler[0] = math.radians(nod)
             head.keyframe_insert(data_path="rotation_euler", frame=frame)
 
     def gestures():
-        for bone in (upper_l, fore_l, upper_r, fore_r):
+        gesture_bones = {
+            "upper_arm.L": upper_l,
+            "forearm.L": fore_l,
+            "hand.L": hand_l,
+            "upper_arm.R": upper_r,
+            "forearm.R": fore_r,
+            "hand.R": hand_r,
+        }
+        for bone in gesture_bones.values():
             bone.rotation_euler = (0, 0, 0)
             bone.keyframe_insert(data_path="rotation_euler", frame=1)
-        shot_a, shot_b, shot_c = plan["shots"][:3]
-        beats = (
-            (int(shot_a["frame_start"]), (0, 0, 0, 0)),
-            ((int(shot_a["frame_start"]) + int(shot_a["frame_end"])) // 2, (-18, 12, 8, -5)),
-            (int(shot_a["frame_end"]), (-5, 4, 2, 0)),
-            ((int(shot_b["frame_start"]) + int(shot_b["frame_end"])) // 2, (-4, 3, 19, -17)),
-            (int(shot_b["frame_end"]), (0, 0, 5, -3)),
-            ((int(shot_c["frame_start"]) + int(shot_c["frame_end"])) // 2, (-9, 7, 10, -6)),
-            (int(shot_c["frame_end"]), (0, 0, 0, 0)),
-        )
-        for frame, values in beats:
-            for bone, degrees in zip((upper_l, fore_l, upper_r, fore_r), values):
-                bone.rotation_euler[1] = math.radians(degrees)
-                bone.rotation_euler[2] = math.radians(degrees * 0.35)
-                bone.keyframe_insert(data_path="rotation_euler", frame=frame)
+        torso.location.z = 0.0
+        torso.rotation_euler[1] = 0.0
+        torso.keyframe_insert(data_path="location", frame=1)
+        torso.keyframe_insert(data_path="rotation_euler", frame=1)
+        for index, shot in enumerate(plan["shots"]):
+            start = int(shot["frame_start"])
+            end = int(shot["frame_end"])
+            midpoint = (start + end) // 2
+            pose = _gesture_pose(shot, index)
+            lift, lean = _body_performance_pose(shot, index)
+            for frame, strength in ((start, 0.0), (midpoint, 1.0), (end, 0.18)):
+                for name, bone in gesture_bones.items():
+                    degrees = pose[name] * strength
+                    bone.rotation_euler = (0.0, math.radians(degrees), math.radians(degrees * 0.35))
+                    bone.keyframe_insert(data_path="rotation_euler", frame=frame)
+                torso.location.z = lift * strength
+                torso.rotation_euler[1] = math.radians(lean * strength)
+                torso.keyframe_insert(data_path="location", frame=frame)
+                torso.keyframe_insert(data_path="rotation_euler", frame=frame)
 
     _stash_action(bpy, rig, "June_Breathing_Idle", breathing)
     _stash_action(bpy, rig, "June_Head_Performance", head_performance)
@@ -1332,20 +1479,23 @@ def _make_cameras(bpy, mathutils, plan: dict) -> None:
     scene = bpy.context.scene
     for index, shot in enumerate(plan["shots"]):
         preset = presets[shot["camera"]]
+        base_target = preset[2]
         data = bpy.data.cameras.new(f"Camera_{shot['id']}")
         data.lens = preset[1]
         data.dof.use_dof = False
         camera = bpy.data.objects.new(f"Camera_{shot['id']}", data)
         bpy.context.collection.objects.link(camera)
         camera.location = preset[0]
-        _look_at(camera, preset[2], mathutils)
+        _look_at(camera, base_target, mathutils)
         start = int(shot["frame_start"])
         end = int(shot["frame_end"])
         camera.keyframe_insert(data_path="location", frame=start)
         camera.keyframe_insert(data_path="rotation_euler", frame=start)
-        camera.location.y += 0.16 if shot["camera"] != "wide" else 0.22
-        camera.location.x += (-0.035, 0.045, -0.02)[index % 3]
-        _look_at(camera, preset[2], mathutils)
+        move = _camera_motion_delta(shot, index)
+        for axis, delta in enumerate(move["location"]):
+            camera.location[axis] += delta
+        end_target = tuple(value + move["target"][axis] for axis, value in enumerate(base_target))
+        _look_at(camera, end_target, mathutils)
         camera.keyframe_insert(data_path="location", frame=end)
         camera.keyframe_insert(data_path="rotation_euler", frame=end)
         marker = scene.timeline_markers.new(f"SHOT_{index + 1}_{shot['id']}", frame=start)

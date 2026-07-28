@@ -71,14 +71,26 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         self.assertEqual(len(entries), 16)
         self.assertTrue(all(shot["camera"] == "close" for shot in plan["shots"]))
         self.assertEqual(plan["render"]["width"], plan["render"]["height"])
+        self.assertEqual(self.manifest["quality_gate"]["continuous_engine"], "BLENDER_WORKBENCH")
         self.assertEqual(self.manifest["quality_gate"]["review_engine"], "BLENDER_EEVEE_NEXT")
         self.assertEqual(self.manifest["quality_gate"]["promotion_engine"], "CYCLES")
 
     def test_v3_without_tiered_render_engines_is_rejected(self):
         invalid = copy.deepcopy(self.manifest)
         invalid["quality_gate"]["review_engine"] = "CYCLES"
-        with self.assertRaisesRegex(ValueError, "continuous review engine"):
+        with self.assertRaisesRegex(ValueError, "lookdev review engine"):
             validate_asset_manifest(invalid)
+
+    def test_facial_gate_can_run_as_a_fast_geometry_matrix(self):
+        plan, entries = facial_performance_plan(
+            self.config,
+            size=480,
+            engine="BLENDER_WORKBENCH",
+            samples=1,
+        )
+        self.assertEqual(len(entries), 16)
+        self.assertEqual((plan["render"]["width"], plan["render"]["height"]), (480, 480))
+        self.assertEqual(plan["render"]["engine"], "BLENDER_WORKBENCH")
 
     def test_v3_without_single_head_surface_is_rejected(self):
         invalid = copy.deepcopy(self.manifest)

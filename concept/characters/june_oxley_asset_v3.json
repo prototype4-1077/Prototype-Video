@@ -66,9 +66,10 @@
   "quality_gate": {
     "profiles": ["youtube", "portrait"],
     "fps": 30,
+    "continuous_engine": "BLENDER_WORKBENCH",
     "review_engine": "BLENDER_EEVEE_NEXT",
     "promotion_engine": "CYCLES",
-    "tier_policy": "Every change must pass full-resolution Eevee review; selected releases receive the slower Cycles promotion render.",
+    "tier_policy": "Every change must pass the fast Workbench geometry gate; selected candidates receive Eevee lookdev review and the final Cycles promotion render.",
     "full_resolution_keyframes_per_profile": 3,
     "artifact_reopen_required": true,
     "human_art_approval_required": true,
