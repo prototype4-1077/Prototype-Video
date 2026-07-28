@@ -17,6 +17,7 @@ ASSET_CONTRACT_VERSION = 1
 REQUIRED_CHARACTER = "june_oxley"
 REQUIRED_VISEMES = set("ABCDEFGHX")
 REQUIRED_EXPRESSIONS = {"smile", "thoughtful", "soft_chuckle"}
+REQUIRED_V2_CORRECTIVES = {"brow_raise", "brow_knit", "squint", "cheek_raise"}
 REQUIRED_BONES = {
     "root", "pelvis", "torso", "neck", "head",
     "upper_arm.L", "forearm.L", "hand.L", "upper_arm.R", "forearm.R", "hand.R",
@@ -40,8 +41,11 @@ def validate_asset_manifest(manifest: dict) -> None:
     version = str(manifest.get("asset_version", ""))
     if not re.fullmatch(r"\d+\.\d+\.\d+", version):
         raise ValueError("asset_version must use semantic versioning")
+    asset_major = int(version.split(".", 1)[0])
     delivery = manifest.get("delivery") or {}
-    if delivery.get("format") != "blend" or delivery.get("generation") != "code_native_runtime_build":
+    if delivery.get("format") != "blend" or delivery.get("generation") not in {
+        "code_native_runtime_build", "artist_directed_runtime_build"
+    }:
         raise ValueError("asset delivery must be a runtime-built blend library")
     collections = _string_set(delivery.get("collections"), "delivery.collections")
     if not {"CE_June_Oxley", "CE_June_Porch"}.issubset(collections):
@@ -70,6 +74,26 @@ def validate_asset_manifest(manifest: dict) -> None:
         raise ValueError("quality gate must cover youtube and portrait")
     if int(gate.get("fps", 0)) != 30:
         raise ValueError("quality gate must use the shared 30 fps clock")
+    if asset_major >= 2:
+        if delivery.get("generation") != "artist_directed_runtime_build":
+            raise ValueError("Hero v2 must use the artist-directed runtime builder")
+        modeling = manifest.get("modeling") or {}
+        if modeling.get("style") != "artist_directed_stylized_3d":
+            raise ValueError("Hero v2 must declare the artist-directed stylized 3D standard")
+        if "smooth" not in str(modeling.get("surface_standard", "")).lower():
+            raise ValueError("Hero v2 must require smooth production surfaces")
+        correctives = _string_set(modeling.get("corrective_shapes"), "modeling.corrective_shapes")
+        if not REQUIRED_V2_CORRECTIVES.issubset(correctives):
+            raise ValueError("Hero v2 is missing facial corrective shapes")
+        if not REQUIRED_V2_CORRECTIVES.issubset(expressions):
+            raise ValueError("Hero v2 face controls must expose every corrective shape")
+        independent = _string_set((manifest.get("face") or {}).get("independent_controls"), "face.independent_controls")
+        if not {"blink.L.upper", "blink.L.lower", "blink.R.upper", "blink.R.lower"}.issubset(independent):
+            raise ValueError("Hero v2 must expose independent upper and lower eyelids")
+        if hands.get("segmented_digits") is not True:
+            raise ValueError("Hero v2 hands must use segmented digits")
+        if gate.get("artifact_reopen_required") is not True or gate.get("human_art_approval_required") is not True:
+            raise ValueError("Hero v2 requires artifact reopen and human art approval gates")
 
 
 def load_asset_manifest(path: str | Path) -> dict:
@@ -189,6 +213,8 @@ def render_quality_gate(
         "asset_id": manifest["asset_id"],
         "asset_version": manifest["asset_version"],
         "library": str(library.relative_to(output)),
+        "artifact_reopened_for_render": True,
+        "human_art_approval_required": bool(manifest["quality_gate"].get("human_art_approval_required")),
         "results": results,
     }
     (output / "asset-quality-report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
