@@ -13,7 +13,7 @@ _Joined 23 videos with performance data (34 stat files present; grows nightly)._
 - the-unopened-mail: 19 views @ 49%  → score 63.8  (prediction+grounding, guided_2nd, question)
 - the-voice: 31 views @ 20%  → score 29.9  (self+recursion, guided_2nd, question)
 - cartographers-confession: 10 views @ 26%  → score 27.0  (belief+mediation, teaching, confession)
-- the-reality-machine-dmt-v3: 909 views @ 0%  → score 0.0  (machine+attention, guided_2nd, plunge)
+- the-reality-machine-dmt-v3: 911 views @ 0%  → score 0.0  (machine+attention, guided_2nd, plunge)
 - room-before-birth: 7 views @ 0%  → score 0.0  (threshold+emotion, testimony_1st, confession)
 - the-loop: 3 views @ 0%  → score 0.0  (recursion+grounding, guided_2nd, question)
 - eye-cannot-see-itself: 9 views @ 0%  → score 0.0  (recursion+mediation, teaching, demonstration)
