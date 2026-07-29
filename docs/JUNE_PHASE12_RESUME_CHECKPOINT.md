@@ -1,155 +1,128 @@
 # June Phase 12 Resume Checkpoint
 
-Checkpoint date: 2026-07-28 (America/Chicago)
+Checkpoint date: 2026-07-29 (America/Chicago)
 
-## Objective
+## Outcome
 
-Finish the 15.1-second June Oxley storybook scene as a zero-cash production
-prototype with selective semantic ink, polished acting, exact synchronized
-dialogue/captions, original authored foley, a verified 1080p finish, and a
-reproducible GitHub promotion record.
+Phase 12 is complete as a working 15.1-second semantic-ink cartoon prototype.
+The public GitHub pipeline rendered and assembled the exact scene, the local
+free/open-source finish produced a verified 1080p master, original foley was
+mixed beneath the approved dialogue, and both automated and human delivery
+gates passed.
+
+This is a safe stopping point. Continue with deformation and multi-shot
+continuity work; do not rerun the Phase 12 full promotion unless its immutable
+look profile, character performance, or scene source changes.
 
 ## Repository state
 
+- Public repository: https://github.com/prototype4-1077/Prototype-Video
 - Worktree: `C:\Users\jwats\Documents\Codex\2026-07-28\d\work\Prototype-Video`
 - Branch: `agent/june-hero-unified-sculpt-phase-5`
-- Pull request: https://github.com/prototype4-1077/Prototype-Video/pull/8
+- Draft pull request: https://github.com/prototype4-1077/Prototype-Video/pull/8
 - Base: `agent/june-hero-asset-v2-phase-4`
 - `main` remains untouched.
-- Remote promotion commit: `c7932efcf2f3fd50699d5727dbc3f188e13aca31`
-  (`Promote the semantic ink cartoon in parallel`)
-- The local checkpoint immediately after that commit contains the streaming
-  visual-metrics fix plus the deterministic sound-design implementation. It is
-  intentionally not pushed while the expensive promotion run is active.
+- Last pushed checkpoint before this document: `6fabfc9`
 
-Always use this safe-directory option for local Git commands:
+Use the safe-directory option for local Git commands:
 
 ```powershell
 git -c safe.directory=C:/Users/jwats/Documents/Codex/2026-07-28/d/work/Prototype-Video ...
 ```
 
-The local OAuth token cannot push workflow-file changes. Modify
-`.github/workflows/pipeline-tests.yml` with the GitHub connector, then fetch and
-rebase locally.
+## Public render evidence
 
-## Active external render
+- Full-promotion revision: `c7932efcf2f3fd50699d5727dbc3f188e13aca31`
+- Successful full Actions run: `30454667937` (run 66)
+- Artifact ID: `8729079236`
+- Artifact: `june-golden-performance-storybook-semantic-npr-v1`
+- Artifact ZIP SHA-256:
+  `b04c362f8443fc07d276f79a32e13fcbea45b36fa3c95dac27f3cfbc52fa0978`
+- Source SHA-256:
+  `bea96dabf0dc2c6d591eb80639c9e951a996360506c6b65f076f1bc657263728`
+- Source contract: H.264/yuv420p, 960x540, 30 fps, exactly 453 frames,
+  15.1 seconds, full decode passed
+- Assembly: six exact gap-free ranges covering frames 1-453
+- Economical CI restore revision: `c847e4957f91c73b48d0dfe06bbe90c8d4ab38b7`
+- Restored public CI run: `30468874323`, regression and 30-frame temporal
+  render gate passed
 
-- GitHub Actions run: `30454667937` (run 66)
-- Workflow revision: `c7932efcf2f3fd50699d5727dbc3f188e13aca31`
-- Regression job: passed.
-- Six deterministic Blender ranges are rendering in parallel:
-  `1-76`, `77-152`, `153-228`, `229-304`, `305-380`, `381-453`.
-- Assembly job name: `assemble-v5-npr`
-- Expected assembled artifact name:
-  `june-golden-performance-storybook-semantic-npr-v1`
-- Expected source files:
-  `june-golden-performance-semantic-npr-v1.mp4` and its JSON report.
+The repository had been private, which prevented the final assembly job from
+starting under the account's billing state. It was intentionally made public on
+2026-07-29. Rerunning only the failed assembly job completed the promotion; the
+six successful Blender chunks were not repeated.
 
-Do not start another full promotion. First inspect run 66. If all jobs pass,
-download the assembled artifact, verify its GitHub digest, SHA-256, 960x540
-dimensions, 30 fps, exactly 453 frames, 15.1-second clock, and full decode.
+## Final local delivery
 
-## Approved Phase 12 audition
+- Master:
+  `C:\Users\jwats\Documents\Codex\2026-07-28\d\outputs\june-golden-scene-semantic-npr-v1.mp4`
+- Master SHA-256:
+  `3050dec00d8c0b40cde8516dcf28e0d3d7aa82c8b13862b18576c5170e5d3165`
+- Contract: H.264/yuv420p, 1920x1080, 30 fps, exactly 453 frames,
+  15.1 seconds, AAC stereo at 48 kHz
+- Full decode: passed, 453 decoded frames
+- Dialogue/foley mix SHA-256:
+  `f0ecc51233af5e3fcc0b02b89f9c2368195f66df67b09a3b1b28a7e2e2d90487`
+- Approved caption SHA-256:
+  `e90529d7e302e740e256a2e39295cb4def0e34a25fa1ab15009bf29cc83206be`
+- Finish report:
+  `C:\Users\jwats\Documents\Codex\2026-07-28\d\outputs\june-golden-scene-semantic-npr-delivery-report-v1.json`
+- Finish-report SHA-256:
+  `9c4a4c32119ff50026688b6f58b2756fa2775b075cf07e902b1273ea4d4da82d`
 
-The v1.4.0 semantic compositor was rejected for excessive form/background ink.
-The tuned immutable v1.4.1 profile passed the one-second GS050 gate.
+## Independent audit
 
-- Profile: `concept/style_frames/june_oxley_npr_look_v5.json`
-- Style version: `1.4.1`
-- Temporal artifact ZIP SHA-256:
-  `d71bcbe2a8d7bfc24cda0a54b84494b6a3e810c550294b1649a137b32e9eb5ee`
-- Temporal source SHA-256:
-  `f2d445e766f02117c5aa4f3d8b6dc605b9a09a922bb38caf5776ea3ad14ada12`
-- Identity similarity against Phase 11: luminance SSIM `0.951780`.
-- Full-frame adjacent luma difference: `1.222086`, down 18.8 percent from
-  Phase 11 and down 20.7 percent from rejected v1.4.0.
-- Face/torso adjacent luma difference: `2.017817`, down 18.5 percent from
-  Phase 11 and down 20.7 percent from v1.4.0.
-- Right-wall adjacent luma difference: `0.017234`, down 32.8 percent from
-  Phase 11 and down 21.4 percent from v1.4.0.
-- Upper-left-wall adjacent luma difference: `0.007384`, down 54.1 percent from
-  Phase 11 and down 17.1 percent from v1.4.0.
-- No silhouette halos, identity drift, or visible temporal crawl were observed.
+- Audit directory:
+  `C:\Users\jwats\Documents\Codex\2026-07-28\d\outputs\phase12-final-audit`
+- Audit-report SHA-256:
+  `84cb244e892c6acaf4ea93b8fd13b6b713bf452e8da7de9a576d4e91256501e5`
+- Nine-pose matrix:
+  `C:\Users\jwats\Documents\Codex\2026-07-28\d\outputs\june-golden-scene-semantic-npr-final-matrix-v1.png`
+- Matrix SHA-256:
+  `7c82727ac435deaf9799e3b28c8beab340f75e91dbbf62bff4c13980b7c8cd74`
+- Final-hold strip:
+  `C:\Users\jwats\Documents\Codex\2026-07-28\d\outputs\june-golden-scene-semantic-npr-final-hold-v1.png`
+- Hold-strip SHA-256:
+  `991b06d66605d129c2147c4432e1d1bac65b1d485644388852ca2d81fb722178`
+- Human review: passed; no visible identity change, shape hallucination, or
+  temporal redraw crawl
 
-Evidence outside the repository:
+Final hold, frames 430-453:
 
-- `C:\Users\jwats\Documents\Codex\2026-07-28\d\outputs\june-semantic-ink-v4-v141-comparison.mp4`
-  SHA-256 `41f7378ac99a28890ecf78dd5cce6889e587bd800c39be52e0d73d8c31a4dedf`
-- Matching PNG SHA-256
-  `78750763b2128c5243ca1e943a303947ec6b051ea3e6248132d01888da527350`
-- Corrected metrics JSON SHA-256
-  `8dc505056ef760de2c84a1465ad2a84d8dc478a1c00a14293ba739575644759c`
+- upper-face first/last SSIM: `0.937358`
+- upper-face adjacent luma mean/max: `0.233295` / `0.422375`
+- left-wall adjacent luma mean/max: `0.017598` / `0.390055`
 
-## AI finishing audition
+The finish is slightly less static than the source but remains sub-luma on
+average and visibly stable. The sharpening and grain cleanup were judged worth
+that documented tradeoff.
 
-The free/local Real-ESRGAN AnimeVideo-v3 audition completed successfully:
+## Versioned production records
 
-- Output:
-  `C:\Users\jwats\Documents\Codex\2026-07-28\d\outputs\june-semantic-ink-v141-finished-temporal.mp4`
-- Output SHA-256:
-  `172725dd0f90d9c6e9b57d7b93bbc5858994756063eba6a2fa495c503d5939a8`
-- Contract: 1920x1080, 30 fps, 30 frames, 1.0 second, full decode passed.
-- SSIM against a conventional Lanczos 2x reference: `0.993323`.
-- It visibly cleans Blender grain and sharpens eyes, beard planes, and ink.
-- Static upper-left and left-wall variation fell slightly. Right-wall variation
-  rose from `0.015507` to `0.025094`, still far below a visible one-luma change.
-- Comparison PNG:
-  `C:\Users\jwats\Documents\Codex\2026-07-28\d\outputs\june-semantic-ink-v141-finish-comparison.png`
-  SHA-256 `b1254ba37387364b6a27ffac507465efd0fb8989c2b49be2f5771de96deaf756`
-- Metrics JSON SHA-256:
-  `7c228e076e165c4f05cc136d444b9c080b30d3fb65ba01ebaa0d1f9fcfe5d1eb`
+- Full Phase 12 rationale and evidence:
+  `docs/JUNE_NPR_LOOKDEV_PHASE12.md`
+- Pinned AI-finish contract:
+  `concept/style_frames/june_oxley_npr_finish_v2.json`
+- Semantic look profile:
+  `concept/style_frames/june_oxley_npr_look_v5.json`
+- Sound profile:
+  `concept/style_frames/june_golden_scene_sound_design_v1.json`
+- Delivery auditor: `pipeline/cartoon_delivery_audit.py`
+- Sound synthesizer: `pipeline/cartoon_sound_design.py`
+- AI finish: `pipeline/cartoon_ai_finish.py`
 
-The finish remains a candidate, not yet the Phase 12 master. Review a full-scene
-nine-pose matrix after promotion, especially the 24-frame final hold at frames
-430-453, before spending the roughly 85-minute full upscale.
+Generated media remains outside Git. Commit source, profiles, tests, documents,
+and hashes; do not add the MP4, WAV, audit PNGs, downloaded artifacts, Blender,
+or Real-ESRGAN binaries.
 
-## New local production improvements
+## Exact next step
 
-`pipeline/cartoon_visual_metrics.py` now streams decoded frames instead of
-holding whole 1080p clips in memory. Regions are tied to the actual GS050
-composition: full frame, face/torso, left wall, right wall, and upper-left wall.
+Start Phase 13 as a 30-60 second deformation-and-continuity pilot. First fix the
+close-up bottlenecks—eyelids, cheeks, mouth corners, beard, wrists, fingers, and
+cloth topology—then author hand shapes, breathing, eye darts, overlap,
+anticipation, overshoot, and settle. Prove the improved June asset across more
+locations, camera angles, and prop interactions before another full promotion.
 
-`pipeline/cartoon_sound_design.py` plus
-`concept/style_frames/june_golden_scene_sound_design_v1.json` synthesize an
-original deterministic stereo foley stem with room tone, chair weight shift,
-boot settle, ledger rustle, pencil contact, and compassion breath. No external
-samples, licenses, services, or APIs are used.
-
-- Focused tests: 7 passed.
-- Generated stem: 48 kHz stereo, exactly 724,800 samples / 15.1 seconds.
-- Stem path:
-  `C:\Users\jwats\Documents\Codex\2026-07-28\d\outputs\june-golden-scene-authored-foley-v1.wav`
-- Stem SHA-256:
-  `ee73375726065246e78c6124d94e63b2658c9c2f43964474b18f29172be0988d`
-- Peak: `-29.494 dBFS`, intentionally subordinate to narration.
-
-## Exact resume order
-
-1. Query run `30454667937`; wait for all six chunks and assembly.
-2. Download and validate the assembled artifact. Extract a nine-pose matrix at
-   frames 1, 93, 171, 172, 260, 339, 340, 398, and 453, plus a strip covering
-   frames 430-453 to prove the final held pose.
-3. Restore `.github/workflows/pipeline-tests.yml` to the economical v5
-   30-frame temporal gate with the GitHub connector. Pull/rebase locally.
-4. Run the complete regression suite, commit/push the local checkpoint, and
-   confirm the restored CI gate passes. Avoid retriggering the six-chunk job.
-5. Mix the generated foley beneath the approved dialogue with FFmpeg, preserving
-   48 kHz stereo and applying a conservative limiter. Audition intelligibility.
-6. If the full visual gate passes, run `pipeline.cartoon_ai_finish` on the
-   453-frame source with 2x scale, restore the mixed audio, burn the approved
-   captions, and emit a delivery report. If the full finish crawls, deliver a
-   Lanczos 2x master instead; the visual gate decides, not the label "AI."
-7. Verify exact 1920x1080 H.264/AAC, yuv420p, 30 fps, 453 frames, 15.1 seconds,
-   48 kHz stereo, full decode, captions, SHA-256, and final matrix.
-8. Write `docs/JUNE_NPR_LOOKDEV_PHASE12.md`, update the PR with run/artifact
-   evidence, and leave the next recommendation: topology/hand/eyelid deformation
-   plus a longer multi-shot continuity pilot.
-
-## Existing Phase 11 fallback
-
-The last fully promoted master remains:
-
-`C:\Users\jwats\Documents\Codex\2026-07-28\d\outputs\june-golden-scene-storybook-npr-v1.mp4`
-
-SHA-256:
-`203a1b48abe219c2c3a89215baa03725279f5c160d59c68c42be83ecf1e56b25`
+Use the existing linear-UCB learner only to rank bounded visual experiments.
+Feed it identity, temporal, render-cost, and blinded pairwise-review evidence;
+never let it edit immutable profiles or waive human art-direction gates.
