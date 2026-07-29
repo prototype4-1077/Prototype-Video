@@ -29,6 +29,7 @@ MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v4.json"
 V5_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v5.json"
 V6_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v6.json"
 V7_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v7.json"
+V8_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v8.json"
 V3_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v3.json"
 V2_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v2.json"
 V1_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v1.json"
@@ -42,6 +43,7 @@ LOOK_PROFILE_V4_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_
 LOOK_PROFILE_V5_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v5.json"
 LOOK_PROFILE_V6_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v6.json"
 LOOK_PROFILE_V7_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v7.json"
+LOOK_PROFILE_V8_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v8.json"
 BLENDER_SOURCE = ROOT / "pipeline" / "blender" / "render_vertical_slice.py"
 BLENDER_LIBRARY_SOURCE = ROOT / "pipeline" / "blender" / "build_june_asset_library.py"
 
@@ -53,6 +55,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         cls.v5_manifest = load_asset_manifest(V5_MANIFEST_PATH)
         cls.v6_manifest = load_asset_manifest(V6_MANIFEST_PATH)
         cls.v7_manifest = load_asset_manifest(V7_MANIFEST_PATH)
+        cls.v8_manifest = load_asset_manifest(V8_MANIFEST_PATH)
         cls.config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
         cls.golden_config = json.loads(GOLDEN_CONFIG_PATH.read_text(encoding="utf-8"))
 
@@ -536,6 +539,100 @@ class CartoonAssetLibraryTests(unittest.TestCase):
             "mouth_clearance", "ce_mouth_rig_version", "MOUTH_V7_POSES",
         ):
             self.assertIn(marker, source)
+
+    def test_phase15_manifest_requires_one_integrated_oral_mask(self):
+        manifest = self.v8_manifest
+        self.assertEqual(manifest["asset_version"], "8.0.0")
+        self.assertEqual(
+            set(manifest["face"]["mouth_components"]),
+            {"mouth_bag", "oral_mask", "upper_gum", "lower_gum", "upper_teeth", "lower_teeth", "tongue"},
+        )
+        self.assertTrue(manifest["face"]["oral_mask"])
+        self.assertFalse(manifest["face"]["detached_lip_objects"])
+        self.assertEqual(
+            set(manifest["face"]["soft_tissue_controls"]),
+            {"corner.L", "corner.R", "cheek.L", "cheek.R", "dental_exposure", "groove_visibility"},
+        )
+        self.assertTrue(manifest["quality_gate"]["nine_viseme_matrix_required"])
+        self.assertTrue(manifest["quality_gate"]["cheek_integration_required"])
+
+    def test_phase15_oral_mask_is_open_asymmetric_and_pose_distinct(self):
+        closed = blender_studio._oral_mask_v8_vertices(blender_studio.MOUTH_V8_POSES["X"])
+        wide = blender_studio._oral_mask_v8_vertices(blender_studio.MOUTH_V8_POSES["E"])
+        rounded = blender_studio._oral_mask_v8_vertices(blender_studio.MOUTH_V8_POSES["G"])
+        self.assertEqual(len(closed), 144)
+        self.assertNotEqual(closed, wide)
+        self.assertNotEqual(wide, rounded)
+        closed_aperture = closed[96:]
+        rounded_aperture = rounded[96:]
+        self.assertGreater(
+            max(point[2] for point in rounded_aperture) - min(point[2] for point in rounded_aperture),
+            max(point[2] for point in closed_aperture) - min(point[2] for point in closed_aperture),
+        )
+        # Ring-one left and right corner heights deliberately differ.
+        self.assertNotEqual(wide[48][2], wide[72][2])
+
+    def test_phase15_viseme_controls_are_complete_and_bounded(self):
+        poses = blender_studio.MOUTH_V8_POSES
+        self.assertEqual(set(poses), set("ABCDEFGHX"))
+        for pose in poses.values():
+            for field in ("dental_exposure", "groove_visibility"):
+                self.assertGreaterEqual(pose[field], 0.0)
+                self.assertLessEqual(pose[field], 1.0)
+            for field in ("corner_l", "corner_r", "cheek_l", "cheek_r"):
+                self.assertGreaterEqual(pose[field], -0.10)
+                self.assertLessEqual(pose[field], 0.50)
+        self.assertNotEqual(poses["E"]["corner_l"], poses["E"]["corner_r"])
+        self.assertGreater(poses["F"]["groove_visibility"], poses["G"]["groove_visibility"])
+
+    def test_phase15_rejects_detached_lips_or_missing_soft_tissue_controls(self):
+        detached = copy.deepcopy(self.v8_manifest)
+        detached["face"]["detached_lip_objects"] = True
+        with self.assertRaisesRegex(ValueError, "forbids detached lip"):
+            validate_asset_manifest(detached)
+        incomplete = copy.deepcopy(self.v8_manifest)
+        incomplete["face"]["soft_tissue_controls"].remove("cheek.R")
+        with self.assertRaisesRegex(ValueError, "exact corner, cheek"):
+            validate_asset_manifest(incomplete)
+
+    def test_phase15_profile_and_builder_lock_the_new_representation(self):
+        profile = load_look_profile(LOOK_PROFILE_V8_PATH)
+        self.assertEqual(profile["style_version"], "1.7.0")
+        self.assertEqual(profile["render"]["temporal_window_start"], 399)
+        self.assertEqual(profile["render"]["temporal_window_frames"], 17)
+        source = BLENDER_SOURCE.read_text(encoding="utf-8")
+        for marker in (
+            "def _make_june_v8", "def _make_oral_mask_v8", "June_Oral_Mask",
+            "cheek_integrated_oral_mask", "per_viseme_groove_mask", "MOUTH_V8_POSES",
+        ):
+            self.assertIn(marker, source)
+
+    def test_phase15_focused_gate_renders_exactly_nine_visemes(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            output = Path(temp_dir).resolve()
+            library = output / "assets" / "june-v8.blend"
+            with mock.patch(
+                "pipeline.cartoon_asset_library.build_asset_library", return_value=library
+            ), mock.patch(
+                "pipeline.cartoon_asset_library._executable", side_effect=lambda value, label: value
+            ), mock.patch(
+                "pipeline.cartoon_asset_library._render_frames"
+            ) as render_frames, mock.patch(
+                "pipeline.cartoon_asset_library._facial_matrix"
+            ):
+                report = render_performance_look_gate(
+                    GOLDEN_CONFIG_PATH,
+                    V8_MANIFEST_PATH,
+                    look_profile_path=LOOK_PROFILE_V8_PATH,
+                    output_dir=output,
+                    performance_gate_mode="visemes",
+                )
+        selected = render_frames.call_args.kwargs["selected_frames"]
+        self.assertEqual(selected, [6, 16, 26, 36, 46, 56, 66, 76, 86])
+        self.assertEqual(report["performance"]["render_mode"], "visemes")
+        self.assertEqual(report["performance"]["rendered_frames"], 9)
+        self.assertEqual(len(report["performance"]["matrix_entries"]), 9)
+        self.assertIsNone(report["performance"]["video"])
 
     def test_golden_performance_uses_audio_derived_rhubarb_cues(self):
         plan, _ = golden_performance_plan(self.golden_config, PERFORMANCE_PATH)

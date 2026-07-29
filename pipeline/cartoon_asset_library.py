@@ -55,6 +55,13 @@ REQUIRED_V7_MOUTH_COMPONENTS = {
     "mouth_bag", "upper_lip", "lower_lip", "upper_gum", "lower_gum",
     "upper_teeth", "lower_teeth", "tongue",
 }
+REQUIRED_V8_MOUTH_COMPONENTS = {
+    "mouth_bag", "oral_mask", "upper_gum", "lower_gum",
+    "upper_teeth", "lower_teeth", "tongue",
+}
+REQUIRED_V8_SOFT_TISSUE = {
+    "corner.L", "corner.R", "cheek.L", "cheek.R", "dental_exposure", "groove_visibility",
+}
 RENDER_ENGINES = {"CYCLES", "BLENDER_EEVEE_NEXT", "BLENDER_WORKBENCH"}
 
 
@@ -351,7 +358,8 @@ def validate_asset_manifest(manifest: dict) -> None:
             raise ValueError("Hero v6 requires facial-coarticulation and hand-pose visual gates")
     if asset_major >= 7:
         face = manifest.get("face") or {}
-        if _string_set(face.get("mouth_components"), "face.mouth_components") != REQUIRED_V7_MOUTH_COMPONENTS:
+        mouth_components = _string_set(face.get("mouth_components"), "face.mouth_components")
+        if asset_major == 7 and mouth_components != REQUIRED_V7_MOUTH_COMPONENTS:
             raise ValueError("Hero v7 must publish the exact volumetric mouth component set")
         if face.get("volumetric_mouth") is not True or face.get("per_viseme_deformation") is not True:
             raise ValueError("Hero v7 requires volumetric per-viseme oral deformation")
@@ -363,6 +371,19 @@ def validate_asset_manifest(manifest: dict) -> None:
         window = gate.get("mouth_temporal_window") or []
         if window != [399, 415]:
             raise ValueError("Hero v7 mouth temporal gate must preserve frames 399-415")
+    if asset_major >= 8:
+        face = manifest.get("face") or {}
+        if _string_set(face.get("mouth_components"), "face.mouth_components") != REQUIRED_V8_MOUTH_COMPONENTS:
+            raise ValueError("Hero v8 must publish the exact oral-mask mouth component set")
+        if face.get("oral_mask") is not True or face.get("detached_lip_objects") is not False:
+            raise ValueError("Hero v8 requires one integrated oral mask and forbids detached lip objects")
+        controls = _string_set(face.get("soft_tissue_controls"), "face.soft_tissue_controls")
+        if controls != REQUIRED_V8_SOFT_TISSUE:
+            raise ValueError("Hero v8 must publish the exact corner, cheek, and dental visibility controls")
+        if face.get("dental_visibility_per_viseme") is not True:
+            raise ValueError("Hero v8 requires per-viseme dental visibility")
+        if gate.get("nine_viseme_matrix_required") is not True or gate.get("cheek_integration_required") is not True:
+            raise ValueError("Hero v8 requires nine-viseme and cheek-integration visual gates")
 
 
 def load_asset_manifest(path: str | Path) -> dict:
@@ -662,7 +683,7 @@ def golden_performance_plan(
 
 
 def _facial_matrix(ffmpeg: str, frames_dir: Path, entries: list[dict], output: Path) -> None:
-    """Assemble a labeled 4x4 face matrix, with a portable unlabeled fallback."""
+    """Assemble a labeled face matrix, with a portable unlabeled fallback."""
     command = [ffmpeg, "-y"]
     for entry in entries:
         command.extend(["-i", str(frames_dir / f"frame_{entry['frame']:04d}.png")])
@@ -678,7 +699,11 @@ def _facial_matrix(ffmpeg: str, frames_dir: Path, entries: list[dict], output: P
             f"drawtext=text='{safe_label}':x=16:y=16:fontsize=30:fontcolor=white:"
             f"box=1:boxcolor=black@0.62[{label}]"
         )
-    layout = "|".join(f"{(index % 4) * 320}_{(index // 4) * 320}" for index in range(len(entries)))
+    columns = 3 if len(entries) == len(FACIAL_GATE_VISEMES) else 4
+    layout = "|".join(
+        f"{(index % columns) * 320}_{(index // columns) * 320}"
+        for index in range(len(entries))
+    )
     filters.append("".join(labels) + f"xstack=inputs={len(entries)}:layout={layout}[matrix]")
     command.extend(["-filter_complex", ";".join(filters), "-map", "[matrix]", "-frames:v", "1", str(output)])
     try:
@@ -773,14 +798,14 @@ def render_performance_look_gate(
     performance_frame_start: int | None = None,
     performance_frame_end: int | None = None,
 ) -> dict:
-    """Render only the nine artistic decision poses or promoted performance.
+    """Render a focused viseme, decision-pose, or promoted performance gate.
 
     Structural profile, face, and deformation matrices stay in the fast
     Workbench lane. This focused lane makes real Eevee look development cheap
     enough to use repeatedly rather than treating art review as a rare event.
     """
-    if performance_gate_mode not in {"poses", "temporal", "chunk", "full"}:
-        raise ValueError("performance_gate_mode must be 'poses', 'temporal', 'chunk', or 'full'")
+    if performance_gate_mode not in {"visemes", "poses", "temporal", "chunk", "full"}:
+        raise ValueError("performance_gate_mode must be 'visemes', 'poses', 'temporal', 'chunk', or 'full'")
     if performance_gate_mode == "chunk":
         if (
             performance_frame_start is None
@@ -808,14 +833,23 @@ def render_performance_look_gate(
         output / "assets" / f"{manifest['asset_id']}-{manifest['asset_version']}.blend",
         blender=blender,
     )
-    repo_root = Path(manifest_path).resolve().parents[2]
-    performance_contract_path = repo_root / manifest["performance_contract"]["path"]
-    plan, entries = golden_performance_plan(
-        config,
-        performance_contract_path,
-        engine=selected_engine,
-        samples=int(samples),
-    )
+    if performance_gate_mode == "visemes":
+        plan, all_entries = facial_performance_plan(
+            config,
+            size=960,
+            engine=selected_engine,
+            samples=int(samples),
+        )
+        entries = [entry for entry in all_entries if entry["kind"] == "viseme"]
+    else:
+        repo_root = Path(manifest_path).resolve().parents[2]
+        performance_contract_path = repo_root / manifest["performance_contract"]["path"]
+        plan, entries = golden_performance_plan(
+            config,
+            performance_contract_path,
+            engine=selected_engine,
+            samples=int(samples),
+        )
     look_sha256 = hashlib.sha256(Path(look_profile_path).read_bytes()).hexdigest()
     plan["look_profile"] = profile
     plan["look_profile_sha256"] = look_sha256
@@ -832,14 +866,14 @@ def render_performance_look_gate(
     temporal_start = int(look_render.get("temporal_window_start", 1))
     temporal_frames = int(look_render.get("temporal_window_frames", 30))
     temporal_end = temporal_start + temporal_frames - 1
-    if temporal_start < 1 or temporal_end > int(plan["frame_end"]):
+    if performance_gate_mode != "visemes" and (temporal_start < 1 or temporal_end > int(plan["frame_end"])):
         raise ValueError("NPR temporal window must stay inside the performance contract")
     chunk_start = int(performance_frame_start or 1)
     chunk_end = int(performance_frame_end or plan["frame_end"])
     if performance_gate_mode == "chunk" and chunk_end > int(plan["frame_end"]):
         raise ValueError("NPR chunk must stay inside the performance contract")
     selected_frames = None
-    if performance_gate_mode == "poses":
+    if performance_gate_mode in {"visemes", "poses"}:
         selected_frames = [int(entry["frame"]) for entry in entries]
     elif performance_gate_mode == "temporal":
         selected_frames = list(range(temporal_start, temporal_end + 1))
@@ -1177,9 +1211,9 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--facial-samples", type=int, default=32)
     parser.add_argument(
         "--performance-gate",
-        choices=("poses", "temporal", "chunk", "full"),
+        choices=("visemes", "poses", "temporal", "chunk", "full"),
         default="full",
-        help="Render decision poses, a temporal window, one promotion chunk, or all 453 frames.",
+        help="Render all nine visemes, decision poses, a temporal window, one promotion chunk, or all 453 frames.",
     )
     parser.add_argument("--performance-frame-start", type=int)
     parser.add_argument("--performance-frame-end", type=int)

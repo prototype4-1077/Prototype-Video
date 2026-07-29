@@ -1413,6 +1413,25 @@ MOUTH_V7_POSES = {
 }
 
 
+MOUTH_V8_SOFT_TISSUE = {
+    "A": {"corner_l": 0.10, "corner_r": 0.04, "cheek_l": 0.12, "cheek_r": 0.08, "dental_exposure": 0.42, "groove_visibility": 0.55},
+    "B": {"corner_l": 0.04, "corner_r": -0.03, "cheek_l": 0.18, "cheek_r": 0.12, "dental_exposure": 0.60, "groove_visibility": 0.75},
+    "C": {"corner_l": 0.35, "corner_r": 0.24, "cheek_l": 0.38, "cheek_r": 0.28, "dental_exposure": 0.68, "groove_visibility": 0.80},
+    "D": {"corner_l": 0.12, "corner_r": 0.03, "cheek_l": 0.20, "cheek_r": 0.14, "dental_exposure": 0.54, "groove_visibility": 0.70},
+    "E": {"corner_l": 0.42, "corner_r": 0.30, "cheek_l": 0.44, "cheek_r": 0.32, "dental_exposure": 0.74, "groove_visibility": 0.88},
+    "F": {"corner_l": -0.04, "corner_r": 0.03, "cheek_l": 0.12, "cheek_r": 0.16, "dental_exposure": 0.82, "groove_visibility": 0.95},
+    "G": {"corner_l": -0.08, "corner_r": -0.03, "cheek_l": 0.12, "cheek_r": 0.10, "dental_exposure": 0.30, "groove_visibility": 0.38},
+    "H": {"corner_l": 0.08, "corner_r": -0.06, "cheek_l": 0.16, "cheek_r": 0.08, "dental_exposure": 0.38, "groove_visibility": 0.48},
+    "X": {"corner_l": 0.02, "corner_r": -0.02, "cheek_l": 0.04, "cheek_r": 0.02, "dental_exposure": 0.00, "groove_visibility": 0.00},
+}
+
+
+MOUTH_V8_POSES = {
+    shape: {**MOUTH_V7_POSES[shape], **MOUTH_V8_SOFT_TISSUE[shape]}
+    for shape in MOUTH_V7_POSES
+}
+
+
 FACIAL_V6_CORRECTIVES = (
     "mouth_corner.L",
     "mouth_corner.R",
@@ -2182,6 +2201,152 @@ def _make_june_v7(bpy, mathutils, materials: dict):
     return rig, mouth, face_controls
 
 
+def _oral_mask_v8_vertices(pose: dict, *, segments: int = 48):
+    """Return a three-ring oral mask fitted from beard/cheek into the aperture.
+
+    The outer two rings are deliberately broad enough to disappear into June's
+    fitted beard rather than reading as another floating lip prop.  The inner
+    ring retains a true hole so the v7 mouth bag and oral anatomy stay recessed.
+    """
+    if segments < 12 or segments % 4:
+        raise ValueError("oral mask segments must be a multiple of four and at least twelve")
+    vertices = []
+    opening = float(pose["opening"])
+    roundness = float(pose["round"])
+    aperture_width = 0.108 * float(pose["width"]) * (1.0 - 0.12 * roundness)
+    top_height = 0.0065 + 0.0180 * opening
+    bottom_height = 0.0060 + 0.0250 * opening
+    for ring in range(3):
+        for index in range(segments):
+            angle = math.tau * index / segments
+            horizontal = math.cos(angle)
+            vertical = math.sin(angle)
+            left_side = horizontal < 0.0
+            cheek = float(pose["cheek_l"] if left_side else pose["cheek_r"])
+            corner = float(pose["corner_l"] if left_side else pose["corner_r"])
+            side_weight = abs(horizontal) ** 3
+            corner_weight = abs(horizontal) ** 7
+            if ring == 0:
+                x = 0.156 * horizontal * (1.0 + 0.045 * cheek)
+                z = 0.080 * vertical + 0.010 * cheek * side_weight + 0.006 * corner * corner_weight
+                y = 0.0070 - 0.0015 * side_weight
+            elif ring == 1:
+                x = 0.130 * horizontal * (1.0 + 0.035 * cheek)
+                z = 0.058 * vertical + 0.009 * cheek * side_weight + 0.007 * corner * corner_weight
+                y = 0.0010 - 0.0025 * side_weight
+            else:
+                arch = abs(vertical) ** 0.72
+                x = aperture_width * horizontal * (1.0 + 0.020 * cheek)
+                z = (top_height if vertical >= 0.0 else -bottom_height) * arch
+                z += 0.008 * corner * corner_weight
+                # Rounded phonemes push the aperture forward while their outer
+                # cheek attachment remains planted in the beard surface.
+                y = -0.0070 - 0.0040 * roundness * arch
+            vertices.append((x, y, z))
+    return vertices
+
+
+def _make_oral_mask_v8(bpy, materials: dict):
+    segments = 48
+    vertices = _oral_mask_v8_vertices(MOUTH_V8_POSES["X"], segments=segments)
+    faces = []
+    material_indices = []
+    for ring in range(2):
+        for index in range(segments):
+            following = (index + 1) % segments
+            faces.append(
+                (
+                    ring * segments + index,
+                    ring * segments + following,
+                    (ring + 1) * segments + following,
+                    (ring + 1) * segments + index,
+                )
+            )
+            material_indices.append(0 if ring == 0 else 1)
+    mesh = bpy.data.meshes.new("June_Oral_Mask_Data")
+    mesh.from_pydata(vertices, [], faces)
+    obj = bpy.data.objects.new("June_Oral_Mask", mesh)
+    bpy.context.collection.objects.link(obj)
+    obj.location = (0.0, -0.339, 2.490)
+    obj.data.materials.append(materials["hair"])
+    obj.data.materials.append(materials["lip"])
+    for polygon, material_index in zip(obj.data.polygons, material_indices):
+        polygon.material_index = material_index
+        polygon.use_smooth = True
+    obj.shape_key_add(name="Basis")
+    for shape, pose in MOUTH_V8_POSES.items():
+        key = obj.shape_key_add(name=shape)
+        coordinates = _oral_mask_v8_vertices(pose, segments=segments)
+        for point, coordinate in zip(key.data, coordinates):
+            point.co = coordinate
+    solidify = obj.modifiers.new("Oral Mask Soft-Tissue Thickness", "SOLIDIFY")
+    solidify.thickness = 0.0045
+    solidify.offset = 0.0
+    bevel = obj.modifiers.new("Oral Mask Soft Edge", "BEVEL")
+    bevel.width = 0.0020
+    bevel.segments = 2
+    obj["ce_mouth_component"] = "cheek_integrated_oral_mask"
+    obj["ce_deformation_model"] = "three_ring_corner_cheek_shape_keys"
+    obj["ce_aperture_topology"] = "open_annulus_recessed_oral_anatomy"
+    return obj
+
+
+def _replace_v8_dental_shape_keys(obj, *, upper: bool, groove: bool) -> None:
+    """Upgrade v7 dental keys with exposure and groove-visibility controls."""
+    shape_keys = getattr(obj.data, "shape_keys", None)
+    if shape_keys is None:
+        return
+    basis = shape_keys.key_blocks.get("Basis")
+    if basis is None:
+        return
+    source_coordinates = [point.co.copy() for point in basis.data]
+    for shape, pose in MOUTH_V8_POSES.items():
+        key = shape_keys.key_blocks.get(shape)
+        if key is None:
+            continue
+        width = 0.86 + 0.14 * float(pose["width"]) if upper else 0.88 + 0.12 * float(pose["width"])
+        travel = -0.013 * float(pose["upper_teeth"]) if upper else 0.014 * float(pose["lower_teeth"])
+        exposure = float(pose["dental_exposure"])
+        visibility = float(pose["groove_visibility"])
+        for point, source in zip(key.data, source_coordinates):
+            point.co.x = source.x * width
+            point.co.z = source.z * (visibility if groove else 0.52 + 0.48 * exposure) + travel
+            point.co.y = source.y + (0.010 * (1.0 - visibility) if groove else 0.0)
+    obj["ce_dental_visibility"] = "per_viseme_groove_mask" if groove else "per_viseme_exposure"
+
+
+def _make_june_v8(bpy, mathutils, materials: dict):
+    """Hero v8: cheek-integrated oral mask over the proven v7 mouth bag."""
+    rig, mouth, face_controls = _make_june_v7(bpy, mathutils, materials)
+    for name in ("June_Mouth_Upper_Lip", "June_Mouth_Lower_Lip"):
+        obj = bpy.data.objects.get(name)
+        if obj is not None:
+            bpy.data.objects.remove(obj, do_unlink=True)
+    oral_mask = _make_oral_mask_v8(bpy, materials)
+    _parent_to_bone(oral_mask, rig, "head")
+    for obj in list(mouth.parent.children):
+        role = str(obj.get("ce_mouth_component", ""))
+        if role in {"upper_teeth", "lower_teeth", "upper_tooth_groove", "lower_tooth_groove"}:
+            _replace_v8_dental_shape_keys(
+                obj,
+                upper=role.startswith("upper"),
+                groove=role.endswith("groove"),
+            )
+    mouth["ce_mouth_rig_version"] = 3
+    mouth["ce_mouth_topology"] = "cheek_integrated_oral_mask_over_recessed_mouth_bag_v1"
+    face_controls["lower_lip"] = None
+    face_controls["oral_mask"] = oral_mask
+    face_controls["mouth_components"] = [
+        obj for obj in mouth.parent.children
+        if obj is not mouth and obj.get("ce_mouth_component")
+    ]
+    rig["ce_asset_major"] = 8
+    rig["ce_control_rig"] = "v7_plus_asymmetric_corner_cheek_oral_mask"
+    rig["ce_face_topology"] = "fitted_beard_cheek_oral_annulus_recessed_dentition"
+    rig["ce_mouth_components"] = "mouth_bag,oral_mask,upper_gum,lower_gum,upper_teeth,lower_teeth,tongue"
+    return rig, mouth, face_controls
+
+
 def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
     if asset_major == 1:
         return _make_june_v1(bpy, mathutils, materials)
@@ -2197,6 +2362,8 @@ def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
         return _make_june_v6(bpy, mathutils, materials)
     if asset_major == 7:
         return _make_june_v7(bpy, mathutils, materials)
+    if asset_major == 8:
+        return _make_june_v8(bpy, mathutils, materials)
     raise ValueError(f"unsupported June asset major version: {asset_major}")
 
 
@@ -2865,7 +3032,9 @@ def _animate_mouth(mouth, plan: dict) -> None:
         mouth.data.shape_keys.animation_data_clear()
     keys = mouth.data.shape_keys.key_blocks
     shapes = tuple("ABCDEFGHX")
-    volumetric = int(mouth.get("ce_mouth_rig_version", 1)) >= 2
+    mouth_rig_version = int(mouth.get("ce_mouth_rig_version", 1))
+    volumetric = mouth_rig_version >= 2
+    pose_table = MOUTH_V8_POSES if mouth_rig_version >= 3 else MOUTH_V7_POSES
     mouth_components = [
         obj for obj in mouth.parent.children
         if obj is not mouth and obj.get("ce_mouth_component")
@@ -2929,13 +3098,13 @@ def _animate_mouth(mouth, plan: dict) -> None:
                 lower_lip.keyframe_insert(data_path="scale", frame=frame)
         if beard_keys is not None and beard_keys.get("jaw_follow") is not None:
             follow = (
-                float(MOUTH_V7_POSES[active]["beard_follow"])
+                float(pose_table[active]["beard_follow"])
                 if volumetric else jaw_follow.get(active, 0.0)
             )
             beard_keys["jaw_follow"].value = follow
             beard_keys["jaw_follow"].keyframe_insert(data_path="value", frame=frame)
             if volumetric and beard_keys.get("mouth_clearance") is not None:
-                beard_keys["mouth_clearance"].value = min(0.55, float(MOUTH_V7_POSES[active]["opening"]) * 0.48)
+                beard_keys["mouth_clearance"].value = min(0.55, float(pose_table[active]["opening"]) * 0.48)
                 beard_keys["mouth_clearance"].keyframe_insert(data_path="value", frame=frame)
 
     for index, cue in enumerate(cues):
@@ -2965,7 +3134,7 @@ def _animate_mouth(mouth, plan: dict) -> None:
         lip_rim.scale.x *= width
         lip_rim.scale.z *= max(0.58, 0.42 + height * 0.34)
         lip_rim.keyframe_insert(data_path="scale", frame=final_frame)
-    if lower_lip is not None:
+    if lower_lip is not None and not volumetric:
         width, height = MOUTH_V5_SHAPE_SCALE["X"]
         lower_lip.scale = lower_lip_base.copy()
         lower_lip.scale.x *= width

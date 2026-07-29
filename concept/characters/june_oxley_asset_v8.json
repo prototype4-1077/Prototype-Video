@@ -1,0 +1,141 @@
+{
+  "contract_version": 1,
+  "asset_id": "june_oxley_hero_rig",
+  "asset_version": "8.0.0",
+  "character_id": "june_oxley",
+  "display_name": "June Oxley Cheek-Integrated Performance Hero Rig v8",
+  "source_of_truth": [
+    "concept/characters/JUNE_OXLEY.md",
+    "concept/characters/june_oxley.json",
+    "concept/characters/june_oxley_animation_addendum.json",
+    "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+    "concept/style_frames/june_golden_scene_performance_slice_v1.json"
+  ],
+  "canonical_identity_reference": {
+    "path": "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+    "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9"
+  },
+  "performance_contract": {
+    "path": "concept/style_frames/june_golden_scene_performance_slice_v1.json",
+    "sha256": "f0515c4ef28571be044dd059cd2f3490655c9b9da5f9041484658f4fadd7f11d",
+    "shots": ["GS030", "GS040", "GS050"],
+    "fps": 30,
+    "frame_count": 453,
+    "duration_seconds": 15.1
+  },
+  "delivery": {
+    "format": "blend",
+    "generation": "artist_directed_runtime_build",
+    "repository_policy": "Generated .blend files and render evidence remain public workflow artifacts.",
+    "collections": ["CE_June_Oxley", "CE_June_Porch", "CE_June_Props"]
+  },
+  "design_lock": {
+    "body": "lean, compact, capable build with continuous weighted sleeves and trouser legs",
+    "face": "compact rounded friendly face, very large expressive eyes, full rounded white beard, and appealing weathered asymmetry",
+    "wardrobe": "faded blue-and-navy plaid work shirt under an open indigo denim shell",
+    "forbidden": ["cowboy hat", "spherical toy proportions", "redneck caricature"]
+  },
+  "modeling": {
+    "style": "artist_directed_stylized_3d",
+    "surface_standard": "smooth canonical production surfaces with continuous weighted deformation",
+    "head_topology": "single_sculpted_surface",
+    "unified_surfaces": ["head", "plaid_torso", "open_denim_shell", "beard_patch"],
+    "weighted_surfaces": ["jacket_sleeve.L", "jacket_sleeve.R", "overall_leg.L", "overall_leg.R"],
+    "deformation_standard": "armature preserve-volume plus corrective-smooth elbow and knee zones",
+    "corrective_shapes": [
+      "brow_raise", "brow_knit", "squint", "cheek_raise",
+      "mouth_corner.L", "mouth_corner.R", "mouth_press", "inner_brow_raise", "lower_lid_engage", "jaw_soften"
+    ]
+  },
+  "rig": {
+    "required_bones": [
+      "root", "pelvis", "torso", "neck", "head",
+      "clavicle.L", "upper_arm.L", "forearm.L", "hand.L",
+      "clavicle.R", "upper_arm.R", "forearm.R", "hand.R",
+      "thigh.L", "shin.L", "foot.L", "thigh.R", "shin.R", "foot.R",
+      "jaw", "eye.L", "eye.R", "gaze",
+      "finger_tip.0.L", "finger_tip.1.L", "finger_tip.2.L", "finger_tip.3.L", "thumb_tip.L",
+      "finger_tip.0.R", "finger_tip.1.R", "finger_tip.2.R", "finger_tip.3.R", "thumb_tip.R"
+    ],
+    "action_library": [
+      "June_Breathing_Idle", "June_Head_Performance", "June_Gesture_Performance",
+      "June_Golden_Performance_v1", "June_Micro_Performance_v1"
+    ],
+    "production_controls": {
+      "ik_targets": ["hand_ik.L", "hand_ik.R", "foot_ik.L", "foot_ik.R"],
+      "pole_targets": ["elbow_pole.L", "elbow_pole.R", "knee_pole.L", "knee_pole.R"],
+      "clavicles": ["clavicle.L", "clavicle.R"],
+      "facial_bones": ["jaw", "eye.L", "eye.R", "gaze"],
+      "finger_controls": [
+        "finger.0.L", "finger.1.L", "finger.2.L", "finger.3.L", "thumb.L",
+        "finger.0.R", "finger.1.R", "finger.2.R", "finger.3.R", "thumb.R"
+      ],
+      "distal_finger_controls": [
+        "finger_tip.0.L", "finger_tip.1.L", "finger_tip.2.L", "finger_tip.3.L", "thumb_tip.L",
+        "finger_tip.0.R", "finger_tip.1.R", "finger_tip.2.R", "finger_tip.3.R", "thumb_tip.R"
+      ],
+      "foot_lock": true,
+      "arm_ik": true,
+      "gaze_target": true,
+      "jaw_follow_through": true
+    }
+  },
+  "face": {
+    "visemes": ["A", "B", "C", "D", "E", "F", "G", "H", "X"],
+    "expression_controls": ["smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise"],
+    "deformation_controls": ["mouth_corner.L", "mouth_corner.R", "mouth_press", "inner_brow_raise", "lower_lid_engage", "jaw_soften"],
+    "independent_controls": ["blink.L.upper", "blink.L.lower", "blink.R.upper", "blink.R.lower", "brow.L", "brow.R", "eye_aim", "jaw"],
+    "mouth_components": ["mouth_bag", "oral_mask", "upper_gum", "lower_gum", "upper_teeth", "lower_teeth", "tongue"],
+    "soft_tissue_controls": ["corner.L", "corner.R", "cheek.L", "cheek.R", "dental_exposure", "groove_visibility"],
+    "oral_mask": true,
+    "detached_lip_objects": false,
+    "volumetric_mouth": true,
+    "per_viseme_deformation": true,
+    "dental_visibility_per_viseme": true,
+    "lip_model": "one open annular surface blends beard and cheek curvature into the lip aperture with asymmetric corner anchors",
+    "dental_parenting": "v7 recessed dual dentition retained; exposure and groove depth are masked per viseme",
+    "facial_hair_follow": "bounded beard jaw follow plus mouth clearance around a planted outer oral-mask ring",
+    "beard_jaw_follow_max": 0.30
+  },
+  "hands": {
+    "minimum_digits_per_hand": 5,
+    "segmented_digits": true,
+    "articulated_digits": true,
+    "independent_distal_controls": true,
+    "contact_safe": true,
+    "pose_library": ["relaxed", "mug_grip", "chair_support", "ledger_support", "pencil_tripod", "open_empathy"]
+  },
+  "performance_props": {
+    "required": ["held_mug", "table_mug", "ledger", "pencil"],
+    "visibility_keyed_by_shot": true,
+    "hand_attachment_controls": true
+  },
+  "quality_gate": {
+    "profiles": ["youtube", "portrait"],
+    "fps": 30,
+    "continuous_engine": "BLENDER_WORKBENCH",
+    "review_engine": "BLENDER_EEVEE_NEXT",
+    "promotion_engine": "CYCLES",
+    "artifact_reopen_required": true,
+    "human_art_approval_required": true,
+    "facial_performance_matrix_required": true,
+    "deformation_pose_matrix_required": true,
+    "performance_slice_required": true,
+    "performance_slice_full_frame_render": true,
+    "facial_coarticulation_required": true,
+    "hand_pose_matrix_required": true,
+    "volumetric_mouth_required": true,
+    "mouth_temporal_gate_required": true,
+    "mouth_temporal_window": [399, 415],
+    "nine_viseme_matrix_required": true,
+    "cheek_integration_required": true,
+    "matrix_visemes": ["A", "B", "C", "D", "E", "F", "G", "H", "X"],
+    "matrix_expressions": ["smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise"],
+    "required_checks": [
+      "single cheek-integrated oral mask", "no detached lip objects", "asymmetric left and right corner anchors",
+      "per-viseme cheek deformation", "per-viseme dental exposure", "per-viseme tooth-groove visibility",
+      "all nine visemes in one 3x3 close-up matrix", "frames 399-415 temporal continuity",
+      "artifact reopened from generated blend", "exact 453-frame performance clock"
+    ]
+  }
+}
