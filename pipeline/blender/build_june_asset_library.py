@@ -51,9 +51,40 @@ def main() -> None:
         "mouth_cues": [{"frame_start": 1, "frame_end": 390, "shape": "X"}],
     }
     studio._animate_rig(bpy, rig, library_plan)
+    if asset_major >= 5:
+        from pipeline.cartoon_asset_library import golden_performance_plan
+
+        library_plan, _ = golden_performance_plan(
+            repo_root / "examples" / "june-golden-scene-twelve-dollar-mug.json",
+            repo_root / "concept" / "style_frames" / "june_golden_scene_performance_slice_v1.json",
+        )
+        studio._animate_golden_performance(bpy, rig, library_plan)
+        studio._animate_performance_props(bpy, library_plan)
+    if asset_major >= 6:
+        preview_plan = dict(library_plan)
+        preview_plan["look_profile"] = {"acting_polish": {"final_hold_frames": 24}}
+        studio._animate_phase13_microperformance(
+            bpy,
+            rig,
+            preview_plan,
+            {
+                "enabled": True,
+                "breath_period_frames": 72,
+                "breath_amplitude": 0.0045,
+                "saccade_amplitude": 0.009,
+                "gaze_lead_frames": 4,
+                "gaze_settle_frames": 3,
+            },
+        )
     studio._animate_mouth(mouth, library_plan)
     studio._animate_expressions(bpy.data.objects["June_Head"], library_plan, face_controls)
-    studio._animate_blinks(face_controls, 390)
+    studio._animate_blinks(face_controls, int(library_plan["frame_end"]))
+
+    for action_name in manifest["rig"]["action_library"]:
+        action = bpy.data.actions.get(action_name)
+        if action is None:
+            raise RuntimeError(f"asset library did not build required action: {action_name}")
+        action.use_fake_user = True
 
     june_collection = bpy.data.collections.new("CE_June_Oxley")
     porch_collection = bpy.data.collections.new("CE_June_Porch")

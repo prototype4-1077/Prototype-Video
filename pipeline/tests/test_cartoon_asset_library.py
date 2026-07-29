@@ -27,6 +27,7 @@ from pipeline.cartoon_vertical_slice import compile_plan
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v4.json"
 V5_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v5.json"
+V6_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v6.json"
 V3_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v3.json"
 V2_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v2.json"
 V1_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v1.json"
@@ -38,7 +39,9 @@ LOOK_PROFILE_V2_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_
 LOOK_PROFILE_V3_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v3.json"
 LOOK_PROFILE_V4_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v4.json"
 LOOK_PROFILE_V5_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v5.json"
+LOOK_PROFILE_V6_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v6.json"
 BLENDER_SOURCE = ROOT / "pipeline" / "blender" / "render_vertical_slice.py"
+BLENDER_LIBRARY_SOURCE = ROOT / "pipeline" / "blender" / "build_june_asset_library.py"
 
 
 class CartoonAssetLibraryTests(unittest.TestCase):
@@ -46,6 +49,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
     def setUpClass(cls):
         cls.manifest = load_asset_manifest(MANIFEST_PATH)
         cls.v5_manifest = load_asset_manifest(V5_MANIFEST_PATH)
+        cls.v6_manifest = load_asset_manifest(V6_MANIFEST_PATH)
         cls.config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
         cls.golden_config = json.loads(GOLDEN_CONFIG_PATH.read_text(encoding="utf-8"))
 
@@ -207,8 +211,8 @@ class CartoonAssetLibraryTests(unittest.TestCase):
             "June_Golden_Performance_v1",
             "def _animate_performance_props",
             'item.name.startswith("Chair_")',
-            "brow_lifts",
-            "lid_shapes",
+            "brow_bases",
+            "upper_bases",
         ):
             self.assertIn(marker, source)
 
@@ -362,6 +366,94 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         invalid["acting_polish"]["final_hold_frames"] = 3
         with self.assertRaisesRegex(ValueError, "final hold"):
             validate_look_profile(invalid)
+
+    def test_phase13_manifest_requires_coarticulated_face_and_two_joint_hands(self):
+        manifest = self.v6_manifest
+        self.assertEqual(manifest["asset_version"], "6.0.0")
+        self.assertEqual(len(manifest["rig"]["production_controls"]["distal_finger_controls"]), 10)
+        self.assertEqual(
+            set(manifest["face"]["deformation_controls"]),
+            set(blender_studio.FACIAL_V6_CORRECTIVES),
+        )
+        self.assertEqual(set(manifest["hands"]["pose_library"]), set(blender_studio.HAND_V6_POSES))
+        self.assertTrue(manifest["quality_gate"]["facial_coarticulation_required"])
+        self.assertTrue(manifest["quality_gate"]["hand_pose_matrix_required"])
+
+    def test_phase13_hand_shapes_are_independent_and_interpolation_safe(self):
+        relaxed = blender_studio._hand_pose_vector("relaxed")
+        pencil = blender_studio._hand_pose_vector("pencil_tripod")
+        self.assertEqual(len(relaxed), 15)
+        self.assertEqual(len(pencil), 15)
+        self.assertNotEqual(relaxed, pencil)
+        self.assertGreater(len(set(pencil[0::3])), 2)
+        start = blender_studio._golden_pose("GS040", "start")
+        target = blender_studio._golden_pose("GS040", "mid")
+        blended = blender_studio._golden_pose_between(
+            start,
+            target,
+            0.5,
+            {"gaze_lead": 0.12, "clavicle_lag": 0.08, "arc_height": 0.018},
+        )
+        self.assertEqual(len(blended["digits.L"]), 15)
+        self.assertNotEqual(blended["digits.L"], start["digits.L"])
+
+    def test_phase13_facial_keys_coactivate_and_ease_across_cue_boundary(self):
+        profile = load_look_profile(LOOK_PROFILE_V6_PATH)
+        plan, _ = golden_performance_plan(self.golden_config, PERFORMANCE_PATH)
+        keys = blender_studio._facial_polish_keys(
+            plan["facial_performance_cues"],
+            plan["frame_end"],
+            profile["facial_polish"],
+        )
+        frames = [entry["frame"] for entry in keys]
+        self.assertEqual(frames, sorted(set(frames)))
+        self.assertIn(391, frames)
+        self.assertNotIn(396, frames)
+        breakdown = next(entry for entry in keys if entry["frame"] == 397)
+        self.assertEqual(breakdown["role"], "facial_breakdown")
+        self.assertGreater(breakdown["weights"]["mouth_press"], 0.0)
+        self.assertGreater(breakdown["weights"]["lower_lid_engage"], 0.0)
+        self.assertGreater(breakdown["weights"]["jaw_soften"], 0.0)
+        self.assertEqual(keys[-1]["frame"], 453)
+
+    def test_phase13_profile_targets_transition_and_final_hold_window(self):
+        profile = load_look_profile(LOOK_PROFILE_V6_PATH)
+        self.assertEqual(profile["style_version"], "1.5.0")
+        self.assertEqual(profile["render"]["temporal_window_start"], 388)
+        self.assertEqual(profile["render"]["temporal_window_frames"], 66)
+        self.assertEqual(profile["facial_polish"]["transition_frames"], 6)
+        self.assertFalse(profile["render"]["motion_blur"])
+
+    def test_phase13_rejects_incomplete_distal_or_facial_contracts(self):
+        missing_digit = copy.deepcopy(self.v6_manifest)
+        missing_digit["rig"]["production_controls"]["distal_finger_controls"].pop()
+        with self.assertRaisesRegex(ValueError, "every distal digit"):
+            validate_asset_manifest(missing_digit)
+        missing_face = copy.deepcopy(self.v6_manifest)
+        missing_face["face"]["deformation_controls"].pop()
+        with self.assertRaisesRegex(ValueError, "exact facial deformation-control"):
+            validate_asset_manifest(missing_face)
+        unsafe_transition = copy.deepcopy(load_look_profile(LOOK_PROFILE_V6_PATH))
+        unsafe_transition["facial_polish"]["transition_frames"] = 1
+        with self.assertRaisesRegex(ValueError, "transition_frames"):
+            validate_look_profile(unsafe_transition)
+
+    def test_phase13_builder_contains_deformation_and_microacting_layers(self):
+        source = BLENDER_SOURCE.read_text(encoding="utf-8")
+        for marker in (
+            "def _make_june_v6",
+            "finger_tip.0.L",
+            "June_Mouth_Lower_Lip",
+            "jaw_follow",
+            "def _animate_phase13_microperformance",
+            "June_Micro_Performance_v1",
+            "def _facial_polish_keys",
+        ):
+            self.assertIn(marker, source)
+        library_source = BLENDER_LIBRARY_SOURCE.read_text(encoding="utf-8")
+        self.assertIn("golden_performance_plan", library_source)
+        self.assertIn("action.use_fake_user = True", library_source)
+        self.assertIn("asset library did not build required action", library_source)
 
     def test_golden_performance_uses_audio_derived_rhubarb_cues(self):
         plan, _ = golden_performance_plan(self.golden_config, PERFORMANCE_PATH)

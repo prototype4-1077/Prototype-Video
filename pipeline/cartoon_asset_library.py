@@ -40,6 +40,17 @@ REQUIRED_V5_FINGERS = {
     "finger.0.R", "finger.1.R", "finger.2.R", "finger.3.R", "thumb.R",
 }
 REQUIRED_V5_PROPS = {"held_mug", "table_mug", "ledger", "pencil"}
+REQUIRED_V6_DISTAL_FINGERS = {
+    "finger_tip.0.L", "finger_tip.1.L", "finger_tip.2.L", "finger_tip.3.L", "thumb_tip.L",
+    "finger_tip.0.R", "finger_tip.1.R", "finger_tip.2.R", "finger_tip.3.R", "thumb_tip.R",
+}
+REQUIRED_V6_CORRECTIVES = {
+    "mouth_corner.L", "mouth_corner.R", "mouth_press", "inner_brow_raise",
+    "lower_lid_engage", "jaw_soften",
+}
+REQUIRED_V6_HAND_POSES = {
+    "relaxed", "mug_grip", "chair_support", "ledger_support", "pencil_tripod", "open_empathy",
+}
 RENDER_ENGINES = {"CYCLES", "BLENDER_EEVEE_NEXT", "BLENDER_WORKBENCH"}
 
 
@@ -136,6 +147,27 @@ def validate_look_profile(profile: dict) -> None:
             value = float(acting.get(field, -1))
             if not minimum <= value <= maximum:
                 raise ValueError(f"NPR acting polish {field} is outside its safe range")
+    facial = profile.get("facial_polish")
+    if facial is not None:
+        if facial.get("enabled") is not True or not re.fullmatch(r"\d+\.\d+\.\d+", str(facial.get("version", ""))):
+            raise ValueError("NPR facial polish must be enabled and semantically versioned")
+        for field, minimum, maximum in (
+            ("transition_frames", 2, 12),
+            ("gaze_lead_frames", 1, 8),
+            ("gaze_settle_frames", 1, 8),
+            ("breath_period_frames", 48, 120),
+        ):
+            value = int(facial.get(field, 0))
+            if not minimum <= value <= maximum:
+                raise ValueError(f"NPR facial polish {field} is outside its safe range")
+        for field, minimum, maximum in (
+            ("overshoot_ratio", 0.0, 0.12),
+            ("breath_amplitude", 0.0, 0.012),
+            ("saccade_amplitude", 0.0, 0.020),
+        ):
+            value = float(facial.get(field, -1))
+            if not minimum <= value <= maximum:
+                raise ValueError(f"NPR facial polish {field} is outside its safe range")
 
 
 def load_look_profile(path: str | Path) -> dict:
@@ -288,6 +320,31 @@ def validate_asset_manifest(manifest: dict) -> None:
             raise ValueError("Hero v5 performance contract must preserve the 453-frame clock")
         if gate.get("performance_slice_required") is not True or gate.get("performance_slice_full_frame_render") is not True:
             raise ValueError("Hero v5 requires a full-frame deformation performance gate")
+    if asset_major >= 6:
+        if not REQUIRED_V6_DISTAL_FINGERS.issubset(bones):
+            raise ValueError("Hero v6 must expose ten independent distal digit controls")
+        modeling = manifest.get("modeling") or {}
+        correctives = _string_set(modeling.get("corrective_shapes"), "modeling.corrective_shapes")
+        if not REQUIRED_V6_CORRECTIVES.issubset(correctives):
+            raise ValueError("Hero v6 is missing localized facial coarticulation correctives")
+        face = manifest.get("face") or {}
+        if _string_set(face.get("deformation_controls"), "face.deformation_controls") != REQUIRED_V6_CORRECTIVES:
+            raise ValueError("Hero v6 must publish the exact facial deformation-control set")
+        distal = _string_set(
+            ((manifest.get("rig") or {}).get("production_controls") or {}).get("distal_finger_controls"),
+            "rig.production_controls.distal_finger_controls",
+        )
+        if distal != REQUIRED_V6_DISTAL_FINGERS:
+            raise ValueError("Hero v6 production controls must publish every distal digit")
+        if hands.get("independent_distal_controls") is not True:
+            raise ValueError("Hero v6 hands must enable independent distal controls")
+        if _string_set(hands.get("pose_library"), "hands.pose_library") != REQUIRED_V6_HAND_POSES:
+            raise ValueError("Hero v6 must publish all six authored hand shapes")
+        actions = _string_set((manifest.get("rig") or {}).get("action_library"), "rig.action_library")
+        if "June_Micro_Performance_v1" not in actions:
+            raise ValueError("Hero v6 must publish the additive micro-performance action")
+        if gate.get("facial_coarticulation_required") is not True or gate.get("hand_pose_matrix_required") is not True:
+            raise ValueError("Hero v6 requires facial-coarticulation and hand-pose visual gates")
 
 
 def load_asset_manifest(path: str | Path) -> dict:

@@ -1395,6 +1395,152 @@ MOUTH_V5_SHAPE_SCALE = {
 }
 
 
+FACIAL_V6_CORRECTIVES = (
+    "mouth_corner.L",
+    "mouth_corner.R",
+    "mouth_press",
+    "inner_brow_raise",
+    "lower_lid_engage",
+    "jaw_soften",
+)
+
+
+HAND_V6_POSES = {
+    # Five (proximal, distal, spread) triplets: index through little finger,
+    # then thumb.  Values are degrees and intentionally asymmetric by role.
+    "relaxed": (
+        (18.0, 24.0, -3.0), (22.0, 30.0, -1.0), (25.0, 34.0, 1.0),
+        (30.0, 39.0, 3.0), (21.0, 28.0, -10.0),
+    ),
+    "mug_grip": (
+        (44.0, 58.0, -1.0), (52.0, 66.0, 0.0), (56.0, 70.0, 1.0),
+        (50.0, 64.0, 2.0), (36.0, 48.0, -18.0),
+    ),
+    "chair_support": (
+        (12.0, 18.0, -7.0), (16.0, 22.0, -2.0), (18.0, 25.0, 2.0),
+        (21.0, 28.0, 6.0), (24.0, 31.0, -13.0),
+    ),
+    "ledger_support": (
+        (28.0, 36.0, -5.0), (34.0, 42.0, -2.0), (38.0, 47.0, 1.0),
+        (42.0, 52.0, 4.0), (30.0, 38.0, -16.0),
+    ),
+    "pencil_tripod": (
+        (24.0, 18.0, -4.0), (56.0, 68.0, -1.0), (62.0, 72.0, 1.0),
+        (66.0, 76.0, 3.0), (22.0, 16.0, -21.0),
+    ),
+    "open_empathy": (
+        (8.0, 10.0, -9.0), (10.0, 12.0, -4.0), (12.0, 14.0, 2.0),
+        (15.0, 18.0, 8.0), (17.0, 20.0, -15.0),
+    ),
+}
+
+
+FACIAL_V6_DRIVERS = {
+    "smile": {
+        "smile": 1.0, "mouth_corner.L": 0.92, "mouth_corner.R": 0.82,
+        "cheek_raise": 0.38, "lower_lid_engage": 0.16,
+    },
+    "soft_chuckle": {
+        "soft_chuckle": 1.0, "mouth_corner.L": 0.78, "mouth_corner.R": 0.70,
+        "cheek_raise": 0.62, "lower_lid_engage": 0.34, "jaw_soften": 0.22,
+    },
+    "thoughtful": {
+        "thoughtful": 1.0, "mouth_press": 0.46, "mouth_corner.L": 0.12,
+        "inner_brow_raise": 0.30, "lower_lid_engage": 0.28, "jaw_soften": 0.18,
+    },
+    "brow_raise": {"brow_raise": 1.0, "inner_brow_raise": 0.58},
+    "brow_knit": {
+        "brow_knit": 1.0, "mouth_press": 0.34, "lower_lid_engage": 0.40,
+        "jaw_soften": 0.28,
+    },
+    "squint": {"squint": 1.0, "lower_lid_engage": 0.72, "cheek_raise": 0.28},
+    "cheek_raise": {"cheek_raise": 1.0, "lower_lid_engage": 0.46},
+}
+
+
+def _hand_pose_vector(name: str) -> tuple[float, ...]:
+    """Flatten a named five-digit hand pose into an interpolation-safe vector."""
+    try:
+        pose = HAND_V6_POSES[name]
+    except KeyError as exc:
+        raise ValueError(f"unsupported June hand pose: {name}") from exc
+    return tuple(value for digit in pose for value in digit)
+
+
+def _facial_driver_weights(expression: str, strength: float) -> dict[str, float]:
+    """Resolve a primary acting cue into coordinated deformation controls."""
+    drivers = FACIAL_V6_DRIVERS.get(str(expression), {str(expression): 1.0})
+    return {
+        name: max(0.0, min(1.0, float(value) * float(strength)))
+        for name, value in drivers.items()
+    }
+
+
+def _weights_blend(start: dict[str, float], target: dict[str, float], amount: float) -> dict[str, float]:
+    names = set(start) | set(target)
+    return {
+        name: float(start.get(name, 0.0)) + (float(target.get(name, 0.0)) - float(start.get(name, 0.0))) * amount
+        for name in names
+    }
+
+
+def _facial_polish_keys(cues: list[dict], frame_end: int, polish: dict) -> list[dict]:
+    """Compile facial cues into eased anticipation, overlap, and settle keys."""
+    if not cues:
+        return []
+    enabled = bool(polish.get("enabled"))
+    transition = int(polish.get("transition_frames", 0)) if enabled else 0
+    overshoot = float(polish.get("overshoot_ratio", 0.0)) if enabled else 0.0
+    result: dict[int, dict] = {}
+    previous_weights: dict[str, float] = {}
+    for index, cue in enumerate(cues):
+        start = max(1, int(cue["frame_start"]))
+        end = min(int(frame_end), int(cue["frame_end"]))
+        expression = str(cue["expression"])
+        strength = float(cue.get("strength", 1.0))
+        target = _facial_driver_weights(expression, strength)
+        if index == 0 or transition <= 0:
+            result[start] = {
+                "frame": start, "role": "facial_cue", "expression": expression,
+                "strength": strength, "weights": target,
+            }
+        else:
+            anticipate_frame = max(int(cues[index - 1]["frame_start"]), start - transition)
+            breakdown_frame = start
+            settle_frame = min(end, start + transition)
+            # The previous cue normally contributes a hold key at ``start - 1``.
+            # Remove keys inside the transition window so interpolation can
+            # actually begin at anticipation instead of popping one frame late.
+            for existing_frame in tuple(result):
+                if anticipate_frame < existing_frame < start:
+                    result.pop(existing_frame)
+            result[anticipate_frame] = {
+                "frame": anticipate_frame, "role": "facial_anticipation",
+                "expression": expression, "strength": strength, "weights": dict(previous_weights),
+            }
+            result[breakdown_frame] = {
+                "frame": breakdown_frame, "role": "facial_breakdown",
+                "expression": expression, "strength": strength,
+                "weights": _weights_blend(previous_weights, target, 0.58),
+            }
+            result[settle_frame] = {
+                "frame": settle_frame, "role": "facial_settle",
+                "expression": expression, "strength": strength,
+                "weights": {name: min(1.0, value * (1.0 + overshoot)) for name, value in target.items()},
+            }
+            if settle_frame + 2 <= end:
+                result[settle_frame + 2] = {
+                    "frame": settle_frame + 2, "role": "facial_hold",
+                    "expression": expression, "strength": strength, "weights": target,
+                }
+        result[end] = {
+            "frame": end, "role": "facial_hold", "expression": expression,
+            "strength": strength, "weights": target,
+        }
+        previous_weights = target
+    return [result[frame] for frame in sorted(result)]
+
+
 def _make_mouth_v5(bpy, rig, materials: dict):
     """Build a camera-facing mouth cavity that survives beard and mustache overlap."""
     lip_rim = _sphere(
@@ -1610,6 +1756,158 @@ def _make_june_v5(bpy, mathutils, materials: dict):
     return rig, mouth, face_controls
 
 
+def _make_june_v6(bpy, mathutils, materials: dict):
+    """Hero v6: coarticulated face, deforming beard, and two-joint hand shapes."""
+    rig, mouth, face_controls = _make_june_v5(bpy, mathutils, materials)
+
+    # Split every digit at its modeled knuckle so the two visible segments no
+    # longer rotate as one rigid stick.  The existing proximal control remains
+    # stable for old actions; the new distal child adds contact-safe curvature.
+    bpy.ops.object.select_all(action="DESELECT")
+    rig.select_set(True)
+    bpy.context.view_layer.objects.active = rig
+    bpy.ops.object.mode_set(mode="EDIT")
+    edit = rig.data.edit_bones
+    for side in ("L", "R"):
+        for digit in range(4):
+            proximal_name = f"finger.{digit}.{side}"
+            distal_name = f"finger_tip.{digit}.{side}"
+            proximal = edit[proximal_name]
+            original_tail = proximal.tail.copy()
+            knuckle = proximal.head.lerp(original_tail, 0.55)
+            proximal.tail = knuckle
+            distal = edit.new(distal_name)
+            distal.head = knuckle
+            distal.tail = original_tail
+            distal.parent = proximal
+            distal.use_connect = True
+            distal.use_deform = True
+        proximal_name = f"thumb.{side}"
+        distal_name = f"thumb_tip.{side}"
+        proximal = edit[proximal_name]
+        original_tail = proximal.tail.copy()
+        knuckle = proximal.head.lerp(original_tail, 0.56)
+        proximal.tail = knuckle
+        distal = edit.new(distal_name)
+        distal.head = knuckle
+        distal.tail = original_tail
+        distal.parent = proximal
+        distal.use_connect = True
+        distal.use_deform = True
+    bpy.ops.object.mode_set(mode="POSE")
+    for bone in rig.pose.bones:
+        bone.rotation_mode = "XYZ"
+    bpy.ops.object.mode_set(mode="OBJECT")
+
+    for side in ("L", "R"):
+        for digit in range(4):
+            segment = bpy.data.objects.get(f"June_Finger_{side}_{digit}_B")
+            if segment is not None:
+                _parent_to_bone(segment, rig, f"finger_tip.{digit}.{side}")
+        thumb_segment = bpy.data.objects.get(f"June_Thumb_{side}_B")
+        if thumb_segment is not None:
+            _parent_to_bone(thumb_segment, rig, f"thumb_tip.{side}")
+
+    # Add localized correctives to the existing dense sculpt instead of adding
+    # proxy cheek or mouth volumes.  These keys preserve June's canonical basis
+    # while allowing asymmetrical corners, lower-lid engagement, and jaw mass.
+    head = bpy.data.objects["June_Head"]
+    basis = head.data.shape_keys.key_blocks["Basis"]
+
+    def field(x, z, center_x, center_z, width_x, width_z):
+        return math.exp(-(((x - center_x) / width_x) ** 2 + ((z - center_z) / width_z) ** 2))
+
+    for control in FACIAL_V6_CORRECTIVES:
+        key = head.shape_key_add(name=control)
+        for source, target in zip(basis.data, key.data):
+            x, y, z = source.co
+            front = max(0.0, min(1.0, -y / 0.28))
+            if control in {"mouth_corner.L", "mouth_corner.R"}:
+                side = -1.0 if control.endswith(".L") else 1.0
+                corner = field(x, z, side * 0.125, -0.135, 0.075, 0.070)
+                target.co.x += side * 0.010 * front * corner
+                target.co.z += 0.030 * front * corner
+                target.co.y -= 0.006 * front * corner
+            elif control == "mouth_press":
+                press = field(x, z, 0.0, -0.135, 0.170, 0.065)
+                target.co.z += 0.009 * front * press
+                target.co.y += 0.008 * front * press
+            elif control == "inner_brow_raise":
+                brow = field(x, z, 0.0, 0.180, 0.105, 0.070)
+                target.co.z += 0.022 * front * brow
+                target.co.y -= 0.004 * front * brow
+            elif control == "lower_lid_engage":
+                lid_l = field(x, z, -0.105, 0.052, 0.080, 0.050)
+                lid_r = field(x, z, 0.108, 0.046, 0.080, 0.050)
+                target.co.z += 0.014 * front * (lid_l + lid_r)
+            elif control == "jaw_soften":
+                jaw = field(x, z, 0.005, -0.205, 0.205, 0.125)
+                target.co.x *= 1.0 + 0.018 * front * jaw
+                target.co.y -= 0.010 * front * jaw
+                target.co.z -= 0.006 * front * jaw
+    head["ce_facial_deformation"] = "localized_asymmetric_coarticulation_v1"
+
+    # The upper teeth and upper lip stay with the skull.  A separate lower lip
+    # follows the jaw, preventing the whole mouth rim from sliding downward.
+    lip_rim = bpy.data.objects.get("June_Mouth_Lip_Rim")
+    if lip_rim is not None:
+        _parent_to_bone(lip_rim, rig, "head")
+        lip_rim["ce_lip_role"] = "upper_lip"
+    upper_teeth = bpy.data.objects.get("June_Upper_Teeth")
+    if upper_teeth is not None:
+        _parent_to_bone(upper_teeth, rig, "head")
+        upper_teeth["ce_dental_role"] = "upper_teeth_skull_locked"
+    lower_lip = _sphere(
+        bpy,
+        "June_Mouth_Lower_Lip",
+        (0.0, -0.427, 2.474),
+        (0.126, 0.012, 0.018),
+        materials["lip"],
+        segments=48,
+        rings=20,
+    )
+    lower_lip["ce_lip_role"] = "lower_lip_jaw_follow"
+    _parent_to_bone(lower_lip, rig, "jaw")
+
+    beard = bpy.data.objects.get("June_Fitted_Beard")
+    if beard is not None:
+        beard_basis = beard.shape_key_add(name="Basis")
+        for control in ("jaw_follow", "smile_follow", "thoughtful_follow", "cheek_follow"):
+            key = beard.shape_key_add(name=control)
+            for source, target in zip(beard_basis.data, key.data):
+                x, y, z = source.co
+                lower = max(0.0, min(1.0, (2.515 - z) / 0.155))
+                side = max(0.0, min(1.0, abs(x) / 0.205))
+                if control == "jaw_follow":
+                    target.co.z -= 0.032 * lower
+                    target.co.y -= 0.010 * lower
+                elif control == "smile_follow":
+                    target.co.z += 0.018 * side * (1.0 - lower * 0.45)
+                    target.co.x *= 1.0 + 0.025 * side
+                elif control == "thoughtful_follow":
+                    target.co.z += (0.007 if x < 0 else -0.004) * side
+                    target.co.x += 0.004
+                elif control == "cheek_follow":
+                    target.co.z += 0.012 * side * (1.0 - lower)
+        beard["ce_beard_deformation"] = "jaw_expression_follow_v1"
+
+    moustache = [
+        obj for side in ("L", "R")
+        if (obj := bpy.data.objects.get(f"June_Moustache_{side}")) is not None
+    ]
+    for obj in moustache:
+        obj["ce_moustache_deformation"] = "expression_overlap_transform_v1"
+
+    face_controls["beard"] = beard
+    face_controls["moustache"] = moustache
+    face_controls["lower_lip"] = lower_lip
+    rig["ce_asset_major"] = 6
+    rig["ce_control_rig"] = "v5_plus_distal_digits_facial_coarticulation_microacting"
+    rig["ce_hand_topology"] = "five_digit_two_joint_contact_safe"
+    rig["ce_face_topology"] = "unified_sculpt_local_correctives_skull_upper_lip_jaw_lower_lip"
+    return rig, mouth, face_controls
+
+
 def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
     if asset_major == 1:
         return _make_june_v1(bpy, mathutils, materials)
@@ -1621,6 +1919,8 @@ def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
         return _make_june_v4(bpy, mathutils, materials)
     if asset_major == 5:
         return _make_june_v5(bpy, mathutils, materials)
+    if asset_major == 6:
+        return _make_june_v6(bpy, mathutils, materials)
     raise ValueError(f"unsupported June asset major version: {asset_major}")
 
 
@@ -1847,8 +2147,31 @@ def _golden_pose(shot_id: str, phase: str) -> dict:
             },
         },
     }
+    hand_roles = {
+        "GS030": {
+            "start": ("chair_support", "mug_grip"),
+            "mid": ("chair_support", "mug_grip"),
+            "end": ("relaxed", "mug_grip"),
+        },
+        "GS040": {
+            "start": ("open_empathy", "relaxed"),
+            "mid": ("ledger_support", "pencil_tripod"),
+            "end": ("ledger_support", "pencil_tripod"),
+        },
+        "GS050": {
+            "start": ("ledger_support", "pencil_tripod"),
+            "mid": ("relaxed", "relaxed"),
+            "end": ("open_empathy", "relaxed"),
+        },
+    }
     try:
-        return poses[shot_id][phase]
+        pose = dict(poses[shot_id][phase])
+        left_role, right_role = hand_roles[shot_id][phase]
+        pose["digits.L"] = _hand_pose_vector(left_role)
+        pose["digits.R"] = _hand_pose_vector(right_role)
+        pose["hand_role.L"] = left_role
+        pose["hand_role.R"] = right_role
+        return pose
     except KeyError as exc:
         raise ValueError(f"unsupported Golden Scene pose: {shot_id}/{phase}") from exc
 
@@ -1883,6 +2206,10 @@ def _golden_pose_between(start: dict, target: dict, amount: float, polish: dict)
         "gaze": _tuple_blend(start["gaze"], target["gaze"], gaze_amount),
         "clavicle": _tuple_blend(start["clavicle"], target["clavicle"], clavicle_amount),
         "curl": _tuple_blend(start["curl"], target["curl"], amount),
+        "digits.L": _tuple_blend(start["digits.L"], target["digits.L"], amount),
+        "digits.R": _tuple_blend(start["digits.R"], target["digits.R"], amount),
+        "hand_role.L": target["hand_role.L"] if amount >= 0.5 else start["hand_role.L"],
+        "hand_role.R": target["hand_role.R"] if amount >= 0.5 else start["hand_role.R"],
     }
 
 
@@ -1939,6 +2266,82 @@ def _golden_polish_keys(shot_id: str, keyframes: list[dict], polish: dict) -> li
     return [result[frame] for frame in sorted(result)]
 
 
+def _animate_phase13_microperformance(bpy, rig, plan: dict, polish: dict) -> None:
+    """Layer breath, gaze lead, and controlled stillness additively over poses."""
+    if not polish.get("enabled"):
+        return
+    frame_end = int(plan["frame_end"])
+    acting = (plan.get("look_profile") or {}).get("acting_polish") or {}
+    hold_start = frame_end - int(acting.get("final_hold_frames", 24))
+    breath_period = max(24, int(polish.get("breath_period_frames", 72)))
+    breath_amplitude = float(polish.get("breath_amplitude", 0.0045))
+    gaze_amplitude = float(polish.get("saccade_amplitude", 0.009))
+    gaze_lead = max(1, int(polish.get("gaze_lead_frames", 4)))
+    gaze_settle = max(1, int(polish.get("gaze_settle_frames", 3)))
+
+    def microperformance():
+        torso = rig.pose.bones["torso"]
+        head = rig.pose.bones["head"]
+        gaze = rig.pose.bones["gaze"]
+        clavicle_l = rig.pose.bones["clavicle.L"]
+        clavicle_r = rig.pose.bones["clavicle.R"]
+
+        half_period = max(12, breath_period // 2)
+        for frame in range(1, max(2, hold_start), half_period):
+            phase = (frame // half_period) % 2
+            lift = breath_amplitude if phase else -breath_amplitude * 0.55
+            torso.location = (0.0, 0.0, lift)
+            head.rotation_euler = (math.radians(-0.22 if phase else 0.12), 0.0, 0.0)
+            clavicle_l.rotation_euler = (0.0, 0.0, math.radians(0.28 if phase else -0.15))
+            clavicle_r.rotation_euler = (0.0, 0.0, math.radians(-0.24 if phase else 0.13))
+            torso.keyframe_insert(data_path="location", frame=frame)
+            head.keyframe_insert(data_path="rotation_euler", frame=frame)
+            clavicle_l.keyframe_insert(data_path="rotation_euler", frame=frame)
+            clavicle_r.keyframe_insert(data_path="rotation_euler", frame=frame)
+
+        # Gaze anticipates each meaningful facial change, then returns to the
+        # authored target.  Hash-derived polarity preserves asymmetry without
+        # random or frame-to-frame noise.
+        for cue in (plan.get("facial_performance_cues") or [])[1:]:
+            center = int(cue["frame_start"])
+            if center >= hold_start:
+                continue
+            polarity = _cue_signed_value(str(cue.get("expression")), f"micro-gaze-{center}")
+            for frame, blend in (
+                (max(1, center - gaze_lead), 0.0),
+                (center, 1.0),
+                (min(hold_start, center + gaze_settle), 0.0),
+            ):
+                gaze.location = (
+                    gaze_amplitude * polarity * blend,
+                    0.0,
+                    gaze_amplitude * -0.42 * blend,
+                )
+                gaze.keyframe_insert(data_path="location", frame=frame)
+
+        for frame in (hold_start, frame_end):
+            torso.location = (0.0, 0.0, 0.0)
+            head.rotation_euler = (0.0, 0.0, 0.0)
+            gaze.location = (0.0, 0.0, 0.0)
+            clavicle_l.rotation_euler = (0.0, 0.0, 0.0)
+            clavicle_r.rotation_euler = (0.0, 0.0, 0.0)
+            for bone, path in (
+                (torso, "location"), (head, "rotation_euler"), (gaze, "location"),
+                (clavicle_l, "rotation_euler"), (clavicle_r, "rotation_euler"),
+            ):
+                bone.keyframe_insert(data_path=path, frame=frame)
+
+        action = rig.animation_data.action
+        if action:
+            for curve in action.fcurves:
+                for point in curve.keyframe_points:
+                    point.interpolation = "BEZIER"
+                    point.handle_left_type = "AUTO_CLAMPED"
+                    point.handle_right_type = "AUTO_CLAMPED"
+
+    _stash_action(bpy, rig, "June_Micro_Performance_v1", microperformance)
+
+
 def _animate_golden_performance(bpy, rig, plan: dict) -> None:
     """Drive the v5 production controls on the exact phase-8 453-frame clock."""
     frame_end = int(plan["frame_end"])
@@ -1959,6 +2362,14 @@ def _animate_golden_performance(bpy, rig, plan: dict) -> None:
         feet = (rig.pose.bones["foot_ik.L"], rig.pose.bones["foot_ik.R"])
         fingers_l = [rig.pose.bones[f"finger.{index}.L"] for index in range(4)] + [rig.pose.bones["thumb.L"]]
         fingers_r = [rig.pose.bones[f"finger.{index}.R"] for index in range(4)] + [rig.pose.bones["thumb.R"]]
+        distal_l = (
+            [rig.pose.bones[f"finger_tip.{index}.L"] for index in range(4)] + [rig.pose.bones["thumb_tip.L"]]
+            if rig.pose.bones.get("finger_tip.0.L") else []
+        )
+        distal_r = (
+            [rig.pose.bones[f"finger_tip.{index}.R"] for index in range(4)] + [rig.pose.bones["thumb_tip.R"]]
+            if rig.pose.bones.get("finger_tip.0.R") else []
+        )
 
         for side in ("L", "R"):
             for owner_name, constraint_name in (
@@ -2002,12 +2413,28 @@ def _animate_golden_performance(bpy, rig, plan: dict) -> None:
                 hand_r.keyframe_insert(data_path="location", frame=frame)
                 gaze.location = pose["gaze"]
                 gaze.keyframe_insert(data_path="location", frame=frame)
-                for finger in fingers_l:
-                    finger.rotation_euler[0] = math.radians(pose["curl"][0])
-                    finger.keyframe_insert(data_path="rotation_euler", frame=frame)
-                for finger in fingers_r:
-                    finger.rotation_euler[0] = math.radians(pose["curl"][1])
-                    finger.keyframe_insert(data_path="rotation_euler", frame=frame)
+                if distal_l and distal_r:
+                    for side, proximal, distal, values in (
+                        ("L", fingers_l, distal_l, pose["digits.L"]),
+                        ("R", fingers_r, distal_r, pose["digits.R"]),
+                    ):
+                        spread_sign = -1.0 if side == "L" else 1.0
+                        for digit, (near, far) in enumerate(zip(proximal, distal)):
+                            proximal_angle, distal_angle, spread = values[digit * 3 : digit * 3 + 3]
+                            near.rotation_euler = (
+                                math.radians(proximal_angle), 0.0,
+                                math.radians(spread * spread_sign),
+                            )
+                            far.rotation_euler = (math.radians(distal_angle), 0.0, 0.0)
+                            near.keyframe_insert(data_path="rotation_euler", frame=frame)
+                            far.keyframe_insert(data_path="rotation_euler", frame=frame)
+                else:
+                    for finger in fingers_l:
+                        finger.rotation_euler[0] = math.radians(pose["curl"][0])
+                        finger.keyframe_insert(data_path="rotation_euler", frame=frame)
+                    for finger in fingers_r:
+                        finger.rotation_euler[0] = math.radians(pose["curl"][1])
+                        finger.keyframe_insert(data_path="rotation_euler", frame=frame)
 
         jaw = rig.pose.bones["jaw"]
         jaw_open = {"A": 9.0, "B": 13.0, "C": 5.0, "D": 10.0, "E": 4.0, "F": 7.0, "G": 12.0, "H": 8.0, "X": 0.0}
@@ -2029,6 +2456,8 @@ def _animate_golden_performance(bpy, rig, plan: dict) -> None:
 
     action_name = "June_Golden_Performance_v2_Polished" if (plan.get("look_profile") or {}).get("acting_polish") else "June_Golden_Performance_v1"
     _stash_action(bpy, rig, action_name, performance)
+    facial_polish = (plan.get("look_profile") or {}).get("facial_polish") or {}
+    _animate_phase13_microperformance(bpy, rig, plan, facial_polish)
 
 
 def _animate_performance_props(bpy, plan: dict) -> None:
@@ -2164,12 +2593,30 @@ def _animate_mouth(mouth, plan: dict) -> None:
         (obj for obj in mouth.parent.children if obj.name == "June_Mouth_Lip_Rim"),
         None,
     )
+    lower_lip = next(
+        (obj for obj in mouth.parent.children if obj.name == "June_Mouth_Lower_Lip"),
+        None,
+    )
+    beard = next(
+        (obj for obj in mouth.parent.children if obj.name == "June_Fitted_Beard"),
+        None,
+    )
     if lip_rim is not None and lip_rim.animation_data:
         lip_rim.animation_data_clear()
+    if lower_lip is not None and lower_lip.animation_data:
+        lower_lip.animation_data_clear()
     lip_base = lip_rim.scale.copy() if lip_rim is not None else None
+    lower_lip_base = lower_lip.scale.copy() if lower_lip is not None else None
+    beard_keys = (
+        beard.data.shape_keys.key_blocks
+        if beard is not None and beard.data.shape_keys is not None else None
+    )
+    if beard_keys is not None and beard.data.shape_keys.animation_data:
+        beard.data.shape_keys.animation_data_clear()
     cues = plan.get("mouth_cues") or [{"frame_start": 1, "frame_end": plan["frame_end"], "shape": "X"}]
     lip_contract = plan.get("lip_sync_contract") or {}
     transition_frames = max(0, int(lip_contract.get("transition_frames", 0)))
+    jaw_follow = {"A": 0.68, "B": 1.0, "C": 0.34, "D": 0.76, "E": 0.28, "F": 0.48, "G": 0.92, "H": 0.60, "X": 0.0}
 
     def key_state(frame: int, active: str) -> None:
         for shape in shapes:
@@ -2179,8 +2626,16 @@ def _animate_mouth(mouth, plan: dict) -> None:
             width, height = MOUTH_V5_SHAPE_SCALE[active]
             lip_rim.scale = lip_base.copy()
             lip_rim.scale.x *= width
-            lip_rim.scale.z *= height
+            lip_rim.scale.z *= max(0.58, 0.42 + height * 0.34)
             lip_rim.keyframe_insert(data_path="scale", frame=frame)
+            if lower_lip is not None:
+                lower_lip.scale = lower_lip_base.copy()
+                lower_lip.scale.x *= width
+                lower_lip.scale.z *= max(0.52, height * 0.72)
+                lower_lip.keyframe_insert(data_path="scale", frame=frame)
+        if beard_keys is not None and beard_keys.get("jaw_follow") is not None:
+            beard_keys["jaw_follow"].value = jaw_follow.get(active, 0.0)
+            beard_keys["jaw_follow"].keyframe_insert(data_path="value", frame=frame)
 
     for index, cue in enumerate(cues):
         frame = int(cue["frame_start"])
@@ -2199,8 +2654,17 @@ def _animate_mouth(mouth, plan: dict) -> None:
         width, height = MOUTH_V5_SHAPE_SCALE["X"]
         lip_rim.scale = lip_base.copy()
         lip_rim.scale.x *= width
-        lip_rim.scale.z *= height
+        lip_rim.scale.z *= max(0.58, 0.42 + height * 0.34)
         lip_rim.keyframe_insert(data_path="scale", frame=final_frame)
+    if lower_lip is not None:
+        width, height = MOUTH_V5_SHAPE_SCALE["X"]
+        lower_lip.scale = lower_lip_base.copy()
+        lower_lip.scale.x *= width
+        lower_lip.scale.z *= max(0.52, height * 0.72)
+        lower_lip.keyframe_insert(data_path="scale", frame=final_frame)
+    if beard_keys is not None and beard_keys.get("jaw_follow") is not None:
+        beard_keys["jaw_follow"].value = 0.0
+        beard_keys["jaw_follow"].keyframe_insert(data_path="value", frame=final_frame)
     action = mouth.data.shape_keys.animation_data.action
     interpolation = "LINEAR" if transition_frames else "CONSTANT"
     for curve in action.fcurves:
@@ -2208,6 +2672,14 @@ def _animate_mouth(mouth, plan: dict) -> None:
             point.interpolation = interpolation
     if lip_rim is not None and lip_rim.animation_data and lip_rim.animation_data.action:
         for curve in lip_rim.animation_data.action.fcurves:
+            for point in curve.keyframe_points:
+                point.interpolation = interpolation
+    if lower_lip is not None and lower_lip.animation_data and lower_lip.animation_data.action:
+        for curve in lower_lip.animation_data.action.fcurves:
+            for point in curve.keyframe_points:
+                point.interpolation = interpolation
+    if beard_keys is not None and beard.data.shape_keys.animation_data and beard.data.shape_keys.animation_data.action:
+        for curve in beard.data.shape_keys.animation_data.action.fcurves:
             for point in curve.keyframe_points:
                 point.interpolation = interpolation
 
@@ -2219,7 +2691,10 @@ def _animate_expressions(head, plan: dict, face_controls: dict | None = None) ->
     keys = head.data.shape_keys.key_blocks
     controls = tuple(
         name
-        for name in ("smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise")
+        for name in (
+            "smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise",
+            *FACIAL_V6_CORRECTIVES,
+        )
         if keys.get(name) is not None
     )
     if face_controls:
@@ -2227,6 +2702,7 @@ def _animate_expressions(head, plan: dict, face_controls: dict | None = None) ->
             (face_controls.get("brows") or [])
             + (face_controls.get("upper_lids") or [])
             + (face_controls.get("lower_lids") or [])
+            + (face_controls.get("moustache") or [])
         ):
             if obj.animation_data:
                 obj.animation_data_clear()
@@ -2235,55 +2711,105 @@ def _animate_expressions(head, plan: dict, face_controls: dict | None = None) ->
         brows = (face_controls.get("brows") or []) if face_controls else []
         upper_lids = (face_controls.get("upper_lids") or []) if face_controls else []
         lower_lids = (face_controls.get("lower_lids") or []) if face_controls else []
+        moustache = (face_controls.get("moustache") or []) if face_controls else []
+        beard = face_controls.get("beard") if face_controls else None
         brow_bases = [(brow.location.copy(), brow.rotation_euler.copy()) for brow in brows]
         upper_bases = [lid.location.copy() for lid in upper_lids]
         lower_bases = [lid.location.copy() for lid in lower_lids]
-        brow_lifts = {
-            "smile": 0.006, "thoughtful": 0.003, "soft_chuckle": 0.010,
-            "brow_raise": 0.034, "brow_knit": -0.006, "squint": -0.004, "cheek_raise": 0.012,
-        }
-        lid_shapes = {
-            "smile": (0.003, 0.002), "soft_chuckle": (0.014, 0.007),
-            "squint": (0.026, 0.011), "cheek_raise": (0.012, 0.008),
-        }
-        for cue in facial_cues:
-            active = cue.get("expression")
+        moustache_bases = [(item.location.copy(), item.scale.copy()) for item in moustache]
+        facial_polish = (plan.get("look_profile") or {}).get("facial_polish") or {}
+        performance_keys = _facial_polish_keys(facial_cues, int(plan["frame_end"]), facial_polish)
+        beard_keys = (
+            beard.data.shape_keys.key_blocks
+            if beard is not None and beard.data.shape_keys is not None else None
+        )
+        for cue in performance_keys:
+            active = str(cue.get("expression"))
             strength = float(cue.get("strength", 1.0))
-            frame = int(cue["frame_start"])
+            weights = cue.get("weights") or _facial_driver_weights(active, strength)
+            frame = int(cue["frame"])
             for control in controls:
-                keys[control].value = strength if control == active else 0.0
+                keys[control].value = float(weights.get(control, 0.0))
                 keys[control].keyframe_insert(data_path="value", frame=frame)
+            smile = float(weights.get("smile", 0.0))
+            thoughtful = float(weights.get("thoughtful", 0.0))
+            chuckle = float(weights.get("soft_chuckle", 0.0))
+            brow_raise = float(weights.get("brow_raise", 0.0))
+            brow_knit = float(weights.get("brow_knit", 0.0))
+            squint = float(weights.get("squint", 0.0))
+            cheek = float(weights.get("cheek_raise", 0.0))
+            inner_raise = float(weights.get("inner_brow_raise", 0.0))
+            lower_engage = float(weights.get("lower_lid_engage", 0.0))
             for index, brow in enumerate(brows):
                 base_location, base_rotation = brow_bases[index]
                 brow.location = base_location.copy()
                 brow.rotation_euler = base_rotation.copy()
-                brow.location.z += brow_lifts.get(str(active), 0.0) * strength
-                if active == "thoughtful":
-                    brow.location.z += (0.010 if index == 0 else -0.006) * strength
-                    brow.rotation_euler[1] += math.radians((-6.0 if index == 0 else 4.0) * strength)
-                elif active == "brow_knit":
-                    brow.location.x += (0.007 if index == 0 else -0.007) * strength
-                    brow.rotation_euler[1] += math.radians((5.0 if index == 0 else -5.0) * strength)
+                brow.location.z += (
+                    0.006 * smile + 0.003 * thoughtful + 0.010 * chuckle
+                    + 0.034 * brow_raise - 0.006 * brow_knit - 0.004 * squint
+                    + 0.012 * cheek + 0.018 * inner_raise
+                )
+                brow.location.z += (0.010 if index == 0 else -0.006) * thoughtful
+                brow.location.x += (0.007 if index == 0 else -0.007) * brow_knit
+                brow.rotation_euler[1] += math.radians(
+                    (-6.0 if index == 0 else 4.0) * thoughtful
+                    + (5.0 if index == 0 else -5.0) * brow_knit
+                )
                 brow.keyframe_insert(data_path="location", frame=frame)
                 brow.keyframe_insert(data_path="rotation_euler", frame=frame)
-            upper_drop, lower_raise = lid_shapes.get(str(active), (0.0, 0.0))
+            upper_drop = 0.003 * smile + 0.014 * chuckle + 0.026 * squint + 0.012 * cheek
+            lower_raise = 0.002 * smile + 0.007 * chuckle + 0.011 * squint + 0.008 * cheek + 0.016 * lower_engage
             for index, upper in enumerate(upper_lids):
                 upper.location = upper_bases[index].copy()
-                upper.location.z -= upper_drop * strength
+                upper.location.z -= upper_drop
                 upper.keyframe_insert(data_path="location", frame=frame)
             for index, lower in enumerate(lower_lids):
                 lower.location = lower_bases[index].copy()
-                lower.location.z += lower_raise * strength
+                lower.location.z += lower_raise
                 lower.keyframe_insert(data_path="location", frame=frame)
+            if beard_keys is not None:
+                beard_values = {
+                    "smile_follow": max(smile, chuckle * 0.9),
+                    "thoughtful_follow": thoughtful,
+                    "cheek_follow": max(cheek, lower_engage * 0.55),
+                }
+                for name, value in beard_values.items():
+                    if beard_keys.get(name) is not None:
+                        beard_keys[name].value = min(1.0, value)
+                        beard_keys[name].keyframe_insert(data_path="value", frame=frame)
+            for index, item in enumerate(moustache):
+                base_location, base_scale = moustache_bases[index]
+                side_corner = float(weights.get("mouth_corner.L" if index == 0 else "mouth_corner.R", 0.0))
+                item.location = base_location.copy()
+                item.scale = base_scale.copy()
+                item.location.z += 0.010 * side_corner - 0.004 * thoughtful
+                item.location.x += (-0.004 if index == 0 else 0.004) * side_corner
+                item.scale.x *= 1.0 + 0.025 * max(smile, chuckle)
+                item.keyframe_insert(data_path="location", frame=frame)
+                item.keyframe_insert(data_path="scale", frame=frame)
         action = head.data.shape_keys.animation_data.action
+        eased = bool(facial_polish.get("enabled"))
         for curve in action.fcurves:
             for point in curve.keyframe_points:
-                point.interpolation = "CONSTANT"
-        for obj in brows + upper_lids + lower_lids:
+                point.interpolation = "BEZIER" if eased else "CONSTANT"
+                if eased:
+                    point.handle_left_type = "AUTO_CLAMPED"
+                    point.handle_right_type = "AUTO_CLAMPED"
+        for obj in brows + upper_lids + lower_lids + moustache:
             if obj.animation_data and obj.animation_data.action:
                 for curve in obj.animation_data.action.fcurves:
                     for point in curve.keyframe_points:
-                        point.interpolation = "CONSTANT"
+                        point.interpolation = "BEZIER" if eased else "CONSTANT"
+                        if eased:
+                            point.handle_left_type = "AUTO_CLAMPED"
+                            point.handle_right_type = "AUTO_CLAMPED"
+        if beard_keys is not None and beard.data.shape_keys.animation_data and beard.data.shape_keys.animation_data.action:
+            for curve in beard.data.shape_keys.animation_data.action.fcurves:
+                for point in curve.keyframe_points:
+                    point.interpolation = "BEZIER" if eased else "LINEAR"
+                    if eased:
+                        point.handle_left_type = "AUTO_CLAMPED"
+                        point.handle_right_type = "AUTO_CLAMPED"
         return
     shots = plan["shots"][:3]
     assignments = ("smile", "thoughtful", "soft_chuckle")
@@ -2741,6 +3267,9 @@ def main() -> None:
             "upper_lids": [obj for side in ("L", "R") if (obj := bpy.data.objects.get(f"June_Eyelid_Upper_{side}")) is not None],
             "lower_lids": [obj for side in ("L", "R") if (obj := bpy.data.objects.get(f"June_Eyelid_Lower_{side}")) is not None],
             "brows": [obj for side in ("L", "R") if (obj := bpy.data.objects.get(f"June_Brow_{side}")) is not None],
+            "beard": bpy.data.objects.get("June_Fitted_Beard"),
+            "moustache": [obj for side in ("L", "R") if (obj := bpy.data.objects.get(f"June_Moustache_{side}")) is not None],
+            "lower_lip": bpy.data.objects.get("June_Mouth_Lower_Lip"),
         }
     head = bpy.data.objects["June_Head"]
     _animate_rig(bpy, rig, plan)
