@@ -14,6 +14,8 @@ from pipeline.cartoon_viseme_atlas import (
     atlas_cells,
     load_viseme_atlas_contract,
     mouth_patch_mask,
+    performance_viseme_plan,
+    render_lipsync_performance,
     render_viseme_preview,
 )
 
@@ -122,6 +124,66 @@ class CartoonVisemeAtlasTests(unittest.TestCase):
         ):
             with self.subTest(kwargs=kwargs), self.assertRaises(ValueError):
                 render_viseme_preview(CONTRACT_PATH, "unused", **kwargs)
+
+    def test_canonical_rhubarb_clock_maps_to_exact_453_frame_plan(self):
+        cue_path = ROOT / "concept" / "style_frames" / "june_golden_scene_rhubarb_lipsync_v1.json"
+        metadata, plan = performance_viseme_plan(cue_path)
+        self.assertEqual(metadata["duration_seconds"], 15.1)
+        self.assertEqual(metadata["frame_count"], 453)
+        self.assertEqual(metadata["source_cue_count"], 77)
+        self.assertEqual(set(metadata["shapes"]), set(REQUIRED_VISEMES))
+        self.assertEqual(plan[0]["to_shape"], "X")
+        self.assertEqual(plan[-1]["to_shape"], "X")
+        first_change = next(item for item in plan if item["from_shape"] != item["to_shape"])
+        self.assertEqual(first_change["blend"], 0.5)
+        self.assertEqual(plan[first_change["frame"]]["blend"], 1.0)
+
+    def test_short_lipsync_render_muxes_exact_audio_and_clears_stale_frames(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            root = Path(temp_dir)
+            cues = root / "cues.json"
+            cues.write_text(json.dumps({
+                "metadata": {"duration": 0.2},
+                "mouthCues": [
+                    {"start": 0.0, "end": 0.05, "value": "X"},
+                    {"start": 0.05, "end": 0.15, "value": "B"},
+                    {"start": 0.15, "end": 0.2, "value": "X"},
+                ],
+            }), encoding="utf-8")
+            audio = root / "scratch.wav"
+            audio.write_bytes(b"exact-audio-contract")
+            output = root / "edit" / "performance"
+            frames = output / "frames"
+            frames.mkdir(parents=True)
+            stale = frames / "frame_9999.png"
+            stale.write_bytes(b"stale")
+
+            def create_video(command, *, check):
+                self.assertTrue(check)
+                Path(command[-1]).write_bytes(b"deterministic-performance-video")
+
+            with mock.patch(
+                "pipeline.cartoon_viseme_atlas.subprocess.run",
+                side_effect=create_video,
+            ) as run:
+                report = render_lipsync_performance(
+                    CONTRACT_PATH,
+                    cues,
+                    output,
+                    audio_path=audio,
+                    ffmpeg=sys.executable,
+                    output_scale=1,
+                )
+        self.assertFalse(stale.exists())
+        self.assertEqual(report["frame_count"], 6)
+        self.assertEqual(report["duration_seconds"], 0.2)
+        self.assertEqual(report["source_cue_count"], 3)
+        self.assertEqual((report["width"], report["height"]), (418, 418))
+        self.assertEqual(report["audio"]["file"], "scratch.wav")
+        command = run.call_args.args[0]
+        self.assertIn(str(audio), command)
+        self.assertIn("aac", command)
+        self.assertEqual(command[command.index("-frames:v") + 1], "6")
 
 
 if __name__ == "__main__":

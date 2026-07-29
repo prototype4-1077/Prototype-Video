@@ -11,6 +11,8 @@ from typing import Any
 
 from PIL import Image, ImageDraw, ImageFilter
 
+from pipeline.cartoon_lipsync import normalize_rhubarb
+
 
 ATLAS_CONTRACT_VERSION = 1
 REQUIRED_VISEMES = tuple("ABCDEFGHX")
@@ -101,6 +103,68 @@ def _ease_in_out_cubic(value: float) -> float:
     if value < 0.5:
         return 4.0 * value * value * value
     return 1.0 - ((-2.0 * value + 2.0) ** 3) / 2.0
+
+
+def performance_viseme_plan(
+    cue_path: str | Path,
+    *,
+    fps: int = 30,
+    transition_frames: int = 2,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    """Map normalized Rhubarb cues onto exact frame-center samples."""
+    if fps <= 0 or transition_frames < 1:
+        raise ValueError("performance timing values must be positive")
+    source = Path(cue_path).resolve()
+    if not source.is_file():
+        raise FileNotFoundError(f"Rhubarb cue file not found: {source}")
+    raw = json.loads(source.read_text(encoding="utf-8"))
+    payload = normalize_rhubarb(raw)
+    duration = float(payload["metadata"]["duration"])
+    if duration <= 0:
+        raise ValueError("Rhubarb performance duration must be positive")
+    frame_count = round(duration * fps)
+    cues = payload["mouthCues"]
+    targets: list[str] = []
+    cue_index = 0
+    for frame_index in range(frame_count):
+        sample_time = (frame_index + 0.5) / fps
+        while cue_index + 1 < len(cues) and sample_time >= float(cues[cue_index]["end"]):
+            cue_index += 1
+        targets.append(str(cues[cue_index]["value"]))
+
+    plan: list[dict[str, Any]] = []
+    active = targets[0]
+    transition_from = active
+    transition_start = 0
+    for frame_index, target in enumerate(targets):
+        if target != active:
+            transition_from = active
+            active = target
+            transition_start = frame_index
+        transition_offset = frame_index - transition_start
+        if transition_from == active or transition_offset >= transition_frames:
+            amount = 1.0
+            transition_from = active
+        else:
+            amount = _ease_in_out_cubic((transition_offset + 1) / transition_frames)
+        plan.append(
+            {
+                "frame": frame_index + 1,
+                "from_shape": transition_from,
+                "to_shape": active,
+                "blend": amount,
+            }
+        )
+    metadata = {
+        "path": source,
+        "sha256": _sha256(source),
+        "duration_seconds": duration,
+        "frame_count": frame_count,
+        "source_cue_count": len(raw.get("mouthCues") or []),
+        "normalized_cue_count": len(cues),
+        "shapes": sorted(set(targets)),
+    }
+    return metadata, plan
 
 
 def render_viseme_preview(
@@ -203,26 +267,145 @@ def render_viseme_preview(
     return report
 
 
+def render_lipsync_performance(
+    contract_path: str | Path,
+    cue_path: str | Path,
+    output_dir: str | Path,
+    *,
+    audio_path: str | Path | None = None,
+    ffmpeg: str = "ffmpeg",
+    fps: int = 30,
+    transition_frames: int = 2,
+    output_scale: int = 2,
+) -> dict[str, Any]:
+    """Render an exact-clock atlas performance from Rhubarb mouth cues."""
+    if not 1 <= output_scale <= 4:
+        raise ValueError("output_scale must be between one and four")
+    contract, image_path = load_viseme_atlas_contract(contract_path)
+    cue_metadata, frame_plan = performance_viseme_plan(
+        cue_path,
+        fps=fps,
+        transition_frames=transition_frames,
+    )
+    audio = Path(audio_path).resolve() if audio_path else None
+    if audio and not audio.is_file():
+        raise FileNotFoundError(f"performance audio not found: {audio}")
+    output = Path(output_dir).resolve()
+    frames_dir = output / "frames"
+    frames_dir.mkdir(parents=True, exist_ok=True)
+    for stale in frames_dir.glob("frame_*.png"):
+        stale.unlink()
+    with Image.open(image_path) as atlas:
+        cells = atlas_cells(atlas, contract)
+    neutral = str(contract["neutral_viseme"])
+    base = cells[neutral].copy()
+    box = tuple(int(value) for value in contract["mouth_patch_box"])
+    patches = {shape: cell.crop(box) for shape, cell in cells.items()}
+    mask = mouth_patch_mask(contract)
+    grid = contract["grid"]
+    render_size = (
+        int(grid["cell_width"]) * output_scale,
+        int(grid["cell_height"]) * output_scale,
+    )
+    for entry in frame_plan:
+        source_patch = patches[entry["from_shape"]]
+        target_patch = patches[entry["to_shape"]]
+        amount = float(entry["blend"])
+        patch = target_patch if amount >= 1.0 else Image.blend(source_patch, target_patch, amount)
+        frame = base.copy()
+        frame.paste(patch, box[:2], mask)
+        frame.resize(render_size, Image.Resampling.LANCZOS).save(
+            frames_dir / f"frame_{entry['frame']:04d}.png",
+            compress_level=1,
+        )
+
+    video = output / "june-2p5d-lipsync-performance.mp4"
+    partial_video = output / "june-2p5d-lipsync-performance.partial.mp4"
+    partial_video.unlink(missing_ok=True)
+    executable = str(Path(ffmpeg)) if Path(ffmpeg).is_file() else shutil.which(ffmpeg)
+    if not executable:
+        raise FileNotFoundError(f"FFmpeg executable not found: {ffmpeg}")
+    command = [
+        executable, "-y", "-v", "error", "-framerate", str(fps),
+        "-i", str(frames_dir / "frame_%04d.png"),
+    ]
+    if audio:
+        command.extend(["-i", str(audio), "-map", "0:v:0", "-map", "1:a:0"])
+    command.extend([
+        "-c:v", "libx264", "-crf", "16", "-pix_fmt", "yuv420p",
+        "-frames:v", str(len(frame_plan)),
+    ])
+    if audio:
+        command.extend(["-c:a", "aac", "-b:a", "192k", "-ar", "48000", "-ac", "2"])
+    command.extend(["-movflags", "+faststart", str(partial_video)])
+    subprocess.run(command, check=True)
+    if not partial_video.is_file() or partial_video.stat().st_size <= 0:
+        raise RuntimeError("FFmpeg did not create a usable lip-sync performance")
+    partial_video.replace(video)
+    first_frame = frames_dir / "frame_0001.png"
+    last_frame = frames_dir / f"frame_{len(frame_plan):04d}.png"
+    report = {
+        "contract_version": ATLAS_CONTRACT_VERSION,
+        "gate": "identity_locked_2p5d_lipsync_performance",
+        "atlas_id": contract["atlas_id"],
+        "atlas_version": contract["atlas_version"],
+        "atlas_sha256": contract["image"]["sha256"],
+        "cue_file": cue_metadata["path"].name,
+        "cue_sha256": cue_metadata["sha256"],
+        "source_cue_count": cue_metadata["source_cue_count"],
+        "normalized_cue_count": cue_metadata["normalized_cue_count"],
+        "shapes": cue_metadata["shapes"],
+        "audio": {"file": audio.name, "sha256": _sha256(audio)} if audio else None,
+        "fps": fps,
+        "transition_frames": transition_frames,
+        "frame_count": len(frame_plan),
+        "duration_seconds": cue_metadata["duration_seconds"],
+        "width": render_size[0],
+        "height": render_size[1],
+        "first_frame_sha256": _sha256(first_frame),
+        "last_frame_sha256": _sha256(last_frame),
+        "video": video.name,
+        "video_sha256": _sha256(video),
+    }
+    (output / "june-2p5d-lipsync-performance-report.json").write_text(
+        json.dumps(report, indent=2) + "\n",
+        encoding="utf-8",
+    )
+    return report
+
+
 def _parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Validate and preview June's 2.5D viseme atlas")
     parser.add_argument("contract")
     parser.add_argument("--output-dir", default="build/june-2p5d-viseme-preview")
     parser.add_argument("--ffmpeg", default="ffmpeg")
     parser.add_argument("--scale", type=int, default=2)
+    parser.add_argument("--cues", help="Validated Rhubarb JSON for exact-clock performance mode")
+    parser.add_argument("--audio", help="Optional exact audio used to generate --cues")
     return parser.parse_args()
 
 
 def main() -> None:
     args = _parse_args()
-    print(json.dumps(
-        render_viseme_preview(
+    if args.audio and not args.cues:
+        raise SystemExit("--audio requires --cues")
+    if args.cues:
+        report = render_lipsync_performance(
+            args.contract,
+            args.cues,
+            args.output_dir,
+            audio_path=args.audio,
+            ffmpeg=args.ffmpeg,
+            output_scale=args.scale,
+        )
+    else:
+        report = render_viseme_preview(
             args.contract,
             args.output_dir,
             ffmpeg=args.ffmpeg,
             output_scale=args.scale,
-        ),
-        indent=2,
-    ))
+        )
+    print(json.dumps(report, indent=2))
 
 
 if __name__ == "__main__":

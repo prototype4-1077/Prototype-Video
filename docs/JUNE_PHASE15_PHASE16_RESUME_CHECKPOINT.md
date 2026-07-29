@@ -1,7 +1,7 @@
 # June Oxley Phase 15/16 resume checkpoint
 
 Date: 2026-07-29
-Status: Phase 15 procedural mouth is checkpointed at its representation ceiling; Phase 16 has a locally verified high-fidelity 2.5D facial-animation prototype. Public Phase 16 evidence is the next gate.
+Status: Phase 15 procedural mouth is checkpointed at its representation ceiling; Phase 16 has a locally and publicly verified high-fidelity 2.5D facial-animation prototype.
 
 ## Repository state
 
@@ -86,6 +86,20 @@ Visual verdict:
 - Five-frame cubic-eased transitions avoid a hard sprite pop.
 - This is a successful front-facing facial-animation representation prototype.
 - It is not yet a full performance: there is no blink/expression layer, head turn, hand/body motion, porch composite, dialogue soundtrack, or production shot edit.
+
+## Public Phase 16 evidence
+
+- Run: `https://github.com/prototype4-1077/Prototype-Video/actions/runs/30497313917`
+- Head: `900ef4d136d21babbb12941bc5cf274e20b12622`
+- `test`: passed in 1m42s with the full regression suite, atlas render, complete FFmpeg decode, exact ffprobe checks, and artifact upload.
+- Artifact: `june-2p5d-viseme-atlas-v1`.
+- Public video: H.264/yuv420p, 836x836, 30 fps, 135 frames, 4.500 seconds.
+- Public video SHA-256: `6ea69ea93811c8f0ce546afee8654bda973f444d20a3cad3d305c6858e462fe6`.
+- Public first-frame SHA-256: `09f4cf8f9813295ce340b0f9baba36b79e39a4648f1cdd2c560503010dd01d14`.
+- Public last-frame SHA-256: `1f6c51238f87455c1a4495ff98ae9cfa58a7ee2c1cd75e76c57c155f4db8fddd`.
+- The downloaded public artifact decoded cleanly and its 18-frame rendered-output timeline passed visual inspection.
+
+The public Linux and local Windows encoders produce different binary hashes, so each report pins its own outputs. Their frame count, timing, codec contract, atlas hash, pose order, and reviewed appearance agree.
 
 ## Compiler invariants
 
