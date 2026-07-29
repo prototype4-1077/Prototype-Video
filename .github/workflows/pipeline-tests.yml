@@ -12,6 +12,8 @@ on:
       - "concept/characters/june_oxley_asset_v8.json"
       - "concept/style_frames/june_golden_scene_performance_slice_v1.json"
       - "concept/style_frames/june_golden_scene_rhubarb_lipsync_v1.json"
+      - "concept/style_frames/june_oxley_viseme_atlas_v1.json"
+      - "concept/style_frames/june_oxley_viseme_atlas_v1.png"
       - "concept/style_frames/june_oxley_npr_look_v1.json"
       - "concept/style_frames/june_oxley_npr_look_v2.json"
       - "concept/style_frames/june_oxley_npr_look_v3.json"
@@ -51,6 +53,34 @@ jobs:
         run: python3 -m compileall -q pipeline
       - name: Regression tests
         run: python3 -m unittest discover -s pipeline/tests -v
+      - name: Render high-fidelity 2.5D June viseme preview
+        run: |
+          python3 -m pipeline.cartoon_viseme_atlas \
+            concept/style_frames/june_oxley_viseme_atlas_v1.json \
+            --output-dir build/edit/june-2p5d-viseme-preview
+      - name: Verify 2.5D preview contract
+        run: |
+          set -euo pipefail
+          video=build/edit/june-2p5d-viseme-preview/june-2p5d-viseme-preview.mp4
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "836"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "836"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "135"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "4.500000"
+          sha256sum "$video"
+      - name: Upload high-fidelity 2.5D June preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-2p5d-viseme-atlas-v1
+          path: |
+            build/edit/june-2p5d-viseme-preview/*.mp4
+            build/edit/june-2p5d-viseme-preview/*.json
+            build/edit/june-2p5d-viseme-preview/frames/frame_0001.png
+            build/edit/june-2p5d-viseme-preview/frames/frame_0135.png
+          if-no-files-found: error
+          retention-days: 14
 
   blender-v8-oral-mask-visemes:
     if: github.event_name == 'pull_request'
@@ -113,4 +143,5 @@ jobs:
             asset-quality-out/assets/*.blend
           if-no-files-found: error
           retention-days: 14
+
 
