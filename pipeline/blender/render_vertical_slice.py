@@ -1932,9 +1932,9 @@ def _mouth_v7_lip_vertices(pose: dict, *, upper: bool, segments: int = 24, sides
     width = 0.112 * float(pose["width"])
     opening = float(pose["opening"])
     roll = float(pose["upper_roll"] if upper else pose["lower_roll"])
-    separation = (0.003 + 0.018 * opening) if upper else -(0.003 + 0.030 * opening)
-    radius_y = 0.0065 + 0.0030 * roll
-    radius_z = 0.0055 + 0.0025 * roll
+    separation = (0.001 + 0.014 * opening) if upper else -(0.002 + 0.022 * opening)
+    radius_y = 0.0045 + 0.0015 * roll
+    radius_z = 0.0030 + 0.0015 * roll
     for index in range(segments + 1):
         normalized = -1.0 + 2.0 * index / segments
         arch = (1.0 - normalized * normalized)
@@ -2002,8 +2002,8 @@ def _make_mouth_v7(bpy, rig, materials: dict):
     mouth = _sphere(
         bpy,
         "June_Mouth_Viseme",
-        (0.0, -0.326, 2.478),
-        (0.112, 0.030, 0.036),
+        (0.0, -0.306, 2.478),
+        (0.112, 0.015, 0.036),
         materials["mouth_interior"],
         segments=48,
         rings=24,
@@ -2011,8 +2011,8 @@ def _make_mouth_v7(bpy, rig, materials: dict):
     cavity_basis = mouth.shape_key_add(name="Basis")
     for shape, pose in MOUTH_V7_POSES.items():
         key = mouth.shape_key_add(name=shape)
-        height = 0.20 + 0.82 * float(pose["opening"])
-        depth = 0.68 + 0.42 * float(pose["opening"])
+        height = 0.16 + 0.70 * float(pose["opening"])
+        depth = 0.80 + 0.30 * float(pose["opening"])
         width = float(pose["width"]) * (1.0 - 0.10 * float(pose["round"]))
         for source, target in zip(cavity_basis.data, key.data):
             target.co.x = source.co.x * width
@@ -2033,7 +2033,7 @@ def _make_mouth_v7(bpy, rig, materials: dict):
     lower_lip["ce_jaw_coupling"] = "soft_viseme_corrective"
 
     upper_gum = _sphere(
-        bpy, "June_Upper_Gum", (0.0, -0.337, 2.508), (0.083, 0.010, 0.011),
+        bpy, "June_Upper_Gum", (0.0, -0.334, 2.508), (0.083, 0.006, 0.009),
         materials["gum"], segments=36, rings=16,
     )
     upper_gum["ce_mouth_component"] = "upper_gum"
@@ -2044,7 +2044,7 @@ def _make_mouth_v7(bpy, rig, materials: dict):
     _parent_to_bone(upper_gum, rig, "head")
 
     lower_gum = _sphere(
-        bpy, "June_Lower_Gum", (0.0, -0.337, 2.461), (0.076, 0.010, 0.010),
+        bpy, "June_Lower_Gum", (0.0, -0.334, 2.461), (0.076, 0.006, 0.008),
         materials["gum"], segments=36, rings=16,
     )
     lower_gum["ce_mouth_component"] = "lower_gum"
@@ -2062,8 +2062,8 @@ def _make_mouth_v7(bpy, rig, materials: dict):
         upper = _box(
             bpy,
             "June_Upper_Teeth" if index == 2 else f"June_Upper_Tooth_{index}",
-            (x, -0.345, 2.503 - 0.0015 * abs(index - 2.5)),
-            (0.0084, 0.0055, 0.0085),
+            (x, -0.340, 2.503 - 0.0015 * abs(index - 2.5)),
+            (0.0084, 0.0040, 0.0080),
             materials["teeth"],
             bevel=0.0035,
         )
@@ -2078,8 +2078,8 @@ def _make_mouth_v7(bpy, rig, materials: dict):
         lower = _box(
             bpy,
             "June_Lower_Teeth" if index == 2 else f"June_Lower_Tooth_{index}",
-            (x * 0.94, -0.344, 2.466 + 0.0010 * abs(index - 2.5)),
-            (0.0078, 0.0050, 0.0072),
+            (x * 0.94, -0.339, 2.466 + 0.0010 * abs(index - 2.5)),
+            (0.0078, 0.0038, 0.0068),
             materials["teeth"],
             bevel=0.0030,
         )
@@ -2093,7 +2093,7 @@ def _make_mouth_v7(bpy, rig, materials: dict):
         lower_teeth.append(lower)
 
     tongue = _sphere(
-        bpy, "June_Tongue", (0.0, -0.340, 2.454), (0.074, 0.014, 0.012),
+        bpy, "June_Tongue", (0.0, -0.334, 2.454), (0.070, 0.010, 0.010),
         materials["tongue"], segments=36, rings=16,
     )
     tongue["ce_mouth_component"] = "tongue"
