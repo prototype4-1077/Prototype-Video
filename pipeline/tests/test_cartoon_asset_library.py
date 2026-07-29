@@ -542,7 +542,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
 
     def test_phase15_manifest_requires_one_integrated_oral_mask(self):
         manifest = self.v8_manifest
-        self.assertEqual(manifest["asset_version"], "8.0.0")
+        self.assertEqual(manifest["asset_version"], "8.1.0")
         self.assertEqual(
             set(manifest["face"]["mouth_components"]),
             {"mouth_bag", "oral_mask", "upper_gum", "lower_gum", "upper_teeth", "lower_teeth", "tongue"},
@@ -571,6 +571,8 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         )
         # Ring-one left and right corner heights deliberately differ.
         self.assertNotEqual(wide[48][2], wide[72][2])
+        # The outer edge is recessed onto the beard while the aperture remains forward.
+        self.assertGreater(closed[0][1], closed[96][1])
 
     def test_phase15_viseme_controls_are_complete_and_bounded(self):
         poses = blender_studio.MOUTH_V8_POSES
@@ -584,6 +586,9 @@ class CartoonAssetLibraryTests(unittest.TestCase):
                 self.assertLessEqual(pose[field], 0.50)
         self.assertNotEqual(poses["E"]["corner_l"], poses["E"]["corner_r"])
         self.assertGreater(poses["F"]["groove_visibility"], poses["G"]["groove_visibility"])
+        self.assertEqual(poses["X"]["opening"], 0.0)
+        self.assertLess(poses["F"]["opening"], 0.15)
+        self.assertGreater(poses["B"]["opening"], 0.80)
 
     def test_phase15_rejects_detached_lips_or_missing_soft_tissue_controls(self):
         detached = copy.deepcopy(self.v8_manifest)
@@ -597,13 +602,14 @@ class CartoonAssetLibraryTests(unittest.TestCase):
 
     def test_phase15_profile_and_builder_lock_the_new_representation(self):
         profile = load_look_profile(LOOK_PROFILE_V8_PATH)
-        self.assertEqual(profile["style_version"], "1.7.0")
+        self.assertEqual(profile["style_version"], "1.7.1")
         self.assertEqual(profile["render"]["temporal_window_start"], 399)
         self.assertEqual(profile["render"]["temporal_window_frames"], 17)
         source = BLENDER_SOURCE.read_text(encoding="utf-8")
         for marker in (
             "def _make_june_v8", "def _make_oral_mask_v8", "June_Oral_Mask",
-            "cheek_integrated_oral_mask", "per_viseme_groove_mask", "MOUTH_V8_POSES",
+            "cheek_integrated_oral_mask", "fitted_beard_muzzle_soft_tissue",
+            "per_viseme_groove_mask", "MOUTH_V8_POSES",
         ):
             self.assertIn(marker, source)
 

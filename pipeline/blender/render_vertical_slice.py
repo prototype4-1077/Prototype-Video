@@ -157,6 +157,7 @@ def _make_materials(bpy, *, asset_major: int = 2) -> dict:
         "mouth": _material(bpy, "June Mouth", (0.20, 0.025, 0.025, 1), roughness=0.45),
         "mouth_interior": _material(bpy, "June Mouth Interior", (0.105, 0.012, 0.014, 1), roughness=0.55),
         "lip": _material(bpy, "June Weathered Lip", (0.38, 0.095, 0.075, 1), roughness=0.62),
+        "lip_soft": _material(bpy, "June Soft Weathered Lip", (0.58, 0.22, 0.16, 1), roughness=0.72),
         "gum": _material(bpy, "June Healthy Gum", (0.34, 0.055, 0.050, 1), roughness=0.58),
         "tongue": _material(bpy, "June Tongue", (0.48, 0.085, 0.075, 1), roughness=0.54),
         "teeth": _material(bpy, "June Teeth", (0.78, 0.72, 0.58, 1), roughness=0.48),
@@ -1414,15 +1415,15 @@ MOUTH_V7_POSES = {
 
 
 MOUTH_V8_SOFT_TISSUE = {
-    "A": {"corner_l": 0.10, "corner_r": 0.04, "cheek_l": 0.12, "cheek_r": 0.08, "dental_exposure": 0.42, "groove_visibility": 0.55},
-    "B": {"corner_l": 0.04, "corner_r": -0.03, "cheek_l": 0.18, "cheek_r": 0.12, "dental_exposure": 0.60, "groove_visibility": 0.75},
-    "C": {"corner_l": 0.35, "corner_r": 0.24, "cheek_l": 0.38, "cheek_r": 0.28, "dental_exposure": 0.68, "groove_visibility": 0.80},
-    "D": {"corner_l": 0.12, "corner_r": 0.03, "cheek_l": 0.20, "cheek_r": 0.14, "dental_exposure": 0.54, "groove_visibility": 0.70},
-    "E": {"corner_l": 0.42, "corner_r": 0.30, "cheek_l": 0.44, "cheek_r": 0.32, "dental_exposure": 0.74, "groove_visibility": 0.88},
-    "F": {"corner_l": -0.04, "corner_r": 0.03, "cheek_l": 0.12, "cheek_r": 0.16, "dental_exposure": 0.82, "groove_visibility": 0.95},
-    "G": {"corner_l": -0.08, "corner_r": -0.03, "cheek_l": 0.12, "cheek_r": 0.10, "dental_exposure": 0.30, "groove_visibility": 0.38},
-    "H": {"corner_l": 0.08, "corner_r": -0.06, "cheek_l": 0.16, "cheek_r": 0.08, "dental_exposure": 0.38, "groove_visibility": 0.48},
-    "X": {"corner_l": 0.02, "corner_r": -0.02, "cheek_l": 0.04, "cheek_r": 0.02, "dental_exposure": 0.00, "groove_visibility": 0.00},
+    "A": {"opening": 0.50, "corner_l": 0.10, "corner_r": 0.04, "cheek_l": 0.12, "cheek_r": 0.08, "dental_exposure": 0.42, "groove_visibility": 0.48},
+    "B": {"opening": 0.86, "corner_l": 0.04, "corner_r": -0.03, "cheek_l": 0.18, "cheek_r": 0.12, "dental_exposure": 0.60, "groove_visibility": 0.68},
+    "C": {"opening": 0.24, "corner_l": 0.35, "corner_r": 0.24, "cheek_l": 0.38, "cheek_r": 0.28, "dental_exposure": 0.68, "groove_visibility": 0.72},
+    "D": {"opening": 0.62, "corner_l": 0.12, "corner_r": 0.03, "cheek_l": 0.20, "cheek_r": 0.14, "dental_exposure": 0.54, "groove_visibility": 0.62},
+    "E": {"opening": 0.14, "corner_l": 0.42, "corner_r": 0.30, "cheek_l": 0.44, "cheek_r": 0.32, "dental_exposure": 0.74, "groove_visibility": 0.80},
+    "F": {"opening": 0.13, "corner_l": -0.04, "corner_r": 0.03, "cheek_l": 0.12, "cheek_r": 0.16, "dental_exposure": 0.82, "groove_visibility": 0.82},
+    "G": {"opening": 0.82, "corner_l": -0.08, "corner_r": -0.03, "cheek_l": 0.12, "cheek_r": 0.10, "dental_exposure": 0.30, "groove_visibility": 0.30},
+    "H": {"opening": 0.44, "corner_l": 0.08, "corner_r": -0.06, "cheek_l": 0.16, "cheek_r": 0.08, "dental_exposure": 0.38, "groove_visibility": 0.38},
+    "X": {"opening": 0.00, "corner_l": 0.02, "corner_r": -0.02, "cheek_l": 0.04, "cheek_r": 0.02, "dental_exposure": 0.00, "groove_visibility": 0.00},
 }
 
 
@@ -2213,9 +2214,11 @@ def _oral_mask_v8_vertices(pose: dict, *, segments: int = 48):
     vertices = []
     opening = float(pose["opening"])
     roundness = float(pose["round"])
-    aperture_width = 0.108 * float(pose["width"]) * (1.0 - 0.12 * roundness)
-    top_height = 0.0065 + 0.0180 * opening
-    bottom_height = 0.0060 + 0.0250 * opening
+    aperture_width = 0.104 * float(pose["width"]) * (1.0 - 0.18 * roundness)
+    top_height = 0.0012 + 0.0200 * opening
+    bottom_height = 0.0012 + 0.0300 * opening
+    upper_lip = 0.0040 + 0.0050 * float(pose["upper_roll"])
+    lower_lip = 0.0045 + 0.0055 * float(pose["lower_roll"])
     for ring in range(3):
         for index in range(segments):
             angle = math.tau * index / segments
@@ -2226,22 +2229,34 @@ def _oral_mask_v8_vertices(pose: dict, *, segments: int = 48):
             corner = float(pose["corner_l"] if left_side else pose["corner_r"])
             side_weight = abs(horizontal) ** 3
             corner_weight = abs(horizontal) ** 7
-            if ring == 0:
-                x = 0.156 * horizontal * (1.0 + 0.045 * cheek)
-                z = 0.080 * vertical + 0.010 * cheek * side_weight + 0.006 * corner * corner_weight
-                y = 0.0070 - 0.0015 * side_weight
+            arch = abs(vertical) ** 0.72
+            if ring == 2:
+                width = aperture_width
+                upper_height = top_height
+                lower_height = bottom_height
             elif ring == 1:
-                x = 0.130 * horizontal * (1.0 + 0.035 * cheek)
-                z = 0.058 * vertical + 0.009 * cheek * side_weight + 0.007 * corner * corner_weight
-                y = 0.0010 - 0.0025 * side_weight
+                width = aperture_width + 0.0065 + 0.0030 * roundness
+                upper_height = top_height + upper_lip
+                lower_height = bottom_height + lower_lip
             else:
-                arch = abs(vertical) ** 0.72
-                x = aperture_width * horizontal * (1.0 + 0.020 * cheek)
-                z = (top_height if vertical >= 0.0 else -bottom_height) * arch
-                z += 0.008 * corner * corner_weight
-                # Rounded phonemes push the aperture forward while their outer
-                # cheek attachment remains planted in the beard surface.
-                y = -0.0070 - 0.0040 * roundness * arch
+                # Only a narrow hair-to-lip transition remains visible.  Its
+                # edge is planted on the existing fitted beard in depth, which
+                # prevents the white clamshell silhouette from the first v8.
+                width = aperture_width + 0.020 + 0.005 * cheek
+                upper_height = top_height + upper_lip + 0.013
+                lower_height = bottom_height + lower_lip + 0.014
+            x = width * horizontal * (1.0 + 0.018 * cheek)
+            z = (upper_height if vertical >= 0.0 else -lower_height) * arch
+            z += (0.006 if ring < 2 else 0.008) * corner * corner_weight
+            if ring == 0:
+                # June's fitted beard recedes sharply toward the cheeks.  Match
+                # that depth field at the outer edge instead of laying a flat
+                # annulus over it.
+                y = 0.062 + 0.046 * side_weight - 0.004 * cheek
+            elif ring == 1:
+                y = 0.012 - 0.004 * roundness * arch
+            else:
+                y = -0.007 - 0.005 * roundness * arch
             vertices.append((x, y, z))
     return vertices
 
@@ -2269,7 +2284,7 @@ def _make_oral_mask_v8(bpy, materials: dict):
     bpy.context.collection.objects.link(obj)
     obj.location = (0.0, -0.339, 2.490)
     obj.data.materials.append(materials["hair"])
-    obj.data.materials.append(materials["lip"])
+    obj.data.materials.append(materials["lip_soft"])
     for polygon, material_index in zip(obj.data.polygons, material_indices):
         polygon.material_index = material_index
         polygon.use_smooth = True
@@ -2291,6 +2306,39 @@ def _make_oral_mask_v8(bpy, materials: dict):
     return obj
 
 
+def _add_mouth_v8_beard_keys(beard) -> None:
+    """Put the broad viseme motion into June's fitted beard/muzzle surface."""
+    shape_keys = getattr(beard.data, "shape_keys", None)
+    if shape_keys is None:
+        return
+    basis = shape_keys.key_blocks.get("Basis")
+    if basis is None:
+        return
+    source_coordinates = [point.co.copy() for point in basis.data]
+    for shape, pose in MOUTH_V8_POSES.items():
+        key = shape_keys.key_blocks.get(shape)
+        if key is None:
+            key = beard.shape_key_add(name=shape)
+        for point, source in zip(key.data, source_coordinates):
+            x, y, z = source
+            mouth_field = math.exp(-((x / 0.180) ** 2 + ((z - 2.485) / 0.115) ** 2))
+            corner_field = math.exp(-(((abs(x) - 0.105) / 0.052) ** 2 + ((z - 2.490) / 0.070) ** 2))
+            lower_field = max(0.0, min(1.0, (2.500 - z) / 0.145)) * mouth_field
+            left_side = x < 0.0
+            cheek = float(pose["cheek_l"] if left_side else pose["cheek_r"])
+            corner = float(pose["corner_l"] if left_side else pose["corner_r"])
+            direction = -1.0 if left_side else 1.0
+            width_delta = float(pose["width"]) - 1.0
+            point.co.x = x + direction * (
+                0.010 * width_delta * mouth_field
+                + 0.008 * cheek * corner_field
+            )
+            point.co.y = y - 0.010 * float(pose["round"]) * mouth_field
+            point.co.z = z + 0.013 * corner * corner_field - 0.010 * float(pose["beard_follow"]) * lower_field
+    beard["ce_mouth_component"] = "fitted_beard_muzzle_soft_tissue"
+    beard["ce_beard_deformation"] = "expression_follow_plus_per_viseme_muzzle_v3"
+
+
 def _replace_v8_dental_shape_keys(obj, *, upper: bool, groove: bool) -> None:
     """Upgrade v7 dental keys with exposure and groove-visibility controls."""
     shape_keys = getattr(obj.data, "shape_keys", None)
@@ -2310,8 +2358,8 @@ def _replace_v8_dental_shape_keys(obj, *, upper: bool, groove: bool) -> None:
         visibility = float(pose["groove_visibility"])
         for point, source in zip(key.data, source_coordinates):
             point.co.x = source.x * width
-            point.co.z = source.z * (visibility if groove else 0.52 + 0.48 * exposure) + travel
-            point.co.y = source.y + (0.010 * (1.0 - visibility) if groove else 0.0)
+            point.co.z = source.z * (0.25 + 0.75 * visibility if groove else 0.82 + 0.30 * exposure) + travel
+            point.co.y = source.y + (0.012 * (1.0 - visibility) if groove else -0.0015 * exposure)
     obj["ce_dental_visibility"] = "per_viseme_groove_mask" if groove else "per_viseme_exposure"
 
 
@@ -2324,6 +2372,9 @@ def _make_june_v8(bpy, mathutils, materials: dict):
             bpy.data.objects.remove(obj, do_unlink=True)
     oral_mask = _make_oral_mask_v8(bpy, materials)
     _parent_to_bone(oral_mask, rig, "head")
+    beard = bpy.data.objects.get("June_Fitted_Beard")
+    if beard is not None:
+        _add_mouth_v8_beard_keys(beard)
     for obj in list(mouth.parent.children):
         role = str(obj.get("ce_mouth_component", ""))
         if role in {"upper_teeth", "lower_teeth", "upper_tooth_groove", "lower_tooth_groove"}:

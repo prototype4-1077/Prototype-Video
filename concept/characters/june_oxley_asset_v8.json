@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
   "asset_id": "june_oxley_hero_rig",
-  "asset_version": "8.0.0",
+  "asset_version": "8.1.0",
   "character_id": "june_oxley",
-  "display_name": "June Oxley Cheek-Integrated Performance Hero Rig v8",
+  "display_name": "June Oxley Fitted-Muzzle Performance Hero Rig v8.1",
   "source_of_truth": [
     "concept/characters/JUNE_OXLEY.md",
     "concept/characters/june_oxley.json",
@@ -92,9 +92,9 @@
     "volumetric_mouth": true,
     "per_viseme_deformation": true,
     "dental_visibility_per_viseme": true,
-    "lip_model": "one open annular surface blends beard and cheek curvature into the lip aperture with asymmetric corner anchors",
+    "lip_model": "a narrow open annulus forms the lip aperture while broad viseme motion deforms the existing fitted beard and muzzle with asymmetric corner anchors",
     "dental_parenting": "v7 recessed dual dentition retained; exposure and groove depth are masked per viseme",
-    "facial_hair_follow": "bounded beard jaw follow plus mouth clearance around a planted outer oral-mask ring",
+    "facial_hair_follow": "bounded jaw follow plus A-H-X muzzle shape keys on the fitted beard; the oral-mask outer edge is planted into the beard depth field",
     "beard_jaw_follow_max": 0.30
   },
   "hands": {
@@ -132,8 +132,8 @@
     "matrix_visemes": ["A", "B", "C", "D", "E", "F", "G", "H", "X"],
     "matrix_expressions": ["smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise"],
     "required_checks": [
-      "single cheek-integrated oral mask", "no detached lip objects", "asymmetric left and right corner anchors",
-      "per-viseme cheek deformation", "per-viseme dental exposure", "per-viseme tooth-groove visibility",
+      "single narrow cheek-integrated oral mask", "no detached lip objects", "asymmetric left and right corner anchors",
+      "per-viseme fitted-beard muzzle deformation", "per-viseme cheek deformation", "per-viseme dental exposure", "per-viseme tooth-groove visibility",
       "all nine visemes in one 3x3 close-up matrix", "frames 399-415 temporal continuity",
       "artifact reopened from generated blend", "exact 453-frame performance clock"
     ]
