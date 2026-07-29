@@ -1,0 +1,48 @@
+{
+  "contract_version": 1,
+  "atlas_id": "june_oxley_canonical_visemes",
+  "atlas_version": "1.0.0",
+  "character_id": "june_oxley",
+  "image": {
+    "path": "concept/style_frames/june_oxley_viseme_atlas_v1.png",
+    "sha256": "73df92931fd6f0e5d276ab85524232479a23d7e3049feb47b0cff7058a24f201",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGB"
+  },
+  "canonical_identity_reference": {
+    "path": "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+    "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9"
+  },
+  "generation": {
+    "method": "built_in_image_generation_with_locked_reference",
+    "intent": "animation-ready fixed-camera facial atlas; identity, gaze, crop, costume, and lighting remain invariant",
+    "cash_cost": 0
+  },
+  "grid": {
+    "columns": 3,
+    "rows": 3,
+    "cell_width": 418,
+    "cell_height": 418,
+    "order": ["A", "B", "C", "D", "E", "F", "G", "H", "X"]
+  },
+  "neutral_viseme": "X",
+  "mouth_patch_box": [88, 150, 330, 310],
+  "patch_feather_px": 16,
+  "invariants": [
+    "fixed straight-on camera",
+    "fixed head and shoulder scale",
+    "fixed gaze and neutral eyebrows",
+    "fixed lighting and crop",
+    "canonical June identity and wardrobe",
+    "only lips jaw cheeks moustache and local beard may deform"
+  ],
+  "visual_gates": [
+    "X lips touch with no visible cavity",
+    "B and G have distinct vertical-open and rounded-open silhouettes",
+    "F shows upper dental arc at the lower lip",
+    "H reads tongue-forward without identity drift",
+    "teeth are continuous natural arcs rather than bars or beads",
+    "moustache and beard flow continuously into the cheeks"
+  ]
+}
