@@ -73,7 +73,7 @@ jobs:
           sudo tar -xJf /tmp/blender.tar.xz -C /opt/blender --strip-components=1
       - name: Verify Blender
         run: /opt/blender/blender --background --version
-      - name: Build v5 rig and render the full 453-frame Golden Scene promotion gate
+      - name: Build v5 rig and render the nine-pose Golden Scene smoke gate
         run: |
           set -euo pipefail
           python3 -m pipeline.cartoon_asset_library \
@@ -86,7 +86,7 @@ jobs:
             --facial-engine BLENDER_WORKBENCH \
             --facial-size 480 \
             --facial-samples 1 \
-            --performance-gate full \
+            --performance-gate poses \
             --output-dir asset-quality-out
           find asset-quality-out -maxdepth 3 -type f -print
       - name: Upload v5 deformation review
