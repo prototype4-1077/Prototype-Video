@@ -2055,42 +2055,70 @@ def _make_mouth_v7(bpy, rig, materials: dict):
     _parent_to_bone(lower_gum, rig, "head")
     lower_gum["ce_jaw_coupling"] = "soft_viseme_corrective"
 
-    upper_teeth = []
-    lower_teeth = []
-    tooth_x = (-0.0475, -0.0285, -0.0095, 0.0095, 0.0285, 0.0475)
-    for index, x in enumerate(tooth_x):
-        upper = _box(
-            bpy,
-            "June_Upper_Teeth" if index == 2 else f"June_Upper_Tooth_{index}",
-            (x, -0.340, 2.503 - 0.0015 * abs(index - 2.5)),
-            (0.0084, 0.0040, 0.0080),
-            materials["teeth"],
-            bevel=0.0035,
+    # At this stylized close-up scale individual tooth cubes read as beads.
+    # Rounded banks preserve one clean dental silhouette; narrow dark grooves
+    # provide just enough segmentation to suggest six teeth without visual grit.
+    upper_teeth = _box(
+        bpy, "June_Upper_Teeth", (0.0, -0.337, 2.503),
+        (0.058, 0.0035, 0.0085), materials["teeth"], bevel=0.0060,
+    )
+    upper_teeth["ce_mouth_component"] = "upper_teeth"
+    _add_mouth_v7_transform_keys(
+        upper_teeth,
+        lambda source, pose: type(source)(
+            (
+                source.x * (0.86 + 0.14 * float(pose["width"])),
+                source.y,
+                source.z - 0.013 * float(pose["upper_teeth"]),
+            )
+        ),
+    )
+    _parent_to_bone(upper_teeth, rig, "head")
+
+    lower_teeth = _box(
+        bpy, "June_Lower_Teeth", (0.0, -0.336, 2.466),
+        (0.053, 0.0033, 0.0068), materials["teeth"], bevel=0.0050,
+    )
+    lower_teeth["ce_mouth_component"] = "lower_teeth"
+    _add_mouth_v7_transform_keys(
+        lower_teeth,
+        lambda source, pose: type(source)(
+            (
+                source.x * (0.88 + 0.12 * float(pose["width"])),
+                source.y,
+                source.z + 0.014 * float(pose["lower_teeth"]),
+            )
+        ),
+    )
+    _parent_to_bone(lower_teeth, rig, "head")
+    lower_teeth["ce_jaw_coupling"] = "soft_viseme_corrective"
+
+    tooth_grooves = []
+    for index, x in enumerate((-0.038, -0.019, 0.0, 0.019, 0.038)):
+        upper_groove = _box(
+            bpy, f"June_Upper_Tooth_Groove_{index}", (x, -0.341, 2.503),
+            (0.00065, 0.0008, 0.0062), materials["mouth_interior"], bevel=0.0004,
         )
-        upper["ce_mouth_component"] = "upper_teeth"
+        upper_groove["ce_mouth_component"] = "upper_tooth_groove"
         _add_mouth_v7_transform_keys(
-            upper,
+            upper_groove,
             lambda source, pose: type(source)((source.x, source.y, source.z - 0.013 * float(pose["upper_teeth"]))),
         )
-        _parent_to_bone(upper, rig, "head")
-        upper_teeth.append(upper)
+        _parent_to_bone(upper_groove, rig, "head")
+        tooth_grooves.append(upper_groove)
 
-        lower = _box(
-            bpy,
-            "June_Lower_Teeth" if index == 2 else f"June_Lower_Tooth_{index}",
-            (x * 0.94, -0.339, 2.466 + 0.0010 * abs(index - 2.5)),
-            (0.0078, 0.0038, 0.0068),
-            materials["teeth"],
-            bevel=0.0030,
+        lower_groove = _box(
+            bpy, f"June_Lower_Tooth_Groove_{index}", (x * 0.91, -0.340, 2.466),
+            (0.00060, 0.0008, 0.0048), materials["mouth_interior"], bevel=0.00035,
         )
-        lower["ce_mouth_component"] = "lower_teeth"
+        lower_groove["ce_mouth_component"] = "lower_tooth_groove"
         _add_mouth_v7_transform_keys(
-            lower,
+            lower_groove,
             lambda source, pose: type(source)((source.x, source.y, source.z + 0.014 * float(pose["lower_teeth"]))),
         )
-        _parent_to_bone(lower, rig, "head")
-        lower["ce_jaw_coupling"] = "soft_viseme_corrective"
-        lower_teeth.append(lower)
+        _parent_to_bone(lower_groove, rig, "head")
+        lower_groove["ce_jaw_coupling"] = "soft_viseme_corrective"
+        tooth_grooves.append(lower_groove)
 
     tongue = _sphere(
         bpy, "June_Tongue", (0.0, -0.334, 2.454), (0.070, 0.010, 0.010),
@@ -2110,7 +2138,10 @@ def _make_mouth_v7(bpy, rig, materials: dict):
     _parent_to_bone(tongue, rig, "head")
     tongue["ce_jaw_coupling"] = "soft_viseme_corrective"
 
-    components = [upper_lip, lower_lip, upper_gum, lower_gum, *upper_teeth, *lower_teeth, tongue]
+    components = [
+        upper_lip, lower_lip, upper_gum, lower_gum,
+        upper_teeth, lower_teeth, *tooth_grooves, tongue,
+    ]
     return mouth, components
 
 
