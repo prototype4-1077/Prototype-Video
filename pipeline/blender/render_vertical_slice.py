@@ -2290,16 +2290,158 @@ def _add_area_light(bpy, mathutils, name: str, location, energy: float, color, s
     _look_at(obj, target, mathutils)
 
 
-def _lighting(bpy, mathutils) -> None:
-    _add_area_light(bpy, mathutils, "Warm_Window_Key", (-3.8, -3.0, 6.0), 950, (1.0, 0.67, 0.40), 4.5, (0, 0, 2))
-    _add_area_light(bpy, mathutils, "Sky_Fill", (4.5, -2.0, 4.0), 450, (0.50, 0.67, 1.0), 5.0, (0, 0, 1.8))
-    _add_area_light(bpy, mathutils, "Porch_Lantern_Light", (1.05, 1.95, 3.45), 520, (1.0, 0.38, 0.12), 2.0, (0, 0, 2.1))
+def _look_light(plan: dict, role: str, fallback: tuple) -> tuple:
+    lighting = (plan.get("look_profile") or {}).get("lighting") or {}
+    spec = lighting.get(role) or {}
+    return (
+        float(spec.get("energy", fallback[0])),
+        tuple(float(value) for value in spec.get("color", fallback[1])),
+        float(spec.get("size", fallback[2])),
+    )
+
+
+def _lighting(bpy, mathutils, plan: dict) -> None:
+    key = _look_light(plan, "key", (950, (1.0, 0.67, 0.40), 4.5))
+    fill = _look_light(plan, "fill", (450, (0.50, 0.67, 1.0), 5.0))
+    lantern = _look_light(plan, "lantern", (520, (1.0, 0.38, 0.12), 2.0))
+    _add_area_light(bpy, mathutils, "Warm_Window_Key", (-3.8, -3.0, 6.0), key[0], key[1], key[2], (0, 0, 2))
+    _add_area_light(bpy, mathutils, "Sky_Fill", (4.5, -2.0, 4.0), fill[0], fill[1], fill[2], (0, 0, 1.8))
+    _add_area_light(bpy, mathutils, "Porch_Lantern_Light", (1.05, 1.95, 3.45), lantern[0], lantern[1], lantern[2], (0, 0, 2.1))
+    if plan.get("look_profile"):
+        rim = _look_light(plan, "rim", (720, (0.42, 0.62, 1.0), 3.2))
+        _add_area_light(bpy, mathutils, "Cool_Story_Rim", (2.7, 3.6, 4.8), rim[0], rim[1], rim[2], (0, 0, 2.25))
     world = bpy.context.scene.world or bpy.data.worlds.new("June_Porch_World")
     bpy.context.scene.world = world
     world.use_nodes = True
     background = world.node_tree.nodes.get("Background")
-    background.inputs["Color"].default_value = (0.055, 0.075, 0.12, 1.0)
-    background.inputs["Strength"].default_value = 0.42
+    palette = (plan.get("look_profile") or {}).get("palette") or {}
+    world_color = tuple(palette.get("world", (0.055, 0.075, 0.12)))
+    background.inputs["Color"].default_value = (*world_color, 1.0)
+    background.inputs["Strength"].default_value = float(
+        ((plan.get("look_profile") or {}).get("lighting") or {}).get("world_strength", 0.42)
+    )
+
+
+def _apply_npr_material(material, profile: dict) -> None:
+    """Convert a Principled material to deterministic three-band Eevee shading."""
+    toon = profile.get("toon") or {}
+    if not toon.get("enabled") or material.name in set(toon.get("exclude_materials") or []):
+        return
+    material.use_nodes = True
+    nodes = material.node_tree.nodes
+    links = material.node_tree.links
+    if nodes.get("CE_NPR_Toon_Light"):
+        return
+    principled = nodes.get("Principled BSDF")
+    output = nodes.get("Material Output")
+    if principled is None or output is None:
+        return
+    shader_to_rgb = nodes.new("ShaderNodeShaderToRGB")
+    shader_to_rgb.name = "CE_NPR_Shader_To_RGB"
+    rgb_to_bw = nodes.new("ShaderNodeRGBToBW")
+    rgb_to_bw.name = "CE_NPR_Luminance"
+    ramp = nodes.new("ShaderNodeValToRGB")
+    ramp.name = "CE_NPR_Toon_Light"
+    ramp.color_ramp.interpolation = "CONSTANT"
+    thresholds = [float(value) for value in toon["thresholds"]]
+    levels = [float(value) for value in toon["levels"]]
+    first, second = ramp.color_ramp.elements
+    first.position = 0.0
+    first.color = (levels[0], levels[0], levels[0], 1.0)
+    second.position = thresholds[0]
+    second.color = (levels[1], levels[1], levels[1], 1.0)
+    highlight = ramp.color_ramp.elements.new(thresholds[1])
+    highlight.color = (levels[2], levels[2], levels[2], 1.0)
+    multiply = nodes.new("ShaderNodeMixRGB")
+    multiply.name = "CE_NPR_Base_x_Light"
+    multiply.blend_type = "MULTIPLY"
+    multiply.inputs[0].default_value = 1.0
+    emission = nodes.new("ShaderNodeEmission")
+    emission.name = "CE_NPR_Color_Output"
+    emission.inputs["Strength"].default_value = 1.0
+    base = principled.inputs.get("Base Color")
+    if base and base.is_linked:
+        links.new(base.links[0].from_socket, multiply.inputs[1])
+    elif base:
+        multiply.inputs[1].default_value = base.default_value
+    else:
+        multiply.inputs[1].default_value = material.diffuse_color
+    links.new(principled.outputs[0], shader_to_rgb.inputs[0])
+    links.new(shader_to_rgb.outputs[0], rgb_to_bw.inputs[0])
+    links.new(rgb_to_bw.outputs[0], ramp.inputs[0])
+    links.new(ramp.outputs[0], multiply.inputs[2])
+    links.new(multiply.outputs[0], emission.inputs["Color"])
+    links.new(emission.outputs[0], output.inputs["Surface"])
+
+
+def _configure_npr_outlines(bpy, profile: dict) -> None:
+    outlines = profile.get("outlines") or {}
+    if not outlines.get("enabled"):
+        return
+    scene = bpy.context.scene
+    if not hasattr(scene.render, "use_freestyle"):
+        return
+    scene.render.use_freestyle = True
+    settings = scene.view_layers[0].freestyle_settings
+    line_set = settings.linesets[0]
+    line_style = line_set.linestyle
+    line_style.color = tuple(float(value) for value in outlines["color"])
+    line_style.thickness = float(outlines["thickness_px"])
+    for attribute, value in (
+        ("select_silhouette", outlines.get("silhouette", True)),
+        ("select_border", True),
+        ("select_crease", outlines.get("crease", True)),
+        ("select_material_boundary", outlines.get("material_boundary", False)),
+    ):
+        if hasattr(line_set, attribute):
+            setattr(line_set, attribute, bool(value))
+
+
+def _configure_npr_compositor(bpy, profile: dict) -> None:
+    compositor = profile.get("compositor") or {}
+    if not compositor.get("glow"):
+        return
+    scene = bpy.context.scene
+    scene.use_nodes = True
+    nodes = scene.node_tree.nodes
+    links = scene.node_tree.links
+    nodes.clear()
+    render_layers = nodes.new("CompositorNodeRLayers")
+    glare = nodes.new("CompositorNodeGlare")
+    glare.name = "CE_NPR_Lantern_Glow"
+    glare.glare_type = "FOG_GLOW"
+    glare.quality = "HIGH"
+    glare.threshold = float(compositor.get("glow_threshold", 1.15))
+    glare.mix = float(compositor.get("glow_mix", -0.93))
+    composite = nodes.new("CompositorNodeComposite")
+    links.new(render_layers.outputs["Image"], glare.inputs["Image"])
+    links.new(glare.outputs["Image"], composite.inputs["Image"])
+
+
+def _configure_npr_cameras(bpy, profile: dict) -> None:
+    camera_profile = profile.get("camera") or {}
+    if not camera_profile.get("depth_of_field"):
+        return
+    target = tuple(float(value) for value in camera_profile["focus_target"])
+    for camera_obj in (obj for obj in bpy.data.objects if obj.type == "CAMERA"):
+        dx = camera_obj.location.x - target[0]
+        dy = camera_obj.location.y - target[1]
+        dz = camera_obj.location.z - target[2]
+        camera_obj.data.dof.use_dof = True
+        camera_obj.data.dof.focus_distance = max(0.1, math.sqrt(dx * dx + dy * dy + dz * dz))
+        camera_obj.data.dof.aperture_fstop = float(camera_profile.get("f_stop", 4.2))
+        camera_obj.data.dof.aperture_blades = 7
+
+
+def _apply_npr_look(bpy, plan: dict) -> None:
+    profile = plan.get("look_profile")
+    if not profile:
+        return
+    for material in bpy.data.materials:
+        _apply_npr_material(material, profile)
+    _configure_npr_outlines(bpy, profile)
+    _configure_npr_compositor(bpy, profile)
+    _configure_npr_cameras(bpy, profile)
 
 
 def _configure_render(bpy, plan: dict, output_dir: Path) -> None:
@@ -2339,6 +2481,12 @@ def _configure_render(bpy, plan: dict, output_dir: Path) -> None:
         if hasattr(shading, "outline_color"):
             shading.outline_color = (0.025, 0.018, 0.018)
         shading.show_specular_highlight = True
+    elif selected == "BLENDER_EEVEE_NEXT":
+        if hasattr(scene, "eevee") and hasattr(scene.eevee, "taa_render_samples"):
+            scene.eevee.taa_render_samples = int(render.get("samples", 24))
+        if hasattr(scene.render, "use_motion_blur"):
+            scene.render.use_motion_blur = True
+        _apply_npr_look(bpy, plan)
     elif selected == "CYCLES":
         scene.cycles.device = "CPU"
         scene.cycles.samples = int(render.get("samples", 64))
@@ -2389,7 +2537,7 @@ def main() -> None:
     if not plan.get("disable_blinks", False):
         _animate_blinks(face_controls, int(plan["frame_end"]))
     _make_cameras(bpy, mathutils, plan)
-    _lighting(bpy, mathutils)
+    _lighting(bpy, mathutils, plan)
     _configure_render(bpy, plan, output_dir)
     if args.frames:
         selected = sorted({int(frame) for frame in args.frames.split(",") if frame.strip()})

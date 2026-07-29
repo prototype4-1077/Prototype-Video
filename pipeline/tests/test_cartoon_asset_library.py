@@ -11,9 +11,11 @@ from pipeline.cartoon_asset_library import (
     facial_performance_plan,
     golden_performance_plan,
     load_asset_manifest,
+    load_look_profile,
     render_quality_gate,
     shot_quality_frames,
     validate_asset_manifest,
+    validate_look_profile,
 )
 from pipeline.cartoon_vertical_slice import compile_plan
 
@@ -27,6 +29,7 @@ V1_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v1.json"
 CONFIG_PATH = ROOT / "examples" / "june-porch-vertical-slice.json"
 GOLDEN_CONFIG_PATH = ROOT / "examples" / "june-golden-scene-twelve-dollar-mug.json"
 PERFORMANCE_PATH = ROOT / "concept" / "style_frames" / "june_golden_scene_performance_slice_v1.json"
+LOOK_PROFILE_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v1.json"
 BLENDER_SOURCE = ROOT / "pipeline" / "blender" / "render_vertical_slice.py"
 
 
@@ -200,6 +203,38 @@ class CartoonAssetLibraryTests(unittest.TestCase):
                 V5_MANIFEST_PATH,
                 output_dir=ROOT / "build" / "invalid-performance-gate",
                 performance_gate_mode="sometimes",
+            )
+
+    def test_phase11_storybook_look_is_versioned_and_renderer_complete(self):
+        profile = load_look_profile(LOOK_PROFILE_PATH)
+        self.assertEqual(profile["look_id"], "june_oxley_storybook_npr")
+        self.assertEqual(profile["engine"], "BLENDER_EEVEE_NEXT")
+        self.assertEqual(len(profile["toon"]["levels"]), 3)
+        self.assertTrue(profile["outlines"]["enabled"])
+        self.assertIn("rim", profile["lighting"])
+        source = BLENDER_SOURCE.read_text(encoding="utf-8")
+        for marker in (
+            "CE_NPR_Toon_Light",
+            "CE_NPR_Lantern_Glow",
+            "Cool_Story_Rim",
+            "scene.render.use_freestyle = True",
+            "_configure_npr_cameras",
+        ):
+            self.assertIn(marker, source)
+
+    def test_phase11_look_rejects_unsafe_line_weight(self):
+        invalid = copy.deepcopy(load_look_profile(LOOK_PROFILE_PATH))
+        invalid["outlines"]["thickness_px"] = 8.0
+        with self.assertRaisesRegex(ValueError, "0.5-3px"):
+            validate_look_profile(invalid)
+
+    def test_performance_engine_rejects_unknown_renderer_before_build(self):
+        with self.assertRaisesRegex(ValueError, "performance_engine"):
+            render_quality_gate(
+                GOLDEN_CONFIG_PATH,
+                V5_MANIFEST_PATH,
+                output_dir=ROOT / "build" / "invalid-performance-engine",
+                performance_engine="PAINTBOX",
             )
 
     def test_v5_without_a_full_performance_gate_is_rejected(self):

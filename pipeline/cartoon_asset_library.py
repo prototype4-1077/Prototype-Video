@@ -16,6 +16,7 @@ from pipeline.cartoon_vertical_slice import _assemble_video, _contact_sheet, _re
 
 
 ASSET_CONTRACT_VERSION = 1
+LOOK_CONTRACT_VERSION = 1
 REQUIRED_CHARACTER = "june_oxley"
 REQUIRED_VISEMES = set("ABCDEFGHX")
 REQUIRED_EXPRESSIONS = {"smile", "thoughtful", "soft_chuckle"}
@@ -38,12 +39,55 @@ REQUIRED_V5_FINGERS = {
     "finger.0.R", "finger.1.R", "finger.2.R", "finger.3.R", "thumb.R",
 }
 REQUIRED_V5_PROPS = {"held_mug", "table_mug", "ledger", "pencil"}
+RENDER_ENGINES = {"CYCLES", "BLENDER_EEVEE_NEXT", "BLENDER_WORKBENCH"}
 
 
 def _string_set(value: Any, field: str) -> set[str]:
     if not isinstance(value, list) or not all(isinstance(item, str) and item for item in value):
         raise ValueError(f"{field} must be a list of non-empty strings")
     return set(value)
+
+
+def validate_look_profile(profile: dict) -> None:
+    """Validate a versioned, renderer-independent June look contract."""
+    if not isinstance(profile, dict) or profile.get("contract_version") != LOOK_CONTRACT_VERSION:
+        raise ValueError(f"look contract_version must be {LOOK_CONTRACT_VERSION}")
+    if profile.get("look_id") != "june_oxley_storybook_npr":
+        raise ValueError("look profile must explicitly target June's storybook NPR style")
+    if not re.fullmatch(r"\d+\.\d+\.\d+", str(profile.get("style_version", ""))):
+        raise ValueError("look style_version must use semantic versioning")
+    if profile.get("engine") != "BLENDER_EEVEE_NEXT":
+        raise ValueError("storybook NPR look must use Blender Eevee Next")
+    toon = profile.get("toon") or {}
+    thresholds = toon.get("thresholds") or []
+    levels = toon.get("levels") or []
+    if toon.get("enabled") is not True or len(thresholds) != 2 or len(levels) != 3:
+        raise ValueError("NPR toon profile requires two thresholds and three levels")
+    if not (0.0 < float(thresholds[0]) < float(thresholds[1]) < 1.0):
+        raise ValueError("NPR toon thresholds must be ordered inside zero and one")
+    if any(float(level) <= 0.0 for level in levels):
+        raise ValueError("NPR toon levels must be positive")
+    outlines = profile.get("outlines") or {}
+    if outlines.get("enabled") is not True or not 0.5 <= float(outlines.get("thickness_px", 0)) <= 3.0:
+        raise ValueError("NPR outlines require a production-safe 0.5-3px thickness")
+    if len(outlines.get("color") or []) != 3:
+        raise ValueError("NPR outline color must be RGB")
+    lighting = profile.get("lighting") or {}
+    for role in ("key", "fill", "lantern", "rim"):
+        light = lighting.get(role) or {}
+        if float(light.get("energy", 0)) <= 0 or len(light.get("color") or []) != 3:
+            raise ValueError(f"NPR lighting.{role} requires positive energy and RGB color")
+    camera = profile.get("camera") or {}
+    if camera.get("depth_of_field") is not True or float(camera.get("f_stop", 0)) <= 0:
+        raise ValueError("NPR camera requires a positive depth-of-field f-stop")
+    if len(camera.get("focus_target") or []) != 3:
+        raise ValueError("NPR camera focus_target must be XYZ")
+
+
+def load_look_profile(path: str | Path) -> dict:
+    profile = json.loads(Path(path).read_text(encoding="utf-8"))
+    validate_look_profile(profile)
+    return profile
 
 
 def validate_asset_manifest(manifest: dict) -> None:
@@ -533,13 +577,31 @@ def render_quality_gate(
     facial_size: int = 960,
     facial_samples: int = 32,
     performance_gate_mode: str = "full",
+    performance_engine: str | None = None,
+    performance_samples: int | None = None,
+    look_profile_path: str | Path | None = None,
 ) -> dict:
     if int(samples) <= 0 or int(facial_size) <= 0 or int(facial_samples) <= 0:
         raise ValueError("samples and facial size must be positive")
     if performance_gate_mode not in {"poses", "full"}:
         raise ValueError("performance_gate_mode must be 'poses' or 'full'")
+    if performance_engine is not None and performance_engine not in RENDER_ENGINES:
+        raise ValueError("performance_engine is not supported")
+    if performance_samples is not None and int(performance_samples) <= 0:
+        raise ValueError("performance_samples must be positive")
     config = json.loads(Path(config_path).read_text(encoding="utf-8"))
     manifest = load_asset_manifest(manifest_path)
+    look_profile = load_look_profile(look_profile_path) if look_profile_path else None
+    look_profile_sha256 = (
+        hashlib.sha256(Path(look_profile_path).read_bytes()).hexdigest()
+        if look_profile_path
+        else None
+    )
+
+    def attach_look(plan: dict) -> None:
+        if look_profile:
+            plan["look_profile"] = look_profile
+            plan["look_profile_sha256"] = look_profile_sha256
     output = Path(output_dir).resolve()
     plans_dir = output / "plans"
     frames_root = output / "frames"
@@ -556,6 +618,7 @@ def render_quality_gate(
         plan = compile_plan(config, profile=profile, quality="production")
         plan["render"]["engine"] = engine
         plan["render"]["samples"] = int(samples)
+        attach_look(plan)
         plan["asset_library"] = {
             "asset_id": manifest["asset_id"],
             "asset_version": manifest["asset_version"],
@@ -596,6 +659,7 @@ def render_quality_gate(
         "asset_version": manifest["asset_version"],
         "path": library.name,
     }
+    attach_look(face_plan)
     face_plan_path = plans_dir / "june-facial-performance.json"
     face_plan_path.write_text(json.dumps(face_plan, indent=2) + "\n", encoding="utf-8")
     face_frames_dir = frames_root / "facial-performance"
@@ -611,6 +675,7 @@ def render_quality_gate(
     deformation_gate = None
     if manifest["quality_gate"].get("deformation_pose_matrix_required"):
         deform_plan, deform_entries = deformation_pose_plan(config, engine=engine, samples=int(samples))
+        attach_look(deform_plan)
         deform_plan["asset_library"] = {
             "asset_id": manifest["asset_id"],
             "asset_version": manifest["asset_version"],
@@ -642,9 +707,10 @@ def render_quality_gate(
         performance_plan, performance_entries = golden_performance_plan(
             config,
             performance_contract_path,
-            engine=manifest["quality_gate"]["continuous_engine"],
-            samples=1,
+            engine=performance_engine or manifest["quality_gate"]["continuous_engine"],
+            samples=int(performance_samples or 1),
         )
+        attach_look(performance_plan)
         performance_plan["asset_library"] = {
             "asset_id": manifest["asset_id"],
             "asset_version": manifest["asset_version"],
@@ -699,6 +765,16 @@ def render_quality_gate(
             if engine == manifest["quality_gate"].get("review_engine")
             else "continuous_geometry"
         ),
+        "look_profile": (
+            {
+                "look_id": look_profile["look_id"],
+                "style_version": look_profile["style_version"],
+                "engine": look_profile["engine"],
+                "sha256": look_profile_sha256,
+            }
+            if look_profile
+            else None
+        ),
         "results": results,
         "facial_performance_gate": {
             "engine": face_plan["render"]["engine"],
@@ -740,6 +816,13 @@ def _parse_args() -> argparse.Namespace:
         default="full",
         help="Render only the nine contracted poses for fast CI or all 453 frames for promotion.",
     )
+    parser.add_argument(
+        "--performance-engine",
+        choices=tuple(sorted(RENDER_ENGINES)),
+        help="Override the performance gate engine; defaults to the manifest continuous engine.",
+    )
+    parser.add_argument("--performance-samples", type=int)
+    parser.add_argument("--look-profile", help="Versioned NPR look-profile JSON applied to every render plan.")
     return parser.parse_args()
 
 
@@ -757,6 +840,9 @@ def main() -> None:
         facial_size=args.facial_size,
         facial_samples=args.facial_samples,
         performance_gate_mode=args.performance_gate,
+        performance_engine=args.performance_engine,
+        performance_samples=args.performance_samples,
+        look_profile_path=args.look_profile,
     )
     print(json.dumps(report, indent=2))
 
