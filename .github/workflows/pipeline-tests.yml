@@ -86,6 +86,7 @@ jobs:
             --facial-engine BLENDER_WORKBENCH \
             --facial-size 480 \
             --facial-samples 1 \
+            --performance-gate poses \
             --output-dir asset-quality-out
           find asset-quality-out -maxdepth 3 -type f -print
       - name: Upload v5 deformation review
