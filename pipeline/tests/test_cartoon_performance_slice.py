@@ -42,9 +42,10 @@ class CartoonPerformanceSliceTests(unittest.TestCase):
             [171, 168, 114],
         )
         self.assertEqual(sum(shot["frame_count"] for shot in self.manifest["shots"]), 453)
-        self.assertEqual(
+        self.assertAlmostEqual(
             sum(float(shot["duration_seconds"]) for shot in self.manifest["shots"]),
             15.1,
+            places=9,
         )
 
     def test_captions_are_shifted_into_the_slice_clock(self):
