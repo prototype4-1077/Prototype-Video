@@ -1382,30 +1382,43 @@ def _make_june_v4(bpy, mathutils, materials: dict):
     return rig, mouth, face_controls
 
 
+MOUTH_V5_SHAPE_SCALE = {
+    "A": (1.00, 1.25),
+    "B": (0.74, 1.65),
+    "C": (1.20, 0.68),
+    "D": (0.90, 1.42),
+    "E": (1.22, 0.44),
+    "F": (0.72, 0.72),
+    "G": (0.64, 1.50),
+    "H": (0.56, 1.08),
+    "X": (1.00, 0.14),
+}
+
+
 def _make_mouth_v5(bpy, rig, materials: dict):
     """Build a camera-facing mouth cavity that survives beard and mustache overlap."""
+    lip_rim = _sphere(
+        bpy,
+        "June_Mouth_Lip_Rim",
+        (0.0, -0.423, 2.490),
+        (0.142, 0.014, 0.043),
+        materials["lip"],
+        segments=48,
+        rings=24,
+    )
+    lip_rim["ce_mouth_role"] = "deforming_lip_rim"
+    _parent_to_bone(lip_rim, rig, "jaw")
     mouth = _sphere(
         bpy,
         "June_Mouth_Viseme",
-        (0.0, -0.405, 2.490),
-        (0.170, 0.018, 0.050),
+        (0.0, -0.432, 2.490),
+        (0.132, 0.010, 0.034),
         materials["mouth_interior"],
         segments=48,
         rings=24,
     )
     basis = mouth.shape_key_add(name="Basis")
-    shape_scale = {
-        "A": (1.00, 1.30),
-        "B": (0.72, 1.75),
-        "C": (1.25, 0.72),
-        "D": (0.90, 1.50),
-        "E": (1.30, 0.48),
-        "F": (0.70, 0.78),
-        "G": (0.62, 1.62),
-        "H": (0.55, 1.18),
-        "X": (1.00, 0.15),
-    }
-    for name, (width, height) in shape_scale.items():
+    for name, (width, height) in MOUTH_V5_SHAPE_SCALE.items():
         key = mouth.shape_key_add(name=name)
         for source, target in zip(basis.data, key.data):
             target.co.x = source.co.x * width
@@ -1416,18 +1429,12 @@ def _make_mouth_v5(bpy, rig, materials: dict):
     teeth = _box(
         bpy,
         "June_Upper_Teeth",
-        (0.0, -0.426, 2.514),
-        (0.074, 0.004, 0.012),
+        (0.0, -0.445, 2.508),
+        (0.060, 0.003, 0.009),
         materials["teeth"],
-        bevel=0.008,
+        bevel=0.006,
     )
     _parent_to_bone(teeth, rig, "jaw")
-    for label, points in (
-        ("Upper", ((-0.165, -0.429, 2.500), (-0.085, -0.431, 2.535), (0.0, -0.432, 2.542), (0.085, -0.431, 2.535), (0.165, -0.429, 2.500))),
-        ("Lower", ((-0.155, -0.429, 2.478), (-0.078, -0.431, 2.450), (0.0, -0.432, 2.443), (0.078, -0.431, 2.450), (0.155, -0.429, 2.478))),
-    ):
-        lip = _curve(bpy, f"June_Lip_{label}", points, materials["lip"], bevel_depth=0.008)
-        _parent_to_bone(lip, rig, "jaw")
     return mouth
 
 
@@ -2060,6 +2067,13 @@ def _animate_mouth(mouth, plan: dict) -> None:
         mouth.data.shape_keys.animation_data_clear()
     keys = mouth.data.shape_keys.key_blocks
     shapes = tuple("ABCDEFGHX")
+    lip_rim = next(
+        (obj for obj in mouth.parent.children if obj.name == "June_Mouth_Lip_Rim"),
+        None,
+    )
+    if lip_rim is not None and lip_rim.animation_data:
+        lip_rim.animation_data_clear()
+    lip_base = lip_rim.scale.copy() if lip_rim is not None else None
     cues = plan.get("mouth_cues") or [{"frame_start": 1, "frame_end": plan["frame_end"], "shape": "X"}]
     for cue in cues:
         frame = int(cue["frame_start"])
@@ -2067,14 +2081,30 @@ def _animate_mouth(mouth, plan: dict) -> None:
         for shape in shapes:
             keys[shape].value = 1.0 if shape == active else 0.0
             keys[shape].keyframe_insert(data_path="value", frame=frame)
+        if lip_rim is not None and active in MOUTH_V5_SHAPE_SCALE:
+            width, height = MOUTH_V5_SHAPE_SCALE[active]
+            lip_rim.scale = lip_base.copy()
+            lip_rim.scale.x *= width
+            lip_rim.scale.z *= height
+            lip_rim.keyframe_insert(data_path="scale", frame=frame)
     final_frame = int(plan["frame_end"])
     for shape in shapes:
         keys[shape].value = 1.0 if shape == "X" else 0.0
         keys[shape].keyframe_insert(data_path="value", frame=final_frame)
+    if lip_rim is not None:
+        width, height = MOUTH_V5_SHAPE_SCALE["X"]
+        lip_rim.scale = lip_base.copy()
+        lip_rim.scale.x *= width
+        lip_rim.scale.z *= height
+        lip_rim.keyframe_insert(data_path="scale", frame=final_frame)
     action = mouth.data.shape_keys.animation_data.action
     for curve in action.fcurves:
         for point in curve.keyframe_points:
             point.interpolation = "CONSTANT"
+    if lip_rim is not None and lip_rim.animation_data and lip_rim.animation_data.action:
+        for curve in lip_rim.animation_data.action.fcurves:
+            for point in curve.keyframe_points:
+                point.interpolation = "CONSTANT"
 
 
 def _animate_expressions(head, plan: dict, face_controls: dict | None = None) -> None:
@@ -2087,18 +2117,68 @@ def _animate_expressions(head, plan: dict, face_controls: dict | None = None) ->
         for name in ("smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise")
         if keys.get(name) is not None
     )
+    if face_controls:
+        for obj in (
+            (face_controls.get("brows") or [])
+            + (face_controls.get("upper_lids") or [])
+            + (face_controls.get("lower_lids") or [])
+        ):
+            if obj.animation_data:
+                obj.animation_data_clear()
     facial_cues = plan.get("facial_performance_cues") or []
     if facial_cues:
+        brows = (face_controls.get("brows") or []) if face_controls else []
+        upper_lids = (face_controls.get("upper_lids") or []) if face_controls else []
+        lower_lids = (face_controls.get("lower_lids") or []) if face_controls else []
+        brow_bases = [(brow.location.copy(), brow.rotation_euler.copy()) for brow in brows]
+        upper_bases = [lid.location.copy() for lid in upper_lids]
+        lower_bases = [lid.location.copy() for lid in lower_lids]
+        brow_lifts = {
+            "smile": 0.006, "thoughtful": 0.003, "soft_chuckle": 0.010,
+            "brow_raise": 0.034, "brow_knit": -0.006, "squint": -0.004, "cheek_raise": 0.012,
+        }
+        lid_shapes = {
+            "smile": (0.003, 0.002), "soft_chuckle": (0.014, 0.007),
+            "squint": (0.026, 0.011), "cheek_raise": (0.012, 0.008),
+        }
         for cue in facial_cues:
             active = cue.get("expression")
             strength = float(cue.get("strength", 1.0))
+            frame = int(cue["frame_start"])
             for control in controls:
                 keys[control].value = strength if control == active else 0.0
-                keys[control].keyframe_insert(data_path="value", frame=int(cue["frame_start"]))
+                keys[control].keyframe_insert(data_path="value", frame=frame)
+            for index, brow in enumerate(brows):
+                base_location, base_rotation = brow_bases[index]
+                brow.location = base_location.copy()
+                brow.rotation_euler = base_rotation.copy()
+                brow.location.z += brow_lifts.get(str(active), 0.0) * strength
+                if active == "thoughtful":
+                    brow.location.z += (0.010 if index == 0 else -0.006) * strength
+                    brow.rotation_euler[1] += math.radians((-6.0 if index == 0 else 4.0) * strength)
+                elif active == "brow_knit":
+                    brow.location.x += (0.012 if index == 0 else -0.012) * strength
+                    brow.rotation_euler[1] += math.radians((8.0 if index == 0 else -8.0) * strength)
+                brow.keyframe_insert(data_path="location", frame=frame)
+                brow.keyframe_insert(data_path="rotation_euler", frame=frame)
+            upper_drop, lower_raise = lid_shapes.get(str(active), (0.0, 0.0))
+            for index, upper in enumerate(upper_lids):
+                upper.location = upper_bases[index].copy()
+                upper.location.z -= upper_drop * strength
+                upper.keyframe_insert(data_path="location", frame=frame)
+            for index, lower in enumerate(lower_lids):
+                lower.location = lower_bases[index].copy()
+                lower.location.z += lower_raise * strength
+                lower.keyframe_insert(data_path="location", frame=frame)
         action = head.data.shape_keys.animation_data.action
         for curve in action.fcurves:
             for point in curve.keyframe_points:
                 point.interpolation = "CONSTANT"
+        for obj in brows + upper_lids + lower_lids:
+            if obj.animation_data and obj.animation_data.action:
+                for curve in obj.animation_data.action.fcurves:
+                    for point in curve.keyframe_points:
+                        point.interpolation = "CONSTANT"
         return
     shots = plan["shots"][:3]
     assignments = ("smile", "thoughtful", "soft_chuckle")

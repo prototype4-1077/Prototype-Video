@@ -178,6 +178,8 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         for marker in (
             "def _make_june_v5",
             "def _make_mouth_v5",
+            "June_Mouth_Lip_Rim",
+            "MOUTH_V5_SHAPE_SCALE",
             "CE_Arm_IK_",
             "CE_Leg_IK_",
             "CE_Eye_Aim_",
@@ -185,6 +187,8 @@ class CartoonAssetLibraryTests(unittest.TestCase):
             "June_Golden_Performance_v1",
             "def _animate_performance_props",
             'item.name.startswith("Chair_")',
+            "brow_lifts",
+            "lid_shapes",
         ):
             self.assertIn(marker, source)
 
