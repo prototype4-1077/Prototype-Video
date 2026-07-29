@@ -542,7 +542,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
 
     def test_phase15_manifest_requires_one_integrated_oral_mask(self):
         manifest = self.v8_manifest
-        self.assertEqual(manifest["asset_version"], "8.1.0")
+        self.assertEqual(manifest["asset_version"], "8.2.0")
         self.assertEqual(
             set(manifest["face"]["mouth_components"]),
             {"mouth_bag", "oral_mask", "upper_gum", "lower_gum", "upper_teeth", "lower_teeth", "tongue"},
@@ -602,13 +602,13 @@ class CartoonAssetLibraryTests(unittest.TestCase):
 
     def test_phase15_profile_and_builder_lock_the_new_representation(self):
         profile = load_look_profile(LOOK_PROFILE_V8_PATH)
-        self.assertEqual(profile["style_version"], "1.7.1")
+        self.assertEqual(profile["style_version"], "1.7.2")
         self.assertEqual(profile["render"]["temporal_window_start"], 399)
         self.assertEqual(profile["render"]["temporal_window_frames"], 17)
         source = BLENDER_SOURCE.read_text(encoding="utf-8")
         for marker in (
             "def _make_june_v8", "def _make_oral_mask_v8", "June_Oral_Mask",
-            "cheek_integrated_oral_mask", "fitted_beard_muzzle_soft_tissue",
+            "cheek_integrated_oral_mask", "fitted_beard_muzzle_soft_tissue", "def _make_moustache_v8",
             "per_viseme_groove_mask", "MOUTH_V8_POSES",
         ):
             self.assertIn(marker, source)

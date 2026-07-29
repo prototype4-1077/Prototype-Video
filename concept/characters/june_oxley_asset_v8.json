@@ -1,9 +1,9 @@
 {
   "contract_version": 1,
   "asset_id": "june_oxley_hero_rig",
-  "asset_version": "8.1.0",
+  "asset_version": "8.2.0",
   "character_id": "june_oxley",
-  "display_name": "June Oxley Fitted-Muzzle Performance Hero Rig v8.1",
+  "display_name": "June Oxley Fitted-Muzzle Performance Hero Rig v8.2",
   "source_of_truth": [
     "concept/characters/JUNE_OXLEY.md",
     "concept/characters/june_oxley.json",
@@ -94,7 +94,7 @@
     "dental_visibility_per_viseme": true,
     "lip_model": "a narrow open annulus forms the lip aperture while broad viseme motion deforms the existing fitted beard and muzzle with asymmetric corner anchors",
     "dental_parenting": "v7 recessed dual dentition retained; exposure and groove depth are masked per viseme",
-    "facial_hair_follow": "bounded jaw follow plus A-H-X muzzle shape keys on the fitted beard; the oral-mask outer edge is planted into the beard depth field",
+    "facial_hair_follow": "bounded jaw follow plus A-H-X muzzle shape keys on the fitted beard; a layered thin-strand moustache replaces the legacy twin slabs",
     "beard_jaw_follow_max": 0.30
   },
   "hands": {
@@ -132,7 +132,7 @@
     "matrix_visemes": ["A", "B", "C", "D", "E", "F", "G", "H", "X"],
     "matrix_expressions": ["smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise"],
     "required_checks": [
-      "single narrow cheek-integrated oral mask", "no detached lip objects", "asymmetric left and right corner anchors",
+      "single narrow cheek-integrated oral mask", "no detached lip objects", "layered thin-strand moustache", "asymmetric left and right corner anchors",
       "per-viseme fitted-beard muzzle deformation", "per-viseme cheek deformation", "per-viseme dental exposure", "per-viseme tooth-groove visibility",
       "all nine visemes in one 3x3 close-up matrix", "frames 399-415 temporal continuity",
       "artifact reopened from generated blend", "exact 453-frame performance clock"

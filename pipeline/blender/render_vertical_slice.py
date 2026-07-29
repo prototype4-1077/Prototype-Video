@@ -2217,8 +2217,8 @@ def _oral_mask_v8_vertices(pose: dict, *, segments: int = 48):
     aperture_width = 0.104 * float(pose["width"]) * (1.0 - 0.18 * roundness)
     top_height = 0.0012 + 0.0200 * opening
     bottom_height = 0.0012 + 0.0300 * opening
-    upper_lip = 0.0040 + 0.0050 * float(pose["upper_roll"])
-    lower_lip = 0.0045 + 0.0055 * float(pose["lower_roll"])
+    upper_lip = 0.0024 + 0.0040 * float(pose["upper_roll"])
+    lower_lip = 0.0028 + 0.0045 * float(pose["lower_roll"])
     for ring in range(3):
         for index in range(segments):
             angle = math.tau * index / segments
@@ -2243,8 +2243,8 @@ def _oral_mask_v8_vertices(pose: dict, *, segments: int = 48):
                 # edge is planted on the existing fitted beard in depth, which
                 # prevents the white clamshell silhouette from the first v8.
                 width = aperture_width + 0.020 + 0.005 * cheek
-                upper_height = top_height + upper_lip + 0.013
-                lower_height = bottom_height + lower_lip + 0.014
+                upper_height = top_height + upper_lip + 0.010
+                lower_height = bottom_height + lower_lip + 0.011
             x = width * horizontal * (1.0 + 0.018 * cheek)
             z = (upper_height if vertical >= 0.0 else -lower_height) * arch
             z += (0.006 if ring < 2 else 0.008) * corner * corner_weight
@@ -2295,10 +2295,10 @@ def _make_oral_mask_v8(bpy, materials: dict):
         for point, coordinate in zip(key.data, coordinates):
             point.co = coordinate
     solidify = obj.modifiers.new("Oral Mask Soft-Tissue Thickness", "SOLIDIFY")
-    solidify.thickness = 0.0045
+    solidify.thickness = 0.0030
     solidify.offset = 0.0
     bevel = obj.modifiers.new("Oral Mask Soft Edge", "BEVEL")
-    bevel.width = 0.0020
+    bevel.width = 0.0010
     bevel.segments = 2
     obj["ce_mouth_component"] = "cheek_integrated_oral_mask"
     obj["ce_deformation_model"] = "three_ring_corner_cheek_shape_keys"
@@ -2339,6 +2339,49 @@ def _add_mouth_v8_beard_keys(beard) -> None:
     beard["ce_beard_deformation"] = "expression_follow_plus_per_viseme_muzzle_v3"
 
 
+def _make_moustache_v8(bpy, rig, material):
+    """Replace the legacy twin slabs with lighter tapered-looking strands."""
+    for name in ("June_Moustache_L", "June_Moustache_R"):
+        obj = bpy.data.objects.get(name)
+        if obj is not None:
+            bpy.data.objects.remove(obj, do_unlink=True)
+    specifications = (
+        (
+            "L",
+            ((-0.112, -0.306, 2.526), (-0.058, -0.337, 2.536), (-0.008, -0.345, 2.525)),
+            ((-0.105, -0.307, 2.512), (-0.054, -0.336, 2.520), (-0.014, -0.343, 2.513)),
+            0.0125,
+        ),
+        (
+            "R",
+            ((0.008, -0.345, 2.525), (0.060, -0.337, 2.534), (0.113, -0.303, 2.518)),
+            ((0.014, -0.343, 2.513), (0.056, -0.335, 2.518), (0.105, -0.304, 2.507)),
+            0.0115,
+        ),
+    )
+    primaries = []
+    for side, primary_points, feather_points, bevel_depth in specifications:
+        primary = _curve(
+            bpy,
+            f"June_Moustache_{side}",
+            primary_points,
+            material,
+            bevel_depth=bevel_depth,
+        )
+        feather = _curve(
+            bpy,
+            f"June_Moustache_Feather_{side}",
+            feather_points,
+            material,
+            bevel_depth=0.0050,
+        )
+        for obj in (primary, feather):
+            _parent_to_bone(obj, rig, "head")
+            obj["ce_moustache_deformation"] = "tapered_layered_overlap_v2"
+        primaries.append(primary)
+    return primaries
+
+
 def _replace_v8_dental_shape_keys(obj, *, upper: bool, groove: bool) -> None:
     """Upgrade v7 dental keys with exposure and groove-visibility controls."""
     shape_keys = getattr(obj.data, "shape_keys", None)
@@ -2372,6 +2415,7 @@ def _make_june_v8(bpy, mathutils, materials: dict):
             bpy.data.objects.remove(obj, do_unlink=True)
     oral_mask = _make_oral_mask_v8(bpy, materials)
     _parent_to_bone(oral_mask, rig, "head")
+    face_controls["moustache"] = _make_moustache_v8(bpy, rig, materials["hair"])
     beard = bpy.data.objects.get("June_Fitted_Beard")
     if beard is not None:
         _add_mouth_v8_beard_keys(beard)
@@ -2383,6 +2427,15 @@ def _make_june_v8(bpy, mathutils, materials: dict):
                 upper=role.startswith("upper"),
                 groove=role.endswith("groove"),
             )
+            if role == "upper_teeth":
+                obj.scale.x *= 1.04
+                obj.scale.z *= 1.55
+                obj["ce_dental_volume_gain"] = 1.55
+            elif role == "lower_teeth":
+                obj.scale.z *= 1.35
+                obj["ce_dental_volume_gain"] = 1.35
+            elif role.endswith("groove"):
+                obj.scale.z *= 1.25
     mouth["ce_mouth_rig_version"] = 3
     mouth["ce_mouth_topology"] = "cheek_integrated_oral_mask_over_recessed_mouth_bag_v1"
     face_controls["lower_lip"] = None

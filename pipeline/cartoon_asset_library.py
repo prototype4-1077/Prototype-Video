@@ -687,6 +687,7 @@ def _facial_matrix(ffmpeg: str, frames_dir: Path, entries: list[dict], output: P
     command = [ffmpeg, "-y"]
     for entry in entries:
         command.extend(["-i", str(frames_dir / f"frame_{entry['frame']:04d}.png")])
+    cell = 480 if len(entries) == len(FACIAL_GATE_VISEMES) else 320
     filters = []
     labels = []
     for index, entry in enumerate(entries):
@@ -694,14 +695,14 @@ def _facial_matrix(ffmpeg: str, frames_dir: Path, entries: list[dict], output: P
         labels.append(f"[{label}]")
         safe_label = str(entry["label"]).replace("'", "")
         filters.append(
-            f"[{index}:v]scale=320:320:force_original_aspect_ratio=decrease,"
-            f"pad=320:320:(ow-iw)/2:(oh-ih)/2,"
-            f"drawtext=text='{safe_label}':x=16:y=16:fontsize=30:fontcolor=white:"
+            f"[{index}:v]scale={cell}:{cell}:force_original_aspect_ratio=decrease,"
+            f"pad={cell}:{cell}:(ow-iw)/2:(oh-ih)/2,"
+            f"drawtext=text='{safe_label}':x=20:y=20:fontsize={int(cell * 0.095)}:fontcolor=white:"
             f"box=1:boxcolor=black@0.62[{label}]"
         )
     columns = 3 if len(entries) == len(FACIAL_GATE_VISEMES) else 4
     layout = "|".join(
-        f"{(index % columns) * 320}_{(index // columns) * 320}"
+        f"{(index % columns) * cell}_{(index // columns) * cell}"
         for index in range(len(entries))
     )
     filters.append("".join(labels) + f"xstack=inputs={len(entries)}:layout={layout}[matrix]")
@@ -715,8 +716,8 @@ def _facial_matrix(ffmpeg: str, frames_dir: Path, entries: list[dict], output: P
         for entry in entries:
             fallback.extend(["-i", str(frames_dir / f"frame_{entry['frame']:04d}.png")])
         fallback_filters = [
-            f"[{index}:v]scale=320:320:force_original_aspect_ratio=decrease,"
-            f"pad=320:320:(ow-iw)/2:(oh-ih)/2[u{index}]"
+            f"[{index}:v]scale={cell}:{cell}:force_original_aspect_ratio=decrease,"
+            f"pad={cell}:{cell}:(ow-iw)/2:(oh-ih)/2[u{index}]"
             for index in range(len(entries))
         ]
         fallback_filters.append(
