@@ -2075,9 +2075,10 @@ def _animate_mouth(mouth, plan: dict) -> None:
         lip_rim.animation_data_clear()
     lip_base = lip_rim.scale.copy() if lip_rim is not None else None
     cues = plan.get("mouth_cues") or [{"frame_start": 1, "frame_end": plan["frame_end"], "shape": "X"}]
-    for cue in cues:
-        frame = int(cue["frame_start"])
-        active = str(cue["shape"])
+    lip_contract = plan.get("lip_sync_contract") or {}
+    transition_frames = max(0, int(lip_contract.get("transition_frames", 0)))
+
+    def key_state(frame: int, active: str) -> None:
         for shape in shapes:
             keys[shape].value = 1.0 if shape == active else 0.0
             keys[shape].keyframe_insert(data_path="value", frame=frame)
@@ -2087,6 +2088,16 @@ def _animate_mouth(mouth, plan: dict) -> None:
             lip_rim.scale.x *= width
             lip_rim.scale.z *= height
             lip_rim.keyframe_insert(data_path="scale", frame=frame)
+
+    for index, cue in enumerate(cues):
+        frame = int(cue["frame_start"])
+        active = str(cue["shape"])
+        if index and transition_frames:
+            previous = cues[index - 1]
+            anticipation_frame = max(int(previous["frame_start"]), frame - transition_frames)
+            if anticipation_frame < frame:
+                key_state(anticipation_frame, str(previous["shape"]))
+        key_state(frame, active)
     final_frame = int(plan["frame_end"])
     for shape in shapes:
         keys[shape].value = 1.0 if shape == "X" else 0.0
@@ -2098,13 +2109,14 @@ def _animate_mouth(mouth, plan: dict) -> None:
         lip_rim.scale.z *= height
         lip_rim.keyframe_insert(data_path="scale", frame=final_frame)
     action = mouth.data.shape_keys.animation_data.action
+    interpolation = "LINEAR" if transition_frames else "CONSTANT"
     for curve in action.fcurves:
         for point in curve.keyframe_points:
-            point.interpolation = "CONSTANT"
+            point.interpolation = interpolation
     if lip_rim is not None and lip_rim.animation_data and lip_rim.animation_data.action:
         for curve in lip_rim.animation_data.action.fcurves:
             for point in curve.keyframe_points:
-                point.interpolation = "CONSTANT"
+                point.interpolation = interpolation
 
 
 def _animate_expressions(head, plan: dict, face_controls: dict | None = None) -> None:

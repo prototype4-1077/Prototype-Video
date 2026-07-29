@@ -151,7 +151,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         self.assertEqual(manifest["performance_contract"]["duration_seconds"], 15.1)
         self.assertEqual(
             manifest["performance_contract"]["sha256"],
-            "cd7a458fbb024cb27205ccfa76f3ed5dc566418f94f5d00155c40da8c430d5af",
+            "173f83177095799d5b72e0888718b2a55fdf9bd0b187652983a4e17c439272c9",
         )
         controls = manifest["rig"]["production_controls"]
         self.assertEqual(
@@ -269,6 +269,20 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         self.assertFalse(render["motion_blur"])
         self.assertEqual(render["temporal_window_start"], 340)
         self.assertEqual(render["temporal_window_frames"], 30)
+
+    def test_golden_performance_uses_audio_derived_rhubarb_cues(self):
+        plan, _ = golden_performance_plan(self.golden_config, PERFORMANCE_PATH)
+        contract = plan["lip_sync_contract"]
+        self.assertEqual(contract["generator"], "Rhubarb Lip Sync 1.14.0")
+        self.assertEqual(contract["cue_count"], 77)
+        self.assertEqual(contract["transition_frames"], 2)
+        self.assertEqual(plan["mouth_cues"][0]["shape"], "X")
+        self.assertEqual(plan["mouth_cues"][1]["shape"], "B")
+        self.assertEqual(plan["mouth_cues"][-1]["shape"], "X")
+        self.assertEqual(plan["mouth_cues"][-1]["frame_end"], 453)
+        source = BLENDER_SOURCE.read_text(encoding="utf-8")
+        self.assertIn("anticipation_frame", source)
+        self.assertIn('interpolation = "LINEAR" if transition_frames else "CONSTANT"', source)
 
     def test_temporal_review_matrix_samples_only_rendered_window(self):
         entries = temporal_review_entries(340, 30)

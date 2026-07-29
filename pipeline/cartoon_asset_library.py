@@ -10,6 +10,7 @@ import shutil
 import subprocess
 from typing import Any
 
+from pipeline.cartoon_lipsync import cues_to_frames
 from pipeline.cartoon_motion import RENDER_PROFILES
 from pipeline.cartoon_performance_slice import validate_key_pose_timing
 from pipeline.cartoon_vertical_slice import _assemble_video, _contact_sheet, _render_frames, compile_plan
@@ -505,19 +506,30 @@ def golden_performance_plan(
     if int(plan["frame_end"]) != 453 or len(entries) != 9:
         raise ValueError("performance gate must compile nine poses across exactly 453 frames")
 
-    shapes = tuple("AECDBFGH")
-    mouth_cues = []
-    for shot_index, shot in enumerate(plan["shots"]):
-        cursor = int(shot["frame_start"])
-        end = int(shot["frame_end"])
-        cue_index = 0
-        while cursor <= end:
-            cue_end = min(end, cursor + 5)
-            shape = "X" if cue_index % 6 == 5 else shapes[(shot_index * 3 + cue_index) % len(shapes)]
-            mouth_cues.append({"frame_start": cursor, "frame_end": cue_end, "shape": shape})
-            cursor = cue_end + 1
-            cue_index += 1
-    plan["mouth_cues"] = mouth_cues
+    lip_sync = performance.get("lip_sync") or {}
+    lip_sync_path = performance_path.parent / str(lip_sync.get("path") or "")
+    if not lip_sync_path.is_file():
+        raise ValueError("performance gate requires a versioned Rhubarb lip-sync contract")
+    actual_lip_sha256 = hashlib.sha256(lip_sync_path.read_bytes()).hexdigest()
+    if actual_lip_sha256 != str(lip_sync.get("sha256") or "").lower():
+        raise ValueError("performance Rhubarb lip-sync contract digest changed")
+    lip_payload = json.loads(lip_sync_path.read_text(encoding="utf-8"))
+    plan["mouth_cues"] = cues_to_frames(lip_payload, fps=30, duration=15.1)
+    if (
+        len(plan["mouth_cues"]) != int(lip_sync.get("cue_count", 0))
+        or int(plan["mouth_cues"][-1]["frame_end"]) != 453
+        or str(plan["mouth_cues"][-1]["shape"]) != "X"
+    ):
+        raise ValueError("performance Rhubarb cues must close the exact 453-frame clock on X")
+    plan["lip_sync_contract"] = {
+        "path": lip_sync_path.name,
+        "sha256": actual_lip_sha256,
+        "generator": lip_sync.get("generator"),
+        "recognizer": lip_sync.get("recognizer"),
+        "cue_count": len(plan["mouth_cues"]),
+        "transition_frames": int(lip_sync.get("transition_frames", 2)),
+        "interpolation": str(lip_sync.get("interpolation") or "LINEAR"),
+    }
     plan["facial_performance_cues"] = [
         {"frame_start": 1, "frame_end": 171, "expression": "smile", "strength": 0.38},
         {"frame_start": 172, "frame_end": 275, "expression": "smile", "strength": 0.68},
