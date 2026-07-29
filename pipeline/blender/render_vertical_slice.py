@@ -157,6 +157,8 @@ def _make_materials(bpy, *, asset_major: int = 2) -> dict:
         "mouth": _material(bpy, "June Mouth", (0.20, 0.025, 0.025, 1), roughness=0.45),
         "mouth_interior": _material(bpy, "June Mouth Interior", (0.105, 0.012, 0.014, 1), roughness=0.55),
         "lip": _material(bpy, "June Weathered Lip", (0.38, 0.095, 0.075, 1), roughness=0.62),
+        "gum": _material(bpy, "June Healthy Gum", (0.34, 0.055, 0.050, 1), roughness=0.58),
+        "tongue": _material(bpy, "June Tongue", (0.48, 0.085, 0.075, 1), roughness=0.54),
         "teeth": _material(bpy, "June Teeth", (0.78, 0.72, 0.58, 1), roughness=0.48),
         "sole": _material(bpy, "June Boot Sole", (0.055, 0.030, 0.022, 1), texture_scale=10.0, bump_strength=0.12),
     }
@@ -1395,6 +1397,22 @@ MOUTH_V5_SHAPE_SCALE = {
 }
 
 
+# Artist-authored mouth poses.  These values describe anatomy, not global
+# object scale: the mouth bag keeps its upper attachment, the two lips change
+# contour independently, and dental/tongue exposure is bounded per phoneme.
+MOUTH_V7_POSES = {
+    "A": {"width": 1.00, "opening": 0.48, "round": 0.12, "upper_roll": 0.18, "lower_roll": 0.20, "upper_teeth": 0.42, "lower_teeth": 0.04, "tongue": 0.12, "beard_follow": 0.18},
+    "B": {"width": 0.82, "opening": 0.82, "round": 0.58, "upper_roll": 0.26, "lower_roll": 0.30, "upper_teeth": 0.52, "lower_teeth": 0.08, "tongue": 0.18, "beard_follow": 0.28},
+    "C": {"width": 1.16, "opening": 0.38, "round": 0.04, "upper_roll": 0.12, "lower_roll": 0.14, "upper_teeth": 0.62, "lower_teeth": 0.06, "tongue": 0.20, "beard_follow": 0.12},
+    "D": {"width": 0.98, "opening": 0.72, "round": 0.24, "upper_roll": 0.24, "lower_roll": 0.28, "upper_teeth": 0.48, "lower_teeth": 0.12, "tongue": 0.26, "beard_follow": 0.24},
+    "E": {"width": 1.18, "opening": 0.24, "round": 0.02, "upper_roll": 0.08, "lower_roll": 0.10, "upper_teeth": 0.66, "lower_teeth": 0.04, "tongue": 0.14, "beard_follow": 0.08},
+    "F": {"width": 0.84, "opening": 0.32, "round": 0.20, "upper_roll": 0.10, "lower_roll": 0.34, "upper_teeth": 0.70, "lower_teeth": 0.00, "tongue": 0.06, "beard_follow": 0.10},
+    "G": {"width": 0.72, "opening": 0.86, "round": 0.78, "upper_roll": 0.34, "lower_roll": 0.38, "upper_teeth": 0.28, "lower_teeth": 0.06, "tongue": 0.10, "beard_follow": 0.30},
+    "H": {"width": 0.68, "opening": 0.58, "round": 0.64, "upper_roll": 0.22, "lower_roll": 0.26, "upper_teeth": 0.24, "lower_teeth": 0.26, "tongue": 0.72, "beard_follow": 0.20},
+    "X": {"width": 1.00, "opening": 0.06, "round": 0.00, "upper_roll": 0.04, "lower_roll": 0.05, "upper_teeth": 0.00, "lower_teeth": 0.00, "tongue": 0.00, "beard_follow": 0.00},
+}
+
+
 FACIAL_V6_CORRECTIVES = (
     "mouth_corner.L",
     "mouth_corner.R",
@@ -1908,6 +1926,224 @@ def _make_june_v6(bpy, mathutils, materials: dict):
     return rig, mouth, face_controls
 
 
+def _mouth_v7_lip_vertices(pose: dict, *, upper: bool, segments: int = 24, sides: int = 8):
+    """Return a closed tube following one authored lip contour."""
+    vertices = []
+    width = 0.112 * float(pose["width"])
+    opening = float(pose["opening"])
+    roll = float(pose["upper_roll"] if upper else pose["lower_roll"])
+    separation = (0.003 + 0.018 * opening) if upper else -(0.003 + 0.030 * opening)
+    radius_y = 0.0065 + 0.0030 * roll
+    radius_z = 0.0055 + 0.0025 * roll
+    for index in range(segments + 1):
+        normalized = -1.0 + 2.0 * index / segments
+        arch = (1.0 - normalized * normalized)
+        if upper:
+            cupid_peaks = math.exp(-((abs(normalized) - 0.30) / 0.18) ** 2)
+            cupid_notch = math.exp(-(normalized / 0.13) ** 2)
+            center_z = separation + 0.0065 * arch + 0.0022 * cupid_peaks - 0.0012 * cupid_notch
+        else:
+            center_z = separation - 0.0050 * arch
+        center_y = -0.0018 * arch * float(pose["round"])
+        for side in range(sides):
+            angle = math.tau * side / sides
+            vertices.append(
+                (
+                    width * normalized,
+                    center_y + radius_y * math.cos(angle),
+                    center_z + radius_z * math.sin(angle),
+                )
+            )
+    return vertices
+
+
+def _make_mouth_v7_lip(bpy, name: str, material, *, upper: bool):
+    segments = 24
+    sides = 8
+    vertices = _mouth_v7_lip_vertices(MOUTH_V7_POSES["X"], upper=upper, segments=segments, sides=sides)
+    faces = []
+    for segment in range(segments):
+        start = segment * sides
+        following = (segment + 1) * sides
+        for side in range(sides):
+            next_side = (side + 1) % sides
+            faces.append((start + side, start + next_side, following + next_side, following + side))
+    faces.append(tuple(reversed(range(sides))))
+    last = segments * sides
+    faces.append(tuple(last + side for side in range(sides)))
+    mesh = bpy.data.meshes.new(f"{name}_Data")
+    mesh.from_pydata(vertices, [], faces)
+    obj = bpy.data.objects.new(name, mesh)
+    bpy.context.collection.objects.link(obj)
+    obj.location = (0.0, -0.342, 2.490)
+    _smooth(_assign(obj, material))
+    obj.shape_key_add(name="Basis")
+    for shape, pose in MOUTH_V7_POSES.items():
+        key = obj.shape_key_add(name=shape)
+        coordinates = _mouth_v7_lip_vertices(pose, upper=upper, segments=segments, sides=sides)
+        for point, coordinate in zip(key.data, coordinates):
+            point.co = coordinate
+    obj["ce_mouth_component"] = "upper_lip" if upper else "lower_lip"
+    obj["ce_deformation_model"] = "authored_contour_shape_keys"
+    return obj
+
+
+def _add_mouth_v7_transform_keys(obj, transform) -> None:
+    basis = obj.shape_key_add(name="Basis")
+    source_coordinates = [point.co.copy() for point in basis.data]
+    for shape, pose in MOUTH_V7_POSES.items():
+        key = obj.shape_key_add(name=shape)
+        for point, source in zip(key.data, source_coordinates):
+            point.co = transform(source.copy(), pose)
+
+
+def _make_mouth_v7(bpy, rig, materials: dict):
+    """Build a recessed mouth bag with independent soft tissue and oral anatomy."""
+    mouth = _sphere(
+        bpy,
+        "June_Mouth_Viseme",
+        (0.0, -0.326, 2.478),
+        (0.112, 0.030, 0.036),
+        materials["mouth_interior"],
+        segments=48,
+        rings=24,
+    )
+    cavity_basis = mouth.shape_key_add(name="Basis")
+    for shape, pose in MOUTH_V7_POSES.items():
+        key = mouth.shape_key_add(name=shape)
+        height = 0.20 + 0.82 * float(pose["opening"])
+        depth = 0.68 + 0.42 * float(pose["opening"])
+        width = float(pose["width"]) * (1.0 - 0.10 * float(pose["round"]))
+        for source, target in zip(cavity_basis.data, key.data):
+            target.co.x = source.co.x * width
+            target.co.y = source.co.y * depth
+            target.co.z = source.co.z * height + 0.036 * (1.0 - height) * 0.65
+    mouth["ce_mouth_component"] = "recessed_mouth_bag"
+    mouth["ce_mouth_rig_version"] = 2
+    mouth["ce_mouth_topology"] = "volumetric_upper_anchored_mouth_bag_v1"
+    _parent_to_bone(mouth, rig, "head")
+
+    upper_lip = _make_mouth_v7_lip(bpy, "June_Mouth_Upper_Lip", materials["lip"], upper=True)
+    lower_lip = _make_mouth_v7_lip(bpy, "June_Mouth_Lower_Lip", materials["lip"], upper=False)
+    _parent_to_bone(upper_lip, rig, "head")
+    _parent_to_bone(lower_lip, rig, "jaw")
+
+    upper_gum = _sphere(
+        bpy, "June_Upper_Gum", (0.0, -0.337, 2.508), (0.083, 0.010, 0.011),
+        materials["gum"], segments=36, rings=16,
+    )
+    upper_gum["ce_mouth_component"] = "upper_gum"
+    _add_mouth_v7_transform_keys(
+        upper_gum,
+        lambda source, pose: type(source)((source.x, source.y, source.z - 0.010 * float(pose["upper_teeth"]))),
+    )
+    _parent_to_bone(upper_gum, rig, "head")
+
+    lower_gum = _sphere(
+        bpy, "June_Lower_Gum", (0.0, -0.337, 2.461), (0.076, 0.010, 0.010),
+        materials["gum"], segments=36, rings=16,
+    )
+    lower_gum["ce_mouth_component"] = "lower_gum"
+    _add_mouth_v7_transform_keys(
+        lower_gum,
+        lambda source, pose: type(source)((source.x, source.y, source.z + 0.012 * float(pose["lower_teeth"]))),
+    )
+    _parent_to_bone(lower_gum, rig, "jaw")
+
+    upper_teeth = []
+    lower_teeth = []
+    tooth_x = (-0.0475, -0.0285, -0.0095, 0.0095, 0.0285, 0.0475)
+    for index, x in enumerate(tooth_x):
+        upper = _box(
+            bpy,
+            "June_Upper_Teeth" if index == 2 else f"June_Upper_Tooth_{index}",
+            (x, -0.345, 2.503 - 0.0015 * abs(index - 2.5)),
+            (0.0084, 0.0055, 0.0085),
+            materials["teeth"],
+            bevel=0.0035,
+        )
+        upper["ce_mouth_component"] = "upper_teeth"
+        _add_mouth_v7_transform_keys(
+            upper,
+            lambda source, pose: type(source)((source.x, source.y, source.z - 0.013 * float(pose["upper_teeth"]))),
+        )
+        _parent_to_bone(upper, rig, "head")
+        upper_teeth.append(upper)
+
+        lower = _box(
+            bpy,
+            "June_Lower_Teeth" if index == 2 else f"June_Lower_Tooth_{index}",
+            (x * 0.94, -0.344, 2.466 + 0.0010 * abs(index - 2.5)),
+            (0.0078, 0.0050, 0.0072),
+            materials["teeth"],
+            bevel=0.0030,
+        )
+        lower["ce_mouth_component"] = "lower_teeth"
+        _add_mouth_v7_transform_keys(
+            lower,
+            lambda source, pose: type(source)((source.x, source.y, source.z + 0.014 * float(pose["lower_teeth"]))),
+        )
+        _parent_to_bone(lower, rig, "jaw")
+        lower_teeth.append(lower)
+
+    tongue = _sphere(
+        bpy, "June_Tongue", (0.0, -0.340, 2.454), (0.074, 0.014, 0.012),
+        materials["tongue"], segments=36, rings=16,
+    )
+    tongue["ce_mouth_component"] = "tongue"
+    _add_mouth_v7_transform_keys(
+        tongue,
+        lambda source, pose: type(source)(
+            (
+                source.x * (0.92 + 0.08 * float(pose["width"])),
+                source.y - 0.004 * float(pose["tongue"]),
+                source.z + 0.020 * float(pose["tongue"]),
+            )
+        ),
+    )
+    _parent_to_bone(tongue, rig, "jaw")
+
+    components = [upper_lip, lower_lip, upper_gum, lower_gum, *upper_teeth, *lower_teeth, tongue]
+    return mouth, components
+
+
+def _make_june_v7(bpy, mathutils, materials: dict):
+    """Hero v7: volumetric mouth anatomy with bounded beard clearance."""
+    rig, old_mouth, face_controls = _make_june_v6(bpy, mathutils, materials)
+    for name in ("June_Mouth_Lip_Rim", "June_Mouth_Lower_Lip", "June_Upper_Teeth"):
+        obj = bpy.data.objects.get(name)
+        if obj is not None:
+            bpy.data.objects.remove(obj, do_unlink=True)
+    if bpy.data.objects.get(old_mouth.name) is not None:
+        bpy.data.objects.remove(old_mouth, do_unlink=True)
+    mouth, components = _make_mouth_v7(bpy, rig, materials)
+
+    beard = bpy.data.objects.get("June_Fitted_Beard")
+    if beard is not None and beard.data.shape_keys is not None:
+        beard_keys = beard.data.shape_keys.key_blocks
+        basis = beard_keys.get("Basis")
+        jaw_follow = beard_keys.get("jaw_follow")
+        if basis is not None and jaw_follow is not None:
+            for base_point, target in zip(basis.data, jaw_follow.data):
+                target.co = base_point.co + (target.co - base_point.co) * 0.38
+        clearance = beard.shape_key_add(name="mouth_clearance")
+        for source, target in zip(basis.data, clearance.data):
+            x, y, z = source.co
+            mouth_field = math.exp(-((x / 0.165) ** 2 + ((z - 2.475) / 0.105) ** 2))
+            target.co.x += (0.010 if x >= 0.0 else -0.010) * mouth_field
+            target.co.y += 0.008 * mouth_field
+            target.co.z -= 0.004 * mouth_field
+        beard["ce_beard_deformation"] = "bounded_jaw_follow_with_mouth_clearance_v2"
+
+    face_controls["lower_lip"] = next(obj for obj in components if obj.name == "June_Mouth_Lower_Lip")
+    face_controls["mouth_components"] = components
+    rig["ce_asset_major"] = 7
+    rig["ce_control_rig"] = "v6_plus_volumetric_oral_anatomy"
+    rig["ce_face_topology"] = "upper_anchored_mouth_bag_contoured_lips_dual_dentition_gums_tongue"
+    rig["ce_mouth_components"] = "mouth_bag,upper_lip,lower_lip,upper_gum,lower_gum,upper_teeth,lower_teeth,tongue"
+    return rig, mouth, face_controls
+
+
 def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
     if asset_major == 1:
         return _make_june_v1(bpy, mathutils, materials)
@@ -1921,6 +2157,8 @@ def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
         return _make_june_v5(bpy, mathutils, materials)
     if asset_major == 6:
         return _make_june_v6(bpy, mathutils, materials)
+    if asset_major == 7:
+        return _make_june_v7(bpy, mathutils, materials)
     raise ValueError(f"unsupported June asset major version: {asset_major}")
 
 
@@ -2589,6 +2827,16 @@ def _animate_mouth(mouth, plan: dict) -> None:
         mouth.data.shape_keys.animation_data_clear()
     keys = mouth.data.shape_keys.key_blocks
     shapes = tuple("ABCDEFGHX")
+    volumetric = int(mouth.get("ce_mouth_rig_version", 1)) >= 2
+    mouth_components = [
+        obj for obj in mouth.parent.children
+        if obj is not mouth and obj.get("ce_mouth_component")
+    ]
+    if volumetric:
+        for component in mouth_components:
+            shape_keys = getattr(component.data, "shape_keys", None)
+            if shape_keys is not None and shape_keys.animation_data:
+                shape_keys.animation_data_clear()
     lip_rim = next(
         (obj for obj in mouth.parent.children if obj.name == "June_Mouth_Lip_Rim"),
         None,
@@ -2622,7 +2870,15 @@ def _animate_mouth(mouth, plan: dict) -> None:
         for shape in shapes:
             keys[shape].value = 1.0 if shape == active else 0.0
             keys[shape].keyframe_insert(data_path="value", frame=frame)
-        if lip_rim is not None and active in MOUTH_V5_SHAPE_SCALE:
+        if volumetric:
+            for component in mouth_components:
+                component_keys = getattr(component.data, "shape_keys", None)
+                if component_keys is None:
+                    continue
+                for shape in shapes:
+                    component_keys.key_blocks[shape].value = 1.0 if shape == active else 0.0
+                    component_keys.key_blocks[shape].keyframe_insert(data_path="value", frame=frame)
+        elif lip_rim is not None and active in MOUTH_V5_SHAPE_SCALE:
             width, height = MOUTH_V5_SHAPE_SCALE[active]
             lip_rim.scale = lip_base.copy()
             lip_rim.scale.x *= width
@@ -2634,8 +2890,15 @@ def _animate_mouth(mouth, plan: dict) -> None:
                 lower_lip.scale.z *= max(0.52, height * 0.72)
                 lower_lip.keyframe_insert(data_path="scale", frame=frame)
         if beard_keys is not None and beard_keys.get("jaw_follow") is not None:
-            beard_keys["jaw_follow"].value = jaw_follow.get(active, 0.0)
+            follow = (
+                float(MOUTH_V7_POSES[active]["beard_follow"])
+                if volumetric else jaw_follow.get(active, 0.0)
+            )
+            beard_keys["jaw_follow"].value = follow
             beard_keys["jaw_follow"].keyframe_insert(data_path="value", frame=frame)
+            if volumetric and beard_keys.get("mouth_clearance") is not None:
+                beard_keys["mouth_clearance"].value = min(0.55, float(MOUTH_V7_POSES[active]["opening"]) * 0.48)
+                beard_keys["mouth_clearance"].keyframe_insert(data_path="value", frame=frame)
 
     for index, cue in enumerate(cues):
         frame = int(cue["frame_start"])
@@ -2650,7 +2913,15 @@ def _animate_mouth(mouth, plan: dict) -> None:
     for shape in shapes:
         keys[shape].value = 1.0 if shape == "X" else 0.0
         keys[shape].keyframe_insert(data_path="value", frame=final_frame)
-    if lip_rim is not None:
+    if volumetric:
+        for component in mouth_components:
+            component_keys = getattr(component.data, "shape_keys", None)
+            if component_keys is None:
+                continue
+            for shape in shapes:
+                component_keys.key_blocks[shape].value = 1.0 if shape == "X" else 0.0
+                component_keys.key_blocks[shape].keyframe_insert(data_path="value", frame=final_frame)
+    elif lip_rim is not None:
         width, height = MOUTH_V5_SHAPE_SCALE["X"]
         lip_rim.scale = lip_base.copy()
         lip_rim.scale.x *= width
@@ -2665,6 +2936,9 @@ def _animate_mouth(mouth, plan: dict) -> None:
     if beard_keys is not None and beard_keys.get("jaw_follow") is not None:
         beard_keys["jaw_follow"].value = 0.0
         beard_keys["jaw_follow"].keyframe_insert(data_path="value", frame=final_frame)
+        if volumetric and beard_keys.get("mouth_clearance") is not None:
+            beard_keys["mouth_clearance"].value = 0.0
+            beard_keys["mouth_clearance"].keyframe_insert(data_path="value", frame=final_frame)
     action = mouth.data.shape_keys.animation_data.action
     interpolation = "LINEAR" if transition_frames else "CONSTANT"
     for curve in action.fcurves:

@@ -51,6 +51,10 @@ REQUIRED_V6_CORRECTIVES = {
 REQUIRED_V6_HAND_POSES = {
     "relaxed", "mug_grip", "chair_support", "ledger_support", "pencil_tripod", "open_empathy",
 }
+REQUIRED_V7_MOUTH_COMPONENTS = {
+    "mouth_bag", "upper_lip", "lower_lip", "upper_gum", "lower_gum",
+    "upper_teeth", "lower_teeth", "tongue",
+}
 RENDER_ENGINES = {"CYCLES", "BLENDER_EEVEE_NEXT", "BLENDER_WORKBENCH"}
 
 
@@ -345,6 +349,20 @@ def validate_asset_manifest(manifest: dict) -> None:
             raise ValueError("Hero v6 must publish the additive micro-performance action")
         if gate.get("facial_coarticulation_required") is not True or gate.get("hand_pose_matrix_required") is not True:
             raise ValueError("Hero v6 requires facial-coarticulation and hand-pose visual gates")
+    if asset_major >= 7:
+        face = manifest.get("face") or {}
+        if _string_set(face.get("mouth_components"), "face.mouth_components") != REQUIRED_V7_MOUTH_COMPONENTS:
+            raise ValueError("Hero v7 must publish the exact volumetric mouth component set")
+        if face.get("volumetric_mouth") is not True or face.get("per_viseme_deformation") is not True:
+            raise ValueError("Hero v7 requires volumetric per-viseme oral deformation")
+        max_follow = float(face.get("beard_jaw_follow_max", 1.0))
+        if not 0.0 <= max_follow <= 0.35:
+            raise ValueError("Hero v7 beard jaw follow must be bounded at or below 0.35")
+        if gate.get("volumetric_mouth_required") is not True or gate.get("mouth_temporal_gate_required") is not True:
+            raise ValueError("Hero v7 requires volumetric-mouth and focused temporal visual gates")
+        window = gate.get("mouth_temporal_window") or []
+        if window != [399, 415]:
+            raise ValueError("Hero v7 mouth temporal gate must preserve frames 399-415")
 
 
 def load_asset_manifest(path: str | Path) -> dict:

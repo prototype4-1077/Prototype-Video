@@ -28,6 +28,7 @@ ROOT = Path(__file__).resolve().parents[2]
 MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v4.json"
 V5_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v5.json"
 V6_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v6.json"
+V7_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v7.json"
 V3_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v3.json"
 V2_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v2.json"
 V1_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v1.json"
@@ -40,6 +41,7 @@ LOOK_PROFILE_V3_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_
 LOOK_PROFILE_V4_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v4.json"
 LOOK_PROFILE_V5_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v5.json"
 LOOK_PROFILE_V6_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v6.json"
+LOOK_PROFILE_V7_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v7.json"
 BLENDER_SOURCE = ROOT / "pipeline" / "blender" / "render_vertical_slice.py"
 BLENDER_LIBRARY_SOURCE = ROOT / "pipeline" / "blender" / "build_june_asset_library.py"
 
@@ -50,6 +52,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         cls.manifest = load_asset_manifest(MANIFEST_PATH)
         cls.v5_manifest = load_asset_manifest(V5_MANIFEST_PATH)
         cls.v6_manifest = load_asset_manifest(V6_MANIFEST_PATH)
+        cls.v7_manifest = load_asset_manifest(V7_MANIFEST_PATH)
         cls.config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
         cls.golden_config = json.loads(GOLDEN_CONFIG_PATH.read_text(encoding="utf-8"))
 
@@ -455,6 +458,84 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         self.assertIn("golden_config = json.loads", library_source)
         self.assertIn("action.use_fake_user = True", library_source)
         self.assertIn("asset library did not build required action", library_source)
+
+    def test_phase14_manifest_requires_complete_volumetric_oral_anatomy(self):
+        manifest = self.v7_manifest
+        self.assertEqual(manifest["asset_version"], "7.0.0")
+        self.assertEqual(
+            set(manifest["face"]["mouth_components"]),
+            {
+                "mouth_bag", "upper_lip", "lower_lip", "upper_gum", "lower_gum",
+                "upper_teeth", "lower_teeth", "tongue",
+            },
+        )
+        self.assertTrue(manifest["face"]["volumetric_mouth"])
+        self.assertTrue(manifest["face"]["per_viseme_deformation"])
+        self.assertLessEqual(manifest["face"]["beard_jaw_follow_max"], 0.35)
+        self.assertEqual(manifest["quality_gate"]["mouth_temporal_window"], [399, 415])
+
+    def test_phase14_viseme_poses_are_bounded_and_anatomically_distinct(self):
+        poses = blender_studio.MOUTH_V7_POSES
+        self.assertEqual(set(poses), set("ABCDEFGHX"))
+        self.assertLess(poses["X"]["opening"], 0.10)
+        self.assertGreater(poses["G"]["opening"], 0.80)
+        self.assertGreater(poses["H"]["tongue"], 0.65)
+        self.assertGreater(poses["F"]["upper_teeth"], 0.65)
+        for pose in poses.values():
+            self.assertGreaterEqual(pose["width"], 0.65)
+            self.assertLessEqual(pose["width"], 1.20)
+            for field in (
+                "opening", "round", "upper_roll", "lower_roll", "upper_teeth",
+                "lower_teeth", "tongue", "beard_follow",
+            ):
+                self.assertGreaterEqual(pose[field], 0.0)
+                self.assertLessEqual(pose[field], 1.0)
+            self.assertLessEqual(pose["beard_follow"], 0.30)
+
+    def test_phase14_lip_contours_deform_without_global_object_scaling(self):
+        closed_upper = blender_studio._mouth_v7_lip_vertices(
+            blender_studio.MOUTH_V7_POSES["X"], upper=True,
+        )
+        open_upper = blender_studio._mouth_v7_lip_vertices(
+            blender_studio.MOUTH_V7_POSES["G"], upper=True,
+        )
+        closed_lower = blender_studio._mouth_v7_lip_vertices(
+            blender_studio.MOUTH_V7_POSES["X"], upper=False,
+        )
+        open_lower = blender_studio._mouth_v7_lip_vertices(
+            blender_studio.MOUTH_V7_POSES["G"], upper=False,
+        )
+        self.assertEqual(len(closed_upper), 200)
+        self.assertEqual(len(open_lower), 200)
+        self.assertNotEqual(closed_upper, open_upper)
+        self.assertGreater(max(point[2] for point in open_upper), max(point[2] for point in closed_upper))
+        self.assertLess(min(point[2] for point in open_lower), min(point[2] for point in closed_lower))
+
+    def test_phase14_profile_is_the_exact_focused_failure_window(self):
+        profile = load_look_profile(LOOK_PROFILE_V7_PATH)
+        self.assertEqual(profile["style_version"], "1.6.0")
+        self.assertEqual(profile["render"]["temporal_window_start"], 399)
+        self.assertEqual(profile["render"]["temporal_window_frames"], 17)
+        self.assertFalse(profile["render"]["motion_blur"])
+
+    def test_phase14_rejects_flat_or_overcoupled_mouth_contracts(self):
+        incomplete = copy.deepcopy(self.v7_manifest)
+        incomplete["face"]["mouth_components"].remove("tongue")
+        with self.assertRaisesRegex(ValueError, "exact volumetric mouth component"):
+            validate_asset_manifest(incomplete)
+        overcoupled = copy.deepcopy(self.v7_manifest)
+        overcoupled["face"]["beard_jaw_follow_max"] = 0.60
+        with self.assertRaisesRegex(ValueError, "bounded"):
+            validate_asset_manifest(overcoupled)
+
+    def test_phase14_builder_contains_versioned_volumetric_layers(self):
+        source = BLENDER_SOURCE.read_text(encoding="utf-8")
+        for marker in (
+            "def _make_june_v7", "def _make_mouth_v7", "June_Mouth_Upper_Lip",
+            "June_Upper_Gum", "June_Lower_Teeth", "June_Tongue",
+            "mouth_clearance", "ce_mouth_rig_version", "MOUTH_V7_POSES",
+        ):
+            self.assertIn(marker, source)
 
     def test_golden_performance_uses_audio_derived_rhubarb_cues(self):
         plan, _ = golden_performance_plan(self.golden_config, PERFORMANCE_PATH)

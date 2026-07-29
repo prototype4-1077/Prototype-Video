@@ -1,0 +1,114 @@
+{
+  "contract_version": 1,
+  "look_id": "june_oxley_storybook_npr",
+  "style_version": "1.6.0",
+  "engine": "BLENDER_EEVEE_NEXT",
+  "intent": "Focused Phase 14 proof of June's recessed volumetric mouth bag, independently contoured lips, dual dentition, gums, tongue, and bounded beard clearance under the established semantic storybook NPR finish.",
+  "palette": {
+    "ink": [0.035, 0.022, 0.020],
+    "world": [0.026, 0.045, 0.082],
+    "shadow_tint": [0.30, 0.34, 0.46],
+    "warm_light": [1.0, 0.60, 0.28],
+    "cool_light": [0.36, 0.56, 1.0]
+  },
+  "toon": {
+    "enabled": true,
+    "thresholds": [0.38, 0.72],
+    "levels": [0.34, 0.72, 1.08],
+    "exclude_materials": ["Window Warmth", "Visible Lantern Glow", "June Eye Catchlight"]
+  },
+  "outlines": {
+    "enabled": true,
+    "mode": "semantic_compositor",
+    "thickness_px": 1.0,
+    "edge_strength": 0.52,
+    "neutral_luminance": true,
+    "color": [0.035, 0.022, 0.020],
+    "silhouette": true,
+    "crease": true,
+    "material_boundary": true,
+    "semantic_layers": [
+      {
+        "name": "silhouette_contact",
+        "source": "mist",
+        "strength": 0.55,
+        "dilate_px": 1,
+        "shot_multipliers": {"wide": 1.25, "medium": 1.0, "close": 0.65}
+      },
+      {
+        "name": "form_crease",
+        "source": "normal",
+        "strength": 0.24,
+        "dilate_px": 0,
+        "shot_multipliers": {"wide": 0.55, "medium": 0.80, "close": 0.55}
+      },
+      {
+        "name": "construction_detail",
+        "source": "luminance",
+        "strength": 0.12,
+        "dilate_px": 0,
+        "shot_multipliers": {"wide": 0.25, "medium": 0.55, "close": 0.90}
+      }
+    ]
+  },
+  "lighting": {
+    "key": {"energy": 1120, "color": [1.0, 0.58, 0.28], "size": 4.2},
+    "fill": {"energy": 390, "color": [0.34, 0.52, 1.0], "size": 5.5},
+    "lantern": {"energy": 620, "color": [1.0, 0.26, 0.075], "size": 1.8},
+    "rim": {"energy": 780, "color": [0.42, 0.62, 1.0], "size": 3.2},
+    "world_strength": 0.24
+  },
+  "camera": {
+    "depth_of_field": true,
+    "f_stop": 5.6,
+    "focus_target": [0.0, 0.0, 2.25],
+    "camera_parented_focus": true
+  },
+  "compositor": {
+    "glow": true,
+    "glow_threshold": 1.15,
+    "glow_mix": -0.93
+  },
+  "acting_polish": {
+    "enabled": true,
+    "version": "1.0.0",
+    "hold_frames": 4,
+    "anticipation_frames": 5,
+    "anticipation_ratio": 0.045,
+    "breakdown_fraction": 0.56,
+    "overshoot_ratio": 0.035,
+    "settle_frames": 6,
+    "arc_height": 0.018,
+    "gaze_lead": 0.12,
+    "clavicle_lag": 0.08,
+    "final_hold_frames": 24
+  },
+  "facial_polish": {
+    "enabled": true,
+    "version": "1.0.0",
+    "transition_frames": 6,
+    "overshoot_ratio": 0.025,
+    "breath_period_frames": 72,
+    "breath_amplitude": 0.0045,
+    "saccade_amplitude": 0.009,
+    "gaze_lead_frames": 4,
+    "gaze_settle_frames": 3
+  },
+  "render": {
+    "review_samples": 16,
+    "performance_samples": 12,
+    "motion_blur": false,
+    "temporal_window_start": 399,
+    "temporal_window_frames": 17,
+    "color_look": "AgX - Medium High Contrast"
+  },
+  "promotion_gates": [
+    "mouth cavity reads as a recessed volume rather than a detached flat oval",
+    "upper and lower lip silhouettes remain connected to the face through frames 399-415",
+    "upper dentition remains skull locked and lower oral anatomy follows the jaw without swimming",
+    "gums and tongue add depth without visual noise or uncanny exposure",
+    "beard frames the mouth without dropping away on wide-open visemes",
+    "all oral components remain temporally continuous across the focused window",
+    "the exact 453-frame performance clock remains unchanged"
+  ]
+}
