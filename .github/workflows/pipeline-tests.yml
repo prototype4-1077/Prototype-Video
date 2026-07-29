@@ -12,8 +12,11 @@ on:
       - "concept/characters/june_oxley_asset_v8.json"
       - "concept/style_frames/june_golden_scene_performance_slice_v1.json"
       - "concept/style_frames/june_golden_scene_rhubarb_lipsync_v1.json"
+      - "concept/style_frames/june_golden_scene_expression_cues_v1.json"
       - "concept/style_frames/june_oxley_viseme_atlas_v1.json"
       - "concept/style_frames/june_oxley_viseme_atlas_v1.png"
+      - "concept/style_frames/june_oxley_expression_atlas_v1.json"
+      - "concept/style_frames/june_oxley_expression_atlas_v1.png"
       - "concept/style_frames/june_oxley_npr_look_v1.json"
       - "concept/style_frames/june_oxley_npr_look_v2.json"
       - "concept/style_frames/june_oxley_npr_look_v3.json"
@@ -81,13 +84,15 @@ jobs:
             build/edit/june-2p5d-viseme-preview/frames/frame_0135.png
           if-no-files-found: error
           retention-days: 14
-      - name: Render exact-clock 2.5D June lip-sync performance
+      - name: Render exact-clock 2.5D June expression performance
         run: |
           python3 -m pipeline.cartoon_viseme_atlas \
             concept/style_frames/june_oxley_viseme_atlas_v1.json \
             --cues concept/style_frames/june_golden_scene_rhubarb_lipsync_v1.json \
+            --expression-atlas concept/style_frames/june_oxley_expression_atlas_v1.json \
+            --expression-cues concept/style_frames/june_golden_scene_expression_cues_v1.json \
             --output-dir build/edit/june-2p5d-lipsync-performance
-      - name: Verify 453-frame lip-sync performance contract
+      - name: Verify 453-frame expression performance contract
         run: |
           set -euo pipefail
           video=build/edit/june-2p5d-lipsync-performance/june-2p5d-lipsync-performance.mp4
@@ -100,10 +105,10 @@ jobs:
           test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "15.100000"
           test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
           sha256sum "$video"
-      - name: Upload exact-clock 2.5D June lip-sync performance
+      - name: Upload exact-clock 2.5D June expression performance
         uses: actions/upload-artifact@v4
         with:
-          name: june-2p5d-lipsync-performance-v1
+          name: june-2p5d-expression-performance-v1
           path: |
             build/edit/june-2p5d-lipsync-performance/*.mp4
             build/edit/june-2p5d-lipsync-performance/*.json
@@ -173,6 +178,7 @@ jobs:
             asset-quality-out/assets/*.blend
           if-no-files-found: error
           retention-days: 14
+
 
 
 
