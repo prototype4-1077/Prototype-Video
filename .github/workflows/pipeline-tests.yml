@@ -77,7 +77,7 @@ jobs:
           sudo tar -xJf /tmp/blender.tar.xz -C /opt/blender --strip-components=1
       - name: Verify Blender
         run: /opt/blender/blender --background --version
-      - name: Render focused v5 crisp NPR nine-pose art gate
+      - name: Render focused v5 NPR temporal closeup gate
         run: |
           set -euo pipefail
           python3 -m pipeline.cartoon_asset_library \
@@ -89,7 +89,7 @@ jobs:
             --performance-engine BLENDER_EEVEE_NEXT \
             --performance-samples 12 \
             --look-profile concept/style_frames/june_oxley_npr_look_v4.json \
-            --performance-gate poses \
+            --performance-gate temporal \
             --output-dir asset-quality-out
           find asset-quality-out -maxdepth 3 -type f -print
       - name: Upload v5 deformation review
