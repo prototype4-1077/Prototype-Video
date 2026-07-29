@@ -8,6 +8,7 @@ on:
       - ".github/workflows/pipeline-tests.yml"
       - "concept/characters/june_oxley_asset_v5.json"
       - "concept/style_frames/june_golden_scene_performance_slice_v1.json"
+      - "concept/style_frames/june_golden_scene_rhubarb_lipsync_v1.json"
       - "concept/style_frames/june_oxley_npr_look_v1.json"
       - "concept/style_frames/june_oxley_npr_look_v2.json"
       - "concept/style_frames/june_oxley_npr_look_v3.json"
@@ -42,12 +43,40 @@ jobs:
       - name: Regression tests
         run: python3 -m unittest discover -s pipeline/tests -v
 
-
-  blender-v5-deformation:
+  blender-v5-npr-chunk:
     if: github.event_name == 'pull_request'
     needs: test
     runs-on: ubuntu-latest
     timeout-minutes: 90
+    strategy:
+      fail-fast: true
+      max-parallel: 6
+      matrix:
+        include:
+          - id: "01"
+            start: 1
+            end: 76
+            count: 76
+          - id: "02"
+            start: 77
+            end: 152
+            count: 76
+          - id: "03"
+            start: 153
+            end: 228
+            count: 76
+          - id: "04"
+            start: 229
+            end: 304
+            count: 76
+          - id: "05"
+            start: 305
+            end: 380
+            count: 76
+          - id: "06"
+            start: 381
+            end: 453
+            count: 73
     env:
       BLENDER_VERSION: "4.2.0"
       BLENDER_SERIES: "Blender4.2"
@@ -77,7 +106,7 @@ jobs:
           sudo tar -xJf /tmp/blender.tar.xz -C /opt/blender --strip-components=1
       - name: Verify Blender
         run: /opt/blender/blender --background --version
-      - name: Render focused v5 NPR temporal closeup gate
+      - name: Render deterministic NPR frame chunk
         run: |
           set -euo pipefail
           python3 -m pipeline.cartoon_asset_library \
@@ -89,18 +118,60 @@ jobs:
             --performance-engine BLENDER_EEVEE_NEXT \
             --performance-samples 12 \
             --look-profile concept/style_frames/june_oxley_npr_look_v4.json \
-            --performance-gate temporal \
+            --performance-gate chunk \
+            --performance-frame-start ${{ matrix.start }} \
+            --performance-frame-end ${{ matrix.end }} \
             --output-dir asset-quality-out
-          find asset-quality-out -maxdepth 3 -type f -print
-      - name: Upload v5 deformation review
+          cp asset-quality-out/asset-quality-report.json \
+            asset-quality-out/frames/golden-performance-look/chunk-${{ matrix.id }}-report.json
+          test "$(find asset-quality-out/frames/golden-performance-look -maxdepth 1 -type f -name 'frame_*.png' | wc -l)" \
+            -eq "${{ matrix.count }}"
+      - name: Upload NPR frame chunk
         uses: actions/upload-artifact@v4
         with:
-          name: june-golden-performance-deformation-v5
+          name: june-npr-chunk-${{ matrix.id }}
+          path: asset-quality-out/frames/golden-performance-look/
+          if-no-files-found: error
+          retention-days: 7
+
+  assemble-v5-npr:
+    if: github.event_name == 'pull_request'
+    needs: blender-v5-npr-chunk
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install FFmpeg
+        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+      - name: Download all NPR frame chunks
+        uses: actions/download-artifact@v5
+        with:
+          pattern: june-npr-chunk-*
+          path: npr-frames
+          merge-multiple: true
+      - name: Verify and assemble complete NPR cartoon
+        run: |
+          set -euo pipefail
+          python3 -m pipeline.cartoon_chunk_assembly \
+            npr-frames \
+            june-golden-performance-look-npr-v1.mp4 \
+            --ffmpeg ffmpeg \
+            --fps 30 \
+            --frame-count 453 \
+            --report june-golden-performance-look-npr-v1-report.json
+          frame_count="$(ffprobe -v error -select_streams v:0 -count_frames \
+            -show_entries stream=nb_read_frames -of default=nokey=1:noprint_wrappers=1 \
+            june-golden-performance-look-npr-v1.mp4)"
+          test "$frame_count" -eq 453
+      - name: Upload assembled NPR cartoon
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-golden-performance-storybook-npr-v1
           path: |
-            asset-quality-out/*.png
-            asset-quality-out/*.mp4
-            asset-quality-out/*.json
-            asset-quality-out/plans/*.json
-            asset-quality-out/assets/*.blend
+            june-golden-performance-look-npr-v1.mp4
+            june-golden-performance-look-npr-v1-report.json
           if-no-files-found: error
           retention-days: 14
