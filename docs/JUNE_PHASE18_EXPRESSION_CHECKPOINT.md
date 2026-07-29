@@ -2,7 +2,7 @@
 
 Date: 2026-07-29
 
-Status: an identity-locked upper-face atlas now adds authored blinks, brows, gaze, and emotional progression to the exact 453-frame A/V performance locally. Public reproduction remains the next gate.
+Status: an identity-locked upper-face atlas adds authored blinks, brows, gaze, and emotional progression to the exact 453-frame performance. GitHub independently reproduced the expression render and the Blender facial gate successfully.
 
 ## Source art
 
@@ -59,6 +59,21 @@ Verification:
 - The encoded A/V file decodes completely without an FFmpeg error.
 - FFprobe confirms the exact video and audio contracts above.
 - Rendered-output timelines inspect the first blink, brow-raise/warm-eye beat, brow-knit/second-blink beat, and the complete concern-to-compassion turn.
+
+## Public reproduction
+
+GitHub Actions run: https://github.com/prototype4-1077/Prototype-Video/actions/runs/30499370835
+
+| Property | Verified value |
+| --- | --- |
+| Result | `test` and `blender-v8-oral-mask-visemes` jobs succeeded |
+| Artifact | `june-2p5d-expression-performance-v1` |
+| Downloaded video SHA-256 | `fa97e4817443817d63e431ddd4f34e78cdcd53d215440fdaf2edaac6779f4c9c` |
+| Video contract | H.264/yuv420p, 836x836, 30 fps, 453 frames, 15.100 seconds, intentionally silent |
+| Public viseme cues | 77 normalized cues, all nine Rhubarb shapes |
+| Public expression cues | 14 authored cues, all nine expression states |
+
+The downloaded artifact decodes completely with FFmpeg. Its report preserves the committed viseme atlas, expression atlas, viseme-cue, and expression-cue hashes, so this is an independent public render rather than a re-upload of the local movie.
 
 ## Honest visual gate
 

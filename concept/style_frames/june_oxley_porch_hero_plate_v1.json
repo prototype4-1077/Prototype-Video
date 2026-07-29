@@ -1,0 +1,77 @@
+{
+  "contract_version": 1,
+  "plate_id": "june_oxley_porch_hero_plate",
+  "plate_version": "1.0.0",
+  "character_id": "june_oxley",
+  "image": {
+    "path": "concept/style_frames/june_oxley_porch_hero_plate_v1.png",
+    "sha256": "a6ed59b3ed26d4ac242828fb173386cd19796dd03ed21ed8dd871676b1ada908",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB"
+  },
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30
+  },
+  "canonical_identity_reference": {
+    "path": "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+    "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9"
+  },
+  "paired_viseme_atlas": {
+    "path": "concept/style_frames/june_oxley_viseme_atlas_v1.png",
+    "sha256": "73df92931fd6f0e5d276ab85524232479a23d7e3049feb47b0cff7058a24f201"
+  },
+  "paired_expression_atlas": {
+    "path": "concept/style_frames/june_oxley_expression_atlas_v1.png",
+    "sha256": "23a1e4fd24ca13ada1c34722905528b052993c0f37477195f13d2a5b6bcf462b"
+  },
+  "atlas_registration": {
+    "cell_width": 418,
+    "cell_height": 418,
+    "scale": 1.3,
+    "offset": [447.0, 47.0],
+    "method": "identity-locked reference generation followed by multiscale edge registration",
+    "registration_score": 0.2230528593,
+    "patch_color_match_strength": 0.72
+  },
+  "rig_regions": {
+    "head": [520, 35, 920, 520],
+    "shoulders": [250, 380, 1160, 840],
+    "wind_chime": [1170, 35, 1355, 330],
+    "lantern": [950, 65, 1145, 335],
+    "steam_origin": [560, 700],
+    "camera_anchor": [0.43, 0.35]
+  },
+  "motion_bounds": {
+    "head_x_px": [-3.5, 3.5],
+    "head_y_px": [-3.0, 3.0],
+    "head_tilt_deg": [-0.9, 0.9],
+    "shoulder_x_px": [-2.0, 2.0],
+    "breath_y_px": [-2.5, 2.5],
+    "camera_push": [0.0, 0.02]
+  },
+  "generation": {
+    "method": "built_in_image_generation_with_neutral_atlas_canonical_turnaround_and_porch_style_references",
+    "intent": "animation-ready 16:9 hero source plate aligned to the working facial atlases",
+    "cash_cost": 0,
+    "paid_runtime_dependency": false
+  },
+  "invariants": [
+    "June remains the same compact canonical character in every frame",
+    "the frontal head angle and atlas registration remain stable",
+    "mug chip ledger pencil wardrobe and porch geography remain continuous",
+    "face motion stays inside the bounded deformation rig",
+    "camera motion never crops June's hair hands mug ledger or pencil",
+    "all procedural motion is deterministic for a fixed cue contract"
+  ],
+  "visual_gates": [
+    "expression and mouth patches have no visible rectangular seams",
+    "head motion reads as intention rather than bobbing",
+    "shoulders counter the head by a smaller amount",
+    "breathing pauses during the final compassion hold",
+    "wind chime steam lantern and dust create secondary life without stealing focus",
+    "the encoded result is 1920x1080 H.264 yuv420p on the exact 453-frame clock"
+  ]
+}
