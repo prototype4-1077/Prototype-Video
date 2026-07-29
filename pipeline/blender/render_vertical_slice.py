@@ -2026,7 +2026,11 @@ def _make_mouth_v7(bpy, rig, materials: dict):
     upper_lip = _make_mouth_v7_lip(bpy, "June_Mouth_Upper_Lip", materials["lip"], upper=True)
     lower_lip = _make_mouth_v7_lip(bpy, "June_Mouth_Lower_Lip", materials["lip"], upper=False)
     _parent_to_bone(upper_lip, rig, "head")
-    _parent_to_bone(lower_lip, rig, "jaw")
+    # Lower oral tissue uses jaw-coordinated shapes in head space.  Rigid bone
+    # parenting would apply the jaw arc a second time after the authored lip
+    # separation and visibly detach the lower cluster in wide-open phonemes.
+    _parent_to_bone(lower_lip, rig, "head")
+    lower_lip["ce_jaw_coupling"] = "soft_viseme_corrective"
 
     upper_gum = _sphere(
         bpy, "June_Upper_Gum", (0.0, -0.337, 2.508), (0.083, 0.010, 0.011),
@@ -2048,7 +2052,8 @@ def _make_mouth_v7(bpy, rig, materials: dict):
         lower_gum,
         lambda source, pose: type(source)((source.x, source.y, source.z + 0.012 * float(pose["lower_teeth"]))),
     )
-    _parent_to_bone(lower_gum, rig, "jaw")
+    _parent_to_bone(lower_gum, rig, "head")
+    lower_gum["ce_jaw_coupling"] = "soft_viseme_corrective"
 
     upper_teeth = []
     lower_teeth = []
@@ -2083,7 +2088,8 @@ def _make_mouth_v7(bpy, rig, materials: dict):
             lower,
             lambda source, pose: type(source)((source.x, source.y, source.z + 0.014 * float(pose["lower_teeth"]))),
         )
-        _parent_to_bone(lower, rig, "jaw")
+        _parent_to_bone(lower, rig, "head")
+        lower["ce_jaw_coupling"] = "soft_viseme_corrective"
         lower_teeth.append(lower)
 
     tongue = _sphere(
@@ -2101,7 +2107,8 @@ def _make_mouth_v7(bpy, rig, materials: dict):
             )
         ),
     )
-    _parent_to_bone(tongue, rig, "jaw")
+    _parent_to_bone(tongue, rig, "head")
+    tongue["ce_jaw_coupling"] = "soft_viseme_corrective"
 
     components = [upper_lip, lower_lip, upper_gum, lower_gum, *upper_teeth, *lower_teeth, tongue]
     return mouth, components
