@@ -33,6 +33,7 @@ PERFORMANCE_PATH = ROOT / "concept" / "style_frames" / "june_golden_scene_perfor
 LOOK_PROFILE_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v1.json"
 LOOK_PROFILE_V2_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v2.json"
 LOOK_PROFILE_V3_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v3.json"
+LOOK_PROFILE_V4_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v4.json"
 BLENDER_SOURCE = ROOT / "pipeline" / "blender" / "render_vertical_slice.py"
 
 
@@ -259,6 +260,14 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         source = BLENDER_SOURCE.read_text(encoding="utf-8")
         self.assertIn("CE_NPR_Neutral_Ink", source)
         self.assertIn("camera_obj.data.dof.focus_object = focus", source)
+
+    def test_phase11_crisp_promotion_profile_targets_the_closeup_window(self):
+        profile = load_look_profile(LOOK_PROFILE_V4_PATH)
+        render = profile["render"]
+        self.assertEqual(profile["style_version"], "1.3.0")
+        self.assertFalse(render["motion_blur"])
+        self.assertEqual(render["temporal_window_start"], 340)
+        self.assertEqual(render["temporal_window_frames"], 30)
 
     def test_performance_engine_rejects_unknown_renderer_before_build(self):
         with self.assertRaisesRegex(ValueError, "performance_engine"):

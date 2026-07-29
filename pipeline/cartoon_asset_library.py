@@ -86,6 +86,9 @@ def validate_look_profile(profile: dict) -> None:
         raise ValueError("NPR camera requires a positive depth-of-field f-stop")
     if len(camera.get("focus_target") or []) != 3:
         raise ValueError("NPR camera focus_target must be XYZ")
+    render = profile.get("render") or {}
+    if int(render.get("temporal_window_start", 1)) < 1 or int(render.get("temporal_window_frames", 30)) < 2:
+        raise ValueError("NPR temporal window requires a positive start and at least two frames")
 
 
 def load_look_profile(path: str | Path) -> dict:
@@ -568,6 +571,43 @@ def _facial_matrix(ffmpeg: str, frames_dir: Path, entries: list[dict], output: P
         subprocess.run(fallback, check=True)
 
 
+def _assemble_video_window(
+    ffmpeg: str,
+    plan: dict,
+    frames_dir: Path,
+    output: Path,
+    *,
+    start_frame: int,
+    frame_count: int,
+) -> None:
+    subprocess.run(
+        [
+            ffmpeg,
+            "-y",
+            "-framerate",
+            str(plan["render"]["fps"]),
+            "-start_number",
+            str(start_frame),
+            "-i",
+            str(frames_dir / "frame_%04d.png"),
+            "-frames:v",
+            str(frame_count),
+            "-c:v",
+            "libx264",
+            "-preset",
+            "medium",
+            "-crf",
+            "18",
+            "-pix_fmt",
+            "yuv420p",
+            "-movflags",
+            "+faststart",
+            str(output),
+        ],
+        check=True,
+    )
+
+
 def render_performance_look_gate(
     config_path: str | Path,
     manifest_path: str | Path,
@@ -625,12 +665,17 @@ def render_performance_look_gate(
     plan_path.write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
     blender_bin = _executable(blender, "Blender")
     ffmpeg_bin = _executable(ffmpeg, "FFmpeg")
-    temporal_frames = int((profile.get("render") or {}).get("temporal_window_frames", 30))
+    look_render = profile.get("render") or {}
+    temporal_start = int(look_render.get("temporal_window_start", 1))
+    temporal_frames = int(look_render.get("temporal_window_frames", 30))
+    temporal_end = temporal_start + temporal_frames - 1
+    if temporal_start < 1 or temporal_end > int(plan["frame_end"]):
+        raise ValueError("NPR temporal window must stay inside the performance contract")
     selected_frames = None
     if performance_gate_mode == "poses":
         selected_frames = [int(entry["frame"]) for entry in entries]
     elif performance_gate_mode == "temporal":
-        selected_frames = list(range(1, temporal_frames + 1))
+        selected_frames = list(range(temporal_start, temporal_end + 1))
     _render_frames(
         blender_bin,
         plan_path,
@@ -647,13 +692,17 @@ def render_performance_look_gate(
             if performance_gate_mode == "temporal"
             else "june-golden-performance-look.mp4"
         )
-        video_plan = plan
         if performance_gate_mode == "temporal":
-            video_plan = {
-                **plan,
-                "duration_seconds": temporal_frames / int(plan["render"]["fps"]),
-            }
-        _assemble_video(ffmpeg_bin, video_plan, frames_dir, video, None)
+            _assemble_video_window(
+                ffmpeg_bin,
+                plan,
+                frames_dir,
+                video,
+                start_frame=temporal_start,
+                frame_count=temporal_frames,
+            )
+        else:
+            _assemble_video(ffmpeg_bin, plan, frames_dir, video, None)
     report = {
         "contract_version": ASSET_CONTRACT_VERSION,
         "gate": "focused_performance_look",
@@ -680,6 +729,11 @@ def render_performance_look_gate(
                 else temporal_frames
                 if performance_gate_mode == "temporal"
                 else len(entries)
+            ),
+            "temporal_window": (
+                {"frame_start": temporal_start, "frame_end": temporal_end}
+                if performance_gate_mode == "temporal"
+                else None
             ),
             "duration_seconds": plan["duration_seconds"],
             "matrix": matrix.name,

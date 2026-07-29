@@ -2514,7 +2514,8 @@ def _configure_render(bpy, plan: dict, output_dir: Path) -> None:
         if hasattr(scene, "eevee") and hasattr(scene.eevee, "taa_render_samples"):
             scene.eevee.taa_render_samples = int(render.get("samples", 24))
         if hasattr(scene.render, "use_motion_blur"):
-            scene.render.use_motion_blur = True
+            look_render = (plan.get("look_profile") or {}).get("render") or {}
+            scene.render.use_motion_blur = bool(look_render.get("motion_blur", False))
         _apply_npr_look(bpy, plan)
     elif selected == "CYCLES":
         scene.cycles.device = "CPU"
