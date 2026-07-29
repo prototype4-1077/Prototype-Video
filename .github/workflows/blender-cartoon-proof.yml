@@ -13,11 +13,18 @@ on:
         required: false
         default: "main"
 
+  push:
+    branches:
+      - agent/june-hero-unified-sculpt-phase-5
+
 permissions:
   contents: read
 
 jobs:
   proof:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      github.event.head_commit.message == 'Dispatch June v5 Golden Scene deformation gate'
     runs-on: ubuntu-latest
     timeout-minutes: 90
     env:
