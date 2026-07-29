@@ -7,6 +7,7 @@ from unittest import mock
 
 from pipeline.cartoon_asset_library import (
     build_asset_library,
+    canonical_text_sha256,
     deformation_pose_plan,
     facial_performance_plan,
     golden_performance_plan,
@@ -51,6 +52,14 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         self.assertIn("foot.L", self.manifest["rig"]["required_bones"])
         self.assertEqual(set(self.manifest["face"]["visemes"]), set("ABCDEFGHX"))
         self.assertEqual(set(self.manifest["quality_gate"]["profiles"]), {"youtube", "portrait"})
+
+    def test_text_contract_digest_is_cross_platform(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            lf = Path(temp_dir) / "lf.json"
+            crlf = Path(temp_dir) / "crlf.json"
+            lf.write_bytes(b'{"clock":453}\n')
+            crlf.write_bytes(b'{"clock":453}\r\n')
+            self.assertEqual(canonical_text_sha256(lf), canonical_text_sha256(crlf))
 
     def test_v1_manifest_remains_valid_for_reproducible_phase3_builds(self):
         self.assertEqual(load_asset_manifest(V1_MANIFEST_PATH)["asset_version"], "1.0.0")
@@ -151,7 +160,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         self.assertEqual(manifest["performance_contract"]["duration_seconds"], 15.1)
         self.assertEqual(
             manifest["performance_contract"]["sha256"],
-            "173f83177095799d5b72e0888718b2a55fdf9bd0b187652983a4e17c439272c9",
+            "f0515c4ef28571be044dd059cd2f3490655c9b9da5f9041484658f4fadd7f11d",
         )
         controls = manifest["rig"]["production_controls"]
         self.assertEqual(
@@ -250,6 +259,28 @@ class CartoonAssetLibraryTests(unittest.TestCase):
                 look_profile_path=LOOK_PROFILE_V2_PATH,
                 output_dir=ROOT / "build" / "invalid-focused-gate",
                 performance_gate_mode="previewish",
+            )
+
+    def test_focused_chunk_gate_rejects_missing_range_before_build(self):
+        with self.assertRaisesRegex(ValueError, "chunk mode requires"):
+            render_performance_look_gate(
+                GOLDEN_CONFIG_PATH,
+                V5_MANIFEST_PATH,
+                look_profile_path=LOOK_PROFILE_V4_PATH,
+                output_dir=ROOT / "build" / "invalid-focused-chunk",
+                performance_gate_mode="chunk",
+            )
+
+    def test_focused_pose_gate_rejects_chunk_range_before_build(self):
+        with self.assertRaisesRegex(ValueError, "only valid in chunk mode"):
+            render_performance_look_gate(
+                GOLDEN_CONFIG_PATH,
+                V5_MANIFEST_PATH,
+                look_profile_path=LOOK_PROFILE_V4_PATH,
+                output_dir=ROOT / "build" / "invalid-focused-range",
+                performance_gate_mode="poses",
+                performance_frame_start=1,
+                performance_frame_end=76,
             )
 
     def test_phase11_neutral_temporal_profile_locks_focus_and_motion_window(self):

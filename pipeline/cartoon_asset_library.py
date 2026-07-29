@@ -43,6 +43,12 @@ REQUIRED_V5_PROPS = {"held_mug", "table_mug", "ledger", "pencil"}
 RENDER_ENGINES = {"CYCLES", "BLENDER_EEVEE_NEXT", "BLENDER_WORKBENCH"}
 
 
+def canonical_text_sha256(path: str | Path) -> str:
+    """Hash UTF-8 contracts after universal-newline normalization."""
+    text = Path(path).read_text(encoding="utf-8")
+    return hashlib.sha256(text.encode("utf-8")).hexdigest()
+
+
 def _string_set(value: Any, field: str) -> set[str]:
     if not isinstance(value, list) or not all(isinstance(item, str) and item for item in value):
         raise ValueError(f"{field} must be a list of non-empty strings")
@@ -263,7 +269,7 @@ def load_asset_manifest(path: str | Path) -> dict:
         contract = repo_root / performance["path"]
         if not contract.is_file():
             raise ValueError(f"Hero v5 performance contract is missing: {contract}")
-        digest = hashlib.sha256(contract.read_bytes()).hexdigest()
+        digest = canonical_text_sha256(contract)
         if digest != performance["sha256"]:
             raise ValueError("Hero v5 performance contract hash does not match")
     return manifest
@@ -510,7 +516,7 @@ def golden_performance_plan(
     lip_sync_path = performance_path.parent / str(lip_sync.get("path") or "")
     if not lip_sync_path.is_file():
         raise ValueError("performance gate requires a versioned Rhubarb lip-sync contract")
-    actual_lip_sha256 = hashlib.sha256(lip_sync_path.read_bytes()).hexdigest()
+    actual_lip_sha256 = canonical_text_sha256(lip_sync_path)
     if actual_lip_sha256 != str(lip_sync.get("sha256") or "").lower():
         raise ValueError("performance Rhubarb lip-sync contract digest changed")
     lip_payload = json.loads(lip_sync_path.read_text(encoding="utf-8"))
@@ -649,6 +655,8 @@ def render_performance_look_gate(
     engine: str | None = None,
     samples: int = 12,
     performance_gate_mode: str = "poses",
+    performance_frame_start: int | None = None,
+    performance_frame_end: int | None = None,
 ) -> dict:
     """Render only the nine artistic decision poses or promoted performance.
 
@@ -656,8 +664,18 @@ def render_performance_look_gate(
     Workbench lane. This focused lane makes real Eevee look development cheap
     enough to use repeatedly rather than treating art review as a rare event.
     """
-    if performance_gate_mode not in {"poses", "temporal", "full"}:
-        raise ValueError("performance_gate_mode must be 'poses', 'temporal', or 'full'")
+    if performance_gate_mode not in {"poses", "temporal", "chunk", "full"}:
+        raise ValueError("performance_gate_mode must be 'poses', 'temporal', 'chunk', or 'full'")
+    if performance_gate_mode == "chunk":
+        if (
+            performance_frame_start is None
+            or performance_frame_end is None
+            or int(performance_frame_start) < 1
+            or int(performance_frame_end) < int(performance_frame_start)
+        ):
+            raise ValueError("chunk mode requires an ordered positive performance frame range")
+    elif performance_frame_start is not None or performance_frame_end is not None:
+        raise ValueError("performance frame range is only valid in chunk mode")
     if int(samples) <= 0:
         raise ValueError("performance look samples must be positive")
     profile = load_look_profile(look_profile_path)
@@ -701,11 +719,17 @@ def render_performance_look_gate(
     temporal_end = temporal_start + temporal_frames - 1
     if temporal_start < 1 or temporal_end > int(plan["frame_end"]):
         raise ValueError("NPR temporal window must stay inside the performance contract")
+    chunk_start = int(performance_frame_start or 1)
+    chunk_end = int(performance_frame_end or plan["frame_end"])
+    if performance_gate_mode == "chunk" and chunk_end > int(plan["frame_end"]):
+        raise ValueError("NPR chunk must stay inside the performance contract")
     selected_frames = None
     if performance_gate_mode == "poses":
         selected_frames = [int(entry["frame"]) for entry in entries]
     elif performance_gate_mode == "temporal":
         selected_frames = list(range(temporal_start, temporal_end + 1))
+    elif performance_gate_mode == "chunk":
+        selected_frames = list(range(chunk_start, chunk_end + 1))
     _render_frames(
         blender_bin,
         plan_path,
@@ -716,6 +740,8 @@ def render_performance_look_gate(
     matrix_entries = (
         temporal_review_entries(temporal_start, temporal_frames)
         if performance_gate_mode == "temporal"
+        else temporal_review_entries(chunk_start, chunk_end - chunk_start + 1)
+        if performance_gate_mode == "chunk"
         else entries
     )
     matrix = output / "june-golden-performance-look-matrix.png"
@@ -761,6 +787,8 @@ def render_performance_look_gate(
             "rendered_frames": (
                 plan["frame_end"]
                 if performance_gate_mode == "full"
+                else chunk_end - chunk_start + 1
+                if performance_gate_mode == "chunk"
                 else temporal_frames
                 if performance_gate_mode == "temporal"
                 else len(entries)
@@ -768,6 +796,11 @@ def render_performance_look_gate(
             "temporal_window": (
                 {"frame_start": temporal_start, "frame_end": temporal_end}
                 if performance_gate_mode == "temporal"
+                else None
+            ),
+            "chunk_window": (
+                {"frame_start": chunk_start, "frame_end": chunk_end}
+                if performance_gate_mode == "chunk"
                 else None
             ),
             "duration_seconds": plan["duration_seconds"],
@@ -1029,10 +1062,12 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--facial-samples", type=int, default=32)
     parser.add_argument(
         "--performance-gate",
-        choices=("poses", "temporal", "full"),
+        choices=("poses", "temporal", "chunk", "full"),
         default="full",
-        help="Render only the nine contracted poses for fast CI or all 453 frames for promotion.",
+        help="Render decision poses, a temporal window, one promotion chunk, or all 453 frames.",
     )
+    parser.add_argument("--performance-frame-start", type=int)
+    parser.add_argument("--performance-frame-end", type=int)
     parser.add_argument(
         "--performance-engine",
         choices=tuple(sorted(RENDER_ENGINES)),
@@ -1063,6 +1098,8 @@ def main() -> None:
             engine=args.performance_engine,
             samples=int(args.performance_samples or 12),
             performance_gate_mode=args.performance_gate,
+            performance_frame_start=args.performance_frame_start,
+            performance_frame_end=args.performance_frame_end,
         )
     else:
         report = render_quality_gate(
