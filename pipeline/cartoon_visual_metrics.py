@@ -25,7 +25,7 @@ REGIONS: dict[str, tuple[float, float, float, float]] = {
     # These deliberately avoid the character and practical ceiling light.
     "left_wall": (0.0, 0.20, 0.16, 0.78),
     "right_wall": (0.84, 0.20, 1.0, 0.78),
-    "upper_wall": (0.30, 0.04, 0.70, 0.20),
+    "upper_left_wall": (0.0, 0.0, 0.18, 0.20),
 }
 
 
@@ -69,8 +69,14 @@ def _probe(ffprobe: str, video: Path) -> tuple[int, int, int, float]:
     )
 
 
-def _decode(ffmpeg: str, video: Path, width: int, height: int) -> np.ndarray:
-    process = subprocess.run(
+def _decoded_frames(
+    ffmpeg: str,
+    video: Path,
+    width: int,
+    height: int,
+    frame_count: int,
+) -> Iterable[np.ndarray]:
+    process = subprocess.Popen(
         [
             ffmpeg,
             "-v",
@@ -85,20 +91,42 @@ def _decode(ffmpeg: str, video: Path, width: int, height: int) -> np.ndarray:
             "rgb24",
             "-",
         ],
-        check=True,
-        capture_output=True,
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
     )
+    assert process.stdout is not None
     frame_bytes = width * height * 3
-    if len(process.stdout) % frame_bytes:
-        raise ValueError(f"decoded byte count is invalid for {video}")
-    return np.frombuffer(process.stdout, dtype=np.uint8).reshape(
-        (-1, height, width, 3)
+    for index in range(frame_count):
+        payload = bytearray()
+        while len(payload) < frame_bytes:
+            chunk = process.stdout.read(frame_bytes - len(payload))
+            if not chunk:
+                stderr = (process.stderr.read() if process.stderr else b"").decode(
+                    "utf-8", errors="replace"
+                )
+                raise ValueError(
+                    f"FFmpeg stopped after {index} frames for {video}: {stderr}"
+                )
+            payload.extend(chunk)
+        yield np.frombuffer(payload, dtype=np.uint8).reshape((height, width, 3))
+    if process.stdout.read(1):
+        process.kill()
+        raise ValueError(f"decoded frame count exceeds {frame_count} for {video}")
+    stderr = (process.stderr.read() if process.stderr else b"").decode(
+        "utf-8", errors="replace"
     )
+    return_code = process.wait()
+    if return_code:
+        raise subprocess.CalledProcessError(return_code, process.args, stderr=stderr)
 
 
 def _luma(frames: np.ndarray) -> np.ndarray:
-    rgb = frames.astype(np.float32)
-    return rgb[..., 0] * 0.2126 + rgb[..., 1] * 0.7152 + rgb[..., 2] * 0.0722
+    return np.einsum(
+        "...c,c->...",
+        frames,
+        np.asarray([0.2126, 0.7152, 0.0722], dtype=np.float32),
+        dtype=np.float32,
+    )
 
 
 def _crop(frames: np.ndarray, region: tuple[float, float, float, float]) -> np.ndarray:
@@ -125,13 +153,14 @@ def _edge_density(luma: np.ndarray) -> float:
 
 def _global_ssim(left: np.ndarray, right: np.ndarray) -> float:
     """Compute global luminance SSIM without a SciPy dependency."""
-    left = left.astype(np.float64)
-    right = right.astype(np.float64)
-    mean_left = left.mean()
-    mean_right = right.mean()
-    var_left = left.var()
-    var_right = right.var()
-    covariance = ((left - mean_left) * (right - mean_right)).mean()
+    mean_left = left.mean(dtype=np.float64)
+    mean_right = right.mean(dtype=np.float64)
+    var_left = left.var(dtype=np.float64)
+    var_right = right.var(dtype=np.float64)
+    covariance = float(
+        np.multiply(left, right, dtype=np.float64).mean(dtype=np.float64)
+        - mean_left * mean_right
+    )
     c1 = (0.01 * 255.0) ** 2
     c2 = (0.03 * 255.0) ** 2
     return float(
@@ -151,6 +180,54 @@ def _metrics(frames: np.ndarray) -> dict[str, dict[str, float]]:
     }
 
 
+def _stream_metrics(
+    ffmpeg: str,
+    video: Path,
+    width: int,
+    height: int,
+    frame_count: int,
+) -> tuple[dict[str, dict[str, float]], np.ndarray]:
+    accumulated_difference = {name: 0.0 for name in REGIONS}
+    difference_samples = {name: 0 for name in REGIONS}
+    edge_density: dict[str, float] = {}
+    previous: dict[str, np.ndarray] = {}
+    first_luma: np.ndarray | None = None
+
+    for frame_index, frame in enumerate(
+        _decoded_frames(ffmpeg, video, width, height, frame_count)
+    ):
+        luma = _luma(frame)
+        if first_luma is None:
+            first_luma = luma.copy()
+        for name, bounds in REGIONS.items():
+            region = _crop(luma[None, ...], bounds)[0]
+            if frame_index == 0:
+                edge_density[name] = _edge_density(region[None, ...])
+            else:
+                accumulated_difference[name] += float(
+                    np.abs(region - previous[name]).sum(dtype=np.float64)
+                )
+                difference_samples[name] += region.size
+            previous[name] = region.copy()
+
+    if first_luma is None:
+        raise ValueError(f"no frames decoded from {video}")
+    return (
+        {
+            name: {
+                "adjacent_luma_difference": (
+                    accumulated_difference[name] / difference_samples[name]
+                    if difference_samples[name]
+                    else 0.0
+                ),
+                "edge_density": edge_density[name],
+            }
+            for name in REGIONS
+        },
+        first_luma,
+    )
+
+
 def evaluate(
     baseline: Path,
     candidates: list[tuple[str, Path]],
@@ -159,9 +236,9 @@ def evaluate(
     ffprobe: str,
 ) -> dict[str, Any]:
     width, height, frame_count, fps = _probe(ffprobe, baseline)
-    baseline_frames = _decode(ffmpeg, baseline, width, height)
-    if len(baseline_frames) != frame_count:
-        raise ValueError("baseline decoded frame count does not match its metadata")
+    baseline_metrics, baseline_first_luma = _stream_metrics(
+        ffmpeg, baseline, width, height, frame_count
+    )
 
     result: dict[str, Any] = {
         "contract_version": 1,
@@ -178,10 +255,9 @@ def evaluate(
     renders["baseline"] = {
         "path": str(baseline),
         "sha256": _sha256(baseline),
-        "metrics": _metrics(baseline_frames),
+        "metrics": baseline_metrics,
     }
 
-    baseline_luma = _luma(baseline_frames)
     for label, path in candidates:
         candidate_contract = _probe(ffprobe, path)
         if candidate_contract != (width, height, frame_count, fps):
@@ -189,15 +265,16 @@ def evaluate(
                 f"{label} contract {candidate_contract!r} does not match baseline "
                 f"{(width, height, frame_count, fps)!r}"
             )
-        frames = _decode(ffmpeg, path, width, height)
-        luma = _luma(frames)
+        metrics, first_luma = _stream_metrics(
+            ffmpeg, path, width, height, frame_count
+        )
         renders[label] = {
             "path": str(path),
             "sha256": _sha256(path),
             "first_frame_luma_ssim_vs_baseline": _global_ssim(
-                baseline_luma[:1], luma[:1]
+                baseline_first_luma, first_luma
             ),
-            "metrics": _metrics(frames),
+            "metrics": metrics,
         }
     return result
 
