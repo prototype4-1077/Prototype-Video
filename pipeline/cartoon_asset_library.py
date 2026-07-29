@@ -528,9 +528,12 @@ def render_quality_gate(
     facial_engine: str = "BLENDER_EEVEE_NEXT",
     facial_size: int = 960,
     facial_samples: int = 32,
+    performance_gate_mode: str = "full",
 ) -> dict:
     if int(samples) <= 0 or int(facial_size) <= 0 or int(facial_samples) <= 0:
         raise ValueError("samples and facial size must be positive")
+    if performance_gate_mode not in {"poses", "full"}:
+        raise ValueError("performance_gate_mode must be 'poses' or 'full'")
     config = json.loads(Path(config_path).read_text(encoding="utf-8"))
     manifest = load_asset_manifest(manifest_path)
     output = Path(output_dir).resolve()
@@ -646,25 +649,36 @@ def render_quality_gate(
         performance_plan_path = plans_dir / "june-golden-performance-deformation.json"
         performance_plan_path.write_text(json.dumps(performance_plan, indent=2) + "\n", encoding="utf-8")
         performance_frames_dir = frames_root / "golden-performance-deformation"
+        selected_performance_frames = (
+            None
+            if performance_gate_mode == "full"
+            else [int(entry["frame"]) for entry in performance_entries]
+        )
         _render_frames(
             blender_bin,
             performance_plan_path,
             performance_frames_dir,
             asset_library=library,
+            selected_frames=selected_performance_frames,
         )
         performance_matrix = output / "june-golden-performance-deformation-matrix.png"
         _facial_matrix(ffmpeg_bin, performance_frames_dir, performance_entries, performance_matrix)
-        performance_video = output / "june-golden-performance-deformation.mp4"
-        _assemble_video(ffmpeg_bin, performance_plan, performance_frames_dir, performance_video, None)
+        performance_video = None
+        if performance_gate_mode == "full":
+            performance_video = output / "june-golden-performance-deformation.mp4"
+            _assemble_video(ffmpeg_bin, performance_plan, performance_frames_dir, performance_video, None)
         performance_gate = {
+            "render_mode": performance_gate_mode,
             "engine": performance_plan["render"]["engine"],
             "width": performance_plan["render"]["width"],
             "height": performance_plan["render"]["height"],
             "fps": performance_plan["render"]["fps"],
             "frames": performance_plan["frame_end"],
+            "contract_frames": performance_plan["frame_end"],
+            "rendered_frames": performance_plan["frame_end"] if performance_gate_mode == "full" else len(performance_entries),
             "duration_seconds": performance_plan["duration_seconds"],
             "matrix": performance_matrix.name,
-            "video": performance_video.name,
+            "video": performance_video.name if performance_video else None,
             "entries": performance_entries,
         }
     report = {
@@ -716,6 +730,12 @@ def _parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--facial-size", type=int, default=960)
     parser.add_argument("--facial-samples", type=int, default=32)
+    parser.add_argument(
+        "--performance-gate",
+        choices=("poses", "full"),
+        default="full",
+        help="Render only the nine contracted poses for fast CI or all 453 frames for promotion.",
+    )
     return parser.parse_args()
 
 
@@ -732,6 +752,7 @@ def main() -> None:
         facial_engine=args.facial_engine,
         facial_size=args.facial_size,
         facial_samples=args.facial_samples,
+        performance_gate_mode=args.performance_gate,
     )
     print(json.dumps(report, indent=2))
 

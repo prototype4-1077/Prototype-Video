@@ -1382,6 +1382,55 @@ def _make_june_v4(bpy, mathutils, materials: dict):
     return rig, mouth, face_controls
 
 
+def _make_mouth_v5(bpy, rig, materials: dict):
+    """Build a camera-facing mouth cavity that survives beard and mustache overlap."""
+    mouth = _sphere(
+        bpy,
+        "June_Mouth_Viseme",
+        (0.0, -0.405, 2.490),
+        (0.170, 0.018, 0.050),
+        materials["mouth_interior"],
+        segments=48,
+        rings=24,
+    )
+    basis = mouth.shape_key_add(name="Basis")
+    shape_scale = {
+        "A": (1.00, 1.30),
+        "B": (0.72, 1.75),
+        "C": (1.25, 0.72),
+        "D": (0.90, 1.50),
+        "E": (1.30, 0.48),
+        "F": (0.70, 0.78),
+        "G": (0.62, 1.62),
+        "H": (0.55, 1.18),
+        "X": (1.00, 0.15),
+    }
+    for name, (width, height) in shape_scale.items():
+        key = mouth.shape_key_add(name=name)
+        for source, target in zip(basis.data, key.data):
+            target.co.x = source.co.x * width
+            target.co.z = source.co.z * height
+    mouth["ce_mouth_topology"] = "camera_facing_cavity_with_readable_viseme_extremes"
+    _parent_to_bone(mouth, rig, "jaw")
+
+    teeth = _box(
+        bpy,
+        "June_Upper_Teeth",
+        (0.0, -0.426, 2.514),
+        (0.074, 0.004, 0.012),
+        materials["teeth"],
+        bevel=0.008,
+    )
+    _parent_to_bone(teeth, rig, "jaw")
+    for label, points in (
+        ("Upper", ((-0.165, -0.429, 2.500), (-0.085, -0.431, 2.535), (0.0, -0.432, 2.542), (0.085, -0.431, 2.535), (0.165, -0.429, 2.500))),
+        ("Lower", ((-0.155, -0.429, 2.478), (-0.078, -0.431, 2.450), (0.0, -0.432, 2.443), (0.078, -0.431, 2.450), (0.155, -0.429, 2.478))),
+    ):
+        lip = _curve(bpy, f"June_Lip_{label}", points, materials["lip"], bevel_depth=0.008)
+        _parent_to_bone(lip, rig, "jaw")
+    return mouth
+
+
 def _make_performance_props_v5(bpy, mathutils, rig, materials: dict) -> None:
     """Create the Golden Scene's contact props with explicit shot roles."""
     held_mug = _cylinder(bpy, "June_Held_Mug", (0.64, -0.53, 1.43), 0.070, 0.115, materials["enamel"], vertices=36)
@@ -1525,6 +1574,12 @@ def _make_june_v5(bpy, mathutils, materials: dict):
         eye_track.track_axis = "TRACK_Y"
     bpy.ops.object.mode_set(mode="OBJECT")
 
+    bpy.data.objects.remove(mouth, do_unlink=True)
+    old_teeth = bpy.data.objects.get("June_Upper_Teeth")
+    if old_teeth is not None:
+        bpy.data.objects.remove(old_teeth, do_unlink=True)
+    mouth = _make_mouth_v5(bpy, rig, materials)
+
     for side in ("L", "R"):
         for prefix in ("June_Eye_", "June_Iris_", "June_Pupil_", "June_Catchlight_"):
             obj = bpy.data.objects.get(f"{prefix}{side}")
@@ -1539,7 +1594,6 @@ def _make_june_v5(bpy, mathutils, materials: dict):
             obj = bpy.data.objects.get(f"June_Thumb_{side}_{segment}")
             if obj is not None:
                 _parent_to_bone(obj, rig, f"thumb.{side}")
-    _parent_to_bone(mouth, rig, "jaw")
     _make_performance_props_v5(bpy, mathutils, rig, materials)
 
     rig["ce_asset_major"] = 5
@@ -1899,6 +1953,14 @@ def _animate_performance_props(bpy, plan: dict) -> None:
             obj.keyframe_insert(data_path="hide_render", frame=end)
             obj.keyframe_insert(data_path="hide_viewport", frame=start)
             obj.keyframe_insert(data_path="hide_viewport", frame=end)
+        for obj in (item for item in bpy.context.scene.objects if item.name.startswith("Chair_")):
+            visible = shot_id == "GS030"
+            obj.hide_render = not visible
+            obj.hide_viewport = not visible
+            obj.keyframe_insert(data_path="hide_render", frame=start)
+            obj.keyframe_insert(data_path="hide_render", frame=end)
+            obj.keyframe_insert(data_path="hide_viewport", frame=start)
+            obj.keyframe_insert(data_path="hide_viewport", frame=end)
 
 
 def _animate_rig(bpy, rig, plan: dict) -> None:
@@ -2104,7 +2166,9 @@ def _make_cameras(bpy, mathutils, plan: dict) -> None:
         "medium": ((0.18, -7.2 if portrait else -5.9, 2.72), 62 if portrait else 58, (0, 0.05, 2.05)),
         "close": ((0.08, -5.1 if portrait else -3.9, 2.69), 72 if portrait else 68, (0, -0.02, 2.48)),
     }
-    if plan.get("facial_performance_cues"):
+    if plan.get("performance_contract") == "june_golden_scene_performance_v1":
+        presets["close"] = ((0.02, -2.65, 2.70), 68, (0.0, -0.06, 2.58))
+    elif plan.get("facial_performance_cues"):
         presets["close"] = ((0.02, -1.72, 2.70), 82, (0.0, -0.08, 2.66))
     scene = bpy.context.scene
     for index, shot in enumerate(plan["shots"]):

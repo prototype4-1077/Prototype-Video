@@ -11,6 +11,7 @@ from pipeline.cartoon_asset_library import (
     facial_performance_plan,
     golden_performance_plan,
     load_asset_manifest,
+    render_quality_gate,
     shot_quality_frames,
     validate_asset_manifest,
 )
@@ -176,14 +177,25 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         source = BLENDER_SOURCE.read_text(encoding="utf-8")
         for marker in (
             "def _make_june_v5",
+            "def _make_mouth_v5",
             "CE_Arm_IK_",
             "CE_Leg_IK_",
             "CE_Eye_Aim_",
             "def _animate_golden_performance",
             "June_Golden_Performance_v1",
             "def _animate_performance_props",
+            'item.name.startswith("Chair_")',
         ):
             self.assertIn(marker, source)
+
+    def test_performance_gate_mode_rejects_unknown_render_tiers_before_build(self):
+        with self.assertRaisesRegex(ValueError, "performance_gate_mode"):
+            render_quality_gate(
+                GOLDEN_CONFIG_PATH,
+                V5_MANIFEST_PATH,
+                output_dir=ROOT / "build" / "invalid-performance-gate",
+                performance_gate_mode="sometimes",
+            )
 
     def test_v5_without_a_full_performance_gate_is_rejected(self):
         invalid = copy.deepcopy(self.v5_manifest)
