@@ -6,6 +6,8 @@ import hashlib
 import json
 import math
 from pathlib import Path
+import shutil
+import subprocess
 import wave
 from typing import Any, Callable, Sequence
 
@@ -149,6 +151,18 @@ def validate_profile(profile: dict[str, Any]) -> dict[str, Any]:
         gain = float(event.get("gain_db", 0.0))
         if not -80.0 <= gain <= 0.0:
             raise ValueError(f"sound event gain is outside [-80, 0] dB: {identifier}")
+    mix = profile.get("mix")
+    if not isinstance(mix, dict):
+        raise ValueError("sound profile must contain mix settings")
+    if int(mix.get("sample_rate", 0)) != sample_rate:
+        raise ValueError("sound mix sample rate must match the stem")
+    for key in ("dialogue_gain_db", "foley_gain_db"):
+        value = float(mix.get(key, 0.0))
+        if not -80.0 <= value <= 12.0:
+            raise ValueError(f"sound mix {key} is outside [-80, 12] dB")
+    limiter_peak = float(mix.get("limiter_peak", 0.0))
+    if not 0.1 <= limiter_peak <= 1.0:
+        raise ValueError("sound mix limiter_peak must be inside [0.1, 1.0]")
     return profile
 
 
@@ -196,6 +210,112 @@ def write_wav(path: Path, stem: np.ndarray, sample_rate: int) -> None:
         destination.writeframes(pcm.tobytes())
 
 
+def _run(command: Sequence[str | Path]) -> subprocess.CompletedProcess[str]:
+    return subprocess.run(
+        [str(part) for part in command],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
+
+
+def _probe_audio(ffprobe: str | Path, path: Path) -> dict[str, Any]:
+    result = _run([
+        ffprobe,
+        "-v",
+        "error",
+        "-select_streams",
+        "a:0",
+        "-show_entries",
+        "stream=codec_name,sample_rate,channels,duration:format=duration,size",
+        "-of",
+        "json",
+        path,
+    ])
+    payload = json.loads(result.stdout)
+    streams = payload.get("streams") or []
+    if not streams:
+        raise ValueError(f"audio stream missing: {path}")
+    stream = streams[0]
+    return {
+        "codec": str(stream.get("codec_name") or ""),
+        "sample_rate": int(stream.get("sample_rate") or 0),
+        "channels": int(stream.get("channels") or 0),
+        "duration_seconds": float(
+            stream.get("duration") or (payload.get("format") or {}).get("duration") or 0.0
+        ),
+        "bytes": int((payload.get("format") or {}).get("size") or path.stat().st_size),
+    }
+
+
+def mix_dialogue_and_foley(
+    dialogue_source: Path,
+    foley_stem: Path,
+    output: Path,
+    *,
+    ffmpeg: str | Path = "ffmpeg",
+    ffprobe: str | Path = "ffprobe",
+    sample_rate: int = 48000,
+    limiter_peak: float = 0.95,
+    dialogue_gain_db: float = 0.0,
+    foley_gain_db: float = 0.0,
+    expected_duration: float = 15.1,
+) -> dict[str, Any]:
+    if not dialogue_source.is_file() or not foley_stem.is_file():
+        raise FileNotFoundError("dialogue source and foley stem must exist")
+    if not 0.1 <= float(limiter_peak) <= 1.0:
+        raise ValueError("limiter peak must be inside [0.1, 1.0]")
+    output.parent.mkdir(parents=True, exist_ok=True)
+    filter_graph = (
+        f"[0:a:0]aresample={sample_rate},volume={float(dialogue_gain_db):.3f}dB[dialogue];"
+        f"[1:a:0]aresample={sample_rate},volume={float(foley_gain_db):.3f}dB[foley];"
+        "[dialogue][foley]"
+        "amix=inputs=2:duration=first:dropout_transition=0:normalize=0,"
+        f"alimiter=limit={float(limiter_peak):.6f}:attack=5:release=50:level=disabled,"
+        f"atrim=end={float(expected_duration):.9f},asetpts=N/SR/TB[mix]"
+    )
+    _run([
+        ffmpeg,
+        "-y",
+        "-v",
+        "error",
+        "-i",
+        dialogue_source,
+        "-i",
+        foley_stem,
+        "-filter_complex",
+        filter_graph,
+        "-map",
+        "[mix]",
+        "-c:a",
+        "pcm_s24le",
+        "-ar",
+        str(sample_rate),
+        "-ac",
+        "2",
+        output,
+    ])
+    contract = _probe_audio(ffprobe, output)
+    if contract["sample_rate"] != sample_rate or contract["channels"] != 2:
+        raise ValueError(f"mixed audio contract is invalid: {contract}")
+    if abs(contract["duration_seconds"] - expected_duration) > 1.0 / sample_rate:
+        raise ValueError(
+            f"mixed audio duration {contract['duration_seconds']} does not match "
+            f"{expected_duration}"
+        )
+    return {
+        "dialogue_source": {
+            "path": dialogue_source.name,
+            "sha256": _sha256(dialogue_source),
+        },
+        "foley_stem": {"path": foley_stem.name, "sha256": _sha256(foley_stem)},
+        "output": {"path": output.name, "sha256": _sha256(output), **contract},
+        "limiter_peak": float(limiter_peak),
+        "dialogue_gain_db": float(dialogue_gain_db),
+        "foley_gain_db": float(foley_gain_db),
+    }
+
+
 def generate(profile_path: Path, output: Path, report_path: Path | None) -> dict[str, Any]:
     profile = validate_profile(json.loads(profile_path.read_text(encoding="utf-8")))
     stem = render_stem(profile)
@@ -229,6 +349,10 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("profile", type=Path)
     parser.add_argument("output", type=Path)
     parser.add_argument("--report", type=Path)
+    parser.add_argument("--dialogue-source", type=Path)
+    parser.add_argument("--mixed-output", type=Path)
+    parser.add_argument("--ffmpeg", default=shutil.which("ffmpeg") or "ffmpeg")
+    parser.add_argument("--ffprobe", default=shutil.which("ffprobe") or "ffprobe")
     return parser
 
 
@@ -237,7 +361,31 @@ def main(argv: Sequence[str] | None = None) -> int:
     profile = args.profile.resolve()
     if not profile.is_file():
         raise FileNotFoundError(f"sound profile not found: {profile}")
-    report = generate(profile, args.output.resolve(), args.report.resolve() if args.report else None)
+    if bool(args.dialogue_source) != bool(args.mixed_output):
+        raise ValueError("dialogue-source and mixed-output must be supplied together")
+    output = args.output.resolve()
+    report = generate(profile, output, None)
+    if args.dialogue_source:
+        source = args.dialogue_source.resolve()
+        mixed = args.mixed_output.resolve()
+        profile_payload = json.loads(profile.read_text(encoding="utf-8"))
+        mix_settings = profile_payload["mix"]
+        report["mix"] = mix_dialogue_and_foley(
+            source,
+            output,
+            mixed,
+            ffmpeg=args.ffmpeg,
+            ffprobe=args.ffprobe,
+            sample_rate=int(mix_settings["sample_rate"]),
+            limiter_peak=float(mix_settings["limiter_peak"]),
+            dialogue_gain_db=float(mix_settings["dialogue_gain_db"]),
+            foley_gain_db=float(mix_settings["foley_gain_db"]),
+            expected_duration=float(profile_payload["duration_seconds"]),
+        )
+    if args.report:
+        report_path = args.report.resolve()
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     print(json.dumps(report, indent=2))
     return 0
 

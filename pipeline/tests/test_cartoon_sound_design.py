@@ -15,6 +15,12 @@ def _profile() -> dict:
         "channels": 2,
         "seed": 17,
         "target_peak_dbfs": -12.0,
+        "mix": {
+            "dialogue_gain_db": 0.0,
+            "foley_gain_db": 0.0,
+            "limiter_peak": 0.95,
+            "sample_rate": 8000,
+        },
         "events": [
             {
                 "id": "tone",
