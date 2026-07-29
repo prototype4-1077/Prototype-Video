@@ -36,3 +36,21 @@ Phase 10 advances only if the next matrix shows visibly distinct open, narrow,
 wide, rounded, and closed mouth families; GS050 includes eyes, nose, mouth, and
 beard; and no chair fragment reads as a floating object in GS040. After those
 conditions pass, the full 453-frame promotion render must be repeated.
+
+## Promotion result
+
+Phase 10c passed the human and technical gates on 2026-07-28.
+
+- Code revision: `2dd6e49` (`Isolate June facial control art gate`)
+- Full promotion revision: `5d0c415`
+- GitHub Actions run: `30422026729`
+- Regression result: 248 passed
+- Blender result: 453/453 frames, 960x540, 30 fps, 15.1 seconds
+- Workflow artifact: `8712450088`
+- Artifact SHA-256: `679e14f6eabfd039fb0c5f587c2da48489d8fd09d98484cddac8dee9a49f4ea4`
+
+The reviewed full render has readable A-H/X mouth families, an isolated facial
+matrix without incidental blinks, restrained brow-knit motion, intact
+deformation, stable prop visibility, and valid wide/medium/close framing. The
+PR workflow was returned to the nine-pose smoke gate after promotion; full
+453-frame rendering remains available as the explicit promotion tier.
