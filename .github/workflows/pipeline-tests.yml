@@ -8,6 +8,7 @@ on:
       - ".github/workflows/pipeline-tests.yml"
       - "concept/characters/june_oxley_asset_v5.json"
       - "concept/style_frames/june_golden_scene_performance_slice_v1.json"
+      - "concept/style_frames/june_oxley_npr_look_v1.json"
       - "examples/june-golden-scene-twelve-dollar-mug.json"
   push:
     branches: [main]
@@ -73,7 +74,7 @@ jobs:
           sudo tar -xJf /tmp/blender.tar.xz -C /opt/blender --strip-components=1
       - name: Verify Blender
         run: /opt/blender/blender --background --version
-      - name: Build v5 rig and render the nine-pose Golden Scene smoke gate
+      - name: Render v5 storybook NPR nine-pose Golden Scene art gate
         run: |
           set -euo pipefail
           python3 -m pipeline.cartoon_asset_library \
@@ -81,11 +82,14 @@ jobs:
             concept/characters/june_oxley_asset_v5.json \
             --blender /opt/blender/blender \
             --ffmpeg ffmpeg \
-            --engine BLENDER_WORKBENCH \
-            --samples 1 \
-            --facial-engine BLENDER_WORKBENCH \
+            --engine BLENDER_EEVEE_NEXT \
+            --samples 16 \
+            --facial-engine BLENDER_EEVEE_NEXT \
             --facial-size 480 \
-            --facial-samples 1 \
+            --facial-samples 16 \
+            --performance-engine BLENDER_EEVEE_NEXT \
+            --performance-samples 16 \
+            --look-profile concept/style_frames/june_oxley_npr_look_v1.json \
             --performance-gate poses \
             --output-dir asset-quality-out
           find asset-quality-out -maxdepth 3 -type f -print
