@@ -306,7 +306,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
     def test_phase12_semantic_ink_profile_separates_line_roles_by_shot_scale(self):
         profile = load_look_profile(LOOK_PROFILE_V5_PATH)
         outlines = profile["outlines"]
-        self.assertEqual(profile["style_version"], "1.4.0")
+        self.assertEqual(profile["style_version"], "1.4.1")
         self.assertEqual(outlines["mode"], "semantic_compositor")
         layers = {layer["name"]: layer for layer in outlines["semantic_layers"]}
         self.assertEqual(set(layers), {"silhouette_contact", "form_crease", "construction_detail"})
