@@ -286,6 +286,10 @@ def facial_performance_plan(
     plan["frame_start"] = 1
     plan["frame_end"] = len(entries) * frame_span
     plan["duration_seconds"] = plan["frame_end"] / int(plan["render"]["fps"])
+    # The matrix must isolate the authored control under review. Production
+    # blinks are intentionally disabled here so a blink cannot contaminate a
+    # viseme or expression sample frame.
+    plan["disable_blinks"] = True
     plan["render"].update(
         {
             "width": int(size),

@@ -82,6 +82,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         plan, entries = facial_performance_plan(self.config)
         self.assertEqual([entry["label"] for entry in entries[:9]], list("ABCDEFGHX"))
         self.assertEqual(len(entries), 16)
+        self.assertTrue(plan["disable_blinks"])
         self.assertTrue(all(shot["camera"] == "close" for shot in plan["shots"]))
         self.assertEqual(plan["render"]["width"], plan["render"]["height"])
         self.assertEqual(self.manifest["quality_gate"]["continuous_engine"], "BLENDER_WORKBENCH")

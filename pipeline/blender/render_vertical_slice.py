@@ -2157,8 +2157,8 @@ def _animate_expressions(head, plan: dict, face_controls: dict | None = None) ->
                     brow.location.z += (0.010 if index == 0 else -0.006) * strength
                     brow.rotation_euler[1] += math.radians((-6.0 if index == 0 else 4.0) * strength)
                 elif active == "brow_knit":
-                    brow.location.x += (0.012 if index == 0 else -0.012) * strength
-                    brow.rotation_euler[1] += math.radians((8.0 if index == 0 else -8.0) * strength)
+                    brow.location.x += (0.007 if index == 0 else -0.007) * strength
+                    brow.rotation_euler[1] += math.radians((5.0 if index == 0 else -5.0) * strength)
                 brow.keyframe_insert(data_path="location", frame=frame)
                 brow.keyframe_insert(data_path="rotation_euler", frame=frame)
             upper_drop, lower_raise = lid_shapes.get(str(active), (0.0, 0.0))
@@ -2386,7 +2386,8 @@ def main() -> None:
     _animate_performance_props(bpy, plan)
     _animate_mouth(mouth, plan)
     _animate_expressions(head, plan, face_controls)
-    _animate_blinks(face_controls, int(plan["frame_end"]))
+    if not plan.get("disable_blinks", False):
+        _animate_blinks(face_controls, int(plan["frame_end"]))
     _make_cameras(bpy, mathutils, plan)
     _lighting(bpy, mathutils)
     _configure_render(bpy, plan, output_dir)
