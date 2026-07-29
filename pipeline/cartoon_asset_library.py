@@ -70,6 +70,10 @@ def validate_look_profile(profile: dict) -> None:
     outlines = profile.get("outlines") or {}
     if outlines.get("enabled") is not True or not 0.5 <= float(outlines.get("thickness_px", 0)) <= 3.0:
         raise ValueError("NPR outlines require a production-safe 0.5-3px thickness")
+    if outlines.get("mode") not in {"freestyle", "compositor_sobel"}:
+        raise ValueError("NPR outline mode must be freestyle or compositor_sobel")
+    if outlines.get("mode") == "compositor_sobel" and not 0.0 < float(outlines.get("edge_strength", 0)) <= 1.0:
+        raise ValueError("NPR compositor edge_strength must be inside zero and one")
     if len(outlines.get("color") or []) != 3:
         raise ValueError("NPR outline color must be RGB")
     lighting = profile.get("lighting") or {}
@@ -564,6 +568,112 @@ def _facial_matrix(ffmpeg: str, frames_dir: Path, entries: list[dict], output: P
         subprocess.run(fallback, check=True)
 
 
+def render_performance_look_gate(
+    config_path: str | Path,
+    manifest_path: str | Path,
+    *,
+    look_profile_path: str | Path,
+    output_dir: str | Path,
+    blender: str = "blender",
+    ffmpeg: str = "ffmpeg",
+    engine: str | None = None,
+    samples: int = 12,
+    performance_gate_mode: str = "poses",
+) -> dict:
+    """Render only the nine artistic decision poses or promoted performance.
+
+    Structural profile, face, and deformation matrices stay in the fast
+    Workbench lane. This focused lane makes real Eevee look development cheap
+    enough to use repeatedly rather than treating art review as a rare event.
+    """
+    if performance_gate_mode not in {"poses", "full"}:
+        raise ValueError("performance_gate_mode must be 'poses' or 'full'")
+    if int(samples) <= 0:
+        raise ValueError("performance look samples must be positive")
+    profile = load_look_profile(look_profile_path)
+    selected_engine = engine or str(profile["engine"])
+    if selected_engine not in RENDER_ENGINES:
+        raise ValueError("performance look engine is not supported")
+    config = json.loads(Path(config_path).read_text(encoding="utf-8"))
+    manifest = load_asset_manifest(manifest_path)
+    output = Path(output_dir).resolve()
+    plans_dir = output / "plans"
+    frames_dir = output / "frames" / "golden-performance-look"
+    plans_dir.mkdir(parents=True, exist_ok=True)
+    library = build_asset_library(
+        manifest_path,
+        output / "assets" / f"{manifest['asset_id']}-{manifest['asset_version']}.blend",
+        blender=blender,
+    )
+    repo_root = Path(manifest_path).resolve().parents[2]
+    performance_contract_path = repo_root / manifest["performance_contract"]["path"]
+    plan, entries = golden_performance_plan(
+        config,
+        performance_contract_path,
+        engine=selected_engine,
+        samples=int(samples),
+    )
+    look_sha256 = hashlib.sha256(Path(look_profile_path).read_bytes()).hexdigest()
+    plan["look_profile"] = profile
+    plan["look_profile_sha256"] = look_sha256
+    plan["asset_library"] = {
+        "asset_id": manifest["asset_id"],
+        "asset_version": manifest["asset_version"],
+        "path": library.name,
+    }
+    plan_path = plans_dir / "june-golden-performance-look.json"
+    plan_path.write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
+    blender_bin = _executable(blender, "Blender")
+    ffmpeg_bin = _executable(ffmpeg, "FFmpeg")
+    selected_frames = (
+        None
+        if performance_gate_mode == "full"
+        else [int(entry["frame"]) for entry in entries]
+    )
+    _render_frames(
+        blender_bin,
+        plan_path,
+        frames_dir,
+        asset_library=library,
+        selected_frames=selected_frames,
+    )
+    matrix = output / "june-golden-performance-look-matrix.png"
+    _facial_matrix(ffmpeg_bin, frames_dir, entries, matrix)
+    video = None
+    if performance_gate_mode == "full":
+        video = output / "june-golden-performance-look.mp4"
+        _assemble_video(ffmpeg_bin, plan, frames_dir, video, None)
+    report = {
+        "contract_version": ASSET_CONTRACT_VERSION,
+        "gate": "focused_performance_look",
+        "asset_id": manifest["asset_id"],
+        "asset_version": manifest["asset_version"],
+        "library": str(library.relative_to(output)),
+        "artifact_reopened_for_render": True,
+        "look_profile": {
+            "look_id": profile["look_id"],
+            "style_version": profile["style_version"],
+            "engine": selected_engine,
+            "samples": int(samples),
+            "sha256": look_sha256,
+        },
+        "performance": {
+            "render_mode": performance_gate_mode,
+            "width": plan["render"]["width"],
+            "height": plan["render"]["height"],
+            "fps": plan["render"]["fps"],
+            "contract_frames": plan["frame_end"],
+            "rendered_frames": plan["frame_end"] if performance_gate_mode == "full" else len(entries),
+            "duration_seconds": plan["duration_seconds"],
+            "matrix": matrix.name,
+            "video": video.name if video else None,
+            "entries": entries,
+        },
+    }
+    (output / "asset-quality-report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
+    return report
+
+
 def render_quality_gate(
     config_path: str | Path,
     manifest_path: str | Path,
@@ -823,27 +933,47 @@ def _parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--performance-samples", type=int)
     parser.add_argument("--look-profile", help="Versioned NPR look-profile JSON applied to every render plan.")
+    parser.add_argument(
+        "--performance-only",
+        action="store_true",
+        help="Skip structural matrices and render only the focused Golden Scene look gate.",
+    )
     return parser.parse_args()
 
 
 def main() -> None:
     args = _parse_args()
-    report = render_quality_gate(
-        args.config,
-        args.manifest,
-        output_dir=args.output_dir,
-        blender=args.blender,
-        ffmpeg=args.ffmpeg,
-        engine=args.engine,
-        samples=args.samples,
-        facial_engine=args.facial_engine,
-        facial_size=args.facial_size,
-        facial_samples=args.facial_samples,
-        performance_gate_mode=args.performance_gate,
-        performance_engine=args.performance_engine,
-        performance_samples=args.performance_samples,
-        look_profile_path=args.look_profile,
-    )
+    if args.performance_only:
+        if not args.look_profile:
+            raise ValueError("--performance-only requires --look-profile")
+        report = render_performance_look_gate(
+            args.config,
+            args.manifest,
+            look_profile_path=args.look_profile,
+            output_dir=args.output_dir,
+            blender=args.blender,
+            ffmpeg=args.ffmpeg,
+            engine=args.performance_engine,
+            samples=int(args.performance_samples or 12),
+            performance_gate_mode=args.performance_gate,
+        )
+    else:
+        report = render_quality_gate(
+            args.config,
+            args.manifest,
+            output_dir=args.output_dir,
+            blender=args.blender,
+            ffmpeg=args.ffmpeg,
+            engine=args.engine,
+            samples=args.samples,
+            facial_engine=args.facial_engine,
+            facial_size=args.facial_size,
+            facial_samples=args.facial_samples,
+            performance_gate_mode=args.performance_gate,
+            performance_engine=args.performance_engine,
+            performance_samples=args.performance_samples,
+            look_profile_path=args.look_profile,
+        )
     print(json.dumps(report, indent=2))
 
 

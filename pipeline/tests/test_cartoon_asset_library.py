@@ -12,6 +12,7 @@ from pipeline.cartoon_asset_library import (
     golden_performance_plan,
     load_asset_manifest,
     load_look_profile,
+    render_performance_look_gate,
     render_quality_gate,
     shot_quality_frames,
     validate_asset_manifest,
@@ -30,6 +31,7 @@ CONFIG_PATH = ROOT / "examples" / "june-porch-vertical-slice.json"
 GOLDEN_CONFIG_PATH = ROOT / "examples" / "june-golden-scene-twelve-dollar-mug.json"
 PERFORMANCE_PATH = ROOT / "concept" / "style_frames" / "june_golden_scene_performance_slice_v1.json"
 LOOK_PROFILE_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v1.json"
+LOOK_PROFILE_V2_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v2.json"
 BLENDER_SOURCE = ROOT / "pipeline" / "blender" / "render_vertical_slice.py"
 
 
@@ -227,6 +229,25 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         invalid["outlines"]["thickness_px"] = 8.0
         with self.assertRaisesRegex(ValueError, "0.5-3px"):
             validate_look_profile(invalid)
+
+    def test_phase11_temporal_outline_profile_uses_focused_gate(self):
+        profile = load_look_profile(LOOK_PROFILE_V2_PATH)
+        self.assertEqual(profile["style_version"], "1.1.0")
+        self.assertEqual(profile["outlines"]["mode"], "compositor_sobel")
+        self.assertLessEqual(profile["render"]["performance_samples"], 12)
+        source = BLENDER_SOURCE.read_text(encoding="utf-8")
+        self.assertIn("CE_NPR_Temporal_Sobel", source)
+        self.assertIn("CE_NPR_Screen_Ink", source)
+
+    def test_focused_look_gate_rejects_unknown_mode_before_build(self):
+        with self.assertRaisesRegex(ValueError, "performance_gate_mode"):
+            render_performance_look_gate(
+                GOLDEN_CONFIG_PATH,
+                V5_MANIFEST_PATH,
+                look_profile_path=LOOK_PROFILE_V2_PATH,
+                output_dir=ROOT / "build" / "invalid-focused-gate",
+                performance_gate_mode="previewish",
+            )
 
     def test_performance_engine_rejects_unknown_renderer_before_build(self):
         with self.assertRaisesRegex(ValueError, "performance_engine"):

@@ -2376,7 +2376,7 @@ def _apply_npr_material(material, profile: dict) -> None:
 
 def _configure_npr_outlines(bpy, profile: dict) -> None:
     outlines = profile.get("outlines") or {}
-    if not outlines.get("enabled"):
+    if not outlines.get("enabled") or outlines.get("mode", "freestyle") != "freestyle":
         return
     scene = bpy.context.scene
     if not hasattr(scene.render, "use_freestyle"):
@@ -2399,7 +2399,9 @@ def _configure_npr_outlines(bpy, profile: dict) -> None:
 
 def _configure_npr_compositor(bpy, profile: dict) -> None:
     compositor = profile.get("compositor") or {}
-    if not compositor.get("glow"):
+    outlines = profile.get("outlines") or {}
+    use_sobel = outlines.get("enabled") and outlines.get("mode") == "compositor_sobel"
+    if not compositor.get("glow") and not use_sobel:
         return
     scene = bpy.context.scene
     scene.use_nodes = True
@@ -2407,15 +2409,33 @@ def _configure_npr_compositor(bpy, profile: dict) -> None:
     links = scene.node_tree.links
     nodes.clear()
     render_layers = nodes.new("CompositorNodeRLayers")
-    glare = nodes.new("CompositorNodeGlare")
-    glare.name = "CE_NPR_Lantern_Glow"
-    glare.glare_type = "FOG_GLOW"
-    glare.quality = "HIGH"
-    glare.threshold = float(compositor.get("glow_threshold", 1.15))
-    glare.mix = float(compositor.get("glow_mix", -0.93))
+    image_output = render_layers.outputs["Image"]
+    if use_sobel:
+        sobel = nodes.new("CompositorNodeFilter")
+        sobel.name = "CE_NPR_Temporal_Sobel"
+        sobel.filter_type = "SOBEL"
+        invert = nodes.new("CompositorNodeInvert")
+        invert.name = "CE_NPR_Invert_Edges"
+        multiply = nodes.new("CompositorNodeMixRGB")
+        multiply.name = "CE_NPR_Screen_Ink"
+        multiply.blend_type = "MULTIPLY"
+        multiply.inputs[0].default_value = float(outlines.get("edge_strength", 0.62))
+        links.new(image_output, sobel.inputs["Image"])
+        links.new(sobel.outputs["Image"], invert.inputs["Color"])
+        links.new(image_output, multiply.inputs[1])
+        links.new(invert.outputs["Color"], multiply.inputs[2])
+        image_output = multiply.outputs[0]
+    if compositor.get("glow"):
+        glare = nodes.new("CompositorNodeGlare")
+        glare.name = "CE_NPR_Lantern_Glow"
+        glare.glare_type = "FOG_GLOW"
+        glare.quality = "HIGH"
+        glare.threshold = float(compositor.get("glow_threshold", 1.15))
+        glare.mix = float(compositor.get("glow_mix", -0.93))
+        links.new(image_output, glare.inputs["Image"])
+        image_output = glare.outputs["Image"]
     composite = nodes.new("CompositorNodeComposite")
-    links.new(render_layers.outputs["Image"], glare.inputs["Image"])
-    links.new(glare.outputs["Image"], composite.inputs["Image"])
+    links.new(image_output, composite.inputs["Image"])
 
 
 def _configure_npr_cameras(bpy, profile: dict) -> None:
