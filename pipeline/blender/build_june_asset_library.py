@@ -54,8 +54,11 @@ def main() -> None:
     if asset_major >= 5:
         from pipeline.cartoon_asset_library import golden_performance_plan
 
+        golden_config = json.loads(
+            (repo_root / "examples" / "june-golden-scene-twelve-dollar-mug.json").read_text(encoding="utf-8")
+        )
         library_plan, _ = golden_performance_plan(
-            repo_root / "examples" / "june-golden-scene-twelve-dollar-mug.json",
+            golden_config,
             repo_root / "concept" / "style_frames" / "june_golden_scene_performance_slice_v1.json",
         )
         studio._animate_golden_performance(bpy, rig, library_plan)

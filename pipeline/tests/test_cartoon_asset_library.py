@@ -452,6 +452,7 @@ class CartoonAssetLibraryTests(unittest.TestCase):
             self.assertIn(marker, source)
         library_source = BLENDER_LIBRARY_SOURCE.read_text(encoding="utf-8")
         self.assertIn("golden_performance_plan", library_source)
+        self.assertIn("golden_config = json.loads", library_source)
         self.assertIn("action.use_fake_user = True", library_source)
         self.assertIn("asset library did not build required action", library_source)
 
