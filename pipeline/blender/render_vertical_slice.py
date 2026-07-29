@@ -2414,6 +2414,8 @@ def _configure_npr_compositor(bpy, profile: dict) -> None:
         sobel = nodes.new("CompositorNodeFilter")
         sobel.name = "CE_NPR_Temporal_Sobel"
         sobel.filter_type = "SOBEL"
+        neutral = nodes.new("CompositorNodeRGBToBW")
+        neutral.name = "CE_NPR_Neutral_Ink"
         invert = nodes.new("CompositorNodeInvert")
         invert.name = "CE_NPR_Invert_Edges"
         multiply = nodes.new("CompositorNodeMixRGB")
@@ -2421,7 +2423,8 @@ def _configure_npr_compositor(bpy, profile: dict) -> None:
         multiply.blend_type = "MULTIPLY"
         multiply.inputs[0].default_value = float(outlines.get("edge_strength", 0.62))
         links.new(image_output, sobel.inputs["Image"])
-        links.new(sobel.outputs["Image"], invert.inputs["Color"])
+        links.new(sobel.outputs["Image"], neutral.inputs["Image"])
+        links.new(neutral.outputs["Val"], invert.inputs["Color"])
         links.new(image_output, multiply.inputs[1])
         links.new(invert.outputs["Color"], multiply.inputs[2])
         image_output = multiply.outputs[0]
@@ -2448,7 +2451,13 @@ def _configure_npr_cameras(bpy, profile: dict) -> None:
         dy = camera_obj.location.y - target[1]
         dz = camera_obj.location.z - target[2]
         camera_obj.data.dof.use_dof = True
-        camera_obj.data.dof.focus_distance = max(0.1, math.sqrt(dx * dx + dy * dy + dz * dz))
+        focus_distance = max(0.1, math.sqrt(dx * dx + dy * dy + dz * dz))
+        focus = bpy.data.objects.new(f"{camera_obj.name}_NPR_Focus", None)
+        bpy.context.collection.objects.link(focus)
+        focus.parent = camera_obj
+        focus.location = (0.0, 0.0, -focus_distance)
+        camera_obj.data.dof.focus_object = focus
+        camera_obj.data.dof.focus_distance = focus_distance
         camera_obj.data.dof.aperture_fstop = float(camera_profile.get("f_stop", 4.2))
         camera_obj.data.dof.aperture_blades = 7
 

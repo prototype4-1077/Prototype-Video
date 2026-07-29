@@ -586,8 +586,8 @@ def render_performance_look_gate(
     Workbench lane. This focused lane makes real Eevee look development cheap
     enough to use repeatedly rather than treating art review as a rare event.
     """
-    if performance_gate_mode not in {"poses", "full"}:
-        raise ValueError("performance_gate_mode must be 'poses' or 'full'")
+    if performance_gate_mode not in {"poses", "temporal", "full"}:
+        raise ValueError("performance_gate_mode must be 'poses', 'temporal', or 'full'")
     if int(samples) <= 0:
         raise ValueError("performance look samples must be positive")
     profile = load_look_profile(look_profile_path)
@@ -625,11 +625,12 @@ def render_performance_look_gate(
     plan_path.write_text(json.dumps(plan, indent=2) + "\n", encoding="utf-8")
     blender_bin = _executable(blender, "Blender")
     ffmpeg_bin = _executable(ffmpeg, "FFmpeg")
-    selected_frames = (
-        None
-        if performance_gate_mode == "full"
-        else [int(entry["frame"]) for entry in entries]
-    )
+    temporal_frames = int((profile.get("render") or {}).get("temporal_window_frames", 30))
+    selected_frames = None
+    if performance_gate_mode == "poses":
+        selected_frames = [int(entry["frame"]) for entry in entries]
+    elif performance_gate_mode == "temporal":
+        selected_frames = list(range(1, temporal_frames + 1))
     _render_frames(
         blender_bin,
         plan_path,
@@ -640,9 +641,19 @@ def render_performance_look_gate(
     matrix = output / "june-golden-performance-look-matrix.png"
     _facial_matrix(ffmpeg_bin, frames_dir, entries, matrix)
     video = None
-    if performance_gate_mode == "full":
-        video = output / "june-golden-performance-look.mp4"
-        _assemble_video(ffmpeg_bin, plan, frames_dir, video, None)
+    if performance_gate_mode in {"temporal", "full"}:
+        video = output / (
+            "june-golden-performance-look-temporal.mp4"
+            if performance_gate_mode == "temporal"
+            else "june-golden-performance-look.mp4"
+        )
+        video_plan = plan
+        if performance_gate_mode == "temporal":
+            video_plan = {
+                **plan,
+                "duration_seconds": temporal_frames / int(plan["render"]["fps"]),
+            }
+        _assemble_video(ffmpeg_bin, video_plan, frames_dir, video, None)
     report = {
         "contract_version": ASSET_CONTRACT_VERSION,
         "gate": "focused_performance_look",
@@ -663,7 +674,13 @@ def render_performance_look_gate(
             "height": plan["render"]["height"],
             "fps": plan["render"]["fps"],
             "contract_frames": plan["frame_end"],
-            "rendered_frames": plan["frame_end"] if performance_gate_mode == "full" else len(entries),
+            "rendered_frames": (
+                plan["frame_end"]
+                if performance_gate_mode == "full"
+                else temporal_frames
+                if performance_gate_mode == "temporal"
+                else len(entries)
+            ),
             "duration_seconds": plan["duration_seconds"],
             "matrix": matrix.name,
             "video": video.name if video else None,
@@ -922,7 +939,7 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--facial-samples", type=int, default=32)
     parser.add_argument(
         "--performance-gate",
-        choices=("poses", "full"),
+        choices=("poses", "temporal", "full"),
         default="full",
         help="Render only the nine contracted poses for fast CI or all 453 frames for promotion.",
     )
