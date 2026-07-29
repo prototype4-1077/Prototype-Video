@@ -5,6 +5,7 @@ import tempfile
 import unittest
 from unittest import mock
 
+from pipeline.blender import render_vertical_slice as blender_studio
 from pipeline.cartoon_asset_library import (
     build_asset_library,
     canonical_text_sha256,
@@ -36,6 +37,7 @@ LOOK_PROFILE_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v1.
 LOOK_PROFILE_V2_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v2.json"
 LOOK_PROFILE_V3_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v3.json"
 LOOK_PROFILE_V4_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v4.json"
+LOOK_PROFILE_V5_PATH = ROOT / "concept" / "style_frames" / "june_oxley_npr_look_v5.json"
 BLENDER_SOURCE = ROOT / "pipeline" / "blender" / "render_vertical_slice.py"
 
 
@@ -300,6 +302,66 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         self.assertFalse(render["motion_blur"])
         self.assertEqual(render["temporal_window_start"], 340)
         self.assertEqual(render["temporal_window_frames"], 30)
+
+    def test_phase12_semantic_ink_profile_separates_line_roles_by_shot_scale(self):
+        profile = load_look_profile(LOOK_PROFILE_V5_PATH)
+        outlines = profile["outlines"]
+        self.assertEqual(profile["style_version"], "1.4.0")
+        self.assertEqual(outlines["mode"], "semantic_compositor")
+        layers = {layer["name"]: layer for layer in outlines["semantic_layers"]}
+        self.assertEqual(set(layers), {"silhouette_contact", "form_crease", "construction_detail"})
+        self.assertEqual({layer["source"] for layer in layers.values()}, {"mist", "normal", "luminance"})
+        self.assertGreater(
+            layers["silhouette_contact"]["shot_multipliers"]["wide"],
+            layers["silhouette_contact"]["shot_multipliers"]["close"],
+        )
+        self.assertGreater(
+            layers["construction_detail"]["shot_multipliers"]["close"],
+            layers["construction_detail"]["shot_multipliers"]["wide"],
+        )
+        source = BLENDER_SOURCE.read_text(encoding="utf-8")
+        for marker in (
+            "CE_Semantic_Ink_Color",
+            "_Shot_Strength",
+            "view_layer.use_pass_normal = True",
+            "view_layer.use_pass_mist = True",
+            "_animate_semantic_strength",
+        ):
+            self.assertIn(marker, source)
+
+    def test_phase12_semantic_ink_rejects_missing_line_class(self):
+        invalid = copy.deepcopy(load_look_profile(LOOK_PROFILE_V5_PATH))
+        invalid["outlines"]["semantic_layers"].pop()
+        with self.assertRaisesRegex(ValueError, "exactly three"):
+            validate_look_profile(invalid)
+
+    def test_phase12_acting_polish_preserves_authored_poses_and_final_hold(self):
+        profile = load_look_profile(LOOK_PROFILE_V5_PATH)
+        plan, _ = golden_performance_plan(self.golden_config, PERFORMANCE_PATH)
+        shot = next(item for item in plan["shots"] if item["id"] == "GS050")
+        keys = blender_studio._golden_polish_keys(
+            "GS050",
+            shot["performance_keyframes"],
+            profile["acting_polish"],
+        )
+        by_frame = {entry["frame"]: entry for entry in keys}
+        self.assertGreater(len(keys), 3)
+        self.assertEqual(list(by_frame), sorted(by_frame))
+        for keyframe in shot["performance_keyframes"]:
+            frame = int(keyframe["frame"])
+            expected = blender_studio._golden_pose("GS050", keyframe["phase"])
+            self.assertEqual(by_frame[frame]["pose"], expected)
+        hold_start = int(shot["frame_end"]) - profile["acting_polish"]["final_hold_frames"]
+        self.assertEqual(by_frame[hold_start]["role"], "settle")
+        self.assertEqual(by_frame[hold_start]["pose"], by_frame[int(shot["frame_end"])]["pose"])
+        roles = {entry["role"] for entry in keys}
+        self.assertTrue({"held_start", "anticipation", "arced_breakdown", "restrained_overshoot", "settle"}.issubset(roles))
+
+    def test_phase12_acting_polish_rejects_short_emotional_hold(self):
+        invalid = copy.deepcopy(load_look_profile(LOOK_PROFILE_V5_PATH))
+        invalid["acting_polish"]["final_hold_frames"] = 3
+        with self.assertRaisesRegex(ValueError, "final hold"):
+            validate_look_profile(invalid)
 
     def test_golden_performance_uses_audio_derived_rhubarb_cues(self):
         plan, _ = golden_performance_plan(self.golden_config, PERFORMANCE_PATH)

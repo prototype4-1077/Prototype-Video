@@ -1853,6 +1853,92 @@ def _golden_pose(shot_id: str, phase: str) -> dict:
         raise ValueError(f"unsupported Golden Scene pose: {shot_id}/{phase}") from exc
 
 
+def _tuple_blend(start, target, amount: float):
+    return tuple(float(left) + (float(right) - float(left)) * amount for left, right in zip(start, target))
+
+
+def _golden_pose_between(start: dict, target: dict, amount: float, polish: dict) -> dict:
+    gaze_amount = amount
+    clavicle_amount = amount
+    if 0.0 < amount < 1.0:
+        gaze_amount = min(1.0, amount + float(polish["gaze_lead"]))
+        clavicle_amount = max(0.0, amount - float(polish["clavicle_lag"]))
+    arc = 0.0
+    if 0.0 < amount < 1.0:
+        arc = float(polish["arc_height"]) * 4.0 * amount * (1.0 - amount)
+    pelvis = list(_tuple_blend(start["pelvis"], target["pelvis"], amount))
+    hand_l = list(_tuple_blend(start["hand.L"], target["hand.L"], amount))
+    hand_r = list(_tuple_blend(start["hand.R"], target["hand.R"], amount))
+    head = list(_tuple_blend(start["head"], target["head"], amount))
+    pelvis[2] += arc
+    hand_l[2] += arc * 0.55
+    hand_r[2] += arc * 0.55
+    head[0] -= arc * 45.0
+    return {
+        "pelvis": tuple(pelvis),
+        "torso": _tuple_blend(start["torso"], target["torso"], amount),
+        "head": tuple(head),
+        "hand.L": tuple(hand_l),
+        "hand.R": tuple(hand_r),
+        "gaze": _tuple_blend(start["gaze"], target["gaze"], gaze_amount),
+        "clavicle": _tuple_blend(start["clavicle"], target["clavicle"], clavicle_amount),
+        "curl": _tuple_blend(start["curl"], target["curl"], amount),
+    }
+
+
+def _golden_polish_keys(shot_id: str, keyframes: list[dict], polish: dict) -> list[dict]:
+    """Expand approved poses into deterministic acting beats without moving them."""
+    authored = [
+        {
+            "frame": int(keyframe["frame"]),
+            "role": f"authored_{keyframe['phase']}",
+            "pose": _golden_pose(shot_id, str(keyframe["phase"])),
+        }
+        for keyframe in keyframes
+    ]
+    if not polish.get("enabled"):
+        return authored
+    result = {entry["frame"]: entry for entry in authored}
+    for index, (start, target) in enumerate(zip(authored, authored[1:])):
+        start_frame = int(start["frame"])
+        target_frame = int(target["frame"])
+        arrival_frame = target_frame
+        if shot_id == "GS050" and index == len(authored) - 2:
+            arrival_frame = target_frame - int(polish["final_hold_frames"])
+        span = arrival_frame - start_frame
+        if span < 16:
+            continue
+        hold_frame = start_frame + int(polish["hold_frames"])
+        anticipation_frame = hold_frame + int(polish["anticipation_frames"])
+        breakdown_frame = start_frame + round(span * float(polish["breakdown_fraction"]))
+        overshoot_frame = arrival_frame - int(polish["settle_frames"])
+        candidates = (
+            (hold_frame, "held_start", start["pose"]),
+            (
+                anticipation_frame,
+                "anticipation",
+                _golden_pose_between(start["pose"], target["pose"], -float(polish["anticipation_ratio"]), polish),
+            ),
+            (
+                breakdown_frame,
+                "arced_breakdown",
+                _golden_pose_between(
+                    start["pose"], target["pose"], float(polish["breakdown_fraction"]), polish
+                ),
+            ),
+            (
+                overshoot_frame,
+                "restrained_overshoot",
+                _golden_pose_between(start["pose"], target["pose"], 1.0 + float(polish["overshoot_ratio"]), polish),
+            ),
+            (arrival_frame, "settle", target["pose"]),
+        )
+        for frame, role, pose in candidates:
+            if start_frame < frame < target_frame:
+                result[int(frame)] = {"frame": int(frame), "role": role, "pose": pose}
+    return [result[frame] for frame in sorted(result)]
+
+
 def _animate_golden_performance(bpy, rig, plan: dict) -> None:
     """Drive the v5 production controls on the exact phase-8 453-frame clock."""
     frame_end = int(plan["frame_end"])
@@ -1889,11 +1975,17 @@ def _animate_golden_performance(bpy, rig, plan: dict) -> None:
             foot.keyframe_insert(data_path="location", frame=1)
             foot.keyframe_insert(data_path="location", frame=frame_end)
 
+        acting_polish = (plan.get("look_profile") or {}).get("acting_polish") or {}
         for shot in plan["shots"]:
             shot_id = str(shot["id"])
-            for keyframe in shot.get("performance_keyframes") or []:
+            performance_keys = _golden_polish_keys(
+                shot_id,
+                shot.get("performance_keyframes") or [],
+                acting_polish,
+            )
+            for keyframe in performance_keys:
                 frame = int(keyframe["frame"])
-                pose = _golden_pose(shot_id, str(keyframe["phase"]))
+                pose = keyframe["pose"]
                 pelvis.location = pose["pelvis"]
                 pelvis.keyframe_insert(data_path="location", frame=frame)
                 torso.rotation_euler = (math.radians(pose["torso"][0]), math.radians(pose["torso"][1]), 0.0)
@@ -1935,7 +2027,8 @@ def _animate_golden_performance(bpy, rig, plan: dict) -> None:
                     point.handle_left_type = "AUTO_CLAMPED"
                     point.handle_right_type = "AUTO_CLAMPED"
 
-    _stash_action(bpy, rig, "June_Golden_Performance_v1", performance)
+    action_name = "June_Golden_Performance_v2_Polished" if (plan.get("look_profile") or {}).get("acting_polish") else "June_Golden_Performance_v1"
+    _stash_action(bpy, rig, action_name, performance)
 
 
 def _animate_performance_props(bpy, plan: dict) -> None:
@@ -2409,11 +2502,61 @@ def _configure_npr_outlines(bpy, profile: dict) -> None:
             setattr(line_set, attribute, bool(value))
 
 
-def _configure_npr_compositor(bpy, profile: dict) -> None:
+def _semantic_shot_scale(shot: dict) -> str:
+    camera = str(shot.get("camera", "medium")).lower()
+    if "wide" in camera:
+        return "wide"
+    if "close" in camera:
+        return "close"
+    return "medium"
+
+
+def _animate_semantic_strength(socket, layer: dict, plan: dict) -> None:
+    base = float(layer["strength"])
+    shots = plan.get("shots") or []
+    if not shots:
+        socket.default_value = base
+        return
+    multipliers = layer["shot_multipliers"]
+    for shot in shots:
+        value = max(0.0, min(1.0, base * float(multipliers[_semantic_shot_scale(shot)])))
+        for frame in (int(shot["frame_start"]), int(shot["frame_end"])):
+            socket.default_value = value
+            socket.keyframe_insert(data_path="default_value", frame=frame)
+
+
+def _semantic_edge_source(nodes, links, render_layers, source_image, layer: dict):
+    source = str(layer["source"])
+    if source == "luminance":
+        edge_input = source_image
+    else:
+        edge_input = render_layers.outputs["Mist" if source == "mist" else "Normal"]
+    sobel = nodes.new("CompositorNodeFilter")
+    sobel.name = f"CE_Ink_{layer['name']}_Sobel"
+    sobel.filter_type = "SOBEL"
+    links.new(edge_input, sobel.inputs["Image"])
+    neutral = nodes.new("CompositorNodeRGBToBW")
+    neutral.name = f"CE_Ink_{layer['name']}_Neutral"
+    links.new(sobel.outputs["Image"], neutral.inputs["Image"])
+    edge_output = neutral.outputs["Val"]
+    dilation = int(layer.get("dilate_px", 0))
+    if dilation:
+        dilate = nodes.new("CompositorNodeDilateErode")
+        dilate.name = f"CE_Ink_{layer['name']}_Dilation"
+        dilate.mode = "DISTANCE"
+        dilate.distance = dilation
+        links.new(edge_output, dilate.inputs["Mask"])
+        edge_output = dilate.outputs["Mask"]
+    return edge_output
+
+
+def _configure_npr_compositor(bpy, profile: dict, plan: dict) -> None:
     compositor = profile.get("compositor") or {}
     outlines = profile.get("outlines") or {}
-    use_sobel = outlines.get("enabled") and outlines.get("mode") == "compositor_sobel"
-    if not compositor.get("glow") and not use_sobel:
+    outline_mode = outlines.get("mode") if outlines.get("enabled") else None
+    use_sobel = outline_mode == "compositor_sobel"
+    use_semantic = outline_mode == "semantic_compositor"
+    if not compositor.get("glow") and not use_sobel and not use_semantic:
         return
     scene = bpy.context.scene
     scene.use_nodes = True
@@ -2421,7 +2564,8 @@ def _configure_npr_compositor(bpy, profile: dict) -> None:
     links = scene.node_tree.links
     nodes.clear()
     render_layers = nodes.new("CompositorNodeRLayers")
-    image_output = render_layers.outputs["Image"]
+    source_image = render_layers.outputs["Image"]
+    image_output = source_image
     if use_sobel:
         sobel = nodes.new("CompositorNodeFilter")
         sobel.name = "CE_NPR_Temporal_Sobel"
@@ -2440,6 +2584,33 @@ def _configure_npr_compositor(bpy, profile: dict) -> None:
         links.new(image_output, multiply.inputs[1])
         links.new(invert.outputs["Color"], multiply.inputs[2])
         image_output = multiply.outputs[0]
+    if use_semantic:
+        view_layer = scene.view_layers[0]
+        view_layer.use_pass_normal = True
+        view_layer.use_pass_mist = True
+        if scene.world:
+            scene.world.mist_settings.start = 0.0
+            scene.world.mist_settings.depth = 24.0
+            scene.world.mist_settings.falloff = "QUADRATIC"
+        ink = nodes.new("CompositorNodeRGB")
+        ink.name = "CE_Semantic_Ink_Color"
+        ink.outputs["RGBA"].default_value = (*tuple(float(value) for value in outlines["color"]), 1.0)
+        for layer in outlines["semantic_layers"]:
+            edge_output = _semantic_edge_source(nodes, links, render_layers, source_image, layer)
+            strength = nodes.new("CompositorNodeMath")
+            strength.name = f"CE_Ink_{layer['name']}_Shot_Strength"
+            strength.operation = "MULTIPLY"
+            strength.use_clamp = True
+            strength.inputs[1].default_value = float(layer["strength"])
+            links.new(edge_output, strength.inputs[0])
+            _animate_semantic_strength(strength.inputs[1], layer, plan)
+            mix = nodes.new("CompositorNodeMixRGB")
+            mix.name = f"CE_Ink_{layer['name']}_Composite"
+            mix.blend_type = "MIX"
+            links.new(strength.outputs[0], mix.inputs[0])
+            links.new(image_output, mix.inputs[1])
+            links.new(ink.outputs["RGBA"], mix.inputs[2])
+            image_output = mix.outputs[0]
     if compositor.get("glow"):
         glare = nodes.new("CompositorNodeGlare")
         glare.name = "CE_NPR_Lantern_Glow"
@@ -2481,7 +2652,7 @@ def _apply_npr_look(bpy, plan: dict) -> None:
     for material in bpy.data.materials:
         _apply_npr_material(material, profile)
     _configure_npr_outlines(bpy, profile)
-    _configure_npr_compositor(bpy, profile)
+    _configure_npr_compositor(bpy, profile, plan)
     _configure_npr_cameras(bpy, profile)
 
 

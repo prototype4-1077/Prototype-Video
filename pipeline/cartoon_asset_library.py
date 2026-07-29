@@ -77,10 +77,30 @@ def validate_look_profile(profile: dict) -> None:
     outlines = profile.get("outlines") or {}
     if outlines.get("enabled") is not True or not 0.5 <= float(outlines.get("thickness_px", 0)) <= 3.0:
         raise ValueError("NPR outlines require a production-safe 0.5-3px thickness")
-    if outlines.get("mode") not in {"freestyle", "compositor_sobel"}:
-        raise ValueError("NPR outline mode must be freestyle or compositor_sobel")
+    if outlines.get("mode") not in {"freestyle", "compositor_sobel", "semantic_compositor"}:
+        raise ValueError("NPR outline mode must be freestyle, compositor_sobel, or semantic_compositor")
     if outlines.get("mode") == "compositor_sobel" and not 0.0 < float(outlines.get("edge_strength", 0)) <= 1.0:
         raise ValueError("NPR compositor edge_strength must be inside zero and one")
+    if outlines.get("mode") == "semantic_compositor":
+        layers = outlines.get("semantic_layers") or []
+        if len(layers) != 3:
+            raise ValueError("NPR semantic compositor requires exactly three ink layers")
+        names = {str(layer.get("name", "")) for layer in layers}
+        sources = {str(layer.get("source", "")) for layer in layers}
+        if names != {"silhouette_contact", "form_crease", "construction_detail"}:
+            raise ValueError("NPR semantic ink layers must name silhouette, form, and construction roles")
+        if sources != {"mist", "normal", "luminance"}:
+            raise ValueError("NPR semantic ink layers must use mist, normal, and luminance sources")
+        for layer in layers:
+            if not 0.0 < float(layer.get("strength", 0)) <= 1.0:
+                raise ValueError("NPR semantic ink strength must be inside zero and one")
+            if not 0 <= int(layer.get("dilate_px", -1)) <= 2:
+                raise ValueError("NPR semantic ink dilation must be between zero and two pixels")
+            multipliers = layer.get("shot_multipliers") or {}
+            if set(multipliers) != {"wide", "medium", "close"}:
+                raise ValueError("NPR semantic ink requires wide, medium, and close shot multipliers")
+            if any(not 0.0 <= float(value) <= 2.0 for value in multipliers.values()):
+                raise ValueError("NPR semantic ink shot multipliers must be between zero and two")
     if len(outlines.get("color") or []) != 3:
         raise ValueError("NPR outline color must be RGB")
     lighting = profile.get("lighting") or {}
@@ -96,6 +116,26 @@ def validate_look_profile(profile: dict) -> None:
     render = profile.get("render") or {}
     if int(render.get("temporal_window_start", 1)) < 1 or int(render.get("temporal_window_frames", 30)) < 2:
         raise ValueError("NPR temporal window requires a positive start and at least two frames")
+    acting = profile.get("acting_polish")
+    if acting is not None:
+        if acting.get("enabled") is not True or not re.fullmatch(r"\d+\.\d+\.\d+", str(acting.get("version", ""))):
+            raise ValueError("NPR acting polish must be enabled and semantically versioned")
+        for field in ("hold_frames", "anticipation_frames", "settle_frames"):
+            if not 1 <= int(acting.get(field, 0)) <= 12:
+                raise ValueError(f"NPR acting polish {field} must be between one and twelve")
+        if not 12 <= int(acting.get("final_hold_frames", 0)) <= 45:
+            raise ValueError("NPR acting polish final hold must be between twelve and forty-five frames")
+        for field, minimum, maximum in (
+            ("anticipation_ratio", 0.0, 0.12),
+            ("breakdown_fraction", 0.35, 0.75),
+            ("overshoot_ratio", 0.0, 0.10),
+            ("arc_height", 0.0, 0.05),
+            ("gaze_lead", 0.0, 0.25),
+            ("clavicle_lag", 0.0, 0.25),
+        ):
+            value = float(acting.get(field, -1))
+            if not minimum <= value <= maximum:
+                raise ValueError(f"NPR acting polish {field} is outside its safe range")
 
 
 def load_look_profile(path: str | Path) -> dict:
