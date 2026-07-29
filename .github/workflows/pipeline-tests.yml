@@ -13,6 +13,7 @@ on:
       - "concept/style_frames/june_oxley_npr_look_v2.json"
       - "concept/style_frames/june_oxley_npr_look_v3.json"
       - "concept/style_frames/june_oxley_npr_look_v4.json"
+      - "concept/style_frames/june_oxley_npr_look_v5.json"
       - "concept/style_frames/june_oxley_npr_finish_v1.json"
       - "concept/style_frames/june_oxley_npr_reward_v1.json"
       - "examples/june-golden-scene-twelve-dollar-mug.json"
@@ -90,7 +91,7 @@ jobs:
             --performance-only \
             --performance-engine BLENDER_EEVEE_NEXT \
             --performance-samples 12 \
-            --look-profile concept/style_frames/june_oxley_npr_look_v4.json \
+            --look-profile concept/style_frames/june_oxley_npr_look_v5.json \
             --performance-gate temporal \
             --output-dir asset-quality-out
           find asset-quality-out -maxdepth 3 -type f -print
