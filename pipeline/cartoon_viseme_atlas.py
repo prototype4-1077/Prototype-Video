@@ -11,6 +11,12 @@ from typing import Any
 
 from PIL import Image, ImageDraw, ImageFilter
 
+from pipeline.cartoon_expression_atlas import (
+    expression_cells,
+    expression_patch_mask,
+    expression_performance_plan,
+    load_expression_atlas_contract,
+)
 from pipeline.cartoon_lipsync import normalize_rhubarb
 
 
@@ -273,6 +279,8 @@ def render_lipsync_performance(
     output_dir: str | Path,
     *,
     audio_path: str | Path | None = None,
+    expression_contract_path: str | Path | None = None,
+    expression_cue_path: str | Path | None = None,
     ffmpeg: str = "ffmpeg",
     fps: int = 30,
     transition_frames: int = 2,
@@ -281,6 +289,8 @@ def render_lipsync_performance(
     """Render an exact-clock atlas performance from Rhubarb mouth cues."""
     if not 1 <= output_scale <= 4:
         raise ValueError("output_scale must be between one and four")
+    if bool(expression_contract_path) != bool(expression_cue_path):
+        raise ValueError("expression_contract_path and expression_cue_path must be supplied together")
     contract, image_path = load_viseme_atlas_contract(contract_path)
     cue_metadata, frame_plan = performance_viseme_plan(
         cue_path,
@@ -302,6 +312,31 @@ def render_lipsync_performance(
     box = tuple(int(value) for value in contract["mouth_patch_box"])
     patches = {shape: cell.crop(box) for shape, cell in cells.items()}
     mask = mouth_patch_mask(contract)
+    expression_metadata = None
+    expression_plan = None
+    expression_patches = None
+    expression_box = None
+    expression_mask = None
+    if expression_contract_path and expression_cue_path:
+        expression_contract, expression_image = load_expression_atlas_contract(expression_contract_path)
+        expression_metadata, expression_plan = expression_performance_plan(
+            expression_cue_path,
+            expected_atlas_id=expression_contract["atlas_id"],
+        )
+        if (
+            expression_metadata["fps"] != fps
+            or expression_metadata["frame_count"] != len(frame_plan)
+            or abs(expression_metadata["duration_seconds"] - cue_metadata["duration_seconds"]) > 1e-6
+        ):
+            raise ValueError("expression and lip-sync plans must share one exact frame clock")
+        with Image.open(expression_image) as atlas:
+            expressions = expression_cells(atlas, expression_contract)
+        base = expressions[str(expression_contract["neutral_expression"])].copy()
+        expression_box = tuple(int(value) for value in expression_contract["expression_patch_box"])
+        expression_patches = {
+            state: cell.crop(expression_box) for state, cell in expressions.items()
+        }
+        expression_mask = expression_patch_mask(expression_contract)
     grid = contract["grid"]
     render_size = (
         int(grid["cell_width"]) * output_scale,
@@ -313,6 +348,17 @@ def render_lipsync_performance(
         amount = float(entry["blend"])
         patch = target_patch if amount >= 1.0 else Image.blend(source_patch, target_patch, amount)
         frame = base.copy()
+        if expression_plan is not None:
+            expression_entry = expression_plan[entry["frame"] - 1]
+            source_expression = expression_patches[expression_entry["from_state"]]
+            target_expression = expression_patches[expression_entry["to_state"]]
+            expression_amount = float(expression_entry["blend"])
+            expression_patch = (
+                target_expression
+                if expression_amount >= 1.0
+                else Image.blend(source_expression, target_expression, expression_amount)
+            )
+            frame.paste(expression_patch, expression_box[:2], expression_mask)
         frame.paste(patch, box[:2], mask)
         frame.resize(render_size, Image.Resampling.LANCZOS).save(
             frames_dir / f"frame_{entry['frame']:04d}.png",
@@ -356,6 +402,14 @@ def render_lipsync_performance(
         "normalized_cue_count": cue_metadata["normalized_cue_count"],
         "shapes": cue_metadata["shapes"],
         "audio": {"file": audio.name, "sha256": _sha256(audio)} if audio else None,
+        "expression": {
+            "atlas_id": expression_contract["atlas_id"],
+            "atlas_sha256": expression_contract["image"]["sha256"],
+            "cue_file": expression_metadata["path"].name,
+            "cue_sha256": expression_metadata["sha256"],
+            "cue_count": expression_metadata["cue_count"],
+            "states": expression_metadata["states"],
+        } if expression_metadata else None,
         "fps": fps,
         "transition_frames": transition_frames,
         "frame_count": len(frame_plan),
@@ -382,6 +436,8 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--scale", type=int, default=2)
     parser.add_argument("--cues", help="Validated Rhubarb JSON for exact-clock performance mode")
     parser.add_argument("--audio", help="Optional exact audio used to generate --cues")
+    parser.add_argument("--expression-atlas", help="Identity-locked expression atlas JSON")
+    parser.add_argument("--expression-cues", help="Exact-clock expression performance JSON")
     return parser.parse_args()
 
 
@@ -389,12 +445,18 @@ def main() -> None:
     args = _parse_args()
     if args.audio and not args.cues:
         raise SystemExit("--audio requires --cues")
+    if bool(args.expression_atlas) != bool(args.expression_cues):
+        raise SystemExit("--expression-atlas and --expression-cues must be supplied together")
+    if args.expression_atlas and not args.cues:
+        raise SystemExit("expression layers require --cues performance mode")
     if args.cues:
         report = render_lipsync_performance(
             args.contract,
             args.cues,
             args.output_dir,
             audio_path=args.audio,
+            expression_contract_path=args.expression_atlas,
+            expression_cue_path=args.expression_cues,
             ffmpeg=args.ffmpeg,
             output_scale=args.scale,
         )

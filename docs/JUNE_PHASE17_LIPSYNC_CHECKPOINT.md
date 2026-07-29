@@ -2,7 +2,7 @@
 
 Date: 2026-07-29
 
-Status: the high-fidelity atlas now performs a real 15.1-second, audio-matched, 453-frame dialogue clock locally. Public cue-mode reproduction remains the next gate.
+Status: the high-fidelity atlas performs a real 15.1-second, audio-matched dialogue clock locally, and the 453-frame cue mode is independently reproduced in public CI.
 
 ## What changed
 
@@ -78,6 +78,21 @@ Not passed:
 - The square close-up is not yet composited into the 1920x1080 porch/body/prop performance.
 - The time-fitted Piper voice is useful proof audio but is not June's canonical release performance.
 - Patch crossfades preserve quality but do not yet use a deformation mesh to carry lip corners and cheek mass between source states.
+
+## Public Phase 17 evidence
+
+- Run: `https://github.com/prototype4-1077/Prototype-Video/actions/runs/30498462761`
+- Head: `f7dee57a6cc649bd1aef7095e626ef703e9f11e5`
+- Full `test` job passed in 2m17s, including regression, both atlas renders, full decode, exact ffprobe gates, and both artifact uploads.
+- The inherited Blender v8 regression also passed in 6m23s.
+- Artifact: `june-2p5d-lipsync-performance-v1`.
+- Public video: H.264/yuv420p, 836x836, 30 fps, 453 frames, 15.100 seconds.
+- Public video SHA-256: `30f932577d4e7f3fee468be3e81e2e08fcdd38bdd1c811f7abfbd87ecae82954`.
+- Public cue SHA-256: `4e59733c26f519fd9f7b596a163a6c58e4fcb90c4525063a5fb0a71732eccc5c` with all 77 canonical cues and all nine shapes.
+- Public first and last frame SHA-256: `1f6c51238f87455c1a4495ff98ae9cfa58a7ee2c1cd75e76c57c155f4db8fddd`.
+- The downloaded public artifact decoded cleanly and its 24-frame full-runtime timeline passed visual inspection.
+
+The public artifact is intentionally silent because downloaded voice models and generated scratch audio stay outside Git. The local A/V gate proves exact audio coupling; the public artifact proves the complete cue-driven picture path independently.
 
 ## Recommended next gate
 
