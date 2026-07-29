@@ -11,7 +11,8 @@ import subprocess
 from typing import Any
 
 from pipeline.cartoon_motion import RENDER_PROFILES
-from pipeline.cartoon_vertical_slice import _contact_sheet, _render_frames, compile_plan
+from pipeline.cartoon_performance_slice import validate_key_pose_timing
+from pipeline.cartoon_vertical_slice import _assemble_video, _contact_sheet, _render_frames, compile_plan
 
 
 ASSET_CONTRACT_VERSION = 1
@@ -28,6 +29,15 @@ REQUIRED_BONES = {
     "upper_arm.L", "forearm.L", "hand.L", "upper_arm.R", "forearm.R", "hand.R",
     "thigh.L", "shin.L", "foot.L", "thigh.R", "shin.R", "foot.R",
 }
+REQUIRED_V5_IK_TARGETS = {"hand_ik.L", "hand_ik.R", "foot_ik.L", "foot_ik.R"}
+REQUIRED_V5_POLES = {"elbow_pole.L", "elbow_pole.R", "knee_pole.L", "knee_pole.R"}
+REQUIRED_V5_CLAVICLES = {"clavicle.L", "clavicle.R"}
+REQUIRED_V5_FACE_BONES = {"jaw", "eye.L", "eye.R", "gaze"}
+REQUIRED_V5_FINGERS = {
+    "finger.0.L", "finger.1.L", "finger.2.L", "finger.3.L", "thumb.L",
+    "finger.0.R", "finger.1.R", "finger.2.R", "finger.3.R", "thumb.R",
+}
+REQUIRED_V5_PROPS = {"held_mug", "table_mug", "ledger", "pencil"}
 
 
 def _string_set(value: Any, field: str) -> set[str]:
@@ -137,6 +147,49 @@ def validate_asset_manifest(manifest: dict) -> None:
             raise ValueError("Hero v4 must declare preserve-volume corrective deformation")
         if gate.get("deformation_pose_matrix_required") is not True:
             raise ValueError("Hero v4 requires a deformation pose matrix")
+    if asset_major >= 5:
+        if "CE_June_Props" not in collections:
+            raise ValueError("Hero v5 must expose a dedicated performance-props collection")
+        if not (REQUIRED_V5_CLAVICLES | REQUIRED_V5_FACE_BONES).issubset(bones):
+            raise ValueError("Hero v5 required bones must include clavicle, jaw, eye, and gaze controls")
+        actions = _string_set((manifest.get("rig") or {}).get("action_library"), "rig.action_library")
+        if "June_Golden_Performance_v1" not in actions:
+            raise ValueError("Hero v5 must publish the reusable Golden Performance action")
+        controls = (manifest.get("rig") or {}).get("production_controls") or {}
+        if _string_set(controls.get("ik_targets"), "rig.production_controls.ik_targets") != REQUIRED_V5_IK_TARGETS:
+            raise ValueError("Hero v5 must expose both arm and leg IK targets")
+        if _string_set(controls.get("pole_targets"), "rig.production_controls.pole_targets") != REQUIRED_V5_POLES:
+            raise ValueError("Hero v5 must expose elbow and knee pole targets")
+        if _string_set(controls.get("clavicles"), "rig.production_controls.clavicles") != REQUIRED_V5_CLAVICLES:
+            raise ValueError("Hero v5 must expose both clavicle controls")
+        if _string_set(controls.get("facial_bones"), "rig.production_controls.facial_bones") != REQUIRED_V5_FACE_BONES:
+            raise ValueError("Hero v5 must expose jaw, eye, and gaze controls")
+        if _string_set(controls.get("finger_controls"), "rig.production_controls.finger_controls") != REQUIRED_V5_FINGERS:
+            raise ValueError("Hero v5 must expose ten articulated digit controls")
+        if not all(controls.get(field) is True for field in ("foot_lock", "arm_ik", "gaze_target", "jaw_follow_through")):
+            raise ValueError("Hero v5 production controls must enable IK, foot lock, gaze, and jaw follow-through")
+        if hands.get("articulated_digits") is not True:
+            raise ValueError("Hero v5 hands must declare articulated digits")
+        props = manifest.get("performance_props") or {}
+        if _string_set(props.get("required"), "performance_props.required") != REQUIRED_V5_PROPS:
+            raise ValueError("Hero v5 must provide the Golden Scene performance props")
+        if props.get("visibility_keyed_by_shot") is not True or props.get("hand_attachment_controls") is not True:
+            raise ValueError("Hero v5 props require shot visibility and hand attachment controls")
+        performance = manifest.get("performance_contract") or {}
+        if performance.get("path") != "concept/style_frames/june_golden_scene_performance_slice_v1.json":
+            raise ValueError("Hero v5 must pin the Golden Scene performance contract")
+        if not re.fullmatch(r"[0-9a-f]{64}", str(performance.get("sha256", ""))):
+            raise ValueError("Hero v5 performance contract must have a SHA-256")
+        if performance.get("shots") != ["GS030", "GS040", "GS050"]:
+            raise ValueError("Hero v5 performance contract must preserve the GS030-GS050 range")
+        if (
+            int(performance.get("fps", 0)) != 30
+            or int(performance.get("frame_count", 0)) != 453
+            or abs(float(performance.get("duration_seconds", 0)) - 15.1) > 1e-9
+        ):
+            raise ValueError("Hero v5 performance contract must preserve the 453-frame clock")
+        if gate.get("performance_slice_required") is not True or gate.get("performance_slice_full_frame_render") is not True:
+            raise ValueError("Hero v5 requires a full-frame deformation performance gate")
 
 
 def load_asset_manifest(path: str | Path) -> dict:
@@ -152,6 +205,15 @@ def load_asset_manifest(path: str | Path) -> dict:
         digest = hashlib.sha256(reference.read_bytes()).hexdigest()
         if digest != canonical["sha256"]:
             raise ValueError("Hero v4 canonical identity reference hash does not match")
+    if int(str(manifest["asset_version"]).split(".", 1)[0]) >= 5:
+        performance = manifest["performance_contract"]
+        repo_root = manifest_path.parents[2]
+        contract = repo_root / performance["path"]
+        if not contract.is_file():
+            raise ValueError(f"Hero v5 performance contract is missing: {contract}")
+        digest = hashlib.sha256(contract.read_bytes()).hexdigest()
+        if digest != performance["sha256"]:
+            raise ValueError("Hero v5 performance contract hash does not match")
     return manifest
 
 
@@ -311,6 +373,106 @@ def deformation_pose_plan(
     return plan, entries
 
 
+def golden_performance_plan(
+    config: dict,
+    performance_manifest_path: str | Path,
+    *,
+    width: int = 960,
+    height: int = 540,
+    engine: str = "BLENDER_WORKBENCH",
+    samples: int = 1,
+) -> tuple[dict, list[dict]]:
+    """Compile the phase-8 acting contract into an exact deforming-rig plan."""
+    if min(int(width), int(height), int(samples)) <= 0:
+        raise ValueError("performance gate dimensions and samples must be positive")
+    performance_path = Path(performance_manifest_path).resolve()
+    performance = json.loads(performance_path.read_text(encoding="utf-8"))
+    shot_ids = [str(shot.get("id")) for shot in performance.get("shots") or []]
+    if shot_ids != ["GS030", "GS040", "GS050"]:
+        raise ValueError("performance gate requires the canonical GS030-GS050 shot range")
+    if performance.get("production") != config.get("production"):
+        raise ValueError("performance gate source production does not match the contract")
+    if (
+        int(performance.get("fps", 0)) != 30
+        or int(config.get("fps", 0)) != 30
+        or int(performance.get("frame_count", 0)) != 453
+        or abs(float(performance.get("duration_seconds", 0)) - 15.1) > 1e-9
+    ):
+        raise ValueError("performance gate requires the exact 453-frame contract")
+    for shot in performance["shots"]:
+        validate_key_pose_timing(shot)
+
+    source_by_id = {str(shot.get("id")): shot for shot in config.get("shots") or []}
+    if any(shot_id not in source_by_id for shot_id in shot_ids):
+        raise ValueError("performance gate source config is missing a contracted shot")
+    selected = [source_by_id[shot_id] for shot_id in shot_ids]
+    subset = {
+        **config,
+        "dialogue": {
+            **(config.get("dialogue") or {}),
+            "text": " ".join(str(shot.get("line") or "") for shot in selected),
+        },
+        "shots": selected,
+    }
+    plan = compile_plan(subset, profile="youtube", quality="production")
+    plan["render"].update(
+        {
+            "width": int(width),
+            "height": int(height),
+            "engine": engine,
+            "samples": int(samples),
+            "quality": "golden-performance-deformation-gate",
+        }
+    )
+    plan["performance_contract"] = "june_golden_scene_performance_v1"
+    plan["performance_manifest"] = str(performance_path)
+
+    entries: list[dict] = []
+    contract_by_id = {str(shot["id"]): shot for shot in performance["shots"]}
+    for shot in plan["shots"]:
+        contract_shot = contract_by_id[str(shot["id"])]
+        expected_frames = int(contract_shot["frame_count"])
+        actual_frames = int(shot["frame_end"]) - int(shot["frame_start"]) + 1
+        if actual_frames != expected_frames:
+            raise ValueError(f"performance gate frame budget changed for {shot['id']}")
+        shot["performance_keyframes"] = []
+        for keyframe in contract_shot["keyframes"]:
+            global_frame = int(shot["frame_start"]) + int(keyframe["frame"])
+            entry = {
+                "shot": shot["id"],
+                "phase": keyframe["phase"],
+                "label": f"{shot['id']}-{keyframe['phase']}",
+                "frame": global_frame,
+            }
+            shot["performance_keyframes"].append(entry)
+            entries.append(entry)
+
+    if int(plan["frame_end"]) != 453 or len(entries) != 9:
+        raise ValueError("performance gate must compile nine poses across exactly 453 frames")
+
+    shapes = tuple("AECDBFGH")
+    mouth_cues = []
+    for shot_index, shot in enumerate(plan["shots"]):
+        cursor = int(shot["frame_start"])
+        end = int(shot["frame_end"])
+        cue_index = 0
+        while cursor <= end:
+            cue_end = min(end, cursor + 5)
+            shape = "X" if cue_index % 6 == 5 else shapes[(shot_index * 3 + cue_index) % len(shapes)]
+            mouth_cues.append({"frame_start": cursor, "frame_end": cue_end, "shape": shape})
+            cursor = cue_end + 1
+            cue_index += 1
+    plan["mouth_cues"] = mouth_cues
+    plan["facial_performance_cues"] = [
+        {"frame_start": 1, "frame_end": 171, "expression": "smile", "strength": 0.38},
+        {"frame_start": 172, "frame_end": 275, "expression": "smile", "strength": 0.68},
+        {"frame_start": 276, "frame_end": 339, "expression": "thoughtful", "strength": 0.30},
+        {"frame_start": 340, "frame_end": 396, "expression": "thoughtful", "strength": 0.76},
+        {"frame_start": 397, "frame_end": 453, "expression": "brow_knit", "strength": 0.62},
+    ]
+    return plan, entries
+
+
 def _facial_matrix(ffmpeg: str, frames_dir: Path, entries: list[dict], output: Path) -> None:
     """Assemble a labeled 4x4 face matrix, with a portable unlabeled fallback."""
     command = [ffmpeg, "-y"]
@@ -466,6 +628,45 @@ def render_quality_gate(
             "matrix": deformation_matrix.name,
             "entries": deform_entries,
         }
+    performance_gate = None
+    if manifest["quality_gate"].get("performance_slice_required"):
+        repo_root = Path(manifest_path).resolve().parents[2]
+        performance_contract_path = repo_root / manifest["performance_contract"]["path"]
+        performance_plan, performance_entries = golden_performance_plan(
+            config,
+            performance_contract_path,
+            engine=manifest["quality_gate"]["continuous_engine"],
+            samples=1,
+        )
+        performance_plan["asset_library"] = {
+            "asset_id": manifest["asset_id"],
+            "asset_version": manifest["asset_version"],
+            "path": library.name,
+        }
+        performance_plan_path = plans_dir / "june-golden-performance-deformation.json"
+        performance_plan_path.write_text(json.dumps(performance_plan, indent=2) + "\n", encoding="utf-8")
+        performance_frames_dir = frames_root / "golden-performance-deformation"
+        _render_frames(
+            blender_bin,
+            performance_plan_path,
+            performance_frames_dir,
+            asset_library=library,
+        )
+        performance_matrix = output / "june-golden-performance-deformation-matrix.png"
+        _facial_matrix(ffmpeg_bin, performance_frames_dir, performance_entries, performance_matrix)
+        performance_video = output / "june-golden-performance-deformation.mp4"
+        _assemble_video(ffmpeg_bin, performance_plan, performance_frames_dir, performance_video, None)
+        performance_gate = {
+            "engine": performance_plan["render"]["engine"],
+            "width": performance_plan["render"]["width"],
+            "height": performance_plan["render"]["height"],
+            "fps": performance_plan["render"]["fps"],
+            "frames": performance_plan["frame_end"],
+            "duration_seconds": performance_plan["duration_seconds"],
+            "matrix": performance_matrix.name,
+            "video": performance_video.name,
+            "entries": performance_entries,
+        }
     report = {
         "contract_version": ASSET_CONTRACT_VERSION,
         "asset_id": manifest["asset_id"],
@@ -489,6 +690,7 @@ def render_quality_gate(
             "entries": face_entries,
         },
         "deformation_pose_gate": deformation_gate,
+        "performance_deformation_gate": performance_gate,
     }
     (output / "asset-quality-report.json").write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8")
     return report

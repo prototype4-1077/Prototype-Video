@@ -57,15 +57,20 @@ def main() -> None:
 
     june_collection = bpy.data.collections.new("CE_June_Oxley")
     porch_collection = bpy.data.collections.new("CE_June_Porch")
+    props_collection = bpy.data.collections.new("CE_June_Props")
     bpy.context.scene.collection.children.link(june_collection)
     bpy.context.scene.collection.children.link(porch_collection)
+    bpy.context.scene.collection.children.link(props_collection)
     june_names = {
         obj.name
         for obj in bpy.context.scene.objects
         if obj.name.startswith("June_") or obj.name == "June_Oxley_Rig"
     }
     for obj in list(bpy.context.scene.objects):
-        target = june_collection if obj.name in june_names else porch_collection
+        if obj.get("ce_prop_role"):
+            target = props_collection
+        else:
+            target = june_collection if obj.name in june_names else porch_collection
         if target.objects.get(obj.name) is None:
             target.objects.link(obj)
         for collection in list(obj.users_collection):
@@ -74,6 +79,7 @@ def main() -> None:
     june_collection["ce_asset_id"] = manifest["asset_id"]
     june_collection["ce_asset_version"] = manifest["asset_version"]
     porch_collection["ce_location_id"] = "june_front_porch"
+    props_collection["ce_performance_contract"] = manifest.get("performance_contract", {}).get("path", "")
 
     output = Path(args.output).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)

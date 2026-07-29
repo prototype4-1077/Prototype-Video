@@ -130,6 +130,8 @@ def _make_materials(bpy, *, asset_major: int = 2) -> dict:
         "cedar": _material(bpy, "Warm Cedar", (0.38, 0.17, 0.075, 1), texture_scale=5.0, bump_strength=0.20),
         "dark_wood": _material(bpy, "Deep Wood", (0.16, 0.065, 0.032, 1), texture_scale=7.0, bump_strength=0.16),
         "cream": _material(bpy, "Porch Cream", (0.72, 0.66, 0.51, 1)),
+        "enamel": _material(bpy, "Cream Enamel", (0.82, 0.78, 0.66, 1), roughness=0.24),
+        "coffee": _material(bpy, "Black Coffee", (0.055, 0.020, 0.010, 1), roughness=0.18),
         "sage": _material(bpy, "Sage Door", (0.22, 0.34, 0.27, 1), texture_scale=4.0, bump_strength=0.08),
         "metal": _material(bpy, "Aged Metal", (0.24, 0.27, 0.26, 1), roughness=0.35),
         "brass": _material(bpy, "Aged Brass", (0.48, 0.29, 0.08, 1), roughness=0.28),
@@ -145,6 +147,8 @@ def _make_materials(bpy, *, asset_major: int = 2) -> dict:
         "overalls": _material(bpy, "June Dark Overalls", (0.045, 0.10, 0.14, 1), texture_scale=48.0, bump_strength=0.14),
         "plaid": _material(bpy, "June Shirt Plaid", plaid_base, texture_scale=35.0, bump_strength=0.09),
         "leather": _material(bpy, "Worn Boot Leather", (0.20, 0.09, 0.035, 1), texture_scale=9.0, bump_strength=0.22),
+        "ledger_leather": _material(bpy, "Ledger Leather", (0.15, 0.045, 0.022, 1), texture_scale=14.0, bump_strength=0.16),
+        "pencil_cedar": _material(bpy, "Pencil Cedar", (0.64, 0.29, 0.055, 1), roughness=0.50),
         "eye": _material(bpy, "Eye White", (0.90, 0.87, 0.77, 1), roughness=0.25),
         "iris": _material(bpy, "June Blue Gray Iris", (0.12, 0.30, 0.34, 1), roughness=0.16),
         "pupil": _material(bpy, "June Blue Gray Eyes", (0.06, 0.16, 0.19, 1), roughness=0.18),
@@ -1378,6 +1382,173 @@ def _make_june_v4(bpy, mathutils, materials: dict):
     return rig, mouth, face_controls
 
 
+def _make_performance_props_v5(bpy, mathutils, rig, materials: dict) -> None:
+    """Create the Golden Scene's contact props with explicit shot roles."""
+    held_mug = _cylinder(bpy, "June_Held_Mug", (0.64, -0.53, 1.43), 0.070, 0.115, materials["enamel"], vertices=36)
+    held_coffee = _cylinder(bpy, "June_Held_Mug_Coffee", (0.64, -0.53, 1.489), 0.059, 0.003, materials["coffee"], vertices=36)
+    held_handle = _curve(
+        bpy,
+        "June_Held_Mug_Handle",
+        ((0.70, -0.53, 1.47), (0.76, -0.53, 1.47), (0.77, -0.53, 1.40), (0.70, -0.53, 1.39)),
+        materials["enamel"],
+        bevel_depth=0.010,
+    )
+    for obj in (held_mug, held_coffee, held_handle):
+        obj["ce_prop_role"] = "held_mug"
+        _parent_to_bone(obj, rig, "hand.R")
+
+    table_mug = _cylinder(bpy, "June_Table_Mug", (0.76, -0.50, 1.30), 0.072, 0.118, materials["enamel"], vertices=36)
+    table_coffee = _cylinder(bpy, "June_Table_Mug_Coffee", (0.76, -0.50, 1.361), 0.061, 0.003, materials["coffee"], vertices=36)
+    table_handle = _curve(
+        bpy,
+        "June_Table_Mug_Handle",
+        ((0.82, -0.50, 1.34), (0.88, -0.50, 1.34), (0.89, -0.50, 1.27), (0.82, -0.50, 1.26)),
+        materials["enamel"],
+        bevel_depth=0.010,
+    )
+    for obj in (table_mug, table_coffee, table_handle):
+        obj["ce_prop_role"] = "table_mug"
+
+    ledger = _box(bpy, "June_Ledger", (-0.49, -0.49, 1.44), (0.095, 0.018, 0.135), materials["ledger_leather"], bevel=0.012)
+    ledger.rotation_euler[1] = math.radians(-10)
+    ledger["ce_prop_role"] = "ledger"
+    _parent_to_bone(ledger, rig, "hand.L")
+
+    pencil = _cylinder_between(
+        bpy,
+        mathutils,
+        "June_Pencil",
+        (0.57, -0.50, 1.47),
+        (0.66, -0.58, 1.38),
+        0.008,
+        materials["pencil_cedar"],
+    )
+    pencil["ce_prop_role"] = "pencil"
+    _parent_to_bone(pencil, rig, "hand.R")
+
+    _box(bpy, "Performance_Table_Top", (0.76, -0.50, 1.22), (0.28, 0.22, 0.035), materials["dark_wood"], bevel=0.025)
+    for x in (0.58, 0.94):
+        for y in (-0.36, -0.64):
+            _cylinder_between(
+                bpy,
+                mathutils,
+                f"Performance_Table_Leg_{x}_{y}",
+                (x, y, 0.28),
+                (x, y, 1.20),
+                0.025,
+                materials["dark_wood"],
+            )
+
+    for obj in bpy.context.scene.objects:
+        if obj.get("ce_prop_role"):
+            obj.hide_render = True
+            obj.hide_viewport = True
+
+
+def _make_june_v5(bpy, mathutils, materials: dict):
+    """Hero v5: production IK, facial aim, digit controls, and contact props."""
+    rig, mouth, face_controls = _make_june_v4(bpy, mathutils, materials)
+    bpy.ops.object.select_all(action="DESELECT")
+    rig.select_set(True)
+    bpy.context.view_layer.objects.active = rig
+    bpy.ops.object.mode_set(mode="EDIT")
+    edit = rig.data.edit_bones
+
+    def add_control(name, head, tail, parent=None, *, deform=False):
+        bone = edit.new(name)
+        bone.head = head
+        bone.tail = tail
+        bone.use_deform = deform
+        if parent:
+            bone.parent = edit[parent]
+        return bone
+
+    add_control("clavicle.L", (-0.10, 0.0, 2.16), (-0.35, 0.0, 2.10), "torso", deform=True)
+    add_control("clavicle.R", (0.10, 0.0, 2.16), (0.35, 0.0, 2.10), "torso", deform=True)
+    edit["upper_arm.L"].parent = edit["clavicle.L"]
+    edit["upper_arm.R"].parent = edit["clavicle.R"]
+
+    add_control("jaw", (0.0, -0.01, 2.57), (0.0, -0.16, 2.47), "head", deform=True)
+    add_control("eye.L", (-0.105, -0.24, 2.715), (-0.105, -0.36, 2.715), "head", deform=True)
+    add_control("eye.R", (0.108, -0.24, 2.709), (0.108, -0.36, 2.709), "head", deform=True)
+    add_control("gaze", (0.0, -2.55, 2.70), (0.0, -2.55, 2.86))
+
+    for side, sign in (("L", -1.0), ("R", 1.0)):
+        add_control(f"hand_ik.{side}", (0.64 * sign, -0.40, 1.50), (0.64 * sign, -0.40, 1.66))
+        add_control(f"elbow_pole.{side}", (0.92 * sign, -0.15, 1.82), (0.92 * sign, -0.15, 1.98))
+        add_control(f"foot_ik.{side}", (0.22 * sign, -0.60, 0.34), (0.22 * sign, -0.60, 0.50))
+        add_control(f"knee_pole.{side}", (0.22 * sign, -1.18, 1.00), (0.22 * sign, -1.18, 1.16))
+        hand_parent = f"hand.{side}"
+        for digit, offset in enumerate((-0.043, -0.015, 0.015, 0.043)):
+            x = 0.56 * sign + offset
+            add_control(
+                f"finger.{digit}.{side}",
+                (x, -0.42, 1.37),
+                (x, -0.45, 1.28),
+                hand_parent,
+                deform=True,
+            )
+        add_control(
+            f"thumb.{side}",
+            (0.56 * sign + 0.055 * sign, -0.414, 1.425),
+            (0.56 * sign + 0.112 * sign, -0.450, 1.36),
+            hand_parent,
+            deform=True,
+        )
+
+    bpy.ops.object.mode_set(mode="POSE")
+    for bone in rig.pose.bones:
+        bone.rotation_mode = "XYZ"
+    for side in ("L", "R"):
+        arm_ik = rig.pose.bones[f"forearm.{side}"].constraints.new("IK")
+        arm_ik.name = f"CE_Arm_IK_{side}"
+        arm_ik.target = rig
+        arm_ik.subtarget = f"hand_ik.{side}"
+        arm_ik.pole_target = rig
+        arm_ik.pole_subtarget = f"elbow_pole.{side}"
+        arm_ik.chain_count = 2
+        arm_ik.influence = 0.0
+
+        leg_ik = rig.pose.bones[f"shin.{side}"].constraints.new("IK")
+        leg_ik.name = f"CE_Leg_IK_{side}"
+        leg_ik.target = rig
+        leg_ik.subtarget = f"foot_ik.{side}"
+        leg_ik.pole_target = rig
+        leg_ik.pole_subtarget = f"knee_pole.{side}"
+        leg_ik.chain_count = 2
+        leg_ik.influence = 0.0
+
+        eye_track = rig.pose.bones[f"eye.{side}"].constraints.new("DAMPED_TRACK")
+        eye_track.name = f"CE_Eye_Aim_{side}"
+        eye_track.target = rig
+        eye_track.subtarget = "gaze"
+        eye_track.track_axis = "TRACK_Y"
+    bpy.ops.object.mode_set(mode="OBJECT")
+
+    for side in ("L", "R"):
+        for prefix in ("June_Eye_", "June_Iris_", "June_Pupil_", "June_Catchlight_"):
+            obj = bpy.data.objects.get(f"{prefix}{side}")
+            if obj is not None:
+                _parent_to_bone(obj, rig, f"eye.{side}")
+        for digit in range(4):
+            for segment in ("A", "B"):
+                obj = bpy.data.objects.get(f"June_Finger_{side}_{digit}_{segment}")
+                if obj is not None:
+                    _parent_to_bone(obj, rig, f"finger.{digit}.{side}")
+        for segment in ("A", "B"):
+            obj = bpy.data.objects.get(f"June_Thumb_{side}_{segment}")
+            if obj is not None:
+                _parent_to_bone(obj, rig, f"thumb.{side}")
+    _parent_to_bone(mouth, rig, "jaw")
+    _make_performance_props_v5(bpy, mathutils, rig, materials)
+
+    rig["ce_asset_major"] = 5
+    rig["ce_control_rig"] = "arm_leg_ik_foot_lock_clavicle_digits_jaw_gaze"
+    rig["ce_performance_contract"] = "june_golden_scene_performance_v1"
+    rig["ce_contact_props"] = "held_mug,table_mug,ledger,pencil"
+    return rig, mouth, face_controls
+
+
 def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
     if asset_major == 1:
         return _make_june_v1(bpy, mathutils, materials)
@@ -1387,6 +1558,8 @@ def _make_june(bpy, mathutils, materials: dict, *, asset_major: int = 2):
         return _make_june_v3(bpy, mathutils, materials)
     if asset_major == 4:
         return _make_june_v4(bpy, mathutils, materials)
+    if asset_major == 5:
+        return _make_june_v5(bpy, mathutils, materials)
     raise ValueError(f"unsupported June asset major version: {asset_major}")
 
 
@@ -1558,7 +1731,180 @@ def _stash_action(bpy, rig, name: str, animator) -> None:
     strip.extrapolation = "NOTHING"
 
 
+def _golden_pose(shot_id: str, phase: str) -> dict:
+    """Return artist-authored v5 control values for one locked acting pose."""
+    poses = {
+        "GS030": {
+            "start": {
+                "pelvis": (0.0, 0.0, 0.0), "torso": (-3.0, 0.0), "head": (2.0, -3.0),
+                "hand.L": (-0.02, 0.10, -0.03), "hand.R": (-0.05, -0.04, 0.02),
+                "gaze": (-0.10, 0.0, -0.02), "clavicle": (-4.0, 2.0), "curl": (22.0, 34.0),
+            },
+            "mid": {
+                "pelvis": (0.0, -0.05, 0.18), "torso": (-11.0, -1.0), "head": (-2.0, 2.0),
+                "hand.L": (-0.08, 0.14, -0.08), "hand.R": (-0.10, -0.08, 0.10),
+                "gaze": (-0.04, 0.0, 0.02), "clavicle": (-8.0, 3.0), "curl": (28.0, 38.0),
+            },
+            "end": {
+                "pelvis": (0.0, 0.13, 0.43), "torso": (0.5, 0.0), "head": (1.0, 0.0),
+                "hand.L": (0.02, 0.06, 0.12), "hand.R": (-0.08, -0.03, 0.22),
+                "gaze": (0.02, 0.0, 0.03), "clavicle": (-1.0, 3.0), "curl": (12.0, 40.0),
+            },
+        },
+        "GS040": {
+            "start": {
+                "pelvis": (0.0, 0.02, 0.06), "torso": (-1.0, 1.0), "head": (3.0, -2.0),
+                "hand.L": (0.12, -0.05, 0.04), "hand.R": (-0.10, -0.03, 0.04),
+                "gaze": (-0.08, 0.0, -0.02), "clavicle": (-2.0, 2.0), "curl": (12.0, 18.0),
+            },
+            "mid": {
+                "pelvis": (0.0, 0.02, 0.07), "torso": (-3.0, 2.0), "head": (-1.0, 4.0),
+                "hand.L": (0.38, -0.13, 0.17), "hand.R": (-0.38, -0.15, 0.20),
+                "gaze": (0.02, 0.0, -0.04), "clavicle": (-5.0, 5.0), "curl": (34.0, 30.0),
+            },
+            "end": {
+                "pelvis": (0.0, 0.02, 0.06), "torso": (-1.0, -2.0), "head": (5.0, 7.0),
+                "hand.L": (0.35, -0.11, 0.15), "hand.R": (-0.34, -0.12, 0.18),
+                "gaze": (0.18, 0.0, -0.03), "clavicle": (-3.0, 4.0), "curl": (38.0, 32.0),
+            },
+        },
+        "GS050": {
+            "start": {
+                "pelvis": (0.0, 0.02, 0.06), "torso": (-1.0, -1.0), "head": (4.0, 6.0),
+                "hand.L": (0.30, -0.10, 0.10), "hand.R": (-0.31, -0.10, 0.13),
+                "gaze": (0.14, 0.0, 0.00), "clavicle": (-2.0, 3.0), "curl": (34.0, 30.0),
+            },
+            "mid": {
+                "pelvis": (0.0, 0.02, 0.05), "torso": (-2.0, 0.0), "head": (7.0, 2.0),
+                "hand.L": (0.28, -0.09, 0.08), "hand.R": (-0.30, -0.09, 0.11),
+                "gaze": (0.10, 0.0, -0.14), "clavicle": (-4.0, 1.0), "curl": (32.0, 28.0),
+            },
+            "end": {
+                "pelvis": (0.0, 0.02, 0.04), "torso": (-1.5, 0.0), "head": (10.0, -2.0),
+                "hand.L": (0.28, -0.09, 0.08), "hand.R": (-0.30, -0.09, 0.11),
+                "gaze": (0.06, 0.0, -0.22), "clavicle": (-5.0, 0.0), "curl": (30.0, 27.0),
+            },
+        },
+    }
+    try:
+        return poses[shot_id][phase]
+    except KeyError as exc:
+        raise ValueError(f"unsupported Golden Scene pose: {shot_id}/{phase}") from exc
+
+
+def _animate_golden_performance(bpy, rig, plan: dict) -> None:
+    """Drive the v5 production controls on the exact phase-8 453-frame clock."""
+    frame_end = int(plan["frame_end"])
+    rig.animation_data_create()
+    for track in list(rig.animation_data.nla_tracks):
+        rig.animation_data.nla_tracks.remove(track)
+    rig.animation_data.action = None
+
+    def performance():
+        pelvis = rig.pose.bones["pelvis"]
+        torso = rig.pose.bones["torso"]
+        head = rig.pose.bones["head"]
+        gaze = rig.pose.bones["gaze"]
+        clavicle_l = rig.pose.bones["clavicle.L"]
+        clavicle_r = rig.pose.bones["clavicle.R"]
+        hand_l = rig.pose.bones["hand_ik.L"]
+        hand_r = rig.pose.bones["hand_ik.R"]
+        feet = (rig.pose.bones["foot_ik.L"], rig.pose.bones["foot_ik.R"])
+        fingers_l = [rig.pose.bones[f"finger.{index}.L"] for index in range(4)] + [rig.pose.bones["thumb.L"]]
+        fingers_r = [rig.pose.bones[f"finger.{index}.R"] for index in range(4)] + [rig.pose.bones["thumb.R"]]
+
+        for side in ("L", "R"):
+            for owner_name, constraint_name in (
+                (f"forearm.{side}", f"CE_Arm_IK_{side}"),
+                (f"shin.{side}", f"CE_Leg_IK_{side}"),
+            ):
+                constraint = rig.pose.bones[owner_name].constraints[constraint_name]
+                constraint.influence = 1.0
+                constraint.keyframe_insert(data_path="influence", frame=1)
+                constraint.keyframe_insert(data_path="influence", frame=frame_end)
+
+        for foot in feet:
+            foot.location = (0.0, 0.0, 0.0)
+            foot.keyframe_insert(data_path="location", frame=1)
+            foot.keyframe_insert(data_path="location", frame=frame_end)
+
+        for shot in plan["shots"]:
+            shot_id = str(shot["id"])
+            for keyframe in shot.get("performance_keyframes") or []:
+                frame = int(keyframe["frame"])
+                pose = _golden_pose(shot_id, str(keyframe["phase"]))
+                pelvis.location = pose["pelvis"]
+                pelvis.keyframe_insert(data_path="location", frame=frame)
+                torso.rotation_euler = (math.radians(pose["torso"][0]), math.radians(pose["torso"][1]), 0.0)
+                torso.keyframe_insert(data_path="rotation_euler", frame=frame)
+                head.rotation_euler = (math.radians(pose["head"][0]), 0.0, math.radians(pose["head"][1]))
+                head.keyframe_insert(data_path="rotation_euler", frame=frame)
+                clavicle_l.rotation_euler[2] = math.radians(pose["clavicle"][0])
+                clavicle_r.rotation_euler[2] = math.radians(pose["clavicle"][1])
+                clavicle_l.keyframe_insert(data_path="rotation_euler", frame=frame)
+                clavicle_r.keyframe_insert(data_path="rotation_euler", frame=frame)
+                hand_l.location = pose["hand.L"]
+                hand_r.location = pose["hand.R"]
+                hand_l.keyframe_insert(data_path="location", frame=frame)
+                hand_r.keyframe_insert(data_path="location", frame=frame)
+                gaze.location = pose["gaze"]
+                gaze.keyframe_insert(data_path="location", frame=frame)
+                for finger in fingers_l:
+                    finger.rotation_euler[0] = math.radians(pose["curl"][0])
+                    finger.keyframe_insert(data_path="rotation_euler", frame=frame)
+                for finger in fingers_r:
+                    finger.rotation_euler[0] = math.radians(pose["curl"][1])
+                    finger.keyframe_insert(data_path="rotation_euler", frame=frame)
+
+        jaw = rig.pose.bones["jaw"]
+        jaw_open = {"A": 9.0, "B": 13.0, "C": 5.0, "D": 10.0, "E": 4.0, "F": 7.0, "G": 12.0, "H": 8.0, "X": 0.0}
+        for cue in plan.get("mouth_cues") or []:
+            start = int(cue["frame_start"])
+            end = int(cue["frame_end"])
+            degrees = jaw_open[str(cue["shape"])]
+            jaw.rotation_euler[0] = math.radians(degrees)
+            jaw.keyframe_insert(data_path="rotation_euler", frame=start)
+            jaw.keyframe_insert(data_path="rotation_euler", frame=end)
+
+        action = rig.animation_data.action
+        if action:
+            for curve in action.fcurves:
+                for point in curve.keyframe_points:
+                    point.interpolation = "BEZIER"
+                    point.handle_left_type = "AUTO_CLAMPED"
+                    point.handle_right_type = "AUTO_CLAMPED"
+
+    _stash_action(bpy, rig, "June_Golden_Performance_v1", performance)
+
+
+def _animate_performance_props(bpy, plan: dict) -> None:
+    if plan.get("performance_contract") != "june_golden_scene_performance_v1":
+        return
+    visibility = {
+        "held_mug": {"GS030"},
+        "table_mug": {"GS040", "GS050"},
+        "ledger": {"GS040", "GS050"},
+        "pencil": {"GS040", "GS050"},
+    }
+    props = [obj for obj in bpy.context.scene.objects if obj.get("ce_prop_role")]
+    for shot in plan["shots"]:
+        start = int(shot["frame_start"])
+        end = int(shot["frame_end"])
+        shot_id = str(shot["id"])
+        for obj in props:
+            visible = shot_id in visibility.get(str(obj["ce_prop_role"]), set())
+            obj.hide_render = not visible
+            obj.hide_viewport = not visible
+            obj.keyframe_insert(data_path="hide_render", frame=start)
+            obj.keyframe_insert(data_path="hide_render", frame=end)
+            obj.keyframe_insert(data_path="hide_viewport", frame=start)
+            obj.keyframe_insert(data_path="hide_viewport", frame=end)
+
+
 def _animate_rig(bpy, rig, plan: dict) -> None:
+    if plan.get("performance_contract") == "june_golden_scene_performance_v1":
+        _animate_golden_performance(bpy, rig, plan)
+        return
     frame_end = int(plan["frame_end"])
     rig.animation_data_create()
     # Runtime performances replace the library preview strips while the source
@@ -1893,6 +2239,7 @@ def main() -> None:
         }
     head = bpy.data.objects["June_Head"]
     _animate_rig(bpy, rig, plan)
+    _animate_performance_props(bpy, plan)
     _animate_mouth(mouth, plan)
     _animate_expressions(head, plan, face_controls)
     _animate_blinks(face_controls, int(plan["frame_end"]))

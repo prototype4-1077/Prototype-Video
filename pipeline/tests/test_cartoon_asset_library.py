@@ -9,6 +9,7 @@ from pipeline.cartoon_asset_library import (
     build_asset_library,
     deformation_pose_plan,
     facial_performance_plan,
+    golden_performance_plan,
     load_asset_manifest,
     shot_quality_frames,
     validate_asset_manifest,
@@ -18,10 +19,13 @@ from pipeline.cartoon_vertical_slice import compile_plan
 
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v4.json"
+V5_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v5.json"
 V3_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v3.json"
 V2_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v2.json"
 V1_MANIFEST_PATH = ROOT / "concept" / "characters" / "june_oxley_asset_v1.json"
 CONFIG_PATH = ROOT / "examples" / "june-porch-vertical-slice.json"
+GOLDEN_CONFIG_PATH = ROOT / "examples" / "june-golden-scene-twelve-dollar-mug.json"
+PERFORMANCE_PATH = ROOT / "concept" / "style_frames" / "june_golden_scene_performance_slice_v1.json"
 BLENDER_SOURCE = ROOT / "pipeline" / "blender" / "render_vertical_slice.py"
 
 
@@ -29,7 +33,9 @@ class CartoonAssetLibraryTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.manifest = load_asset_manifest(MANIFEST_PATH)
+        cls.v5_manifest = load_asset_manifest(V5_MANIFEST_PATH)
         cls.config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+        cls.golden_config = json.loads(GOLDEN_CONFIG_PATH.read_text(encoding="utf-8"))
 
     def test_canonical_manifest_covers_full_biped_face_and_both_profiles(self):
         self.assertEqual(self.manifest["asset_version"], "4.0.0")
@@ -126,6 +132,64 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         source = BLENDER_SOURCE.read_text(encoding="utf-8")
         self.assertIn('armature.use_deform_preserve_volume = True', source)
         self.assertIn('corrective = obj.modifiers.new("CE_Joint_Corrective", "CORRECTIVE_SMOOTH")', source)
+
+    def test_v5_pins_the_exact_performance_clock_and_production_controls(self):
+        manifest = self.v5_manifest
+        self.assertEqual(manifest["asset_version"], "5.0.0")
+        self.assertEqual(manifest["performance_contract"]["shots"], ["GS030", "GS040", "GS050"])
+        self.assertEqual(manifest["performance_contract"]["frame_count"], 453)
+        self.assertEqual(manifest["performance_contract"]["duration_seconds"], 15.1)
+        self.assertEqual(
+            manifest["performance_contract"]["sha256"],
+            "cd7a458fbb024cb27205ccfa76f3ed5dc566418f94f5d00155c40da8c430d5af",
+        )
+        controls = manifest["rig"]["production_controls"]
+        self.assertEqual(
+            set(controls["ik_targets"]),
+            {"hand_ik.L", "hand_ik.R", "foot_ik.L", "foot_ik.R"},
+        )
+        self.assertEqual(len(controls["finger_controls"]), 10)
+        self.assertTrue(manifest["hands"]["articulated_digits"])
+        self.assertTrue(manifest["quality_gate"]["performance_slice_full_frame_render"])
+
+    def test_v5_golden_performance_plan_maps_all_nine_poses_frame_exactly(self):
+        plan, entries = golden_performance_plan(self.golden_config, PERFORMANCE_PATH)
+        self.assertEqual(plan["performance_contract"], "june_golden_scene_performance_v1")
+        self.assertEqual(plan["frame_end"], 453)
+        self.assertEqual(plan["duration_seconds"], 15.1)
+        self.assertEqual((plan["render"]["width"], plan["render"]["height"]), (960, 540))
+        self.assertEqual(plan["render"]["engine"], "BLENDER_WORKBENCH")
+        self.assertEqual(
+            [(entry["shot"], entry["phase"], entry["frame"]) for entry in entries],
+            [
+                ("GS030", "start", 1), ("GS030", "mid", 93), ("GS030", "end", 171),
+                ("GS040", "start", 172), ("GS040", "mid", 260), ("GS040", "end", 339),
+                ("GS050", "start", 340), ("GS050", "mid", 398), ("GS050", "end", 453),
+            ],
+        )
+        self.assertEqual(plan["mouth_cues"][0]["frame_start"], 1)
+        self.assertEqual(plan["mouth_cues"][-1]["frame_end"], 453)
+        self.assertTrue(all(cue["shape"] in set("ABCDEFGHX") for cue in plan["mouth_cues"]))
+        self.assertEqual(plan["facial_performance_cues"][-1]["frame_end"], 453)
+
+    def test_v5_builder_contains_true_performance_controls_and_prop_animation(self):
+        source = BLENDER_SOURCE.read_text(encoding="utf-8")
+        for marker in (
+            "def _make_june_v5",
+            "CE_Arm_IK_",
+            "CE_Leg_IK_",
+            "CE_Eye_Aim_",
+            "def _animate_golden_performance",
+            "June_Golden_Performance_v1",
+            "def _animate_performance_props",
+        ):
+            self.assertIn(marker, source)
+
+    def test_v5_without_a_full_performance_gate_is_rejected(self):
+        invalid = copy.deepcopy(self.v5_manifest)
+        invalid["quality_gate"]["performance_slice_full_frame_render"] = False
+        with self.assertRaisesRegex(ValueError, "full-frame deformation performance gate"):
+            validate_asset_manifest(invalid)
 
     def test_proxy_body_and_cowboy_regressions_are_rejected(self):
         invalid = copy.deepcopy(self.manifest)
