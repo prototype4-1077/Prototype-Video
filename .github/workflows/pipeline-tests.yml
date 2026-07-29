@@ -8,6 +8,7 @@ on:
       - ".github/workflows/pipeline-tests.yml"
       - "concept/characters/june_oxley_asset_v5.json"
       - "concept/characters/june_oxley_asset_v6.json"
+      - "concept/characters/june_oxley_asset_v7.json"
       - "concept/style_frames/june_golden_scene_performance_slice_v1.json"
       - "concept/style_frames/june_golden_scene_rhubarb_lipsync_v1.json"
       - "concept/style_frames/june_oxley_npr_look_v1.json"
@@ -16,6 +17,7 @@ on:
       - "concept/style_frames/june_oxley_npr_look_v4.json"
       - "concept/style_frames/june_oxley_npr_look_v5.json"
       - "concept/style_frames/june_oxley_npr_look_v6.json"
+      - "concept/style_frames/june_oxley_npr_look_v7.json"
       - "concept/style_frames/june_oxley_npr_finish_v1.json"
       - "concept/style_frames/june_oxley_npr_reward_v1.json"
       - "examples/june-golden-scene-twelve-dollar-mug.json"
@@ -48,7 +50,7 @@ jobs:
       - name: Regression tests
         run: python3 -m unittest discover -s pipeline/tests -v
 
-  blender-v6-deformation-temporal:
+  blender-v7-volumetric-mouth-temporal:
     if: github.event_name == 'pull_request'
     needs: test
     runs-on: ubuntu-latest
@@ -87,20 +89,20 @@ jobs:
           set -euo pipefail
           python3 -m pipeline.cartoon_asset_library \
             examples/june-golden-scene-twelve-dollar-mug.json \
-            concept/characters/june_oxley_asset_v6.json \
+            concept/characters/june_oxley_asset_v7.json \
             --blender /opt/blender/blender \
             --ffmpeg ffmpeg \
             --performance-only \
             --performance-engine BLENDER_EEVEE_NEXT \
             --performance-samples 12 \
-            --look-profile concept/style_frames/june_oxley_npr_look_v6.json \
+            --look-profile concept/style_frames/june_oxley_npr_look_v7.json \
             --performance-gate temporal \
             --output-dir asset-quality-out
           find asset-quality-out -maxdepth 3 -type f -print
       - name: Upload synchronized NPR review
         uses: actions/upload-artifact@v4
         with:
-          name: june-golden-performance-deformation-temporal-v6
+          name: june-golden-performance-volumetric-mouth-v7
           path: |
             asset-quality-out/*.png
             asset-quality-out/*.mp4
