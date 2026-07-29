@@ -608,6 +608,24 @@ def _assemble_video_window(
     )
 
 
+def temporal_review_entries(start_frame: int, frame_count: int, *, sample_count: int = 9) -> list[dict]:
+    """Select an evenly distributed, endpoint-inclusive temporal review matrix."""
+    if int(start_frame) < 1 or int(frame_count) < 2 or int(sample_count) < 2:
+        raise ValueError("temporal review requires a positive start and at least two frames and samples")
+    samples = min(int(sample_count), int(frame_count))
+    span = int(frame_count) - 1
+    frames = [int(start_frame) + ((span * index) // (samples - 1)) for index in range(samples)]
+    return [
+        {
+            "shot": "GS050",
+            "phase": "temporal_review",
+            "label": f"GS050-t+{frame - int(start_frame):02d}",
+            "frame": frame,
+        }
+        for frame in frames
+    ]
+
+
 def render_performance_look_gate(
     config_path: str | Path,
     manifest_path: str | Path,
@@ -683,8 +701,13 @@ def render_performance_look_gate(
         asset_library=library,
         selected_frames=selected_frames,
     )
+    matrix_entries = (
+        temporal_review_entries(temporal_start, temporal_frames)
+        if performance_gate_mode == "temporal"
+        else entries
+    )
     matrix = output / "june-golden-performance-look-matrix.png"
-    _facial_matrix(ffmpeg_bin, frames_dir, entries, matrix)
+    _facial_matrix(ffmpeg_bin, frames_dir, matrix_entries, matrix)
     video = None
     if performance_gate_mode in {"temporal", "full"}:
         video = output / (
@@ -738,6 +761,7 @@ def render_performance_look_gate(
             "duration_seconds": plan["duration_seconds"],
             "matrix": matrix.name,
             "video": video.name if video else None,
+            "matrix_entries": matrix_entries,
             "entries": entries,
         },
     }

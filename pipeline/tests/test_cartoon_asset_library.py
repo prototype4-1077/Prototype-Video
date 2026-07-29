@@ -15,6 +15,7 @@ from pipeline.cartoon_asset_library import (
     render_performance_look_gate,
     render_quality_gate,
     shot_quality_frames,
+    temporal_review_entries,
     validate_asset_manifest,
     validate_look_profile,
 )
@@ -268,6 +269,16 @@ class CartoonAssetLibraryTests(unittest.TestCase):
         self.assertFalse(render["motion_blur"])
         self.assertEqual(render["temporal_window_start"], 340)
         self.assertEqual(render["temporal_window_frames"], 30)
+
+    def test_temporal_review_matrix_samples_only_rendered_window(self):
+        entries = temporal_review_entries(340, 30)
+        frames = [entry["frame"] for entry in entries]
+        self.assertEqual(len(entries), 9)
+        self.assertEqual(frames[0], 340)
+        self.assertEqual(frames[-1], 369)
+        self.assertEqual(frames, sorted(set(frames)))
+        self.assertTrue(all(340 <= frame <= 369 for frame in frames))
+        self.assertTrue(all(entry["phase"] == "temporal_review" for entry in entries))
 
     def test_performance_engine_rejects_unknown_renderer_before_build(self):
         with self.assertRaisesRegex(ValueError, "performance_engine"):
