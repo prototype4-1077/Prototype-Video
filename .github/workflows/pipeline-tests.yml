@@ -28,6 +28,9 @@ on:
       - "concept/style_frames/june_oxley_porch_pencil_contact_v1.png"
       - "concept/style_frames/june_oxley_porch_pencil_hold_v1.png"
       - "concept/style_frames/june_golden_scene_multishot_v1.json"
+      - "concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json"
+      - "concept/style_frames/june-golden-scene-gs030-*"
+      - "concept/style_frames/june_gs030_pose_*"
       - "concept/style_frames/june_oxley_mug_held_insert_v1.png"
       - "concept/style_frames/june_oxley_ledger_insert_v1.png"
       - "concept/style_frames/june-golden-scene-gs020-style-target-v2.png"
@@ -208,6 +211,49 @@ jobs:
             build/edit/june-golden-scene-multishot/review_frames/*.png
           if-no-files-found: error
           retention-days: 14
+      - name: Render registered GS030 layered stand
+        run: |
+          python3 -m pipeline.cartoon_pose_layers \
+            concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json \
+            --output-dir build/edit/june-gs030-layered-stand
+      - name: Verify registered GS030 layered stand contract
+        run: |
+          set -euo pipefail
+          video=build/edit/june-gs030-layered-stand/june-gs030-layered-stand.mp4
+          report=build/edit/june-gs030-layered-stand/june-gs030-layered-stand-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "171"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "5.700000"
+          test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+          test "$(find build/edit/june-gs030-layered-stand/review_frames -name 'frame_*.png' | wc -l)" = "14"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-gs030-layered-stand/june-gs030-layered-stand-report.json", encoding="utf-8"))
+          assert report["gate"] == "registered_layered_body_mechanics"
+          assert report["frame_count"] == 171
+          assert report["audio"]["included"] is False
+          assert report["optical_flow_used"] is False
+          assert report["cross_dissolve_used"] is False
+          assert report["maximum_contact_residual_px_source"] <= 1.75
+          assert report["encoded_quality"]["minimum_psnr_db"] >= 38.0
+          assert report["encoded_quality"]["minimum_encoded_laplacian_variance"] >= 30.0
+          assert len(report["review_frames"]) == 14
+          PY
+          sha256sum "$video" "$report"
+      - name: Upload registered GS030 layered stand
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-gs030-layered-stand-v1
+          path: |
+            build/edit/june-gs030-layered-stand/*.mp4
+            build/edit/june-gs030-layered-stand/*.json
+            build/edit/june-gs030-layered-stand/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
 
   blender-v8-oral-mask-visemes:
     if: github.event_name == 'pull_request'
@@ -270,6 +316,7 @@ jobs:
             asset-quality-out/assets/*.blend
           if-no-files-found: error
           retention-days: 14
+
 
 
 
