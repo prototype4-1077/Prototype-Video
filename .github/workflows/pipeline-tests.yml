@@ -36,6 +36,7 @@ on:
       - "concept/style_frames/june_gs060_pose_*"
       - "concept/style_frames/june_golden_scene_gs070_*"
       - "concept/style_frames/june-golden-scene-gs070-*"
+      - "concept/style_frames/june_golden_scene_master_v1.json"
       - "concept/style_frames/june_oxley_mug_held_insert_v1.png"
       - "concept/style_frames/june_oxley_ledger_insert_v1.png"
       - "concept/style_frames/june-golden-scene-gs020-style-target-v2.png"
@@ -365,6 +366,65 @@ jobs:
             build/edit/june-gs070-resolution/review_frames/*.png
           if-no-files-found: error
           retention-days: 14
+      - name: Assemble exact 38.8-second Golden Scene picture master
+        run: |
+          python3 -m pipeline.cartoon_golden_master \
+            concept/style_frames/june_golden_scene_master_v1.json \
+            --gs030-video build/edit/june-gs030-layered-stand/june-gs030-layered-stand.mp4 \
+            --gs030-report build/edit/june-gs030-layered-stand/june-gs030-layered-stand-report.json \
+            --gs060-video build/edit/june-gs060-layered-pour/june-gs060-layered-pour.mp4 \
+            --gs060-report build/edit/june-gs060-layered-pour/june-gs060-layered-pour-report.json \
+            --gs070-video build/edit/june-gs070-resolution/june-gs070-resolution.mp4 \
+            --gs070-report build/edit/june-gs070-resolution/june-gs070-resolution-report.json \
+            --output-dir build/edit/june-golden-scene-master
+      - name: Verify exact Golden Scene picture master
+        run: |
+          set -euo pipefail
+          video=build/edit/june-golden-scene-master/june-golden-scene-master.mp4
+          report=build/edit/june-golden-scene-master/june-golden-scene-master-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "1164"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "38.800000"
+          test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+          test "$(find build/edit/june-golden-scene-master/review_frames -name 'frame_*.png' | wc -l)" = "26"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-golden-scene-master/june-golden-scene-master-report.json", encoding="utf-8"))
+          assert report["gate"] == "exact_1164_frame_golden_scene_picture_master"
+          assert report["frame_count"] == 1164
+          assert report["duration_seconds"] == 38.8
+          assert report["audio"] is None
+          assert [shot["frame_count"] for shot in report["shots"]] == [129, 96, 171, 168, 114, 258, 228]
+          assert report["cut_frames"] == [130, 226, 397, 565, 679, 937]
+          assert report["internal_plate_cut_frames"] == [453, 509, 621]
+          assert report["rendered_sources"]["GS030"]["frames_consumed"] == 171
+          assert report["rendered_sources"]["GS060"]["frames_consumed"] == 258
+          assert report["rendered_sources"]["GS070"]["frames_consumed"] == 228
+          assert all(not source["retimed"] for source in report["rendered_sources"].values())
+          assert report["prohibited_interpolation"] == {
+              "optical_flow_used": False,
+              "cross_dissolve_used": False,
+              "implicit_retiming_used": False,
+          }
+          assert report["encoded_quality"]["minimum_psnr_db"] >= 38.0
+          assert report["encoded_quality"]["minimum_encoded_laplacian_variance"] >= 30.0
+          assert len(report["review_frames"]) == 26
+          PY
+          sha256sum "$video" "$report"
+      - name: Upload exact Golden Scene picture master
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-golden-scene-master-v1
+          path: |
+            build/edit/june-golden-scene-master/*.mp4
+            build/edit/june-golden-scene-master/*.json
+            build/edit/june-golden-scene-master/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
 
   blender-v8-oral-mask-visemes:
     if: github.event_name == 'pull_request'
@@ -427,6 +487,7 @@ jobs:
             asset-quality-out/assets/*.blend
           if-no-files-found: error
           retention-days: 14
+
 
 
 
