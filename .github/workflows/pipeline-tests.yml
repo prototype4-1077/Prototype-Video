@@ -27,6 +27,11 @@ on:
       - "concept/style_frames/june_oxley_porch_mug_lift_v1.png"
       - "concept/style_frames/june_oxley_porch_pencil_contact_v1.png"
       - "concept/style_frames/june_oxley_porch_pencil_hold_v1.png"
+      - "concept/style_frames/june_golden_scene_multishot_v1.json"
+      - "concept/style_frames/june_oxley_mug_held_insert_v1.png"
+      - "concept/style_frames/june_oxley_ledger_insert_v1.png"
+      - "concept/style_frames/june-golden-scene-gs020-style-target-v2.png"
+      - "concept/style_frames/june-golden-scene-gs040-style-target-v2.png"
       - "concept/style_frames/june_oxley_npr_look_v1.json"
       - "concept/style_frames/june_oxley_npr_look_v2.json"
       - "concept/style_frames/june_oxley_npr_look_v3.json"
@@ -162,6 +167,47 @@ jobs:
             build/edit/june-hero-expression-performance/review_frames/*.png
           if-no-files-found: error
           retention-days: 14
+      - name: Render high-detail June multi-shot sequence
+        run: |
+          python3 -m pipeline.cartoon_shot_sequence \
+            concept/style_frames/june_golden_scene_multishot_v1.json \
+            build/edit/june-hero-expression-performance/june-hero-expression-performance.mp4 \
+            --output-dir build/edit/june-golden-scene-multishot
+      - name: Verify high-detail multi-shot contract
+        run: |
+          set -euo pipefail
+          video=build/edit/june-golden-scene-multishot/june-golden-scene-multishot.mp4
+          report=build/edit/june-golden-scene-multishot/june-golden-scene-multishot-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "453"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "15.100000"
+          test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+          test "$(find build/edit/june-golden-scene-multishot/review_frames -name 'frame_*.png' | wc -l)" = "18"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-golden-scene-multishot/june-golden-scene-multishot-report.json", encoding="utf-8"))
+          assert report["gate"] == "identity_locked_high_detail_multishot_sequence"
+          assert report["cut_frames"] == [51, 115, 307, 379, 393]
+          assert len(report["shots"]) == 6
+          assert report["base_performance"]["audio_preserved"] is False
+          assert report["encoded_quality"]["minimum_psnr_db"] >= 38.0
+          assert report["encoded_quality"]["minimum_encoded_laplacian_variance"] >= 30.0
+          PY
+          sha256sum "$video" "$report"
+      - name: Upload high-detail June multi-shot sequence
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-golden-scene-multishot-v1
+          path: |
+            build/edit/june-golden-scene-multishot/*.mp4
+            build/edit/june-golden-scene-multishot/*.json
+            build/edit/june-golden-scene-multishot/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
 
   blender-v8-oral-mask-visemes:
     if: github.event_name == 'pull_request'
@@ -224,6 +270,7 @@ jobs:
             asset-quality-out/assets/*.blend
           if-no-files-found: error
           retention-days: 14
+
 
 
 
