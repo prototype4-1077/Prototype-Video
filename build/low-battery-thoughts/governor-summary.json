@@ -1,0 +1,377 @@
+{
+  "finished_at": "2026-07-30T17:11:41+00:00",
+  "github_run_id": "30563377619",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/low-battery-thoughts/final_youtube.mp4",
+  "mode": "recover",
+  "passes": 5,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 26,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.1,
+      "idle_timeout_s": 48.3,
+      "sample_count": 20,
+      "soft_timeout_s": 48.3,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 80.38,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 271.15,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.09,
+      "sample_count": 60,
+      "soft_timeout_s": 33.09,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 32.2,
+      "idle_timeout_s": 126.61,
+      "sample_count": 136,
+      "soft_timeout_s": 126.61,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 232.32,
+      "idle_timeout_s": 255.0,
+      "sample_count": 23,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 18.31,
+      "idle_timeout_s": 120.0,
+      "sample_count": 26,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 23.77,
+      "idle_timeout_s": 180.0,
+      "sample_count": 26,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 75.55,
+      "idle_timeout_s": 180.0,
+      "sample_count": 26,
+      "soft_timeout_s": 256.65,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/low-battery-thoughts",
+    "checked_at": "2026-07-30T17:11:41+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 168.993,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "youtube": {
+        "avg_kbps": 7669,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.074,
+        "exists": true,
+        "expected_duration_s": 168.993,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/low-battery-thoughts/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 168.995011,
+          "bit_rate": 7669415.0,
+          "duration_s": 169.066667,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 169.066667,
+          "width": 1920
+        },
+        "size_bytes": 162080311,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
+  "recommendations": [
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (1090.4s).",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "35dc49bf6e6245b9a49097664dc989eb",
+  "schema_version": 1,
+  "slug": "low-battery-thoughts",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.007,
+      "p95_success_s": 1.007,
+      "success_durations_s": [
+        1.007
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.007
+    },
+    "assemble": {
+      "attempts": 24,
+      "failures": 0,
+      "p50_success_s": 33.173,
+      "p95_success_s": 40.218,
+      "success_durations_s": [
+        31.164,
+        24.118,
+        28.133,
+        35.172,
+        33.171,
+        32.154,
+        40.201,
+        32.165,
+        28.136,
+        36.174,
+        36.185,
+        32.191,
+        37.201,
+        31.131,
+        33.175,
+        40.221,
+        30.149,
+        34.194,
+        23.125,
+        37.228,
+        32.177,
+        38.202,
+        35.216,
+        42.222
+      ],
+      "successes": 24,
+      "timeouts": 0,
+      "total_duration_s": 803.205
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 63.028,
+      "p95_success_s": 725.199,
+      "success_durations_s": [
+        63.028,
+        19.017,
+        117.158,
+        14.026,
+        877.209
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 1090.438
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.007,
+      "success_durations_s": [
+        1.006,
+        1.007
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.013
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 6.518,
+      "p95_success_s": 17.271,
+      "success_durations_s": [
+        1.007,
+        6.016,
+        19.08,
+        7.019
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 33.122
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 116.15,
+      "p95_success_s": 116.15,
+      "success_durations_s": [
+        116.15
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 116.15
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 12.023,
+      "p95_success_s": 12.023,
+      "success_durations_s": [
+        12.023
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 12.023
+    },
+    "probe": {
+      "attempts": 25,
+      "failures": 0,
+      "p50_success_s": 1.007,
+      "p95_success_s": 1.007,
+      "success_durations_s": [
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.01
+      ],
+      "successes": 25,
+      "timeouts": 0,
+      "total_duration_s": 25.178
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 21.079,
+      "p95_success_s": 21.079,
+      "success_durations_s": [
+        21.079
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 21.079
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 16.014,
+      "p95_success_s": 16.014,
+      "success_durations_s": [
+        16.014
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 16.014
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 62.028,
+      "p95_success_s": 62.028,
+      "success_durations_s": [
+        62.028
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 62.028
+    }
+  },
+  "status": "done"
+}
