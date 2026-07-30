@@ -1,46 +1,34 @@
 {
-  "finished_at": "2026-07-23T15:37:37+00:00",
-  "github_run_id": "30020801099",
-  "incidents": [
-    {
-      "count": 3,
-      "failure_class": "transient",
-      "fingerprint": "667cc43ce3238cd7",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "n response = meth(req, response) ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in http_response response = self.parent.error( ^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in error return self._call_chain(*args) ^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: ",
-      "stage": "footage"
-    },
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "d7bdfb546a04d76f",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "governor stage=footage state=start soft=300s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=667cc43ce3238cd7 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: py\", line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.http",
-      "stage": "build_pass"
-    },
-    {
-      "count": 1,
-      "failure_class": "unknown",
-      "fingerprint": "59b6f6839df57e9c",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "governor stage=footage state=start soft=300s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=running elapsed=45s idle=0s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=667cc43ce3238cd7 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>",
-      "stage": "build_pass"
-    }
-  ],
-  "last_message": "footage failed (transient); retry budget 2 exhausted. fingerprint=667cc43ce3238cd7. ERROR: footage batch [5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]: py\", line 496, in _call_chain",
+  "finished_at": "2026-07-30T07:08:36+00:00",
+  "github_run_id": "30520758515",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/june-oxley-folks-aint-roadblocks-tier1/final_youtube.mp4",
   "mode": "recover",
   "passes": 5,
   "policy": {
     "align": {
       "hard_timeout_s": 300.0,
-      "historical_p95_s": null,
-      "idle_timeout_s": 120.0,
-      "sample_count": 3,
-      "soft_timeout_s": 180.0,
-      "source": "default"
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 25,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.2,
+      "idle_timeout_s": 48.6,
+      "sample_count": 18,
+      "soft_timeout_s": 48.6,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 87.31,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 291.93,
+      "source": "history"
     },
     "build_pass": {
       "hard_timeout_s": 1800.0,
@@ -50,62 +38,146 @@
       "soft_timeout_s": 1800.0,
       "source": "explicit"
     },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.09,
+      "sample_count": 56,
+      "soft_timeout_s": 33.09,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 32.21,
+      "idle_timeout_s": 126.63,
+      "sample_count": 128,
+      "soft_timeout_s": 126.63,
+      "source": "history"
+    },
     "footage": {
       "hard_timeout_s": 600.0,
+      "historical_p95_s": 205.31,
+      "idle_timeout_s": 255.0,
+      "sample_count": 21,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 50.09,
+      "idle_timeout_s": 180.26,
+      "sample_count": 85,
+      "soft_timeout_s": 180.26,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 15.9,
+      "idle_timeout_s": 120.0,
+      "sample_count": 24,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
       "historical_p95_s": null,
-      "idle_timeout_s": 180.0,
-      "sample_count": 2,
-      "soft_timeout_s": 300.0,
-      "source": "default"
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
     },
     "transcribe": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": null,
-      "idle_timeout_s": 360.0,
-      "sample_count": 3,
-      "soft_timeout_s": 600.0,
-      "source": "default"
+      "historical_p95_s": 23.82,
+      "idle_timeout_s": 180.0,
+      "sample_count": 25,
+      "soft_timeout_s": 180.0,
+      "source": "history"
     },
     "tts": {
       "hard_timeout_s": 480.0,
-      "historical_p95_s": null,
+      "historical_p95_s": 75.65,
       "idle_timeout_s": 180.0,
-      "sample_count": 3,
-      "soft_timeout_s": 240.0,
-      "source": "default"
+      "sample_count": 25,
+      "soft_timeout_s": 256.95,
+      "source": "history"
     }
   },
-  "quality": {},
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/june-oxley-folks-aint-roadblocks-tier1",
+    "checked_at": "2026-07-30T07:08:36+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 175.236,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "youtube": {
+        "avg_kbps": 6481,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 1.319,
+        "exists": true,
+        "expected_duration_s": 175.236,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/june-oxley-folks-aint-roadblocks-tier1/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 173.917007,
+          "bit_rate": 6480517.0,
+          "duration_s": 173.917007,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 173.866667,
+          "width": 1920
+        },
+        "size_bytes": 140884025,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
   "recommendations": [
-    {
-      "action": "Keep bounded retry enabled and monitor whether the same fingerprint recovers on the next pass.",
-      "fingerprint": "667cc43ce3238cd7",
-      "priority": "high",
-      "reason": "3 occurrence(s): n response = meth(req, response) ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in http_response response = self.parent.error( ^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in error return self._call_chain(*args) ^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.httperror: ",
-      "stage": "footage"
-    },
-    {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "59b6f6839df57e9c",
-      "priority": "medium",
-      "reason": "1 occurrence(s): governor stage=footage state=start soft=300s hard=600s governor stage=footage state=running elapsed=15s idle=3s governor stage=footage state=running elapsed=30s idle=0s governor stage=footage state=running elapsed=45s idle=0s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=667cc43ce3238cd7 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>",
-      "stage": "build_pass"
-    },
-    {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "d7bdfb546a04d76f",
-      "priority": "high",
-      "reason": "2 occurrence(s): governor stage=footage state=start soft=300s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=667cc43ce3238cd7 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: py\", line <n>, in _call_chain result = func(*args) ^^^^^^^^^^^ file \"<path> line <n>, in http_error_default raise httperror(req.full_url, code, msg, hdrs, fp) urllib.error.http",
-      "stage": "build_pass"
-    },
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (146.1s).",
+      "reason": "Largest measured latency contribution in this run (1057.7s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "9fde8a6c5d4b4909a91f0f5260377fcf",
+  "run_id": "f47ca019b37945e3b21efd9ad455882b",
   "schema_version": 1,
   "slug": "june-oxley-folks-aint-roadblocks-tier1",
   "stages": {
@@ -121,53 +193,208 @@
       "timeouts": 0,
       "total_duration_s": 1.002
     },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.009,
+      "success_durations_s": [
+        1.009
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.009
+    },
+    "assemble": {
+      "attempts": 24,
+      "failures": 0,
+      "p50_success_s": 29.224,
+      "p95_success_s": 37.979,
+      "success_durations_s": [
+        20.104,
+        42.299,
+        31.21,
+        21.174,
+        36.237,
+        27.222,
+        31.255,
+        22.178,
+        34.266,
+        32.295,
+        20.135,
+        29.237,
+        23.176,
+        29.211,
+        36.245,
+        22.178,
+        31.196,
+        21.165,
+        26.202,
+        38.285,
+        20.142,
+        26.199,
+        33.296,
+        34.216
+      ],
+      "successes": 24,
+      "timeouts": 0,
+      "total_duration_s": 689.123
+    },
     "build_pass": {
       "attempts": 5,
-      "failures": 3,
-      "p50_success_s": 43.52,
-      "p95_success_s": 61.976,
+      "failures": 0,
+      "p50_success_s": 79.186,
+      "p95_success_s": 636.47,
       "success_durations_s": [
-        64.027,
-        23.013
+        67.033,
+        19.016,
+        129.142,
+        79.186,
+        763.302
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 1057.679
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 1.007,
+      "p95_success_s": 1.009,
+      "success_durations_s": [
+        1.005,
+        1.009
       ],
       "successes": 2,
       "timeouts": 0,
-      "total_duration_s": 146.086
+      "total_duration_s": 2.014
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 5.522,
+      "p95_success_s": 16.276,
+      "success_durations_s": [
+        1.009,
+        5.024,
+        18.086,
+        6.02
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 30.139
     },
     "footage": {
-      "attempts": 3,
-      "failures": 3,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 128.147,
+      "p95_success_s": 128.147,
+      "success_durations_s": [
+        128.147
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 56.049
+      "total_duration_s": 128.147
+    },
+    "hero": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 13.032,
+      "p95_success_s": 17.591,
+      "success_durations_s": [
+        10.029,
+        15.036,
+        11.028,
+        18.042
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 54.135
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 23.075,
+      "p95_success_s": 23.075,
+      "success_durations_s": [
+        23.075
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 23.075
+    },
+    "probe": {
+      "attempts": 25,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.012,
+      "success_durations_s": [
+        1.009,
+        1.013,
+        1.013,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.01
+      ],
+      "successes": 25,
+      "timeouts": 0,
+      "total_duration_s": 25.234
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 20.107,
+      "p95_success_s": 20.107,
+      "success_durations_s": [
+        20.107
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 20.107
     },
     "transcribe": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 20.015,
-      "p95_success_s": 20.015,
+      "p50_success_s": 16.012,
+      "p95_success_s": 16.012,
       "success_durations_s": [
-        20.015
+        16.012
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 20.015
+      "total_duration_s": 16.012
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 63.026,
-      "p95_success_s": 63.026,
+      "p50_success_s": 66.033,
+      "p95_success_s": 66.033,
       "success_durations_s": [
-        63.026
+        66.033
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 63.026
+      "total_duration_s": 66.033
     }
   },
-  "status": "failed"
+  "status": "done"
 }
