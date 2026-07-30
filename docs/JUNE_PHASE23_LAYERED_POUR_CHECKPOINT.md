@@ -79,4 +79,14 @@ Build GS070 as the final identity-locked emotional close-up, then assemble GS030
 
 ## Public evidence
 
-Pending the Phase 23 GitHub Actions run and independent artifact download.
+GitHub Actions run [30529683179](https://github.com/prototype4-1077/Prototype-Video/actions/runs/30529683179) independently passed all 358 repository tests, every 2D/full-HD render and exact-contract check, the new GS060 render/decode/contact/quality gates, artifact upload, and the separate Blender v8 nine-viseme facial gate.
+
+Artifact `june-gs060-layered-pour-v1` was downloaded to `outputs/edit/phase23-public-run-30529683179/` and verified independently:
+
+- Public video SHA-256: `ec86a5c67d294611b80b606040c72a08382c48ea29b258e592e0ce4b719ab3ea`
+- Public report SHA-256: `82f830edc19a285171720f44d440a6c64b6c1a20c0ad6979caeac2050480ff98`
+- H.264/yuv420p, 1920×1080, 30 fps, 258 frames, 8.600 seconds, no audio stream
+- Full independent FFmpeg decode: pass
+- Public report: 40.844 dB minimum PSNR, 41.358 dB mean PSNR, 83.242 minimum encoded Laplacian variance
+- Public contacts: 0 mug residual, 20.396 grounded-pot residual, 0 spout error, 0 rendered spill
+- Twenty exact encoded frames plus the complete transition/liquid contact sheet passed full-resolution visual inspection
