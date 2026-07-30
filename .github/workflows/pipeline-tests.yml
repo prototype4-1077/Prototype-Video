@@ -37,6 +37,8 @@ on:
       - "concept/style_frames/june_golden_scene_gs070_*"
       - "concept/style_frames/june-golden-scene-gs070-*"
       - "concept/style_frames/june_golden_scene_master_v1.json"
+      - "concept/style_frames/june_golden_scene_master_sound_v1.json"
+      - "concept/audio/june_golden_scene_dialogue_norman_v1.wav"
       - "concept/style_frames/june_oxley_mug_held_insert_v1.png"
       - "concept/style_frames/june_oxley_ledger_insert_v1.png"
       - "concept/style_frames/june-golden-scene-gs020-style-target-v2.png"
@@ -58,6 +60,8 @@ on:
       - "pipeline/**"
       - ".github/workflows/render.yml"
       - ".github/workflows/pipeline-tests.yml"
+      - "concept/style_frames/june_golden_scene_master_sound_v1.json"
+      - "concept/audio/june_golden_scene_dialogue_norman_v1.wav"
 
 permissions:
   contents: read
@@ -425,6 +429,64 @@ jobs:
             build/edit/june-golden-scene-master/review_frames/*.png
           if-no-files-found: error
           retention-days: 14
+      - name: Build sound-finished Golden Scene master
+        run: |
+          python3 -m pipeline.cartoon_golden_sound mix \
+            concept/style_frames/june_golden_scene_master_sound_v1.json \
+            --picture-video build/edit/june-golden-scene-master/june-golden-scene-master.mp4 \
+            --picture-report build/edit/june-golden-scene-master/june-golden-scene-master-report.json \
+            --output-dir build/edit/june-golden-scene-sound-master
+      - name: Verify sound-finished Golden Scene master
+        run: |
+          set -euo pipefail
+          video=build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master.mp4
+          report=build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "1164"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "aac"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of csv=p=0 "$video")" = "48000"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=channels -of csv=p=0 "$video")" = "2"
+          test "$(ffprobe -v error -select_streams s:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "mov_text"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "38.800000"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master-report.json", encoding="utf-8"))
+          assert report["gate"] == "exact_picture_locked_sound_finished_golden_scene"
+          assert report["picture"]["reencoded"] is False
+          assert report["final"]["video_stream_matches_picture_lock"] is True
+          assert report["final"]["frame_count"] == 1164
+          assert report["final"]["duration_seconds"] == 38.8
+          assert report["final"]["audio_codec"] == "aac"
+          assert report["final"]["audio_sample_rate"] == 48000
+          assert report["final"]["audio_channels"] == 2
+          assert report["final"]["subtitle_codec"] == "mov_text"
+          assert report["voice"]["dataset"] == "LibriVox"
+          assert report["voice"]["dataset_license"] == "public domain"
+          assert report["dialogue_cue_count"] == 18
+          assert report["event_count"] == 26
+          assert report["captions"]["cue_count"] == 18
+          assert abs(report["loudness"]["measured_lufs_i"] + 16.0) <= 1.0
+          assert 4.0 <= report["loudness"]["measured_lra_lu"] <= 8.0
+          assert report["loudness"]["measured_true_peak_dbtp"] <= -0.95
+          assert report["music"] == "none_intentional"
+          assert report["paid_runtime_dependency"] is False
+          PY
+          sha256sum "$video" "$report" build/edit/june-golden-scene-sound-master/june-golden-scene-master.srt
+      - name: Upload sound-finished Golden Scene master
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-golden-scene-sound-master-v1
+          path: |
+            build/edit/june-golden-scene-sound-master/*.mp4
+            build/edit/june-golden-scene-sound-master/*.json
+            build/edit/june-golden-scene-sound-master/*.srt
+            build/edit/june-golden-scene-sound-master/stems/*.wav
+          if-no-files-found: error
+          retention-days: 14
 
   blender-v8-oral-mask-visemes:
     if: github.event_name == 'pull_request'
@@ -487,6 +549,7 @@ jobs:
             asset-quality-out/assets/*.blend
           if-no-files-found: error
           retention-days: 14
+
 
 
 
