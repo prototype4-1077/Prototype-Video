@@ -1,0 +1,403 @@
+{
+  "finished_at": "2026-07-30T22:26:57+00:00",
+  "github_run_id": "30585740800",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/final_youtube.mp4",
+  "mode": "recover",
+  "passes": 5,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 31,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.05,
+      "idle_timeout_s": 48.15,
+      "sample_count": 25,
+      "soft_timeout_s": 48.15,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 80.38,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 271.15,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.09,
+      "sample_count": 70,
+      "soft_timeout_s": 33.09,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 31.37,
+      "idle_timeout_s": 124.12,
+      "sample_count": 156,
+      "soft_timeout_s": 124.12,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 237.22,
+      "idle_timeout_s": 255.0,
+      "sample_count": 28,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 50.09,
+      "idle_timeout_s": 180.26,
+      "sample_count": 109,
+      "soft_timeout_s": 180.26,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 17.55,
+      "idle_timeout_s": 120.0,
+      "sample_count": 31,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 23.52,
+      "idle_timeout_s": 180.0,
+      "sample_count": 31,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 75.05,
+      "idle_timeout_s": 180.0,
+      "sample_count": 31,
+      "soft_timeout_s": 255.16,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things",
+    "checked_at": "2026-07-30T22:26:57+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 176.438,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "youtube": {
+        "avg_kbps": 7741,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.029,
+        "exists": true,
+        "expected_duration_s": 176.438,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 176.448005,
+          "bit_rate": 7740789.0,
+          "duration_s": 176.466667,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 176.466667,
+          "width": 1920
+        },
+        "size_bytes": 170748912,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
+  "recommendations": [
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (1323.8s).",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "591fc5a645074bbfa5a742416ca8436c",
+  "schema_version": 1,
+  "slug": "the-alphabet-beneath-things",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.008,
+      "p95_success_s": 1.008,
+      "success_durations_s": [
+        1.008
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.008
+    },
+    "assemble": {
+      "attempts": 25,
+      "failures": 0,
+      "p50_success_s": 33.214,
+      "p95_success_s": 39.3,
+      "success_durations_s": [
+        33.184,
+        24.12,
+        32.18,
+        20.108,
+        34.214,
+        22.124,
+        32.174,
+        31.232,
+        45.254,
+        31.195,
+        31.218,
+        34.228,
+        39.213,
+        39.309,
+        36.236,
+        31.175,
+        38.198,
+        33.182,
+        39.258,
+        37.221,
+        23.165,
+        34.239,
+        33.214,
+        34.196,
+        39.265
+      ],
+      "successes": 25,
+      "timeouts": 0,
+      "total_duration_s": 829.102
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 125.152,
+      "p95_success_s": 765.675,
+      "success_durations_s": [
+        67.031,
+        19.013,
+        125.152,
+        207.401,
+        905.243
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 1323.84
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.007,
+      "success_durations_s": [
+        1.006,
+        1.007
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.013
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 6.518,
+      "p95_success_s": 18.147,
+      "success_durations_s": [
+        1.008,
+        6.016,
+        20.111,
+        7.021
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 34.156
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 124.153,
+      "p95_success_s": 124.153,
+      "success_durations_s": [
+        124.153
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 124.153
+    },
+    "hero": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 42.072,
+      "p95_success_s": 49.286,
+      "success_durations_s": [
+        15.036,
+        42.072,
+        50.086,
+        40.076,
+        46.086
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 193.356
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 12.037,
+      "p95_success_s": 12.037,
+      "success_durations_s": [
+        12.037
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 12.037
+    },
+    "probe": {
+      "attempts": 26,
+      "failures": 0,
+      "p50_success_s": 1.007,
+      "p95_success_s": 1.008,
+      "success_durations_s": [
+        1.008,
+        1.008,
+        1.007,
+        1.008,
+        1.007,
+        1.007,
+        1.007,
+        1.008,
+        1.007,
+        1.007,
+        1.007,
+        1.008,
+        1.007,
+        1.008,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.008,
+        1.008,
+        1.007,
+        1.008,
+        1.008,
+        1.008,
+        1.008
+      ],
+      "successes": 26,
+      "timeouts": 0,
+      "total_duration_s": 26.194
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 22.107,
+      "p95_success_s": 22.107,
+      "success_durations_s": [
+        22.107
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 22.107
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 16.011,
+      "p95_success_s": 16.011,
+      "success_durations_s": [
+        16.011
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 16.011
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 66.032,
+      "p95_success_s": 66.032,
+      "success_durations_s": [
+        66.032
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 66.032
+    }
+  },
+  "status": "done"
+}

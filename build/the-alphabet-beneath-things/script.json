@@ -61,7 +61,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, an impossible living house rearranging its rooms around a turning brass handle, walls becoming memories and oceans, luminous doorways, floating dust stars, deep parallax, volumetric moonlight, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, an impossible living house rearranging its rooms around a turning brass handle, walls becoming memories and oceans, luminous doorways, floating dust stars, deep parallax, volumetric moonlight, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 0.0,
+   "duration": 7.32,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_00.jpg",
+   "still_reference_signature": "b89d68d7ce4e3da5b041",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_00.mp4",
+   "clip_fingerprint": "08f3df4bde38f032",
+   "hero_generated": true,
+   "hero_raw_signature": "59e09137b1b18377da3c",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Usually, I stand in one room and mistake its furniture for the whole building.",
@@ -79,7 +106,25 @@
    "query": "a person studying one furnished room while transparent floors and hidden rooms surround it",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 7.32,
+   "duration": 5.26,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.5847,
+    "active_region_ratio": 0.9412,
+    "frame_difference": 7.7841
+   },
+   "clip_fingerprint": "fbf4c68ecda7e5a0",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_01.mp4",
+   "stock_id": 6550659,
+   "pexels_id": 6550659,
+   "stock_frame_url": "https://images.pexels.com/videos/6550659/pexels-photo-6550659.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/girl-reading-a-book-while-sitting-on-the-floor-6550659/"
   },
   {
    "text": "Attention widens, narrows, turns inward, and quietly changes what feels real.",
@@ -96,7 +141,25 @@
    "narrative_mode": "stock_ok",
    "query": "an antique camera aperture opening and closing over a busy street and an inward-facing mirror",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 12.58,
+   "duration": 7.04,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.4047,
+    "active_region_ratio": 0.9551,
+    "frame_difference": 11.9927
+   },
+   "clip_fingerprint": "2e7da711f8c29cc4",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_02.mp4",
+   "stock_id": 3804693,
+   "pexels_id": 3804693,
+   "stock_frame_url": "https://images.pexels.com/videos/3804693/pexels-photo-3804693.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-photographer-setting-up-his-digital-camera-to-take-a-photo-of-chicago-theater-s-frontage-3804693/"
   },
   {
    "text": "I can vanish into a book while my body waits in a chair, loyal as a coat.",
@@ -113,7 +176,25 @@
    "narrative_mode": "stock_ok",
    "query": "an open book projecting a vast landscape above an occupied reading chair beside a hanging coat",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 19.62,
+   "duration": 4.26,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.5962,
+    "active_region_ratio": 0.4056,
+    "frame_difference": 14.755
+   },
+   "clip_fingerprint": "1f06ba409c5090cc",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_03.mp4",
+   "stock_id": 27375574,
+   "pexels_id": 27375574,
+   "stock_frame_url": "https://images.pexels.com/videos/27375574/book-books-eyewear-fujifilm-27375574.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-table-and-chair-under-a-tree-with-a-book-27375574/"
   },
   {
    "text": "When I return, the room remains. My spotlight simply stopped feeding it light.",
@@ -130,7 +211,25 @@
    "narrative_mode": "stock_ok",
    "query": "a theater spotlight sweeping back onto a familiar living room after illuminating a distant stage",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 23.88,
+   "duration": 7.34,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.4113,
+    "active_region_ratio": 0.3608,
+    "frame_difference": 3.8546
+   },
+   "clip_fingerprint": "5204c5b6c2bd58b5",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_04.mp4",
+   "stock_id": 7985880,
+   "pexels_id": 7985880,
+   "stock_frame_url": "https://images.pexels.com/videos/7985880/pexels-photo-7985880.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/tracking-shot-of-empty-seats-in-the-movie-theater-7985880/"
   },
   {
    "text": "Different states of consciousness are different rooms receiving electricity.",
@@ -147,7 +246,25 @@
    "narrative_mode": "stock_ok",
    "query": "a floor plan with separate rooms lighting one by one as power moves through copper lines",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 31.22,
+   "duration": 4.42,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.3777,
+    "active_region_ratio": 0.6336,
+    "frame_difference": 8.6724
+   },
+   "clip_fingerprint": "1d36ee626c05bade",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_05.mp4",
+   "stock_id": 8293506,
+   "pexels_id": 8293506,
+   "stock_frame_url": "https://images.pexels.com/videos/8293506/architect-balance-blueprint-business-8293506.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/an-architect-writing-on-the-document-floor-plan-8293506/"
   },
   {
    "text": "Every room speaks in symbols because raw feeling is too large for language unless it folds itself.",
@@ -164,7 +281,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a vast ocean of emotion folding into origami symbols that fly through a narrow doorway, prismatic spray, luminous paper trails, spectral ribbons, gold sparks, impossible scale, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a vast ocean of emotion folding into origami symbols that fly through a narrow doorway, prismatic spray, luminous paper trails, spectral ribbons, gold sparks, impossible scale, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 35.64,
+   "duration": 7.8,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_06.jpg",
+   "still_reference_signature": "0082421d27fd5989d90c",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_06.mp4",
+   "clip_fingerprint": "a3d5a38219415a5f",
+   "hero_generated": true,
+   "hero_raw_signature": "4ebc644121bb5f64a328",
+   "motion_recipe": "paper",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Joy can repaint a street. Grief can lower winter over a kitchen in July.",
@@ -183,7 +327,25 @@
    "motion_kind": "video",
    "motion_mode": "stock",
    "symbol_query": "storm shadow crosses a bright room then clears through the window natural time lapse",
-   "symbol_family_source": "planner"
+   "symbol_family_source": "planner",
+   "start": 43.44,
+   "duration": 6.04,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.1099,
+    "active_region_ratio": 0.7969,
+    "frame_difference": 11.2225
+   },
+   "clip_fingerprint": "b5699aa6bc705a3c",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_07.mp4",
+   "stock_id": 9902185,
+   "pexels_id": 9902185,
+   "stock_frame_url": "https://images.pexels.com/videos/9902185/pexels-photo-9902185.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-man-standing-by-a-window-and-looking-outside-9902185/"
   },
   {
    "text": "The world did not swear allegiance to my mood. Mood became the glass through which it arrived.",
@@ -200,7 +362,25 @@
    "narrative_mode": "stock_ok",
    "query": "colored glass panes rotating before the same landscape and changing its emotional atmosphere",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 49.48,
+   "duration": 9.2,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.368,
+    "active_region_ratio": 0.2737,
+    "frame_difference": 4.821
+   },
+   "clip_fingerprint": "c5d1a3c07322e3c1",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_08.mp4",
+   "stock_id": 5930874,
+   "pexels_id": 5930874,
+   "stock_frame_url": "https://images.pexels.com/videos/5930874/lightning-rain-5930874.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-view-of-raindrops-and-lightning-on-a-glass-window-5930874/"
   },
   {
    "text": "A symbol is that glass made portable. It carries more than physical weight.",
@@ -218,7 +398,25 @@
    "query": "a small pane of stained glass carried in two hands, projecting an enormous scene onto a wall",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 58.68,
+   "duration": 6.4,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.2513,
+    "active_region_ratio": 0.9764,
+    "frame_difference": 25.4265
+   },
+   "clip_fingerprint": "cd637bb42bb4895a",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_09.mp4",
+   "stock_id": 38043817,
+   "pexels_id": 38043817,
+   "stock_frame_url": "https://images.pexels.com/videos/38043817/pexels-photo-38043817.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/ornate-cross-with-colorful-stained-glass-background-38043817/"
   },
   {
    "text": "A key is metal, permission, escape, or return, depending on which part of me holds it.",
@@ -235,7 +433,25 @@
    "narrative_mode": "stock_ok",
    "query": "one antique key casting four shadows shaped like a gate, open road, locked room, and childhood home",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 65.08,
+   "duration": 6.56,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.2522,
+    "active_region_ratio": 0.9245,
+    "frame_difference": 23.6652
+   },
+   "clip_fingerprint": "1e0f8172d42dec46",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_10.mp4",
+   "stock_id": 9792637,
+   "pexels_id": 9792637,
+   "stock_frame_url": "https://images.pexels.com/videos/9792637/pexels-photo-9792637.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-unlocking-the-padlock-of-a-metal-gate-9792637/"
   },
   {
    "text": "The object stays still. Meaning circles it like weather around a mountain.",
@@ -252,7 +468,25 @@
    "narrative_mode": "stock_ok",
    "query": "a motionless mountain-shaped stone surrounded by changing clouds, rain, sunlight, and snow",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 71.64,
+   "duration": 7.84,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.2591,
+    "active_region_ratio": 0.9638,
+    "frame_difference": 7.8029
+   },
+   "clip_fingerprint": "79621d018fa08d54",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_11.mp4",
+   "stock_id": 28650479,
+   "pexels_id": 28650479,
+   "stock_frame_url": "https://images.pexels.com/videos/28650479/pexels-photo-28650479.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/majestic-snow-capped-mountain-range-28650479/"
   },
   {
    "text": "Fire can be warmth, danger, desire, purification, or anger's red unfinished sentence.",
@@ -270,7 +504,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a colossal living flame transforming into a hearth, warning beacon, red flower, clear water, and unspoken letters, liquid light, ember constellations, smoke ribbons, radiant heat distortions, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a colossal living flame transforming into a hearth, warning beacon, red flower, clear water, and unspoken letters, liquid light, ember constellations, smoke ribbons, radiant heat distortions, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 79.48,
+   "duration": 8.82,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_12.jpg",
+   "still_reference_signature": "c5977be0b0a78386976d",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_12.mp4",
+   "clip_fingerprint": "abf78208644c7c93",
+   "hero_generated": true,
+   "hero_raw_signature": "3bfa4136e0040e52fcca",
+   "motion_recipe": "paper",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "My private alphabet is built from childhood rooms, songs, smells, scars, and slamming doors.",
@@ -287,7 +548,25 @@
    "narrative_mode": "stock_ok",
    "query": "a wooden type case filled with a toy, record, perfume bottle, bandage, and miniature door",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 88.3,
+   "duration": 8.66,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.2558,
+    "active_region_ratio": 0.9979,
+    "frame_difference": 34.8618
+   },
+   "clip_fingerprint": "4904bc6ba3ecba54",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_13.mp4",
+   "stock_id": 8206440,
+   "pexels_id": 8206440,
+   "stock_frame_url": "https://images.pexels.com/videos/8206440/pexels-photo-8206440.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/little-girl-playing-with-a-soft-toy-in-a-dollhouse-8206440/"
   },
   {
    "text": "Someone sees an old coat. I feel a hand from a winter that no longer exists.",
@@ -305,7 +584,25 @@
    "query": "an old coat in an empty hallway touched by a warm hand-shaped patch of winter sunlight",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 96.96,
+   "duration": 7.34,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.8383,
+    "active_region_ratio": 0.4163,
+    "frame_difference": 6.6677
+   },
+   "clip_fingerprint": "148b6060494aa015",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_14.mp4",
+   "stock_id": 4733680,
+   "pexels_id": 4733680,
+   "stock_frame_url": "https://images.pexels.com/videos/4733680/pexels-photo-4733680.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-holding-onto-a-metal-railing-in-a-stairwell-4733680/"
   },
   {
    "text": "Symbols cannot be translated like receipts. The same image spends differently in every life.",
@@ -323,7 +620,25 @@
    "query": "a shop counter where the same brass token becomes different treasured objects for different customers",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 104.3,
+   "duration": 6.88,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.1318,
+    "active_region_ratio": 0.9284,
+    "frame_difference": 15.647
+   },
+   "clip_fingerprint": "1e5023882281cae5",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_15.mp4",
+   "stock_id": 6539945,
+   "pexels_id": 6539945,
+   "stock_frame_url": "https://images.pexels.com/videos/6539945/pexels-photo-6539945.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-woman-buying-a-product-at-a-cashier-counter-6539945/"
   },
   {
    "text": "In dreams, one doorway can be birth, funeral, warning, and forgiveness at once.",
@@ -340,7 +655,25 @@
    "narrative_mode": "stock_ok",
    "query": "a single doorway opening simultaneously into a nursery, candlelit memorial, storm path, and sunrise garden",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 111.18,
+   "duration": 7.7,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.2254,
+    "active_region_ratio": 0.9964,
+    "frame_difference": 38.2577
+   },
+   "clip_fingerprint": "c4023dd6d375a189",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_16.mp4",
+   "stock_id": 3851106,
+   "pexels_id": 3851106,
+   "stock_frame_url": "https://images.pexels.com/videos/3851106/pexels-photo-3851106.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/framing-tomatoes-inside-a-greenhouse-3851106/"
   },
   {
    "text": "Waking thought seats one meaning per chair. Dreaming lets the whole audience speak.",
@@ -359,7 +692,34 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "cinematic photoreal, a surreal theater audience made of many meanings rising together beneath rotating chandeliers, faces becoming landscapes, velvet curtains flowing like water, floating masks, luminous mist, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
-   "human_role": "collective"
+   "human_role": "collective",
+   "start": 118.88,
+   "duration": 7.66,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_17.jpg",
+   "still_reference_signature": "ac349df9dd70c978c71c",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_17.mp4",
+   "clip_fingerprint": "4365643b549dbd3d",
+   "hero_generated": true,
+   "hero_raw_signature": "36037e06f286e04c0357",
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "The more exact a symbol becomes, the less sky it carries. Precision can trim off stars.",
@@ -376,7 +736,25 @@
    "narrative_mode": "stock_ok",
    "query": "a craftsman fitting a tiny precise frame around a night sky while stars remain beyond its edges",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 126.54,
+   "duration": 8.12,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.344,
+    "active_region_ratio": 0.9961,
+    "frame_difference": 7.361
+   },
+   "clip_fingerprint": "61902aa297ac4467",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_18.mp4",
+   "stock_id": 30696754,
+   "pexels_id": 30696754,
+   "stock_frame_url": "https://images.pexels.com/videos/30696754/el-isciligi-30696754.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/crafting-mystery-in-antique-workshop-30696754/"
   },
   {
    "text": "Even blankness may work. A pause can be language backstage, changing costumes.",
@@ -393,7 +771,25 @@
    "narrative_mode": "stock_ok",
    "query": "an empty theater stage while letters change costumes behind a half-open curtain",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 134.66,
+   "duration": 7.8,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.8208,
+    "active_region_ratio": 0.9762,
+    "frame_difference": 6.2008
+   },
+   "clip_fingerprint": "7fa48e8577178898",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_19.mp4",
+   "stock_id": 6899948,
+   "pexels_id": 6899948,
+   "stock_frame_url": "https://images.pexels.com/videos/6899948/pexels-photo-6899948.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/theater-actors-acting-on-stage-6899948/"
   },
   {
    "text": "Nothing may be the workshop where tomorrow's image receives a handle.",
@@ -410,7 +806,25 @@
    "narrative_mode": "stock_ok",
    "query": "a quiet workshop where an undefined glowing shape receives a carefully carved wooden handle",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 142.46,
+   "duration": 4.7,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.3065,
+    "active_region_ratio": 0.9953,
+    "frame_difference": 13.0646
+   },
+   "clip_fingerprint": "c25910936956a714",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_20.mp4",
+   "stock_id": 35170033,
+   "pexels_id": 35170033,
+   "stock_frame_url": "https://images.pexels.com/videos/35170033/pexels-photo-35170033.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/craftsman-using-hand-plane-in-workshop-35170033/"
   },
   {
    "text": "Multiple focus means I may exceed the room my waking mind rents.",
@@ -427,7 +841,25 @@
    "narrative_mode": "stock_ok",
    "query": "a small rented room suspended inside a much larger transparent mansion filled with moving lights",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 147.16,
+   "duration": 5.92,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.6086,
+    "active_region_ratio": 0.6377,
+    "frame_difference": 29.3489
+   },
+   "clip_fingerprint": "675413aad7f68299",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_21.mp4",
+   "stock_id": 33717452,
+   "pexels_id": 33717452,
+   "stock_frame_url": "https://images.pexels.com/videos/33717452/pexels-photo-33717452.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/futuristic-neon-cube-in-urban-sci-fi-cityscape-33717452/"
   },
   {
    "text": "Body, dream, art, and ritual may be alphabets writing one living sentence.",
@@ -445,7 +877,25 @@
    "query": "an open hand, sleeping face, painted canvas, and candle circle arranged as lines in one luminous manuscript",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 153.08,
+   "duration": 7.18,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.5103,
+    "active_region_ratio": 0.2886,
+    "frame_difference": 3.1477
+   },
+   "clip_fingerprint": "c26035607b2c8ea1",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_22.mp4",
+   "stock_id": 32788086,
+   "pexels_id": 32788086,
+   "stock_frame_url": "https://images.pexels.com/videos/32788086/brush-line-art-man-night-32788086.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/artistic-handwriting-with-ink-brush-at-night-32788086/"
   },
   {
    "text": "Maybe I am a breathing doorway through which larger awareness briefly learns my name.",
@@ -463,7 +913,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a human silhouette becoming a breathing doorway inside a vast cosmic mind, fractal halos, flowing glyphs, celestial ink clouds, radiant neural constellations, deep layered parallax, energy pulses, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a human silhouette becoming a breathing doorway inside a vast cosmic mind, fractal halos, flowing glyphs, celestial ink clouds, radiant neural constellations, deep layered parallax, energy pulses, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 160.26,
+   "duration": 7.78,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_23.jpg",
+   "still_reference_signature": "91f31f69624b1a8d2b51",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_23.mp4",
+   "clip_fingerprint": "73c4a1c55cb04491",
+   "hero_generated": true,
+   "hero_raw_signature": "bbac7deaa552619848f4",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Now I look at one ordinary object and ask what invisible story it carries for me.",
@@ -481,7 +958,51 @@
    "narrative_mode": "stock_ok",
    "query": "one familiar personal object resting on a wooden bedside table as dawn slowly fills the room",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 168.04,
+   "duration": 8.398,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.1373,
+    "active_region_ratio": 0.8418,
+    "frame_difference": 20.2469
+   },
+   "clip_fingerprint": "ba69ef4bf53307a3",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-alphabet-beneath-things/clip_24.mp4",
+   "stock_id": 32156305,
+   "pexels_id": 32156305,
+   "stock_frame_url": "https://images.pexels.com/videos/32156305/pexels-photo-32156305.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/candle-on-wooden-tray-in-minimalist-setting-32156305/"
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.97
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
