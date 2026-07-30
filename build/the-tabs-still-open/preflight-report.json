@@ -1,16 +1,6 @@
 {
   "applied_solution_ids": [],
-  "blockers": [
-    {
-      "code": "visual_symbol_plan",
-      "fingerprint": "5d20dc55cdcdc309",
-      "matched_solution_ids": [
-        "sol-visual-symbol-diversity-v1"
-      ],
-      "message": "generic human filler repeats for 2 consecutive scenes starting at scene 4",
-      "stage": "preflight"
-    }
-  ],
+  "blockers": [],
   "checks": {
     "animation_contract": {
       "errors": [],
@@ -44,7 +34,7 @@
         "perception": 1,
         "time_memory": 4
       },
-      "generic_human_ratio": 0.25,
+      "generic_human_ratio": 0.2083,
       "human_presence_ratio": 0.5833,
       "longest_family_run": {
         "length": 3,
@@ -52,11 +42,11 @@
         "value": "architecture"
       },
       "longest_generic_human_run": {
-        "length": 2,
-        "start": 4,
+        "length": 1,
+        "start": 0,
         "value": "generic_human"
       },
-      "passes": false,
+      "passes": true,
       "policy": {
         "max_family_run": 6,
         "max_generic_human_run": 1,
@@ -68,7 +58,6 @@
       "primary_symbol_counts": {
         "a computer memory graph falls from red overload into a cool": 1,
         "a computer task manager shows one repeating process consumin": 1,
-        "a cursor searches rapidly across many browser tabs while a t": 1,
         "a hand closes one browser tab while preserving the page as a": 1,
         "a hand closes the laptop, and the warmly lit room continues": 1,
         "a hand scrolls an apparently endless webpage while the mouse": 1,
@@ -85,9 +74,10 @@
         "an unsent message, a turning coin, an unopened envelope, and": 1,
         "browser pages automatically refresh one after another on an": 1,
         "dozens of browser tabs close in sequence until one quiet bla": 1,
+        "dozens of small chargers draw current from a power strip whi": 1,
+        "extreme macro footage of one computer tab's audio indicator": 1,
         "feet rest on a rug as window light shifts and tree branches": 1,
         "many digital windows remain open as daylight outside the rea": 1,
-        "many small chargers fill a power strip while a connected ene": 1,
         "multiple hands scroll different social feeds on separate pho": 1,
         "several alarm clocks and notification lights activate one af": 1
       },
@@ -105,7 +95,7 @@
           "selected_family": null,
           "semantic_anchor": "beat 1",
           "symbol_family": "human",
-          "text": "You may not be tired from doing. You may be tired from everything your mind refuses to close.",
+          "text": "You may not be tired from doing—just from everything your mind refuses to close.",
           "visual_function": "beat 1"
         },
         {
@@ -154,13 +144,13 @@
           "visual_function": "beat 4"
         },
         {
-          "effective_query": "A cursor searches rapidly across many browser tabs while a tiny audio indicator continues pulsing.",
+          "effective_query": "Extreme macro footage of one computer tab's audio indicator pulsing beside a moving cursor.",
           "generic_human": true,
           "human_present": true,
           "human_role": "unspecified",
           "index": 4,
-          "original_query": "A cursor searches rapidly across many browser tabs while a tiny audio indicator continues pulsing.",
-          "primary_symbol": "a cursor searches rapidly across many browser tabs while a t",
+          "original_query": "Extreme macro footage of one computer tab's audio indicator pulsing beside a moving cursor.",
+          "primary_symbol": "extreme macro footage of one computer tab's audio indicator",
           "query_family": "human",
           "selected_family": null,
           "semantic_anchor": "beat 5",
@@ -169,13 +159,13 @@
           "visual_function": "beat 5"
         },
         {
-          "effective_query": "Many small chargers fill a power strip while a connected energy meter climbs steadily.",
-          "generic_human": true,
+          "effective_query": "Dozens of small chargers draw current from a power strip while an energy meter climbs.",
+          "generic_human": false,
           "human_present": true,
-          "human_role": "unspecified",
+          "human_role": "creator",
           "index": 5,
-          "original_query": "Many small chargers fill a power strip while a connected energy meter climbs steadily.",
-          "primary_symbol": "many small chargers fill a power strip while a connected ene",
+          "original_query": "Dozens of small chargers draw current from a power strip while an energy meter climbs.",
+          "primary_symbol": "dozens of small chargers draw current from a power strip whi",
           "query_family": "human",
           "selected_family": null,
           "semantic_anchor": "beat 6",
@@ -240,7 +230,7 @@
           "selected_family": null,
           "semantic_anchor": "beat 10",
           "symbol_family": "architecture",
-          "text": "Your body is on the couch. Your attention is answering imaginary emails in six different futures.",
+          "text": "Your body rests. Your attention answers imaginary emails in six different futures.",
           "visual_function": "beat 10"
         },
         {
@@ -255,7 +245,7 @@
           "selected_family": null,
           "semantic_anchor": "beat 11",
           "symbol_family": "human",
-          "text": "And every tab believes it is urgent. Naturally. Anxiety has never been known for respecting office hours.",
+          "text": "Every tab believes it is urgent. Naturally. Anxiety ignores office hours.",
           "visual_function": "beat 11"
         },
         {
@@ -345,7 +335,7 @@
           "selected_family": null,
           "semantic_anchor": "beat 17",
           "symbol_family": "human",
-          "text": "You can close a page without declaring it meaningless, defeated, forgiven, or finished forever.",
+          "text": "You can close a page without declaring it meaningless or finished forever.",
           "visual_function": "beat 17"
         },
         {
@@ -454,22 +444,18 @@
           "visual_function": "beat 24"
         }
       ],
-      "score": 95.0,
+      "score": 95.8,
       "symbol_family_count": 8,
-      "violations": [
-        "generic human filler repeats for 2 consecutive scenes starting at scene 4"
-      ],
+      "violations": [],
       "warnings": [
-        "generic human filler occupies 25%; people should have a named symbolic role"
+        "generic human filler occupies 21%; people should have a named symbolic role"
       ]
     }
   },
   "fix_safe": true,
-  "matched_solution_ids": [
-    "sol-visual-symbol-diversity-v1"
-  ],
-  "narration_fingerprint": "1982be2bcc6b4ce8f127e583e3c24a6aeebc4486506a28e923074b745613db2d",
-  "passed": false,
+  "matched_solution_ids": [],
+  "narration_fingerprint": "ffd45a831e9b4d8dbd24a01507ca04198a434343d4aa8dd9085f2090e15ab29c",
+  "passed": true,
   "prevention_rule_version": 1,
   "scene_count": 24,
   "schema_version": 1,
@@ -479,8 +465,8 @@
   "warnings": [
     {
       "code": "visual_symbol_warning",
-      "message": "generic human filler occupies 25%; people should have a named symbolic role"
+      "message": "generic human filler occupies 21%; people should have a named symbolic role"
     }
   ],
-  "word_count": 351
+  "word_count": 335
 }
