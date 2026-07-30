@@ -2,7 +2,7 @@
 
 Date: 2026-07-29
 
-Status: GS030 now has a reproducible 5.7-second seated-to-standing performance built from five high-detail production drawings over one reconstructed clean porch plate. The renderer registers both boots, applies only a bounded lower-leg correction, preserves the mug, adds one-frame target-pose smears, and never asks optical flow to invent anatomy. The local audible master passes full decode, encoded-detail gates, and full-resolution visual review. Public reproduction remains pending until the branch workflow completes.
+Status: GS030 now has a reproducible 5.7-second seated-to-standing performance built from five high-detail production drawings over one reconstructed clean porch plate. The renderer registers both boots, applies only a bounded lower-leg correction, preserves the mug, adds one-frame target-pose smears, and never asks optical flow to invent anatomy. The local audible master and the independently rendered public artifact both pass full decode, encoded-detail gates, and full-resolution visual review. GitHub Actions also passes the complete regression and separate Blender facial gate.
 
 ## Why this phase exists
 
@@ -77,6 +77,25 @@ Output directory: `outputs/edit/phase22-gs030-layered`
 
 FFmpeg decodes the complete A/V master without error. Full-resolution inspection confirms one stable background, one readable June silhouette, no duplicate mug or limbs, no translucent chair, no planted-foot slide, clean pose holds, and one blurred target body on each smear frame. The mug stays upright and the left hand visibly progresses from chair leverage to release.
 
+## Public reproduction
+
+GitHub Actions run [30513997592](https://github.com/prototype4-1077/Prototype-Video/actions/runs/30513997592) rebuilt commit `f95ecac5a62b6aefbe959e7fed2bebff38b5f613` on a clean Ubuntu runner. The test job passed the 345-test regression, rendered and verified GS030, and uploaded artifact `june-gs030-layered-stand-v1`. The dependent `blender-v8-oral-mask-visemes` job also completed successfully.
+
+| Property | Public value |
+| --- | --- |
+| Artifact | `june-gs030-layered-stand-v1` |
+| Video SHA-256 | `704ee55ae5e67312ef24cba77a56d7dccf2e906c36a3ef93cf20200302b5ddf7` |
+| Picture | H.264/yuv420p, 1920x1080, 30 fps, 171 frames, 5.700 seconds |
+| Encoded size / bit rate | 2,821,893 bytes / 3,960,551 bits per second |
+| Audio | Intentionally absent; hosted picture reproduction needs no private voice or timing file |
+| Contract SHA-256 | `870ffd61fe25ba3702641eb0588379bff8628eaed186b08da521a40353507c22` |
+| Minimum / mean encoded PSNR | 40.712 / 41.179 dB |
+| Minimum encoded detail variance | 147.453 |
+| Maximum contact residual | 0 source pixels |
+| Review samples | 14 encoded transition frames |
+
+The downloaded public MP4 decodes completely with FFmpeg. FFprobe confirms the exact silent video clock. Full-resolution inspection of the downloaded first, smear, clean-pose, and final frames confirms that the public result retains the local stable set, single-body silhouette, mug continuity, planted boots, and camera/effect decisions.
+
 ## Honest visual gate
 
 Passed:
@@ -96,6 +115,7 @@ Not passed yet:
 - The porch is one camera plane rather than a deep multi-plane or 3D set.
 - GS060 liquid/pour physics, GS070 final resolution, walking, three-quarter/profile speech atlases, and the complete 38.8-second edit remain unfinished.
 - The audible local track is a timing mix, not the approved final June voice/Foley/ambience/music master.
+- GitHub currently reports that several pinned action majors still target deprecated Node.js 20 and are being forced onto Node.js 24; this is a maintenance warning, not a Phase 22 failure.
 
 ## Recommended next gate
 
