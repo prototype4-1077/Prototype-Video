@@ -1,16 +1,16 @@
 # What's working (auto-generated: learn.py digest)
 
-_Updated 2026-07-29 from 33 recorded videos._
+_Updated 2026-07-30 from 33 recorded videos._
 
 ## Queries that keep winning
 
 - `camera glides through a colorful carnival funhouse interior with moving checkerboard floor, spinning pillars, swaying chairs and vivid practical lights, genuine environmental motion, no text or diagrams` (+5.50)
 - `rear view of one adult narrator seated in meditation with face completely hidden while vivid mystical ribbons and sacred geometry swirl around the body, dmt palace colors, genuine environmental motion` (+4.67)
+- `chess piece hand moving board dark` (+4.00)
 - `vast exquisite psychedelic universe of moving galaxies stars and prismatic nebulae expands peacefully while one tiny unopened package drifts through deep space, comic contrast, continuous cosmic motion, no split screen, boxes, panels, labels, text, diagrams or ui` (+3.83)
 - `adult person opens their eyes and sits upright in bed in a bright morning bedroom, soft daylight fills the room while faint colorful psychedelic reflections fade from the walls, genuine motion, no text` (+3.00)
 - `frustrated adult beside half-assembled flat-pack furniture holding three leftover screws, comedic cinematic movement, no brand, no readable instructions` (+3.00)
 - `psychedelic machine opening as streams of people emerge into multiple realities, continuous motion, no text or ui` (+3.00)
-- `chess piece hand moving board dark` (+3.00)
 - `backstage theater red curtain dramatic light` (+2.89)
 - `glowing brain neurons firing dark background` (+2.89)
 - `fully clothed theatrical jester in red and teal costume sits in an ornate carnival chair surrounded by flickering vintage television screens, expressive face, genuine body and screen motion, no nudity` (+2.50)
@@ -22,7 +22,6 @@ _Updated 2026-07-29 from 33 recorded videos._
 
 ## Recent audience verdicts (YouTube retention)
 
-- collapse-of-gravity: scenes [26, 20, 6] held viewers, scenes [16, 3, 1] bled them
 - the-unopened-mail: scenes [0, 1, 2] held viewers, scenes [6, 3, 4] bled them
 - jester-who-knew-my-name: scenes [15, 19, 3] held viewers, scenes [2, 36, 0] bled them
 - the-lag: scenes [4, 8] held viewers, scenes [1, 0] bled them
@@ -32,3 +31,4 @@ _Updated 2026-07-29 from 33 recorded videos._
 - the-museum-that-repaints-itself: scenes [5] held viewers, scenes [0] bled them
 - cartographers-confession: scenes [1, 5] held viewers, scenes [3, 0] bled them
 - you-are-a-flame-wearing-a-name-tag: scenes [1] held viewers, scenes [0] bled them
+- the-lag: scenes [4, 8] held viewers, scenes [1, 0] bled them
