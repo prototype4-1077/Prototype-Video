@@ -1,33 +1,33 @@
 {
-  "finished_at": "2026-07-30T06:42:51+00:00",
-  "github_run_id": "30519442693",
+  "finished_at": "2026-07-30T13:41:40+00:00",
+  "github_run_id": "30546691755",
   "incidents": [],
   "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-person-isnt-here/final_youtube.mp4",
   "mode": "recover",
-  "passes": 5,
+  "passes": 6,
   "policy": {
     "align": {
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.0,
       "idle_timeout_s": 33.01,
-      "sample_count": 23,
+      "sample_count": 26,
       "soft_timeout_s": 33.01,
       "source": "history"
     },
     "altsheet": {
       "hard_timeout_s": 300.0,
-      "historical_p95_s": 6.3,
-      "idle_timeout_s": 48.9,
-      "sample_count": 16,
-      "soft_timeout_s": 48.9,
+      "historical_p95_s": 6.1,
+      "idle_timeout_s": 48.3,
+      "sample_count": 20,
+      "soft_timeout_s": 48.3,
       "source": "history"
     },
     "assemble": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 87.31,
+      "historical_p95_s": 80.38,
       "idle_timeout_s": 240.0,
       "sample_count": 200,
-      "soft_timeout_s": 291.93,
+      "soft_timeout_s": 271.15,
       "source": "history"
     },
     "build_pass": {
@@ -42,31 +42,31 @@
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.03,
       "idle_timeout_s": 33.09,
-      "sample_count": 52,
+      "sample_count": 60,
       "soft_timeout_s": 33.09,
       "source": "history"
     },
     "ffmpeg": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 32.22,
-      "idle_timeout_s": 126.65,
-      "sample_count": 120,
-      "soft_timeout_s": 126.65,
+      "historical_p95_s": 32.2,
+      "idle_timeout_s": 126.61,
+      "sample_count": 136,
+      "soft_timeout_s": 126.61,
       "source": "history"
     },
     "footage": {
       "hard_timeout_s": 600.0,
-      "historical_p95_s": 208.32,
+      "historical_p95_s": 232.32,
       "idle_timeout_s": 255.0,
-      "sample_count": 19,
+      "sample_count": 23,
       "soft_timeout_s": 510.0,
       "source": "history"
     },
     "prep": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 16.0,
+      "historical_p95_s": 18.31,
       "idle_timeout_s": 120.0,
-      "sample_count": 22,
+      "sample_count": 26,
       "soft_timeout_s": 120.0,
       "source": "history"
     },
@@ -88,31 +88,31 @@
     },
     "transcribe": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 23.92,
+      "historical_p95_s": 23.77,
       "idle_timeout_s": 180.0,
-      "sample_count": 23,
+      "sample_count": 26,
       "soft_timeout_s": 180.0,
       "source": "history"
     },
     "tts": {
       "hard_timeout_s": 480.0,
-      "historical_p95_s": 75.85,
+      "historical_p95_s": 75.55,
       "idle_timeout_s": 180.0,
-      "sample_count": 23,
-      "soft_timeout_s": 257.55,
+      "sample_count": 26,
+      "soft_timeout_s": 256.65,
       "source": "history"
     }
   },
   "quality": {
     "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-isnt-here",
-    "checked_at": "2026-07-30T06:42:50+00:00",
+    "checked_at": "2026-07-30T13:41:39+00:00",
     "deep_decode": true,
-    "expected_duration_s": 150.524,
+    "expected_duration_s": 154.364,
     "failures": [],
     "mode": "delivery",
     "outputs": {
       "youtube": {
-        "avg_kbps": 7028,
+        "avg_kbps": 7092,
         "deep_scan": {
           "black_intervals": 0,
           "black_longest_s": 0.0,
@@ -127,26 +127,26 @@
           "silence_longest_s": 0.0,
           "silence_total_s": 0
         },
-        "duration_difference_s": 0.076,
+        "duration_difference_s": 0.003,
         "exists": true,
-        "expected_duration_s": 150.524,
+        "expected_duration_s": 154.364,
         "failures": [],
         "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-person-isnt-here/final_youtube.mp4",
         "probe": {
           "audio_codec": "aac",
-          "audio_duration_s": 150.535011,
-          "bit_rate": 7028158.0,
-          "duration_s": 150.6,
+          "audio_duration_s": 154.366009,
+          "bit_rate": 7092228.0,
+          "duration_s": 154.366667,
           "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
           "fps": 30.0,
           "has_audio": true,
           "has_video": true,
           "height": 1080,
           "video_codec": "h264",
-          "video_duration_s": 150.6,
+          "video_duration_s": 154.366667,
           "width": 1920
         },
-        "size_bytes": 132305089,
+        "size_bytes": 136850454,
         "warnings": []
       }
     },
@@ -165,212 +165,213 @@
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (1033.2s).",
+      "reason": "Largest measured latency contribution in this run (967.7s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "07ae42f9bbc146bca619cdd94e42f336",
+  "run_id": "bdff716152bc42828526423e91139fce",
   "schema_version": 1,
   "slug": "the-person-isnt-here",
   "stages": {
     "align": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 1.002,
-      "p95_success_s": 1.002,
+      "p50_success_s": 1.003,
+      "p95_success_s": 1.003,
       "success_durations_s": [
-        1.002
+        1.003
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 1.002
+      "total_duration_s": 1.003
     },
     "altsheet": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 1.007,
-      "p95_success_s": 1.007,
+      "p50_success_s": 1.008,
+      "p95_success_s": 1.008,
       "success_durations_s": [
-        1.007
+        1.008
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 1.007
+      "total_duration_s": 1.008
     },
     "assemble": {
       "attempts": 24,
       "failures": 0,
-      "p50_success_s": 30.162,
-      "p95_success_s": 41.085,
+      "p50_success_s": 29.648,
+      "p95_success_s": 42.04,
       "success_durations_s": [
-        44.233,
-        26.125,
-        31.147,
-        22.101,
-        38.233,
-        20.101,
-        32.153,
-        32.168,
-        27.132,
-        24.098,
-        40.237,
-        41.235,
-        25.131,
-        34.178,
-        23.104,
-        34.191,
-        29.171,
-        23.109,
-        23.131,
-        30.173,
-        30.164,
-        36.209,
-        28.129,
-        30.159
+        42.193,
+        25.114,
+        33.15,
+        20.09,
+        42.197,
+        20.053,
+        30.135,
+        34.143,
+        28.15,
+        23.135,
+        38.17,
+        41.174,
+        31.13,
+        35.182,
+        24.094,
+        35.159,
+        26.104,
+        29.121,
+        23.103,
+        29.16,
+        29.141,
+        40.206,
+        26.127,
+        30.148
       ],
       "successes": 24,
       "timeouts": 0,
-      "total_duration_s": 725.812
+      "total_duration_s": 736.379
     },
     "build_pass": {
-      "attempts": 5,
+      "attempts": 6,
       "failures": 0,
-      "p50_success_s": 58.025,
-      "p95_success_s": 665.785,
+      "p50_success_s": 40.55,
+      "p95_success_s": 620.93,
       "success_durations_s": [
-        58.025,
-        18.012,
-        149.174,
-        13.033,
-        794.938
+        1.003,
+        67.052,
+        19.024,
+        62.076,
+        13.025,
+        805.556
       ],
-      "successes": 5,
+      "successes": 6,
       "timeouts": 0,
-      "total_duration_s": 1033.182
+      "total_duration_s": 967.736
     },
     "credits": {
       "attempts": 2,
       "failures": 0,
-      "p50_success_s": 1.006,
-      "p95_success_s": 1.007,
+      "p50_success_s": 1.004,
+      "p95_success_s": 1.005,
       "success_durations_s": [
-        1.006,
-        1.007
+        1.004,
+        1.005
       ],
       "successes": 2,
       "timeouts": 0,
-      "total_duration_s": 2.013
+      "total_duration_s": 2.009
     },
     "ffmpeg": {
       "attempts": 4,
       "failures": 0,
-      "p50_success_s": 5.515,
-      "p95_success_s": 15.413,
+      "p50_success_s": 5.513,
+      "p95_success_s": 15.408,
       "success_durations_s": [
-        1.007,
-        5.015,
-        17.071,
-        6.015
+        1.006,
+        5.014,
+        17.066,
+        6.012
       ],
       "successes": 4,
       "timeouts": 0,
-      "total_duration_s": 29.108
+      "total_duration_s": 29.098
     },
     "footage": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 148.178,
-      "p95_success_s": 148.178,
+      "p50_success_s": 61.072,
+      "p95_success_s": 61.072,
       "success_durations_s": [
-        148.178
+        61.072
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 148.178
+      "total_duration_s": 61.072
     },
     "prep": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 11.03,
-      "p95_success_s": 11.03,
+      "p50_success_s": 11.024,
+      "p95_success_s": 11.024,
       "success_durations_s": [
-        11.03
+        11.024
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 11.03
+      "total_duration_s": 11.024
     },
     "probe": {
       "attempts": 25,
       "failures": 0,
-      "p50_success_s": 1.007,
-      "p95_success_s": 1.008,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.006,
       "success_durations_s": [
-        1.007,
-        1.007,
-        1.007,
-        1.008,
-        1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.008,
-        1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.008,
-        1.007,
-        1.008
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006,
+        1.006
       ],
       "successes": 25,
       "timeouts": 0,
-      "total_duration_s": 25.179
+      "total_duration_s": 25.15
     },
     "quality": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 19.081,
-      "p95_success_s": 19.081,
+      "p50_success_s": 19.073,
+      "p95_success_s": 19.073,
       "success_durations_s": [
-        19.081
+        19.073
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 19.081
+      "total_duration_s": 19.073
     },
     "transcribe": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 15.011,
-      "p95_success_s": 15.011,
+      "p50_success_s": 16.021,
+      "p95_success_s": 16.021,
       "success_durations_s": [
-        15.011
+        16.021
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 15.011
+      "total_duration_s": 16.021
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 57.025,
-      "p95_success_s": 57.025,
+      "p50_success_s": 66.05,
+      "p95_success_s": 66.05,
       "success_durations_s": [
-        57.025
+        66.05
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 57.025
+      "total_duration_s": 66.05
     }
   },
   "status": "done"
