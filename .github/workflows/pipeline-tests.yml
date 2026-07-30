@@ -10,6 +10,7 @@ on:
       - "concept/characters/june_oxley_asset_v6.json"
       - "concept/characters/june_oxley_asset_v7.json"
       - "concept/characters/june_oxley_asset_v8.json"
+      - "concept/characters/june_oxley_performance_rig_v1.json"
       - "concept/style_frames/june_golden_scene_performance_slice_v1.json"
       - "concept/style_frames/june_golden_scene_rhubarb_lipsync_v1.json"
       - "concept/style_frames/june_golden_scene_expression_cues_v1.json"
@@ -39,6 +40,7 @@ on:
       - "concept/style_frames/june_golden_scene_master_v1.json"
       - "concept/style_frames/june_golden_scene_master_sound_v1.json"
       - "concept/audio/june_golden_scene_dialogue_norman_v1.wav"
+      - "concept/characters/june_oxley_performance_rig_v1.json"
       - "concept/style_frames/june_oxley_mug_held_insert_v1.png"
       - "concept/style_frames/june_oxley_ledger_insert_v1.png"
       - "concept/style_frames/june-golden-scene-gs020-style-target-v2.png"
@@ -490,6 +492,76 @@ jobs:
             build/edit/june-golden-scene-sound-master/stems/*.wav
           if-no-files-found: error
           retention-days: 14
+      - name: Build reusable June performance-rig proof
+        run: |
+          python3 -m pipeline.cartoon_performance_rig \
+            concept/characters/june_oxley_performance_rig_v1.json \
+            --sound-master build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master.mp4 \
+            --sound-report build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master-report.json \
+            --output-dir build/edit/june-performance-rig-proof
+      - name: Verify reusable June performance-rig proof
+        run: |
+          set -euo pipefail
+          video=build/edit/june-performance-rig-proof/june-performance-rig-proof.mp4
+          report=build/edit/june-performance-rig-proof/june-performance-rig-proof-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "657"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "aac"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of csv=p=0 "$video")" = "48000"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=channels -of csv=p=0 "$video")" = "2"
+          test "$(ffprobe -v error -select_streams s:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "mov_text"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "21.900000"
+          test "$(find build/edit/june-performance-rig-proof/review_frames -name 'frame_*.png' | wc -l)" = "27"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-performance-rig-proof/june-performance-rig-proof-report.json", encoding="utf-8"))
+          assert report["gate"] == "reusable_multiview_performance_rig_proof"
+          assert report["rig_id"] == "june_oxley_performance_rig_v1"
+          assert report["view_adapter_count"] == 3
+          assert set(report["action_class_coverage"]) == {
+              "broad_body_mechanics",
+              "constrained_prop_mechanics",
+              "close_speaking_performance",
+          }
+          assert len(report["semantic_channels"]) == 10
+          assert report["sequence"]["frame_count"] == 657
+          assert report["sequence"]["duration_seconds"] == 21.9
+          assert report["sequence"]["cut_frames"] == [172, 430]
+          assert report["sequence"]["action_video_concat_codec_copy"] is True
+          assert report["sequence"]["optical_flow_used"] is False
+          assert report["sequence"]["cross_dissolve_used"] is False
+          assert report["sequence"]["implicit_retiming_used"] is False
+          assert report["sound"]["caption_count"] == 11
+          loudness = report["sound"]["encoded_aac_loudness"]
+          assert abs(loudness["measured_lufs_i"] + 16.0) <= 1.0
+          assert loudness["measured_true_peak_dbtp"] <= -1.0
+          assert loudness["lra_gate_applied"] is False
+          assert report["quality"]["decoded_frame_count"] == 657
+          assert report["quality"]["review_frame_count"] == 27
+          assert report["quality"]["minimum_encoded_laplacian_variance"] >= 30.0
+          assert report["picture_stream"]["preserved_through_sound_and_caption_mux"] is True
+          assert report["picture_stream"]["video_only_sha256"] == report["picture_stream"]["final_sha256"]
+          assert report["paid_runtime_dependency"] is False
+          PY
+          sha256sum "$video" "$report" \
+            build/edit/june-performance-rig-proof/june-performance-rig-proof.srt \
+            build/edit/june-performance-rig-proof/june-performance-rig-proof-audio.wav
+      - name: Upload reusable June performance-rig proof
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-performance-rig-proof-v1
+          path: |
+            build/edit/june-performance-rig-proof/*.mp4
+            build/edit/june-performance-rig-proof/*.json
+            build/edit/june-performance-rig-proof/*.srt
+            build/edit/june-performance-rig-proof/*.wav
+            build/edit/june-performance-rig-proof/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
 
   blender-v8-oral-mask-visemes:
     if: github.event_name == 'pull_request'
@@ -552,6 +624,7 @@ jobs:
             asset-quality-out/assets/*.blend
           if-no-files-found: error
           retention-days: 14
+
 
 
 
