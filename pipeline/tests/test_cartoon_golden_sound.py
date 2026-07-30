@@ -31,6 +31,7 @@ class CartoonGoldenSoundTests(unittest.TestCase):
         )
         self.assertEqual(master["duration_seconds"], 38.8)
         self.assertEqual(len(self.contract["dialogue_cues"]), 18)
+        self.assertEqual(self.contract["mix"]["aac_true_peak_headroom_db"], 0.3)
         self.assertLess(min(cue["gain_db"] for cue in self.contract["dialogue_cues"]), -3.0)
         self.assertGreater(max(cue["gain_db"] for cue in self.contract["dialogue_cues"]), 0.0)
 

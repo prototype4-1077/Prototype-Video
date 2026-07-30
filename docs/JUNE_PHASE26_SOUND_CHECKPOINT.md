@@ -38,7 +38,7 @@ Twenty-six events cover all nine required Foley categories in the Golden Scene s
 
 Local delivery directory:
 
-`outputs/edit/phase26-sound/full-render-v1/`
+`outputs/edit/phase26-sound/full-render-v2/`
 
 | Gate | Result |
 | --- | ---: |
@@ -48,9 +48,9 @@ Local delivery directory:
 | Duration | 38.800000 s |
 | Audio | AAC, 48 kHz, stereo, 256 kb/s target |
 | Captions | `mov_text`, English, plus SRT sidecar |
-| Integrated loudness | −16.04 LUFS-I |
+| Integrated loudness | −16.06 LUFS-I master / −16.07 LUFS-I AAC |
 | Loudness range | 4.5 LU |
-| True peak | −0.99 dBTP |
+| True peak | −1.29 dBTP master / −1.28 dBTP AAC |
 | Picture stream SHA-256 | `353441e6995b76494853b55910174573777f35dee319b8613466bd67ffa28851` |
 | Picture re-encoded | no |
 | Full video/audio decode | pass |
@@ -58,8 +58,8 @@ Local delivery directory:
 Pinned local hashes:
 
 - Dialogue WAV: `2cb1fc40d7c03d726e6f7310dda957014ce2bc6c692df41b8ef5c26f0c6171ce`
-- Final MP4: `aadd685152053c318729d743b6f8747269d4aca3537c86273ba55c6a9c6e4fa8`
-- Report: `5a10d12a72fc9468afefc58f8e4e235dc238f70cc1c338e8e002d0240272b266`
+- Final MP4: `03d9104456ea89285d29f9d8a49ccac15cdc4ae3b7d3bd93d84ebbcee1060131`
+- Report: `b2478250670437da548eb9ac362673a9092a7a293aa5587693593f1d2563c8dc`
 - SRT: `0100c2c967673cc4ded334f00050c37a0a3f231362590401aa9bb05b6081239e`
 
 The waveform review shows clean phrase separation, intentional quiet beats, visible contact transients, and a tapered final porch hold. The spectrum shows continuous low-level porch air, intelligible speech-band energy, sparse chime harmonics, and no hard clipping shelf.
@@ -76,7 +76,7 @@ python3 -m pipeline.cartoon_golden_sound mix \
   --output-dir build/edit/june-golden-scene-sound-master
 ```
 
-The delivery gate fails on a missing or changed dialogue asset, incomplete Foley map, off-clock source, non-H.264/yuv420p picture, video re-encode, missing AAC/caption streams, frame or duration drift, loudness outside −16 ± 1 LUFS-I, LRA outside 4–8 LU, true peak above −1 dBTP (with 0.05 dB meter tolerance), or any decode error.
+The delivery gate fails on a missing or changed dialogue asset, incomplete Foley map, off-clock source, non-H.264/yuv420p picture, video re-encode, missing AAC/caption streams, frame or duration drift, loudness outside −16 ± 1 LUFS-I, LRA outside 4–8 LU, final AAC true peak above −1 dBTP, or any decode error. The PCM master reserves 0.3 dB of encoding headroom and the renderer meters the encoded AAC again before acceptance.
 
 ## Remaining limitation and next move
 

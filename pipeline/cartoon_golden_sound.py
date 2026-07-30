@@ -224,6 +224,8 @@ def load_sound_contract(
         raise ValueError("master loudness target must be -16 LUFS-I")
     if not math.isclose(float(mix.get("true_peak_dbtp_max", 0.0)), -1.0):
         raise ValueError("master true-peak ceiling must be -1 dBTP")
+    if not 0.1 <= float(mix.get("aac_true_peak_headroom_db", 0.0)) <= 1.0:
+        raise ValueError("AAC true-peak headroom must be between 0.1 and 1.0 dB")
     if [float(value) for value in mix.get("accepted_lra_lu", [])] != [4.0, 8.0]:
         raise ValueError("master LRA acceptance window must be 4-8 LU")
     delivery = contract.get("delivery") or {}
@@ -694,6 +696,9 @@ def _loudnorm_measure(ffmpeg: str, path: Path, *, target_i: float, target_lra: f
             "-nostats",
             "-i",
             str(path),
+            "-map",
+            "0:a:0",
+            "-vn",
             "-af",
             f"loudnorm=I={target_i}:LRA={target_lra}:TP={target_tp}:print_format=json",
             "-f",
@@ -801,11 +806,12 @@ def render_sound_master(
 
     target_i = float(mix["target_lufs_i"])
     target_lra = float(mix["target_lra_lu"])
-    target_tp = float(mix["true_peak_dbtp_max"])
-    first_pass = _loudnorm_measure(ffmpeg_bin, premaster_path, target_i=target_i, target_lra=target_lra, target_tp=target_tp)
+    delivery_tp = float(mix["true_peak_dbtp_max"])
+    master_tp = delivery_tp - float(mix["aac_true_peak_headroom_db"])
+    first_pass = _loudnorm_measure(ffmpeg_bin, premaster_path, target_i=target_i, target_lra=target_lra, target_tp=master_tp)
     master_path = stems_dir / "MIX_MASTER_STEREO.wav"
     second_filter = (
-        f"loudnorm=I={target_i}:LRA={target_lra}:TP={target_tp}:"
+        f"loudnorm=I={target_i}:LRA={target_lra}:TP={master_tp}:"
         f"measured_I={first_pass['input_i']}:measured_LRA={first_pass['input_lra']}:"
         f"measured_TP={first_pass['input_tp']}:measured_thresh={first_pass['input_thresh']}:"
         f"offset={first_pass['target_offset']}:linear=true:print_format=json,"
@@ -831,7 +837,7 @@ def render_sound_master(
         ]
     )
     stem_files["MIX_MASTER_STEREO"] = master_path
-    measured = _loudnorm_measure(ffmpeg_bin, master_path, target_i=target_i, target_lra=target_lra, target_tp=target_tp)
+    measured = _loudnorm_measure(ffmpeg_bin, master_path, target_i=target_i, target_lra=target_lra, target_tp=master_tp)
     measured_i = float(measured["input_i"])
     measured_lra = float(measured["input_lra"])
     measured_tp = float(measured["input_tp"])
@@ -840,8 +846,8 @@ def render_sound_master(
     accepted_lra = [float(value) for value in mix["accepted_lra_lu"]]
     if not accepted_lra[0] <= measured_lra <= accepted_lra[1]:
         raise RuntimeError(f"master LRA is outside 4-8 LU: {measured_lra}")
-    if measured_tp > target_tp + 0.05:
-        raise RuntimeError(f"master true peak exceeds -1 dBTP: {measured_tp}")
+    if measured_tp > master_tp + 0.05:
+        raise RuntimeError(f"master true peak consumed its AAC headroom: {measured_tp}")
 
     captions = output / "june-golden-scene-master.srt"
     write_captions(contract, captions)
@@ -918,6 +924,16 @@ def render_sound_master(
         or not math.isclose(float(probe["format"]["duration"]), 38.8, abs_tol=0.001)
     ):
         raise RuntimeError(f"final sound delivery failed its media contract: {probe}")
+    encoded = _loudnorm_measure(ffmpeg_bin, final_video, target_i=target_i, target_lra=target_lra, target_tp=delivery_tp)
+    encoded_i = float(encoded["input_i"])
+    encoded_lra = float(encoded["input_lra"])
+    encoded_tp = float(encoded["input_tp"])
+    if abs(encoded_i - target_i) > float(mix["target_lufs_tolerance"]):
+        raise RuntimeError(f"encoded AAC loudness is outside tolerance: {encoded_i} LUFS-I")
+    if not accepted_lra[0] <= encoded_lra <= accepted_lra[1]:
+        raise RuntimeError(f"encoded AAC LRA is outside 4-8 LU: {encoded_lra}")
+    if encoded_tp > delivery_tp + 0.02:
+        raise RuntimeError(f"encoded AAC true peak exceeds -1 dBTP: {encoded_tp}")
 
     stem_report = {}
     for stem_id, path in stem_files.items():
@@ -949,11 +965,20 @@ def render_sound_master(
         "captions": {"file": captions.name, "sha256": _sha256(captions), "cue_count": len(contract["dialogue_cues"]), "applied_after_picture_and_mix": True},
         "loudness": {
             "target_lufs_i": target_i,
+            "delivery_true_peak_dbtp_max": delivery_tp,
+            "aac_true_peak_headroom_db": float(mix["aac_true_peak_headroom_db"]),
+            "master_target_true_peak_dbtp": master_tp,
             "measured_lufs_i": measured_i,
             "measured_lra_lu": measured_lra,
             "measured_true_peak_dbtp": measured_tp,
             "first_pass": first_pass,
             "verification": measured,
+            "encoded_aac": {
+                "measured_lufs_i": encoded_i,
+                "measured_lra_lu": encoded_lra,
+                "measured_true_peak_dbtp": encoded_tp,
+                "verification": encoded,
+            },
         },
         "final": {
             "file": final_video.name,
