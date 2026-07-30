@@ -66,3 +66,18 @@ These are the remaining differences between a strong complete prototype and a fu
 ## Recommended next production step
 
 Treat this master as picture lock. The next highest-value pass is sound: create a coherent zero-cash porch ambience bed, author the required prop/body Foley to exact frame contacts, record or approve June's final voice, and master the mix to -16 LUFS-I with a -1 dBTP ceiling. In parallel, begin the reusable high-resolution June rig manifest—segmented head, eyes, mouth, hair, torso, arms, hands, clothing, props, shadows, and occlusion planes—so the next episode can replace held plate shots with continuous deformation without lowering the approved art finish.
+
+## Public evidence
+
+GitHub Actions run [30537074223](https://github.com/prototype4-1077/Prototype-Video/actions/runs/30537074223) independently passed the complete repository regression and picture pipeline in 6m44s. It rebuilt every prerequisite shot, assembled the exact master, verified H.264/yuv420p, 1920×1080, 30 fps, 1,164 frames, 38.800 seconds, silence, one-to-one rendered-frame consumption, no implicit retiming, full decode, encoded PSNR/detail, and artifact upload. The separate Blender v8 cheek-integrated nine-viseme gate also passed in 6m22s.
+
+Downloaded artifact `june-golden-scene-master-v1` was independently verified under `outputs/edit/phase25-public-run-30537074223/`:
+
+- Public video SHA-256: `e4d828cc31cb462df1529ecf501f6bfe43e0df37204884e2ead4968f708a51ef`
+- Public report SHA-256: `0f71d136c9db39eab05a56ce4555b84ed537d44db190f4631b185c3f71422d14`
+- H.264/yuv420p, 1920×1080, 30 fps, 1,164 frames, 38.800 seconds, intentionally silent
+- Full independent FFmpeg decode: pass
+- Public minimum/mean review PSNR: 39.216/41.987 dB
+- Public minimum encoded Laplacian variance: 126.163
+- Twenty-six review frames: present
+- Independently decoded 26-frame contact sheet: full-resolution visual inspection passed
