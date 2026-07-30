@@ -20,6 +20,13 @@ on:
       - "concept/style_frames/june_oxley_porch_hero_plate_v1.json"
       - "concept/style_frames/june_oxley_porch_hero_plate_v1.png"
       - "concept/style_frames/june_golden_scene_body_motion_v1.json"
+      - "concept/style_frames/june_oxley_porch_gesture_atlas_v1.json"
+      - "concept/style_frames/june_golden_scene_gesture_cues_v1.json"
+      - "concept/style_frames/june_oxley_porch_mug_lift_low_v1.png"
+      - "concept/style_frames/june_oxley_porch_mug_lift_mid_v1.png"
+      - "concept/style_frames/june_oxley_porch_mug_lift_v1.png"
+      - "concept/style_frames/june_oxley_porch_pencil_contact_v1.png"
+      - "concept/style_frames/june_oxley_porch_pencil_hold_v1.png"
       - "concept/style_frames/june_oxley_npr_look_v1.json"
       - "concept/style_frames/june_oxley_npr_look_v2.json"
       - "concept/style_frames/june_oxley_npr_look_v3.json"
@@ -119,7 +126,7 @@ jobs:
             build/edit/june-2p5d-lipsync-performance/frames/frame_0453.png
           if-no-files-found: error
           retention-days: 14
-      - name: Render full-HD June porch hero performance
+      - name: Render full-HD June porch gesture performance
         run: |
           python3 -m pipeline.cartoon_hero_scene \
             concept/style_frames/june_oxley_porch_hero_plate_v1.json \
@@ -128,8 +135,10 @@ jobs:
             --expression-atlas concept/style_frames/june_oxley_expression_atlas_v1.json \
             --expression-cues concept/style_frames/june_golden_scene_expression_cues_v1.json \
             --body-motion concept/style_frames/june_golden_scene_body_motion_v1.json \
+            --gesture-atlas concept/style_frames/june_oxley_porch_gesture_atlas_v1.json \
+            --gesture-cues concept/style_frames/june_golden_scene_gesture_cues_v1.json \
             --output-dir build/edit/june-hero-expression-performance
-      - name: Verify full-HD June porch hero contract
+      - name: Verify full-HD June porch gesture contract
         run: |
           set -euo pipefail
           video=build/edit/june-hero-expression-performance/june-hero-expression-performance.mp4
@@ -143,10 +152,10 @@ jobs:
           test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
           test "$(find build/edit/june-hero-expression-performance/review_frames -name 'frame_*.png' | wc -l)" = "9"
           sha256sum "$video"
-      - name: Upload full-HD June porch hero performance
+      - name: Upload full-HD June porch gesture performance
         uses: actions/upload-artifact@v4
         with:
-          name: june-hero-expression-performance-v1
+          name: june-hero-gesture-performance-v1
           path: |
             build/edit/june-hero-expression-performance/*.mp4
             build/edit/june-hero-expression-performance/*.json
@@ -215,6 +224,7 @@ jobs:
             asset-quality-out/assets/*.blend
           if-no-files-found: error
           retention-days: 14
+
 
 
 
