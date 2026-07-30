@@ -109,3 +109,18 @@ The seven-shot cartoon is not yet assembled. Final voice, room tone, porch ambie
 ## Recommended next production step
 
 Assemble the exact 1,164-frame, 38.8-second GS010–GS070 picture master from the accepted Phase 21, GS030, GS060, and GS070 material. The assembly contract should map every output frame to one pinned source frame, prohibit implicit retiming, enforce all shot durations, add transition and continuity review frames, preserve audio slots without inventing final sound, and emit one public artifact. Once picture lock passes, build the reusable high-resolution June layer/mesh rig for continuous future episodes rather than reopening this short's accepted poses.
+
+## Public evidence
+
+GitHub Actions run [30534953396](https://github.com/prototype4-1077/Prototype-Video/actions/runs/30534953396) independently passed the full repository regression, every existing full-HD shot gate, the exact GS070 render/decode/quality assertions, artifact upload, and the separate Blender v8 nine-viseme facial gate.
+
+Downloaded artifact `june-gs070-resolution-v1` was independently verified under `outputs/edit/phase24-public-run-30534953396/`:
+
+- Public video SHA-256: `41726dc3e631de5389370e711fff438062daa4426e9e402181c4c437bd20b83f`
+- Public report SHA-256: `d733fbfb09f3c6b9866c4ef021c1f60821da78802cf94412f66d7d080b442b42`
+- H.264/yuv420p, 1920×1080, 30 fps, 228 frames, 7.600 seconds, intentionally silent
+- Full independent FFmpeg decode: pass
+- Public minimum/mean review PSNR: 41.063/41.245 dB
+- Public minimum encoded Laplacian variance: 137.505
+- Body-locked/live-porch final hold: pass
+- Twelve exact encoded frames plus the full public contact sheet passed full-resolution visual inspection
