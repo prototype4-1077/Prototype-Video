@@ -61,7 +61,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a colossal enchanted house unfolding from inside a floating keyhole, rooms containing alternate versions of one moment, impossible staircases, glowing clocks, temporal echoes, gold mist, volumetric moonlight, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a colossal enchanted house unfolding from inside a floating keyhole, rooms containing alternate versions of one moment, impossible staircases, glowing clocks, temporal echoes, gold mist, volumetric moonlight, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 0.0,
+   "duration": 5.04,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_00.jpg",
+   "still_reference_signature": "0e7dcaa869eadfeb371f",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_00.mp4",
+   "clip_fingerprint": "4316fbf16006d230",
+   "hero_generated": true,
+   "hero_raw_signature": "992673e6c2fdfda0ecd7",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "My waking mind sees one room through the opening and declares it inspected the address.",
@@ -78,7 +105,25 @@
    "narrative_mode": "stock_ok",
    "query": "an eye looking through a brass keyhole at one room while a large floor plan remains hidden",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 5.04,
+   "duration": 4.86,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.009,
+    "active_region_ratio": 0.1679,
+    "frame_difference": 6.5284
+   },
+   "clip_fingerprint": "443a182548f0b66d",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_01.mp4",
+   "stock_id": 7701946,
+   "pexels_id": 7701946,
+   "stock_frame_url": "https://images.pexels.com/videos/7701946/pexels-photo-7701946.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-ringing-the-doorbell-and-looks-at-the-peephole-7701946/"
   },
   {
    "text": "Beside ordinary focus may be another view, reachable without sleep.",
@@ -95,7 +140,25 @@
    "narrative_mode": "stock_ok",
    "query": "a normal reading chair beside a nearly invisible doorway opening into a calm blue chamber",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 9.9,
+   "duration": 4.52,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.2124,
+    "active_region_ratio": 0.1943,
+    "frame_difference": 4.1966
+   },
+   "clip_fingerprint": "5e04410916173829",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_02.mp4",
+   "stock_id": 8861618,
+   "pexels_id": 8861618,
+   "stock_frame_url": "https://images.pexels.com/videos/8861618/pexels-photo-8861618.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-woman-looking-art-the-photo-in-a-picture-frame-8861618/"
   },
   {
    "text": "The map calls it A-one. I picture stepping behind the camera while the scene runs.",
@@ -113,7 +176,25 @@
    "query": "a film camera operating in a city street while a person steps behind it to adjust the lens",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "observer"
+   "human_role": "observer",
+   "start": 14.42,
+   "duration": 6.0,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.0589,
+    "active_region_ratio": 0.9761,
+    "frame_difference": 10.2805
+   },
+   "clip_fingerprint": "7a4d0f93b13a4b38",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_03.mp4",
+   "stock_id": 33684649,
+   "pexels_id": 33684649,
+   "stock_frame_url": "https://images.pexels.com/videos/33684649/pexels-photo-33684649.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/videographer-adjusting-camera-settings-indoors-33684649/"
   },
   {
    "text": "There, I can examine a thought instead of living inside its weather.",
@@ -130,7 +211,25 @@
    "narrative_mode": "stock_ok",
    "query": "a small storm cloud resting on an examination table beneath a warm adjustable lamp",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 20.42,
+   "duration": 3.98,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.0634,
+    "active_region_ratio": 0.9693,
+    "frame_difference": 7.9437
+   },
+   "clip_fingerprint": "35e2605d5725595f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_04.mp4",
+   "stock_id": 34771080,
+   "pexels_id": 34771080,
+   "stock_frame_url": "https://images.pexels.com/videos/34771080/vietnamese-house-vietnamese-interior-34771080.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/cozy-vietnamese-room-interior-design-34771080/"
   },
   {
    "text": "Fear may become a mountain, desire a road, and belief my father's empty coat.",
@@ -148,7 +247,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, an inner landscape where a black mountain, luminous road, and empty coat become living thoughts, aurora winds, drifting memory fragments, glowing contour lines, spectral particles, deep parallax, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, an inner landscape where a black mountain, luminous road, and empty coat become living thoughts, aurora winds, drifting memory fragments, glowing contour lines, spectral particles, deep parallax, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 24.4,
+   "duration": 7.28,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_05.jpg",
+   "still_reference_signature": "34b8b57e05490da6779e",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_05.mp4",
+   "clip_fingerprint": "693cf3b8e9bdf88f",
+   "hero_generated": true,
+   "hero_raw_signature": "5c235d1a4afb646c05fa",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "The scenery reveals the shape thought has been giving my life.",
@@ -165,7 +291,25 @@
    "narrative_mode": "stock_ok",
    "query": "a landscape blueprint folding over an ordinary apartment until their shapes align exactly",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 31.68,
+   "duration": 3.74,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.5393,
+    "active_region_ratio": 0.9951,
+    "frame_difference": 11.7318
+   },
+   "clip_fingerprint": "2a549f3e17e8944b",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_06.mp4",
+   "stock_id": 6615523,
+   "pexels_id": 6615523,
+   "stock_frame_url": "https://images.pexels.com/videos/6615523/pexels-photo-6615523.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/blue-plans-6615523/"
   },
   {
    "text": "Attention can turn toward the body like a lantern entering the cellar that warms the house.",
@@ -182,7 +326,25 @@
    "narrative_mode": "stock_ok",
    "query": "a lantern descending stone cellar steps beneath a house toward glowing pipes and a warm furnace",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 35.42,
+   "duration": 5.36,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.8595,
+    "active_region_ratio": 0.8958,
+    "frame_difference": 11.6805
+   },
+   "clip_fingerprint": "1f2b0f9739ae994c",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_07.mp4",
+   "stock_id": 35769381,
+   "pexels_id": 35769381,
+   "stock_frame_url": "https://images.pexels.com/videos/35769381/pexels-photo-35769381.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/glowing-lanterns-in-falling-snow-at-night-35769381/"
   },
   {
    "text": "This is metaphysical imagery, not diagnosis. Inner maps must never impersonate medical care.",
@@ -200,7 +362,25 @@
    "query": "a hand-drawn inner map placed beside a separate medical chart and stethoscope on a clean desk",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 40.78,
+   "duration": 6.81,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.0791,
+    "active_region_ratio": 0.9915,
+    "frame_difference": 25.423
+   },
+   "clip_fingerprint": "e14019d5e74e9620",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_08.mp4",
+   "stock_id": 7579336,
+   "pexels_id": 7579336,
+   "stock_frame_url": "https://images.pexels.com/videos/7579336/pexels-photo-7579336.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-female-doctor-smiling-while-looking-at-a-medical-chart-7579336/"
   },
   {
    "text": "A-one-a faces personal probabilities, futures waiting behind a decision like actors behind curtains.",
@@ -218,7 +398,25 @@
    "query": "several versions of one person waiting in different costumes behind a red theater curtain",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 47.59,
+   "duration": 7.61,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.199,
+    "active_region_ratio": 0.2187,
+    "frame_difference": 1.285
+   },
+   "clip_fingerprint": "d581b17f0806eb9d",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_09.mp4",
+   "stock_id": 7571419,
+   "pexels_id": 7571419,
+   "stock_frame_url": "https://images.pexels.com/videos/7571419/pexels-photo-7571419.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/woman-hiding-on-curtain-7571419/"
   },
   {
    "text": "No fixed future waits there. I see blueprints asking which building I keep supplying.",
@@ -237,7 +435,25 @@
    "motion_kind": "video",
    "motion_mode": "stock",
    "symbol_query": "magnifying lens moves across an ordinary landscape changing what is in focus daylight",
-   "symbol_family_source": "planner"
+   "symbol_family_source": "planner",
+   "start": 55.2,
+   "duration": 5.46,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.3364,
+    "active_region_ratio": 0.3784,
+    "frame_difference": 8.1725
+   },
+   "clip_fingerprint": "25201d057e2525e9",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_10.mp4",
+   "stock_id": 6980927,
+   "pexels_id": 6980927,
+   "stock_frame_url": "https://images.pexels.com/videos/6980927/pexels-photo-6980927.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/type-writer-in-a-magnifying-glass-6980927/"
   },
   {
    "text": "A-one-b widens toward collective probabilities, where private hopes become public weather.",
@@ -255,7 +471,25 @@
    "query": "thousands of small glass jars releasing light and shadow into one weather system above a city",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 60.66,
+   "duration": 6.58,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.2945,
+    "active_region_ratio": 0.9068,
+    "frame_difference": 13.0348
+   },
+   "clip_fingerprint": "b3661e3068a457f6",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_11.mp4",
+   "stock_id": 34687161,
+   "pexels_id": 34687161,
+   "stock_frame_url": "https://images.pexels.com/videos/34687161/city-helicopter-looking-down-overhead-34687161.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/stunning-aerial-view-of-urban-skyscrapers-34687161/"
   },
   {
    "text": "A city may dream its next century through people who believe they dream alone.",
@@ -274,7 +508,34 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "cinematic photoreal, a vast sleeping city projecting millions of dream rivers into one future skyline, aurora networks, spectral towers, cascading particles, atmospheric energy blooms, temporal waves, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 67.24,
+   "duration": 5.52,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_12.jpg",
+   "still_reference_signature": "a3facb792c7f4275cfb7",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_12.mp4",
+   "clip_fingerprint": "b08e868df4b331d8",
+   "hero_generated": true,
+   "hero_raw_signature": "db0827ba9ed16846cb3a",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "What history calls inevitable may begin as pressure passing quietly between rooms.",
@@ -291,7 +552,25 @@
    "narrative_mode": "stock_ok",
    "query": "an antique pressure gauge connected by thin pipes through many ordinary homes and public buildings",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 72.76,
+   "duration": 5.64,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.2716,
+    "active_region_ratio": 0.9963,
+    "frame_difference": 6.9096
+   },
+   "clip_fingerprint": "99304b3d35373e86",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_13.mp4",
+   "stock_id": 5637839,
+   "pexels_id": 5637839,
+   "stock_frame_url": "https://images.pexels.com/videos/5637839/athletes-car-racing-cars-carting-5637839.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-of-a-tire-pressure-gauge-5637839/"
   },
   {
    "text": "A-two approaches reincarnational material, where old emotions return in different costumes.",
@@ -308,7 +587,25 @@
    "narrative_mode": "stock_ok",
    "query": "one golden thread passing through a rotating wardrobe of garments from many historical periods",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 78.4,
+   "duration": 6.88,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.4019,
+    "active_region_ratio": 0.9958,
+    "frame_difference": 39.8992
+   },
+   "clip_fingerprint": "382d6ed838c8ddc0",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_14.mp4",
+   "stock_id": 3753696,
+   "pexels_id": 3753696,
+   "stock_frame_url": "https://images.pexels.com/videos/3753696/pexels-photo-3753696.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-woman-parting-the-clothes-in-the-clothes-line-3753696/"
   },
   {
    "text": "Memory is less a filing cabinet than perfume: invisible, immediate, already inside the room.",
@@ -325,7 +622,25 @@
    "narrative_mode": "stock_ok",
    "query": "an open perfume bottle releasing scenes from different eras into a modern room",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 85.28,
+   "duration": 7.03,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.2336,
+    "active_region_ratio": 0.4693,
+    "frame_difference": 10.907
+   },
+   "clip_fingerprint": "1beb9e30899604a0",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_15.mp4",
+   "stock_id": 4612264,
+   "pexels_id": 4612264,
+   "stock_frame_url": "https://images.pexels.com/videos/4612264/pexels-photo-4612264.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-is-touching-a-sink-with-a-bottle-of-soap-4612264/"
   },
   {
    "text": "A-three opens collective pasts, as if civilizations leave dreams beneath their streets.",
@@ -343,7 +658,25 @@
    "query": "a modern avenue shown in cutaway above layered ancient streets, archives, temples, and sleeping faces",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 92.31,
+   "duration": 6.68,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.7398,
+    "active_region_ratio": 0.715,
+    "frame_difference": 10.6081
+   },
+   "clip_fingerprint": "63eea23c9527f9cf",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_16.mp4",
+   "stock_id": 31387442,
+   "pexels_id": 31387442,
+   "stock_frame_url": "https://images.pexels.com/videos/31387442/ancient-temple-authentic-japanese-historic-japan-japanese-31387442.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/traditional-japanese-temple-gate-in-osaka-31387442/"
   },
   {
    "text": "A-four approaches ideas before names, where relationship exists before matter chooses edges.",
@@ -361,7 +694,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a boundless realm where pure relationships become luminous geometry before matter, orbiting polyhedra, liquid topology, translucent blueprints, radiant particle storms, flowing energy filaments, impossible depth, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a boundless realm where pure relationships become luminous geometry before matter, orbiting polyhedra, liquid topology, translucent blueprints, radiant particle storms, flowing energy filaments, impossible depth, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 98.99,
+   "duration": 7.81,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_17.jpg",
+   "still_reference_signature": "8bbbb2fb4396f01998e2",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_17.mp4",
+   "clip_fingerprint": "02450c71f16392f6",
+   "hero_generated": true,
+   "hero_raw_signature": "57fc72ae5d652ba64639",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "A bridge may begin as the promise that two shores need not remain strangers.",
@@ -378,7 +738,25 @@
    "narrative_mode": "stock_ok",
    "query": "two canyon shores connected first by a ribbon of light and then by forming steel beams",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 106.8,
+   "duration": 4.97,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 15.3056,
+    "active_region_ratio": 0.9997,
+    "frame_difference": 43.1862
+   },
+   "clip_fingerprint": "34e1eb32499da6cc",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_18.mp4",
+   "stock_id": 4216164,
+   "pexels_id": 4216164,
+   "stock_frame_url": "https://images.pexels.com/videos/4216164/pexels-photo-4216164.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-zoomed-in-shot-of-a-steel-structure-4216164/"
   },
   {
    "text": "A-five proposes a meeting place where personalities across time exchange impressions.",
@@ -395,7 +773,25 @@
    "narrative_mode": "stock_ok",
    "query": "a circular chamber with open doorways into many centuries surrounding one empty wooden table",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 111.77,
+   "duration": 6.49,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.2611,
+    "active_region_ratio": 0.9769,
+    "frame_difference": 9.5406
+   },
+   "clip_fingerprint": "bf877268d2fa9fce",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_19.mp4",
+   "stock_id": 6317867,
+   "pexels_id": 6317867,
+   "stock_frame_url": "https://images.pexels.com/videos/6317867/pexels-photo-6317867.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/woman-going-upstairs-6317867/"
   },
   {
    "text": "I imagine lives as musicians in separate centuries, passing one melody through time's walls.",
@@ -413,7 +809,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, an impossible orchestra of musicians from many centuries playing across floating rooms, one ribbon of visible music joining them, clock fragments, starlight waves, gold particles, luminous resonance rings, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, an impossible orchestra of musicians from many centuries playing across floating rooms, one ribbon of visible music joining them, clock fragments, starlight waves, gold particles, luminous resonance rings, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 118.26,
+   "duration": 6.8,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_20.jpg",
+   "still_reference_signature": "2db87bcc6f94ed1ba279",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_20.mp4",
+   "clip_fingerprint": "a7113e7b600d560c",
+   "hero_generated": true,
+   "hero_raw_signature": "3276cccf2577810bfc0e",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Consciousness may be the flashlight, while I am more than its beam.",
@@ -431,7 +854,25 @@
    "query": "a flashlight beam crossing a cavern while a vast transparent hand quietly redirects it",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 125.06,
+   "duration": 4.44,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.5199,
+    "active_region_ratio": 0.3713,
+    "frame_difference": 20.9837
+   },
+   "clip_fingerprint": "3654d50a839f9008",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_21.mp4",
+   "stock_id": 5473978,
+   "pexels_id": 5473978,
+   "stock_frame_url": "https://images.pexels.com/videos/5473978/pexels-photo-5473978.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-reaching-for-the-green-light-5473978/"
   },
   {
    "text": "An inner door matters only if I return carrying a better answer for the front door.",
@@ -448,7 +889,26 @@
    "narrative_mode": "stock_ok",
    "query": "a traveler returning through a luminous side door to answer an ordinary sunlit front entrance",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 129.5,
+   "duration": 4.84,
+   "motion_source": "coverr",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.9955,
+    "active_region_ratio": 0.9953,
+    "frame_difference": 41.6565
+   },
+   "clip_fingerprint": "7c19b8cf9adda7f2",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_22.mp4",
+   "stock_id": "coverr:coverr-through-a-cave-1474",
+   "stock_frame_url": "https://cdn.coverr.co/videos/coverr-through-a-cave-1474/thumbnail?width=640",
+   "stock_frame_url_checked": true,
+   "source_url": "https://coverr.co/videos/coverr-through-a-cave-1474",
+   "source_title": "Through A Cave",
+   "source_license": "Coverr Free Stock Video License (attribution required)"
   },
   {
    "text": "Otherwise, mystery becomes a room where I hide from the life seeking me.",
@@ -465,7 +925,25 @@
    "narrative_mode": "stock_ok",
    "query": "someone sitting in a beautiful hidden room while warm daylight waits beneath a closed practical door",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 134.34,
+   "duration": 5.3,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.9832,
+    "active_region_ratio": 0.8193,
+    "frame_difference": 8.5084
+   },
+   "clip_fingerprint": "c7791bec832f431a",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_23.mp4",
+   "stock_id": 7128355,
+   "pexels_id": 7128355,
+   "stock_frame_url": "https://images.pexels.com/videos/7128355/pexels-photo-7128355.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/young-women-having-a-conversation-7128355/"
   },
   {
    "text": "Before acting, I notice the pause: a tiny keyhole where more than one present breathes.",
@@ -484,7 +962,51 @@
    "query": "a hand paused above an ordinary door handle as several gentle dawns breathe through its keyhole",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 139.64,
+   "duration": 7.749,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.5349,
+    "active_region_ratio": 0.3724,
+    "frame_difference": 5.1348
+   },
+   "clip_fingerprint": "8579b88fd2ff8df1",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-rooms-inside-this-moment/clip_24.mp4",
+   "stock_id": 29038649,
+   "pexels_id": 29038649,
+   "stock_frame_url": "https://images.pexels.com/videos/29038649/decor-detail-door-knobs-doors-29038649.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/ornate-bronze-door-handle-close-up-29038649/"
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.97
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
