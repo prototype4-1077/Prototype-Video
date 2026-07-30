@@ -31,6 +31,9 @@ on:
       - "concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json"
       - "concept/style_frames/june-golden-scene-gs030-*"
       - "concept/style_frames/june_gs030_pose_*"
+      - "concept/style_frames/june_golden_scene_gs060_layered_pour_v1.json"
+      - "concept/style_frames/june-golden-scene-gs060-*"
+      - "concept/style_frames/june_gs060_pose_*"
       - "concept/style_frames/june_oxley_mug_held_insert_v1.png"
       - "concept/style_frames/june_oxley_ledger_insert_v1.png"
       - "concept/style_frames/june-golden-scene-gs020-style-target-v2.png"
@@ -254,6 +257,59 @@ jobs:
             build/edit/june-gs030-layered-stand/review_frames/*.png
           if-no-files-found: error
           retention-days: 14
+      - name: Render registered GS060 layered pour
+        run: |
+          python3 -m pipeline.cartoon_pour_layers \
+            concept/style_frames/june_golden_scene_gs060_layered_pour_v1.json \
+            --output-dir build/edit/june-gs060-layered-pour
+      - name: Verify registered GS060 layered pour contract
+        run: |
+          set -euo pipefail
+          video=build/edit/june-gs060-layered-pour/june-gs060-layered-pour.mp4
+          report=build/edit/june-gs060-layered-pour/june-gs060-layered-pour-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "258"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "8.600000"
+          test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+          test "$(find build/edit/june-gs060-layered-pour/review_frames -name 'frame_*.png' | wc -l)" = "22"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-gs060-layered-pour/june-gs060-layered-pour-report.json", encoding="utf-8"))
+          assert report["gate"] == "registered_pour_contact_and_liquid"
+          assert report["frame_count"] == 258
+          assert report["audio"]["included"] is False
+          assert report["optical_flow_used"] is False
+          assert report["cross_dissolve_used"] is False
+          assert report["paid_runtime_generation_used"] is False
+          assert report["maximum_mug_residual_px_source"] <= 0.01
+          assert report["grounded_pot_contact"]["maximum_residual_px_source"] <= 24.0
+          assert len(report["grounded_pot_contact"]["poses"]) == 3
+          assert report["liquid"]["reference_runtime_consumed"] is False
+          assert report["liquid"]["maximum_spout_start_error_px_source"] <= 0.01
+          assert report["liquid"]["maximum_rendered_spill_pixels_source"] == 0
+          assert report["liquid"]["landing_ellipse_value"] <= 0.8
+          assert report["visibility_audit"]["support_foot"] is False
+          assert "GS030" in report["visibility_audit"]["support_foot_remediation"]
+          assert report["encoded_quality"]["decoded_frame_count"] == 258
+          assert report["encoded_quality"]["minimum_psnr_db"] >= 38.0
+          assert report["encoded_quality"]["minimum_encoded_laplacian_variance"] >= 30.0
+          assert len(report["review_frames"]) == 22
+          PY
+          sha256sum "$video" "$report"
+      - name: Upload registered GS060 layered pour
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-gs060-layered-pour-v1
+          path: |
+            build/edit/june-gs060-layered-pour/*.mp4
+            build/edit/june-gs060-layered-pour/*.json
+            build/edit/june-gs060-layered-pour/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
 
   blender-v8-oral-mask-visemes:
     if: github.event_name == 'pull_request'
@@ -316,6 +372,7 @@ jobs:
             asset-quality-out/assets/*.blend
           if-no-files-found: error
           retention-days: 14
+
 
 
 
