@@ -61,6 +61,29 @@ The 17.7 LU loudness-range reading is intentionally informational for this disco
 
 The full local suite contains 383 tests. On the first sandboxed Windows pass, two legacy media tests were denied permission to spawn bare FFmpeg; rerunning those exact tests with local FFmpeg access passed. The only skip is the pre-existing optional OpenTimelineIO dependency.
 
+## Public reproduction
+
+GitHub Actions run [30546955844](https://github.com/prototype4-1077/Prototype-Video/actions/runs/30546955844) rebuilt the entire dependency chain on a clean Ubuntu runner. The 383-test picture/sound/performance job passed in 10m08s; the separate Blender v8 cheek-integrated nine-viseme gate passed in 6m11s.
+
+Downloaded artifact `june-performance-rig-proof-v1` was independently verified under `outputs/edit/phase27-public-run-30546955844/` with FFmpeg 8.1.2:
+
+| Public gate | Result |
+| --- | ---: |
+| Final MP4 SHA-256 | `8d044d7090aff602dac962e65f948972b21ab70e8a3745bfd75f8ccd7fa62e2a` |
+| Report SHA-256 | `a871afb73d5bb6d1b3b6daa5c81113fed5ee4bcd202f4c24a7193f4bd3cc672d` |
+| SRT SHA-256 | `1a54c87c3afd0a9b29c02c1cb5a8896f4568affce16181bc9812b0c7214d733e` |
+| Public picture-stream SHA-256 | `d4f961d4559b67f2a31d573ae4c689c4f1aa828af48bf2f8440c4d72899fa306` |
+| Dimensions / clock | 1920×1080 / 30 fps / 657 frames / 21.9 s |
+| Streams | H.264 yuv420p / AAC 48 kHz stereo / English `mov_text` |
+| Review frames | 27 / 27 |
+| Minimum encoded detail variance | 90.380 |
+| Independent AAC meter | −15.91 LUFS-I / 17.7 LU informational LRA / −1.31 dBTP |
+| Full independent video/audio decode | pass |
+| Picture preserved through final mux | yes |
+| Caption text versus local master | identical |
+
+Different FFmpeg/libx264 versions make the local and hosted container/packet hashes intentionally different. Decoded cross-platform picture comparison measures 58.086 dB average PSNR and 0.999144 SSIM, confirming that the clean runner reproduced the accepted visual sequence with only normal encoder-level variation.
+
 ## Reproduction
 
 The rig proof requires the accepted Phase 26 sound master and report, then runs:
