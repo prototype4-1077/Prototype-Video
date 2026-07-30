@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-29T13:28:03+00:00",
-  "records": 2614,
-  "with_assets": 127,
-  "asset_coverage": 0.0486,
+  "generated_at": "2026-07-30T06:48:34+00:00",
+  "records": 2685,
+  "with_assets": 131,
+  "asset_coverage": 0.0488,
   "reviewed": 69,
   "approved": 51,
   "revised": 18,
-  "reviewed_coverage": 0.0264,
+  "reviewed_coverage": 0.0257,
   "reviewed_feedback_tags": {
     "depth_parallax": 1,
     "synthetic_appearance": 1,
@@ -390,6 +390,18 @@
       ],
       "visual_function": "perspective_shift",
       "provider": "reference_conditioned_still",
+      "generation_route": "cinemagraph"
+    },
+    {
+      "slug": "june-oxley-folks-aint-roadblocks-tier1",
+      "scene_number": 3,
+      "asset_path": "build/june-oxley-folks-aint-roadblocks-tier1/hero_02_raw.jpg",
+      "risk_score": 5.0,
+      "automated_risk_tags": [
+        "anatomy_transform"
+      ],
+      "visual_function": "humor",
+      "provider": "pexels",
       "generation_route": "cinemagraph"
     },
     {
@@ -897,6 +909,36 @@
       "generation_route": "cinemagraph"
     },
     {
+      "slug": "june-oxley-folks-aint-roadblocks-tier1",
+      "scene_number": 1,
+      "asset_path": "build/june-oxley-folks-aint-roadblocks-tier1/hero_00_raw.jpg",
+      "risk_score": 0.0,
+      "automated_risk_tags": [],
+      "visual_function": "hook",
+      "provider": "pexels",
+      "generation_route": "cinemagraph"
+    },
+    {
+      "slug": "june-oxley-folks-aint-roadblocks-tier1",
+      "scene_number": 13,
+      "asset_path": "build/june-oxley-folks-aint-roadblocks-tier1/hero_12_raw.jpg",
+      "risk_score": 0.0,
+      "automated_risk_tags": [],
+      "visual_function": "belief_analysis",
+      "provider": null,
+      "generation_route": "cinemagraph"
+    },
+    {
+      "slug": "june-oxley-folks-aint-roadblocks-tier1",
+      "scene_number": 24,
+      "asset_path": "build/june-oxley-folks-aint-roadblocks-tier1/hero_23_raw.jpg",
+      "risk_score": 0.0,
+      "automated_risk_tags": [],
+      "visual_function": "invitation",
+      "provider": null,
+      "generation_route": "cinemagraph"
+    },
+    {
       "slug": "the-crossword",
       "scene_number": 3,
       "asset_path": "build/the-crossword/hero_02_raw.jpg",
@@ -1335,59 +1377,19 @@
       "visual_function": "perspective_shift",
       "provider": "reference_conditioned_still",
       "generation_route": "cinemagraph"
-    },
-    {
-      "slug": "the-save-file",
-      "scene_number": 20,
-      "asset_path": "build/the-save-file/hero_19_raw.jpg",
-      "risk_score": 0.0,
-      "automated_risk_tags": [],
-      "visual_function": "mechanism",
-      "provider": "reference_conditioned_still",
-      "generation_route": "cinemagraph"
-    },
-    {
-      "slug": "the-save-file",
-      "scene_number": 22,
-      "asset_path": "build/the-save-file/hero_21_raw.jpg",
-      "risk_score": 0.0,
-      "automated_risk_tags": [],
-      "visual_function": "perspective_shift",
-      "provider": "reference_conditioned_still",
-      "generation_route": "cinemagraph"
-    },
-    {
-      "slug": "the-save-file",
-      "scene_number": 24,
-      "asset_path": "build/the-save-file/hero_23_raw.jpg",
-      "risk_score": 0.0,
-      "automated_risk_tags": [],
-      "visual_function": "recursion",
-      "provider": "reference_conditioned_still",
-      "generation_route": "cinemagraph"
-    },
-    {
-      "slug": "the-ship",
-      "scene_number": 14,
-      "asset_path": "build/the-ship/hero_13_raw.jpg",
-      "risk_score": 0.0,
-      "automated_risk_tags": [],
-      "visual_function": "perspective_shift",
-      "provider": "reference_conditioned_still",
-      "generation_route": "cinemagraph"
     }
   ],
   "actions": [
     {
       "priority": "high",
       "category": "evidence_coverage",
-      "evidence": "Only 69 of 2614 scene records have a human decision (2.6%).",
+      "evidence": "Only 69 of 2685 scene records have a human decision (2.6%).",
       "action": "Do not convert automated risk frequency into house rules. Review the highest-risk asset-backed queue first."
     },
     {
       "priority": "medium",
       "category": "asset_coverage",
-      "evidence": "Only 127 of 2614 records retain a reviewable asset (4.9%).",
+      "evidence": "Only 131 of 2685 records retain a reviewable asset (4.9%).",
       "action": "Persist representative frames or durable release references for completed scenes so historical feedback remains inspectable."
     },
     {
