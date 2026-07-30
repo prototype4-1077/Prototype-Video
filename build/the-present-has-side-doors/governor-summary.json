@@ -1,30 +1,35 @@
 {
-  "finished_at": "2026-07-30T21:05:07+00:00",
+  "finished_at": "2026-07-30T21:34:14+00:00",
   "github_run_id": "30581823393",
-  "incidents": [
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "d7bce4dd53740d0d",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "governor stage=tts state=start soft=256s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=e46fd00cb0fa2366 error: tts failed: tts failed with http <n>: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"this request exceeds your quota of <n>. you have <n> credits remaining, while <n> credits are required for this request.\",\"status\":\"quota_exceeded\",\"request_id\":\"<id>\"}",
-      "stage": "build_pass"
-    },
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "e46fd00cb0fa2366",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "eback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts response = _call_elevenlabs(voice_id, payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"this request exceeds your quota of <n",
-      "stage": "tts"
-    }
-  ],
-  "last_message": "tts failed (unknown); retry budget 1 exhausted. fingerprint=e46fd00cb0fa2366. ERROR: tts failed: TTS failed with HTTP 401: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 121712. You have 1066 credits remaining, while 1578 credits are required for this request.\",\"status\":\"quota_exceeded\",\"request_id\":\"e31dd1fb71de0addb113f3a8bfe91836\"}}",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-present-has-side-doors/final_youtube.mp4",
   "mode": "recover",
-  "passes": 2,
+  "passes": 5,
   "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 28,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.05,
+      "idle_timeout_s": 48.15,
+      "sample_count": 22,
+      "soft_timeout_s": 48.15,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 80.38,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 271.15,
+      "source": "history"
+    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -32,6 +37,70 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.09,
+      "sample_count": 64,
+      "soft_timeout_s": 33.09,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 32.03,
+      "idle_timeout_s": 126.1,
+      "sample_count": 144,
+      "soft_timeout_s": 126.1,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 237.65,
+      "idle_timeout_s": 255.0,
+      "sample_count": 25,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 50.08,
+      "idle_timeout_s": 180.25,
+      "sample_count": 94,
+      "soft_timeout_s": 180.25,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 18.01,
+      "idle_timeout_s": 120.0,
+      "sample_count": 28,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 23.67,
+      "idle_timeout_s": 180.0,
+      "sample_count": 28,
+      "soft_timeout_s": 180.0,
+      "source": "history"
     },
     "tts": {
       "hard_timeout_s": 480.0,
@@ -42,47 +111,293 @@
       "source": "history"
     }
   },
-  "quality": {},
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-present-has-side-doors",
+    "checked_at": "2026-07-30T21:34:14+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 169.881,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "youtube": {
+        "avg_kbps": 7800,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.052,
+        "exists": true,
+        "expected_duration_s": 169.881,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-present-has-side-doors/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 169.9,
+          "bit_rate": 7800244.0,
+          "duration_s": 169.933333,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 169.933333,
+          "width": 1920
+        },
+        "size_bytes": 165690192,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
   "recommendations": [
     {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "e46fd00cb0fa2366",
-      "priority": "high",
-      "reason": "2 occurrence(s): eback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts response = _call_elevenlabs(voice_id, payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"this request exceeds your quota of <n",
-      "stage": "tts"
-    },
-    {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "d7bce4dd53740d0d",
-      "priority": "high",
-      "reason": "2 occurrence(s): governor stage=tts state=start soft=256s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=e46fd00cb0fa2366 error: tts failed: tts failed with http <n>: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"this request exceeds your quota of <n>. you have <n> credits remaining, while <n> credits are required for this request.\",\"status\":\"quota_exceeded\",\"request_id\":\"<id>\"}",
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (1290.8s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "ed826f786b924d289e838a128d0c0623",
+  "run_id": "ee8bf5113ed84ec8a72e9c2af06c527c",
   "schema_version": 1,
   "slug": "the-present-has-side-doors",
   "stages": {
-    "build_pass": {
-      "attempts": 2,
-      "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 4.002
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.007,
+      "p95_success_s": 1.007,
+      "success_durations_s": [
+        1.007
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.007
+    },
+    "assemble": {
+      "attempts": 25,
+      "failures": 0,
+      "p50_success_s": 32.164,
+      "p95_success_s": 40.01,
+      "success_durations_s": [
+        34.166,
+        33.152,
+        31.178,
+        32.171,
+        40.21,
+        24.115,
+        29.157,
+        33.22,
+        38.204,
+        28.146,
+        33.179,
+        30.155,
+        32.164,
+        34.167,
+        28.137,
+        24.125,
+        34.159,
+        39.212,
+        29.156,
+        37.199,
+        27.132,
+        26.122,
+        26.149,
+        29.169,
+        40.228
+      ],
+      "successes": 25,
+      "timeouts": 0,
+      "total_duration_s": 794.172
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 135.139,
+      "p95_success_s": 738.442,
+      "success_durations_s": [
+        55.023,
+        19.012,
+        135.139,
+        211.37,
+        870.21
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 1290.754
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.007,
+      "success_durations_s": [
+        1.006,
+        1.007
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.013
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 6.517,
+      "p95_success_s": 17.268,
+      "success_durations_s": [
+        1.007,
+        6.015,
+        19.077,
+        7.019
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 33.118
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 134.132,
+      "p95_success_s": 134.132,
+      "success_durations_s": [
+        134.132
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 134.132
+    },
+    "hero": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 42.068,
+      "p95_success_s": 49.082,
+      "success_durations_s": [
+        19.047,
+        40.07,
+        50.082,
+        42.068,
+        45.083
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 196.35
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 13.028,
+      "p95_success_s": 13.028,
+      "success_durations_s": [
+        13.028
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 13.028
+    },
+    "probe": {
+      "attempts": 26,
+      "failures": 0,
+      "p50_success_s": 1.007,
+      "p95_success_s": 1.008,
+      "success_durations_s": [
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.008,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.008
+      ],
+      "successes": 26,
+      "timeouts": 0,
+      "total_duration_s": 26.184
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 21.085,
+      "p95_success_s": 21.085,
+      "success_durations_s": [
+        21.085
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 21.085
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 16.013,
+      "p95_success_s": 16.013,
+      "success_durations_s": [
+        16.013
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 16.013
     },
     "tts": {
-      "attempts": 2,
-      "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 54.024,
+      "p95_success_s": 54.024,
+      "success_durations_s": [
+        54.024
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 2.003
+      "total_duration_s": 54.024
     }
   },
-  "status": "failed"
+  "status": "done"
 }

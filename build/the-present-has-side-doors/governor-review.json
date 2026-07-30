@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-30T21:05:07+00:00",
+  "generated_at": "2026-07-30T21:34:14+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "long_black_interval": 2,
@@ -9,18 +9,10 @@
     {
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
-      "evidence": "4 occurrence(s) across 2 build(s)",
+      "evidence": "2 occurrence(s) across 1 build(s)",
       "fingerprint": "d7bce4dd53740d0d",
-      "priority": "high",
+      "priority": "medium",
       "stage": "build_pass"
-    },
-    {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "4 occurrence(s) across 2 build(s)",
-      "fingerprint": "e46fd00cb0fa2366",
-      "priority": "high",
-      "stage": "tts"
     },
     {
       "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
@@ -31,37 +23,32 @@
       "stage": "build_pass"
     },
     {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "e46fd00cb0fa2366",
+      "priority": "medium",
+      "stage": "tts"
+    },
+    {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=62.6s, p95=1174.4s",
+      "evidence": "p50=63.0s, p95=1165.8s",
       "priority": "medium",
       "stage": "build_pass"
     }
   ],
   "recurring_incidents": [
     {
-      "count": 4,
+      "count": 2,
       "failure_class": "unknown",
       "fingerprint": "d7bce4dd53740d0d",
       "kind": "failure",
       "normalized_error": "governor stage=tts state=start soft=256s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=e46fd00cb0fa2366 error: tts failed: tts failed with http <n>: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"this request exceeds your quota of <n>. you have <n> credits remaining, while <n> credits are required for this request.\",\"status\":\"quota_exceeded\",\"request_id\":\"<id>\"}",
       "slugs": [
-        "the-present-has-side-doors",
         "the-universe-behind-every-no"
       ],
       "stage": "build_pass"
-    },
-    {
-      "count": 4,
-      "failure_class": "unknown",
-      "fingerprint": "e46fd00cb0fa2366",
-      "kind": "failure",
-      "normalized_error": "eback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts response = _call_elevenlabs(voice_id, payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"this request exceeds your quota of <n",
-      "slugs": [
-        "the-present-has-side-doors",
-        "the-universe-behind-every-no"
-      ],
-      "stage": "tts"
     },
     {
       "count": 2,
@@ -74,6 +61,17 @@
         "beliefs-are-software-updates"
       ],
       "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "e46fd00cb0fa2366",
+      "kind": "failure",
+      "normalized_error": "eback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts response = _call_elevenlabs(voice_id, payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"this request exceeds your quota of <n",
+      "slugs": [
+        "the-universe-behind-every-no"
+      ],
+      "stage": "tts"
     },
     {
       "count": 1,
@@ -146,164 +144,164 @@
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 28,
+      "attempts": 29,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.002,
       "p95_success_s": 1.003,
-      "sample_count": 28,
-      "successes": 28,
+      "sample_count": 29,
+      "successes": 29,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 28.059
+      "total_duration_s": 29.061
     },
     "altsheet": {
-      "attempts": 22,
+      "attempts": 23,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.011,
       "p95_success_s": 6.05,
-      "sample_count": 22,
-      "successes": 22,
+      "sample_count": 23,
+      "successes": 23,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 62.42
+      "total_duration_s": 63.427
     },
     "assemble": {
-      "attempts": 811,
+      "attempts": 836,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 42.295,
-      "p95_success_s": 84.829,
-      "sample_count": 811,
-      "successes": 811,
+      "p50_success_s": 42.124,
+      "p95_success_s": 83.907,
+      "sample_count": 836,
+      "successes": 836,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 37512.85
+      "total_duration_s": 38307.022
     },
     "build_pass": {
-      "attempts": 158,
-      "failure_rate": 0.0759,
-      "failures": 12,
-      "p50_success_s": 62.552,
-      "p95_success_s": 1174.394,
-      "sample_count": 146,
-      "successes": 146,
-      "timeout_rate": 0.0506,
+      "attempts": 161,
+      "failure_rate": 0.0621,
+      "failures": 10,
+      "p50_success_s": 63.028,
+      "p95_success_s": 1165.795,
+      "sample_count": 151,
+      "successes": 151,
+      "timeout_rate": 0.0497,
       "timeouts": 8,
-      "total_duration_s": 49282.043
+      "total_duration_s": 50568.795
     },
     "credits": {
-      "attempts": 64,
+      "attempts": 66,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.007,
       "p95_success_s": 1.03,
-      "sample_count": 64,
-      "successes": 64,
+      "sample_count": 66,
+      "successes": 66,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 64.603
+      "total_duration_s": 66.616
     },
     "ffmpeg": {
-      "attempts": 144,
+      "attempts": 148,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 6.012,
-      "p95_success_s": 32.032,
-      "sample_count": 144,
-      "successes": 144,
+      "p50_success_s": 6.013,
+      "p95_success_s": 31.813,
+      "sample_count": 148,
+      "successes": 148,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1346.388
+      "total_duration_s": 1379.506
     },
     "footage": {
-      "attempts": 25,
+      "attempts": 26,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 155.247,
-      "p95_success_s": 237.655,
-      "sample_count": 25,
-      "successes": 25,
+      "p50_success_s": 155.237,
+      "p95_success_s": 237.509,
+      "sample_count": 26,
+      "successes": 26,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 3472.724
+      "total_duration_s": 3606.856
     },
     "hero": {
-      "attempts": 94,
+      "attempts": 99,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 23.064,
+      "p50_success_s": 24.031,
       "p95_success_s": 50.083,
-      "sample_count": 94,
-      "successes": 94,
+      "sample_count": 99,
+      "successes": 99,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2646.321
+      "total_duration_s": 2842.671
     },
     "prep": {
-      "attempts": 28,
+      "attempts": 29,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 13.523,
-      "p95_success_s": 18.008,
-      "sample_count": 28,
-      "successes": 28,
+      "p50_success_s": 13.028,
+      "p95_success_s": 17.857,
+      "sample_count": 29,
+      "successes": 29,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 360.948
+      "total_duration_s": 373.976
     },
     "probe": {
-      "attempts": 855,
+      "attempts": 881,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 1.01,
+      "p50_success_s": 1.009,
       "p95_success_s": 1.015,
-      "sample_count": 855,
-      "successes": 855,
+      "sample_count": 881,
+      "successes": 881,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 863.662
+      "total_duration_s": 889.846
     },
     "quality": {
-      "attempts": 28,
+      "attempts": 29,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 30.745,
-      "p95_success_s": 68.074,
-      "sample_count": 28,
-      "successes": 28,
+      "p50_success_s": 29.277,
+      "p95_success_s": 68.033,
+      "sample_count": 29,
+      "successes": 29,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 995.899
+      "total_duration_s": 1016.984
     },
     "transcribe": {
-      "attempts": 28,
+      "attempts": 29,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 19.012,
-      "p95_success_s": 23.671,
-      "sample_count": 28,
-      "successes": 28,
+      "p50_success_s": 19.011,
+      "p95_success_s": 23.621,
+      "sample_count": 29,
+      "successes": 29,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 503.429
+      "total_duration_s": 519.442
     },
     "tts": {
-      "attempts": 32,
-      "failure_rate": 0.125,
-      "failures": 4,
-      "p50_success_s": 56.525,
-      "p95_success_s": 75.352,
-      "sample_count": 28,
-      "successes": 28,
+      "attempts": 31,
+      "failure_rate": 0.0645,
+      "failures": 2,
+      "p50_success_s": 56.023,
+      "p95_success_s": 75.253,
+      "sample_count": 29,
+      "successes": 29,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1557.862
+      "total_duration_s": 1609.883
     }
   },
   "statuses": {
-    "done": 28,
-    "failed": 2
+    "done": 29,
+    "failed": 1
   }
 }
