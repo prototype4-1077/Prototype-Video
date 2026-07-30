@@ -61,7 +61,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a colossal seed splitting beneath transparent earth, roots becoming luminous roads into parallel worlds, glowing soil layers, temporal ripples, gold particles, volumetric light, cinematic magical realism, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a colossal seed splitting beneath transparent earth, roots becoming luminous roads into parallel worlds, glowing soil layers, temporal ripples, gold particles, volumetric light, cinematic magical realism, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 0.0,
+   "duration": 8.18,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_00.jpg",
+   "still_reference_signature": "7aeb6d2f9805c44956c3",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_00.mp4",
+   "clip_fingerprint": "60b69891b96b9eb7",
+   "hero_generated": true,
+   "hero_raw_signature": "7c1fec140f461a43f84e",
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Above, one stem appears. Below, roots keep choosing darkness in a hundred directions.",
@@ -78,7 +105,25 @@
    "narrative_mode": "stock_ok",
    "query": "a green stem above soil with an intricate network of roots branching through dark glass chambers",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 8.18,
+   "duration": 7.1,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.9209,
+    "active_region_ratio": 0.9965,
+    "frame_difference": 43.0452
+   },
+   "clip_fingerprint": "1935d5a90c4def82",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_01.mp4",
+   "stock_id": 38390291,
+   "pexels_id": 38390291,
+   "stock_frame_url": "https://images.pexels.com/videos/38390291/absorption-agriculture-bioactive-compounds-biology-education-38390291.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-of-intricate-root-system-structure-38390291/"
   },
   {
    "text": "A decision selects my experience, while rejected possibilities may continue as probable lives.",
@@ -96,7 +141,25 @@
    "query": "a hand selecting one photograph while many photographs develop themselves in separate trays",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 15.28,
+   "duration": 7.74,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.6619,
+    "active_region_ratio": 0.7485,
+    "frame_difference": 32.1797
+   },
+   "clip_fingerprint": "ffdaca4507451dff",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_02.mp4",
+   "stock_id": 10276474,
+   "pexels_id": 10276474,
+   "stock_frame_url": "https://images.pexels.com/videos/10276474/acute-adolescent-adult-art-10276474.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-man-looking-at-the-negative-film-strip-from-the-table-10276474/"
   },
   {
    "text": "The call I avoid may become a door another version of me still opens.",
@@ -113,7 +176,25 @@
    "narrative_mode": "stock_ok",
    "query": "an unanswered telephone beside a closed apartment door whose shadow opens into another home",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 23.02,
+   "duration": 5.28,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.7118,
+    "active_region_ratio": 0.7204,
+    "frame_difference": 5.0489
+   },
+   "clip_fingerprint": "57cec62acbdb7021",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_03.mp4",
+   "stock_id": 8049623,
+   "pexels_id": 8049623,
+   "stock_frame_url": "https://images.pexels.com/videos/8049623/pexels-photo-8049623.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/shadow-of-a-person-walking-outdoors-8049623/"
   },
   {
    "text": "I experience one answer because attention is a flashlight, not because the house vanished.",
@@ -130,7 +211,25 @@
    "narrative_mode": "stock_ok",
    "query": "a flashlight illuminating one furnished room while many connected rooms remain visible in blue darkness",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 28.3,
+   "duration": 6.9,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.3151,
+    "active_region_ratio": 0.2341,
+    "frame_difference": 7.6619
+   },
+   "clip_fingerprint": "073495349f54ac4a",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_04.mp4",
+   "stock_id": 18359613,
+   "pexels_id": 18359613,
+   "stock_frame_url": "https://images.pexels.com/videos/18359613/agonizing-anguish-artificial-light-celebrating-halloween-18359613.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-is-standing-in-the-dark-with-a-flashlight-18359613/"
   },
   {
    "text": "The larger self is a station holding departures that never meet on my clock.",
@@ -147,7 +246,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, an impossible celestial railway station inside a transparent human silhouette, countless glowing trains departing into different eras, floating clocks, aurora rails, deep parallax, radiant mist, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, an impossible celestial railway station inside a transparent human silhouette, countless glowing trains departing into different eras, floating clocks, aurora rails, deep parallax, radiant mist, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 35.2,
+   "duration": 5.74,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_05.jpg",
+   "still_reference_signature": "e2569e0afd6e05cb25a2",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_05.mp4",
+   "clip_fingerprint": "26364c15a5644074",
+   "hero_generated": true,
+   "hero_raw_signature": "64a0dbfb067dca528c14",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Those selves are not failed drafts. They are sentences written from the same first word.",
@@ -164,7 +290,25 @@
    "narrative_mode": "stock_ok",
    "query": "a typewriter producing several pages that continue writing different stories across one long desk",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 40.94,
+   "duration": 6.94,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.8963,
+    "active_region_ratio": 0.6891,
+    "frame_difference": 16.5288
+   },
+   "clip_fingerprint": "4e8af923b8f54f64",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_06.mp4",
+   "stock_id": 27379077,
+   "pexels_id": 27379077,
+   "stock_frame_url": "https://images.pexels.com/videos/27379077/book-books-fujifilm-reading-27379077.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-typewriter-sits-on-a-table-with-a-book-and-glasses-27379077/"
   },
   {
    "text": "I may feel them as familiarity, a fingerprinted dream, or grief for an unlived life.",
@@ -181,7 +325,25 @@
    "narrative_mode": "stock_ok",
    "query": "a bedside table holding a dream journal, an unfamiliar key, and a photograph with a blank figure",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 47.88,
+   "duration": 7.56,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.2002,
+    "active_region_ratio": 0.9868,
+    "frame_difference": 10.1541
+   },
+   "clip_fingerprint": "a118f6c885be401e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_07.mp4",
+   "stock_id": 6443874,
+   "pexels_id": 6443874,
+   "stock_frame_url": "https://images.pexels.com/videos/6443874/pexels-photo-6443874.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-holding-smartphone-6443874/"
   },
   {
    "text": "Time is not a river. It is rain striking many windows at once.",
@@ -198,7 +360,25 @@
    "narrative_mode": "stock_ok",
    "query": "rain falling simultaneously across windows showing different seasons and different cities",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 55.44,
+   "duration": 6.88,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.8161,
+    "active_region_ratio": 0.4231,
+    "frame_difference": 7.5229
+   },
+   "clip_fingerprint": "51bbbf4c7e811b2a",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_08.mp4",
+   "stock_id": 10651122,
+   "pexels_id": 10651122,
+   "stock_frame_url": "https://images.pexels.com/videos/10651122/pexels-photo-10651122.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/time-lapse-of-raindrops-falling-on-a-window-glass-10651122/"
   },
   {
    "text": "Growth is not a ladder toward perfection. A ladder knows only one direction.",
@@ -215,7 +395,25 @@
    "narrative_mode": "stock_ok",
    "query": "a narrow ladder ending at a ceiling beside a vast compass rose opening across the floor",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 62.32,
+   "duration": 5.7,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.2076,
+    "active_region_ratio": 0.1073,
+    "frame_difference": 2.1516
+   },
+   "clip_fingerprint": "25c9604973f27789",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_09.mp4",
+   "stock_id": 4560735,
+   "pexels_id": 4560735,
+   "stock_frame_url": "https://images.pexels.com/videos/4560735/pexels-photo-4560735.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-woman-going-down-the-spiral-staircase-4560735/"
   },
   {
    "text": "I imagine the soul as a sun learning itself through every ray, not escaping the ground.",
@@ -233,7 +431,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a living sun at the center of an infinite human mandala, each ray becoming a complete world, solar filaments, rotating halos, nebula dust, luminous shockwaves, impossible cosmic scale, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a living sun at the center of an infinite human mandala, each ray becoming a complete world, solar filaments, rotating halos, nebula dust, luminous shockwaves, impossible cosmic scale, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 68.02,
+   "duration": 7.56,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_10.jpg",
+   "still_reference_signature": "a904a2eef183b0635747",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_10.mp4",
+   "clip_fingerprint": "590023846b00f719",
+   "hero_generated": true,
+   "hero_raw_signature": "6ac2f6cb6bb7fb4fcbae",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "That changes good and evil. I no longer picture eternal armies owning half the sky.",
@@ -251,7 +476,25 @@
    "query": "two opposing armies painted on theater curtains as the curtains are drawn aside to reveal one sky",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 75.58,
+   "duration": 6.58,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.1379,
+    "active_region_ratio": 0.6229,
+    "frame_difference": 8.5965
+   },
+   "clip_fingerprint": "a80ea60a7c28cc31",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_11.mp4",
+   "stock_id": 9477459,
+   "pexels_id": 9477459,
+   "stock_frame_url": "https://images.pexels.com/videos/9477459/pexels-photo-9477459.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/people-walking-behind-a-white-curtain-9477459/"
   },
   {
    "text": "Pain is not imaginary. Destruction has no separate well of life to drink from.",
@@ -268,7 +511,25 @@
    "narrative_mode": "stock_ok",
    "query": "a dry black stone well beside a flowing communal spring surrounded by worn drinking cups",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 82.16,
+   "duration": 7.28,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.5699,
+    "active_region_ratio": 0.5319,
+    "frame_difference": 11.2068
+   },
+   "clip_fingerprint": "2bfd4d422d8da6df",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_12.mp4",
+   "stock_id": 33660349,
+   "pexels_id": 33660349,
+   "stock_frame_url": "https://images.pexels.com/videos/33660349/authentic-texture-calm-ambience-clear-water-drinking-water-collection-33660349.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/tranquil-outdoor-spring-with-flowing-water-33660349/"
   },
   {
    "text": "It borrows creative power, then teaches it to forget the living web.",
@@ -285,7 +546,25 @@
    "narrative_mode": "stock_ok",
    "query": "a black river severing itself from a colorful living delta seen from high above",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 89.44,
+   "duration": 5.84,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.5041,
+    "active_region_ratio": 0.993,
+    "frame_difference": 13.8989
+   },
+   "clip_fingerprint": "65eeda582049764e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_13.mp4",
+   "stock_id": 4694209,
+   "pexels_id": 4694209,
+   "stock_frame_url": "https://images.pexels.com/videos/4694209/pexels-photo-4694209.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/aeriiew-of-green-plants-on-a-body-of-water-4694209/"
   },
   {
    "text": "A shadow owns no lamp, but still covers a face. Consequences remain real.",
@@ -302,7 +581,25 @@
    "narrative_mode": "stock_ok",
    "query": "a heavy moving shadow crossing a sunlit marble statue while an open lamp stands beyond it",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 95.28,
+   "duration": 7.5,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.3133,
+    "active_region_ratio": 0.9909,
+    "frame_difference": 8.296
+   },
+   "clip_fingerprint": "8ee7772245d1731e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_14.mp4",
+   "stock_id": 31808983,
+   "pexels_id": 31808983,
+   "stock_frame_url": "https://images.pexels.com/videos/31808983/ancient-roman-architecture-ancient-rome-archaelogy-archaeological-museum-31808983.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/exploring-ancient-roman-statues-in-museum-setting-31808983/"
   },
   {
    "text": "Responsibility matters. Philosophy becomes an escape hatch when it refuses to kneel beside suffering.",
@@ -319,7 +616,25 @@
    "narrative_mode": "stock_ok",
    "query": "an ornate golden escape hatch beside a plain figure kneeling to help someone on a stone floor",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 102.78,
+   "duration": 7.7,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.21,
+    "active_region_ratio": 0.0608,
+    "frame_difference": 5.3674
+   },
+   "clip_fingerprint": "7035d623896017c0",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_15.mp4",
+   "stock_id": 8720494,
+   "pexels_id": 8720494,
+   "stock_frame_url": "https://images.pexels.com/videos/8720494/pexels-photo-8720494.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/back-view-of-a-man-kneeling-inside-ancient-ruins-8720494/"
   },
   {
    "text": "Fear is a locksmith who builds a prison, hides the key, then calls the lock proof of danger.",
@@ -337,7 +652,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, an enormous mirror prison assembling around a solitary locksmith, keys orbiting beyond the glass, blue fire, suspended shards, moving shadows, sharp volumetric rays, showers of sparks, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, an enormous mirror prison assembling around a solitary locksmith, keys orbiting beyond the glass, blue fire, suspended shards, moving shadows, sharp volumetric rays, showers of sparks, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 110.48,
+   "duration": 8.28,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_16.jpg",
+   "still_reference_signature": "1ecc671aff1757bd4c4d",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_16.mp4",
+   "clip_fingerprint": "ad9e9831fa9def2e",
+   "hero_generated": true,
+   "hero_raw_signature": "52a6c25e4feb55ae4607",
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Religious images can map inner weather: thunder given a face, mercy given hands.",
@@ -355,7 +697,25 @@
    "query": "an old illuminated map where storm clouds become a carved face and warm rain becomes open hands",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 118.76,
+   "duration": 6.98,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.0092,
+    "active_region_ratio": 0.4365,
+    "frame_difference": 2.0002
+   },
+   "clip_fingerprint": "164e509abc837b65",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_17.mp4",
+   "stock_id": 34011694,
+   "pexels_id": 34011694,
+   "stock_frame_url": "https://images.pexels.com/videos/34011694/pexels-photo-34011694.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/dramatic-dark-sky-with-illuminated-clouds-34011694/"
   },
   {
    "text": "A devil can be terror wearing a mask; a savior, wholeness wearing a body the heart recognizes.",
@@ -372,7 +732,25 @@
    "narrative_mode": "stock_ok",
    "query": "a dark ceremonial mask and a simple white garment resting on opposite sides of one dressing mirror",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 125.74,
+   "duration": 8.68,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.3767,
+    "active_region_ratio": 0.9894,
+    "frame_difference": 18.9016
+   },
+   "clip_fingerprint": "032f4726c41723a5",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_18.mp4",
+   "stock_id": 6961952,
+   "pexels_id": 6961952,
+   "stock_frame_url": "https://images.pexels.com/videos/6961952/pexels-photo-6961952.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/woman-wearing-a-witch-hat-6961952/"
   },
   {
    "text": "The symbol is a cup, not the water. Each century lifts a different cup.",
@@ -389,7 +767,25 @@
    "narrative_mode": "stock_ok",
    "query": "cups from many historical periods arranged around one clear spring at dawn",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 134.42,
+   "duration": 7.22,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.5077,
+    "active_region_ratio": 0.8944,
+    "frame_difference": 5.8038
+   },
+   "clip_fingerprint": "845e2053da0e2b9a",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_19.mp4",
+   "stock_id": 34988502,
+   "pexels_id": 34988502,
+   "stock_frame_url": "https://images.pexels.com/videos/34988502/pexels-photo-34988502.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/serene-aquatic-scene-with-floating-leaves-34988502/"
   },
   {
    "text": "Trouble begins when I worship the cup and forget I was thirsty.",
@@ -406,7 +802,25 @@
    "narrative_mode": "stock_ok",
    "query": "a glass display case protecting an ornate empty cup while fresh water flows outside",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 141.64,
+   "duration": 4.96,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.3444,
+    "active_region_ratio": 0.628,
+    "frame_difference": 10.1484
+   },
+   "clip_fingerprint": "89832f023852f954",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_20.mp4",
+   "stock_id": 10558760,
+   "pexels_id": 10558760,
+   "stock_frame_url": "https://images.pexels.com/videos/10558760/bubble-clean-clear-cold-10558760.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-of-water-being-poured-into-a-glass-10558760/"
   },
   {
    "text": "Morality is not spotless obedience. It is power remembering nothing exists alone.",
@@ -424,7 +838,25 @@
    "query": "many separate colored threads joining into a strong bridge over a deep canyon",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 146.6,
+   "duration": 7.24,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.1675,
+    "active_region_ratio": 0.9915,
+    "frame_difference": 23.0152
+   },
+   "clip_fingerprint": "cf2b1714e6c5a8f5",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_21.mp4",
+   "stock_id": 30024498,
+   "pexels_id": 30024498,
+   "stock_frame_url": "https://images.pexels.com/videos/30024498/architecture-bridge-construction-desert-30024498.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/stunning-aerial-view-of-himalayan-bridge-30024498/"
   },
   {
    "text": "Every thought votes. Every act builds. Together they rehearse one world until it feels inevitable.",
@@ -443,7 +875,34 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "cinematic photoreal, a cosmic city being built from countless glowing ballots and tiny human choices, streets branching into universes, golden scaffolds, aurora currents, temporal waves, intricate particle storms, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
-   "human_role": "relationship"
+   "human_role": "relationship",
+   "start": 153.84,
+   "duration": 9.54,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_22.jpg",
+   "still_reference_signature": "25062f3273f3b494e0b1",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_22.mp4",
+   "clip_fingerprint": "6a7854dfbad54bb5",
+   "hero_generated": true,
+   "hero_raw_signature": "e5b4d0fb6314b4ecd495",
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "I am not responsible for every storm, only the weather my hands bring inside.",
@@ -461,7 +920,25 @@
    "query": "two hands opening curtains in a storm-dark room as clean morning light enters",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 163.38,
+   "duration": 6.16,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.8397,
+    "active_region_ratio": 0.4616,
+    "frame_difference": 5.8398
+   },
+   "clip_fingerprint": "f03543b44d77dbef",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_23.mp4",
+   "stock_id": 31245009,
+   "pexels_id": 31245009,
+   "stock_frame_url": "https://images.pexels.com/videos/31245009/pexels-photo-31245009.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/silhouette-opening-curtains-at-luxurious-hotel-31245009/"
   },
   {
    "text": "Choice does not kill roads. It decides which road borrows my footsteps today.",
@@ -479,7 +956,51 @@
    "narrative_mode": "stock_ok",
    "query": "ordinary shoes paused where several wet roads begin at sunrise, one path receiving the first footprint",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 169.54,
+   "duration": 7.368,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.7639,
+    "active_region_ratio": 0.9904,
+    "frame_difference": 16.0232
+   },
+   "clip_fingerprint": "3754a572cde08bb0",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-roads-that-keep-walking/clip_24.mp4",
+   "stock_id": 4310191,
+   "pexels_id": 4310191,
+   "stock_frame_url": "https://images.pexels.com/videos/4310191/pexels-photo-4310191.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-holding-a-camera-while-looking-down-and-walking-4310191/"
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.97
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
