@@ -2,7 +2,7 @@
 
 Date: 2026-07-29
 
-Status: June now performs two story actions inside the full-HD hero shot: he lifts and replaces the returned enamel mug, then reaches for, lifts, and replaces the pencil before the compassion hold. The final local A/V render and full decode pass; public reproduction is the next gate.
+Status: June now performs two story actions inside the full-HD hero shot: he lifts and replaces the returned enamel mug, then reaches for, lifts, and replaces the pencil before the compassion hold. The final local A/V render, full decode, and independent public reproduction all pass.
 
 ## Source drawings
 
@@ -105,6 +105,22 @@ Not passed yet:
 - Only one front-facing hero shot is integrated; the other six golden-scene shots and angle-specific atlases remain missing.
 - Scratch Piper speech remains a timing prototype, not June's final voice performance.
 
+## Public reproduction
+
+GitHub Actions run [`30503919604`](https://github.com/prototype4-1077/Prototype-Video/actions/runs/30503919604) reproduced the Phase 20 result from commit `448b7667bdc56b5e9037fb7840bc1ce99ae5f779` without local generated media.
+
+| Property | Verified value |
+| --- | --- |
+| Regression/render job | Success: 331 tests, exact 2.5D performance, full-HD gesture render, decode, contract check, upload |
+| Independent Blender job | Success: headless cheek-integrated nine-viseme NPR gate and artifact upload |
+| Artifact | `june-hero-gesture-performance-v1` |
+| Downloaded video | H.264/yuv420p, 1920x1080, 30 fps, 453 frames, 15.100 seconds |
+| Public artifact audio | Intentionally absent because the scratch voice is not versioned |
+| Downloaded video size | 7,950,797 bytes |
+| Downloaded video SHA-256 | `bcd8e193a1340e69aecc76313b979de575f0f84721bb23ca7c82fc3761cb6fe9` |
+
+The downloaded artifact fully decodes with FFmpeg. Frames 42, 90, 332, and 453 were inspected at encoded resolution and preserve the clean mug lift, hero hold, pencil lift, and final neutral silhouette seen in the local A/V master.
+
 ## Recommended next gate
 
-Publish and independently reproduce the gesture-enabled 1920x1080 artifact. Then stop expanding this single shot and assemble the first multi-shot sequence: use GS010 as the present hero setup, GS020 as a mug-chip insert, GS040 as the ledger/pencil medium, GS050 as the existing emotional close-up, and GS070 as the final question. Each shot should have its own registration contract, action drawings, continuity hashes, and cut-frame handles. Add open-source ambience, mug/wood/pencil Foley, and a temporary music stem only after picture timing is locked.
+Stop expanding this single shot and assemble the first multi-shot sequence: use the present hero performance as the identity anchor, promote the high-resolution mug and ledger paintings into production inserts, and derive the emotional close-up from the same registered face atlas. Each shot should have its own source hash, crop or camera contract, continuity invariants, and cut-frame handles. Add open-source ambience, mug/wood/pencil Foley, and a temporary music stem only after picture timing is locked.

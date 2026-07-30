@@ -1,0 +1,161 @@
+{
+  "contract_version": 1,
+  "sequence_id": "june_golden_scene_multishot_v1",
+  "production": "june-golden-scene-twelve-dollar-mug",
+  "character_id": "june_oxley",
+  "intent": "Use finished high-resolution paintings as actual insert-shot pixels while the identity-locked Phase 20 performance remains the only facial and lip-sync source.",
+  "generation": {
+    "cash_cost": 0,
+    "paid_runtime_dependency": false,
+    "runtime": "local Python, Pillow, OpenCV, and FFmpeg"
+  },
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 453,
+    "duration_seconds": 15.1,
+    "codec": "H.264",
+    "pixel_format": "yuv420p"
+  },
+  "base_performance": {
+    "role": "identity, expression, lip-sync, body motion, gesture transitions, atmosphere, and continuous audio clock",
+    "required_width": 1920,
+    "required_height": 1080,
+    "required_fps": 30,
+    "required_frame_count": 453,
+    "report_name": "june-hero-expression-performance-report.json"
+  },
+  "encoded_quality_gate": {
+    "minimum_review_frame_psnr_db": 38.0,
+    "minimum_review_frame_laplacian_variance": 30.0,
+    "intent": "Reject an encode that visibly erases the tactile illustration detail preserved by the production plates."
+  },
+  "plates": {
+    "mug_held_insert": {
+      "path": "concept/style_frames/june_oxley_mug_held_insert_v1.png",
+      "sha256": "857e2e1584170d9264b0806bf74ae64e0a9a3845e0e6a1711c6b3897c2d2389c",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "role": "tactile held-mug macro at the completed Phase 20 lift pose",
+      "source_provenance": [
+        {
+          "path": "concept/style_frames/june-golden-scene-gs020-style-target-v2.png",
+          "sha256": "fd7e3b0789d06a7dca7ca0f75c8b93c49bd24b60b2d279e14df3a472e1e0e354",
+          "role": "mug, hand, denim, material, lighting, and lens reference"
+        },
+        {
+          "path": "concept/style_frames/june_oxley_porch_mug_lift_v1.png",
+          "sha256": "d4d921596259944fabbd91e137108ff718b470ee9d711b3336326e7f8ac6e2e6",
+          "role": "registered lifted height, grip, wrist, and action reference"
+        }
+      ],
+      "image_generation": {
+        "mode": "built-in reference generation",
+        "source": "exec-23203714-7d56-48ff-906a-94e648b3ed7e.png",
+        "cash_cost": 0,
+        "paid_runtime_dependency": false
+      }
+    },
+    "ledger_insert": {
+      "path": "concept/style_frames/june_oxley_ledger_insert_v1.png",
+      "sha256": "6b11c1c41455b7e44851146c459a3299bef8c0d7082ac6025701fdde097d87d7",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "role": "face-free pencil and ledger macro at the compassion turn",
+      "source_provenance": [
+        {
+          "path": "concept/style_frames/june_oxley_porch_pencil_contact_v1.png",
+          "sha256": "847b7440c2c126d9052e24ab8bf5b6503d1014e49991faf1006dd2b761da0018",
+          "role": "registered hand, pencil, ledger, table, and porch continuity"
+        },
+        {
+          "path": "concept/style_frames/june-golden-scene-gs040-style-target-v2.png",
+          "sha256": "37f24c8ac5fa14492e9d7c5ec6b8abccade55e5f44f0195a95a1e05c4b6d2105",
+          "role": "ledger composition and material reference"
+        },
+        {
+          "path": "concept/style_frames/june-golden-scene-gs020-style-target-v2.png",
+          "sha256": "fd7e3b0789d06a7dca7ca0f75c8b93c49bd24b60b2d279e14df3a472e1e0e354",
+          "role": "macro skin, denim, enamel, wood, and depth-of-field reference"
+        }
+      ],
+      "image_generation": {
+        "mode": "built-in reference generation",
+        "source": "exec-ebdfc803-6481-4196-93dc-85cdb1fff39d.png",
+        "cash_cost": 0,
+        "paid_runtime_dependency": false
+      }
+    }
+  },
+  "shots": [
+    {
+      "id": "GS010_HERO_SETUP_AND_MUG_LIFT",
+      "start_frame": 1,
+      "end_frame": 50,
+      "source": {"type": "performance"},
+      "camera": {"start_zoom": 1.0, "end_zoom": 1.0, "focus_start": [0.5, 0.5], "focus_end": [0.5, 0.5], "easing": "ease_in_out_cubic"},
+      "purpose": "Establish canonical June and preserve the authored beginning of the mug lift."
+    },
+    {
+      "id": "GS020_MUG_CHIP_INSERT",
+      "start_frame": 51,
+      "end_frame": 114,
+      "source": {"type": "plate", "plate_id": "mug_held_insert"},
+      "camera": {"start_zoom": 1.0, "end_zoom": 1.035, "focus_start": [0.64, 0.48], "focus_end": [0.65, 0.47], "easing": "ease_in_out_cubic"},
+      "effects": {"steam": {"origin": [0.66, 0.145], "strength": 0.78}},
+      "purpose": "Promote the approved painterly mug detail into the actual held-action shot."
+    },
+    {
+      "id": "GS030_HERO_RETURN_AND_LEDGER_REACH",
+      "start_frame": 115,
+      "end_frame": 306,
+      "source": {"type": "performance"},
+      "camera": {"start_zoom": 1.0, "end_zoom": 1.0, "focus_start": [0.5, 0.5], "focus_end": [0.5, 0.5], "easing": "ease_in_out_cubic"},
+      "purpose": "Return on the mug lowering, preserve dialogue acting, and reveal the authored pencil lift."
+    },
+    {
+      "id": "GS040_LEDGER_PENCIL_INSERT",
+      "start_frame": 307,
+      "end_frame": 378,
+      "source": {"type": "plate", "plate_id": "ledger_insert"},
+      "camera": {"start_zoom": 1.0, "end_zoom": 1.04, "focus_start": [0.54, 0.61], "focus_end": [0.56, 0.62], "easing": "ease_in_out_cubic"},
+      "effects": {"light_breathe": {"strength": 0.006}},
+      "purpose": "Let high-resolution hand, pencil, ledger, and material detail carry the emotional realization without exposing an alternate face."
+    },
+    {
+      "id": "GS045_HERO_PENCIL_RETURN",
+      "start_frame": 379,
+      "end_frame": 392,
+      "source": {"type": "performance"},
+      "camera": {"start_zoom": 1.0, "end_zoom": 1.0, "focus_start": [0.5, 0.5], "focus_end": [0.5, 0.5], "easing": "ease_in_out_cubic"},
+      "purpose": "Show the pencil return and re-establish June before the emotional cut-in."
+    },
+    {
+      "id": "GS050_IDENTITY_LOCKED_COMPASSION_CLOSEUP",
+      "start_frame": 393,
+      "end_frame": 453,
+      "source": {"type": "performance"},
+      "camera": {"start_zoom": 1.5, "end_zoom": 1.58, "focus_start": [0.44, 0.335], "focus_end": [0.44, 0.32], "easing": "ease_in_out_cubic"},
+      "purpose": "Derive the emotional close-up from the same moving identity, expression, and lip-sync pixels instead of introducing a drifting face."
+    }
+  ],
+  "continuity_invariants": [
+    "the Phase 20 performance supplies every visible face and every visible spoken mouth",
+    "insert plates never expose a second face or alternate June identity",
+    "the mug keeps one cream enamel body, faded blue rim, stable upper-right chip, worn handle, and visible lifted clearance",
+    "the ledger remains small, closed, brown, worn, and paired with one short yellow pencil",
+    "all shots remain on the same porch, golden-hour direction, warm wood, faded indigo wardrobe, and muted sage palette",
+    "the source audio timeline remains continuous and is never cut at a visual edit"
+  ],
+  "visual_gates": [
+    "all six shots fill 1920x1080 without letterboxing or nonuniform stretch",
+    "hard cuts occur only on authored action or emotional beats",
+    "the mug and pencil inserts retain full-resolution tactile detail after encoding",
+    "the final close-up preserves active lip-sync and expression continuity",
+    "no duplicate hands, props, faces, or optical-flow ghosts appear",
+    "the sequence contains exactly 453 frames and remains 15.100 seconds at 30 fps"
+  ]
+}
