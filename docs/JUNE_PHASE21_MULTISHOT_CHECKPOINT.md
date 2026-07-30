@@ -2,7 +2,7 @@
 
 Date: 2026-07-29
 
-Status: the 15.1-second June performance is now a real six-shot edit. Two full-resolution tactile paintings enter the encoded sequence as actual mug and ledger shots, while the Phase 20 performance remains the only source of June's visible face, expressions, lip-sync, body motion, and continuous audio clock. The local A/V master, full decode, cut-boundary review, and encoded-detail gate pass; public reproduction is the next gate.
+Status: the 15.1-second June performance is now a real six-shot edit. Two full-resolution tactile paintings enter the encoded sequence as actual mug and ledger shots, while the Phase 20 performance remains the only source of June's visible face, expressions, lip-sync, body motion, and continuous local audio clock. The local A/V master and the independently rendered public video both pass full decode, cut-boundary review, and encoded-detail gates. GitHub Actions run 30508680111 also passes the complete regression suite and the separate headless Blender facial gate.
 
 ## What changed
 
@@ -90,6 +90,24 @@ Verification:
 - The final close-up uses sequential Phase 20 frames, so the facial performance continues rather than freezing or switching models.
 - No optical flow, face generation, temporal interpolation, or alternate character painting enters the edit.
 
+## Public reproduction
+
+GitHub Actions run [30508680111](https://github.com/prototype4-1077/Prototype-Video/actions/runs/30508680111) rebuilt commit `60fbdea01cff195f12a5d2e920c562089310bac6` on a clean hosted runner and completed successfully. The `test` job rendered, verified, and uploaded artifact `june-golden-scene-multishot-v1`; the independent `blender-v8-oral-mask-visemes` job also passed.
+
+| Property | Public value |
+| --- | --- |
+| Artifact | `june-golden-scene-multishot-v1` |
+| Video SHA-256 | `893cf8eff3bad81e0dd9436f9db4de483fc11b629bf2162a9871d908834f6652` |
+| Video | H.264/yuv420p, 1920x1080, 30 fps, 453 frames |
+| Duration / encoded size | 15.100 seconds / 10,034,362 bytes |
+| Audio | Intentionally absent in the public artifact; no voice model or private/local audio is required by CI |
+| Sequence-contract SHA-256 | `fecaa35202524ed6764a66b373adf9a8aff43adb84ce4a2384d402787ca46827` |
+| Minimum/mean encoded PSNR | 40.636 dB / 42.124 dB |
+| Minimum encoded detail variance | 43.820 |
+| Review evidence | 18 encoded frames covering the start, middle, and end of all six shots |
+
+The downloaded public MP4 decodes completely with FFmpeg. FFprobe confirms the exact video clock, and full-resolution inspection of every cut state confirms that the public render retains the local mug, ledger, expression, identity, camera, and effect decisions. The local master remains the audible review version: its AAC packets are byte-identical to the Phase 20 timing performance, while the public video intentionally proves that picture generation has no paid or private runtime dependency.
+
 ## Honest visual gate
 
 Passed:
@@ -112,4 +130,4 @@ Not passed yet:
 
 ## Recommended next gate
 
-Publish and independently reproduce this exact multi-shot artifact. Then expand the picture contract to the full 38.8-second seven-shot Golden Scene rather than polishing this slice indefinitely: build registered GS030 standing mechanics, GS060 coffee-pour/liquid mechanics, and GS070 wide/portrait resolution coverage; add angle-specific face atlases only where a speaking face is visible. After picture lock, produce a zero-cash local voice/ambience/Foley mix and master the completed scene.
+Expand the picture contract to the full 38.8-second seven-shot Golden Scene rather than polishing this slice indefinitely. Build registered GS030 standing mechanics first because it tests the broadest unsolved requirements at once: full-body deformation, planted feet, chair contact, prop protection, clothing settle, and a wide camera. Then build GS060 coffee-pour/liquid mechanics and GS070 wide/portrait resolution coverage; add angle-specific face atlases only where a speaking face is visible. After picture lock, produce a zero-cash local voice/ambience/Foley mix and master the completed scene.
