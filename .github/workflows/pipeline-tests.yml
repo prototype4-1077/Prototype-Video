@@ -471,7 +471,10 @@ jobs:
           assert report["captions"]["cue_count"] == 18
           assert abs(report["loudness"]["measured_lufs_i"] + 16.0) <= 1.0
           assert 4.0 <= report["loudness"]["measured_lra_lu"] <= 8.0
-          assert report["loudness"]["measured_true_peak_dbtp"] <= -0.95
+          assert report["loudness"]["measured_true_peak_dbtp"] <= -1.25
+          assert abs(report["loudness"]["encoded_aac"]["measured_lufs_i"] + 16.0) <= 1.0
+          assert 4.0 <= report["loudness"]["encoded_aac"]["measured_lra_lu"] <= 8.0
+          assert report["loudness"]["encoded_aac"]["measured_true_peak_dbtp"] <= -0.98
           assert report["music"] == "none_intentional"
           assert report["paid_runtime_dependency"] is False
           PY
@@ -549,6 +552,7 @@ jobs:
             asset-quality-out/assets/*.blend
           if-no-files-found: error
           retention-days: 14
+
 
 
 
