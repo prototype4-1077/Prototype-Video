@@ -1,0 +1,307 @@
+{
+  "generated_at": "2026-07-30T23:19:00+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {
+    "long_black_interval": 2,
+    "low_bitrate": 8
+  },
+  "recommendations": [
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "a4ffcb700850e0f6",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "2c243482baacee93",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "3797b6f436aefe92",
+      "priority": "medium",
+      "stage": "tts"
+    },
+    {
+      "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
+      "category": "tail_latency",
+      "evidence": "p50=67.0s, p95=1122.2s",
+      "priority": "medium",
+      "stage": "build_pass"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "a4ffcb700850e0f6",
+      "kind": "failure",
+      "normalized_error": "governor stage=tts state=start soft=254s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=3797b6f436aefe92 error: tts failed: del_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<n>. shorten the script or reduce audio tags. | fix: check elevenlabs_api_key / credits, rerun",
+      "slugs": [
+        "heaven-is-when-nothing-is-outside-me"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "2c243482baacee93",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.0s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-mercy-of-the-filter",
+        "beliefs-are-software-updates"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "3797b6f436aefe92",
+      "kind": "failure",
+      "normalized_error": "traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
+      "slugs": [
+        "heaven-is-when-nothing-is-outside-me"
+      ],
+      "stage": "tts"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "ae42b8afcdf01801",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.7s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "tomorrow-uses-old-footage"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "7f0ae4a56577d65a",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.6s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-witness-without-a-face"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-universe-keeps-its-options-open"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "7e1d511cec319c51",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.5s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-blueprint-recognizes-the-building"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "019e3c600e4624c4",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "no-disagreement-here"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "dd39869b090c1b69",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.2s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "i-was-gone-eleven-minutes"
+      ],
+      "stage": "build_pass"
+    }
+  ],
+  "runs_analyzed": 35,
+  "schema_version": 1,
+  "stages": {
+    "align": {
+      "attempts": 34,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.003,
+      "sample_count": 34,
+      "successes": 34,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 34.07
+    },
+    "altsheet": {
+      "attempts": 28,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.01,
+      "p95_success_s": 6.047,
+      "sample_count": 28,
+      "successes": 28,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 68.462
+    },
+    "assemble": {
+      "attempts": 961,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 39.279,
+      "p95_success_s": 81.687,
+      "sample_count": 961,
+      "successes": 961,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 42294.509
+    },
+    "build_pass": {
+      "attempts": 186,
+      "failure_rate": 0.0538,
+      "failures": 10,
+      "p50_success_s": 67.043,
+      "p95_success_s": 1122.249,
+      "sample_count": 176,
+      "successes": 176,
+      "timeout_rate": 0.043,
+      "timeouts": 8,
+      "total_duration_s": 57089.65
+    },
+    "credits": {
+      "attempts": 76,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.007,
+      "p95_success_s": 1.029,
+      "sample_count": 76,
+      "successes": 76,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 76.676
+    },
+    "ffmpeg": {
+      "attempts": 168,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.016,
+      "p95_success_s": 30.791,
+      "sample_count": 168,
+      "successes": 168,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1543.338
+    },
+    "footage": {
+      "attempts": 31,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 148.125,
+      "p95_success_s": 236.781,
+      "sample_count": 31,
+      "successes": 31,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 4295.605
+    },
+    "hero": {
+      "attempts": 124,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 35.576,
+      "p95_success_s": 50.085,
+      "sample_count": 124,
+      "successes": 124,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 3830.412
+    },
+    "prep": {
+      "attempts": 34,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 13.036,
+      "p95_success_s": 17.102,
+      "sample_count": 34,
+      "successes": 34,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 437.155
+    },
+    "probe": {
+      "attempts": 1011,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.015,
+      "sample_count": 1011,
+      "successes": 1011,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1020.916
+    },
+    "quality": {
+      "attempts": 34,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 27.197,
+      "p95_success_s": 67.824,
+      "sample_count": 34,
+      "successes": 34,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1125.492
+    },
+    "transcribe": {
+      "attempts": 34,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 17.014,
+      "p95_success_s": 23.374,
+      "sample_count": 34,
+      "successes": 34,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 596.494
+    },
+    "tts": {
+      "attempts": 36,
+      "failure_rate": 0.0556,
+      "failures": 2,
+      "p50_success_s": 56.525,
+      "p95_success_s": 74.756,
+      "sample_count": 34,
+      "successes": 34,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1915.036
+    }
+  },
+  "statuses": {
+    "done": 34,
+    "failed": 1
+  }
+}
