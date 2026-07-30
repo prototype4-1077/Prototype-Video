@@ -1,13 +1,13 @@
 {
   "schema_version": 1,
-  "generated_at": "2026-07-30T10:34:32+00:00",
-  "records": 2685,
+  "generated_at": "2026-07-30T16:51:33+00:00",
+  "records": 2733,
   "with_assets": 131,
-  "asset_coverage": 0.0488,
+  "asset_coverage": 0.0479,
   "reviewed": 93,
   "approved": 66,
   "revised": 27,
-  "reviewed_coverage": 0.0346,
+  "reviewed_coverage": 0.034,
   "reviewed_feedback_tags": {
     "depth_parallax": 1,
     "synthetic_appearance": 1,
@@ -22,7 +22,7 @@
     "crowd_or_many_subjects": 25,
     "tool_grasp": 20,
     "medical_contact": 19,
-    "multiple_hands": 6
+    "multiple_hands": 7
   },
   "cohorts": {
     "generation_route": [
@@ -63,7 +63,7 @@
     ],
     "symbol_family": [
       {
-        "value": "architecture",
+        "value": "human",
         "reviewed": 9,
         "approved": 6,
         "revised": 3,
@@ -71,11 +71,11 @@
         "evidence_strength": "developing"
       },
       {
-        "value": "object_tool",
+        "value": "architecture",
         "reviewed": 7,
-        "approved": 5,
-        "revised": 2,
-        "approval_rate": 0.7143,
+        "approved": 6,
+        "revised": 1,
+        "approval_rate": 0.8571,
         "evidence_strength": "developing"
       },
       {
@@ -87,19 +87,19 @@
         "evidence_strength": "developing"
       },
       {
-        "value": "human",
-        "reviewed": 6,
-        "approved": 6,
-        "revised": 0,
-        "approval_rate": 1.0,
-        "evidence_strength": "developing"
-      },
-      {
         "value": "identity",
         "reviewed": 6,
         "approved": 0,
         "revised": 6,
         "approval_rate": 0.0,
+        "evidence_strength": "developing"
+      },
+      {
+        "value": "object_tool",
+        "reviewed": 6,
+        "approved": 5,
+        "revised": 1,
+        "approval_rate": 0.8333,
         "evidence_strength": "developing"
       },
       {
@@ -1383,13 +1383,13 @@
     {
       "priority": "high",
       "category": "evidence_coverage",
-      "evidence": "Only 93 of 2685 scene records have a human decision (3.5%).",
+      "evidence": "Only 93 of 2733 scene records have a human decision (3.4%).",
       "action": "Do not convert automated risk frequency into house rules. Review the highest-risk asset-backed queue first."
     },
     {
       "priority": "medium",
       "category": "asset_coverage",
-      "evidence": "Only 131 of 2685 records retain a reviewable asset (4.9%).",
+      "evidence": "Only 131 of 2733 records retain a reviewable asset (4.8%).",
       "action": "Persist representative frames or durable release references for completed scenes so historical feedback remains inspectable."
     },
     {
