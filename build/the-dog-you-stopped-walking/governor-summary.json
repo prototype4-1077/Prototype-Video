@@ -1,0 +1,397 @@
+{
+  "finished_at": "2026-07-30T06:46:11+00:00",
+  "github_run_id": "30519676288",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-dog-you-stopped-walking/final_youtube.mp4",
+  "mode": "recover",
+  "passes": 5,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 23,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.3,
+      "idle_timeout_s": 48.9,
+      "sample_count": 16,
+      "soft_timeout_s": 48.9,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 87.31,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 291.93,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.09,
+      "sample_count": 52,
+      "soft_timeout_s": 33.09,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 32.22,
+      "idle_timeout_s": 126.65,
+      "sample_count": 120,
+      "soft_timeout_s": 126.65,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 208.32,
+      "idle_timeout_s": 255.0,
+      "sample_count": 19,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 50.09,
+      "idle_timeout_s": 180.27,
+      "sample_count": 80,
+      "soft_timeout_s": 180.27,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 16.0,
+      "idle_timeout_s": 120.0,
+      "sample_count": 22,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 23.92,
+      "idle_timeout_s": 180.0,
+      "sample_count": 23,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 75.85,
+      "idle_timeout_s": 180.0,
+      "sample_count": 23,
+      "soft_timeout_s": 257.55,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-dog-you-stopped-walking",
+    "checked_at": "2026-07-30T06:46:11+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 110.426,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "youtube": {
+        "avg_kbps": 7237,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.041,
+        "exists": true,
+        "expected_duration_s": 110.426,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-dog-you-stopped-walking/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 110.433991,
+          "bit_rate": 7237143.0,
+          "duration_s": 110.466667,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 110.466667,
+          "width": 1920
+        },
+        "size_bytes": 99932890,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
+  "recommendations": [
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (984.1s).",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "aa3ec11bd06a443b92c0e7b23f36db80",
+  "schema_version": 1,
+  "slug": "the-dog-you-stopped-walking",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.007,
+      "p95_success_s": 1.007,
+      "success_durations_s": [
+        1.007
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.007
+    },
+    "assemble": {
+      "attempts": 22,
+      "failures": 0,
+      "p50_success_s": 25.123,
+      "p95_success_s": 31.098,
+      "success_durations_s": [
+        23.094,
+        25.115,
+        20.083,
+        29.157,
+        29.151,
+        28.135,
+        30.124,
+        31.149,
+        19.091,
+        24.122,
+        22.112,
+        29.154,
+        15.065,
+        32.181,
+        26.12,
+        21.092,
+        27.14,
+        25.131,
+        21.099,
+        23.117,
+        22.106,
+        25.139
+      ],
+      "successes": 22,
+      "timeouts": 0,
+      "total_duration_s": 548.677
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 107.105,
+      "p95_success_s": 526.812,
+      "success_durations_s": [
+        50.021,
+        16.01,
+        107.105,
+        203.291,
+        607.692
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 984.119
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.007,
+      "success_durations_s": [
+        1.005,
+        1.007
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.012
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 4.513,
+      "p95_success_s": 11.846,
+      "success_durations_s": [
+        1.007,
+        4.012,
+        13.052,
+        5.015
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 23.086
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 106.11,
+      "p95_success_s": 106.11,
+      "success_durations_s": [
+        106.11
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 106.11
+    },
+    "hero": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 44.061,
+      "p95_success_s": 45.671,
+      "success_durations_s": [
+        19.042,
+        39.06,
+        44.07,
+        44.061,
+        46.071
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 192.304
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 9.018,
+      "p95_success_s": 9.018,
+      "success_durations_s": [
+        9.018
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 9.018
+    },
+    "probe": {
+      "attempts": 23,
+      "failures": 0,
+      "p50_success_s": 1.007,
+      "p95_success_s": 1.007,
+      "success_durations_s": [
+        1.007,
+        1.007,
+        1.007,
+        1.008,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007
+      ],
+      "successes": 23,
+      "timeouts": 0,
+      "total_duration_s": 23.162
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 14.047,
+      "p95_success_s": 14.047,
+      "success_durations_s": [
+        14.047
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 14.047
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 13.007,
+      "p95_success_s": 13.007,
+      "success_durations_s": [
+        13.007
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 13.007
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 49.022,
+      "p95_success_s": 49.022,
+      "success_durations_s": [
+        49.022
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 49.022
+    }
+  },
+  "status": "done"
+}
