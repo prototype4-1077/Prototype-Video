@@ -1,0 +1,88 @@
+{
+  "finished_at": "2026-07-30T21:04:43+00:00",
+  "github_run_id": "30581805254",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "d7bce4dd53740d0d",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "governor stage=tts state=start soft=256s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=e46fd00cb0fa2366 error: tts failed: tts failed with http <n>: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"this request exceeds your quota of <n>. you have <n> credits remaining, while <n> credits are required for this request.\",\"status\":\"quota_exceeded\",\"request_id\":\"<id>\"}",
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "e46fd00cb0fa2366",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "eback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts response = _call_elevenlabs(voice_id, payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"this request exceeds your quota of <n",
+      "stage": "tts"
+    }
+  ],
+  "last_message": "tts failed (unknown); retry budget 1 exhausted. fingerprint=e46fd00cb0fa2366. ERROR: tts failed: TTS failed with HTTP 401: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"This request exceeds your quota of 121712. You have 1066 credits remaining, while 1548 credits are required for this request.\",\"status\":\"quota_exceeded\",\"request_id\":\"f89a8a18a8c32e6c246dd04b924446e2\"}}",
+  "mode": "recover",
+  "passes": 2,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 75.35,
+      "idle_timeout_s": 180.0,
+      "sample_count": 28,
+      "soft_timeout_s": 256.06,
+      "source": "history"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "e46fd00cb0fa2366",
+      "priority": "high",
+      "reason": "2 occurrence(s): eback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts response = _call_elevenlabs(voice_id, payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"this request exceeds your quota of <n",
+      "stage": "tts"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "d7bce4dd53740d0d",
+      "priority": "high",
+      "reason": "2 occurrence(s): governor stage=tts state=start soft=256s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=e46fd00cb0fa2366 error: tts failed: tts failed with http <n>: {\"detail\":{\"type\":\"invalid_request\",\"code\":\"quota_exceeded\",\"message\":\"this request exceeds your quota of <n>. you have <n> credits remaining, while <n> credits are required for this request.\",\"status\":\"quota_exceeded\",\"request_id\":\"<id>\"}",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "271cc7c6f1074ad7b3f04f92d27b7c7a",
+  "schema_version": 1,
+  "slug": "the-symbols-are-dreaming-you",
+  "stages": {
+    "build_pass": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 4.004
+    },
+    "tts": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.004
+    }
+  },
+  "status": "failed"
+}
