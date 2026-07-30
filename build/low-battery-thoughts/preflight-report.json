@@ -1,16 +1,6 @@
 {
   "applied_solution_ids": [],
-  "blockers": [
-    {
-      "code": "visual_symbol_plan",
-      "fingerprint": "5d20dc55cdcdc309",
-      "matched_solution_ids": [
-        "sol-visual-symbol-diversity-v1"
-      ],
-      "message": "generic human filler repeats for 2 consecutive scenes starting at scene 6",
-      "stage": "preflight"
-    }
-  ],
+  "blockers": [],
   "checks": {
     "animation_contract": {
       "errors": [],
@@ -36,29 +26,29 @@
     "visual_symbols": {
       "family_counts": {
         "architecture": 9,
-        "human": 4,
+        "human": 3,
         "light_atmosphere": 1,
         "nature": 2,
-        "object_tool": 3,
+        "object_tool": 4,
         "pathway": 1,
         "perception": 1,
         "time_memory": 1,
         "transformation": 1,
         "world_scale": 1
       },
-      "generic_human_ratio": 0.1667,
-      "human_presence_ratio": 0.2917,
+      "generic_human_ratio": 0.125,
+      "human_presence_ratio": 0.25,
       "longest_family_run": {
         "length": 3,
         "start": 20,
         "value": "architecture"
       },
       "longest_generic_human_run": {
-        "length": 2,
-        "start": 6,
+        "length": 1,
+        "start": 4,
         "value": "generic_human"
       },
-      "passes": false,
+      "passes": true,
       "policy": {
         "max_family_run": 6,
         "max_generic_human_run": 1,
@@ -202,16 +192,16 @@
         },
         {
           "effective_query": "A flashlight narrows to one cracked gear inside an otherwise functioning clockwork assembly.",
-          "generic_human": true,
-          "human_present": true,
-          "human_role": "unspecified",
+          "generic_human": false,
+          "human_present": false,
+          "human_role": null,
           "index": 7,
           "original_query": "A flashlight narrows to one cracked gear inside an otherwise functioning clockwork assembly.",
           "primary_symbol": "a flashlight narrows to one cracked gear inside an otherwise",
-          "query_family": "human",
+          "query_family": "object_tool",
           "selected_family": null,
           "semantic_anchor": "beat 8",
-          "symbol_family": "human",
+          "symbol_family": "object_tool",
           "text": "Low battery does not necessarily invent the problem. It removes the light around it.",
           "visual_function": "beat 8"
         },
@@ -456,33 +446,22 @@
           "visual_function": "beat 24"
         }
       ],
-      "score": 96.7,
+      "score": 97.5,
       "symbol_family_count": 10,
-      "violations": [
-        "generic human filler repeats for 2 consecutive scenes starting at scene 6"
-      ],
-      "warnings": [
-        "generic human filler occupies 17%; people should have a named symbolic role"
-      ]
+      "violations": [],
+      "warnings": []
     }
   },
   "fix_safe": true,
-  "matched_solution_ids": [
-    "sol-visual-symbol-diversity-v1"
-  ],
+  "matched_solution_ids": [],
   "narration_fingerprint": "287d5ed6658893ff7b4fbf63a8e18630925c750639a3ac9106bf6d080a95718b",
-  "passed": false,
+  "passed": true,
   "prevention_rule_version": 1,
   "scene_count": 24,
   "schema_version": 1,
-  "script_changed": true,
+  "script_changed": false,
   "slug": "low-battery-thoughts",
   "title": "Low Battery Thoughts",
-  "warnings": [
-    {
-      "code": "visual_symbol_warning",
-      "message": "generic human filler occupies 17%; people should have a named symbolic role"
-    }
-  ],
+  "warnings": [],
   "word_count": 339
 }
