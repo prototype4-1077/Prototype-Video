@@ -1,0 +1,109 @@
+{
+  "contract_version": 1,
+  "atlas_id": "june_oxley_porch_gestures",
+  "atlas_version": "1.0.0",
+  "character_id": "june_oxley",
+  "plate_id": "june_oxley_porch_hero_plate",
+  "base_image": {
+    "path": "concept/style_frames/june_oxley_porch_hero_plate_v1.png",
+    "sha256": "a6ed59b3ed26d4ac242828fb173386cd19796dd03ed21ed8dd871676b1ada908",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB"
+  },
+  "neutral_state": "neutral",
+  "base_steam_origin": [560, 700],
+  "poses": {
+    "mug_lift": {
+      "patch_box": [230, 335, 800, 920],
+      "patch_feather_px": 34,
+      "keyframes": [
+        {
+          "amount": 0.25,
+          "image": {
+            "path": "concept/style_frames/june_oxley_porch_mug_lift_low_v1.png",
+            "sha256": "85ca03e9b6a704fb5089790469171f4cdd1ca777c02822bb09a546ce6ed006dd",
+            "width": 1672,
+            "height": 941,
+            "mode": "RGB"
+          },
+          "steam_origin": [575, 676]
+        },
+        {
+          "amount": 0.62,
+          "image": {
+            "path": "concept/style_frames/june_oxley_porch_mug_lift_mid_v1.png",
+            "sha256": "a060e229df1fbaf2500d8b5a38e2bafeaa2ba780f4196bfe763abeb667926295",
+            "width": 1672,
+            "height": 941,
+            "mode": "RGB"
+          },
+          "steam_origin": [623, 598]
+        },
+        {
+          "amount": 1.0,
+          "image": {
+            "path": "concept/style_frames/june_oxley_porch_mug_lift_v1.png",
+            "sha256": "d4d921596259944fabbd91e137108ff718b470ee9d711b3336326e7f8ac6e2e6",
+            "width": 1672,
+            "height": 941,
+            "mode": "RGB"
+          },
+          "steam_origin": [626, 465]
+        }
+      ],
+      "intent": "screen-left hand lifts the chipped enamel mug to mid-chest with the elbow bent"
+    },
+    "pencil_hold": {
+      "patch_box": [675, 535, 1195, 925],
+      "patch_feather_px": 30,
+      "keyframes": [
+        {
+          "amount": 0.45,
+          "image": {
+            "path": "concept/style_frames/june_oxley_porch_pencil_contact_v1.png",
+            "sha256": "847b7440c2c126d9052e24ab8bf5b6503d1014e49991faf1006dd2b761da0018",
+            "width": 1672,
+            "height": 941,
+            "mode": "RGB"
+          }
+        },
+        {
+          "amount": 1.0,
+          "image": {
+            "path": "concept/style_frames/june_oxley_porch_pencil_hold_v1.png",
+            "sha256": "94147f429f65e5d9488908327357e971e404e63885240a869113caabbdcc8757",
+            "width": 1672,
+            "height": 941,
+            "mode": "RGB"
+          }
+        }
+      ],
+      "intent": "screen-right hand pauses with the short pencil above the ledger"
+    }
+  },
+  "interpolation": {
+    "engine": "registered_stepped_inbetweens",
+    "pose_selection": "nearest_keyframe",
+    "patch_color_match_strength": 0.65
+  },
+  "generation": {
+    "method": "built_in_reference_edit_generation_with_registration_locked_hero_plate",
+    "cash_cost": 0,
+    "paid_runtime_dependency": false
+  },
+  "invariants": [
+    "only the selected arm hand prop and necessary local contact pixels may enter the pose patch",
+    "head face identity expression and lip-sync remain owned by the facial atlases",
+    "the unselected hand and prop remain on the neutral hero plate",
+    "the mug chip handle scale and ledger geography remain continuous",
+    "all pose transitions use exact-clock registered drawings on an authored limited-animation cadence"
+  ],
+  "visual_gates": [
+    "mug grip reads as five-finger anatomical contact without fused or duplicated digits",
+    "pencil grip reads between thumb index and supporting middle finger",
+    "registered in-between drawings prevent duplicate mug pencil hand and arm silhouettes",
+    "pose patch borders remain invisible against denim wood and skin",
+    "steam follows the raised mug rather than remaining on the table"
+  ]
+}

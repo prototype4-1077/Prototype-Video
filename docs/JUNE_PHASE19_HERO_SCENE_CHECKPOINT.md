@@ -2,7 +2,7 @@
 
 Date: 2026-07-29
 
-Status: the identity-locked face performance now runs inside a production-quality 1920x1080 porch composition with June's upper body, anatomical hands, mug, ledger, pencil, wardrobe, environment, secondary motion, and synchronized prototype audio. Local render and decode gates pass; public reproduction is next.
+Status: the identity-locked face performance now runs inside a production-quality 1920x1080 porch composition with June's upper body, anatomical hands, mug, ledger, pencil, wardrobe, environment, and secondary motion. Local A/V gates and independent public reproduction pass.
 
 ## What changed
 
@@ -66,6 +66,20 @@ Verification:
 - Nine full-resolution review frames cover the first frame, both blinks, brow changes, speech extremes, gaze lead, compassion transition, and final closed-mouth hold.
 - A fifteen-frame whole-runtime timeline confirms identity, exposure, prop geography, composition, and camera continuity.
 
+## Public reproduction
+
+GitHub Actions run: https://github.com/prototype4-1077/Prototype-Video/actions/runs/30500748021
+
+| Property | Verified value |
+| --- | --- |
+| Result | `test` and `blender-v8-oral-mask-visemes` jobs succeeded |
+| Artifact | `june-hero-expression-performance-v1` |
+| Downloaded video SHA-256 | `c247eaed6f92ec9b2a3f2ddc60a7f53624353bcf523ead968f96fb1f3bccd49e` |
+| Video contract | H.264/yuv420p, 1920x1080, 30 fps, 453 frames, 15.100 seconds, intentionally silent |
+| Encoded size | 7,733,430 bytes |
+
+The downloaded artifact decodes completely with FFmpeg. Its report pins the hero plate, both facial atlases, both facial cue files, body-motion contract, dimensions, frame count, and nine review frames. The public runner generated it in 39 seconds after the full regression, so the approach is practical as well as visually credible.
+
 ## Honest visual gate
 
 Passed:
@@ -89,6 +103,6 @@ Not passed yet:
 
 ## Recommended next gate
 
-Publish and independently reproduce this exact 1920x1080 render in GitHub Actions. Then build the first true gesture layer: a registered two-pose right-hand/pencil atlas and two-pose left-hand/mug atlas with occlusion mattes. The shot should lift the mug on the returned-mug beat, settle it without sliding, set the pencil across the ledger on the moral-choice beat, and end in the existing compassion hold. This adds story action without sacrificing the visual quality already achieved.
+Build the first true gesture layer: registered right-hand/pencil and left-hand/mug drawings with local occlusion mattes. The shot should lift the mug on the returned-mug beat, settle it without sliding, lift and replace the pencil on the ledger beat, and end in the existing compassion hold. This adds story action without sacrificing the visual quality already achieved.
 
 After that, extend the same contract to the seven golden-scene shots and train a zero-cost preference optimizer over bounded timing candidates. Its reward should combine human A/B rankings with hard penalties for landmark drift, patch-edge energy, pose discontinuity, eye-mouth desynchronization, prop teleportation, excessive motion, broken holds, and visual disagreement with the approved style targets.

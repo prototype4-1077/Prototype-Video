@@ -21,6 +21,11 @@ from pipeline.cartoon_expression_atlas import (
     expression_performance_plan,
     load_expression_atlas_contract,
 )
+from pipeline.cartoon_gesture_atlas import (
+    apply_gesture_pose,
+    gesture_performance_plan,
+    prepare_gesture_sources,
+)
 from pipeline.cartoon_viseme_atlas import (
     atlas_cells,
     load_viseme_atlas_contract,
@@ -411,10 +416,18 @@ def compose_hero_frame(
     secondary: dict[str, Any],
     frame_index: int,
     fps: int,
+    gesture_sources: dict[str, Any] | None = None,
+    gesture_entry: dict[str, Any] | None = None,
 ) -> Image.Image:
     contract = sources["hero_contract"]
     regions = contract["rig_regions"]
     frame = sources["plate"].copy()
+    overlay_regions = dict(regions)
+
+    if gesture_sources is not None and gesture_entry is not None:
+        gesture_state, gesture_amount, raised_origin = apply_gesture_pose(frame, gesture_sources, gesture_entry)
+        if gesture_state == "mug_lift" and raised_origin is not None:
+            overlay_regions["steam_origin"] = list(raised_origin)
 
     _warp_region(
         frame,
@@ -453,7 +466,7 @@ def compose_hero_frame(
     flicker = float(lantern.get("flicker_strength", 0.0))
     amount = flicker * (0.55 + 0.45 * math.sin(frame_index / fps / lantern_period * math.tau + float(lantern.get("phase", 0.0))))
     _lantern_glow(frame, regions["lantern"], max(0.0, amount))
-    _secondary_overlay(frame, frame_index, fps, regions, secondary)
+    _secondary_overlay(frame, frame_index, fps, overlay_regions, secondary)
     return _camera_frame(frame, float(motion_entry["camera_push"]), contract)
 
 
@@ -467,8 +480,12 @@ def render_hero_performance(
     output_dir: str | Path,
     *,
     audio_path: str | Path | None = None,
+    gesture_contract_path: str | Path | None = None,
+    gesture_cue_path: str | Path | None = None,
     ffmpeg: str = "ffmpeg",
 ) -> dict[str, Any]:
+    if bool(gesture_contract_path) != bool(gesture_cue_path):
+        raise ValueError("gesture_contract_path and gesture_cue_path must be supplied together")
     sources = prepare_hero_sources(hero_contract_path, viseme_contract_path, expression_contract_path)
     contract = sources["hero_contract"]
     fps = int(contract["output"]["fps"])
@@ -478,12 +495,29 @@ def render_hero_performance(
         expected_atlas_id=sources["expression_contract"]["atlas_id"],
     )
     motion_metadata, motion_plan = load_body_motion_contract(motion_cue_path, hero_contract=contract)
+    gesture_metadata = None
+    gesture_plan = None
+    gesture_sources = None
+    if gesture_contract_path and gesture_cue_path:
+        gesture_sources = prepare_gesture_sources(
+            gesture_contract_path,
+            expected_plate_id=contract["plate_id"],
+            expected_base_sha256=contract["image"]["sha256"],
+        )
+        gesture_metadata, gesture_plan = gesture_performance_plan(
+            gesture_cue_path,
+            expected_atlas_id=gesture_sources["contract"]["atlas_id"],
+        )
     counts = {len(viseme_plan), len(expression_plan), len(motion_plan)}
+    if gesture_plan is not None:
+        counts.add(len(gesture_plan))
     durations = {
         round(float(viseme_metadata["duration_seconds"]), 6),
         round(float(expression_metadata["duration_seconds"]), 6),
         round(float(motion_metadata["duration_seconds"]), 6),
     }
+    if gesture_metadata is not None:
+        durations.add(round(float(gesture_metadata["duration_seconds"]), 6))
     if len(counts) != 1 or len(durations) != 1:
         raise ValueError("lip, expression, and body motion plans must share one exact frame clock")
     frame_count = len(viseme_plan)
@@ -524,9 +558,10 @@ def render_hero_performance(
         raise RuntimeError("unable to open FFmpeg raw-video pipe")
     review_numbers = {1, 42, 90, 150, 250, 332, 381, 410, frame_count}
     saved: dict[int, Path] = {}
+    frame_gestures = gesture_plan if gesture_plan is not None else [None] * frame_count
     try:
-        for index, (viseme_entry, expression_entry, motion_entry) in enumerate(
-            zip(viseme_plan, expression_plan, motion_plan), start=1
+        for index, (viseme_entry, expression_entry, motion_entry, gesture_entry) in enumerate(
+            zip(viseme_plan, expression_plan, motion_plan, frame_gestures), start=1
         ):
             frame = compose_hero_frame(
                 sources,
@@ -536,6 +571,8 @@ def render_hero_performance(
                 secondary=motion_metadata["secondary_motion"],
                 frame_index=index,
                 fps=fps,
+                gesture_sources=gesture_sources,
+                gesture_entry=gesture_entry,
             )
             process.stdin.write(np.asarray(frame, dtype=np.uint8).tobytes())
             if index in review_numbers:
@@ -568,6 +605,13 @@ def render_hero_performance(
         "expression_cue_sha256": expression_metadata["sha256"],
         "motion_cue_sha256": motion_metadata["sha256"],
         "motion_keyframe_count": motion_metadata["keyframe_count"],
+        "gesture": {
+            "atlas_id": gesture_sources["contract"]["atlas_id"],
+            "atlas_version": gesture_sources["contract"]["atlas_version"],
+            "cue_sha256": gesture_metadata["sha256"],
+            "cue_count": gesture_metadata["cue_count"],
+            "states": gesture_metadata["states"],
+        } if gesture_metadata else None,
         "audio": {"file": audio.name, "sha256": _sha256(audio)} if audio else None,
         "fps": fps,
         "frame_count": frame_count,
@@ -594,6 +638,8 @@ def _parse_args() -> argparse.Namespace:
     parser.add_argument("--expression-atlas", required=True)
     parser.add_argument("--expression-cues", required=True)
     parser.add_argument("--body-motion", required=True)
+    parser.add_argument("--gesture-atlas")
+    parser.add_argument("--gesture-cues")
     parser.add_argument("--audio")
     parser.add_argument("--ffmpeg", default="ffmpeg")
     parser.add_argument("--output-dir", default="build/edit/june-hero-expression-performance")
@@ -602,6 +648,8 @@ def _parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = _parse_args()
+    if bool(args.gesture_atlas) != bool(args.gesture_cues):
+        raise SystemExit("--gesture-atlas and --gesture-cues must be supplied together")
     report = render_hero_performance(
         args.hero_contract,
         args.viseme_contract,
@@ -611,6 +659,8 @@ def main() -> None:
         args.body_motion,
         args.output_dir,
         audio_path=args.audio,
+        gesture_contract_path=args.gesture_atlas,
+        gesture_cue_path=args.gesture_cues,
         ffmpeg=args.ffmpeg,
     )
     print(json.dumps(report, indent=2))
