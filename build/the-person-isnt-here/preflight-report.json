@@ -1,16 +1,6 @@
 {
   "applied_solution_ids": [],
-  "blockers": [
-    {
-      "code": "visual_symbol_plan",
-      "fingerprint": "5d20dc55cdcdc309",
-      "matched_solution_ids": [
-        "sol-visual-symbol-diversity-v1"
-      ],
-      "message": "generic human filler repeats for 2 consecutive scenes starting at scene 5",
-      "stage": "preflight"
-    }
-  ],
+  "blockers": [],
   "checks": {
     "animation_contract": {
       "errors": [],
@@ -35,26 +25,28 @@
     },
     "visual_symbols": {
       "family_counts": {
-        "architecture": 10,
-        "human": 7,
+        "architecture": 7,
+        "collective": 1,
+        "geometry": 1,
         "identity": 3,
-        "language": 1,
+        "object_tool": 5,
         "pathway": 1,
-        "time_memory": 2
+        "perception": 2,
+        "time_memory": 4
       },
-      "generic_human_ratio": 0.25,
-      "human_presence_ratio": 0.375,
+      "generic_human_ratio": 0.0,
+      "human_presence_ratio": 0.0833,
       "longest_family_run": {
-        "length": 3,
-        "start": 12,
-        "value": "architecture"
+        "length": 2,
+        "start": 1,
+        "value": "object_tool"
       },
       "longest_generic_human_run": {
-        "length": 2,
-        "start": 5,
-        "value": "generic_human"
+        "length": 0,
+        "start": 0,
+        "value": null
       },
-      "passes": false,
+      "passes": true,
       "policy": {
         "max_family_run": 6,
         "max_generic_human_run": 1,
@@ -68,6 +60,7 @@
         "a falling wooden block strikes a ceramic cup and sends it sl": 1,
         "a film editor scrubs rapidly through scattered clips on a la": 1,
         "a judge's wooden gavel resting untouched beside balanced sca": 1,
+        "a mechanical metronome swings beside rotating cinema lights": 1,
         "a moving film contact sheet alternates between a closing doo": 1,
         "a person relaxes their jaw and shoulders in a sunlit living": 1,
         "a reel of developed film moves past several clean empty fram": 1,
@@ -78,10 +71,9 @@
         "an illuminated bedside clock reads two in the morning while": 1,
         "an old arcade screen loads portrait fragments one by one whi": 1,
         "authentic documentary film strips travel through a projector": 1,
-        "faders move across a sound mixing console as studio lights c": 1,
-        "film reels turn through a vintage editing machine while loos": 1,
         "fingers remove blank sticky notes from around a printed port": 1,
         "hands sort partial portrait photographs into illuminated arc": 1,
+        "macro view of sprockets pulling celluloid through mechanical": 1,
         "two chairs facing each other across a warm table, one occupi": 1,
         "two empty chairs sit in clear morning light beside an open w": 1,
         "two neighboring editing suites seen through glass, each edit": 1,
@@ -108,16 +100,16 @@
         },
         {
           "effective_query": "a judge's wooden gavel resting untouched beside balanced scales while sunlight shifts across the desk",
-          "generic_human": true,
-          "human_present": true,
-          "human_role": "unspecified",
+          "generic_human": false,
+          "human_present": false,
+          "human_role": null,
           "index": 1,
           "original_query": "a judge's wooden gavel resting untouched beside balanced scales while sunlight shifts across the desk",
           "primary_symbol": "a judge's wooden gavel resting untouched beside balanced sca",
-          "query_family": "human",
+          "query_family": "object_tool",
           "selected_family": null,
           "semantic_anchor": "beat 2",
-          "symbol_family": "human",
+          "symbol_family": "object_tool",
           "text": "I know how that sounds—like I’m excusing them and blaming your imagination. I’m not.",
           "visual_function": "beat 2"
         },
@@ -129,10 +121,10 @@
           "index": 2,
           "original_query": "a falling wooden block strikes a ceramic cup and sends it sliding across a brightly side-lit table",
           "primary_symbol": "a falling wooden block strikes a ceramic cup and sends it sl",
-          "query_family": "language",
+          "query_family": "object_tool",
           "selected_family": null,
           "semantic_anchor": "beat 3",
-          "symbol_family": "language",
+          "symbol_family": "object_tool",
           "text": "Harm is real. Words land. Choices leave bruises you cannot meditate into confetti.",
           "visual_function": "beat 3"
         },
@@ -162,52 +154,52 @@
           "query_family": "architecture",
           "selected_family": null,
           "semantic_anchor": "beat 5",
-          "symbol_family": "architecture",
+          "symbol_family": "time_memory",
           "text": "Your mind keeps fragments: a tone, a slammed door, three texts, the face before “fine.”",
           "visual_function": "beat 5"
         },
         {
-          "effective_query": "film reels turn through a vintage editing machine while loose frames feed rapidly beneath a warm work lamp",
-          "generic_human": true,
-          "human_present": true,
-          "human_role": "unspecified",
+          "effective_query": "macro view of sprockets pulling celluloid through mechanical rollers beneath a warm moving work light",
+          "generic_human": false,
+          "human_present": false,
+          "human_role": null,
           "index": 5,
-          "original_query": "film reels turn through a vintage editing machine while loose frames feed rapidly beneath a warm work lamp",
-          "primary_symbol": "film reels turn through a vintage editing machine while loos",
-          "query_family": "human",
+          "original_query": "macro view of sprockets pulling celluloid through mechanical rollers beneath a warm moving work light",
+          "primary_symbol": "macro view of sprockets pulling celluloid through mechanical",
+          "query_family": "object_tool",
           "selected_family": null,
           "semantic_anchor": "beat 6",
-          "symbol_family": "human",
+          "symbol_family": "object_tool",
           "text": "Then it opens an animation studio and fills in the missing footage.",
           "visual_function": "beat 6"
         },
         {
-          "effective_query": "faders move across a sound mixing console as studio lights change color behind a spinning reel",
-          "generic_human": true,
-          "human_present": true,
-          "human_role": "unspecified",
+          "effective_query": "a mechanical metronome swings beside rotating cinema lights and a pulsing analog waveform meter",
+          "generic_human": false,
+          "human_present": false,
+          "human_role": null,
           "index": 6,
-          "original_query": "faders move across a sound mixing console as studio lights change color behind a spinning reel",
-          "primary_symbol": "faders move across a sound mixing console as studio lights c",
-          "query_family": "human",
+          "original_query": "a mechanical metronome swings beside rotating cinema lights and a pulsing analog waveform meter",
+          "primary_symbol": "a mechanical metronome swings beside rotating cinema lights",
+          "query_family": "time_memory",
           "selected_family": null,
           "semantic_anchor": "beat 7",
-          "symbol_family": "human",
+          "symbol_family": "light_atmosphere",
           "text": "It guesses motives, predicts dialogue, adjusts the lighting, and adds a suspicious soundtrack.",
           "visual_function": "beat 7"
         },
         {
           "effective_query": "a researcher studies animated paths connecting faces and gestures on a transparent display in a bright modern lab",
           "generic_human": false,
-          "human_present": false,
-          "human_role": null,
+          "human_present": true,
+          "human_role": "unspecified",
           "index": 7,
           "original_query": "a researcher studies animated paths connecting faces and gestures on a transparent display in a bright modern lab",
           "primary_symbol": "a researcher studies animated paths connecting faces and ges",
-          "query_family": "architecture",
+          "query_family": "collective",
           "selected_family": null,
           "semantic_anchor": "beat 8",
-          "symbol_family": "architecture",
+          "symbol_family": "collective",
           "text": "Psychology calls part of this theory of mind: building models of people so you can navigate them.",
           "visual_function": "beat 8"
         },
@@ -258,16 +250,16 @@
         },
         {
           "effective_query": "a wind-up theater puppet gestures dramatically beneath a moving spotlight while tiny curtains flutter",
-          "generic_human": true,
-          "human_present": true,
-          "human_role": "unspecified",
+          "generic_human": false,
+          "human_present": false,
+          "human_role": null,
           "index": 11,
           "original_query": "a wind-up theater puppet gestures dramatically beneath a moving spotlight while tiny curtains flutter",
           "primary_symbol": "a wind-up theater puppet gestures dramatically beneath a mov",
-          "query_family": "human",
+          "query_family": "object_tool",
           "selected_family": null,
           "semantic_anchor": "beat 12",
-          "symbol_family": "human",
+          "symbol_family": "object_tool",
           "text": "That is why your opponent always says the worst possible thing. Committed actor. Terrible union rules.",
           "visual_function": "beat 12"
         },
@@ -282,7 +274,7 @@
           "query_family": "architecture",
           "selected_family": null,
           "semantic_anchor": "beat 13",
-          "symbol_family": "architecture",
+          "symbol_family": "perception",
           "text": "Here is the uncomfortable turn: they are doing the same thing to you.",
           "visual_function": "beat 13"
         },
@@ -294,10 +286,10 @@
           "index": 13,
           "original_query": "two neighboring editing suites seen through glass, each editor cutting a different version of the same figure",
           "primary_symbol": "two neighboring editing suites seen through glass, each edit",
-          "query_family": "architecture",
+          "query_family": "perception",
           "selected_family": null,
           "semantic_anchor": "beat 14",
-          "symbol_family": "architecture",
+          "symbol_family": "perception",
           "text": "Somewhere, a version of you lives inside someone else’s editing room, saying lines you never approved.",
           "visual_function": "beat 14"
         },
@@ -312,22 +304,22 @@
           "query_family": "architecture",
           "selected_family": null,
           "semantic_anchor": "beat 15",
-          "symbol_family": "architecture",
+          "symbol_family": "time_memory",
           "text": "Neither model is nonsense. Each is built from real footage.",
           "visual_function": "beat 15"
         },
         {
           "effective_query": "a camera circles a sculpture, revealing a different shape with every smoothly changing angle",
           "generic_human": false,
-          "human_present": true,
-          "human_role": "performer",
+          "human_present": false,
+          "human_role": null,
           "index": 15,
           "original_query": "a camera circles a sculpture, revealing a different shape with every smoothly changing angle",
           "primary_symbol": "a camera circles a sculpture, revealing a different shape wi",
-          "query_family": "human",
+          "query_family": "geometry",
           "selected_family": null,
           "semantic_anchor": "beat 16",
-          "symbol_family": "human",
+          "symbol_family": "geometry",
           "text": "But footage is not a whole life. A camera angle can be accurate and incomplete.",
           "visual_function": "beat 16"
         },
@@ -378,46 +370,46 @@
         },
         {
           "effective_query": "two transparent film frames overlap above balanced scales, both images remaining visible as the beam settles",
-          "generic_human": true,
-          "human_present": true,
-          "human_role": "unspecified",
+          "generic_human": false,
+          "human_present": false,
+          "human_role": null,
           "index": 19,
           "original_query": "two transparent film frames overlap above balanced scales, both images remaining visible as the beam settles",
           "primary_symbol": "two transparent film frames overlap above balanced scales, b",
-          "query_family": "human",
+          "query_family": "object_tool",
           "selected_family": null,
           "semantic_anchor": "beat 20",
-          "symbol_family": "human",
+          "symbol_family": "object_tool",
           "text": "Maybe they were cruel. Maybe you misread one piece. Maybe both are true.",
           "visual_function": "beat 20"
         },
         {
           "effective_query": "a reel of developed film moves past several clean empty frames without stopping or being cut",
-          "generic_human": true,
-          "human_present": true,
-          "human_role": "unspecified",
+          "generic_human": false,
+          "human_present": false,
+          "human_role": null,
           "index": 20,
           "original_query": "a reel of developed film moves past several clean empty frames without stopping or being cut",
           "primary_symbol": "a reel of developed film moves past several clean empty fram",
-          "query_family": "human",
+          "query_family": "time_memory",
           "selected_family": null,
           "semantic_anchor": "beat 21",
-          "symbol_family": "human",
+          "symbol_family": "time_memory",
           "text": "Mercy is not deleting evidence. It is labeling missing footage “missing.”",
           "visual_function": "beat 21"
         },
         {
-          "effective_query": "a person relaxes their jaw and shoulders in a sunlit living room as curtains move gently and a kettle steams",
+          "effective_query": "magnifying lens moves across an ordinary landscape changing what is in focus daylight",
           "generic_human": false,
-          "human_present": true,
-          "human_role": "observer",
+          "human_present": false,
+          "human_role": null,
           "index": 21,
           "original_query": "a person relaxes their jaw and shoulders in a sunlit living room as curtains move gently and a kettle steams",
           "primary_symbol": "a person relaxes their jaw and shoulders in a sunlit living",
-          "query_family": "architecture",
+          "query_family": "perception",
           "selected_family": null,
           "semantic_anchor": "beat 22",
-          "symbol_family": "architecture",
+          "symbol_family": "perception",
           "text": "Look around the room. Feel your jaw. Lower your shoulders. Notice who is actually here.",
           "visual_function": "beat 22"
         },
@@ -452,33 +444,22 @@
           "visual_function": "beat 24"
         }
       ],
-      "score": 95.0,
-      "symbol_family_count": 6,
-      "violations": [
-        "generic human filler repeats for 2 consecutive scenes starting at scene 5"
-      ],
-      "warnings": [
-        "generic human filler occupies 25%; people should have a named symbolic role"
-      ]
+      "score": 100.0,
+      "symbol_family_count": 8,
+      "violations": [],
+      "warnings": []
     }
   },
   "fix_safe": true,
-  "matched_solution_ids": [
-    "sol-visual-symbol-diversity-v1"
-  ],
+  "matched_solution_ids": [],
   "narration_fingerprint": "640a734dc26fc944e6feef525f85138cd8ae915b1efa0575ed46493484d00d8f",
-  "passed": false,
+  "passed": true,
   "prevention_rule_version": 1,
   "scene_count": 24,
   "schema_version": 1,
   "script_changed": true,
   "slug": "the-person-isnt-here",
   "title": "The Person Isn't Here",
-  "warnings": [
-    {
-      "code": "visual_symbol_warning",
-      "message": "generic human filler occupies 25%; people should have a named symbolic role"
-    }
-  ],
+  "warnings": [],
   "word_count": 339
 }
