@@ -64,6 +64,26 @@ Pinned local hashes:
 
 The waveform review shows clean phrase separation, intentional quiet beats, visible contact transients, and a tapered final porch hold. The spectrum shows continuous low-level porch air, intelligible speech-band energy, sparse chime harmonics, and no hard clipping shelf.
 
+## Public reproduction
+
+GitHub Actions run [30543753516](https://github.com/prototype4-1077/Prototype-Video/actions/runs/30543753516) rebuilt the complete scene on a clean hosted runner. The 377-test picture-and-sound job passed in 7m29s; the separate Blender v8 cheek-integrated nine-viseme gate passed in 6m12s.
+
+Downloaded artifact `june-golden-scene-sound-master-v1` was independently verified under `outputs/edit/phase26-public-run-30543753516/` with a different FFmpeg build:
+
+| Public gate | Result |
+| --- | ---: |
+| Final MP4 SHA-256 | `d25aecf27692716baca0f2fae508669c67a07ce0927bb0150a06a44b314cbae9` |
+| Report SHA-256 | `99f50dd9848aff6f95a60f15c8efd22d18787a94b855ec914299bd438ca74ca7` |
+| SRT SHA-256 | `932fd66edbe438c8ac9b2eb0f9dc810b8e1238212fcb6ed23c16e820be1aad97` |
+| Picture-stream SHA-256 | `353441e6995b76494853b55910174573777f35dee319b8613466bd67ffa28851` |
+| Dimensions / clock | 1920×1080 / 30 fps / 1,164 frames / 38.8 s |
+| Streams | H.264 yuv420p / AAC 48 kHz stereo / English `mov_text` |
+| Independent AAC meter | −16.07 LUFS-I / 4.5 LU / −1.26 dBTP |
+| Full independent decode | pass |
+| Picture re-encoded | no |
+
+The hosted and independent meters agree, the final AAC stays 0.26 dB below the delivery ceiling, and the public H.264 stream hash matches the Phase 25 picture lock exactly.
+
 ## Reproduction
 
 The public workflow must first build the exact Phase 25 picture master. It then runs:
