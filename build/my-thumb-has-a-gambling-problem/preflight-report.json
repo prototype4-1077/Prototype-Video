@@ -13,18 +13,38 @@
       "passed": true,
       "policy": "runtime_generated",
       "runtime_scene_generation": true,
-      "scene_prompt_count": 5
+      "scene_prompt_count": 25
     },
     "planned_still_budget": {
-      "cap": 0.5,
-      "estimated_ratio": 0.221662,
+      "cap": 1.0,
+      "estimated_ratio": 1.0,
       "passed": true,
       "still_scene_indexes": [
         0,
+        1,
+        2,
+        3,
         4,
+        5,
+        6,
+        7,
+        8,
+        9,
         10,
+        11,
+        12,
+        13,
+        14,
+        15,
         16,
-        23
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24
       ],
       "used_exact_durations": false
     },
@@ -35,26 +55,21 @@
     "visual_symbols": {
       "family_counts": {
         "architecture": 7,
-        "human": 4,
-        "identity": 1,
         "nature": 1,
-        "object_tool": 8,
-        "perception": 1,
-        "time_memory": 1,
-        "transformation": 1,
-        "world_scale": 1
+        "object_tool": 7,
+        "world_scale": 10
       },
-      "generic_human_ratio": 0.12,
-      "human_presence_ratio": 0.4,
+      "generic_human_ratio": 0.0,
+      "human_presence_ratio": 0.2,
       "longest_family_run": {
-        "length": 3,
-        "start": 22,
-        "value": "architecture"
+        "length": 5,
+        "start": 5,
+        "value": "world_scale"
       },
       "longest_generic_human_run": {
-        "length": 1,
-        "start": 5,
-        "value": "generic_human"
+        "length": 0,
+        "start": 0,
+        "value": null
       },
       "passes": true,
       "policy": {
@@ -110,12 +125,12 @@
           "visual_function": "beat 1"
         },
         {
-          "effective_query": "funny 2D cartoon animation of a neglected rain cloud waiting outside while a smartphone rolls out a red carpet for nonsense, bold outlines, colorful editorial illustration",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 1,
-          "original_query": "funny 2D cartoon animation of a neglected rain cloud waiting outside while a smartphone rolls out a red carpet for nonsense, bold outlines, colorful editorial illustration",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of a neglected rain cloud waiting",
           "query_family": "nature",
           "selected_family": null,
@@ -125,12 +140,12 @@
           "visual_function": "beat 2"
         },
         {
-          "effective_query": "funny 2D cartoon animation of a smartphone transformed into a miniature casino with a tiny dental chair beside the slot machines, playful editorial illustration",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 2,
-          "original_query": "funny 2D cartoon animation of a smartphone transformed into a miniature casino with a tiny dental chair beside the slot machines, playful editorial illustration",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of a smartphone transformed into",
           "query_family": "object_tool",
           "selected_family": null,
@@ -140,14 +155,14 @@
           "visual_function": "beat 3"
         },
         {
-          "effective_query": "person removes a plain mask before a mirror in natural daylight realistic documentary",
+          "effective_query": "",
           "generic_human": false,
-          "human_present": true,
+          "human_present": false,
           "human_role": "unspecified",
           "index": 3,
-          "original_query": "funny 2D cartoon animation inside a clockless windowless pocket casino where slot machines dispense emotions and the carpet pattern has expressive eyebrows, bold comic art",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation inside a clockless windowless poc",
-          "query_family": "identity",
+          "query_family": "world_scale",
           "selected_family": null,
           "semantic_anchor": "beat 4",
           "symbol_family": "identity",
@@ -170,14 +185,14 @@
           "visual_function": "beat 5"
         },
         {
-          "effective_query": "funny 2D cartoon animation of an overconfident kitchen presenter pointing dramatically at empty floating placards while a toaster looks embarrassed, editorial comic style",
-          "generic_human": true,
-          "human_present": true,
+          "effective_query": "",
+          "generic_human": false,
+          "human_present": false,
           "human_role": "unspecified",
           "index": 5,
-          "original_query": "funny 2D cartoon animation of an overconfident kitchen presenter pointing dramatically at empty floating placards while a toaster looks embarrassed, editorial comic style",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of an overconfident kitchen prese",
-          "query_family": "human",
+          "query_family": "world_scale",
           "selected_family": null,
           "semantic_anchor": "beat 6",
           "symbol_family": "performance",
@@ -185,14 +200,14 @@
           "visual_function": "beat 6"
         },
         {
-          "effective_query": "funny 2D cartoon animation of a fortune teller algorithm examining a crystal ball filled with snack wrappers and ridiculous search history symbols, bold playful illustration",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 6,
-          "original_query": "funny 2D cartoon animation of a fortune teller algorithm examining a crystal ball filled with snack wrappers and ridiculous search history symbols, bold playful illustration",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of a fortune teller algorithm exa",
-          "query_family": "perception",
+          "query_family": "world_scale",
           "selected_family": null,
           "semantic_anchor": "beat 7",
           "symbol_family": "perception",
@@ -200,14 +215,14 @@
           "visual_function": "beat 7"
         },
         {
-          "effective_query": "funny 2D cartoon animation of a heroic loaf wearing a teal hoodie leaving home with a tiny suitcase while shocked toast relatives wave goodbye, absurd editorial cartoon",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 7,
-          "original_query": "funny 2D cartoon animation of a heroic loaf wearing a teal hoodie leaving home with a tiny suitcase while shocked toast relatives wave goodbye, absurd editorial cartoon",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of a heroic loaf wearing a teal h",
-          "query_family": "transformation",
+          "query_family": "world_scale",
           "selected_family": null,
           "semantic_anchor": "beat 8",
           "symbol_family": "transformation",
@@ -215,14 +230,14 @@
           "visual_function": "beat 8"
         },
         {
-          "effective_query": "funny 2D cartoon animation of an elegant waiter presenting a covered silver platter containing a small thunderstorm labeled only by visual panic symbols, vintage comic timing",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 8,
-          "original_query": "funny 2D cartoon animation of an elegant waiter presenting a covered silver platter containing a small thunderstorm labeled only by visual panic symbols, vintage comic timing",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of an elegant waiter presenting a",
-          "query_family": "object_tool",
+          "query_family": "world_scale",
           "selected_family": null,
           "semantic_anchor": "beat 9",
           "symbol_family": "object_tool",
@@ -230,14 +245,14 @@
           "visual_function": "beat 9"
         },
         {
-          "effective_query": "funny 2D cartoon animation of bizarre videos performing at a talent audition before a frazzled brain holding score cards, stage lights and slapstick reactions",
+          "effective_query": "",
           "generic_human": false,
-          "human_present": true,
+          "human_present": false,
           "human_role": "performer",
           "index": 9,
-          "original_query": "funny 2D cartoon animation of bizarre videos performing at a talent audition before a frazzled brain holding score cards, stage lights and slapstick reactions",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of bizarre videos performing at a",
-          "query_family": "human",
+          "query_family": "world_scale",
           "selected_family": null,
           "semantic_anchor": "beat 10",
           "symbol_family": "performance",
@@ -260,12 +275,12 @@
           "visual_function": "beat 11"
         },
         {
-          "effective_query": "funny 2D cartoon animation of a smartphone slamming an emergency button as glitter cannons blast a sleepy cartoon brain, bold color and comic recoil",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 11,
-          "original_query": "funny 2D cartoon animation of a smartphone slamming an emergency button as glitter cannons blast a sleepy cartoon brain, bold color and comic recoil",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of a smartphone slamming an emerg",
           "query_family": "object_tool",
           "selected_family": null,
@@ -275,14 +290,14 @@
           "visual_function": "beat 12"
         },
         {
-          "effective_query": "funny 2D cartoon animation of four calm ticking dots followed by an absurd theatrical escape from beneath a single sofa cushion, playful visual exaggeration",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 12,
-          "original_query": "funny 2D cartoon animation of four calm ticking dots followed by an absurd theatrical escape from beneath a single sofa cushion, playful visual exaggeration",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of four calm ticking dots followe",
-          "query_family": "time_memory",
+          "query_family": "world_scale",
           "selected_family": null,
           "semantic_anchor": "beat 13",
           "symbol_family": "time_memory",
@@ -290,12 +305,12 @@
           "visual_function": "beat 13"
         },
         {
-          "effective_query": "funny 2D cartoon animation of peaceful Silence as a polite glowing visitor at a door while the entire house hurriedly goes dark, storybook comic style",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 13,
-          "original_query": "funny 2D cartoon animation of peaceful Silence as a polite glowing visitor at a door while the entire house hurriedly goes dark, storybook comic style",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of peaceful silence as a polite g",
           "query_family": "architecture",
           "selected_family": null,
@@ -305,12 +320,12 @@
           "visual_function": "beat 14"
         },
         {
-          "effective_query": "funny 2D cartoon animation of a smug smartphone conducting a customer survey with only a giant spinning wheel and no answer buttons, clean editorial cartoon",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 14,
-          "original_query": "funny 2D cartoon animation of a smug smartphone conducting a customer survey with only a giant spinning wheel and no answer buttons, clean editorial cartoon",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of a smug smartphone conducting a",
           "query_family": "object_tool",
           "selected_family": null,
@@ -320,12 +335,12 @@
           "visual_function": "beat 15"
         },
         {
-          "effective_query": "funny 2D cartoon animation of a smartphone checking a pulse and immediately feeding another endless ribbon of videos into the frame, slapstick machine motion",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 15,
-          "original_query": "funny 2D cartoon animation of a smartphone checking a pulse and immediately feeding another endless ribbon of videos into the frame, slapstick machine motion",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of a smartphone checking a pulse",
           "query_family": "architecture",
           "selected_family": null,
@@ -350,12 +365,12 @@
           "visual_function": "beat 17"
         },
         {
-          "effective_query": "funny 2D cartoon animation of one room rapidly changing wallpaper while increasingly frantic presenters pop through identical doors, visual loop comedy",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 17,
-          "original_query": "funny 2D cartoon animation of one room rapidly changing wallpaper while increasingly frantic presenters pop through identical doors, visual loop comedy",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of one room rapidly changing wall",
           "query_family": "architecture",
           "selected_family": null,
@@ -365,14 +380,14 @@
           "visual_function": "beat 18"
         },
         {
-          "effective_query": "funny tender 2D cartoon animation of a glowing final-post icon attempting to tuck a lumpy cartoon brain into a tiny bed, cozy absurd editorial art",
-          "generic_human": true,
-          "human_present": true,
+          "effective_query": "",
+          "generic_human": false,
+          "human_present": false,
           "human_role": "unspecified",
           "index": 18,
-          "original_query": "funny tender 2D cartoon animation of a glowing final-post icon attempting to tuck a lumpy cartoon brain into a tiny bed, cozy absurd editorial art",
+          "original_query": null,
           "primary_symbol": "funny tender 2d cartoon animation of a glowing final-post ic",
-          "query_family": "human",
+          "query_family": "world_scale",
           "selected_family": null,
           "semantic_anchor": "beat 19",
           "symbol_family": "care",
@@ -380,12 +395,12 @@
           "visual_function": "beat 19"
         },
         {
-          "effective_query": "funny 2D cartoon animation of a casino architect angrily erasing an EXIT sign from an infinite smartphone blueprint, bold graphic comedy",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 19,
-          "original_query": "funny 2D cartoon animation of a casino architect angrily erasing an EXIT sign from an infinite smartphone blueprint, bold graphic comedy",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of a casino architect angrily era",
           "query_family": "object_tool",
           "selected_family": null,
@@ -395,12 +410,12 @@
           "visual_function": "beat 20"
         },
         {
-          "effective_query": "funny 2D cartoon animation of a pajama-clad person calmly holding a gigantic roaring attention-harvesting machine disguised as a tiny phone, scale contrast comedy",
+          "effective_query": "",
           "generic_human": false,
           "human_present": true,
           "human_role": "unspecified",
           "index": 20,
-          "original_query": "funny 2D cartoon animation of a pajama-clad person calmly holding a gigantic roaring attention-harvesting machine disguised as a tiny phone, scale contrast comedy",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of a pajama-clad person calmly ho",
           "query_family": "object_tool",
           "selected_family": null,
@@ -410,14 +425,14 @@
           "visual_function": "beat 21"
         },
         {
-          "effective_query": "funny 2D cartoon animation of an award ceremony in a ridiculous attention farm where thumbs receive medals beside notification crops, sunny satirical illustration",
-          "generic_human": true,
-          "human_present": true,
+          "effective_query": "",
+          "generic_human": false,
+          "human_present": false,
           "human_role": "unspecified",
           "index": 21,
-          "original_query": "funny 2D cartoon animation of an award ceremony in a ridiculous attention farm where thumbs receive medals beside notification crops, sunny satirical illustration",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of an award ceremony in a ridicul",
-          "query_family": "human",
+          "query_family": "world_scale",
           "selected_family": null,
           "semantic_anchor": "beat 22",
           "symbol_family": "nature_growth",
@@ -425,12 +440,12 @@
           "visual_function": "beat 22"
         },
         {
-          "effective_query": "gentle funny 2D cartoon animation of a hand pausing inches from a glowing phone while a tiny peaceful doorway opens in the gap, expressive editorial illustration",
+          "effective_query": "",
           "generic_human": false,
           "human_present": true,
           "human_role": "explorer",
           "index": 22,
-          "original_query": "gentle funny 2D cartoon animation of a hand pausing inches from a glowing phone while a tiny peaceful doorway opens in the gap, expressive editorial illustration",
+          "original_query": null,
           "primary_symbol": "gentle funny 2d cartoon animation of a hand pausing inches f",
           "query_family": "architecture",
           "selected_family": null,
@@ -455,12 +470,12 @@
           "visual_function": "beat 24"
         },
         {
-          "effective_query": "funny 2D cartoon animation of a thumb relaxing in a tiny retirement chair while the phone waits across the room and the real sky shines through an open window, warm comic ending",
+          "effective_query": "",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 24,
-          "original_query": "funny 2D cartoon animation of a thumb relaxing in a tiny retirement chair while the phone waits across the room and the real sky shines through an open window, warm comic ending",
+          "original_query": null,
           "primary_symbol": "funny 2d cartoon animation of a thumb relaxing in a tiny ret",
           "query_family": "architecture",
           "selected_family": null,
@@ -470,8 +485,8 @@
           "visual_function": "beat 25"
         }
       ],
-      "score": 97.6,
-      "symbol_family_count": 9,
+      "score": 100.0,
+      "symbol_family_count": 4,
       "violations": [],
       "warnings": []
     }
@@ -486,6 +501,11 @@
   "script_changed": false,
   "slug": "my-thumb-has-a-gambling-problem",
   "title": "My Thumb Has a Gambling Problem",
-  "warnings": [],
+  "warnings": [
+    {
+      "code": "still_budget_near_cap",
+      "message": "Estimated still ratio 100.0% is within 3 points of the cap; exact narration timing may push it over."
+    }
+  ],
   "word_count": 397
 }
