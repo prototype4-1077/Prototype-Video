@@ -1,6 +1,6 @@
 {
-  "finished_at": "2026-07-31T01:00:05+00:00",
-  "github_run_id": "30594148346",
+  "finished_at": "2026-07-31T01:36:45+00:00",
+  "github_run_id": "30595431929",
   "incidents": [],
   "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/my-thumb-has-a-gambling-problem/final_youtube.mp4",
   "mode": "recover",
@@ -10,16 +10,8 @@
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.0,
       "idle_timeout_s": 33.01,
-      "sample_count": 36,
+      "sample_count": 37,
       "soft_timeout_s": 33.01,
-      "source": "history"
-    },
-    "altsheet": {
-      "hard_timeout_s": 300.0,
-      "historical_p95_s": 6.05,
-      "idle_timeout_s": 48.14,
-      "sample_count": 30,
-      "soft_timeout_s": 48.14,
       "source": "history"
     },
     "assemble": {
@@ -42,39 +34,31 @@
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.03,
       "idle_timeout_s": 33.09,
-      "sample_count": 80,
+      "sample_count": 82,
       "soft_timeout_s": 33.09,
       "source": "history"
     },
     "ffmpeg": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 30.44,
-      "idle_timeout_s": 121.31,
-      "sample_count": 176,
-      "soft_timeout_s": 121.31,
-      "source": "history"
-    },
-    "footage": {
-      "hard_timeout_s": 600.0,
-      "historical_p95_s": 236.49,
-      "idle_timeout_s": 255.0,
-      "sample_count": 33,
-      "soft_timeout_s": 510.0,
+      "historical_p95_s": 30.26,
+      "idle_timeout_s": 120.79,
+      "sample_count": 180,
+      "soft_timeout_s": 120.79,
       "source": "history"
     },
     "hero": {
       "hard_timeout_s": 1200.0,
-      "historical_p95_s": 50.09,
-      "idle_timeout_s": 180.28,
-      "sample_count": 134,
-      "soft_timeout_s": 180.28,
+      "historical_p95_s": 50.2,
+      "idle_timeout_s": 180.59,
+      "sample_count": 139,
+      "soft_timeout_s": 180.59,
       "source": "history"
     },
     "prep": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 16.8,
+      "historical_p95_s": 16.65,
       "idle_timeout_s": 120.0,
-      "sample_count": 36,
+      "sample_count": 37,
       "soft_timeout_s": 120.0,
       "source": "history"
     },
@@ -96,31 +80,31 @@
     },
     "transcribe": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 23.28,
+      "historical_p95_s": 23.23,
       "idle_timeout_s": 180.0,
-      "sample_count": 36,
+      "sample_count": 37,
       "soft_timeout_s": 180.0,
       "source": "history"
     },
     "tts": {
       "hard_timeout_s": 480.0,
-      "historical_p95_s": 74.56,
+      "historical_p95_s": 74.46,
       "idle_timeout_s": 180.0,
-      "sample_count": 36,
-      "soft_timeout_s": 253.67,
+      "sample_count": 37,
+      "soft_timeout_s": 253.37,
       "source": "history"
     }
   },
   "quality": {
     "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/my-thumb-has-a-gambling-problem",
-    "checked_at": "2026-07-31T01:00:05+00:00",
+    "checked_at": "2026-07-31T01:36:44+00:00",
     "deep_decode": true,
-    "expected_duration_s": 159.876,
+    "expected_duration_s": 165.309,
     "failures": [],
     "mode": "delivery",
     "outputs": {
       "youtube": {
-        "avg_kbps": 5769,
+        "avg_kbps": 5890,
         "deep_scan": {
           "black_intervals": 0,
           "black_longest_s": 0.0,
@@ -137,24 +121,24 @@
         },
         "duration_difference_s": 0.024,
         "exists": true,
-        "expected_duration_s": 159.876,
+        "expected_duration_s": 165.309,
         "failures": [],
         "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/my-thumb-has-a-gambling-problem/final_youtube.mp4",
         "probe": {
           "audio_codec": "aac",
-          "audio_duration_s": 159.891995,
-          "bit_rate": 5768515.0,
-          "duration_s": 159.9,
+          "audio_duration_s": 165.326009,
+          "bit_rate": 5890246.0,
+          "duration_s": 165.333333,
           "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
           "fps": 30.0,
           "has_audio": true,
           "has_video": true,
           "height": 1080,
           "video_codec": "h264",
-          "video_duration_s": 159.9,
+          "video_duration_s": 165.333333,
           "width": 1920
         },
-        "size_bytes": 115298204,
+        "size_bytes": 121731771,
         "warnings": []
       }
     },
@@ -173,166 +157,168 @@
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (1156.3s).",
+      "reason": "Largest measured latency contribution in this run (1713.4s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "93746bae77c8450d90b3d7a6583226fa",
+  "run_id": "71a919fc96344ada91a17941f747219e",
   "schema_version": 1,
   "slug": "my-thumb-has-a-gambling-problem",
   "stages": {
     "align": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 1.002,
-      "p95_success_s": 1.002,
+      "p50_success_s": 1.003,
+      "p95_success_s": 1.003,
       "success_durations_s": [
-        1.002
+        1.003
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 1.002
-    },
-    "altsheet": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 1.007,
-      "p95_success_s": 1.007,
-      "success_durations_s": [
-        1.007
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 1.007
+      "total_duration_s": 1.003
     },
     "assemble": {
       "attempts": 25,
       "failures": 0,
-      "p50_success_s": 28.163,
-      "p95_success_s": 38.608,
+      "p50_success_s": 28.116,
+      "p95_success_s": 36.358,
       "success_durations_s": [
-        41.182,
-        24.132,
-        26.138,
-        33.18,
-        32.163,
-        24.123,
-        20.096,
-        36.2,
-        39.21,
-        26.108,
-        34.156,
-        26.14,
-        30.157,
-        28.163,
-        21.132,
-        28.161,
-        11.048,
-        35.203,
-        35.183,
-        24.117,
-        32.174,
-        24.135,
-        32.17,
-        26.125,
-        35.209
+        40.213,
+        29.145,
+        24.111,
+        28.116,
+        33.142,
+        23.109,
+        18.059,
+        31.141,
+        37.153,
+        22.089,
+        33.137,
+        25.118,
+        27.131,
+        23.098,
+        20.08,
+        28.136,
+        13.069,
+        28.136,
+        33.178,
+        20.105,
+        29.154,
+        21.073,
+        31.148,
+        27.132,
+        30.128
       ],
       "successes": 25,
       "timeouts": 0,
-      "total_duration_s": 725.805
+      "total_duration_s": 676.101
     },
     "build_pass": {
       "attempts": 5,
       "failures": 0,
-      "p50_success_s": 95.111,
-      "p95_success_s": 675.879,
+      "p50_success_s": 61.044,
+      "p95_success_s": 859.551,
       "success_durations_s": [
-        48.021,
-        21.012,
-        95.111,
-        196.357,
-        795.76
+        1.002,
+        61.044,
+        18.019,
+        888.143,
+        745.184
       ],
       "successes": 5,
       "timeouts": 0,
-      "total_duration_s": 1156.261
+      "total_duration_s": 1713.392
     },
     "credits": {
       "attempts": 2,
       "failures": 0,
       "p50_success_s": 1.006,
-      "p95_success_s": 1.007,
+      "p95_success_s": 1.006,
       "success_durations_s": [
-        1.006,
-        1.007
+        1.005,
+        1.006
       ],
       "successes": 2,
       "timeouts": 0,
-      "total_duration_s": 2.013
+      "total_duration_s": 2.011
     },
     "ffmpeg": {
       "attempts": 4,
       "failures": 0,
-      "p50_success_s": 5.515,
-      "p95_success_s": 15.412,
+      "p50_success_s": 5.514,
+      "p95_success_s": 15.415,
       "success_durations_s": [
-        1.007,
-        5.015,
-        17.07,
-        6.015
+        1.009,
+        5.014,
+        17.074,
+        6.014
       ],
       "successes": 4,
       "timeouts": 0,
-      "total_duration_s": 29.107
-    },
-    "footage": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 94.113,
-      "p95_success_s": 94.113,
-      "success_durations_s": [
-        94.113
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 94.113
+      "total_duration_s": 29.111
     },
     "hero": {
-      "attempts": 5,
+      "attempts": 25,
       "failures": 0,
-      "p50_success_s": 44.079,
-      "p95_success_s": 49.88,
+      "p50_success_s": 43.07,
+      "p95_success_s": 47.867,
       "success_durations_s": [
-        15.046,
-        45.08,
-        44.079,
-        37.063,
-        51.08
+        15.025,
+        12.014,
+        46.04,
+        47.044,
+        16.021,
+        25.029,
+        45.049,
+        49.056,
+        44.048,
+        41.041,
+        14.024,
+        33.046,
+        44.054,
+        44.057,
+        46.057,
+        47.073,
+        7.019,
+        39.062,
+        43.07,
+        43.061,
+        48.066,
+        44.068,
+        45.072,
+        11.03,
+        35.066
       ],
-      "successes": 5,
+      "successes": 25,
       "timeouts": 0,
-      "total_duration_s": 192.348
+      "total_duration_s": 884.192
     },
     "prep": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 2.006,
-      "p95_success_s": 2.006,
+      "p50_success_s": 2.005,
+      "p95_success_s": 2.005,
       "success_durations_s": [
-        2.006
+        2.005
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 2.006
+      "total_duration_s": 2.005
     },
     "probe": {
       "attempts": 26,
       "failures": 0,
       "p50_success_s": 1.007,
-      "p95_success_s": 1.008,
+      "p95_success_s": 1.009,
       "success_durations_s": [
         1.008,
         1.007,
+        1.009,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.009,
         1.007,
         1.007,
         1.007,
@@ -341,62 +327,56 @@
         1.007,
         1.007,
         1.007,
-        1.007,
-        1.007,
-        1.008,
-        1.007,
+        1.009,
         1.007,
         1.007,
         1.007,
-        1.007,
+        1.009,
         1.007,
         1.007,
         1.007,
         1.007,
-        1.007,
-        1.007,
-        1.007,
-        1.008
+        1.007
       ],
       "successes": 26,
       "timeouts": 0,
-      "total_duration_s": 26.185
+      "total_duration_s": 26.191
     },
     "quality": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 19.078,
-      "p95_success_s": 19.078,
+      "p50_success_s": 19.068,
+      "p95_success_s": 19.068,
       "success_durations_s": [
-        19.078
+        19.068
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 19.078
+      "total_duration_s": 19.068
     },
     "transcribe": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 17.012,
-      "p95_success_s": 17.012,
+      "p50_success_s": 15.015,
+      "p95_success_s": 15.015,
       "success_durations_s": [
-        17.012
+        15.015
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 17.012
+      "total_duration_s": 15.015
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 47.021,
-      "p95_success_s": 47.021,
+      "p50_success_s": 60.043,
+      "p95_success_s": 60.043,
       "success_durations_s": [
-        47.021
+        60.043
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 47.021
+      "total_duration_s": 60.043
     }
   },
   "status": "done"
