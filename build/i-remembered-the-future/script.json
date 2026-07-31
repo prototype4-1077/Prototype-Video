@@ -59,7 +59,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a clock melting into silver numerical rain across a dark room, time droplets becoming fractal rivers and luminous symbols, psychedelic cinematic realism, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a clock melting into silver numerical rain across a dark room, time droplets becoming fractal rivers and luminous symbols, psychedelic cinematic realism, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 0.0,
+   "duration": 6.78,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_00.jpg",
+   "still_reference_signature": "e23b3ae500b4541fb9f4",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_00.mp4",
+   "clip_fingerprint": "0f5525344e03b5c9",
+   "hero_generated": true,
+   "hero_raw_signature": "9cabc2febcbf35eb9e9e",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "One second stretched until it held weather, distance, and its own horizon.",
@@ -75,7 +102,25 @@
    "narrative_mode": "stock_ok",
    "query": "one glowing second expanding into a complete alien landscape with storms, mountains, and a curved impossible horizon",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 6.78,
+   "duration": 6.38,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.4809,
+    "active_region_ratio": 0.6348,
+    "frame_difference": 25.2931
+   },
+   "clip_fingerprint": "5380c0d9e0010b52",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_01.mp4",
+   "stock_id": 33360025,
+   "pexels_id": 33360025,
+   "stock_frame_url": "https://images.pexels.com/videos/33360025/pexels-photo-33360025.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/futuristic-alien-landscape-with-neon-glow-33360025/"
   },
   {
    "text": "The present split open. Behind it stood every past moment and every moment I had not reached.",
@@ -91,7 +136,25 @@
    "narrative_mode": "stock_ok",
    "query": "the present cracking like glass to reveal layered past and future worlds rotating inside one another",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 13.16,
+   "duration": 7.7,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.6201,
+    "active_region_ratio": 0.9968,
+    "frame_difference": 75.5856
+   },
+   "clip_fingerprint": "8b6c3dd2d4ace6d2",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_02.mp4",
+   "stock_id": 30064776,
+   "pexels_id": 30064776,
+   "stock_frame_url": "https://images.pexels.com/videos/30064776/3d-digital-dj-neon-30064776.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/futuristic-neon-digital-abstract-landscape-30064776/"
   },
   {
    "text": "They were nested, like dreams sleeping inside dreams that would someday remember them.",
@@ -107,7 +170,25 @@
    "narrative_mode": "stock_ok",
    "query": "nested dream spheres containing sleepers who dream smaller universes, recursive kaleidoscopic descent, deep psychedelic motion",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 20.86,
+   "duration": 5.86,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.4478,
+    "active_region_ratio": 0.9642,
+    "frame_difference": 19.1131
+   },
+   "clip_fingerprint": "551462610774ad37",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_03.mp4",
+   "stock_id": 38782782,
+   "pexels_id": 38782782,
+   "stock_frame_url": "https://images.pexels.com/videos/38782782/abstract-abstract-animation-abstract-background-animation-38782782.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/dynamic-abstract-spheres-in-motion-loop-38782782/"
   },
   {
    "text": "A tree rose before me. Every branch was a life I could become; every leaf held another face.",
@@ -123,7 +204,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a colossal branching tree of possible lives, millions of leaves holding alternate faces, roots threading through galaxies, temporal lightning, aurora sap, fractal growth, psychedelic hero art, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a colossal branching tree of possible lives, millions of leaves holding alternate faces, roots threading through galaxies, temporal lightning, aurora sap, fractal growth, psychedelic hero art, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 26.72,
+   "duration": 10.72,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_04.jpg",
+   "still_reference_signature": "5f9c2f5714a808c2287f",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_04.mp4",
+   "clip_fingerprint": "1e53da89db7ba04d",
+   "hero_generated": true,
+   "hero_raw_signature": "04aef7db3a9bd2d8bd83",
+   "motion_recipe": "organic",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "I saw myself wealthy and hollow. Poor and radiant. Loved by crowds. Unknown and finally honest.",
@@ -139,7 +247,25 @@
    "narrative_mode": "stock_ok",
    "query": "four alternate selves orbiting a crystal center, luxury turning hollow, poverty glowing, crowds dissolving, solitude becoming transparent",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 37.44,
+   "duration": 10.18,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.3059,
+    "active_region_ratio": 0.9765,
+    "frame_difference": 14.8751
+   },
+   "clip_fingerprint": "4adcea76cb726060",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_05.mp4",
+   "stock_id": 36016993,
+   "pexels_id": 36016993,
+   "stock_frame_url": "https://images.pexels.com/videos/36016993/pexels-photo-36016993.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/mesmerizing-close-up-of-glowing-bubbles-36016993/"
   },
   {
    "text": "None felt imaginary. Each looked back with the wounded dignity of someone I had abandoned.",
@@ -156,7 +282,25 @@
    "query": "alternate selves behind translucent doorways reaching toward the viewer as abandoned timelines drift like torn silk",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 47.62,
+   "duration": 7.26,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.3469,
+    "active_region_ratio": 0.58,
+    "frame_difference": 11.8932
+   },
+   "clip_fingerprint": "8ca3a05b3f8cc778",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_06.mp4",
+   "stock_id": 10264387,
+   "pexels_id": 10264387,
+   "stock_frame_url": "https://images.pexels.com/videos/10264387/pexels-photo-10264387.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/woman-dancing-near-window-10264387/"
   },
   {
    "text": "I asked which was real. All were real as possibility. None were promised.",
@@ -172,7 +316,25 @@
    "narrative_mode": "stock_ok",
    "query": "many luminous roads forming and dissolving before they touch the horizon, possibility clouds pulsing above each route",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 54.88,
+   "duration": 9.12,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.7023,
+    "active_region_ratio": 0.7448,
+    "frame_difference": 8.0956
+   },
+   "clip_fingerprint": "a9aeddb19337baeb",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_07.mp4",
+   "stock_id": 29013896,
+   "pexels_id": 29013896,
+   "stock_frame_url": "https://images.pexels.com/videos/29013896/california-cloud-driving-fast-29013896.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/sunrise-road-trip-on-interstate-5-29013896/"
   },
   {
    "text": "The future was not a destination. It was weather gathering around every choice.",
@@ -188,7 +350,25 @@
    "narrative_mode": "stock_ok",
    "query": "a human figure at a crossroads while psychedelic weather systems spiral from each small gesture and decision",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 64.0,
+   "duration": 6.46,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.0074,
+    "active_region_ratio": 0.5115,
+    "frame_difference": 2.8871
+   },
+   "clip_fingerprint": "207bad49dbe0f601",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_08.mp4",
+   "stock_id": 36155033,
+   "pexels_id": 36155033,
+   "stock_frame_url": "https://images.pexels.com/videos/36155033/pexels-photo-36155033.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/silhouette-of-person-under-dramatic-stormy-sky-36155033/"
   },
   {
    "text": "A word became wind. Kindness changed the temperature. Fear darkened an entire season.",
@@ -205,7 +385,25 @@
    "query": "spoken breath becoming colored wind, a kind hand warming a frozen landscape, a small dark seed expanding into winter",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 70.46,
+   "duration": 8.5,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.8821,
+    "active_region_ratio": 0.9697,
+    "frame_difference": 8.8378
+   },
+   "clip_fingerprint": "1bbc71b962ea73a4",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_09.mp4",
+   "stock_id": 19642406,
+   "pexels_id": 19642406,
+   "stock_frame_url": "https://images.pexels.com/videos/19642406/beautiful-close-up-cold-fall-19642406.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/snow-falling-in-winter-19642406/"
   },
   {
    "text": "Every decision rang like a tuning fork. Distant versions of me trembled in response.",
@@ -221,7 +419,25 @@
    "narrative_mode": "stock_ok",
    "query": "a luminous tuning fork sending waves through a cathedral of alternate selves, bodies resonating as geometric color",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 78.96,
+   "duration": 7.68,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.593,
+    "active_region_ratio": 0.9914,
+    "frame_difference": 28.4727
+   },
+   "clip_fingerprint": "174d172a714fb389",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_10.mp4",
+   "stock_id": 33276497,
+   "pexels_id": 33276497,
+   "stock_frame_url": "https://images.pexels.com/videos/33276497/pexels-photo-33276497.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/dynamic-abstract-red-and-blue-light-tunnel-33276497/"
   },
   {
    "text": "Then time became a prism. One beam entered; a thousand lives emerged, each claiming to be the original light.",
@@ -237,7 +453,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, a colossal crystal time-prism splitting one white life into thousands of living timelines, faces, cities, births, and deaths, rotating sacred geometry, prismatic shockwaves, psychedelic hero spectacle, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, a colossal crystal time-prism splitting one white life into thousands of living timelines, faces, cities, births, and deaths, rotating sacred geometry, prismatic shockwaves, psychedelic hero spectacle, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 86.64,
+   "duration": 10.74,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_11.jpg",
+   "still_reference_signature": "8fa95235f8c7c06fdf49",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_11.mp4",
+   "clip_fingerprint": "390b341dfdc158df",
+   "hero_generated": true,
+   "hero_raw_signature": "6e11d8c73f073ba54940",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "I saw my death through several doors. Each opened into the same impossible brightness.",
@@ -253,7 +496,25 @@
    "narrative_mode": "stock_ok",
    "query": "many distinct doors at the ends of different lives opening into one gentle impossible radiance, no horror, celestial depth",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 97.38,
+   "duration": 6.46,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.408,
+    "active_region_ratio": 0.9942,
+    "frame_difference": 35.0565
+   },
+   "clip_fingerprint": "95a0d54d03d3cf35",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_12.mp4",
+   "stock_id": 6982088,
+   "pexels_id": 6982088,
+   "stock_frame_url": "https://images.pexels.com/videos/6982088/pexels-photo-6982088.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-man-walking-in-a-hallway-while-carrying-a-disco-ball-6982088/"
   },
   {
    "text": "I saw my birth as eternity narrowing itself enough to become touchable.",
@@ -271,7 +532,25 @@
    "motion_kind": "video",
    "motion_mode": "stock",
    "symbol_query": "seed germinates and roots spread through dark soil time lapse with soft daylight",
-   "symbol_family_source": "planner"
+   "symbol_family_source": "planner",
+   "start": 103.84,
+   "duration": 8.3,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 13.0854,
+    "active_region_ratio": 0.9979,
+    "frame_difference": 25.1407
+   },
+   "clip_fingerprint": "92feb1c0a84ca1e9",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_13.mp4",
+   "stock_id": 38738157,
+   "pexels_id": 38738157,
+   "stock_frame_url": "https://images.pexels.com/videos/38738157/agriculture-agronomy-chernozem-cinematic-science-38738157.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/macro-shot-of-bean-seeds-in-fertile-soil-38738157/"
   },
   {
    "text": "My life turned inside out. Memory was the shadow of a much larger shape.",
@@ -287,7 +566,25 @@
    "narrative_mode": "stock_ok",
    "query": "a lifetime ribbon turning inside out to reveal a vast multidimensional sculpture casting memories as moving shadows",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 112.14,
+   "duration": 7.76,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.2875,
+    "active_region_ratio": 0.3075,
+    "frame_difference": 2.588
+   },
+   "clip_fingerprint": "1e1731285f20030f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_14.mp4",
+   "stock_id": 13306928,
+   "pexels_id": 13306928,
+   "stock_frame_url": "https://images.pexels.com/videos/13306928/pexels-photo-13306928.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/colorful-animation-on-black-background-13306928/"
   },
   {
    "text": "Something looked backward through me. The future remembered me before I became it.",
@@ -303,7 +600,25 @@
    "narrative_mode": "stock_ok",
    "query": "a radiant future silhouette looking backward through a tunnel of younger selves, gaze traveling against the current of time",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 119.9,
+   "duration": 7.49,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.7653,
+    "active_region_ratio": 0.8535,
+    "frame_difference": 10.0745
+   },
+   "clip_fingerprint": "e9f9659822ca209c",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_15.mp4",
+   "stock_id": 35186847,
+   "pexels_id": 35186847,
+   "stock_frame_url": "https://images.pexels.com/videos/35186847/pexels-photo-35186847.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/silhouettes-walking-through-dark-tunnel-35186847/"
   },
   {
    "text": "Déjà vu was a message sent upstream, a ripple reaching the stone before impact.",
@@ -319,7 +634,25 @@
    "narrative_mode": "stock_ok",
    "query": "a psychedelic river flowing backward as concentric ripples reach a floating stone before impact, time reversing around it",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 127.39,
+   "duration": 8.13,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.5153,
+    "active_region_ratio": 0.9055,
+    "frame_difference": 14.8935
+   },
+   "clip_fingerprint": "09d93a45668f5b1e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_16.mp4",
+   "stock_id": 4174025,
+   "pexels_id": 4174025,
+   "stock_frame_url": "https://images.pexels.com/videos/4174025/pexels-photo-4174025.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/skip-rock-throwing-over-the-river-surface-4174025/"
   },
   {
    "text": "I entered a library where books wrote themselves from the final page toward the first.",
@@ -335,7 +668,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, an infinite library spiraling through space, books writing themselves backward in streams of luminous symbols, pages flying into constellations, deep parallax, temporal storms, psychedelic hero art, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, an infinite library spiraling through space, books writing themselves backward in streams of luminous symbols, pages flying into constellations, deep parallax, temporal storms, psychedelic hero art, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 135.52,
+   "duration": 7.72,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_17.jpg",
+   "still_reference_signature": "eb77e70bfd8b23a6edcf",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_17.mp4",
+   "clip_fingerprint": "bfb2951feb522259",
+   "hero_generated": true,
+   "hero_raw_signature": "8ba15382a870b5697ad6",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "My life was one book. I saw every page, yet still had to turn them one by one.",
@@ -351,7 +711,25 @@
    "narrative_mode": "stock_ok",
    "query": "one open life-book containing all ages simultaneously while a small reader carefully turns a single glowing page",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 143.24,
+   "duration": 8.74,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.9435,
+    "active_region_ratio": 0.5155,
+    "frame_difference": 6.0954
+   },
+   "clip_fingerprint": "7abcb2257fce2ad3",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_18.mp4",
+   "stock_id": 33841805,
+   "pexels_id": 33841805,
+   "stock_frame_url": "https://images.pexels.com/videos/33841805/relax-33841805.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/cozy-indoor-reading-with-dim-light-ambiance-33841805/"
   },
   {
    "text": "Eternity stopped feeling like endless time. It became the page holding every moment.",
@@ -367,7 +745,25 @@
    "narrative_mode": "stock_ok",
    "query": "all moments becoming inked scenes across one immeasurable luminous page curving around the universe",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 151.98,
+   "duration": 8.3,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.4711,
+    "active_region_ratio": 0.9813,
+    "frame_difference": 11.7466
+   },
+   "clip_fingerprint": "84683a84054867ba",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_19.mp4",
+   "stock_id": 7033775,
+   "pexels_id": 7033775,
+   "stock_frame_url": "https://images.pexels.com/videos/7033775/pexels-photo-7033775.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-macro-shot-of-a-book-s-page-7033775/"
   },
   {
    "text": "If the page existed, did choice matter? The answer was deeply human.",
@@ -386,7 +782,25 @@
    "motion_mode": "stock",
    "symbol_query": "hand draws two arrows pointing different directions on paper soft window light close up",
    "symbol_family_source": "planner",
-   "human_role": "chooser"
+   "human_role": "chooser",
+   "start": 160.28,
+   "duration": 6.86,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.6872,
+    "active_region_ratio": 0.9964,
+    "frame_difference": 10.4476
+   },
+   "clip_fingerprint": "ccaac194c909e683",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_20.mp4",
+   "stock_id": 6079425,
+   "pexels_id": 6079425,
+   "stock_frame_url": "https://images.pexels.com/videos/6079425/pexels-photo-6079425.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-looking-at-a-document-6079425/"
   },
   {
    "text": "Choice was not how I escaped infinity. Choice was how infinity acquired texture, consequence, and a point of view.",
@@ -403,7 +817,25 @@
    "query": "infinite white light gaining texture as one hand shapes it into landscapes, relationships, wounds, and healing",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "chooser"
+   "human_role": "chooser",
+   "start": 167.14,
+   "duration": 9.68,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.6966,
+    "active_region_ratio": 0.9028,
+    "frame_difference": 13.0051
+   },
+   "clip_fingerprint": "bae25abeb892c008",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_21.mp4",
+   "stock_id": 6328481,
+   "pexels_id": 6328481,
+   "stock_frame_url": "https://images.pexels.com/videos/6328481/pexels-photo-6328481.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/hands-sliding-down-6328481/"
   },
   {
    "text": "The present became a needle, drawing one thread through countless possible worlds.",
@@ -419,7 +851,25 @@
    "narrative_mode": "stock_ok",
    "query": "a golden needle sewing one bright timeline through a vast textile of translucent universes, microscopic and cosmic scale",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 176.82,
+   "duration": 7.22,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.1819,
+    "active_region_ratio": 0.9964,
+    "frame_difference": 44.5009
+   },
+   "clip_fingerprint": "1bdf2d0217f953b4",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_22.mp4",
+   "stock_id": 35540638,
+   "pexels_id": 35540638,
+   "stock_frame_url": "https://images.pexels.com/videos/35540638/pexels-photo-35540638.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/abstract-golden-light-trails-with-starry-background-35540638/"
   },
   {
    "text": "Every clock opened like an eye. Their hands became wings, and the future rushed through me in both directions.",
@@ -436,7 +886,34 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "cinematic photoreal, thousands of clocks opening as cosmic eyes, clock hands becoming wings, timelines rushing forward and backward through a human silhouette, rainbow temporal vortices, radiant particles, psychedelic hero finale, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
-   "human_role": "observer"
+   "human_role": "observer",
+   "start": 184.04,
+   "duration": 9.5,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_23.jpg",
+   "still_reference_signature": "57a2809a0bb3cc89b027",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_23.mp4",
+   "clip_fingerprint": "3ff3d3365179d30c",
+   "hero_generated": true,
+   "hero_raw_signature": "9cca586b673c8dd6f109",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "I returned to the room, but tomorrow felt attentive, as though the future listened to how I became it.",
@@ -452,7 +929,51 @@
    "narrative_mode": "stock_ok",
    "query": "the original room restored at dawn, a quiet future silhouette listening beyond the window as fading fractal light rests on ordinary objects",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 193.54,
+   "duration": 9.307,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.2737,
+    "active_region_ratio": 0.233,
+    "frame_difference": 5.7434
+   },
+   "clip_fingerprint": "bb5984b5f8eff422",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/i-remembered-the-future/clip_24.mp4",
+   "stock_id": 26711375,
+   "pexels_id": 26711375,
+   "stock_frame_url": "https://images.pexels.com/videos/26711375/dark-drinking-water-film-look-glass-of-water-26711375.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-drinking-water-in-a-dark-kitchen-26711375/"
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.97
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
