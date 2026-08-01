@@ -60,7 +60,34 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "cinematic photoreal, A kitchen calendar covered with predicted dates while a hand circles today's date and sets the marker down., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
-   "human_role": "creator"
+   "human_role": "creator",
+   "start": 0.0,
+   "duration": 7.06,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_00.jpg",
+   "still_reference_signature": "76cef294340599601e48",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_00.mp4",
+   "clip_fingerprint": "a56f91d9fccebad3",
+   "hero_generated": true,
+   "hero_raw_signature": "303c93e402f2c3c6dc76",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "We keep asking when humanity will wake up, as if it will be announced during the weather report.",
@@ -77,7 +104,25 @@
    "query": "A television weather forecast plays in a living room while a viewer waits with the remote in hand.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 7.06,
+   "duration": 6.18,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.6603,
+    "active_region_ratio": 0.3478,
+    "frame_difference": 8.5375
+   },
+   "clip_fingerprint": "98a7e1ee256d9d09",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_01.mp4",
+   "stock_id": 7184588,
+   "pexels_id": 7184588,
+   "stock_frame_url": "https://images.pexels.com/videos/7184588/netflix-remote-control-tv-screen-tv-set-7184588.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-using-remote-control-switching-the-television-7184588/"
   },
   {
    "text": "Maybe we expect a date, a flash in the sky, or one morning when everybody understands each other.",
@@ -93,7 +138,25 @@
    "narrative_mode": "stock_ok",
    "query": "A city rooftop at dawn as commuters look up briefly, then continue into the active street below.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 13.24,
+   "duration": 6.7,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.2586,
+    "active_region_ratio": 0.9867,
+    "frame_difference": 7.9962
+   },
+   "clip_fingerprint": "0c25cc6442a071be",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_02.mp4",
+   "stock_id": 7316611,
+   "pexels_id": 7316611,
+   "stock_frame_url": "https://images.pexels.com/videos/7316611/pexels-photo-7316611.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/vehicles-traffic-in-the-city-road-7316611/"
   },
   {
    "text": "Convenient. It would let us behave the same way until the universe did the work.",
@@ -110,7 +173,25 @@
    "query": "A person leaves an overflowing household chore list beside a window and waits while nothing changes.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 19.94,
+   "duration": 4.68,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.3367,
+    "active_region_ratio": 0.4125,
+    "frame_difference": 8.8942
+   },
+   "clip_fingerprint": "bc0655df68b6a855",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_03.mp4",
+   "stock_id": 6197556,
+   "pexels_id": 6197556,
+   "stock_frame_url": "https://images.pexels.com/videos/6197556/pexels-photo-6197556.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/woman-wearing-jumper-wiping-a-glass-6197556/"
   },
   {
    "text": "But real change does not usually arrive with an announcement. It becomes visible in what people do under pressure.",
@@ -127,7 +208,25 @@
    "query": "Busy emergency-room staff coordinate calmly around a moving hospital corridor during a demanding shift.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 24.62,
+   "duration": 8.12,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.338,
+    "active_region_ratio": 0.9859,
+    "frame_difference": 17.688
+   },
+   "clip_fingerprint": "2503a6d3c041afea",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_04.mp4",
+   "stock_id": 30141968,
+   "pexels_id": 30141968,
+   "stock_frame_url": "https://images.pexels.com/videos/30141968/adventist-adventist-health-doctor-nurse-30141968.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/healthcare-professional-assisting-patient-in-hospital-30141968/"
   },
   {
    "text": "Your phone shows you something designed to make you angry. What happens next?",
@@ -143,7 +242,25 @@
    "narrative_mode": "stock_ok",
    "query": "A thumb stops above a provocative social-media post instead of immediately tapping the reply field.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 32.74,
+   "duration": 5.4,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.8428,
+    "active_region_ratio": 0.9248,
+    "frame_difference": 16.7261
+   },
+   "clip_fingerprint": "547e05359783e8de",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_05.mp4",
+   "stock_id": 5201209,
+   "pexels_id": 5201209,
+   "stock_frame_url": "https://images.pexels.com/videos/5201209/cellphone-instagram-iphone-online-5201209.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-browsing-facebook-on-mobile-5201209/"
   },
   {
    "text": "A friend disagrees with you. Do you listen, or start preparing your answer while they are still talking?",
@@ -160,7 +277,25 @@
    "query": "Two friends talk across a cafe table; one lowers a raised hand and begins listening carefully.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "relationship"
+   "human_role": "relationship",
+   "start": 38.14,
+   "duration": 6.66,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.2108,
+    "active_region_ratio": 0.9953,
+    "frame_difference": 43.7928
+   },
+   "clip_fingerprint": "62c21f5483470fb3",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_06.mp4",
+   "stock_id": 4391962,
+   "pexels_id": 4391962,
+   "stock_frame_url": "https://images.pexels.com/videos/4391962/pexels-photo-4391962.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/women-having-conversation-in-the-cafe-bar-4391962/"
   },
   {
    "text": "You feel the old reaction start, but this time you notice it before it takes over.",
@@ -179,7 +314,34 @@
    "image_prompt": "cinematic photoreal, A realistic close view of a hand tightening on a chair arm, then slowly relaxing before a conversation continues., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
    "symbol_query": "record needle travels across spinning vinyl beside old photographs soft window light",
    "symbol_family_source": "planner",
-   "human_role": "relationship"
+   "human_role": "relationship",
+   "start": 44.8,
+   "duration": 5.36,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_07.jpg",
+   "still_reference_signature": "a940d43bfae583701827",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_07.mp4",
+   "clip_fingerprint": "126996d4a02a0faa",
+   "hero_generated": true,
+   "hero_raw_signature": "ef895aa260553937d7dd",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "That pause may look small, but it is the exact moment when automatic behavior becomes a conscious choice.",
@@ -195,7 +357,25 @@
    "narrative_mode": "stock_ok",
    "query": "A pedestrian pauses at a branching park path, checks both directions, and deliberately chooses one route.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 50.16,
+   "duration": 7.74,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.2911,
+    "active_region_ratio": 0.2194,
+    "frame_difference": 8.2809
+   },
+   "clip_fingerprint": "f66c991ad4a086ce",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_08.mp4",
+   "stock_id": 38275938,
+   "pexels_id": 38275938,
+   "stock_frame_url": "https://images.pexels.com/videos/38275938/pexels-photo-38275938.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/scenic-riverside-street-with-pedestrians-and-vehicles-38275938/"
   },
   {
    "text": "A higher frequency does not mean feeling happy every minute. Nobody honest lives that way.",
@@ -212,7 +392,25 @@
    "query": "A person removes a forced smile before a mirror and lets their face settle into a natural expression.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 57.9,
+   "duration": 6.46,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.7111,
+    "active_region_ratio": 0.7606,
+    "frame_difference": 1.8509
+   },
+   "clip_fingerprint": "75df3209977167b0",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_09.mp4",
+   "stock_id": 6277922,
+   "pexels_id": 6277922,
+   "stock_frame_url": "https://images.pexels.com/videos/6277922/blue-eyed-broken-mirror-caucasian-face-6277922.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-looking-in-a-broken-mirror-6277922/"
   },
   {
    "text": "Fear is not proof that you failed. Anger is not proof that you are spiritually broken.",
@@ -228,7 +426,25 @@
    "narrative_mode": "stock_ok",
    "query": "A storm passes across a home window while someone remains seated, breathing steadily beside it.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 64.36,
+   "duration": 6.72,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.1887,
+    "active_region_ratio": 0.1053,
+    "frame_difference": 4.9655
+   },
+   "clip_fingerprint": "dddaa7059ffdb2e8",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_10.mp4",
+   "stock_id": 9494948,
+   "pexels_id": 9494948,
+   "stock_frame_url": "https://images.pexels.com/videos/9494948/pexels-photo-9494948.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-view-of-a-window-with-rain-falling-through-it-9494948/"
   },
   {
    "text": "The change is that you stop making every emotion somebody else's responsibility.",
@@ -245,7 +461,25 @@
    "query": "A person closes an unsent accusatory message, places the phone down, and writes privately in a notebook.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 71.08,
+   "duration": 5.8,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.2463,
+    "active_region_ratio": 0.9715,
+    "frame_difference": 5.2995
+   },
+   "clip_fingerprint": "3095baed60239f7c",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_11.mp4",
+   "stock_id": 4052876,
+   "pexels_id": 4052876,
+   "stock_frame_url": "https://images.pexels.com/videos/4052876/pexels-photo-4052876.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-typing-on-a-cellphone-4052876/"
   },
   {
    "text": "You ask what the feeling is showing you, then decide what kind of action you can stand behind tomorrow.",
@@ -262,7 +496,25 @@
    "query": "A journal page receives three headings: feeling, need, and next action, written slowly by hand.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "chooser"
+   "human_role": "chooser",
+   "start": 76.88,
+   "duration": 6.7,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.9593,
+    "active_region_ratio": 0.9956,
+    "frame_difference": 14.4051
+   },
+   "clip_fingerprint": "e01ed3064edf5677",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_12.mp4",
+   "stock_id": 6174923,
+   "pexels_id": 6174923,
+   "stock_frame_url": "https://images.pexels.com/videos/6174923/mental-health-therapy-6174923.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-writings-notes-on-a-paper-on-the-top-of-a-book-6174923/"
   },
   {
    "text": "That is the transition: less unconscious reaction, more deliberate participation.",
@@ -279,7 +531,34 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "cinematic photoreal, A crowded intersection freezes around one calm person, then resumes with everyone moving in clearer coordinated paths., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 83.58,
+   "duration": 7.98,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_13.jpg",
+   "still_reference_signature": "6d845082dbf8253dd6f7",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_13.mp4",
+   "clip_fingerprint": "d48908dd3e7e8df6",
+   "hero_generated": true,
+   "hero_raw_signature": "b8ce4e4e1422383b55a2",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "You do not need the whole world to change before you practice it.",
@@ -295,7 +574,25 @@
    "narrative_mode": "stock_ok",
    "query": "One apartment window turns on a warm light while the surrounding city buildings remain in evening shadow.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 91.56,
+   "duration": 4.28,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.2037,
+    "active_region_ratio": 0.0881,
+    "frame_difference": 4.3853
+   },
+   "clip_fingerprint": "5fd4e8425ceda78b",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_14.mp4",
+   "stock_id": 32217939,
+   "pexels_id": 32217939,
+   "stock_frame_url": "https://images.pexels.com/videos/32217939/sunset-walk-32217939.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/scenic-urban-sunset-over-rooftops-32217939/"
   },
   {
    "text": "One calmer person can change the direction of a family argument without pretending the problem is not real.",
@@ -312,7 +609,25 @@
    "query": "A family discussion at a dining table slows as one person lowers their voice and everyone begins taking turns.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 95.84,
+   "duration": 7.0,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.9616,
+    "active_region_ratio": 0.712,
+    "frame_difference": 7.4292
+   },
+   "clip_fingerprint": "127c2639e075f3c8",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_15.mp4",
+   "stock_id": 5590828,
+   "pexels_id": 5590828,
+   "stock_frame_url": "https://images.pexels.com/videos/5590828/pexels-photo-5590828.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/family-praying-before-eating-dinner-5590828/"
   },
   {
    "text": "One honest employee can question a bad decision without humiliating the person who made it.",
@@ -329,7 +644,25 @@
    "query": "A worker points to a planning document in a meeting while colleagues listen and revise the page together.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "relationship"
+   "human_role": "relationship",
+   "start": 102.84,
+   "duration": 6.38,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.0829,
+    "active_region_ratio": 0.9845,
+    "frame_difference": 14.0146
+   },
+   "clip_fingerprint": "6ce7ee43a44ae5f9",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_16.mp4",
+   "stock_id": 7252805,
+   "pexels_id": 7252805,
+   "stock_frame_url": "https://images.pexels.com/videos/7252805/pexels-photo-7252805.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/people-in-a-meeting-looking-at-a-document-7252805/"
   },
   {
    "text": "One person online can refuse to turn a stranger into an enemy for the entertainment of an audience.",
@@ -345,7 +678,25 @@
    "narrative_mode": "stock_ok",
    "query": "A laptop user deletes a hostile public reply and replaces it with a short respectful question.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 109.22,
+   "duration": 7.44,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.0432,
+    "active_region_ratio": 0.9915,
+    "frame_difference": 7.8089
+   },
+   "clip_fingerprint": "24078fe4d4c91148",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_17.mp4",
+   "stock_id": 7252678,
+   "pexels_id": 7252678,
+   "stock_frame_url": "https://images.pexels.com/videos/7252678/pexels-photo-7252678.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-using-a-laptop-7252678/"
   },
   {
    "text": "These moments do not look historic. Most important changes do not look important while they are being practiced.",
@@ -361,7 +712,25 @@
    "narrative_mode": "stock_ok",
    "query": "Ordinary acts unfold in separate windows: returning a cart, holding a door, listening, and cleaning a shared table.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 116.66,
+   "duration": 7.48,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.2737,
+    "active_region_ratio": 0.233,
+    "frame_difference": 5.7434
+   },
+   "clip_fingerprint": "011f3211c799700f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_18.mp4",
+   "stock_id": 26711375,
+   "pexels_id": 26711375,
+   "stock_frame_url": "https://images.pexels.com/videos/26711375/dark-drinking-water-film-look-glass-of-water-26711375.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/man-drinking-water-in-a-dark-kitchen-26711375/"
   },
   {
    "text": "But repeat them across enough homes, workplaces, and communities, and collective behavior begins to change.",
@@ -377,7 +746,25 @@
    "narrative_mode": "stock_ok",
    "query": "Aerial views move from one lit home to many active neighborhoods, schools, workshops, and community centers.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 124.14,
+   "duration": 7.74,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.9352,
+    "active_region_ratio": 0.9623,
+    "frame_difference": 16.142
+   },
+   "clip_fingerprint": "cd8a3c9beca31826",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_19.mp4",
+   "stock_id": 36489857,
+   "pexels_id": 36489857,
+   "stock_frame_url": "https://images.pexels.com/videos/36489857/aerial-city-community-countryside-36489857.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/aerial-night-view-of-urban-neighborhood-lights-36489857/"
   },
   {
    "text": "The shift is not a finish line. It is millions of people getting slightly better at choosing what they contribute.",
@@ -393,7 +780,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, Thousands of small points of light connect across a realistic rotating Earth, each brightening after a human choice., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, Thousands of small points of light connect across a realistic rotating Earth, each brightening after a human choice., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 131.88,
+   "duration": 8.46,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_20.jpg",
+   "still_reference_signature": "3d7e98535d31107305a4",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_20.mp4",
+   "clip_fingerprint": "2f39485eee356f54",
+   "hero_generated": true,
+   "hero_raw_signature": "d6961b2c0c9da54502ed",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "So instead of asking when the new world arrives, ask what you are practicing in the one already here.",
@@ -410,7 +824,25 @@
    "query": "A person opens their front door onto an ordinary morning street and steps outside to greet a neighbor.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 140.34,
+   "duration": 7.16,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.3185,
+    "active_region_ratio": 0.9939,
+    "frame_difference": 33.9343
+   },
+   "clip_fingerprint": "e3884677ce56caa1",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_21.mp4",
+   "stock_id": 6667244,
+   "pexels_id": 6667244,
+   "stock_frame_url": "https://images.pexels.com/videos/6667244/pexels-photo-6667244.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-delivery-man-leaving-package-at-the-front-door-6667244/"
   },
   {
    "text": "You are not responsible for everybody's consciousness. You are responsible for what passes through yours.",
@@ -427,7 +859,25 @@
    "query": "A clear glass prism is held in sunlight, and one controlled beam lands on the person's open palm.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 147.5,
+   "duration": 7.48,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.859,
+    "active_region_ratio": 0.3176,
+    "frame_difference": 8.9877
+   },
+   "clip_fingerprint": "e90c04c7755e0eca",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_22.mp4",
+   "stock_id": 6258509,
+   "pexels_id": 6258509,
+   "stock_frame_url": "https://images.pexels.com/videos/6258509/pexels-photo-6258509.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/hands-dance-with-lights-reflection-6258509/"
   },
   {
    "text": "The shift has no date. Your next chance to take part in it is probably scheduled for sometime today.",
@@ -443,7 +893,51 @@
    "narrative_mode": "stock_ok",
    "query": "Today's calendar page stays in focus as a phone rings and the owner takes one breath before answering.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 154.98,
+   "duration": 8.736,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 2.305,
+    "active_region_ratio": 0.7509,
+    "frame_difference": 10.0348
+   },
+   "clip_fingerprint": "20f559b35cc561e6",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-shift-has-no-date/clip_23.mp4",
+   "stock_id": 5985881,
+   "pexels_id": 5985881,
+   "stock_frame_url": "https://images.pexels.com/videos/5985881/pexels-photo-5985881.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-view-of-a-person-answering-a-ringing-phone-5985881/"
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.97
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
