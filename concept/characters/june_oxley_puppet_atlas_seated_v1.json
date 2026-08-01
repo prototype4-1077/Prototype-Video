@@ -1,0 +1,78 @@
+{
+  "contract_version": 1,
+  "asset_id": "june_oxley_puppet_atlas_seated_v1",
+  "character_id": "june_oxley",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "atlas": {
+    "path": "concept/characters/rig_assets/june_oxley_puppet_atlas_seated_v1.png",
+    "sha256": "33e0cc580a6b9e80131802a85f58048cdadcb06224fcabb67a72ccb388d6d7d1",
+    "width": 1536,
+    "height": 1024,
+    "expected_substantial_connected_components": 14,
+    "component_alpha_threshold": 8,
+    "minimum_substantial_area": 500
+  },
+  "standing_atlas_contract": {
+    "path": "concept/characters/june_oxley_puppet_atlas_v1.json",
+    "sha256": "d3fa6801ad352bf8670f02b76e105173c9f0b14d9531374b5498bc17d4d92ee9"
+  },
+  "phase29_target": {
+    "path": "concept/characters/june_oxley_deformable_performance_3q_v1.json",
+    "sha256": "1a4d28beeae21f5ac8f91e0063c4061325b132449db236e187e9c494bfc77193"
+  },
+  "proof": {
+    "seated_proof_frame": 1,
+    "transition_frame_range": [64, 100],
+    "seated_hold_end_frame": 70,
+    "standing_only_start_frame": 96,
+    "width": 960,
+    "height": 540,
+    "fps": 30
+  },
+  "components": [
+    {"id": "head", "bbox": [193, 27, 198, 324], "source_bone": [[99, 307], [100, 105]], "target_bone": ["neck", "head"], "underlap": {"proximal": 6, "distal": 0}, "depth": 60},
+    {"id": "torso", "bbox": [599, 66, 369, 418], "source_bone": [[185, 397], [185, 170]], "target_bone": ["pelvis", "chest"], "underlap": {"proximal": 0, "distal": 0}, "depth": 30,
+      "center_mask_polygon": [[77, 26], [293, 26], [319, 104], [288, 374], [245, 409], [106, 409], [67, 374], [39, 104]], "mask_feather_px": 3},
+    {"id": "left_upper_arm", "bbox": [444, 85, 145, 316], "source_bone": [[112, 20], [85, 285]], "target_bone": ["left_shoulder", "left_elbow"], "underlap": {"proximal": 10, "distal": 5}, "depth": 40},
+    {"id": "right_upper_arm", "bbox": [975, 84, 144, 316], "source_bone": [[40, 20], [50, 220]], "target_bone": ["right_shoulder", "right_elbow"], "underlap": {"proximal": 10, "distal": 5}, "depth": 50},
+    {"id": "left_forearm", "bbox": [261, 379, 241, 130], "source_bone": [[222, 68], [25, 66]], "target_bone": ["left_elbow", "left_hand"], "underlap": {"proximal": 5, "distal": 5}, "depth": 41},
+    {"id": "right_forearm", "bbox": [1016, 379, 220, 131], "source_bone": [[24, 70], [172, 66]], "target_bone": ["right_elbow", "right_hand"], "underlap": {"proximal": 5, "distal": 5}, "retain_largest_alpha_component": true, "depth": 51},
+    {"id": "left_hand", "bbox": [362, 535, 127, 148], "source_bone": [[64, 10], [64, 135]], "target_bone": ["left_hand", "left_hand_tip"], "underlap": {"proximal": 5, "distal": 0}, "depth": 42},
+    {"id": "right_hand_mug", "bbox": [980, 538, 212, 125], "source_bone": [[67, 64], [160, 63]], "target_bone": ["right_hand", "mug_center"], "underlap": {"proximal": 5, "distal": 0}, "depth": 52},
+    {"id": "left_thigh", "bbox": [595, 510, 152, 164], "source_bone": [[76, 8], [130, 148]], "target_bone": ["left_hip", "left_knee"], "underlap": {"proximal": 6, "distal": 5}, "depth": 10},
+    {"id": "right_thigh", "bbox": [792, 512, 152, 164], "source_bone": [[76, 8], [25, 148]], "target_bone": ["right_hip", "right_knee"], "underlap": {"proximal": 6, "distal": 5}, "depth": 11},
+    {"id": "left_shin", "bbox": [587, 693, 121, 157], "source_bone": [[61, 8], [61, 148]], "target_bone": ["left_knee", "left_ankle"], "underlap": {"proximal": 5, "distal": 5}, "depth": 12},
+    {"id": "right_shin", "bbox": [826, 691, 120, 159], "source_bone": [[60, 8], [60, 150]], "target_bone": ["right_knee", "right_ankle"], "underlap": {"proximal": 5, "distal": 5}, "depth": 13},
+    {"id": "left_boot", "bbox": [497, 853, 200, 130], "source_bone": [[151, 5], [15, 112]], "target_bone": ["left_ankle", "left_foot"], "underlap": {"proximal": 5, "distal": 0}, "depth": 14},
+    {"id": "right_boot", "bbox": [827, 853, 210, 129], "source_bone": [[36, 5], [198, 112]], "target_bone": ["right_ankle", "right_foot"], "underlap": {"proximal": 5, "distal": 0}, "depth": 15}
+  ],
+  "contact_components": ["left_hand", "right_hand_mug", "left_boot", "right_boot"],
+  "joint_pairs": [
+    ["head", "torso"], ["left_upper_arm", "torso"], ["left_upper_arm", "left_forearm"],
+    ["left_forearm", "left_hand"], ["right_upper_arm", "torso"], ["right_upper_arm", "right_forearm"],
+    ["right_forearm", "right_hand_mug"], ["left_thigh", "torso"], ["left_thigh", "left_shin"],
+    ["left_shin", "left_boot"], ["right_thigh", "torso"], ["right_thigh", "right_shin"],
+    ["right_shin", "right_boot"]
+  ],
+  "topology_repairs": {
+    "largest_component_source_cleanup": ["right_forearm"],
+    "joint_socket_extensions": {
+      "left_upper_arm": {"joint": "left_shoulder", "radius_preview_px": 32, "extension_preview_px": 3},
+      "right_upper_arm": {"joint": "right_shoulder", "radius_preview_px": 32, "extension_preview_px": 3}
+    }
+  },
+  "gates": {
+    "minimum_pose0_seated_silhouette_iou": 0.55,
+    "minimum_pose100_standing_silhouette_iou": 0.55,
+    "minimum_per_part_aligned_alpha_iou": 0.30,
+    "maximum_blended_part_components": 1,
+    "maximum_double_edge_fraction": 0.70,
+    "maximum_shoulder_or_knee_gap_preview_px": 8.0,
+    "maximum_ankle_gap_preview_px": 8.0,
+    "maximum_contact_centroid_error_p95_preview_px": 20.0,
+    "minimum_temporal_alpha_iou": 0.80,
+    "minimum_normalized_affine_determinant": 0.0001
+  },
+  "promotion_scope": "Bounded dual-atlas proof only; blend quality must be reported separately from delivery and mechanics."
+}

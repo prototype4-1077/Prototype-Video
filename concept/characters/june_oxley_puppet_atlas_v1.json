@@ -1,0 +1,85 @@
+{
+  "contract_version": 1,
+  "asset_id": "june_oxley_puppet_atlas_v1",
+  "character_id": "june_oxley",
+  "proof_mode": "bounded_atlas_similarity_cage_88_94",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "atlas": {
+    "path": "concept/characters/rig_assets/june_oxley_puppet_atlas_v1.png",
+    "sha256": "acc5f19cf666b3fb64997ba5ec352a7fb0b481128fa1505b1d5d0e9b30d4a55f",
+    "width": 1536,
+    "height": 1024,
+    "mode": "RGBA",
+    "expected_substantial_connected_components": 14,
+    "component_alpha_threshold": 8,
+    "minimum_substantial_area": 500
+  },
+  "phase29_target": {
+    "path": "concept/characters/june_oxley_deformable_performance_3q_v1.json",
+    "sha256": "1a4d28beeae21f5ac8f91e0063c4061325b132449db236e187e9c494bfc77193",
+    "start_corrective_progress": 0.5,
+    "target_corrective_progress": 0.75,
+    "frame_range": [88, 94]
+  },
+  "output": {
+    "source_width": 1672,
+    "source_height": 941,
+    "review_width": 1920,
+    "review_height": 1080,
+    "fps": 30,
+    "proof_frame_count": 7,
+    "encoded_hold_frames_per_pose": 6,
+    "pixel_format": "yuv420p"
+  },
+  "rig": {
+    "transform": "positive_determinant_similarity",
+    "joint_underlap_pixels": 4,
+    "source_policy": "single_atlas_component_crop_per_part",
+    "background_in_transform": false,
+    "components": [
+      {"id": "head", "bbox": [195, 27, 196, 323], "source_bone": [[98, 306], [100, 105]], "target_bone": ["neck", "head"], "underlap": {"proximal": 6, "distal": 0}, "depth": 60},
+      {"id": "torso", "bbox": [635, 34, 278, 450], "source_bone": [[139, 430], [139, 180]], "target_bone": ["pelvis", "chest"], "underlap": {"proximal": 0, "distal": 0}, "depth": 30},
+      {"id": "left_upper_arm", "bbox": [452, 58, 151, 329], "source_bone": [[105, 22], [83, 302]], "target_bone": ["left_shoulder", "left_elbow"], "underlap": {"proximal": 10, "distal": 5}, "depth": 40},
+      {"id": "right_upper_arm", "bbox": [946, 58, 160, 329], "source_bone": [[55, 65], [47, 235]], "target_bone": ["right_shoulder", "right_elbow"], "underlap": {"proximal": 10, "distal": 5}, "depth": 50},
+      {"id": "left_forearm", "bbox": [261, 372, 243, 134], "source_bone": [[224, 72], [26, 70]], "target_bone": ["left_elbow", "left_hand"], "underlap": {"proximal": 5, "distal": 5}, "depth": 41},
+      {"id": "right_forearm", "bbox": [1012, 370, 224, 137], "source_bone": [[25, 76], [175, 70]], "target_bone": ["right_elbow", "right_hand"], "underlap": {"proximal": 5, "distal": 5}, "depth": 51},
+      {"id": "left_hand", "bbox": [393, 532, 131, 152], "source_bone": [[66, 12], [66, 138]], "target_bone": ["left_hand", "left_hand_tip"], "underlap": {"proximal": 5, "distal": 0}, "depth": 42},
+      {"id": "right_hand_mug", "bbox": [986, 534, 228, 130], "source_bone": [[75, 70], [165, 68]], "target_bone": ["right_hand", "mug_center"], "underlap": {"proximal": 5, "distal": 0}, "depth": 52},
+      {"id": "left_thigh", "bbox": [607, 518, 137, 185], "source_bone": [[68, 8], [68, 176]], "target_bone": ["left_hip", "left_knee"], "underlap": {"proximal": 6, "distal": 5}, "depth": 10},
+      {"id": "right_thigh", "bbox": [791, 521, 127, 178], "source_bone": [[64, 8], [64, 170]], "target_bone": ["right_hip", "right_knee"], "underlap": {"proximal": 6, "distal": 5}, "depth": 11},
+      {"id": "left_shin", "bbox": [590, 711, 119, 145], "source_bone": [[60, 8], [60, 138]], "target_bone": ["left_knee", "left_ankle"], "underlap": {"proximal": 5, "distal": 5}, "depth": 12},
+      {"id": "right_shin", "bbox": [804, 710, 119, 147], "source_bone": [[60, 8], [60, 139]], "target_bone": ["right_knee", "right_ankle"], "underlap": {"proximal": 5, "distal": 5}, "depth": 13},
+      {"id": "left_boot", "bbox": [498, 856, 196, 127], "source_bone": [[150, 5], [15, 110]], "target_bone": ["left_ankle", "left_foot"], "underlap": {"proximal": 5, "distal": 0}, "depth": 14},
+      {"id": "right_boot", "bbox": [811, 857, 200, 125], "source_bone": [[35, 5], [190, 110]], "target_bone": ["right_ankle", "right_foot"], "underlap": {"proximal": 5, "distal": 0}, "depth": 15}
+    ],
+    "contact_components": ["left_hand", "right_hand_mug", "left_boot", "right_boot"],
+    "joint_pairs": [
+      ["head", "torso"],
+      ["left_upper_arm", "torso"],
+      ["left_upper_arm", "left_forearm"],
+      ["left_forearm", "left_hand"],
+      ["right_upper_arm", "torso"],
+      ["right_upper_arm", "right_forearm"],
+      ["right_forearm", "right_hand_mug"],
+      ["left_thigh", "torso"],
+      ["left_thigh", "left_shin"],
+      ["left_shin", "left_boot"],
+      ["right_thigh", "torso"],
+      ["right_thigh", "right_shin"],
+      ["right_shin", "right_boot"]
+    ]
+  },
+  "gates": {
+    "maximum_mapping_residual_to_extended_target_px": 0.05,
+    "minimum_affine_determinant": 0.2,
+    "maximum_joint_gap_px": 6.0,
+    "maximum_contact_significant_components": 1,
+    "minimum_contact_dominant_fraction": 0.95,
+    "minimum_temporal_alpha_iou": 0.84,
+    "minimum_frame94_silhouette_iou_to_pose75": 0.58,
+    "minimum_frame94_alpha_area_ratio_to_pose75": 0.78,
+    "maximum_frame94_alpha_area_ratio_to_pose75": 1.28
+  },
+  "promotion_scope": "Bounded atlas-rig feasibility evidence only; audience-quality and full-action promotion remain separate."
+}
