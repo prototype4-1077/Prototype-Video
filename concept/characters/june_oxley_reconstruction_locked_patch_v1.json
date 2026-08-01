@@ -1,0 +1,510 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_reconstruction_locked_patch_v1",
+  "phase": "phase30_reconstruction_lock",
+  "character_id": "june_oxley",
+  "purpose": "Prove that a deterministic overlapping patch representation derived only from the accepted POSE_100_STANDING foreground can reproduce that foreground exactly at rest before any animation is attempted.",
+  "classification": "Build-time representation acceptance contract; not an animation, not a generated atlas, and not permission to render motion.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "source_lock": {
+    "source_count": 1,
+    "sole_rgba_source": {
+      "path": "concept/style_frames/june_gs030_pose_100_foreground_v1.png",
+      "sha256": "c8665a358c7f18fb159ce15c9bd381b433871a1f2f47f6b227e31cb08031e07d",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGBA",
+      "coordinate_space": "gs030_source_pixels",
+      "pose_id": "POSE_100_STANDING",
+      "role": "accepted_pose_100_foreground_and_only_patch_pixel_source",
+      "sole_rgba_source": true
+    },
+    "control_contract": {
+      "path": "concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json",
+      "sha256": "870ffd61fe25ba3702641eb0588379bff8628eaed186b08da521a40353507c22",
+      "required_pose_id": "POSE_100_STANDING",
+      "required_progress": 1.0,
+      "role": "accepted_pose_identity_dimensions_and_contact_control"
+    },
+    "accepted_source_metadata": {
+      "path": "concept/characters/june_oxley_deformable_performance_3q_v1.json",
+      "sha256": "1a4d28beeae21f5ac8f91e0063c4061325b132449db236e187e9c494bfc77193",
+      "required_key": "accepted_sources.standing_endpoint",
+      "required_role": "runtime_registered_endpoint",
+      "required_corrective_pose_id": "POSE_100_STANDING"
+    },
+    "forbidden_rgba_sources": [
+      "generated_atlas",
+      "ai_regenerated_character",
+      "canonical_turnaround_pixels",
+      "neutral_puppet_source_pixels",
+      "pose_00_pixels",
+      "pose_25_pixels",
+      "pose_50_pixels",
+      "pose_75_pixels",
+      "background_pixels",
+      "inpainted_pixels",
+      "procedural_texture_pixels"
+    ],
+    "hash_mismatch_policy": "raise_before_extraction",
+    "metadata_mismatch_policy": "raise_before_extraction"
+  },
+  "source_observations": {
+    "pixel_preservation_alpha_rule": "alpha_greater_than_0",
+    "expected_nontransparent_pixels": 205934,
+    "expected_nontransparent_bbox_xyxy_half_open": [451, 6, 876, 929],
+    "semantic_gate_alpha_rule": "alpha_greater_than_8",
+    "expected_semantic_foreground_pixels": 203394,
+    "expected_semantic_foreground_bbox_xyxy_half_open": [452, 7, 875, 928],
+    "expected_semantic_foreground_components_8_connected": 1,
+    "transparent_rgb_policy": "all_channels_zero_when_alpha_is_zero"
+  },
+  "source_landmarks": {
+    "coordinate_space": "gs030_source_pixels",
+    "source": "accepted_source_metadata.runtime_asset_pack.corrective_sources.POSE_100_STANDING.landmarks",
+    "points": {
+      "head": [650, 98],
+      "neck": [636, 195],
+      "chest": [616, 304],
+      "pelvis": [603, 468],
+      "left_shoulder": [519, 234],
+      "left_elbow": [488, 378],
+      "left_hand": [482, 518],
+      "right_shoulder": [735, 231],
+      "right_elbow": [767, 307],
+      "right_hand": [850, 334],
+      "mug_center": [818, 300],
+      "left_hip": [554, 493],
+      "left_knee": [550, 646],
+      "left_ankle": [551, 802],
+      "left_foot": [556, 926],
+      "right_hip": [662, 489],
+      "right_knee": [660, 627],
+      "right_ankle": [674, 776],
+      "right_foot": [714, 883]
+    }
+  },
+  "patch_extraction": {
+    "algorithm_id": "native_rgba_connected_region_polygons_with_hard_owner_partition_v1",
+    "deterministic": true,
+    "coordinate_space": "gs030_source_pixels",
+    "source_alpha_threshold_exclusive": 8,
+    "pixel_preservation_alpha_threshold_exclusive": 0,
+    "low_alpha_fringe_rule": "stable_8_connected_geodesic_expand_from_semantic_owners_into_native_pixels_where_0_lt_alpha_lte_8",
+    "pixel_sampling": "integer_coordinate_direct_copy",
+    "crop_rule": "tight_integer_xyxy_exclusive_bbox_of_overlap_mask",
+    "mask_connectivity": 8,
+    "generated_atlas_allowed": false,
+    "atlas_repack_allowed": false,
+    "resize_allowed": false,
+    "resampling_allowed": false,
+    "rotation_allowed": false,
+    "warp_allowed": false,
+    "color_transform_allowed": false,
+    "alpha_reestimation_allowed": false,
+    "inpainting_allowed": false,
+    "fallback_policy": "raise",
+    "ownership": {
+      "method": "alpha_clipped_declared_region_polygons_then_stable_priority_first_claim",
+      "eligibility_rule": "source_alpha_greater_than_8_and_cv2_fillPoly_inclusive_integer_polygon_raster_is_nonzero",
+      "tie_break_rule": "first_patch_id_in_stable_priority_order",
+      "unmatched_semantic_foreground_rule": "raise",
+      "low_alpha_fringe_assignment": "stable_priority_geodesic_expansion_from_semantic_owner_masks",
+      "transparent_pixel_rule": "unowned",
+      "stable_priority_order": [
+        "right_hand_mug",
+        "left_hand",
+        "left_boot",
+        "right_boot",
+        "head_neck",
+        "left_sleeve",
+        "right_sleeve",
+        "lower_garment",
+        "torso_shell"
+      ],
+      "every_foreground_pixel_has_exactly_one_semantic_owner": true
+    },
+    "overlap": {
+      "method": "native_source_alpha_clipped_declared_region_polygons",
+      "purpose": "retain real accepted source pixels across regional seams without inventing hidden limb surfaces",
+      "overlap_pixels_are_double_composited_at_rest": false,
+      "required_adjacent_pairs": [
+        ["head_neck", "torso_shell"],
+        ["left_sleeve", "torso_shell"],
+        ["right_sleeve", "torso_shell"],
+        ["left_hand", "left_sleeve"],
+        ["right_hand_mug", "right_sleeve"],
+        ["lower_garment", "torso_shell"],
+        ["left_boot", "lower_garment"],
+        ["right_boot", "lower_garment"]
+      ],
+      "expected_semantic_overlap_pixels": 82229,
+      "expected_maximum_cover_count": 4
+    },
+    "patches": [
+      {"id": "lower_garment", "kind": "continuous_authoritative_source_region", "polygon_xy": [[502,395],[725,395],[725,520],[718,650],[706,785],[725,845],[614,850],[600,830],[585,850],[490,847],[495,780],[507,650],[509,520]], "expected_semantic_bbox_xyxy_half_open": [496,395,726,851], "expected_semantic_pixels": 92851, "required_connected_components": 1, "required": true},
+      {"id": "torso_shell", "kind": "continuous_source_region", "polygon_xy": [[535,145],[700,145],[735,185],[748,280],[738,430],[728,520],[500,520],[490,450],[482,330],[490,235]], "expected_semantic_bbox_xyxy_half_open": [482,145,749,521], "expected_semantic_pixels": 87441, "required_connected_components": 1, "required": true},
+      {"id": "left_sleeve", "kind": "continuous_shoulder_to_cuff_source_region", "polygon_xy": [[500,168],[570,180],[565,250],[545,330],[528,430],[528,522],[477,528],[449,490],[449,355],[470,245]], "expected_semantic_bbox_xyxy_half_open": [452,177,571,529], "expected_semantic_pixels": 25573, "required_connected_components": 1, "required": true},
+      {"id": "right_sleeve", "kind": "continuous_shoulder_to_cuff_source_region", "polygon_xy": [[690,165],[750,180],[772,230],[795,285],[818,335],[827,380],[805,416],[738,425],[720,360],[713,260]], "expected_semantic_bbox_xyxy_half_open": [690,165,827,405], "expected_semantic_pixels": 14457, "required_connected_components": 1, "required": true},
+      {"id": "head_neck", "kind": "continuous_source_region", "polygon_xy": [[575,7],[737,7],[737,220],[575,220]], "expected_semantic_bbox_xyxy_half_open": [575,7,738,221], "expected_semantic_pixels": 26295, "required_connected_components": 1, "required": true},
+      {"id": "left_hand", "kind": "rigid_source_region", "polygon_xy": [[455,486],[536,486],[536,604],[455,604]], "expected_semantic_bbox_xyxy_half_open": [455,486,537,605], "expected_semantic_pixels": 8667, "required_connected_components": 1, "required": true},
+      {"id": "right_hand_mug", "kind": "atomic_rigid_source_region", "polygon_xy": [[760,287],[874,287],[874,394],[760,394]], "expected_semantic_bbox_xyxy_half_open": [760,287,875,395], "expected_semantic_pixels": 10045, "required_connected_components": 1, "must_remain_atomic": true, "required": true},
+      {"id": "left_boot", "kind": "rigid_source_region", "polygon_xy": [[496,776],[617,776],[617,927],[496,927]], "expected_semantic_bbox_xyxy_half_open": [496,776,618,928], "expected_semantic_pixels": 14424, "required_connected_components": 1, "required": true},
+      {"id": "right_boot", "kind": "rigid_source_region", "polygon_xy": [[600,776],[763,776],[763,884],[600,884]], "expected_semantic_bbox_xyxy_half_open": [600,776,764,885], "expected_semantic_pixels": 12639, "required_connected_components": 1, "required": true}
+    ]
+  },
+  "lower_body_stitched_region": {
+    "required": true,
+    "patch_id": "lower_garment",
+    "rest_authority": true,
+    "coordinate_space": "gs030_source_pixels",
+    "derivation": "native_source_alpha_clipped_declared_lower_garment_polygon",
+    "semantic_owner_pixels_expected": 72560,
+    "boot_overlap_patch_ids": ["left_boot", "right_boot"],
+    "required_landmarks_inside_source_alpha_or_nearest_foreground_px": [
+      "pelvis",
+      "left_hip",
+      "left_knee",
+      "left_ankle",
+      "left_foot",
+      "right_hip",
+      "right_knee",
+      "right_ankle",
+      "right_foot"
+    ],
+    "required_anatomy": [
+      "pelvis",
+      "both_hips",
+      "both_thighs",
+      "both_knees",
+      "both_shins",
+      "both_ankles",
+      "both_cuffs"
+    ],
+    "connected_components_required": 1,
+    "independent_leg_child_patch_count_required": 0,
+    "independent_leg_strip_reconstruction_allowed_at_rest": false,
+    "future_motion_policy": "deform_as_one_connected_surface_or_fail_closed_and_require_a_corrective_pose",
+    "purpose": "keep the accepted waist-to-both-cuffs trouser silhouette intact; boots remain separate overlapping rigid regions"
+  },
+  "rest_reconstruction": {
+    "pose_id": "POSE_100_STANDING",
+    "canvas": {"width": 1672, "height": 941, "mode": "RGBA", "coordinate_space": "gs030_source_pixels"},
+    "method": "hard_source_pixel_ownership_direct_copy",
+    "owner_masks_form_exact_partition": true,
+    "owner_mask_values": "boolean",
+    "overlap_handling": "copy_only_the_declared_rest_owner_for_each_source_pixel",
+    "alpha_over_between_overlapping_patches": false,
+    "premultiplied_blend_between_overlapping_patches": false,
+    "background_fill_rgba": [0, 0, 0, 0],
+    "authoritative_lower_body_patch": "lower_garment",
+    "lower_body_animation_children_enabled_at_rest": false,
+    "rest_owner_priority": [
+      "right_hand_mug",
+      "left_hand",
+      "left_boot",
+      "right_boot",
+      "head_neck",
+      "left_sleeve",
+      "right_sleeve",
+      "lower_garment",
+      "torso_shell"
+    ],
+    "identity_transform_only": true,
+    "resampling_fallback": "forbidden_raise",
+    "generated_atlas_fallback": "forbidden_raise",
+    "required_result": "full_canvas_rgba_pixel_equality_with_sole_rgba_source"
+  },
+  "registered_rest_equivalence": {
+    "required": true,
+    "purpose": "prove that an exact raw patch reconstruction remains identical to the existing Phase 27 result after both inputs receive the same pinned production registration transform",
+    "reference_operation": {
+      "module_path": "pipeline/cartoon_pose_layers.py",
+      "module_sha256": "fd45cd4274fbd9d4cc3d079971be9b9f67d58e63623af675101a7d2bc0198502",
+      "function": "registered_pose_layer",
+      "pose_id": "POSE_100_STANDING",
+      "interpolation": "opencv_inter_cubic_premultiplied_rgba",
+      "border_mode": "constant_transparent"
+    },
+    "pinned_pose_contacts": {
+      "left_support_boot": [556.0, 926.0],
+      "right_boot": [714.0, 883.0]
+    },
+    "pinned_registration": {
+      "target_left_support_boot": [553.0, 915.0],
+      "target_right_boot": [737.0, 864.0],
+      "maximum_contact_drift_px_source": 1.75,
+      "right_leg_warp": {
+        "x_falloff_start": 580.0,
+        "x_falloff_end": 680.0,
+        "y_falloff_start": 430.0,
+        "y_falloff_end": 780.0,
+        "maximum_correction_px": 40.0
+      }
+    },
+    "expected_transform_report": {
+      "translation": [-3.0, -11.0],
+      "right_leg_correction": [26.0, -8.0],
+      "left_support_boot_residual_px": 0.0,
+      "right_boot_residual_px": 0.0,
+      "steam_origin": [819.0, 265.0]
+    },
+    "comparison": "apply_reference_operation_independently_to_raw_source_and_raw_reconstruction_then_compare_full_canvas_rgba",
+    "required_result": "registered_full_canvas_rgba_pixel_equality",
+    "reference_rgba_bytes_sha256": "5f3b0c400c815c665aec872ce9f739b2cceb0fa1728c5bd406ed98f53020f202",
+    "fallback_policy": "raise"
+  },
+  "quality_gates": {
+    "source": {
+      "required_source_count": 1,
+      "required_sha256_match": true,
+      "required_control_sha256_match": true,
+      "required_metadata_sha256_match": true,
+      "required_width": 1672,
+      "required_height": 941,
+      "required_mode": "RGBA"
+    },
+    "coverage_and_overlap": {
+      "minimum_foreground_coverage_fraction": 1.0,
+      "maximum_uncovered_foreground_pixels": 0,
+      "maximum_owned_transparent_pixels": 0,
+      "minimum_rest_owner_count_per_foreground_pixel": 1,
+      "maximum_rest_owner_count_per_foreground_pixel": 1,
+      "minimum_overlap_fraction_of_foreground": 0.35,
+      "maximum_overlap_fraction_of_foreground": 0.45,
+      "minimum_overlap_pixels_per_required_adjacent_pair": 2000,
+      "maximum_extraction_cover_count_per_foreground_pixel": 4
+    },
+    "topology": {
+      "required_patch_count": 9,
+      "required_semantic_support_components_per_patch": 1,
+      "required_ownership_components_per_patch": 1,
+      "required_atomic_patch_ids": ["right_hand_mug"],
+      "required_continuous_patch_ids": ["lower_garment", "left_sleeve", "right_sleeve"],
+      "forbidden_independent_limb_patch_ids": ["left_upper_arm", "left_forearm", "right_upper_arm", "right_forearm", "left_thigh", "left_shin", "right_thigh", "right_shin", "mug"],
+      "maximum_zero_ownership_patches": 0
+    },
+    "rest_rgba": {
+      "maximum_rgba_mismatched_pixels": 0,
+      "maximum_alpha_mismatched_pixels": 0,
+      "maximum_rgb_mismatched_pixels_where_source_alpha_nonzero": 0,
+      "maximum_channel_error": 0,
+      "maximum_rgba_mean_absolute_error": 0.0,
+      "minimum_alpha_iou": 1.0,
+      "minimum_psnr_db": 90.0
+    },
+    "registered_rest": {
+      "maximum_rgba_mismatched_pixels": 0,
+      "maximum_alpha_mismatched_pixels": 0,
+      "maximum_rgb_mismatched_pixels_where_reference_alpha_nonzero": 0,
+      "maximum_channel_error": 0,
+      "maximum_rgba_mean_absolute_error": 0.0,
+      "minimum_alpha_iou": 1.0,
+      "maximum_left_support_boot_residual_px": 0.0,
+      "maximum_right_boot_residual_px": 0.0,
+      "required_reference_rgba_bytes_sha256_match": true
+    },
+    "edge_and_detail": {
+      "maximum_alpha_edge_mismatched_pixels": 0,
+      "maximum_bidirectional_edge_chamfer_p95_px": 0.0,
+      "minimum_laplacian_variance_ratio": 0.999999,
+      "maximum_laplacian_variance_ratio": 1.000001,
+      "minimum_rgba_ssim": 1.0
+    },
+    "lower_body": {
+      "required_patch_id": "lower_garment",
+      "required_connected_components": 1,
+      "minimum_semantic_owner_pixels": 70000,
+      "required_independent_leg_child_patch_count": 0,
+      "maximum_rest_rgba_mismatched_pixels_in_region": 0,
+      "maximum_rest_alpha_mismatched_pixels_in_region": 0
+    }
+  },
+  "report_schema": {
+    "required_top_level_fields": [
+      "proof",
+      "contract_id",
+      "source_lock",
+      "extraction_policy",
+      "patch_inventory",
+      "topology",
+      "coverage",
+      "overlap",
+      "rest_reconstruction",
+      "registered_rest_equivalence",
+      "lower_body_stitched_region",
+      "edge_detail",
+      "provenance",
+      "gates",
+      "gate_results",
+      "machine_passed",
+      "audience_quality",
+      "cash_cost",
+      "paid_runtime_dependency"
+    ],
+    "source_lock_fields": [
+      "source_path",
+      "source_sha256_expected",
+      "source_sha256_actual",
+      "control_path",
+      "control_sha256_expected",
+      "control_sha256_actual",
+      "metadata_path",
+      "metadata_sha256_expected",
+      "metadata_sha256_actual",
+      "width",
+      "height",
+      "mode",
+      "source_count",
+      "passed"
+    ],
+    "extraction_policy_fields": [
+      "algorithm_id",
+      "coordinate_space",
+      "pixel_sampling",
+      "region_polygon_count",
+      "low_alpha_fringe_rule",
+      "generated_atlas_used",
+      "resampling_used",
+      "warp_used",
+      "color_transform_used",
+      "inpainting_used",
+      "fallback_used",
+      "passed"
+    ],
+    "patch_record_fields": [
+      "id",
+      "kind",
+      "source_bbox_xyxy_exclusive",
+      "source_alpha_pixels",
+      "semantic_support_pixels",
+      "ownership_pixels",
+      "overlap_pixels",
+      "connected_components",
+      "ownership_connected_components",
+      "patch_rgba_sha256",
+      "source_coordinate_hash",
+      "passed"
+    ],
+    "topology_fields": [
+      "patch_count",
+      "disconnected_semantic_support_patches",
+      "disconnected_ownership_patches",
+      "zero_ownership_patches",
+      "atomic_patch_ids",
+      "continuous_patch_ids",
+      "forbidden_patch_ids_present",
+      "passed"
+    ],
+    "coverage_fields": [
+      "foreground_alpha_pixels",
+      "covered_foreground_pixels",
+      "uncovered_foreground_pixels",
+      "owned_transparent_pixels",
+      "foreground_coverage_fraction",
+      "minimum_rest_owner_count",
+      "maximum_rest_owner_count",
+      "passed"
+    ],
+    "overlap_fields": [
+      "overlap_foreground_pixels",
+      "overlap_fraction_of_foreground",
+      "maximum_extraction_cover_count",
+      "required_pair_overlap_pixels",
+      "passed"
+    ],
+    "rest_reconstruction_fields": [
+      "rgba_mismatched_pixels",
+      "alpha_mismatched_pixels",
+      "rgb_mismatched_pixels_where_source_alpha_nonzero",
+      "maximum_channel_error",
+      "rgba_mean_absolute_error",
+      "alpha_iou",
+      "psnr_db",
+      "exact_pixel_match",
+      "passed"
+    ],
+    "registered_rest_equivalence_fields": [
+      "operation_module_path",
+      "operation_module_sha256_expected",
+      "operation_module_sha256_actual",
+      "source_registered_rgba_bytes_sha256",
+      "reconstruction_registered_rgba_bytes_sha256",
+      "reference_rgba_bytes_sha256_expected",
+      "transform_report",
+      "rgba_mismatched_pixels",
+      "alpha_mismatched_pixels",
+      "rgb_mismatched_pixels_where_reference_alpha_nonzero",
+      "maximum_channel_error",
+      "rgba_mean_absolute_error",
+      "alpha_iou",
+      "left_support_boot_residual_px",
+      "right_boot_residual_px",
+      "exact_pixel_match",
+      "passed"
+    ],
+    "lower_body_stitched_region_fields": [
+      "patch_id",
+      "source_bbox_xyxy_exclusive",
+      "connected_components",
+      "ownership_pixels",
+      "support_pixels",
+      "included_landmarks",
+      "boot_overlap_patch_ids",
+      "independent_leg_child_patch_count",
+      "rgba_mismatched_pixels_in_region",
+      "alpha_mismatched_pixels_in_region",
+      "used_as_rest_authority",
+      "passed"
+    ],
+    "edge_detail_fields": [
+      "alpha_edge_mismatched_pixels",
+      "bidirectional_edge_chamfer_p95_px",
+      "source_laplacian_variance",
+      "reconstruction_laplacian_variance",
+      "laplacian_variance_ratio",
+      "rgba_ssim",
+      "passed"
+    ],
+    "provenance_fields": [
+      "rgba_source_paths",
+      "rgba_source_sha256s",
+      "non_source_rgba_pixel_count",
+      "generated_pixel_count",
+      "resampled_pixel_count",
+      "all_output_rgba_pixels_trace_to_integer_source_coordinates",
+      "passed"
+    ],
+    "gate_result_fields": ["id", "measured", "operator", "threshold", "passed"],
+    "audience_quality_fields": ["status", "machine_gate_is_not_audience_approval", "notes"]
+  },
+  "failure_policy": {
+    "mode": "fail_closed",
+    "on_contract_violation": "raise",
+    "on_missing_required_field": "raise",
+    "on_missing_source": "raise",
+    "on_hash_or_metadata_mismatch": "raise",
+    "on_extra_rgba_source": "raise",
+    "on_generated_or_resampled_pixel": "raise",
+    "on_incomplete_ownership": "raise",
+    "on_missing_required_overlap": "raise",
+    "on_lower_body_stitch_failure": "raise",
+    "on_reconstruction_gate_failure": "raise",
+    "on_registered_rest_equivalence_failure": "raise",
+    "partial_success_allowed": false,
+    "fallback_allowed": false,
+    "machine_pass_rule": "true_only_when_every_gate_result_passes",
+    "audience_quality_default": {
+      "status": "not_evaluated",
+      "machine_gate_is_not_audience_approval": true,
+      "notes": "This contract accepts source fidelity only; animation appeal and audience quality require a later proof."
+    }
+  },
+  "promotion_rule": {
+    "animation_may_begin_only_after_machine_passed": true,
+    "this_contract_authorizes_media_render": false,
+    "next_step_after_pass": "bounded_native_patch_motion_proof_with_lower_body_stitch_preserved"
+  }
+}
