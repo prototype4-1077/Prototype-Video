@@ -1,0 +1,161 @@
+{
+  "credits_used": null,
+  "estimated_cost_usd": null,
+  "failure_count": 0,
+  "finished_at": "2026-07-31T01:36:45+00:00",
+  "generated_at": "2026-08-01T22:11:57+00:00",
+  "github_run_id": "30595431929",
+  "historical_limitations": [
+    "No OpenTelemetry spans were emitted for this historical run.",
+    "Provider calls, scene spans, costs, and credits cannot be reconstructed from Governor summaries."
+  ],
+  "recommendations": [
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "priority": "medium",
+      "reason": "2 occurrence(s) across 2 build(s)",
+      "source": "governor_review_backfill",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
+      "category": "tail_latency",
+      "priority": "medium",
+      "reason": "p50=69.0s, p95=1102.2s",
+      "source": "governor_review_backfill",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "71a919fc96344ada91a17941f747219e",
+  "scene_span_count": 0,
+  "schema_version": 1,
+  "single_trace": false,
+  "slug": "my-thumb-has-a-gambling-problem",
+  "source": "governor_summary_backfill",
+  "span_count": 0,
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 1.003,
+      "p95_duration_s": 1.003,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.003
+    },
+    "assemble": {
+      "attempts": 25,
+      "failures": 0,
+      "p50_duration_s": 28.116,
+      "p95_duration_s": 36.358,
+      "sample_count": 25,
+      "source": "governor_summary_backfill",
+      "successes": 25,
+      "timeouts": 0,
+      "total_duration_s": 676.101
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_duration_s": 61.044,
+      "p95_duration_s": 859.551,
+      "sample_count": 5,
+      "source": "governor_summary_backfill",
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 1713.392
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_duration_s": 1.006,
+      "p95_duration_s": 1.006,
+      "sample_count": 2,
+      "source": "governor_summary_backfill",
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.011
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_duration_s": 5.514,
+      "p95_duration_s": 15.415,
+      "sample_count": 4,
+      "source": "governor_summary_backfill",
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 29.111
+    },
+    "hero": {
+      "attempts": 25,
+      "failures": 0,
+      "p50_duration_s": 43.07,
+      "p95_duration_s": 47.867,
+      "sample_count": 25,
+      "source": "governor_summary_backfill",
+      "successes": 25,
+      "timeouts": 0,
+      "total_duration_s": 884.192
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 2.005,
+      "p95_duration_s": 2.005,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 2.005
+    },
+    "probe": {
+      "attempts": 26,
+      "failures": 0,
+      "p50_duration_s": 1.007,
+      "p95_duration_s": 1.009,
+      "sample_count": 26,
+      "source": "governor_summary_backfill",
+      "successes": 26,
+      "timeouts": 0,
+      "total_duration_s": 26.191
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 19.068,
+      "p95_duration_s": 19.068,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 19.068
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 15.015,
+      "p95_duration_s": 15.015,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 15.015
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 60.043,
+      "p95_duration_s": 60.043,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 60.043
+    }
+  },
+  "status": "done"
+}

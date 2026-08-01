@@ -1,0 +1,183 @@
+{
+  "credits_used": null,
+  "estimated_cost_usd": null,
+  "failure_count": 0,
+  "finished_at": "2026-08-01T17:58:46+00:00",
+  "generated_at": "2026-08-01T22:11:57+00:00",
+  "github_run_id": "30710767761",
+  "historical_limitations": [
+    "No OpenTelemetry spans were emitted for this historical run.",
+    "Provider calls, scene spans, costs, and credits cannot be reconstructed from Governor summaries."
+  ],
+  "recommendations": [
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "priority": "medium",
+      "reason": "2 occurrence(s) across 2 build(s)",
+      "source": "governor_review_backfill",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
+      "category": "tail_latency",
+      "priority": "medium",
+      "reason": "p50=73.0s, p95=1107.8s",
+      "source": "governor_review_backfill",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "853690e55ea7403f95752dd47cd86223",
+  "scene_span_count": 0,
+  "schema_version": 1,
+  "single_trace": false,
+  "slug": "the-future-is-built-in-the-next-ten-seconds",
+  "source": "governor_summary_backfill",
+  "span_count": 0,
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 1.002,
+      "p95_duration_s": 1.002,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 1.007,
+      "p95_duration_s": 1.007,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.007
+    },
+    "assemble": {
+      "attempts": 24,
+      "failures": 0,
+      "p50_duration_s": 26.145,
+      "p95_duration_s": 38.075,
+      "sample_count": 24,
+      "source": "governor_summary_backfill",
+      "successes": 24,
+      "timeouts": 0,
+      "total_duration_s": 654.849
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_duration_s": 119.142,
+      "p95_duration_s": 610.209,
+      "sample_count": 5,
+      "source": "governor_summary_backfill",
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 1081.419
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_duration_s": 1.006,
+      "p95_duration_s": 1.007,
+      "sample_count": 2,
+      "source": "governor_summary_backfill",
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.013
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_duration_s": 5.515,
+      "p95_duration_s": 13.704,
+      "sample_count": 4,
+      "source": "governor_summary_backfill",
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 27.098
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 118.137,
+      "p95_duration_s": 118.137,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 118.137
+    },
+    "hero": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_duration_s": 46.581,
+      "p95_duration_s": 52.795,
+      "sample_count": 4,
+      "source": "governor_summary_backfill",
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 154.273
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 11.035,
+      "p95_duration_s": 11.035,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 11.035
+    },
+    "probe": {
+      "attempts": 25,
+      "failures": 0,
+      "p50_duration_s": 1.007,
+      "p95_duration_s": 1.008,
+      "sample_count": 25,
+      "source": "governor_summary_backfill",
+      "successes": 25,
+      "timeouts": 0,
+      "total_duration_s": 25.177
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 17.073,
+      "p95_duration_s": 17.073,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 17.073
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 14.011,
+      "p95_duration_s": 14.011,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 14.011
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_duration_s": 56.024,
+      "p95_duration_s": 56.024,
+      "sample_count": 1,
+      "source": "governor_summary_backfill",
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 56.024
+    }
+  },
+  "status": "done"
+}
