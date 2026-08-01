@@ -1,6 +1,6 @@
 # What's working (auto-generated: learn.py digest)
 
-_Updated 2026-07-31 from 33 recorded videos._
+_Updated 2026-08-01 from 33 recorded videos._
 
 ## Queries that keep winning
 
