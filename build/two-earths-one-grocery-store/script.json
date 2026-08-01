@@ -59,7 +59,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, A single neighborhood grocery storefront appears split between a tense gray morning and a welcoming bright afternoon., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, A single neighborhood grocery storefront appears split between a tense gray morning and a welcoming bright afternoon., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 0.0,
+   "duration": 4.76,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_00.jpg",
+   "still_reference_signature": "fe7a2f22f468be9b9714",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_00.mp4",
+   "clip_fingerprint": "e1cc1dee0c3d5cac",
+   "hero_generated": true,
+   "hero_raw_signature": "89ae9709973feb99acd1",
+   "motion_recipe": "reflection",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "The first visit followed a long day. I was tired, hungry, and annoyed before the automatic door opened.",
@@ -76,7 +103,25 @@
    "query": "A tired shopper leaves a late work shift, crosses a parking lot, and approaches opening automatic doors.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 4.76,
+   "duration": 7.08,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.3563,
+    "active_region_ratio": 0.2512,
+    "frame_difference": 3.0163
+   },
+   "clip_fingerprint": "dcd22d02ba3d60a4",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_01.mp4",
+   "stock_id": 8651800,
+   "pexels_id": 8651800,
+   "stock_frame_url": "https://images.pexels.com/videos/8651800/pexels-photo-8651800.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-woman-inflating-car-tire-using-a-foot-pump-8651800/"
   },
   {
    "text": "Someone took my parking space, which I briefly treated as a personal attack.",
@@ -93,7 +138,25 @@
    "query": "One car enters an open parking space while another driver stops, exhales, and grips the steering wheel.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 11.84,
+   "duration": 4.54,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.9337,
+    "active_region_ratio": 0.9815,
+    "frame_difference": 16.8178
+   },
+   "clip_fingerprint": "32d8fcdf709e31a2",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_02.mp4",
+   "stock_id": 4524438,
+   "pexels_id": 4524438,
+   "stock_frame_url": "https://images.pexels.com/videos/4524438/pexels-photo-4524438.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-driving-4524438/"
   },
   {
    "text": "Inside, a cart blocked the aisle. A child cried. Somebody had twelve items in the ten-item lane.",
@@ -110,7 +173,25 @@
    "query": "A busy grocery aisle shows a sideways cart, a parent calming a child, and a full express checkout line.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "relationship"
+   "human_role": "relationship",
+   "start": 16.38,
+   "duration": 6.14,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.7638,
+    "active_region_ratio": 0.9975,
+    "frame_difference": 52.1243
+   },
+   "clip_fingerprint": "956afb381846b352",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_03.mp4",
+   "stock_id": 3191108,
+   "pexels_id": 3191108,
+   "stock_frame_url": "https://images.pexels.com/videos/3191108/free-video-3191108.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-boy-placed-inside-a-push-cart-passing-through-the-vegetable-section-in-a-grocery-3191108/"
   },
   {
    "text": "Every inconvenience confirmed my conclusion: people were inconsiderate and the store was working against me.",
@@ -127,7 +208,25 @@
    "query": "The shopper's view narrows as aisle signs, carts, and passing customers crowd tightly toward the camera.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "collective"
+   "human_role": "collective",
+   "start": 22.52,
+   "duration": 6.3,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 11.3876,
+    "active_region_ratio": 0.9972,
+    "frame_difference": 34.9875
+   },
+   "clip_fingerprint": "56f413351f979edc",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_04.mp4",
+   "stock_id": 13752470,
+   "pexels_id": 13752470,
+   "stock_frame_url": "https://images.pexels.com/videos/13752470/food-market-supermarket-13752470.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/blurred-video-of-market-interior-13752470/"
   },
   {
    "text": "I left with groceries, a headache, and a case against humanity.",
@@ -144,7 +243,25 @@
    "query": "A shopper loads grocery bags into a car at dusk, shuts the trunk hard, and rubs their forehead.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 28.82,
+   "duration": 5.2,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.0414,
+    "active_region_ratio": 0.9965,
+    "frame_difference": 20.9426
+   },
+   "clip_fingerprint": "c8d8154525e1568b",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_05.mp4",
+   "stock_id": 11760015,
+   "pexels_id": 11760015,
+   "stock_frame_url": "https://images.pexels.com/videos/11760015/abstract-adult-airplane-airport-11760015.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-woman-putting-down-her-luggage-from-her-car-11760015/"
   },
   {
    "text": "Days later, I returned. Prices had not dropped. The aisles had not widened.",
@@ -160,7 +277,25 @@
    "narrative_mode": "stock_ok",
    "query": "The same storefront and price signs appear on another day as the same shopper enters through the doors.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 34.02,
+   "duration": 6.0,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.684,
+    "active_region_ratio": 0.9466,
+    "frame_difference": 13.9359
+   },
+   "clip_fingerprint": "34ed60e916652e06",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_06.mp4",
+   "stock_id": 6412408,
+   "pexels_id": 6412408,
+   "stock_frame_url": "https://images.pexels.com/videos/6412408/pexels-photo-6412408.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/reflection-of-a-man-at-confectionery-store-6412408/"
   },
   {
    "text": "The difference was sleep, food, and ten quiet minutes before leaving.",
@@ -176,7 +311,25 @@
    "narrative_mode": "stock_ok",
    "query": "Morning light shows an empty breakfast plate, a glass of water, and a ten-minute timer completing beside a chair.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 40.02,
+   "duration": 5.96,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.3255,
+    "active_region_ratio": 0.1887,
+    "frame_difference": 1.8539
+   },
+   "clip_fingerprint": "b60579843c865d18",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_07.mp4",
+   "stock_id": 6278839,
+   "pexels_id": 6278839,
+   "stock_frame_url": "https://images.pexels.com/videos/6278839/pexels-photo-6278839.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/cup-being-placed-on-pyrex-plate-6278839/"
   },
   {
    "text": "This time, when an older driver moved slowly into a space, I noticed the disability permit hanging from the mirror.",
@@ -192,7 +345,25 @@
    "narrative_mode": "stock_ok",
    "query": "An accessible parking permit swings from a rearview mirror as a car carefully enters a clearly marked space.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 45.98,
+   "duration": 7.3,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.6889,
+    "active_region_ratio": 0.6679,
+    "frame_difference": 22.0182
+   },
+   "clip_fingerprint": "df92f98a09a6f158",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_08.mp4",
+   "stock_id": 35186842,
+   "pexels_id": 35186842,
+   "stock_frame_url": "https://images.pexels.com/videos/35186842/pexels-photo-35186842.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/car-ride-through-city-streets-rearview-perspective-35186842/"
   },
   {
    "text": "The cart blocking the aisle belonged to an employee cleaning up a broken jar before somebody slipped.",
@@ -208,7 +379,25 @@
    "narrative_mode": "stock_ok",
    "query": "A yellow safety marker is placed beside a spreading jar spill while broken glass is swept into a dustpan.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 53.28,
+   "duration": 5.68,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.6587,
+    "active_region_ratio": 0.4048,
+    "frame_difference": 10.3296
+   },
+   "clip_fingerprint": "d56085515fca67dd",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_09.mp4",
+   "stock_id": 14501264,
+   "pexels_id": 14501264,
+   "stock_frame_url": "https://images.pexels.com/videos/14501264/pexels-photo-14501264.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-getting-out-of-a-car-and-stepping-on-broken-glass-14501264/"
   },
   {
    "text": "The crying child had an exhausted parent trying to hold a baby and find a missing shoe at the same time.",
@@ -226,7 +415,25 @@
    "motion_kind": "video",
    "motion_mode": "stock",
    "symbol_query": "record needle travels across spinning vinyl beside old photographs soft window light",
-   "symbol_family_source": "planner"
+   "symbol_family_source": "planner",
+   "start": 58.96,
+   "duration": 6.48,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.8173,
+    "active_region_ratio": 0.5591,
+    "frame_difference": 3.3364
+   },
+   "clip_fingerprint": "a681a57e8a476d75",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_10.mp4",
+   "stock_id": 3757661,
+   "pexels_id": 3757661,
+   "stock_frame_url": "https://images.pexels.com/videos/3757661/pexels-photo-3757661.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-footage-of-spinning-vinyl-3757661/"
   },
   {
    "text": "Nothing had become perfect. I was simply seeing information that irritation had edited out before.",
@@ -242,7 +449,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, A realistic grocery aisle opens from a narrow dark field of view into a wide clear scene full of visible context., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, A realistic grocery aisle opens from a narrow dark field of view into a wide clear scene full of visible context., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 65.44,
+   "duration": 6.76,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_11.jpg",
+   "still_reference_signature": "9f30e00abf17b8f9fecc",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_11.mp4",
+   "clip_fingerprint": "28111b3b4f6702e4",
+   "hero_generated": true,
+   "hero_raw_signature": "29ceb26f8a512c70abcd",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Then a jar fell. Instead of complaining about the delay, I helped clear the area.",
@@ -259,7 +493,25 @@
    "query": "A jar breaks near a checkout; one shopper alerts staff and helps move baskets safely away from the glass.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 72.2,
+   "duration": 5.36,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.6751,
+    "active_region_ratio": 0.9885,
+    "frame_difference": 22.8947
+   },
+   "clip_fingerprint": "bc46303d5eb435c2",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_12.mp4",
+   "stock_id": 8421648,
+   "pexels_id": 8421648,
+   "stock_frame_url": "https://images.pexels.com/videos/8421648/pexels-photo-8421648.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-paying-groceries-via-credit-card-8421648/"
   },
   {
    "text": "The employee thanked me. Another person moved my cart. A tense little corner of the store became cooperative.",
@@ -276,7 +528,25 @@
    "query": "Three strangers coordinate around a grocery spill, moving carts and clearing a safe walking route together.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "relationship"
+   "human_role": "relationship",
+   "start": 77.56,
+   "duration": 7.8,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.5516,
+    "active_region_ratio": 0.9947,
+    "frame_difference": 38.8918
+   },
+   "clip_fingerprint": "463434648d78813b",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_13.mp4",
+   "stock_id": 4121270,
+   "pexels_id": 4121270,
+   "stock_frame_url": "https://images.pexels.com/videos/4121270/pexels-photo-4121270.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/couple-picking-fruits-in-the-grocery-4121270/"
   },
   {
    "text": "That is how a state of mind becomes a shared environment. Your behavior gives other people something to respond to.",
@@ -293,7 +563,25 @@
    "query": "One calm gesture passes through a checkout line as customers make room, return items, and help each other.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "creator"
+   "human_role": "creator",
+   "start": 85.36,
+   "duration": 7.72,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.9176,
+    "active_region_ratio": 0.9891,
+    "frame_difference": 31.1654
+   },
+   "clip_fingerprint": "6e7b291a4804fef1",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_14.mp4",
+   "stock_id": 4122971,
+   "pexels_id": 4122971,
+   "stock_frame_url": "https://images.pexels.com/videos/4122971/buying-cashier-checkout-customer-4122971.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/food-man-woman-shopping-4122971/"
   },
   {
    "text": "The first time, I carried tension into the room and kept finding proof that it belonged there.",
@@ -309,7 +597,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, Red lines spread from one tense shopper through a realistic store map, connecting each frustrated interaction., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, Red lines spread from one tense shopper through a realistic store map, connecting each frustrated interaction., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 93.08,
+   "duration": 5.7,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_15.jpg",
+   "still_reference_signature": "9ab56361f9d5379d9a27",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_15.mp4",
+   "clip_fingerprint": "53e06ae0ea2a8101",
+   "hero_generated": true,
+   "hero_raw_signature": "be0a39e070a1bcbcfbcd",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "The second time, I carried more awareness, and that helped me notice choices I could not see before.",
@@ -325,7 +640,25 @@
    "narrative_mode": "stock_ok",
    "query": "A store directory lights several open routes around crowded aisles as a shopper calmly changes direction.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 98.78,
+   "duration": 6.76,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 10.9644,
+    "active_region_ratio": 0.9986,
+    "frame_difference": 40.3054
+   },
+   "clip_fingerprint": "420de4126bf17395",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_16.mp4",
+   "stock_id": 5700362,
+   "pexels_id": 5700362,
+   "stock_frame_url": "https://images.pexels.com/videos/5700362/pexels-photo-5700362.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/woman-walking-inside-a-store-5700362/"
   },
   {
    "text": "This does not mean attitude controls prices, prevents hardship, or makes unfair treatment imaginary.",
@@ -341,7 +674,25 @@
    "narrative_mode": "stock_ok",
    "query": "A receipt total, empty wallet, and customer-service complaint form remain plainly visible on a checkout counter.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 105.54,
+   "duration": 7.18,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.0408,
+    "active_region_ratio": 0.9617,
+    "frame_difference": 9.1125
+   },
+   "clip_fingerprint": "5eb5a6675507f137",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_17.mp4",
+   "stock_id": 6602062,
+   "pexels_id": 6602062,
+   "stock_frame_url": "https://images.pexels.com/videos/6602062/pexels-photo-6602062.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-paying-bills-using-smartphone-6602062/"
   },
   {
    "text": "It means your inner state affects what you notice, how you speak, and what happens after you enter the situation.",
@@ -358,7 +709,25 @@
    "query": "Three close actions follow in sequence: eyes noticing, a voice speaking calmly, and hands solving a practical problem.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "explorer"
+   "human_role": "explorer",
+   "start": 112.72,
+   "duration": 8.02,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.273,
+    "active_region_ratio": 0.9954,
+    "frame_difference": 23.6609
+   },
+   "clip_fingerprint": "05b72fbe2cba8535",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_18.mp4",
+   "stock_id": 7313657,
+   "pexels_id": 7313657,
+   "stock_frame_url": "https://images.pexels.com/videos/7313657/accomplishment-adult-art-arts-and-crafts-7313657.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-person-clapping-to-make-a-beat-7313657/"
   },
   {
    "text": "People talk about an old Earth and a new Earth. Maybe the useful question is not which planet you are assigned to.",
@@ -374,7 +743,25 @@
    "narrative_mode": "stock_ok",
    "query": "Two versions of Earth hover above one ordinary grocery receipt, then settle into the same neighborhood map.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 120.74,
+   "duration": 6.94,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.5081,
+    "active_region_ratio": 0.5776,
+    "frame_difference": 16.4546
+   },
+   "clip_fingerprint": "4a0f84582e85142e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_19.mp4",
+   "stock_id": 37452398,
+   "pexels_id": 37452398,
+   "stock_frame_url": "https://images.pexels.com/videos/37452398/pexels-photo-37452398.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/aerial-view-of-suburban-neighborhood-in-daylight-37452398/"
   },
   {
    "text": "Maybe the question is which version of this room your attention and behavior are helping create.",
@@ -390,7 +777,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, The grocery store divides into a hostile checkout line and a cooperative one, then both merge around one choice., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, The grocery store divides into a hostile checkout line and a cooperative one, then both merge around one choice., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 127.68,
+   "duration": 6.42,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_20.jpg",
+   "still_reference_signature": "a16cca8fd14575d81d38",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_20.mp4",
+   "clip_fingerprint": "a9d7bd4025107bd4",
+   "hero_generated": true,
+   "hero_raw_signature": "e7ffb883f4cd5fa43d93",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "You will still have bad days. Sometimes you will be the person blocking the aisle without realizing it.",
@@ -407,7 +821,25 @@
    "query": "The narrator's own cart sits sideways in an aisle until another shopper gestures and they quickly move it.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 134.1,
+   "duration": 6.9,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 3.4287,
+    "active_region_ratio": 0.9299,
+    "frame_difference": 19.8172
+   },
+   "clip_fingerprint": "3a9c425eae2eb1b7",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_21.mp4",
+   "stock_id": 8551735,
+   "pexels_id": 8551735,
+   "stock_frame_url": "https://images.pexels.com/videos/8551735/pexels-photo-8551735.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-man-getting-cooking-oil-in-a-hypermarket-shop-8551735/"
   },
   {
    "text": "The goal is not to feel superior. It is to wake up sooner, repair what you can, and make the next interaction better.",
@@ -424,7 +856,25 @@
    "query": "One shopper apologizes, moves the cart, and helps another person reach an item from a high shelf.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "creator"
+   "human_role": "creator",
+   "start": 141.0,
+   "duration": 8.04,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.291,
+    "active_region_ratio": 0.9756,
+    "frame_difference": 21.4954
+   },
+   "clip_fingerprint": "41efd9f24e32b18d",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_22.mp4",
+   "stock_id": 8420786,
+   "pexels_id": 8420786,
+   "stock_frame_url": "https://images.pexels.com/videos/8420786/pexels-photo-8420786.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/an-elderly-woman-carrying-a-grocery-basket-8420786/"
   },
   {
    "text": "Same store. Same people. Different participation. Which version are you bringing through the door today?",
@@ -440,7 +890,51 @@
    "narrative_mode": "stock_ok",
    "query": "Automatic grocery doors open toward a busy but welcoming store as the shopper enters, alert and relaxed.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 149.04,
+   "duration": 8.433,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.1504,
+    "active_region_ratio": 0.2046,
+    "frame_difference": 7.761
+   },
+   "clip_fingerprint": "0bd9bc1cbcd1246f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/two-earths-one-grocery-store/clip_23.mp4",
+   "stock_id": 6641527,
+   "pexels_id": 6641527,
+   "stock_frame_url": "https://images.pexels.com/videos/6641527/buy-enter-exit-food-6641527.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/people-going-inside-a-store-with-automatic-sliding-doors-6641527/"
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.97
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
