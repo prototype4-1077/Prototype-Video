@@ -62,7 +62,34 @@
    "image_prompt": "cinematic photoreal, A person sits at a kitchen table as morning news, messages, and calendar alerts gather across several devices., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
    "symbol_query": "magnifying lens moves across an ordinary landscape changing what is in focus daylight",
    "symbol_family_source": "planner",
-   "human_role": "observer"
+   "human_role": "observer",
+   "start": 0.0,
+   "duration": 3.2,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_00.jpg",
+   "still_reference_signature": "c8efcb37700960025f86",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_00.mp4",
+   "clip_fingerprint": "d1015fad02fa6341",
+   "hero_generated": true,
+   "hero_raw_signature": "99f1baa167c6fa36ad41",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Every day, somebody tells you what is about to go wrong.",
@@ -78,7 +105,25 @@
    "narrative_mode": "stock_ok",
    "query": "Different breaking-news banners and urgent phone alerts update rapidly across a wall of active screens.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 3.2,
+   "duration": 3.94,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.1712,
+    "active_region_ratio": 0.9916,
+    "frame_difference": 20.4528
+   },
+   "clip_fingerprint": "86941284fa297d1f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_01.mp4",
+   "stock_id": 854765,
+   "pexels_id": 854765,
+   "stock_frame_url": "https://images.pexels.com/videos/854765/free-video-854765.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/reading-news-on-a-lenovo-smartphone-854765/"
   },
   {
    "text": "Technology is moving fast. People are angry. Politics is exhausting. Somehow you need an informed opinion before breakfast.",
@@ -94,7 +139,25 @@
    "narrative_mode": "stock_ok",
    "query": "A breakfast table fills with a laptop update, political headlines, group messages, and an untouched bowl of cereal.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 7.14,
+   "duration": 6.42,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.0833,
+    "active_region_ratio": 0.9969,
+    "frame_difference": 23.246
+   },
+   "clip_fingerprint": "d5713d401da3830c",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_02.mp4",
+   "stock_id": 34982756,
+   "pexels_id": 34982756,
+   "stock_frame_url": "https://images.pexels.com/videos/34982756/atmosphare-bath-with-teddy-bear-behaglich-breakfast-34982756.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/cozy-kitchen-breakfast-scene-with-tablet-cereal-34982756/"
   },
   {
    "text": "That is a ridiculous amount of pressure for one nervous system and one cup of coffee.",
@@ -110,7 +173,25 @@
    "narrative_mode": "stock_ok",
    "query": "A coffee cup vibrates beside a smartwatch showing repeated alerts until the owner switches notifications off.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 13.56,
+   "duration": 5.56,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 9.1299,
+    "active_region_ratio": 0.9903,
+    "frame_difference": 22.4916
+   },
+   "clip_fingerprint": "32a56dab95dd9ff5",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_03.mp4",
+   "stock_id": 6563965,
+   "pexels_id": 6563965,
+   "stock_frame_url": "https://images.pexels.com/videos/6563965/account-analysis-beautiful-board-6563965.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-video-of-people-holding-a-cup-6563965/"
   },
   {
    "text": "But the future is not only being decided by governments, corporations, or people with more power than us.",
@@ -126,7 +207,25 @@
    "narrative_mode": "stock_ok",
    "query": "Government buildings and corporate towers dissolve into ordinary homes, classrooms, workshops, and neighborhood streets.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 19.12,
+   "duration": 5.92,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.871,
+    "active_region_ratio": 0.992,
+    "frame_difference": 19.2151
+   },
+   "clip_fingerprint": "ad642e7665a11d43",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_04.mp4",
+   "stock_id": 7317315,
+   "pexels_id": 7317315,
+   "stock_frame_url": "https://images.pexels.com/videos/7317315/pexels-photo-7317315.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/high-rise-buildings-in-the-city-central-7317315/"
   },
   {
    "text": "It is also being shaped by how ordinary people respond to ordinary moments.",
@@ -143,7 +242,25 @@
    "query": "A sequence shows a bus passenger making room, a coworker listening, and a neighbor returning a dropped package.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 25.04,
+   "duration": 5.4,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.3733,
+    "active_region_ratio": 0.8814,
+    "frame_difference": 9.4731
+   },
+   "clip_fingerprint": "7fbdde42de1ecd32",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_05.mp4",
+   "stock_id": 35575760,
+   "pexels_id": 35575760,
+   "stock_frame_url": "https://images.pexels.com/videos/35575760/silent-in-transjakarta-35575760.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/diverse-passengers-traveling-on-urban-bus-35575760/"
   },
   {
    "text": "You read something online that makes you angry. What do you do next?",
@@ -159,7 +276,25 @@
    "narrative_mode": "stock_ok",
    "query": "A phone displays a hostile comment while a thumb hovers between reply and close controls.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 30.44,
+   "duration": 3.8,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 6.1762,
+    "active_region_ratio": 0.7013,
+    "frame_difference": 11.985
+   },
+   "clip_fingerprint": "fd257fae3910590d",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_06.mp4",
+   "stock_id": 32848508,
+   "pexels_id": 32848508,
+   "stock_frame_url": "https://images.pexels.com/videos/32848508/boy-gamer-cell-phone-cod-codm-32848508.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/intense-mobile-fps-gaming-session-close-up-32848508/"
   },
   {
    "text": "Someone disagrees with you. Do you listen, or immediately decide they are an idiot?",
@@ -175,7 +310,25 @@
    "narrative_mode": "stock_ok",
    "query": "Two coworkers disagree over a whiteboard; one crosses out an insult on a note and asks a question instead.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 34.24,
+   "duration": 5.1,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.7746,
+    "active_region_ratio": 0.9891,
+    "frame_difference": 8.2962
+   },
+   "clip_fingerprint": "e678ccc90968450e",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_07.mp4",
+   "stock_id": 12283403,
+   "pexels_id": 12283403,
+   "stock_frame_url": "https://images.pexels.com/videos/12283403/business-ideas-it-office-job-office-meeting-12283403.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-man-writing-on-a-whiteboard-and-talking-to-his-coworkers-12283403/"
   },
   {
    "text": "You feel afraid. Do you examine the fear, or pass it to somebody else?",
@@ -191,7 +344,25 @@
    "narrative_mode": "stock_ok",
    "query": "A tense message draft pauses on a screen while the sender walks outside, breathes, and returns more settled.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 39.34,
+   "duration": 4.92,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.1156,
+    "active_region_ratio": 0.1099,
+    "frame_difference": 1.7723
+   },
+   "clip_fingerprint": "f5e91bb83496fbdf",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_08.mp4",
+   "stock_id": 33414466,
+   "pexels_id": 33414466,
+   "stock_frame_url": "https://images.pexels.com/videos/33414466/pexels-photo-33414466.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/inspirational-video-typing-don-t-quit-33414466/"
   },
   {
    "text": "That next response matters because it becomes part of somebody else's next moment.",
@@ -208,7 +379,25 @@
    "query": "One message travels through several phones, changing the expressions and actions of each recipient in sequence.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 44.26,
+   "duration": 5.66,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 8.2601,
+    "active_region_ratio": 0.9974,
+    "frame_difference": 32.8101
+   },
+   "clip_fingerprint": "7b930102bb5e04b4",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_09.mp4",
+   "stock_id": 6963836,
+   "pexels_id": 6963836,
+   "stock_frame_url": "https://images.pexels.com/videos/6963836/pexels-photo-6963836.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/female-typing-on-her-smartphone-6963836/"
   },
   {
    "text": "When people talk about humanity moving to a higher frequency, I do not think it means everybody becomes peaceful overnight.",
@@ -224,7 +413,34 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, A glowing frequency display settles into realistic scenes of traffic, chores, work, and unresolved conversation., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, A glowing frequency display settles into realistic scenes of traffic, chores, work, and unresolved conversation., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 49.92,
+   "duration": 7.12,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_10.jpg",
+   "still_reference_signature": "364288768e076594286c",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_10.mp4",
+   "clip_fingerprint": "95d42c349bb99a96",
+   "hero_generated": true,
+   "hero_raw_signature": "7a0c465412bde29b888c",
+   "motion_recipe": "human",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "I think it means more people become aware of what they are contributing.",
@@ -241,7 +457,25 @@
    "query": "People in different daily settings pause as clear lines show their words and actions reaching nearby people.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 57.04,
+   "duration": 4.62,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.2606,
+    "active_region_ratio": 0.7359,
+    "frame_difference": 35.9196
+   },
+   "clip_fingerprint": "0de0283b9b6db1af",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_11.mp4",
+   "stock_id": 854621,
+   "pexels_id": 854621,
+   "stock_frame_url": "https://images.pexels.com/videos/854621/free-video-854621.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/people-walking-on-the-street-854621/"
   },
   {
    "text": "You cannot control every thought that enters your mind or prevent every emotional reaction.",
@@ -258,7 +492,25 @@
    "query": "Unplanned notes and emotion words move across a glass board while a person observes without erasing them.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 61.66,
+   "duration": 5.62,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.8545,
+    "active_region_ratio": 0.9897,
+    "frame_difference": 7.295
+   },
+   "clip_fingerprint": "411a98c32860bce4",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_12.mp4",
+   "stock_id": 6563922,
+   "pexels_id": 6563922,
+   "stock_frame_url": "https://images.pexels.com/videos/6563922/account-analysis-beautiful-board-6563922.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/woman-posting-sticky-notes-6563922/"
   },
   {
    "text": "But you can notice what is happening before you act on it.",
@@ -275,7 +527,25 @@
    "query": "A hand stops before pressing send, turns the phone face down, and starts a ten-second timer.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 67.28,
+   "duration": 4.34,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 5.9712,
+    "active_region_ratio": 0.987,
+    "frame_difference": 21.7598
+   },
+   "clip_fingerprint": "a76e70ac31ab3abb",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_13.mp4",
+   "stock_id": 10599685,
+   "pexels_id": 10599685,
+   "stock_frame_url": "https://images.pexels.com/videos/10599685/pexels-photo-10599685.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-on-hand-choosing-number-on-fixed-phone-10599685/"
   },
   {
    "text": "That small pause gives you time to ask, Is this really how I want to respond?",
@@ -291,7 +561,25 @@
    "narrative_mode": "stock_ok",
    "query": "A ten-second countdown runs beside two written response options while one is calmly selected.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 71.62,
+   "duration": 5.72,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.3383,
+    "active_region_ratio": 0.2805,
+    "frame_difference": 4.7113
+   },
+   "clip_fingerprint": "7e039cba4994228b",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_14.mp4",
+   "stock_id": 8319435,
+   "pexels_id": 8319435,
+   "stock_frame_url": "https://images.pexels.com/videos/8319435/beach-party-beach-wedding-canon-christians-8319435.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/close-up-view-of-a-running-time-code-8319435/"
   },
   {
    "text": "This does not mean ignoring problems or pretending everything is wonderful.",
@@ -308,7 +596,25 @@
    "query": "A real community problem board remains visible as residents begin sorting issues into practical action groups.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "collective"
+   "human_role": "collective",
+   "start": 77.34,
+   "duration": 3.9,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.7313,
+    "active_region_ratio": 0.9903,
+    "frame_difference": 17.7648
+   },
+   "clip_fingerprint": "05dc6d63ec8459a6",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_15.mp4",
+   "stock_id": 6804116,
+   "pexels_id": 6804116,
+   "stock_frame_url": "https://images.pexels.com/videos/6804116/pexels-photo-6804116.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-man-reading-the-sticky-notes-6804116/"
   },
   {
    "text": "You can recognize injustice without becoming consumed by hatred. You can set a boundary without trying to destroy somebody.",
@@ -324,7 +630,25 @@
    "narrative_mode": "stock_ok",
    "query": "A peaceful public advocate holds a clear boundary line while speaking firmly across a meeting table.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 81.24,
+   "duration": 8.58,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.3931,
+    "active_region_ratio": 0.2674,
+    "frame_difference": 2.8915
+   },
+   "clip_fingerprint": "d46a79b7d587f6bf",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_16.mp4",
+   "stock_id": 6952113,
+   "pexels_id": 6952113,
+   "stock_frame_url": "https://images.pexels.com/videos/6952113/diverse-european-union-man-people-6952113.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/a-man-in-a-podium-giving-a-speech-6952113/"
   },
   {
    "text": "You can be honest about what is wrong while still helping create what comes next.",
@@ -340,7 +664,25 @@
    "narrative_mode": "stock_ok",
    "query": "Neighbors document damage after a storm, then organize tools, supplies, and repair teams in the same location.",
    "motion_kind": "video",
-   "motion_mode": "stock"
+   "motion_mode": "stock",
+   "start": 89.82,
+   "duration": 5.76,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.2098,
+    "active_region_ratio": 0.1735,
+    "frame_difference": 7.1943
+   },
+   "clip_fingerprint": "50d393c369166824",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_17.mp4",
+   "stock_id": 30567549,
+   "pexels_id": 30567549,
+   "stock_frame_url": "https://images.pexels.com/videos/30567549/electric-workers-fallen-hurricane-trees-30567549.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/utility-workers-clearing-storm-debris-on-road-30567549/"
   },
   {
    "text": "A higher state of consciousness is not passive. It is responsible.",
@@ -357,7 +699,34 @@
    "hero": true,
    "hero_style": "effects",
    "image_prompt": "cinematic photoreal, A seated observer stands, puts on work gloves, and joins a coordinated community repair effort., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
-   "human_role": "collective"
+   "human_role": "collective",
+   "start": 95.58,
+   "duration": 5.1,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_18.jpg",
+   "still_reference_signature": "516269e0b97a9be66ccf",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_18.mp4",
+   "clip_fingerprint": "35e02492e94ba8b3",
+   "hero_generated": true,
+   "hero_raw_signature": "b6bdc3a6a06ced049930",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   },
   {
    "text": "Beliefs affect what you notice. What you notice affects your emotions. Your emotions influence your decisions.",
@@ -374,7 +743,25 @@
    "query": "A clear sequence connects a written belief, an eye focusing, an emotion gauge, and a hand making a choice.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "chooser"
+   "human_role": "chooser",
+   "start": 100.68,
+   "duration": 6.48,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 4.5894,
+    "active_region_ratio": 0.9905,
+    "frame_difference": 15.8825
+   },
+   "clip_fingerprint": "2ce41a895877dc89",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_19.mp4",
+   "stock_id": 7265751,
+   "pexels_id": 7265751,
+   "stock_frame_url": "https://images.pexels.com/videos/7265751/pexels-photo-7265751.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/calling-the-spirit-of-the-dead-7265751/"
   },
   {
    "text": "Those decisions affect other people, and their reactions continue the process. That is how inner life becomes collective behavior.",
@@ -391,7 +778,25 @@
    "query": "A network of ordinary decisions moves through a family, office, bus, and neighborhood without repeating a face.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 107.16,
+   "duration": 8.98,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 0.328,
+    "active_region_ratio": 0.2306,
+    "frame_difference": 7.0886
+   },
+   "clip_fingerprint": "ce468d3e90930d4f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_20.mp4",
+   "stock_id": 7578721,
+   "pexels_id": 7578721,
+   "stock_frame_url": "https://images.pexels.com/videos/7578721/adult-apartment-architecture-at-home-7578721.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/couple-standing-in-front-of-a-house-7578721/"
   },
   {
    "text": "You do not have to fix the entire world today. Honestly, nobody could.",
@@ -408,7 +813,25 @@
    "query": "A person sets aside an enormous world map and chooses one manageable task card from today's list.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified"
+   "human_role": "unspecified",
+   "start": 116.14,
+   "duration": 5.32,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 1.4671,
+    "active_region_ratio": 0.7189,
+    "frame_difference": 15.1246
+   },
+   "clip_fingerprint": "780d8c1e0e9c42bb",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_21.mp4",
+   "stock_id": 10603199,
+   "pexels_id": 10603199,
+   "stock_frame_url": "https://images.pexels.com/videos/10603199/geography-students-study-university-10603199.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/marking-circle-on-map-10603199/"
   },
   {
    "text": "Just take responsibility for the part of the future that passes through your next conversation, decision, and act of patience.",
@@ -427,7 +850,25 @@
    "motion_mode": "stock",
    "symbol_query": "hand draws two arrows pointing different directions on paper soft window light close up",
    "symbol_family_source": "planner",
-   "human_role": "chooser"
+   "human_role": "chooser",
+   "start": 121.46,
+   "duration": 7.96,
+   "motion_source": "pexels",
+   "motion_verified": true,
+   "motion_evidence": {
+    "passes": true,
+    "samples": 9,
+    "residual_flow_p75": 7.6872,
+    "active_region_ratio": 0.9964,
+    "frame_difference": 10.4476
+   },
+   "clip_fingerprint": "565f4c7561d5250f",
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_22.mp4",
+   "stock_id": 6079425,
+   "pexels_id": 6079425,
+   "stock_frame_url": "https://images.pexels.com/videos/6079425/pexels-photo-6079425.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
+   "stock_frame_url_checked": true,
+   "source_url": "https://www.pexels.com/video/person-looking-at-a-document-6079425/"
   },
   {
    "text": "The future is not completely outside your control. Some of it is waiting inside your next response, and the next ten seconds have started.",
@@ -443,7 +884,60 @@
    "narrative_mode": "hero",
    "hero": true,
    "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, A ten-second clock glows above branching scenes of conflict and cooperation, then one calm response moves forward., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain"
+   "image_prompt": "cinematic photoreal, A ten-second clock glows above branching scenes of conflict and cooperation, then one calm response moves forward., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "start": 129.42,
+   "duration": 11.021,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "still_reference_policy": "closest_stock_frame_full_enhancement",
+   "enhanced_source_image": "hero_23.jpg",
+   "still_reference_signature": "2e9bc3f1760c5f511914",
+   "pure_generated_still": true,
+   "still_enhancement_steps": [
+    "reference_conditioned_image_generation",
+    "depth_separated_layers",
+    "occlusion_background_completion",
+    "recipe_specific_internal_motion",
+    "restrained_practical_light_motion",
+    "cohesive_final_grade",
+    "subtle_film_grain"
+   ],
+   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-future-is-built-in-the-next-ten-seconds/clip_23.mp4",
+   "clip_fingerprint": "4fb3b8b0dc40f12a",
+   "hero_generated": true,
+   "hero_raw_signature": "954f72d07c64468bf59d",
+   "motion_recipe": "light",
+   "motion_compiled": true,
+   "motion_source": "reference_conditioned_still",
+   "still_reference_generation_model": "pollinations_kontext",
+   "still_enhancement_version": 1,
+   "still_enhanced": true
   }
- ]
+ ],
+ "voiceover": "vo.mp3",
+ "voiceover_config": {
+  "provider": "ElevenLabs",
+  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
+  "voice_name": "Liam - Energetic, Social Media Creator",
+  "model_id": "eleven_v3",
+  "stability_mode": "creative",
+  "voice_settings": {
+   "stability": 0.0,
+   "similarity_boost": 0.75,
+   "style": 0.0,
+   "speed": 0.97
+  },
+  "audio_tags_enabled": true
+ },
+ "music_variants": [
+  {
+   "file": "music_03.wav",
+   "label": "Deep Current",
+   "source": "generated",
+   "variant": 3,
+   "index": 3,
+   "selected": true
+  }
+ ],
+ "music": "music_03.wav"
 }
