@@ -1,0 +1,91 @@
+{
+  "contract_version": 1,
+  "asset_id": "june_oxley_hero_rig",
+  "asset_version": "4.0.0",
+  "character_id": "june_oxley",
+  "display_name": "June Oxley Canonical Deformation Hero Rig v4",
+  "source_of_truth": [
+    "concept/characters/JUNE_OXLEY.md",
+    "concept/characters/june_oxley.json",
+    "concept/characters/june_oxley_animation_addendum.json",
+    "concept/style_frames/june-oxley-canonical-turnaround-v1.png"
+  ],
+  "canonical_identity_reference": {
+    "path": "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+    "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9"
+  },
+  "delivery": {
+    "format": "blend",
+    "generation": "artist_directed_runtime_build",
+    "repository_policy": "The generated .blend is a workflow artifact, never a committed binary.",
+    "collections": ["CE_June_Oxley", "CE_June_Porch"]
+  },
+  "design_lock": {
+    "age_range": [78, 84],
+    "body": "lean, compact, capable build with continuous weighted sleeves and trouser legs",
+    "face": "compact rounded friendly face, very large expressive blue-gray eyes, short rounded crooked nose, full rounded white beard, and appealing weathered asymmetry",
+    "hair": "swept white side hair with soft temple masses and a bald crown",
+    "facial_hair": "full rounded fitted white beard patch and shaped mustache",
+    "wardrobe": ["faded blue-and-navy plaid work shirt", "single open worn indigo denim jacket shell", "dark denim overalls", "rounded worn brown work boots"],
+    "forbidden": ["long gaunt face", "small eyes", "sparse beard", "red plaid shirt", "cowboy hat", "huge belly", "spherical toy proportions", "redneck caricature", "preacher costume"]
+  },
+  "modeling": {
+    "style": "artist_directed_stylized_3d",
+    "surface_standard": "smooth canonical production surfaces with continuous weighted deformation",
+    "head_topology": "single_sculpted_surface",
+    "unified_surfaces": ["head", "plaid_torso", "open_denim_shell", "beard_patch"],
+    "weighted_surfaces": ["jacket_sleeve.L", "jacket_sleeve.R", "overall_leg.L", "overall_leg.R"],
+    "deformation_standard": "armature preserve-volume plus corrective-smooth elbow and knee zones",
+    "asymmetry_landmarks": ["crooked nose field", "offset cheek fields", "uneven brow and eye height", "uneven swept hair opening"],
+    "corrective_shapes": ["brow_raise", "brow_knit", "squint", "cheek_raise"]
+  },
+  "rig": {
+    "required_bones": [
+      "root", "pelvis", "torso", "neck", "head",
+      "upper_arm.L", "forearm.L", "hand.L",
+      "upper_arm.R", "forearm.R", "hand.R",
+      "thigh.L", "shin.L", "foot.L",
+      "thigh.R", "shin.R", "foot.R"
+    ],
+    "action_library": ["June_Breathing_Idle", "June_Head_Performance", "June_Gesture_Performance"],
+    "deformation_features": ["normalized vertex groups", "preserve volume", "corrective smooth", "subdivision after deformation"]
+  },
+  "face": {
+    "visemes": ["A", "B", "C", "D", "E", "F", "G", "H", "X"],
+    "expression_controls": ["smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise"],
+    "independent_controls": ["blink.L.upper", "blink.L.lower", "blink.R.upper", "blink.R.lower", "brow.L", "brow.R", "eye_aim"],
+    "eyelid_model": "independent upper and lower lid curves around canonical large eyeballs; eyeballs never scale during blink",
+    "readability_gain": 1.65
+  },
+  "hands": {
+    "minimum_digits_per_hand": 5,
+    "segmented_digits": true,
+    "contact_safe": true
+  },
+  "materials": [
+    "June Skin", "June White Hair", "June Faded Denim", "June Dark Overalls",
+    "June Shirt Plaid Navy", "Worn Boot Leather", "June Weathered Lip", "June Blue Gray Iris",
+    "Aged Brass", "Warm Cedar"
+  ],
+  "quality_gate": {
+    "profiles": ["youtube", "portrait"],
+    "fps": 30,
+    "continuous_engine": "BLENDER_WORKBENCH",
+    "review_engine": "BLENDER_EEVEE_NEXT",
+    "promotion_engine": "CYCLES",
+    "tier_policy": "Every change must pass the fast Workbench geometry gate; selected candidates receive Eevee lookdev review and the final Cycles promotion render.",
+    "full_resolution_keyframes_per_profile": 3,
+    "artifact_reopen_required": true,
+    "human_art_approval_required": true,
+    "facial_performance_matrix_required": true,
+    "deformation_pose_matrix_required": true,
+    "matrix_visemes": ["A", "B", "C", "D", "E", "F", "G", "H", "X"],
+    "matrix_expressions": ["smile", "thoughtful", "soft_chuckle", "brow_raise", "brow_knit", "squint", "cheek_raise"],
+    "required_checks": [
+      "canonical identity reference hash", "compact rounded face", "large readable eyes", "full rounded beard", "blue navy plaid",
+      "continuous weighted elbow deformation", "continuous weighted knee deformation", "preserve-volume joints", "corrective smoothing",
+      "independent eyelid blink", "segmented readable hands", "all nine visemes readable in a close-up matrix",
+      "all seven expressions readable in a close-up matrix", "safe landscape crop", "safe portrait crop", "no primitive faceting in hero close-up"
+    ]
+  }
+}

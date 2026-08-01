@@ -6,12 +6,64 @@ on:
       - "pipeline/**"
       - ".github/workflows/render.yml"
       - ".github/workflows/pipeline-tests.yml"
+      - "concept/characters/june_oxley_asset_v5.json"
+      - "concept/characters/june_oxley_asset_v6.json"
+      - "concept/characters/june_oxley_asset_v7.json"
+      - "concept/characters/june_oxley_asset_v8.json"
+      - "concept/characters/june_oxley_performance_rig_v1.json"
+      - "concept/style_frames/june_golden_scene_performance_slice_v1.json"
+      - "concept/style_frames/june_golden_scene_rhubarb_lipsync_v1.json"
+      - "concept/style_frames/june_golden_scene_expression_cues_v1.json"
+      - "concept/style_frames/june_oxley_viseme_atlas_v1.json"
+      - "concept/style_frames/june_oxley_viseme_atlas_v1.png"
+      - "concept/style_frames/june_oxley_expression_atlas_v1.json"
+      - "concept/style_frames/june_oxley_expression_atlas_v1.png"
+      - "concept/style_frames/june_oxley_porch_hero_plate_v1.json"
+      - "concept/style_frames/june_oxley_porch_hero_plate_v1.png"
+      - "concept/style_frames/june_golden_scene_body_motion_v1.json"
+      - "concept/style_frames/june_oxley_porch_gesture_atlas_v1.json"
+      - "concept/style_frames/june_golden_scene_gesture_cues_v1.json"
+      - "concept/style_frames/june_oxley_porch_mug_lift_low_v1.png"
+      - "concept/style_frames/june_oxley_porch_mug_lift_mid_v1.png"
+      - "concept/style_frames/june_oxley_porch_mug_lift_v1.png"
+      - "concept/style_frames/june_oxley_porch_pencil_contact_v1.png"
+      - "concept/style_frames/june_oxley_porch_pencil_hold_v1.png"
+      - "concept/style_frames/june_golden_scene_multishot_v1.json"
+      - "concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json"
+      - "concept/style_frames/june-golden-scene-gs030-*"
+      - "concept/style_frames/june_gs030_pose_*"
+      - "concept/style_frames/june_golden_scene_gs060_layered_pour_v1.json"
+      - "concept/style_frames/june-golden-scene-gs060-*"
+      - "concept/style_frames/june_gs060_pose_*"
+      - "concept/style_frames/june_golden_scene_gs070_*"
+      - "concept/style_frames/june-golden-scene-gs070-*"
+      - "concept/style_frames/june_golden_scene_master_v1.json"
+      - "concept/style_frames/june_golden_scene_master_sound_v1.json"
+      - "concept/audio/june_golden_scene_dialogue_norman_v1.wav"
+      - "concept/characters/june_oxley_performance_rig_v1.json"
+      - "concept/style_frames/june_oxley_mug_held_insert_v1.png"
+      - "concept/style_frames/june_oxley_ledger_insert_v1.png"
+      - "concept/style_frames/june-golden-scene-gs020-style-target-v2.png"
+      - "concept/style_frames/june-golden-scene-gs040-style-target-v2.png"
+      - "concept/style_frames/june_oxley_npr_look_v1.json"
+      - "concept/style_frames/june_oxley_npr_look_v2.json"
+      - "concept/style_frames/june_oxley_npr_look_v3.json"
+      - "concept/style_frames/june_oxley_npr_look_v4.json"
+      - "concept/style_frames/june_oxley_npr_look_v5.json"
+      - "concept/style_frames/june_oxley_npr_look_v6.json"
+      - "concept/style_frames/june_oxley_npr_look_v7.json"
+      - "concept/style_frames/june_oxley_npr_look_v8.json"
+      - "concept/style_frames/june_oxley_npr_finish_v1.json"
+      - "concept/style_frames/june_oxley_npr_reward_v1.json"
+      - "examples/june-golden-scene-twelve-dollar-mug.json"
   push:
     branches: [main]
     paths:
       - "pipeline/**"
       - ".github/workflows/render.yml"
       - ".github/workflows/pipeline-tests.yml"
+      - "concept/style_frames/june_golden_scene_master_sound_v1.json"
+      - "concept/audio/june_golden_scene_dialogue_norman_v1.wav"
 
 permissions:
   contents: read
@@ -34,3 +86,555 @@ jobs:
         run: python3 -m compileall -q pipeline
       - name: Regression tests
         run: python3 -m unittest discover -s pipeline/tests -v
+      - name: Render high-fidelity 2.5D June viseme preview
+        run: |
+          python3 -m pipeline.cartoon_viseme_atlas \
+            concept/style_frames/june_oxley_viseme_atlas_v1.json \
+            --output-dir build/edit/june-2p5d-viseme-preview
+      - name: Verify 2.5D preview contract
+        run: |
+          set -euo pipefail
+          video=build/edit/june-2p5d-viseme-preview/june-2p5d-viseme-preview.mp4
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "836"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "836"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "135"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "4.500000"
+          sha256sum "$video"
+      - name: Upload high-fidelity 2.5D June preview
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-2p5d-viseme-atlas-v1
+          path: |
+            build/edit/june-2p5d-viseme-preview/*.mp4
+            build/edit/june-2p5d-viseme-preview/*.json
+            build/edit/june-2p5d-viseme-preview/frames/frame_0001.png
+            build/edit/june-2p5d-viseme-preview/frames/frame_0135.png
+          if-no-files-found: error
+          retention-days: 14
+      - name: Render exact-clock 2.5D June expression performance
+        run: |
+          python3 -m pipeline.cartoon_viseme_atlas \
+            concept/style_frames/june_oxley_viseme_atlas_v1.json \
+            --cues concept/style_frames/june_golden_scene_rhubarb_lipsync_v1.json \
+            --expression-atlas concept/style_frames/june_oxley_expression_atlas_v1.json \
+            --expression-cues concept/style_frames/june_golden_scene_expression_cues_v1.json \
+            --output-dir build/edit/june-2p5d-lipsync-performance
+      - name: Verify 453-frame expression performance contract
+        run: |
+          set -euo pipefail
+          video=build/edit/june-2p5d-lipsync-performance/june-2p5d-lipsync-performance.mp4
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "836"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "836"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "453"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "15.100000"
+          test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+          sha256sum "$video"
+      - name: Upload exact-clock 2.5D June expression performance
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-2p5d-expression-performance-v1
+          path: |
+            build/edit/june-2p5d-lipsync-performance/*.mp4
+            build/edit/june-2p5d-lipsync-performance/*.json
+            build/edit/june-2p5d-lipsync-performance/frames/frame_0001.png
+            build/edit/june-2p5d-lipsync-performance/frames/frame_0453.png
+          if-no-files-found: error
+          retention-days: 14
+      - name: Render full-HD June porch gesture performance
+        run: |
+          python3 -m pipeline.cartoon_hero_scene \
+            concept/style_frames/june_oxley_porch_hero_plate_v1.json \
+            concept/style_frames/june_oxley_viseme_atlas_v1.json \
+            --cues concept/style_frames/june_golden_scene_rhubarb_lipsync_v1.json \
+            --expression-atlas concept/style_frames/june_oxley_expression_atlas_v1.json \
+            --expression-cues concept/style_frames/june_golden_scene_expression_cues_v1.json \
+            --body-motion concept/style_frames/june_golden_scene_body_motion_v1.json \
+            --gesture-atlas concept/style_frames/june_oxley_porch_gesture_atlas_v1.json \
+            --gesture-cues concept/style_frames/june_golden_scene_gesture_cues_v1.json \
+            --output-dir build/edit/june-hero-expression-performance
+      - name: Verify full-HD June porch gesture contract
+        run: |
+          set -euo pipefail
+          video=build/edit/june-hero-expression-performance/june-hero-expression-performance.mp4
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "453"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "15.100000"
+          test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+          test "$(find build/edit/june-hero-expression-performance/review_frames -name 'frame_*.png' | wc -l)" = "9"
+          sha256sum "$video"
+      - name: Upload full-HD June porch gesture performance
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-hero-gesture-performance-v1
+          path: |
+            build/edit/june-hero-expression-performance/*.mp4
+            build/edit/june-hero-expression-performance/*.json
+            build/edit/june-hero-expression-performance/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
+      - name: Render high-detail June multi-shot sequence
+        run: |
+          python3 -m pipeline.cartoon_shot_sequence \
+            concept/style_frames/june_golden_scene_multishot_v1.json \
+            build/edit/june-hero-expression-performance/june-hero-expression-performance.mp4 \
+            --output-dir build/edit/june-golden-scene-multishot
+      - name: Verify high-detail multi-shot contract
+        run: |
+          set -euo pipefail
+          video=build/edit/june-golden-scene-multishot/june-golden-scene-multishot.mp4
+          report=build/edit/june-golden-scene-multishot/june-golden-scene-multishot-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "453"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "15.100000"
+          test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+          test "$(find build/edit/june-golden-scene-multishot/review_frames -name 'frame_*.png' | wc -l)" = "18"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-golden-scene-multishot/june-golden-scene-multishot-report.json", encoding="utf-8"))
+          assert report["gate"] == "identity_locked_high_detail_multishot_sequence"
+          assert report["cut_frames"] == [51, 115, 307, 379, 393]
+          assert len(report["shots"]) == 6
+          assert report["base_performance"]["audio_preserved"] is False
+          assert report["encoded_quality"]["minimum_psnr_db"] >= 38.0
+          assert report["encoded_quality"]["minimum_encoded_laplacian_variance"] >= 30.0
+          PY
+          sha256sum "$video" "$report"
+      - name: Upload high-detail June multi-shot sequence
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-golden-scene-multishot-v1
+          path: |
+            build/edit/june-golden-scene-multishot/*.mp4
+            build/edit/june-golden-scene-multishot/*.json
+            build/edit/june-golden-scene-multishot/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
+      - name: Render registered GS030 layered stand
+        run: |
+          python3 -m pipeline.cartoon_pose_layers \
+            concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json \
+            --output-dir build/edit/june-gs030-layered-stand
+      - name: Verify registered GS030 layered stand contract
+        run: |
+          set -euo pipefail
+          video=build/edit/june-gs030-layered-stand/june-gs030-layered-stand.mp4
+          report=build/edit/june-gs030-layered-stand/june-gs030-layered-stand-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "171"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "5.700000"
+          test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+          test "$(find build/edit/june-gs030-layered-stand/review_frames -name 'frame_*.png' | wc -l)" = "14"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-gs030-layered-stand/june-gs030-layered-stand-report.json", encoding="utf-8"))
+          assert report["gate"] == "registered_layered_body_mechanics"
+          assert report["frame_count"] == 171
+          assert report["audio"]["included"] is False
+          assert report["optical_flow_used"] is False
+          assert report["cross_dissolve_used"] is False
+          assert report["maximum_contact_residual_px_source"] <= 1.75
+          assert report["encoded_quality"]["minimum_psnr_db"] >= 38.0
+          assert report["encoded_quality"]["minimum_encoded_laplacian_variance"] >= 30.0
+          assert len(report["review_frames"]) == 14
+          PY
+          sha256sum "$video" "$report"
+      - name: Upload registered GS030 layered stand
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-gs030-layered-stand-v1
+          path: |
+            build/edit/june-gs030-layered-stand/*.mp4
+            build/edit/june-gs030-layered-stand/*.json
+            build/edit/june-gs030-layered-stand/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
+      - name: Render registered GS060 layered pour
+        run: |
+          python3 -m pipeline.cartoon_pour_layers \
+            concept/style_frames/june_golden_scene_gs060_layered_pour_v1.json \
+            --output-dir build/edit/june-gs060-layered-pour
+      - name: Verify registered GS060 layered pour contract
+        run: |
+          set -euo pipefail
+          video=build/edit/june-gs060-layered-pour/june-gs060-layered-pour.mp4
+          report=build/edit/june-gs060-layered-pour/june-gs060-layered-pour-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "258"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "8.600000"
+          test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+          test "$(find build/edit/june-gs060-layered-pour/review_frames -name 'frame_*.png' | wc -l)" = "22"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-gs060-layered-pour/june-gs060-layered-pour-report.json", encoding="utf-8"))
+          assert report["gate"] == "registered_pour_contact_and_liquid"
+          assert report["frame_count"] == 258
+          assert report["audio"]["included"] is False
+          assert report["optical_flow_used"] is False
+          assert report["cross_dissolve_used"] is False
+          assert report["paid_runtime_generation_used"] is False
+          assert report["maximum_mug_residual_px_source"] <= 0.01
+          assert report["grounded_pot_contact"]["maximum_residual_px_source"] <= 24.0
+          assert len(report["grounded_pot_contact"]["poses"]) == 3
+          assert report["liquid"]["reference_runtime_consumed"] is False
+          assert report["liquid"]["maximum_spout_start_error_px_source"] <= 0.01
+          assert report["liquid"]["maximum_rendered_spill_pixels_source"] == 0
+          assert report["liquid"]["landing_ellipse_value"] <= 0.8
+          assert report["visibility_audit"]["support_foot"] is False
+          assert "GS030" in report["visibility_audit"]["support_foot_remediation"]
+          assert report["encoded_quality"]["decoded_frame_count"] == 258
+          assert report["encoded_quality"]["minimum_psnr_db"] >= 38.0
+          assert report["encoded_quality"]["minimum_encoded_laplacian_variance"] >= 30.0
+          assert len(report["review_frames"]) == 22
+          PY
+          sha256sum "$video" "$report"
+      - name: Upload registered GS060 layered pour
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-gs060-layered-pour-v1
+          path: |
+            build/edit/june-gs060-layered-pour/*.mp4
+            build/edit/june-gs060-layered-pour/*.json
+            build/edit/june-gs060-layered-pour/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
+      - name: Render registered GS070 resolution performance
+        run: |
+          python3 -m pipeline.cartoon_resolution_scene \
+            concept/style_frames/june_golden_scene_gs070_resolution_v1.json \
+            concept/style_frames/june_oxley_viseme_atlas_v1.json \
+            --cues concept/style_frames/june_golden_scene_gs070_rhubarb_v1.json \
+            --expression-atlas concept/style_frames/june_oxley_expression_atlas_v1.json \
+            --expression-cues concept/style_frames/june_golden_scene_gs070_expression_v1.json \
+            --body-motion concept/style_frames/june_golden_scene_gs070_body_motion_v1.json \
+            --output-dir build/edit/june-gs070-resolution
+      - name: Verify registered GS070 resolution contract
+        run: |
+          set -euo pipefail
+          video=build/edit/june-gs070-resolution/june-gs070-resolution.mp4
+          report=build/edit/june-gs070-resolution/june-gs070-resolution-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "228"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "7.600000"
+          test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+          test "$(find build/edit/june-gs070-resolution/review_frames -name 'frame_*.png' | wc -l)" = "12"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-gs070-resolution/june-gs070-resolution-report.json", encoding="utf-8"))
+          assert report["gate"] == "gs070_registered_resolution_production_pixels"
+          assert report["shot_id"] == "GS070"
+          assert report["frame_count"] == 228
+          assert report["audio"] is None
+          assert report["sequence"]["transition"] == "hard_cut_on_frame_46"
+          assert report["sequence"]["interpolated_source_frames"] == 0
+          assert report["final_hold"]["start_frame"] == 202
+          assert report["final_hold"]["frame_count"] == 27
+          assert report["final_hold"]["body_locked"] is True
+          assert report["final_hold"]["secondary_motion_live"] is True
+          assert len(report["production_pixel_sources"]) == 2
+          assert report["encoded_quality"]["minimum_psnr_db"] >= 38.0
+          assert report["encoded_quality"]["minimum_encoded_laplacian_variance"] >= 30.0
+          assert len(report["review_frames"]) == 12
+          PY
+          sha256sum "$video" "$report"
+      - name: Upload registered GS070 resolution performance
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-gs070-resolution-v1
+          path: |
+            build/edit/june-gs070-resolution/*.mp4
+            build/edit/june-gs070-resolution/*.json
+            build/edit/june-gs070-resolution/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
+      - name: Assemble exact 38.8-second Golden Scene picture master
+        run: |
+          python3 -m pipeline.cartoon_golden_master \
+            concept/style_frames/june_golden_scene_master_v1.json \
+            --gs030-video build/edit/june-gs030-layered-stand/june-gs030-layered-stand.mp4 \
+            --gs030-report build/edit/june-gs030-layered-stand/june-gs030-layered-stand-report.json \
+            --gs060-video build/edit/june-gs060-layered-pour/june-gs060-layered-pour.mp4 \
+            --gs060-report build/edit/june-gs060-layered-pour/june-gs060-layered-pour-report.json \
+            --gs070-video build/edit/june-gs070-resolution/june-gs070-resolution.mp4 \
+            --gs070-report build/edit/june-gs070-resolution/june-gs070-resolution-report.json \
+            --output-dir build/edit/june-golden-scene-master
+      - name: Verify exact Golden Scene picture master
+        run: |
+          set -euo pipefail
+          video=build/edit/june-golden-scene-master/june-golden-scene-master.mp4
+          report=build/edit/june-golden-scene-master/june-golden-scene-master-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "1164"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "38.800000"
+          test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
+          test "$(find build/edit/june-golden-scene-master/review_frames -name 'frame_*.png' | wc -l)" = "26"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-golden-scene-master/june-golden-scene-master-report.json", encoding="utf-8"))
+          assert report["gate"] == "exact_1164_frame_golden_scene_picture_master"
+          assert report["frame_count"] == 1164
+          assert report["duration_seconds"] == 38.8
+          assert report["audio"] is None
+          assert [shot["frame_count"] for shot in report["shots"]] == [129, 96, 171, 168, 114, 258, 228]
+          assert report["cut_frames"] == [130, 226, 397, 565, 679, 937]
+          assert report["internal_plate_cut_frames"] == [453, 509, 621]
+          assert report["rendered_sources"]["GS030"]["frames_consumed"] == 171
+          assert report["rendered_sources"]["GS060"]["frames_consumed"] == 258
+          assert report["rendered_sources"]["GS070"]["frames_consumed"] == 228
+          assert all(not source["retimed"] for source in report["rendered_sources"].values())
+          assert report["prohibited_interpolation"] == {
+              "optical_flow_used": False,
+              "cross_dissolve_used": False,
+              "implicit_retiming_used": False,
+          }
+          assert report["encoded_quality"]["minimum_psnr_db"] >= 38.0
+          assert report["encoded_quality"]["minimum_encoded_laplacian_variance"] >= 30.0
+          assert len(report["review_frames"]) == 26
+          PY
+          sha256sum "$video" "$report"
+      - name: Upload exact Golden Scene picture master
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-golden-scene-master-v1
+          path: |
+            build/edit/june-golden-scene-master/*.mp4
+            build/edit/june-golden-scene-master/*.json
+            build/edit/june-golden-scene-master/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
+      - name: Build sound-finished Golden Scene master
+        run: |
+          python3 -m pipeline.cartoon_golden_sound mix \
+            concept/style_frames/june_golden_scene_master_sound_v1.json \
+            --picture-video build/edit/june-golden-scene-master/june-golden-scene-master.mp4 \
+            --picture-report build/edit/june-golden-scene-master/june-golden-scene-master-report.json \
+            --output-dir build/edit/june-golden-scene-sound-master
+      - name: Verify sound-finished Golden Scene master
+        run: |
+          set -euo pipefail
+          video=build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master.mp4
+          report=build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "1164"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "aac"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of csv=p=0 "$video")" = "48000"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=channels -of csv=p=0 "$video")" = "2"
+          test "$(ffprobe -v error -select_streams s:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "mov_text"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "38.800000"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master-report.json", encoding="utf-8"))
+          assert report["gate"] == "exact_picture_locked_sound_finished_golden_scene"
+          assert report["picture"]["reencoded"] is False
+          assert report["final"]["video_stream_matches_picture_lock"] is True
+          assert report["final"]["frame_count"] == 1164
+          assert report["final"]["duration_seconds"] == 38.8
+          assert report["final"]["audio_codec"] == "aac"
+          assert report["final"]["audio_sample_rate"] == 48000
+          assert report["final"]["audio_channels"] == 2
+          assert report["final"]["subtitle_codec"] == "mov_text"
+          assert report["voice"]["dataset"] == "LibriVox"
+          assert report["voice"]["dataset_license"] == "public domain"
+          assert report["dialogue_cue_count"] == 18
+          assert report["event_count"] == 26
+          assert report["captions"]["cue_count"] == 18
+          assert abs(report["loudness"]["measured_lufs_i"] + 16.0) <= 1.0
+          assert 4.0 <= report["loudness"]["measured_lra_lu"] <= 8.0
+          assert report["loudness"]["measured_true_peak_dbtp"] <= -1.25
+          assert abs(report["loudness"]["encoded_aac"]["measured_lufs_i"] + 16.0) <= 1.0
+          assert 4.0 <= report["loudness"]["encoded_aac"]["measured_lra_lu"] <= 8.0
+          assert report["loudness"]["encoded_aac"]["measured_true_peak_dbtp"] <= -0.98
+          assert report["music"] == "none_intentional"
+          assert report["paid_runtime_dependency"] is False
+          PY
+          sha256sum "$video" "$report" build/edit/june-golden-scene-sound-master/june-golden-scene-master.srt
+      - name: Upload sound-finished Golden Scene master
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-golden-scene-sound-master-v1
+          path: |
+            build/edit/june-golden-scene-sound-master/*.mp4
+            build/edit/june-golden-scene-sound-master/*.json
+            build/edit/june-golden-scene-sound-master/*.srt
+            build/edit/june-golden-scene-sound-master/stems/*.wav
+          if-no-files-found: error
+          retention-days: 14
+      - name: Build reusable June performance-rig proof
+        run: |
+          python3 -m pipeline.cartoon_performance_rig \
+            concept/characters/june_oxley_performance_rig_v1.json \
+            --sound-master build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master.mp4 \
+            --sound-report build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master-report.json \
+            --output-dir build/edit/june-performance-rig-proof
+      - name: Verify reusable June performance-rig proof
+        run: |
+          set -euo pipefail
+          video=build/edit/june-performance-rig-proof/june-performance-rig-proof.mp4
+          report=build/edit/june-performance-rig-proof/june-performance-rig-proof-report.json
+          ffmpeg -v error -i "$video" -f null -
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "h264"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=pix_fmt -of csv=p=0 "$video")" = "yuv420p"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=width -of csv=p=0 "$video")" = "1920"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=height -of csv=p=0 "$video")" = "1080"
+          test "$(ffprobe -v error -select_streams v:0 -show_entries stream=nb_frames -of csv=p=0 "$video")" = "657"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "aac"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=sample_rate -of csv=p=0 "$video")" = "48000"
+          test "$(ffprobe -v error -select_streams a:0 -show_entries stream=channels -of csv=p=0 "$video")" = "2"
+          test "$(ffprobe -v error -select_streams s:0 -show_entries stream=codec_name -of csv=p=0 "$video")" = "mov_text"
+          test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "21.900000"
+          test "$(find build/edit/june-performance-rig-proof/review_frames -name 'frame_*.png' | wc -l)" = "27"
+          python3 - <<'PY'
+          import json
+          report = json.load(open("build/edit/june-performance-rig-proof/june-performance-rig-proof-report.json", encoding="utf-8"))
+          assert report["gate"] == "reusable_multiview_performance_rig_proof"
+          assert report["rig_id"] == "june_oxley_performance_rig_v1"
+          assert report["view_adapter_count"] == 3
+          assert set(report["action_class_coverage"]) == {
+              "broad_body_mechanics",
+              "constrained_prop_mechanics",
+              "close_speaking_performance",
+          }
+          assert len(report["semantic_channels"]) == 10
+          assert report["sequence"]["frame_count"] == 657
+          assert report["sequence"]["duration_seconds"] == 21.9
+          assert report["sequence"]["cut_frames"] == [172, 430]
+          assert report["sequence"]["action_video_concat_codec_copy"] is True
+          assert report["sequence"]["optical_flow_used"] is False
+          assert report["sequence"]["cross_dissolve_used"] is False
+          assert report["sequence"]["implicit_retiming_used"] is False
+          assert report["sound"]["caption_count"] == 11
+          loudness = report["sound"]["encoded_aac_loudness"]
+          assert abs(loudness["measured_lufs_i"] + 16.0) <= 1.0
+          assert loudness["measured_true_peak_dbtp"] <= -1.0
+          assert loudness["lra_gate_applied"] is False
+          assert report["quality"]["decoded_frame_count"] == 657
+          assert report["quality"]["review_frame_count"] == 27
+          assert report["quality"]["minimum_encoded_laplacian_variance"] >= 30.0
+          assert report["picture_stream"]["preserved_through_sound_and_caption_mux"] is True
+          assert report["picture_stream"]["video_only_sha256"] == report["picture_stream"]["final_sha256"]
+          assert report["paid_runtime_dependency"] is False
+          PY
+          sha256sum "$video" "$report" \
+            build/edit/june-performance-rig-proof/june-performance-rig-proof.srt \
+            build/edit/june-performance-rig-proof/june-performance-rig-proof-audio.wav
+      - name: Upload reusable June performance-rig proof
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-performance-rig-proof-v1
+          path: |
+            build/edit/june-performance-rig-proof/*.mp4
+            build/edit/june-performance-rig-proof/*.json
+            build/edit/june-performance-rig-proof/*.srt
+            build/edit/june-performance-rig-proof/*.wav
+            build/edit/june-performance-rig-proof/review_frames/*.png
+          if-no-files-found: error
+          retention-days: 14
+
+  blender-v8-oral-mask-visemes:
+    if: github.event_name == 'pull_request'
+    needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    env:
+      BLENDER_VERSION: "4.2.0"
+      BLENDER_SERIES: "Blender4.2"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install headless render dependencies
+        run: |
+          sudo apt-get update -q
+          sudo apt-get install -y -q \
+            libx11-6 libxi6 libxxf86vm1 libxfixes3 libxrender1 libxrandr2 \
+            libxinerama1 libxcursor1 libxkbcommon0 libsm6 libgl1 libegl1 \
+            libglu1-mesa libwayland-client0 libwayland-egl1 libdbus-1-3 \
+            ffmpeg xz-utils
+      - name: Cache Blender
+        id: cache-blender
+        uses: actions/cache@v4
+        with:
+          path: /opt/blender
+          key: blender-${{ env.BLENDER_VERSION }}-linux-x64
+      - name: Download Blender
+        if: steps.cache-blender.outputs.cache-hit != 'true'
+        run: |
+          set -euo pipefail
+          url="https://download.blender.org/release/${BLENDER_SERIES}/blender-${BLENDER_VERSION}-linux-x64.tar.xz"
+          curl -fL --retry 3 -o /tmp/blender.tar.xz "$url"
+          sudo mkdir -p /opt/blender
+          sudo tar -xJf /tmp/blender.tar.xz -C /opt/blender --strip-components=1
+      - name: Verify Blender
+        run: /opt/blender/blender --background --version
+      - name: Render cheek-integrated nine-viseme NPR gate
+        run: |
+          set -euo pipefail
+          python3 -m pipeline.cartoon_asset_library \
+            examples/june-golden-scene-twelve-dollar-mug.json \
+            concept/characters/june_oxley_asset_v8.json \
+            --blender /opt/blender/blender \
+            --ffmpeg ffmpeg \
+            --performance-only \
+            --performance-engine BLENDER_EEVEE_NEXT \
+            --performance-samples 12 \
+            --look-profile concept/style_frames/june_oxley_npr_look_v8.json \
+            --performance-gate visemes \
+            --output-dir asset-quality-out
+          find asset-quality-out -maxdepth 3 -type f -print
+      - name: Upload cheek-integrated viseme review
+        uses: actions/upload-artifact@v4
+        with:
+          name: june-facial-oral-mask-visemes-v8
+          path: |
+            asset-quality-out/*.png
+            asset-quality-out/*.mp4
+            asset-quality-out/*.json
+            asset-quality-out/plans/*.json
+            asset-quality-out/assets/*.blend
+          if-no-files-found: error
+          retention-days: 14
+
+
+
+
+
+
+
+
+
+
+
+
+
+

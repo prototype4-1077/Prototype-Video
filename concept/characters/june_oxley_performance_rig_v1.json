@@ -1,0 +1,164 @@
+{
+  "contract_version": 1,
+  "rig_id": "june_oxley_performance_rig_v1",
+  "character_id": "june_oxley",
+  "classification": "Reusable multi-view high-resolution production rig: registered authored body drawings, deterministic contact and liquid controls, and feature-level facial atlases behind one semantic action interface.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "canonical_identity": {
+    "path": "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+    "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9"
+  },
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 657,
+    "duration_seconds": 21.9,
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio_codec": "aac",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "caption_codec": "mov_text"
+  },
+  "semantic_channels": [
+    {"id": "body_pose", "kind": "discrete_authored_pose", "units": "normalized_progress"},
+    {"id": "root_contact", "kind": "registered_constraint", "units": "source_pixels"},
+    {"id": "hand_contact", "kind": "registered_constraint", "units": "source_pixels"},
+    {"id": "prop_pose", "kind": "discrete_authored_pose", "units": "normalized_progress"},
+    {"id": "liquid", "kind": "deterministic_procedural", "units": "normalized_flow"},
+    {"id": "viseme", "kind": "feature_atlas", "units": "rhubarb_shape"},
+    {"id": "expression", "kind": "feature_atlas", "units": "authored_state"},
+    {"id": "head", "kind": "bounded_transform", "units": "pixels_and_degrees"},
+    {"id": "camera", "kind": "bounded_transform", "units": "normalized_frame"},
+    {"id": "atmosphere", "kind": "deterministic_procedural", "units": "normalized_strength"}
+  ],
+  "views": [
+    {
+      "id": "WIDE_BODY_3Q",
+      "scale": "wide_full_body",
+      "adapter": "registered_pose_layers",
+      "contract": {
+        "path": "concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json",
+        "sha256": "870ffd61fe25ba3702641eb0588379bff8628eaed186b08da521a40353507c22"
+      },
+      "channels": ["body_pose", "root_contact", "prop_pose", "camera", "atmosphere"],
+      "visibility": ["face", "both_hands", "mug", "both_support_feet", "chair"]
+    },
+    {
+      "id": "TABLE_MEDIUM_3Q",
+      "scale": "medium_prop_action",
+      "adapter": "registered_pour_layers",
+      "contract": {
+        "path": "concept/style_frames/june_golden_scene_gs060_layered_pour_v1.json",
+        "sha256": "ee15b51a42334b6abe9e01cb2d15a65dcbb9876b69444d6087fbe2241e1b386a"
+      },
+      "channels": ["body_pose", "hand_contact", "prop_pose", "liquid", "camera", "atmosphere"],
+      "visibility": ["face", "both_hands", "mug", "coffee_pot", "ledger", "pencil", "coffee_stream"]
+    },
+    {
+      "id": "CLOSE_HERO_FRONT",
+      "scale": "close_direct_address",
+      "adapter": "registered_feature_atlases",
+      "contract": {
+        "path": "concept/style_frames/june_golden_scene_gs070_resolution_v1.json",
+        "sha256": "ff5ae15bf49e4ab19c654948d4217b3202d3ddcffb3d1b9d617694c46d78b194"
+      },
+      "dependencies": {
+        "viseme_atlas": {
+          "path": "concept/style_frames/june_oxley_viseme_atlas_v1.json",
+          "sha256": "223e2f34665d630d7062c8e9d57ff43eb2d6735c8468411d305bd86ca34614e9"
+        },
+        "viseme_cues": {
+          "path": "concept/style_frames/june_golden_scene_gs070_rhubarb_v1.json",
+          "sha256": "49fa540a59580318310f2966df0d4dddaebba5a8f480f762ce44962e494baa54"
+        },
+        "expression_atlas": {
+          "path": "concept/style_frames/june_oxley_expression_atlas_v1.json",
+          "sha256": "0592cb604aba1a46b0117198821a6a92a172530e1de29b27fe86c3d8fc8bf210"
+        },
+        "expression_cues": {
+          "path": "concept/style_frames/june_golden_scene_gs070_expression_v1.json",
+          "sha256": "50a6607c981293f8d46576c28ec894dc9a42a2423704c7b9102f7755155d70b0"
+        },
+        "body_motion": {
+          "path": "concept/style_frames/june_golden_scene_gs070_body_motion_v1.json",
+          "sha256": "a091c43074629abc86e40b9c3f8aec4a4bb03c3da1e2eecee43f059adb2eb01f"
+        }
+      },
+      "channels": ["viseme", "expression", "head", "camera", "atmosphere"],
+      "visibility": ["face", "eyes", "mouth", "beard_silhouette", "shoulders", "grounded_mug"]
+    }
+  ],
+  "actions": [
+    {
+      "id": "STAND_UP",
+      "action_class": "broad_body_mechanics",
+      "view_id": "WIDE_BODY_3Q",
+      "frame_count": 171,
+      "source_master_frames": [226, 396],
+      "review_local_frames": [1, 70, 71, 95, 96, 171],
+      "required_channels": ["body_pose", "root_contact", "prop_pose", "camera", "atmosphere"],
+      "acceptance": ["both_support_feet_registered", "chair_contact_readable", "mug_continuity", "identity_stable"]
+    },
+    {
+      "id": "POUR_COFFEE",
+      "action_class": "constrained_prop_mechanics",
+      "view_id": "TABLE_MEDIUM_3Q",
+      "frame_count": 258,
+      "source_master_frames": [679, 936],
+      "review_local_frames": [1, 30, 31, 84, 85, 127, 128, 156, 184, 185, 230, 231, 258],
+      "required_channels": ["body_pose", "hand_contact", "prop_pose", "liquid", "camera", "atmosphere"],
+      "acceptance": ["mug_contact_registered", "pot_contact_bounded", "stream_starts_at_spout", "zero_rendered_spill"]
+    },
+    {
+      "id": "DIRECT_ADDRESS",
+      "action_class": "close_speaking_performance",
+      "view_id": "CLOSE_HERO_FRONT",
+      "frame_count": 228,
+      "source_master_frames": [937, 1164],
+      "review_local_frames": [1, 45, 46, 143, 157, 188, 202, 228],
+      "required_channels": ["viseme", "expression", "head", "camera", "atmosphere"],
+      "acceptance": ["feature_masks_preserve_identity", "mouth_follows_cues", "nod_completes_before_hold", "final_body_hold_locked"]
+    }
+  ],
+  "sequence": {
+    "action_ids": ["STAND_UP", "POUR_COFFEE", "DIRECT_ADDRESS"],
+    "cut_frames": [172, 430],
+    "transition": "hard_cuts_only",
+    "cross_dissolve_allowed": false,
+    "optical_flow_allowed": false,
+    "implicit_retiming_allowed": false
+  },
+  "sound": {
+    "contract": {
+      "path": "concept/style_frames/june_golden_scene_master_sound_v1.json",
+      "sha256": "7fedd04d2c77804180a51bdebdc8779eb3ff0a4cf35c3c776c7a7104611db7ab"
+    },
+    "source_gate": "exact_picture_locked_sound_finished_golden_scene",
+    "boundary_fades_ms": 30,
+    "expected_caption_count": 11,
+    "captions": "frame_rebased_soft_mov_text_plus_sidecar_srt",
+    "delivery_loudness": {
+      "target_lufs_i": -16.0,
+      "tolerance_lu": 1.0,
+      "maximum_true_peak_dbtp": -1.0,
+      "lra_is_informational_for_excerpt": true
+    }
+  },
+  "quality_gate": {
+    "minimum_encoded_laplacian_variance": 30.0,
+    "require_full_decode": true,
+    "require_exact_frame_count": true,
+    "require_video_stream_copy_after_action_concat": true,
+    "required_action_classes": ["broad_body_mechanics", "constrained_prop_mechanics", "close_speaking_performance"],
+    "required_semantic_channels": ["body_pose", "root_contact", "hand_contact", "prop_pose", "liquid", "viseme", "expression", "head", "camera", "atmosphere"]
+  },
+  "known_limitations": [
+    "This v1 rig is multi-view and uses authored pose drawings for broad motion rather than one continuously deforming full-body mesh.",
+    "Only the close-hero view has independent feature-level facial articulation.",
+    "New camera angles still require a new registered view adapter and production art.",
+    "The proof validates reusable semantic control and production assembly; it does not claim unrestricted character synthesis."
+  ]
+}

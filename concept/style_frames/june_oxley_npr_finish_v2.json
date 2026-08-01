@@ -1,0 +1,112 @@
+{
+  "contract_version": 1,
+  "finish_id": "june_oxley_semantic_npr_ai_finish",
+  "finish_version": "2.0.0",
+  "intent": "Produce a clean 1920x1080 semantic-ink cartoon master from the exact 960x540 Phase 12 Blender clock without changing identity, acting, audio, captions, or frame timing.",
+  "tool": {
+    "name": "Real-ESRGAN ncnn Vulkan",
+    "release": "20220424",
+    "license_family": "open_source",
+    "official_source": "https://github.com/xinntao/Real-ESRGAN/releases/tag/v0.2.5.0",
+    "archive_sha256": "abc02804e17982a3be33675e4d471e91ea374e65b70167abc09e31acb412802d",
+    "executable_sha256": "07e49f7cbb4ede01ae4dd4c399d3a7e5846e3d2085c3128eff881e55cb7b1a0c"
+  },
+  "model": {
+    "name": "realesr-animevideov3",
+    "binary_sha256": "548a36f9c3f4ab8da56cd3b13badf23968bee207b396dad14d04b830e5f2ab2d",
+    "parameter_sha256": "850a248e7c14c27e5bd8cf7265113a9441036a7db63963bb8aa5169d788a435e"
+  },
+  "settings": {
+    "scale": 2,
+    "tile_size": 128,
+    "gpu_id": 0,
+    "threads": "1:2:2",
+    "output_format": "png"
+  },
+  "clock": {
+    "fps": 30,
+    "frame_count": 453,
+    "duration_seconds": 15.1,
+    "source_dimensions": [
+      960,
+      540
+    ],
+    "delivery_dimensions": [
+      1920,
+      1080
+    ]
+  },
+  "source_promotion": {
+    "github_actions_run": 30454667937,
+    "artifact_id": 8729079236,
+    "artifact_sha256": "b04c362f8443fc07d276f79a32e13fcbea45b36fa3c95dac27f3cfbc52fa0978",
+    "source_sha256": "bea96dabf0dc2c6d591eb80639c9e951a996360506c6b65f076f1bc657263728",
+    "assembly_report_sha256": "8afd3c5a13442847342dab8649986b77db1f61ad3fd023c417c1c31019c0e980",
+    "look_profile_sha256": "5809cb19c668b1ddea2ad2c73061e47cd10ff0a32af3fea1834cf1da8a32c26d",
+    "full_decode_passed": true,
+    "visual_disposition": "passed"
+  },
+  "temporal_audition": {
+    "frame_count": 30,
+    "source_sha256": "f2d445e766f02117c5aa4f3d8b6dc605b9a09a922bb38caf5776ea3ad14ada12",
+    "finished_sha256": "172725dd0f90d9c6e9b57d7b93bbc5858994756063eba6a2fa495c503d5939a8",
+    "lanczos_reference_luma_ssim": 0.993323,
+    "identity_or_shape_hallucination": false,
+    "visible_temporal_crawl": false,
+    "visual_disposition": "passed"
+  },
+  "source_final_hold": {
+    "frame_start": 430,
+    "frame_end": 453,
+    "upper_face_first_last_ssim": 0.9696305766586679,
+    "upper_face_adjacent_luma_mean": 0.1688350286010815,
+    "upper_face_adjacent_luma_max": 0.306906133890152,
+    "left_wall_adjacent_luma_mean": 0.00027174408245153484,
+    "left_wall_adjacent_luma_max": 0.0032098600640892982
+  },
+  "full_delivery": {
+    "path": "june-golden-scene-semantic-npr-v1.mp4",
+    "sha256": "3050dec00d8c0b40cde8516dcf28e0d3d7aa82c8b13862b18576c5170e5d3165",
+    "report_sha256": "9c4a4c32119ff50026688b6f58b2756fa2775b075cf07e902b1273ea4d4da82d",
+    "audit_sha256": "84cb244e892c6acaf4ea93b8fd13b6b713bf452e8da7de9a576d4e91256501e5",
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio_codec": "aac",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "bytes": 5238376,
+    "full_decode_passed": true,
+    "decoded_frames": 453,
+    "matrix_sha256": "7c82727ac435deaf9799e3b28c8beab340f75e91dbbf62bff4c13980b7c8cd74",
+    "final_hold_strip_sha256": "991b06d66605d129c2147c4432e1d1bac65b1d485644388852ca2d81fb722178",
+    "final_hold_metrics": {
+      "upper_face_first_last_ssim": 0.9373579377061211,
+      "upper_face_adjacent_luma_mean": 0.23329460232154184,
+      "upper_face_adjacent_luma_max": 0.4223746955394745,
+      "left_wall_adjacent_luma_mean": 0.017597964531650297,
+      "left_wall_adjacent_luma_max": 0.3900551199913025
+    },
+    "identity_or_shape_hallucination": false,
+    "visible_temporal_crawl": false,
+    "visual_disposition": "passed"
+  },
+  "audio": {
+    "dialogue_source_sha256": "f84dcdae98fb44d80c451eaae5ba3ba8d9335e7a074edfc0e4b8a4be34aadd32",
+    "authored_foley_sha256": "ee73375726065246e78c6124d94e63b2658c9c2f43964474b18f29172be0988d",
+    "mix_sha256": "f0ecc51233af5e3fcc0b02b89f9c2368195f66df67b09a3b1b28a7e2e2d90487",
+    "sample_rate": 48000,
+    "channels": 2,
+    "integrated_lufs": -16.4,
+    "loudness_range_lu": 6.6,
+    "true_peak_db": -2.9
+  },
+  "promotion_gates": [
+    "exact source and finished frame sequence",
+    "every output frame is exactly 1920x1080",
+    "no identity or facial-control hallucination in nine-pose human review",
+    "no visible temporal crawl in the 24-frame final hold",
+    "full video decode succeeds with the exact 453-frame clock",
+    "delivery retains 48 kHz stereo audio and burned captions",
+    "source, result, executable, model, audio, caption, matrix, and hold evidence are pinned by SHA-256"
+  ]
+}

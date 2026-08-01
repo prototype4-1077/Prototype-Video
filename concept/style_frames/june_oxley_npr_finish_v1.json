@@ -1,0 +1,53 @@
+{
+  "contract_version": 1,
+  "finish_id": "june_oxley_storybook_ai_finish",
+  "finish_version": "1.0.0",
+  "intent": "Produce a clean 1920x1080 storybook master from the exact 960x540 Blender clock without changing identity, acting, audio, or captions.",
+  "tool": {
+    "name": "Real-ESRGAN ncnn Vulkan",
+    "release": "20220424",
+    "license_family": "open_source",
+    "official_source": "https://github.com/xinntao/Real-ESRGAN/releases/tag/v0.2.5.0",
+    "archive_sha256": "abc02804e17982a3be33675e4d471e91ea374e65b70167abc09e31acb412802d",
+    "executable_sha256": "07e49f7cbb4ede01ae4dd4c399d3a7e5846e3d2085c3128eff881e55cb7b1a0c"
+  },
+  "model": {
+    "name": "realesr-animevideov3",
+    "binary_sha256": "548a36f9c3f4ab8da56cd3b13badf23968bee207b396dad14d04b830e5f2ab2d",
+    "parameter_sha256": "850a248e7c14c27e5bd8cf7265113a9441036a7db63963bb8aa5169d788a435e"
+  },
+  "settings": {
+    "scale": 2,
+    "tile_size": 128,
+    "gpu_id": 0,
+    "threads": "1:2:2",
+    "output_format": "png"
+  },
+  "clock": {
+    "fps": 30,
+    "frame_count": 453,
+    "duration_seconds": 15.1,
+    "source_dimensions": [960, 540],
+    "delivery_dimensions": [1920, 1080]
+  },
+  "temporal_audition": {
+    "frame_count": 30,
+    "source": "june-golden-performance-look-temporal.mp4",
+    "finished_sha256": "dad280add91d0c6130f273263bb8b8bcc347b317742b5b295b845330263d3bf9",
+    "static_background_adjacent_luma_difference": {
+      "source": 0.1325,
+      "finished": 0.1188,
+      "reduction_percent": 10.34
+    },
+    "identity_or_shape_hallucination": false,
+    "visual_disposition": "passed"
+  },
+  "promotion_gates": [
+    "exact frame sequence before and after enhancement",
+    "every output frame is exactly 1920x1080",
+    "no identity or facial-control hallucination in the temporal matrix",
+    "static-region temporal noise does not increase",
+    "final video fully decodes with exact 453-frame clock",
+    "delivery retains 48 kHz audio and burned captions"
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "contract_version": 1,
+  "sound_id": "june_golden_scene_authored_foley",
+  "sound_version": "1.0.0",
+  "intent": "Support June's physical performance and the emotional turn without competing with dialogue.",
+  "duration_seconds": 15.1,
+  "sample_rate": 48000,
+  "channels": 2,
+  "seed": 20260728,
+  "target_peak_dbfs": -13.0,
+  "events": [
+    {
+      "id": "room_tone",
+      "type": "room_tone",
+      "time_seconds": 0.0,
+      "duration_seconds": 15.1,
+      "gain_db": -39.0,
+      "pan": 0.0
+    },
+    {
+      "id": "chair_weight_shift",
+      "type": "chair_creak",
+      "time_seconds": 2.65,
+      "duration_seconds": 0.72,
+      "gain_db": -28.0,
+      "pan": -0.18
+    },
+    {
+      "id": "boot_settle",
+      "type": "foot_plant",
+      "time_seconds": 4.92,
+      "duration_seconds": 0.32,
+      "gain_db": -27.0,
+      "pan": 0.12
+    },
+    {
+      "id": "ledger_pickup",
+      "type": "paper_rustle",
+      "time_seconds": 7.34,
+      "duration_seconds": 0.62,
+      "gain_db": -31.0,
+      "pan": 0.22
+    },
+    {
+      "id": "pencil_contact",
+      "type": "pencil_tap",
+      "time_seconds": 9.58,
+      "duration_seconds": 0.22,
+      "gain_db": -32.0,
+      "pan": 0.28
+    },
+    {
+      "id": "compassion_breath",
+      "type": "breath",
+      "time_seconds": 12.62,
+      "duration_seconds": 1.15,
+      "gain_db": -35.0,
+      "pan": -0.05
+    }
+  ],
+  "mix": {
+    "dialogue_gain_db": 0.0,
+    "foley_gain_db": 0.0,
+    "limiter_peak": 0.95,
+    "sample_rate": 48000
+  },
+  "license": "Original deterministic synthesis; no external samples or paid services."
+}

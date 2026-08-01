@@ -1,0 +1,454 @@
+{
+  "schema_version": 1,
+  "contract_id": "june_oxley_contact_performance_v1",
+  "character_id": "june_oxley",
+  "action_id": "STAND_UP_CONTACT_PROOF",
+  "purpose": "Fail-closed physical-contact contract for the bounded shared-UV seated-to-standing proof. A machine pass is mechanical evidence only and never an audience-quality claim.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "api_contract": {
+    "module": "pipeline.cartoon_contact_performance_proof",
+    "renderer": "ContactPerformanceRenderer(contract_path)",
+    "solver": "solve_contact_landmarks(contract, frame, base_landmarks)",
+    "entrypoint": "render_contact_performance_proof(contract_path, output_dir, ffmpeg='ffmpeg')",
+    "gate_evaluator": "evaluate_contact_gate_results(contract, aggregate_measurements)",
+    "render_frame_result": ["PIL.Image.Image", "details"],
+    "solver_result": {
+      "coordinate_space": "gs030_registered_source_px_pre_camera",
+      "required_keys": ["frame", "landmarks", "foot_targets", "loads", "root_target", "pose_registration_evidence"]
+    }
+  },
+  "proof": {
+    "frame_range": [64, 112],
+    "frame_count": 49,
+    "width": 960,
+    "height": 540,
+    "fps": 30,
+    "pixel_format": "yuv420p",
+    "measurement_space": "final_output_px_after_camera",
+    "required_review_frames": [64, 70, 73, 78, 82, 86, 90, 94, 96, 98, 100, 102, 106, 108, 112]
+  },
+  "coordinate_spaces": {
+    "authored_targets": {
+      "id": "gs030_registered_source_px_pre_camera",
+      "width": 1672,
+      "height": 941,
+      "rule": "All authored geometry is transformed through the same camera used for the delivered frame before any physical metric is computed."
+    },
+    "component_local": {
+      "id": "standing_atlas_component_local_px",
+      "rule": "Boot sockets are independently sampled from the standing atlas alpha boundary before deformation."
+    },
+    "metrics": {
+      "id": "final_output_px_after_camera",
+      "width": 960,
+      "height": 540,
+      "rule": "Pre-camera or declared-only evidence is invalid."
+    }
+  },
+  "source_policy": {
+    "representation": "shared_uv_piecewise_affine",
+    "standing_texture_contract": {
+      "path": "concept/characters/june_oxley_puppet_atlas_v1.json",
+      "sha256": "d3fa6801ad352bf8670f02b76e105173c9f0b14d9531374b5498bc17d4d92ee9",
+      "atlas_path": "concept/characters/rig_assets/june_oxley_puppet_atlas_v1.png",
+      "atlas_sha256": "acc5f19cf666b3fb64997ba5ec352a7fb0b481128fa1505b1d5d0e9b30d4a55f",
+      "texture_role": "only_rgb_texture_source"
+    },
+    "seated_geometry_contract": {
+      "path": "concept/characters/june_oxley_puppet_atlas_seated_v1.json",
+      "sha256": "3197e5daaa8d36d9a363819d715c42c591cafb36995334eb30dd78b1657813a8",
+      "role": "alpha_geometry_and_component_annotations_only",
+      "rgb_sample_count": 0
+    },
+    "performance_source_contract": {
+      "path": "concept/characters/june_oxley_deformable_performance_3q_v1.json",
+      "sha256": "1a4d28beeae21f5ac8f91e0063c4061325b132449db236e187e9c494bfc77193"
+    },
+    "texture_source_count": 1,
+    "standing_texture_sources_per_component": 1,
+    "dual_rgba_blend_allowed": false,
+    "dual_alpha_blend_allowed": false,
+    "alpha_blend_fallback_allowed": false,
+    "background_in_character_deformation": false
+  },
+  "pose_keys": [
+    {"progress": 0.0, "pose_id": "POSE_00_SEATED", "source_role": "seated_endpoint"},
+    {"progress": 0.25, "pose_id": "POSE_25_LEVERAGE", "source_role": "leverage_corrective"},
+    {"progress": 0.5, "pose_id": "POSE_50_WEIGHT_TRANSFER", "source_role": "weight_transfer_corrective"},
+    {"progress": 0.75, "pose_id": "POSE_75_RELEASE", "source_role": "release_corrective"},
+    {"progress": 1.0, "pose_id": "POSE_100_STANDING", "source_role": "standing_endpoint"}
+  ],
+  "pose_key_registration": {
+    "source_control": {
+      "path": "concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json",
+      "sha256": "870ffd61fe25ba3702641eb0588379bff8628eaed186b08da521a40353507c22"
+    },
+    "required_pose_ids": ["POSE_00_SEATED", "POSE_25_LEVERAGE", "POSE_50_WEIGHT_TRANSFER", "POSE_75_RELEASE", "POSE_100_STANDING"],
+    "point_registration_semantics": "pipeline.cartoon_deformable_performance_3q._registered_point",
+    "required_operations": ["pose_specific_translation", "pose_specific_right_leg_warp_when_declared"],
+    "right_leg_landmarks": ["right_hip", "right_knee", "right_ankle", "right_foot"],
+    "operation_order": "register_every_pose_key_to_gs030_source_space_before_any_pose_interpolation",
+    "register_before_interpolation": true,
+    "interpolate_unregistered_pose_points_allowed": false,
+    "shared_transform_for_all_pose_keys_allowed": false
+  },
+  "component_topology": {
+    "component_ids": [
+      "head", "torso", "left_upper_arm", "right_upper_arm", "left_forearm", "right_forearm",
+      "left_hand", "right_hand_mug", "left_thigh", "right_thigh", "left_shin", "right_shin",
+      "left_boot", "right_boot"
+    ],
+    "joint_pairs": [
+      ["head", "torso"],
+      ["left_upper_arm", "torso"],
+      ["left_upper_arm", "left_forearm"],
+      ["left_forearm", "left_hand"],
+      ["right_upper_arm", "torso"],
+      ["right_upper_arm", "right_forearm"],
+      ["right_forearm", "right_hand_mug"],
+      ["left_thigh", "torso"],
+      ["left_thigh", "left_shin"],
+      ["left_shin", "left_boot"],
+      ["right_thigh", "torso"],
+      ["right_thigh", "right_shin"],
+      ["right_shin", "right_boot"]
+    ],
+    "expected_component_count": 14,
+    "expected_joint_count": 13
+  },
+  "boot_contact_geometry": {
+    "sample_order": "heel_to_toe",
+    "sample_count_per_boot": 7,
+    "source_evidence": "standing_atlas_alpha_boundary",
+    "left_boot": {
+      "component_id": "left_boot",
+      "component_bbox_atlas_px": [498, 856, 196, 127],
+      "heel_sample_index": 0,
+      "ball_sample_index": 5,
+      "toe_sample_index": 6,
+      "iso_contour_registration_offset_source_px": [0.0, -0.7],
+      "sole_samples_component_local_px": [[192, 92], [159, 103], [127, 115], [95, 125], [63, 125], [32, 119], [3, 112]]
+    },
+    "right_boot": {
+      "component_id": "right_boot",
+      "component_bbox_atlas_px": [811, 857, 200, 125],
+      "heel_sample_index": 0,
+      "ball_sample_index": 5,
+      "toe_sample_index": 6,
+      "iso_contour_registration_offset_source_px": [0.0, -0.7],
+      "sole_samples_component_local_px": [[3, 91], [35, 102], [69, 107], [98, 123], [130, 124], [163, 118], [196, 110]]
+    }
+  },
+  "porch_target_geometry": {
+    "coordinate_space": "gs030_registered_source_px_pre_camera",
+    "surface_id": "front_porch_deck_depth_specific_contacts",
+    "kind": "independently_measured_depth_specific_projected_contact_segments",
+    "provenance": {
+      "clean_background": {
+        "path": "concept/style_frames/june-golden-scene-gs030-clean-porch-v1.png",
+        "sha256": "c2ed99ead71cc526032908722916c67739d27741e1f1d4145fc276fe11f1e9dd",
+        "width": 1672,
+        "height": 941,
+        "role": "chair_mask_and_porch_surface_review"
+      },
+      "accepted_pose_alpha": {
+        "path": "concept/style_frames/june_gs030_pose_100_foreground_v1.png",
+        "sha256": "c8665a358c7f18fb159ce15c9bd381b433871a1f2f47f6b227e31cb08031e07d",
+        "width": 1672,
+        "height": 941,
+        "role": "registered_footprint_location_reference_not_contact_boundary"
+      },
+      "measurement_method": "Depth-specific collision receiver segments are placed on the clean porch immediately beneath each accepted rounded boot footprint. They are receiver geometry, not claims about a raw observed boot-alpha boundary. No tangent is inferred by joining one boot to the other."
+    },
+    "left_boot": {
+      "depth_role": "near_boot",
+      "receiver_geometry_bounds": {"x_interval": [510.0, 600.0], "y_interval": [915.0, 918.0]},
+      "target_segment": {
+        "heel": [600.0, 915.0],
+        "toe": [510.0, 918.0],
+        "maximum_target_sample_line_residual_px": 0.01,
+        "maximum_absolute_tangent_degrees": 2.0
+      },
+      "target_samples": [[600.0, 915.0], [585.0, 915.5], [570.0, 916.0], [555.0, 916.5], [540.0, 917.0], [525.0, 917.5], [510.0, 918.0]]
+    },
+    "right_boot": {
+      "depth_role": "far_boot",
+      "receiver_geometry_bounds": {"x_interval": [692.0, 782.0], "y_interval": [864.0, 866.0]},
+      "target_segment": {
+        "heel": [692.0, 866.0],
+        "toe": [782.0, 864.0],
+        "maximum_target_sample_line_residual_px": 0.01,
+        "maximum_absolute_tangent_degrees": 2.0
+      },
+      "target_samples": [[692.0, 866.0], [707.0, 865.667], [722.0, 865.333], [737.0, 865.0], [752.0, 864.667], [767.0, 864.333], [782.0, 864.0]]
+    },
+    "chair_arm": {
+      "mask_polygon": [[235.0, 502.0], [392.0, 526.0], [427.0, 541.0], [422.0, 568.0], [382.0, 574.0], [234.0, 543.0]],
+      "planted_hand_anchor": [390.0, 550.0],
+      "evidence_rule": "Measure independent rendered hand-alpha to rendered chair-mask separation and intersection; a hand socket inside its own alpha is not evidence."
+    },
+    "chair_seat": {
+      "occlusion_mask_polygon": [[272.0, 592.0], [603.0, 582.0], [625.0, 615.0], [606.0, 639.0], [281.0, 653.0], [261.0, 625.0]],
+      "collision_receiver": {"kind": "projected_line_segment", "start": [272.0, 592.0], "end": [603.0, 582.0]},
+      "evidence_rule": "Measure signed pelvis/torso alpha-boundary distance and penetration against the camera-transformed seat-top receiver. The whole polygon is only the independent chair occlusion mask; torso alpha around a pelvis landmark is not evidence."
+    }
+  },
+  "motion": {
+    "interpolation": "time_weighted_cubic_hermite_c1",
+    "tangent_policy": "centered_finite_difference_with_monotone_scalar_clamp",
+    "double_easing_allowed": false,
+    "keys": [
+      {"frame": 64, "stand_progress": 0.0, "pelvis_progress": 0.0, "torso_progress": 0.0, "anticipation": 0.55, "root": [600.0, 642.0]},
+      {"frame": 70, "stand_progress": 0.0, "pelvis_progress": 0.0, "torso_progress": 0.0, "anticipation": 1.0, "root": [610.0, 648.0]},
+      {"frame": 73, "stand_progress": 0.04, "pelvis_progress": 0.08, "torso_progress": 0.01, "anticipation": 0.87, "root": [624.0, 644.0]},
+      {"frame": 74, "stand_progress": 0.07, "pelvis_progress": 0.12, "torso_progress": 0.03, "anticipation": 0.8, "root": [626.0, 638.0]},
+      {"frame": 78, "stand_progress": 0.2, "pelvis_progress": 0.32, "torso_progress": 0.12, "anticipation": 0.45, "root": [630.0, 600.0]},
+      {"frame": 82, "stand_progress": 0.38, "pelvis_progress": 0.52, "torso_progress": 0.25, "anticipation": 0.1, "root": [632.0, 560.0]},
+      {"frame": 84, "stand_progress": 0.49, "pelvis_progress": 0.62, "torso_progress": 0.34, "anticipation": 0.0, "root": [632.5, 542.0]},
+      {"frame": 86, "stand_progress": 0.6, "pelvis_progress": 0.7, "torso_progress": 0.45, "anticipation": 0.0, "root": [633.0, 526.0]},
+      {"frame": 90, "stand_progress": 0.79, "pelvis_progress": 0.86, "torso_progress": 0.65, "anticipation": 0.0, "root": [633.0, 495.0]},
+      {"frame": 94, "stand_progress": 0.92, "pelvis_progress": 0.96, "torso_progress": 0.82, "anticipation": 0.0, "root": [633.0, 474.0]},
+      {"frame": 96, "stand_progress": 0.985, "pelvis_progress": 1.0, "torso_progress": 0.93, "anticipation": 0.0, "root": [633.0, 466.0]},
+      {"frame": 98, "stand_progress": 1.0, "pelvis_progress": 1.0, "torso_progress": 0.98, "anticipation": 0.0, "root": [633.0, 463.0]},
+      {"frame": 100, "stand_progress": 1.0, "pelvis_progress": 1.0, "torso_progress": 1.0, "anticipation": 0.0, "root": [633.0, 466.0]},
+      {"frame": 102, "stand_progress": 1.0, "pelvis_progress": 1.0, "torso_progress": 1.0, "anticipation": 0.0, "root": [633.0, 471.0]},
+      {"frame": 106, "stand_progress": 1.0, "pelvis_progress": 1.0, "torso_progress": 1.0, "anticipation": 0.0, "root": [633.0, 467.0]},
+      {"frame": 108, "stand_progress": 1.0, "pelvis_progress": 1.0, "torso_progress": 1.0, "anticipation": 0.0, "root": [633.0, 468.0]},
+      {"frame": 112, "stand_progress": 1.0, "pelvis_progress": 1.0, "torso_progress": 1.0, "anticipation": 0.0, "root": [633.0, 468.0]}
+    ],
+    "settle": {
+      "equilibrium_root": [633.0, 468.0],
+      "vertical_offset_source_px_keys": [[96, -2.0], [98, -5.0], [102, 3.0], [106, -1.0], [108, 0.0], [112, 0.0]],
+      "pelvis_leads_torso_frames": 2,
+      "pelvis_leads_head_frames": 4,
+      "requires_knee_recompression": true,
+      "feet_may_translate_with_settle": false
+    }
+  },
+  "load_curves": {
+    "interpolation": "time_weighted_cubic_hermite_c1",
+    "seat_load": [[64, 0.95], [68, 1.0], [70, 0.7], [73, 0.0], [112, 0.0]],
+    "chair_hand_load": [[64, 0.55], [70, 1.0], [74, 0.8], [77, 0.35], [79, 0.0], [112, 0.0]],
+    "left_heel_lift_preview_px": [[64, 0.0], [70, 0.0], [72, 0.8], [74, 1.6], [76, 2.4], [78, 1.6], [80, 0.8], [82, 0.0], [112, 0.0]],
+    "right_heel_lift_preview_px": [[64, 0.0], [84, 0.0], [86, 0.8], [88, 1.6], [90, 2.4], [92, 1.6], [94, 0.8], [96, 0.0], [112, 0.0]],
+    "chair_hand_release_frame": 79,
+    "seat_release_complete_frame": 73,
+    "left_flat_recovery_frame": 82,
+    "right_flat_recovery_frame": 96
+  },
+  "render_derived_balance": {
+    "method": "mass_weighted_final_output_component_alpha_centroids",
+    "declared_proxy_may_satisfy_gate": false,
+    "component_mass_weights": {
+      "head": 0.08,
+      "torso": 0.47,
+      "left_upper_arm": 0.03,
+      "right_upper_arm": 0.03,
+      "left_forearm": 0.02,
+      "right_forearm": 0.02,
+      "left_hand": 0.01,
+      "right_hand_mug": 0.01,
+      "left_thigh": 0.11,
+      "right_thigh": 0.11,
+      "left_shin": 0.04,
+      "right_shin": 0.04,
+      "left_boot": 0.015,
+      "right_boot": 0.015
+    },
+    "support_hull_sources": ["rendered_left_sole_contacts", "rendered_right_sole_contacts", "rendered_chair_seat_contact", "rendered_chair_hand_contact"],
+    "support_hull_rule": "Use only independently measured rendered contacts with load greater than 0.05; after chair release the hull is derived only from rendered sole contact points.",
+    "anticipation_rule": "Rendered COM must travel forward before material pelvis rise."
+  },
+  "gates": {
+    "delivery": {
+      "exact_encoded_frames": 49,
+      "exact_decoded_frames": 49,
+      "width": 960,
+      "height": 540,
+      "fps": 30,
+      "pixel_format": "yuv420p"
+    },
+    "feet": {
+      "maximum_flat_sole_absolute_distance_p95_preview_px": 1.5,
+      "maximum_flat_sole_clearance_preview_px": 2.0,
+      "maximum_flat_sole_penetration_preview_px": 1.0,
+      "minimum_flat_sole_contact_fraction": 0.7,
+      "maximum_flat_pitch_error_degrees": 2.0,
+      "maximum_toe_pivot_residual_preview_px": 1.0,
+      "maximum_endpoint_motion_preview_px_per_frame": 2.0,
+      "maximum_left_heel_lift_preview_px": 8.0,
+      "maximum_right_heel_lift_preview_px": 11.0,
+      "maximum_shadow_to_sole_gap_preview_px": 1.5,
+      "shadow_must_be_derived_from_rendered_contact_polygon": true
+    },
+    "chair": {
+      "maximum_loaded_hand_to_chair_separation_preview_px": 1.0,
+      "maximum_loaded_hand_slip_preview_px": 1.0,
+      "minimum_loaded_hand_chair_intersection_pixels": 1,
+      "minimum_shoulder_travel_relative_to_planted_hand_preview_px": 8.0,
+      "minimum_release_separation_preview_px": 6.0,
+      "release_separation_deadline_frame": 84,
+      "maximum_release_position_jump_preview_px": 2.0,
+      "maximum_release_velocity_jump_preview_px_per_frame": 2.0,
+      "maximum_loaded_seat_separation_preview_px": 1.5,
+      "maximum_seat_penetration_preview_px": 1.0
+    },
+    "balance": {
+      "minimum_com_support_hull_margin_after_seat_release_preview_px": 4.0,
+      "minimum_forward_com_travel_before_pelvis_rise_preview_px": 10.0,
+      "maximum_pelvis_rise_during_forward_anticipation_preview_px": 5.0,
+      "minimum_active_support_points": 2
+    },
+    "motion": {
+      "maximum_root_jerk_preview_px_per_frame_cubed": 2.0,
+      "maximum_non_smear_landmark_motion_preview_px_per_frame": 14.0,
+      "maximum_acceleration_reversals_during_ascent": 1,
+      "minimum_settle_upward_overshoot_preview_px": 2.0,
+      "minimum_settle_downward_compression_preview_px": 1.0,
+      "minimum_knee_recompression_preview_px": 1.0,
+      "maximum_final_root_error_preview_px": 1.0,
+      "maximum_final_root_speed_preview_px_per_frame": 0.5,
+      "required_final_stable_frames": 4
+    },
+    "topology_and_texture": {
+      "exact_component_count": 14,
+      "exact_joint_count": 13,
+      "maximum_joint_gap_preview_px": 1.5,
+      "minimum_joint_overlap_pixels": 1,
+      "minimum_joint_bridge_width_preview_px": 1.0,
+      "maximum_substantial_components_per_part": 1,
+      "minimum_canonical_alpha_mesh_coverage": 0.995,
+      "maximum_fixed_uv_drift_px": 0.01,
+      "maximum_foldover_count": 0,
+      "exact_texture_source_count": 1,
+      "exact_seated_rgb_sample_count": 0,
+      "maximum_dual_source_contribution_pixels": 0,
+      "maximum_secondary_edge_fraction": 0.02
+    }
+  },
+  "evidence_policy": {
+    "required_measurement_space": "final_output_px_after_camera",
+    "declared_values_are_not_measurements": true,
+    "self_contact_is_not_contact": true,
+    "required_independent_pairs": [
+      "rendered_sole_to_porch_geometry",
+      "rendered_hand_to_chair_mask",
+      "rendered_pelvis_to_chair_seat_mask",
+      "rendered_com_to_rendered_support_hull"
+    ],
+    "forbidden_metric_sources": [
+      "nearest_pixel_on_same_component_to_its_own_socket",
+      "authored_com_proxy_inside_authored_rectangle",
+      "declared_contact_mode_without_rendered_geometry",
+      "pre_camera_contact_residual",
+      "alpha_iou_as_motion_quality"
+    ],
+    "required_detail_evidence": {
+      "foot_sole_samples": {
+        "sample_source": "final_component_alpha_boundary",
+        "measurement_space": "final_output_px_after_camera",
+        "required_fields": ["component_id", "alpha_threshold", "boundary_pixels_preview_px", "sample_membership_residual_preview_px"],
+        "forbidden_sample_sources": ["target_coordinates", "transformed_cage_coordinates", "authored_landmarks", "solver_markers_without_alpha_resampling"]
+      },
+      "chair_seat_penetration": {
+        "measurement": "signed_alpha_boundary_to_receiver_depth",
+        "measurement_space": "final_output_px_after_camera",
+        "required_source_pair": ["rendered_pelvis_alpha_boundary", "camera_transformed_chair_seat_top_receiver"],
+        "required_mask_sources": ["final_torso_alpha_mask", "rendered_chair_seat_occlusion_mask"]
+      },
+      "shadow_to_sole_gap": {
+        "measurement": "independent_mask_separation",
+        "measurement_space": "final_output_px_after_camera",
+        "required_source_kinds": ["final_boot_alpha_mask", "final_contact_shadow_alpha_mask"]
+      }
+    }
+  },
+  "report_contract": {
+    "filename": "june-contact-performance-report.json",
+    "video_filename": "june-contact-performance-proof.mp4",
+    "required_sections": [
+      "delivery", "source_policy", "feet", "chair", "balance", "motion", "joints", "topology", "gates", "aggregate_measurements", "threshold_results", "gate_results", "machine_passed", "audience_quality"
+    ],
+    "required_gate_results": ["delivery", "source_policy", "feet", "chair", "balance", "motion", "joints", "topology", "no_ghost"],
+    "gate_derivation": {
+      "aggregate_schema": "nested_measurement_records_mirroring_every_gate_leaf_path",
+      "measurement_record_required_fields": ["value", "source_kind", "source_detail", "aggregation"],
+      "allowed_source_kinds": ["rendered_measurement", "decoded_media", "source_policy_measurement"],
+      "forbidden_source_kinds": ["declared_value", "target_coordinate", "cage_coordinate", "prefilled_boolean"],
+      "default_comparators": {
+        "maximum_": "less_than_or_equal",
+        "minimum_": "greater_than_or_equal",
+        "exact_": "equal"
+      },
+      "comparator_overrides": {
+        "delivery.width": "equal",
+        "delivery.height": "equal",
+        "delivery.fps": "equal",
+        "delivery.pixel_format": "equal",
+        "feet.shadow_must_be_derived_from_rendered_contact_polygon": "equal",
+        "chair.release_separation_deadline_frame": "less_than_or_equal",
+        "motion.required_final_stable_frames": "greater_than_or_equal"
+      },
+      "gate_groups": {
+        "delivery": [
+          "delivery.exact_encoded_frames", "delivery.exact_decoded_frames", "delivery.width", "delivery.height", "delivery.fps", "delivery.pixel_format"
+        ],
+        "source_policy": [
+          "topology_and_texture.exact_texture_source_count", "topology_and_texture.exact_seated_rgb_sample_count"
+        ],
+        "feet": [
+          "feet.maximum_flat_sole_absolute_distance_p95_preview_px", "feet.maximum_flat_sole_clearance_preview_px",
+          "feet.maximum_flat_sole_penetration_preview_px", "feet.minimum_flat_sole_contact_fraction",
+          "feet.maximum_flat_pitch_error_degrees", "feet.maximum_toe_pivot_residual_preview_px",
+          "feet.maximum_endpoint_motion_preview_px_per_frame", "feet.maximum_left_heel_lift_preview_px",
+          "feet.maximum_right_heel_lift_preview_px", "feet.maximum_shadow_to_sole_gap_preview_px",
+          "feet.shadow_must_be_derived_from_rendered_contact_polygon"
+        ],
+        "chair": [
+          "chair.maximum_loaded_hand_to_chair_separation_preview_px", "chair.maximum_loaded_hand_slip_preview_px",
+          "chair.minimum_loaded_hand_chair_intersection_pixels", "chair.minimum_shoulder_travel_relative_to_planted_hand_preview_px",
+          "chair.minimum_release_separation_preview_px", "chair.release_separation_deadline_frame",
+          "chair.maximum_release_position_jump_preview_px", "chair.maximum_release_velocity_jump_preview_px_per_frame",
+          "chair.maximum_loaded_seat_separation_preview_px", "chair.maximum_seat_penetration_preview_px"
+        ],
+        "balance": [
+          "balance.minimum_com_support_hull_margin_after_seat_release_preview_px",
+          "balance.minimum_forward_com_travel_before_pelvis_rise_preview_px",
+          "balance.maximum_pelvis_rise_during_forward_anticipation_preview_px", "balance.minimum_active_support_points"
+        ],
+        "motion": [
+          "motion.maximum_root_jerk_preview_px_per_frame_cubed", "motion.maximum_non_smear_landmark_motion_preview_px_per_frame",
+          "motion.maximum_acceleration_reversals_during_ascent", "motion.minimum_settle_upward_overshoot_preview_px",
+          "motion.minimum_settle_downward_compression_preview_px", "motion.minimum_knee_recompression_preview_px",
+          "motion.maximum_final_root_error_preview_px", "motion.maximum_final_root_speed_preview_px_per_frame",
+          "motion.required_final_stable_frames"
+        ],
+        "joints": [
+          "topology_and_texture.exact_joint_count", "topology_and_texture.maximum_joint_gap_preview_px",
+          "topology_and_texture.minimum_joint_overlap_pixels", "topology_and_texture.minimum_joint_bridge_width_preview_px"
+        ],
+        "topology": [
+          "topology_and_texture.exact_component_count", "topology_and_texture.maximum_substantial_components_per_part",
+          "topology_and_texture.minimum_canonical_alpha_mesh_coverage", "topology_and_texture.maximum_fixed_uv_drift_px",
+          "topology_and_texture.maximum_foldover_count"
+        ],
+        "no_ghost": [
+          "topology_and_texture.maximum_dual_source_contribution_pixels", "topology_and_texture.maximum_secondary_edge_fraction"
+        ]
+      },
+      "missing_measurement_policy": "raise",
+      "unmeasured_or_forbidden_source_policy": "raise",
+      "gate_result_rule": "A named gate is true only when every bound threshold result is measured and passes.",
+      "machine_pass_rule": "decoded delivery is represented as measurements; machine_passed equals all named gate results and cannot be initialized independently."
+    },
+    "machine_pass_requires_every_gate": true
+  },
+  "audience_quality": {
+    "status": "unevaluated",
+    "may_be_inferred_from_machine_pass": false,
+    "requires_separate_blinded_review": true,
+    "promotion_allowed": false
+  }
+}

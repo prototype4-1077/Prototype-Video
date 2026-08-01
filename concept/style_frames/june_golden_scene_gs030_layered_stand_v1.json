@@ -1,0 +1,139 @@
+{
+  "contract_version": 1,
+  "performance_id": "june_golden_scene_gs030_layered_stand_v1",
+  "character_id": "june_oxley",
+  "shot_id": "GS030",
+  "gate": "registered_layered_body_mechanics",
+  "classification": "AI-assisted authored-pose 2.5D animation with registered contacts; not final continuous topology deformation.",
+  "generation": {
+    "cash_cost": 0,
+    "paid_runtime_dependency": false,
+    "runtime": "Pillow + OpenCV + FFmpeg",
+    "foreground_extraction": {
+      "tool": "rembg",
+      "version": "2.0.77",
+      "model": "u2net_human_seg",
+      "model_sha256": "01eb6a29a5c4d8edb30b56adad9bb3a2a0535338e480724a213e0acfd2d1c73c",
+      "runtime_required": false,
+      "purpose": "Offline build-time derivation of pinned RGBA foreground layers; the production renderer consumes the derived pixels directly."
+    }
+  },
+  "identity_reference": {
+    "path": "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+    "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9"
+  },
+  "source_canvas": {"width": 1672, "height": 941},
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 171,
+    "duration_seconds": 5.7,
+    "codec": "h264",
+    "pixel_format": "yuv420p"
+  },
+  "background": {
+    "path": "concept/style_frames/june-golden-scene-gs030-clean-porch-v1.png",
+    "sha256": "c2ed99ead71cc526032908722916c67739d27741e1f1d4145fc276fe11f1e9dd",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB",
+    "image_generation": {
+      "mode": "Codex built-in precise-object-edit",
+      "cash_cost": 0,
+      "paid_runtime_dependency": false,
+      "prompt_summary": "Remove only June and the mug; reconstruct the complete empty rocking chair and occluded porch while preserving camera, set, lighting, ledger, and furniture."
+    },
+    "source_provenance": {
+      "path": "concept/style_frames/june-golden-scene-gs030-performance-start-v1.png",
+      "sha256": "19499060768d51f2aa84f7c7e6bea94b0f9732ad35a9201c15f299bb76beb961"
+    }
+  },
+  "contact_registration": {
+    "target_left_support_boot": [553.0, 915.0],
+    "target_right_boot": [737.0, 864.0],
+    "maximum_contact_drift_px_source": 1.75,
+    "right_leg_warp": {
+      "x_falloff_start": 580.0,
+      "x_falloff_end": 680.0,
+      "y_falloff_start": 430.0,
+      "y_falloff_end": 780.0,
+      "maximum_correction_px": 40.0
+    }
+  },
+  "poses": [
+    {
+      "id": "POSE_00_SEATED",
+      "progress": 0.0,
+      "foreground": {"path": "concept/style_frames/june_gs030_pose_00_foreground_v1.png", "sha256": "e5d9a25ded2e9e106cce3d915b28badd1bd7c0ce25c17f135be2a29ec4049d85", "width": 1672, "height": 941, "mode": "RGBA"},
+      "source_art": {"path": "concept/style_frames/june-golden-scene-gs030-performance-start-v1.png", "sha256": "19499060768d51f2aa84f7c7e6bea94b0f9732ad35a9201c15f299bb76beb961"},
+      "source_contacts": {"left_support_boot": [553.0, 893.0], "right_boot": [737.0, 842.0]},
+      "steam_origin": [715.0, 308.0]
+    },
+    {
+      "id": "POSE_25_LEVERAGE",
+      "progress": 0.25,
+      "foreground": {"path": "concept/style_frames/june_gs030_pose_25_foreground_v1.png", "sha256": "59eb85746bae9351d4011620fbb9776ae8eacf03ef56e81d0ed0813b87de45cc", "width": 1672, "height": 941, "mode": "RGBA"},
+      "source_art": {"path": "concept/style_frames/june-golden-scene-gs030-performance-quarter-v1.png", "sha256": "edcf0ed84c36af6b3b9464a000d61ab3efcc1357c6beef01313516432e0b1334"},
+      "source_contacts": {"left_support_boot": [552.0, 893.0], "right_boot": [728.0, 837.0]},
+      "steam_origin": [790.0, 292.0]
+    },
+    {
+      "id": "POSE_50_WEIGHT_TRANSFER",
+      "progress": 0.5,
+      "foreground": {"path": "concept/style_frames/june_gs030_pose_50_foreground_v1.png", "sha256": "6f3062b01ae6ead65664b99fcba23ca492b010611b7d125862fbc21e50ab3c8f", "width": 1672, "height": 941, "mode": "RGBA"},
+      "source_art": {"path": "concept/style_frames/june-golden-scene-gs030-performance-half-v1.png", "sha256": "aaec2910111111c48706fecc5902d3e2fde4577935f468f01aa092da3ed54f24"},
+      "source_contacts": {"left_support_boot": [552.0, 893.0], "right_boot": [725.0, 838.0]},
+      "steam_origin": [775.0, 292.0]
+    },
+    {
+      "id": "POSE_75_RELEASE",
+      "progress": 0.75,
+      "foreground": {"path": "concept/style_frames/june_gs030_pose_75_foreground_v1.png", "sha256": "1c5d3cb7af0a199ce5e7fe80831bd3764aaae91bdb860ea1a52c90db523233a6", "width": 1672, "height": 941, "mode": "RGBA"},
+      "source_art": {"path": "concept/style_frames/june-golden-scene-gs030-performance-threequarter-v1.png", "sha256": "0e2be41e630eea13699fa5b0891ce9496beedbc4be1fe041e8713e9509a1ace6"},
+      "source_contacts": {"left_support_boot": [557.0, 921.0], "right_boot": [713.0, 874.0]},
+      "steam_origin": [796.0, 276.0]
+    },
+    {
+      "id": "POSE_100_STANDING",
+      "progress": 1.0,
+      "foreground": {"path": "concept/style_frames/june_gs030_pose_100_foreground_v1.png", "sha256": "c8665a358c7f18fb159ce15c9bd381b433871a1f2f47f6b227e31cb08031e07d", "width": 1672, "height": 941, "mode": "RGBA"},
+      "source_art": {"path": "concept/style_frames/june-golden-scene-gs030-performance-end-v1.png", "sha256": "db58683190bfa5818670e61d20812024c6065ab941dd907352f77b6c702f64b0"},
+      "source_contacts": {"left_support_boot": [556.0, 926.0], "right_boot": [714.0, 883.0]},
+      "steam_origin": [822.0, 276.0]
+    }
+  ],
+  "timeline": [
+    {"start_frame": 1, "end_frame": 70, "type": "pose", "pose_id": "POSE_00_SEATED"},
+    {"start_frame": 71, "end_frame": 71, "type": "smear", "from_pose_id": "POSE_00_SEATED", "to_pose_id": "POSE_25_LEVERAGE"},
+    {"start_frame": 72, "end_frame": 78, "type": "pose", "pose_id": "POSE_25_LEVERAGE"},
+    {"start_frame": 79, "end_frame": 79, "type": "smear", "from_pose_id": "POSE_25_LEVERAGE", "to_pose_id": "POSE_50_WEIGHT_TRANSFER"},
+    {"start_frame": 80, "end_frame": 86, "type": "pose", "pose_id": "POSE_50_WEIGHT_TRANSFER"},
+    {"start_frame": 87, "end_frame": 87, "type": "smear", "from_pose_id": "POSE_50_WEIGHT_TRANSFER", "to_pose_id": "POSE_75_RELEASE"},
+    {"start_frame": 88, "end_frame": 94, "type": "pose", "pose_id": "POSE_75_RELEASE"},
+    {"start_frame": 95, "end_frame": 95, "type": "smear", "from_pose_id": "POSE_75_RELEASE", "to_pose_id": "POSE_100_STANDING"},
+    {"start_frame": 96, "end_frame": 171, "type": "pose", "pose_id": "POSE_100_STANDING"}
+  ],
+  "camera": {
+    "easing": "ease_in_out_cubic",
+    "start_zoom": 1.0,
+    "end_zoom": 1.012,
+    "focus_start": [0.5, 0.5],
+    "focus_end": [0.5, 0.486]
+  },
+  "effects": {
+    "contact_shadow": {"opacity": 54, "blur_radius": 9.0},
+    "steam": {"strand_count": 2, "strength": 0.55},
+    "light_breathe": {"strength": 0.004}
+  },
+  "encoded_quality_gate": {
+    "minimum_review_frame_psnr_db": 38.0,
+    "minimum_review_frame_laplacian_variance": 30.0
+  },
+  "prohibited_methods": [
+    "full-frame optical flow",
+    "multi-frame cross-dissolve",
+    "paid runtime generation",
+    "unregistered planted-foot motion"
+  ]
+}

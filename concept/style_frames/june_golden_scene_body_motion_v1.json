@@ -1,0 +1,38 @@
+{
+  "contract_version": 1,
+  "performance_id": "june_golden_scene_body_motion",
+  "performance_version": "1.0.0",
+  "plate_id": "june_oxley_porch_hero_plate",
+  "fps": 30,
+  "duration_seconds": 15.1,
+  "frame_count": 453,
+  "interpolation": "cubic_ease",
+  "keyframes": [
+    {"frame": 1, "head_x_px": 0.0, "head_y_px": 0.0, "head_tilt_deg": 0.0, "shoulder_x_px": 0.0, "breath_y_px": 0.0, "camera_push": 0.0},
+    {"frame": 38, "head_x_px": 0.5, "head_y_px": 0.3, "head_tilt_deg": -0.1, "shoulder_x_px": -0.2, "breath_y_px": 1.4, "camera_push": 0.001},
+    {"frame": 50, "head_x_px": 0.3, "head_y_px": 0.1, "head_tilt_deg": 0.0, "shoulder_x_px": -0.1, "breath_y_px": 0.3, "camera_push": 0.0015},
+    {"frame": 90, "head_x_px": -1.4, "head_y_px": -0.4, "head_tilt_deg": 0.45, "shoulder_x_px": 0.7, "breath_y_px": -0.8, "camera_push": 0.003},
+    {"frame": 142, "head_x_px": -0.4, "head_y_px": 0.2, "head_tilt_deg": 0.12, "shoulder_x_px": 0.2, "breath_y_px": 1.2, "camera_push": 0.004},
+    {"frame": 188, "head_x_px": 0.8, "head_y_px": 0.0, "head_tilt_deg": -0.25, "shoulder_x_px": -0.4, "breath_y_px": -0.7, "camera_push": 0.005},
+    {"frame": 250, "head_x_px": 1.5, "head_y_px": -0.5, "head_tilt_deg": -0.5, "shoulder_x_px": -0.75, "breath_y_px": 1.0, "camera_push": 0.0065},
+    {"frame": 290, "head_x_px": 0.4, "head_y_px": 0.0, "head_tilt_deg": -0.1, "shoulder_x_px": -0.2, "breath_y_px": 0.0, "camera_push": 0.008},
+    {"frame": 332, "head_x_px": -0.8, "head_y_px": -0.3, "head_tilt_deg": 0.35, "shoulder_x_px": 0.4, "breath_y_px": -0.8, "camera_push": 0.0105},
+    {"frame": 375, "head_x_px": -0.2, "head_y_px": 0.3, "head_tilt_deg": 0.08, "shoulder_x_px": 0.1, "breath_y_px": 0.5, "camera_push": 0.013},
+    {"frame": 381, "head_x_px": 0.2, "head_y_px": 1.2, "head_tilt_deg": -0.12, "shoulder_x_px": -0.1, "breath_y_px": 0.2, "camera_push": 0.0135},
+    {"frame": 410, "head_x_px": 0.4, "head_y_px": 1.8, "head_tilt_deg": -0.22, "shoulder_x_px": -0.2, "breath_y_px": 0.0, "camera_push": 0.016},
+    {"frame": 430, "head_x_px": 0.2, "head_y_px": 1.0, "head_tilt_deg": -0.08, "shoulder_x_px": -0.1, "breath_y_px": 0.0, "camera_push": 0.018},
+    {"frame": 453, "head_x_px": 0.0, "head_y_px": 0.4, "head_tilt_deg": 0.0, "shoulder_x_px": 0.0, "breath_y_px": 0.0, "camera_push": 0.019}
+  ],
+  "secondary_motion": {
+    "wind_chime": {"amplitude_px": 3.0, "period_seconds": 2.9, "phase": 0.35},
+    "lantern": {"flicker_strength": 0.018, "period_seconds": 0.63, "phase": 0.2},
+    "steam": {"strand_count": 3, "opacity": 42, "rise_px": 115.0, "period_seconds": 2.4},
+    "dust": {"seed": 1827, "particle_count": 18, "opacity": 35}
+  },
+  "authored_intent": [
+    "gaze changes lead the larger head response",
+    "head motion is compact and shoulders counter at roughly half amplitude",
+    "breathing follows silence windows and stops for the compassion hold",
+    "the last twenty-three frames settle instead of adding a mechanical loop"
+  ]
+}

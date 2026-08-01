@@ -51,21 +51,60 @@ def main() -> None:
         "mouth_cues": [{"frame_start": 1, "frame_end": 390, "shape": "X"}],
     }
     studio._animate_rig(bpy, rig, library_plan)
+    if asset_major >= 5:
+        from pipeline.cartoon_asset_library import golden_performance_plan
+
+        golden_config = json.loads(
+            (repo_root / "examples" / "june-golden-scene-twelve-dollar-mug.json").read_text(encoding="utf-8")
+        )
+        library_plan, _ = golden_performance_plan(
+            golden_config,
+            repo_root / "concept" / "style_frames" / "june_golden_scene_performance_slice_v1.json",
+        )
+        studio._animate_golden_performance(bpy, rig, library_plan)
+        studio._animate_performance_props(bpy, library_plan)
+    if asset_major >= 6:
+        preview_plan = dict(library_plan)
+        preview_plan["look_profile"] = {"acting_polish": {"final_hold_frames": 24}}
+        studio._animate_phase13_microperformance(
+            bpy,
+            rig,
+            preview_plan,
+            {
+                "enabled": True,
+                "breath_period_frames": 72,
+                "breath_amplitude": 0.0045,
+                "saccade_amplitude": 0.009,
+                "gaze_lead_frames": 4,
+                "gaze_settle_frames": 3,
+            },
+        )
     studio._animate_mouth(mouth, library_plan)
     studio._animate_expressions(bpy.data.objects["June_Head"], library_plan, face_controls)
-    studio._animate_blinks(face_controls, 390)
+    studio._animate_blinks(face_controls, int(library_plan["frame_end"]))
+
+    for action_name in manifest["rig"]["action_library"]:
+        action = bpy.data.actions.get(action_name)
+        if action is None:
+            raise RuntimeError(f"asset library did not build required action: {action_name}")
+        action.use_fake_user = True
 
     june_collection = bpy.data.collections.new("CE_June_Oxley")
     porch_collection = bpy.data.collections.new("CE_June_Porch")
+    props_collection = bpy.data.collections.new("CE_June_Props")
     bpy.context.scene.collection.children.link(june_collection)
     bpy.context.scene.collection.children.link(porch_collection)
+    bpy.context.scene.collection.children.link(props_collection)
     june_names = {
         obj.name
         for obj in bpy.context.scene.objects
         if obj.name.startswith("June_") or obj.name == "June_Oxley_Rig"
     }
     for obj in list(bpy.context.scene.objects):
-        target = june_collection if obj.name in june_names else porch_collection
+        if obj.get("ce_prop_role"):
+            target = props_collection
+        else:
+            target = june_collection if obj.name in june_names else porch_collection
         if target.objects.get(obj.name) is None:
             target.objects.link(obj)
         for collection in list(obj.users_collection):
@@ -74,6 +113,7 @@ def main() -> None:
     june_collection["ce_asset_id"] = manifest["asset_id"]
     june_collection["ce_asset_version"] = manifest["asset_version"]
     porch_collection["ce_location_id"] = "june_front_porch"
+    props_collection["ce_performance_contract"] = manifest.get("performance_contract", {}).get("path", "")
 
     output = Path(args.output).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
