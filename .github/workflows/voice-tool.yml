@@ -1,0 +1,54 @@
+name: Voice tool
+on:
+  workflow_dispatch:
+    inputs:
+      search:
+        description: "shared-library search term"
+        required: false
+        default: ""
+      add:
+        description: "owner_id:voice_id to add to account"
+        required: false
+        default: ""
+      voice_name:
+        description: "name for the added voice"
+        required: false
+        default: ""
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Query ElevenLabs voices
+        env:
+          XI: ${{ secrets.ELEVENLABS_API_KEY }}
+          SEARCH: ${{ github.event.inputs.search }}
+          ADD: ${{ github.event.inputs.add }}
+          VNAME: ${{ github.event.inputs.voice_name }}
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, urllib.parse
+          key = os.environ["XI"]
+          def api(url, method="GET", body=None):
+              req = urllib.request.Request(url, method=method,
+                  headers={"xi-api-key": key, "Content-Type": "application/json"},
+                  data=json.dumps(body).encode() if body else None)
+              return json.load(urllib.request.urlopen(req))
+          mine = api("https://api.elevenlabs.io/v1/voices")
+          print("=== MY VOICES ===")
+          for v in mine.get("voices", []):
+              print("MINE", v["voice_id"], "|", v["name"])
+          s = os.environ.get("SEARCH", "").strip()
+          if s:
+              d = api("https://api.elevenlabs.io/v1/shared-voices?search="
+                      + urllib.parse.quote(s) + "&page_size=10")
+              print("=== SHARED MATCHES ===")
+              for v in d.get("voices", []):
+                  print("SHARED", v["voice_id"], "| owner", v.get("public_owner_id"),
+                        "|", v.get("name"), "|", str(v.get("description"))[:90])
+          a = os.environ.get("ADD", "").strip()
+          if a:
+              owner, vid = a.split(":", 1)
+              res = api("https://api.elevenlabs.io/v1/voices/add/%s/%s" % (owner, vid),
+                        "POST", {"new_name": os.environ.get("VNAME") or "Added Voice"})
+              print("ADDED", json.dumps(res))
+          PY
