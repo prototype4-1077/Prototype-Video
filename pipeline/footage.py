@@ -6,7 +6,7 @@ Reads scene["query"], writes clip_XX.mp4, and records source/motion evidence.
 No human/AI judgment needed: every candidate's preview thumbnail is scored for
 mood (dark, not garish) and the best one wins. Bad/empty queries fall back to
 a curated MYSTICAL bank, so any query still yields on-style footage."""
-import io, json, os, random, re, shutil, sys, urllib.request, urllib.parse
+import io, json, os, random, re, shutil, subprocess, sys, time, urllib.request, urllib.parse
 
 import motion
 import profiles
