@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-08-02T12:43:36+00:00",
+  "generated_at": "2026-08-02T12:54:41+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "long_black_interval": 2,
@@ -10,7 +10,7 @@
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
       "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "1bd6ecd3d568b41e",
+      "fingerprint": "24c270db1c3a7477",
       "priority": "medium",
       "stage": "build_pass"
     },
@@ -21,6 +21,22 @@
       "fingerprint": "2c243482baacee93",
       "priority": "medium",
       "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "1bd6ecd3d568b41e",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "3797b6f436aefe92",
+      "priority": "medium",
+      "stage": "tts"
     },
     {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
@@ -34,9 +50,9 @@
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "1bd6ecd3d568b41e",
+      "fingerprint": "24c270db1c3a7477",
       "kind": "failure",
-      "normalized_error": "error: script is <n> words | fix: aim for <n>-<n> words total",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=3797b6f436aefe92 error: tts failed: del_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<n>. short",
       "slugs": [
         "black-wall-street-ep2-one-shot"
       ],
@@ -53,6 +69,28 @@
         "beliefs-are-software-updates"
       ],
       "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "1bd6ecd3d568b41e",
+      "kind": "failure",
+      "normalized_error": "error: script is <n> words | fix: aim for <n>-<n> words total",
+      "slugs": [
+        "black-wall-street-ep1-the-elevator"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "3797b6f436aefe92",
+      "kind": "failure",
+      "normalized_error": "traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
+      "slugs": [
+        "black-wall-street-ep2-one-shot"
+      ],
+      "stage": "tts"
     },
     {
       "count": 1,
@@ -121,7 +159,7 @@
       "stage": "build_pass"
     }
   ],
-  "runs_analyzed": 44,
+  "runs_analyzed": 45,
   "schema_version": 1,
   "stages": {
     "align": {
@@ -161,16 +199,16 @@
       "total_duration_s": 49378.814
     },
     "build_pass": {
-      "attempts": 231,
-      "failure_rate": 0.0433,
-      "failures": 10,
+      "attempts": 233,
+      "failure_rate": 0.0515,
+      "failures": 12,
       "p50_success_s": 75.059,
       "p95_success_s": 1090.962,
       "sample_count": 221,
       "successes": 221,
-      "timeout_rate": 0.0346,
+      "timeout_rate": 0.0343,
       "timeouts": 8,
-      "total_duration_s": 69012.326
+      "total_duration_s": 69016.332
     },
     "credits": {
       "attempts": 94,
@@ -269,20 +307,20 @@
       "total_duration_s": 738.594
     },
     "tts": {
-      "attempts": 43,
-      "failure_rate": 0.0,
-      "failures": 0,
+      "attempts": 45,
+      "failure_rate": 0.0444,
+      "failures": 2,
       "p50_success_s": 58.036,
       "p95_success_s": 73.957,
       "sample_count": 43,
       "successes": 43,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2480.314
+      "total_duration_s": 2482.318
     }
   },
   "statuses": {
     "done": 43,
-    "failed": 1
+    "failed": 2
   }
 }
