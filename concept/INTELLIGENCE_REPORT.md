@@ -11,10 +11,10 @@ _Joined 23 videos with performance data (36 stat files present; grows nightly)._
 - the-save-file: 23 views @ 60%  → score 82.8  (memory+machine, guided_2nd, plunge)
 - jester-who-knew-my-name: 15 views @ 55%  → score 66.4  (self+threshold, testimony_1st, confession)
 - the-unopened-mail: 19 views @ 49%  → score 63.8  (prediction+grounding, guided_2nd, question)
+- room-before-birth: 11 views @ 30%  → score 32.2  (threshold+emotion, testimony_1st, confession)
 - the-voice: 31 views @ 20%  → score 29.9  (self+recursion, guided_2nd, question)
 - cartographers-confession: 10 views @ 26%  → score 27.0  (belief+mediation, teaching, confession)
-- the-reality-machine-dmt-v3: 916 views @ 0%  → score 0.0  (machine+attention, guided_2nd, plunge)
-- room-before-birth: 11 views @ 0%  → score 0.0  (threshold+emotion, testimony_1st, confession)
+- the-reality-machine-dmt-v3: 917 views @ 0%  → score 0.0  (machine+attention, guided_2nd, plunge)
 - the-loop: 3 views @ 0%  → score 0.0  (recursion+grounding, guided_2nd, question)
 - eye-cannot-see-itself: 9 views @ 0%  → score 0.0  (recursion+mediation, teaching, demonstration)
 - two-ships: 5 views @ 0%  → score 0.0  (belief+emotion, teaching, demonstration)
@@ -28,14 +28,14 @@ _Joined 23 videos with performance data (36 stat files present; grows nightly)._
 - the-edge-of-you-is-negotiable: 2 views @ 0%  → score 0.0  (machine, teaching, plunge)
 
 ## Winning lanes
-- by pillars: threshold (67.3), machine (64.6), emotion (45.2)
-- by narration: testimony_1st (67.3), guided_2nd (42.0), teaching (19.6)
-- by hook: confession (45.8), demonstration (43.7), plunge (40.1)
+- by pillars: threshold (78.1), machine (64.6), emotion (55.9)
+- by narration: testimony_1st (78.1), guided_2nd (42.0), teaching (19.6)
+- by hook: confession (52.2), demonstration (43.7), plunge (40.1)
 
 ## What to make next (data-driven)
-- Proven pillar: **threshold** (avg score 67.3 over 3 videos) — keep feeding it.
-- Proven narration style: **testimony_1st** (avg score 67.3 over 3 videos) — keep feeding it.
-- Proven hook type: **confession** (avg score 45.8 over 5 videos) — keep feeding it.
+- Proven pillar: **threshold** (avg score 78.1 over 3 videos) — keep feeding it.
+- Proven narration style: **testimony_1st** (avg score 78.1 over 3 videos) — keep feeding it.
+- Proven hook type: **confession** (avg score 52.2 over 5 videos) — keep feeding it.
 - Highest-value NEW bet: **Belief Rewrites the Body** [established] — untouched, and it extends your proven 'threshold' lane. Hook: A sugar pill you KNOW is a sugar pill can still dull real pain. Your beliefs have hands.
 
 ## Craft rules (from retention)

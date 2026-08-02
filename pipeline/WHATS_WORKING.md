@@ -1,6 +1,6 @@
 # What's working (auto-generated: learn.py digest)
 
-_Updated 2026-08-01 from 33 recorded videos._
+_Updated 2026-08-02 from 33 recorded videos._
 
 ## Queries that keep winning
 
@@ -22,7 +22,6 @@ _Updated 2026-08-01 from 33 recorded videos._
 
 ## Recent audience verdicts (YouTube retention)
 
-- the-unopened-mail: scenes [0, 1, 2] held viewers, scenes [6, 3, 4] bled them
 - jester-who-knew-my-name: scenes [15, 19, 3] held viewers, scenes [2, 36, 0] bled them
 - the-lag: scenes [4, 8] held viewers, scenes [1, 0] bled them
 - the-save-file: scenes [3, 4] held viewers, scenes [0, 1] bled them
@@ -32,3 +31,4 @@ _Updated 2026-08-01 from 33 recorded videos._
 - cartographers-confession: scenes [1, 5] held viewers, scenes [3, 0] bled them
 - you-are-a-flame-wearing-a-name-tag: scenes [1] held viewers, scenes [0] bled them
 - the-lag: scenes [4, 8] held viewers, scenes [1, 0] bled them
+- room-before-birth: scenes [14, 15] held viewers, scenes [17, 0] bled them
