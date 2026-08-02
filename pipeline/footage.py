@@ -380,6 +380,45 @@ def fetch_scene(bd, s, i, used_ids):
             sc.pop("clip", None)
         else:
             return
+    pinned_url = str(sc.get("archival_url") or "").strip()
+    if pinned_url:
+        # Era-locked documentary source (archive.org public-domain reels etc.).
+        # The author pinned an exact film; never substitute modern stock silently.
+        start = float(sc.get("archival_start") or 0)
+        seg = float(sc.get("archival_duration") or 18)
+        for attempt in (1, 2, 3):
+            try:
+                subprocess.run(
+                    ["ffmpeg", "-y", "-loglevel", "error",
+                     "-ss", f"{start:.2f}", "-i", pinned_url,
+                     "-t", f"{seg:.2f}", "-an", "-c:v", "libx264",
+                     "-preset", "veryfast", "-crf", "20",
+                     "-vf", "scale=w=1920:h=1080:force_original_aspect_ratio=increase,"
+                            "crop=1920:1080,fps=24",
+                     out], check=True, timeout=420)
+                if not os.path.exists(out) or os.path.getsize(out) < 100_000:
+                    raise ValueError("archival segment too small")
+                passed, evidence = verify_and_mark(sc, out, "archival")
+                if not passed:
+                    raise ValueError(f"archival segment lacks motion: {evidence}")
+                sc["clip"] = out
+                sc["source_url"] = pinned_url
+                sc["source_license"] = str(sc.get("archival_license") or
+                                           "Archival / public domain (verify item)")
+                sc["source_title"] = str(sc.get("archival_title") or "archival reel")
+                print(f"scene {i}: archival clip pinned "
+                      f"({os.path.getsize(out)//1024} KB from {pinned_url[:60]})")
+                return
+            except Exception as e:
+                print(f"WARN scene {i}: archival fetch attempt {attempt} failed: {e}")
+                try:
+                    os.remove(out)
+                except OSError:
+                    pass
+                time.sleep(4 * attempt)
+        sc["archival_fallback"] = True
+        print(f"WARN scene {i}: ARCHIVAL SOURCE UNAVAILABLE after 3 tries; "
+              "falling back to stock search - era look compromised for this scene")
     pinned_id = sc.get("stock_id") or sc.get("pexels_id")
     if pinned_id:  # reproducible re-runs: fetch the exact chosen clip
         try:
