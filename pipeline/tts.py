@@ -26,6 +26,7 @@ import json
 import os
 from pathlib import Path
 import re
+import subprocess
 import sys
 import urllib.error
 import urllib.parse
@@ -337,7 +338,7 @@ def tts_fingerprint(script: "dict", model_id: "str") -> "str":
     """Identity of the voice take: text+tags+voice+model+stability. If any of it
     changes, a cached vo.mp3 is stale and must be regenerated."""
     import hashlib
-    text, tags = build_tts_text(script, model_id)
+    text, tags, _scene_chunks = build_tts_text(script, model_id)
     basis = "|".join([
         text,
         json.dumps(tags, ensure_ascii=False),
@@ -365,12 +366,9 @@ def build_tts_text(script: dict, model_id: str) -> tuple[str, list[list[str]]]:
         applied.append(tags)
 
     tagged_text = " ".join(chunks)
-    if model_id == DEFAULT_MODEL_ID and len(tagged_text) > V3_CHARACTER_LIMIT:
-        raise ValueError(
-            f"Eleven v3 request is {len(tagged_text):,} characters; "
-            f"limit is {V3_CHARACTER_LIMIT:,}. Shorten the script or reduce audio tags."
-        )
-    return tagged_text, applied
+    # Long supplied scripts are synthesized in scene-boundary chunks (see
+    # _synthesize_chunked); the single-request character limit is applied there.
+    return tagged_text, applied, chunks
 
 
 def build_request(script: dict) -> tuple[str, str, str | None, dict, dict, list[list[str]]]:
@@ -378,7 +376,7 @@ def build_request(script: dict) -> tuple[str, str, str | None, dict, dict, list[
     model_id = resolve_model_id(script)
     stability_mode = resolve_stability_mode(script, model_id)
     voice_settings = resolve_voice_settings(script, model_id)
-    text, applied_tags = build_tts_text(script, model_id)
+    text, applied_tags, scene_chunks = build_tts_text(script, model_id)
     payload: dict[str, object] = {
         "text": text,
         "model_id": model_id,
@@ -388,7 +386,8 @@ def build_request(script: dict) -> tuple[str, str, str | None, dict, dict, list[
         payload["language_code"] = script["language_code"]
     if script.get("elevenlabs_seed") is not None:
         payload["seed"] = int(script["elevenlabs_seed"])
-    return voice_id, model_id, stability_mode, voice_settings, payload, applied_tags
+    return (voice_id, model_id, stability_mode, voice_settings, payload,
+            applied_tags, scene_chunks)
 
 
 def apply_scene_timings(script: dict, alignment: dict) -> None:
@@ -455,6 +454,88 @@ def _call_elevenlabs(voice_id: str, payload: dict) -> dict:
         ) from error
 
 
+def _probe_duration(path: Path) -> float:
+    out = subprocess.run(
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "default=noprint_wrappers=1:nokey=1", str(path)],
+        capture_output=True, text=True, check=True, timeout=60,
+    ).stdout.strip()
+    return float(out)
+
+
+def _synthesize_chunked(root: Path, voice_id: str, payload: dict,
+                        scene_chunks: list) -> dict:
+    """Synthesize a long script in scene-boundary parts and stitch one vo.mp3
+    plus one merged character alignment. Keeps every spoken word verbatim."""
+    margin = V3_CHARACTER_LIMIT - 200
+    parts: list[str] = []
+    current: list[str] = []
+    for chunk in scene_chunks:
+        candidate = " ".join(current + [chunk])
+        if current and len(candidate) > margin:
+            parts.append(" ".join(current))
+            current = [chunk]
+        else:
+            current.append(chunk)
+    if current:
+        parts.append(" ".join(current))
+    print(f"tts: long script -> {len(parts)} chunked requests "
+          f"({', '.join(str(len(p)) for p in parts)} chars)")
+
+    merged_chars: list = []
+    merged_start: list = []
+    merged_end: list = []
+    part_files: list[Path] = []
+    offset = 0.0
+    for index, part in enumerate(parts):
+        part_payload = dict(payload)
+        part_payload["text"] = part
+        if index > 0:
+            part_payload["previous_text"] = parts[index - 1][-400:]
+        if index + 1 < len(parts):
+            part_payload["next_text"] = parts[index + 1][:400]
+        response = _call_elevenlabs(voice_id, part_payload)
+        audio = response.get("audio_base64")
+        alignment = (response.get("alignment")
+                     or response.get("normalized_alignment"))
+        if not audio or not alignment:
+            raise RuntimeError(
+                f"ElevenLabs chunk {index + 1}/{len(parts)} omitted audio or alignment"
+            )
+        part_file = root / f"vo_part{index:02d}.mp3"
+        part_file.write_bytes(base64.b64decode(audio))
+        part_files.append(part_file)
+        chars = alignment.get("characters") or []
+        starts = alignment.get("character_start_times_seconds") or []
+        ends = alignment.get("character_end_times_seconds") or []
+        if not chars or len(chars) != len(starts) or len(chars) != len(ends):
+            raise RuntimeError(
+                f"ElevenLabs chunk {index + 1} returned incomplete alignment"
+            )
+        merged_chars.extend(chars)
+        merged_start.extend(offset + value for value in starts)
+        merged_end.extend(offset + value for value in ends)
+        offset += _probe_duration(part_file)
+
+    concat_list = root / "vo_parts.txt"
+    concat_list.write_text(
+        "".join(f"file '{f.name}'\n" for f in part_files), encoding="utf-8"
+    )
+    subprocess.run(
+        ["ffmpeg", "-y", "-loglevel", "error", "-f", "concat", "-safe", "0",
+         "-i", str(concat_list), "-c", "copy", str(root / "vo.mp3")],
+        check=True, timeout=300, cwd=str(root),
+    )
+    for f in part_files:
+        f.unlink(missing_ok=True)
+    concat_list.unlink(missing_ok=True)
+    return {
+        "characters": merged_chars,
+        "character_start_times_seconds": merged_start,
+        "character_end_times_seconds": merged_end,
+    }
+
+
 def tts(build_dir: str | os.PathLike[str]) -> None:
     root = Path(build_dir)
     script = _read_script(root)
@@ -465,16 +546,20 @@ def tts(build_dir: str | os.PathLike[str]) -> None:
         voice_settings,
         payload,
         applied_tags,
+        scene_chunks,
     ) = build_request(script)
     voice_name = resolve_voice_name(script, voice_id)
 
-    response = _call_elevenlabs(voice_id, payload)
-    audio = response.get("audio_base64")
-    alignment = response.get("alignment") or response.get("normalized_alignment")
-    if not audio or not alignment:
-        raise RuntimeError("ElevenLabs response omitted audio or alignment")
-
-    (root / "vo.mp3").write_bytes(base64.b64decode(audio))
+    if len(str(payload["text"])) > V3_CHARACTER_LIMIT:
+        alignment = _synthesize_chunked(root, voice_id, payload, scene_chunks)
+    else:
+        response = _call_elevenlabs(voice_id, payload)
+        audio = response.get("audio_base64")
+        alignment = (response.get("alignment")
+                     or response.get("normalized_alignment"))
+        if not audio or not alignment:
+            raise RuntimeError("ElevenLabs response omitted audio or alignment")
+        (root / "vo.mp3").write_bytes(base64.b64decode(audio))
     apply_scene_timings(script, alignment)
     script["voiceover"] = "vo.mp3"
     script["elevenlabs_voice_id"] = voice_id
