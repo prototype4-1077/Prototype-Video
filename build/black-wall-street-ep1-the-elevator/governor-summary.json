@@ -1,18 +1,27 @@
 {
-  "finished_at": "2026-08-02T12:43:50+00:00",
-  "github_run_id": "30748381163",
+  "finished_at": "2026-08-02T12:54:28+00:00",
+  "github_run_id": "30748750345",
   "incidents": [
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "1bd6ecd3d568b41e",
+      "fingerprint": "f6190a5d6048eebc",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "error: script is <n> words | fix: aim for <n>-<n> words total",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=3797b6f436aefe92 error: tts failed: del_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise ",
       "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "3797b6f436aefe92",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
+      "stage": "tts"
     }
   ],
-  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=cfa37fce1315aafd. ERROR: script is 953 words | FIX: aim for 300-400 words total",
+  "last_message": "tts failed (unknown); retry budget 1 exhausted. fingerprint=3797b6f436aefe92. ERROR: tts failed: del_id)",
   "mode": "recover",
   "passes": 2,
   "policy": {
@@ -23,19 +32,34 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 73.96,
+      "idle_timeout_s": 180.0,
+      "sample_count": 43,
+      "soft_timeout_s": 251.87,
+      "source": "history"
     }
   },
   "quality": {},
   "recommendations": [
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "1bd6ecd3d568b41e",
+      "fingerprint": "3797b6f436aefe92",
       "priority": "high",
-      "reason": "2 occurrence(s): error: script is <n> words | fix: aim for <n>-<n> words total",
+      "reason": "2 occurrence(s): traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
+      "stage": "tts"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "f6190a5d6048eebc",
+      "priority": "high",
+      "reason": "2 occurrence(s): note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=3797b6f436aefe92 error: tts failed: del_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise ",
       "stage": "build_pass"
     }
   ],
-  "run_id": "13c5f250ff164dfd80bcf8c8bd888d35",
+  "run_id": "593bbdcd6c8a4b1b9e04cf44f3e767c4",
   "schema_version": 1,
   "slug": "black-wall-street-ep1-the-elevator",
   "stages": {
@@ -47,7 +71,17 @@
       "success_durations_s": [],
       "successes": 0,
       "timeouts": 0,
-      "total_duration_s": 2.004
+      "total_duration_s": 4.004
+    },
+    "tts": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.005
     }
   },
   "status": "failed"
