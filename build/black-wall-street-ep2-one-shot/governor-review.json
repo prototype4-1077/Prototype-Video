@@ -1,11 +1,19 @@
 {
-  "generated_at": "2026-08-02T13:18:57+00:00",
+  "generated_at": "2026-08-02T13:25:04+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "long_black_interval": 2,
     "low_bitrate": 8
   },
   "recommendations": [
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "4a39a658d3d9c433",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
     {
       "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
       "category": "recurring_incident",
@@ -18,27 +26,30 @@
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
       "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "f6190a5d6048eebc",
+      "fingerprint": "5bb4942ac2c4d1d0",
       "priority": "medium",
-      "stage": "build_pass"
-    },
-    {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "3797b6f436aefe92",
-      "priority": "medium",
-      "stage": "tts"
+      "stage": "footage"
     },
     {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=75.1s, p95=1091.0s",
+      "evidence": "p50=75.1s, p95=1088.9s",
       "priority": "medium",
       "stage": "build_pass"
     }
   ],
   "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "4a39a658d3d9c433",
+      "kind": "failure",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=5bb4942ac2c4d1d0 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ototype-video<path> line <n>, in main footage.fetch_scene(build_dir, script, index, used) file \"<path> line <n>",
+      "slugs": [
+        "black-wall-street-ep2-one-shot"
+      ],
+      "stage": "build_pass"
+    },
     {
       "count": 2,
       "failure_class": "transient",
@@ -54,35 +65,13 @@
     {
       "count": 2,
       "failure_class": "unknown",
-      "fingerprint": "f6190a5d6048eebc",
+      "fingerprint": "5bb4942ac2c4d1d0",
       "kind": "failure",
-      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=3797b6f436aefe92 error: tts failed: del_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise ",
-      "slugs": [
-        "black-wall-street-ep1-the-elevator"
-      ],
-      "stage": "build_pass"
-    },
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "3797b6f436aefe92",
-      "kind": "failure",
-      "normalized_error": "traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
-      "slugs": [
-        "black-wall-street-ep1-the-elevator"
-      ],
-      "stage": "tts"
-    },
-    {
-      "count": 1,
-      "failure_class": "deterministic",
-      "fingerprint": "fa8efdca9b41b3fc",
-      "kind": "failure",
-      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=a708b5f07032b518 error: tts failed: r: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"validation_error\",\"code\":\"unsupported_model\",\"message\":\"providing previous_text or next_text is not yet supported wit",
+      "normalized_error": "cess' is not defined during handling of the above exception, another exception occurred: traceback (most recent call last): file \"<path> line <n>, in <module> raise systemexit(cli()) ^^^^^ file \"<path> line <n>, in cli main(build_dir, args[<n>] if len(args) > <n> else none) file \"<path> line <n>, in main footage.fetch_scene(build_dir, script, index, used) file \"<path> line <n>, in fetch_scene time.sleep(<n> * attempt",
       "slugs": [
         "black-wall-street-ep2-one-shot"
       ],
-      "stage": "build_pass"
+      "stage": "footage"
     },
     {
       "count": 1,
@@ -153,11 +142,22 @@
     {
       "count": 1,
       "failure_class": "deterministic",
+      "fingerprint": "097e42cce65eb14b",
+      "kind": "failure",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=a708b5f07032b518 error: tts failed: r: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"validation_error\",\"code\":\"uns",
+      "slugs": [
+        "black-wall-street-ep1-the-elevator"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "deterministic",
       "fingerprint": "a708b5f07032b518",
       "kind": "failure",
       "normalized_error": "t = _synthesize_chunked(root, voice_id, payload, scene_chunks) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _synthesize_chunked response = _call_elevenlabs(voice_id, part_payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"validation_error\",\"code\":\"",
       "slugs": [
-        "black-wall-street-ep2-one-shot"
+        "black-wall-street-ep1-the-elevator"
       ],
       "stage": "tts"
     }
@@ -166,16 +166,16 @@
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 43,
+      "attempts": 44,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.002,
       "p95_success_s": 1.003,
-      "sample_count": 43,
-      "successes": 43,
+      "sample_count": 44,
+      "successes": 44,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 43.085
+      "total_duration_s": 44.087
     },
     "altsheet": {
       "attempts": 36,
@@ -202,16 +202,16 @@
       "total_duration_s": 49378.814
     },
     "build_pass": {
-      "attempts": 232,
-      "failure_rate": 0.0474,
+      "attempts": 234,
+      "failure_rate": 0.047,
       "failures": 11,
       "p50_success_s": 75.059,
-      "p95_success_s": 1090.962,
-      "sample_count": 221,
-      "successes": 221,
-      "timeout_rate": 0.0345,
+      "p95_success_s": 1088.946,
+      "sample_count": 223,
+      "successes": 223,
+      "timeout_rate": 0.0342,
       "timeouts": 8,
-      "total_duration_s": 69016.33
+      "total_duration_s": 69228.462
     },
     "credits": {
       "attempts": 94,
@@ -238,16 +238,16 @@
       "total_duration_s": 1838.61
     },
     "footage": {
-      "attempts": 39,
-      "failure_rate": 0.0,
-      "failures": 0,
+      "attempts": 41,
+      "failure_rate": 0.0488,
+      "failures": 2,
       "p50_success_s": 134.132,
       "p95_success_s": 235.616,
       "sample_count": 39,
       "successes": 39,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 5332.82
+      "total_duration_s": 5334.824
     },
     "hero": {
       "attempts": 185,
@@ -298,28 +298,28 @@
       "total_duration_s": 1316.339
     },
     "transcribe": {
-      "attempts": 43,
+      "attempts": 44,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 17.011,
-      "p95_success_s": 23.028,
-      "sample_count": 43,
-      "successes": 43,
+      "p95_success_s": 23.868,
+      "sample_count": 44,
+      "successes": 44,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 738.594
+      "total_duration_s": 777.629
     },
     "tts": {
-      "attempts": 46,
-      "failure_rate": 0.0652,
-      "failures": 3,
-      "p50_success_s": 58.036,
-      "p95_success_s": 73.957,
-      "sample_count": 43,
-      "successes": 43,
+      "attempts": 45,
+      "failure_rate": 0.0222,
+      "failures": 1,
+      "p50_success_s": 58.041,
+      "p95_success_s": 75.75,
+      "sample_count": 44,
+      "successes": 44,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2483.321
+      "total_duration_s": 2650.415
     }
   },
   "statuses": {
