@@ -1,30 +1,38 @@
 {
-  "finished_at": "2026-08-02T13:18:42+00:00",
-  "github_run_id": "30749607511",
+  "finished_at": "2026-08-02T13:25:14+00:00",
+  "github_run_id": "30749707131",
   "incidents": [
     {
-      "count": 1,
-      "failure_class": "deterministic",
-      "fingerprint": "097e42cce65eb14b",
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "70be00e8edd41e72",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=a708b5f07032b518 error: tts failed: r: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"validation_error\",\"code\":\"uns",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=5bb4942ac2c4d1d0 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ototype-video<path> line <n",
       "stage": "build_pass"
     },
     {
-      "count": 1,
-      "failure_class": "deterministic",
-      "fingerprint": "a708b5f07032b518",
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "5bb4942ac2c4d1d0",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "t = _synthesize_chunked(root, voice_id, payload, scene_chunks) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _synthesize_chunked response = _call_elevenlabs(voice_id, part_payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"validation_error\",\"code\":\"",
-      "stage": "tts"
+      "normalized_error": "cess' is not defined during handling of the above exception, another exception occurred: traceback (most recent call last): file \"<path> line <n>, in <module> raise systemexit(cli()) ^^^^^ file \"<path> line <n>, in cli main(build_dir, args[<n>] if len(args) > <n> else none) file \"<path> line <n>, in main footage.fetch_scene(build_dir, script, index, used) file \"<path> line <n>, in fetch_scene time.sleep(<n> * attempt",
+      "stage": "footage"
     }
   ],
-  "last_message": "tts failed (deterministic); retry budget 0 exhausted. fingerprint=a708b5f07032b518. ERROR: tts failed: r: ElevenLabs TTS failed with HTTP 400: {\"detail\":{\"type\":\"validation_error\",\"code\":\"unsupported_model\",\"message\":\"Providing previous_text or next_text is not yet supported with the 'eleven_v3' model.\",\"status\":\"unsupported_model\",\"request_id\":\"24bb6392e06f70230b9d0fc8a977ecbc\",\"param\":\"model_id\"}}",
+  "last_message": "footage failed (unknown); retry budget 1 exhausted. fingerprint=5bb4942ac2c4d1d0. ERROR: footage batch [0,1,3,6,8,11,14,17,20,21,23,25]: ototype-Video/pipeline/storyline_footage.py\", line 251, in main",
   "mode": "recover",
-  "passes": 1,
+  "passes": 4,
   "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 43,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
     "build_pass": {
       "hard_timeout_s": 1800.0,
       "historical_p95_s": null,
@@ -32,6 +40,22 @@
       "sample_count": 0,
       "soft_timeout_s": 1800.0,
       "source": "explicit"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 235.62,
+      "idle_timeout_s": 255.0,
+      "sample_count": 39,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 23.03,
+      "idle_timeout_s": 180.0,
+      "sample_count": 43,
+      "soft_timeout_s": 180.0,
+      "source": "history"
     },
     "tts": {
       "hard_timeout_s": 480.0,
@@ -46,42 +70,87 @@
   "recommendations": [
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "a708b5f07032b518",
-      "priority": "medium",
-      "reason": "1 occurrence(s): t = _synthesize_chunked(root, voice_id, payload, scene_chunks) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _synthesize_chunked response = _call_elevenlabs(voice_id, part_payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"validation_error\",\"code\":\"",
-      "stage": "tts"
+      "fingerprint": "5bb4942ac2c4d1d0",
+      "priority": "high",
+      "reason": "2 occurrence(s): cess' is not defined during handling of the above exception, another exception occurred: traceback (most recent call last): file \"<path> line <n>, in <module> raise systemexit(cli()) ^^^^^ file \"<path> line <n>, in cli main(build_dir, args[<n>] if len(args) > <n> else none) file \"<path> line <n>, in main footage.fetch_scene(build_dir, script, index, used) file \"<path> line <n>, in fetch_scene time.sleep(<n> * attempt",
+      "stage": "footage"
     },
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "097e42cce65eb14b",
+      "fingerprint": "70be00e8edd41e72",
+      "priority": "high",
+      "reason": "2 occurrence(s): note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=5bb4942ac2c4d1d0 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ototype-video<path> line <n",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "1 occurrence(s): note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=a708b5f07032b518 error: tts failed: r: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"validation_error\",\"code\":\"uns",
+      "reason": "Largest measured latency contribution in this run (224.1s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "ebc61ac5849f45fe9c144b86b5bb0f06",
+  "run_id": "0bdb47f84b4340e6b477821f63a59cb9",
   "schema_version": 1,
   "slug": "black-wall-street-ep1-the-elevator",
   "stages": {
-    "build_pass": {
+    "align": {
       "attempts": 1,
-      "failures": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "build_pass": {
+      "attempts": 4,
+      "failures": 2,
+      "p50_success_s": 110.069,
+      "p95_success_s": 168.597,
+      "success_durations_s": [
+        175.1,
+        45.038
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 224.142
+    },
+    "footage": {
+      "attempts": 2,
+      "failures": 2,
       "p50_success_s": null,
       "p95_success_s": null,
       "success_durations_s": [],
       "successes": 0,
       "timeouts": 0,
-      "total_duration_s": 2.002
+      "total_duration_s": 2.004
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 42.04,
+      "p95_success_s": 42.04,
+      "success_durations_s": [
+        42.04
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 42.04
     },
     "tts": {
       "attempts": 1,
-      "failures": 1,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+      "failures": 0,
+      "p50_success_s": 174.097,
+      "p95_success_s": 174.097,
+      "success_durations_s": [
+        174.097
+      ],
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 1.003
+      "total_duration_s": 174.097
     }
   },
   "status": "failed"
