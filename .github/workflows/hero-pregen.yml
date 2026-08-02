@@ -1,0 +1,25 @@
+name: Pre-generate hero art
+on:
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "build slug with hero_manifest.json"
+        required: true
+jobs:
+  pregen:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Generate committed hero art
+        run: python3 pipeline/hero_pregen.py "${{ github.event.inputs.slug }}"
+      - name: Commit art
+        run: |
+          set -euo pipefail
+          git config user.name "hero-pregen-bot"
+          git config user.email "hero-pregen@users.noreply.github.com"
+          git add "build/${{ github.event.inputs.slug }}"/hero_*.jpg "build/${{ github.event.inputs.slug }}/hero.jpg" 2>/dev/null || true
+          git diff --cached --quiet && { echo "nothing new"; exit 0; }
+          git commit -m "hero art: pre-generated committed stills for ${{ github.event.inputs.slug }}"
+          for i in 1 2 3 4 5; do git push && break; git pull --rebase origin main; sleep $((i*2)); done
