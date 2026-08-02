@@ -1,29 +1,29 @@
 {
-  "finished_at": "2026-08-02T12:54:28+00:00",
-  "github_run_id": "30748750345",
+  "finished_at": "2026-08-02T13:18:42+00:00",
+  "github_run_id": "30749607511",
   "incidents": [
     {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "f6190a5d6048eebc",
+      "count": 1,
+      "failure_class": "deterministic",
+      "fingerprint": "097e42cce65eb14b",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=3797b6f436aefe92 error: tts failed: del_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise ",
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=a708b5f07032b518 error: tts failed: r: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"validation_error\",\"code\":\"uns",
       "stage": "build_pass"
     },
     {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "3797b6f436aefe92",
+      "count": 1,
+      "failure_class": "deterministic",
+      "fingerprint": "a708b5f07032b518",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
+      "normalized_error": "t = _synthesize_chunked(root, voice_id, payload, scene_chunks) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _synthesize_chunked response = _call_elevenlabs(voice_id, part_payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"validation_error\",\"code\":\"",
       "stage": "tts"
     }
   ],
-  "last_message": "tts failed (unknown); retry budget 1 exhausted. fingerprint=3797b6f436aefe92. ERROR: tts failed: del_id)",
+  "last_message": "tts failed (deterministic); retry budget 0 exhausted. fingerprint=a708b5f07032b518. ERROR: tts failed: r: ElevenLabs TTS failed with HTTP 400: {\"detail\":{\"type\":\"validation_error\",\"code\":\"unsupported_model\",\"message\":\"Providing previous_text or next_text is not yet supported with the 'eleven_v3' model.\",\"status\":\"unsupported_model\",\"request_id\":\"24bb6392e06f70230b9d0fc8a977ecbc\",\"param\":\"model_id\"}}",
   "mode": "recover",
-  "passes": 2,
+  "passes": 1,
   "policy": {
     "build_pass": {
       "hard_timeout_s": 1800.0,
@@ -46,42 +46,42 @@
   "recommendations": [
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "3797b6f436aefe92",
-      "priority": "high",
-      "reason": "2 occurrence(s): traceback (most recent call last): file \"<path> line <n>, in <module> tts(sys.argv[<n>]) file \"<path> line <n>, in tts ) = build_request(script) ^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_request text, applied_tags = build_tts_text(script, model_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise valueerror( valueerror: eleven v3 request is <n>,<n> characters; limit is <n>,<",
+      "fingerprint": "a708b5f07032b518",
+      "priority": "medium",
+      "reason": "1 occurrence(s): t = _synthesize_chunked(root, voice_id, payload, scene_chunks) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _synthesize_chunked response = _call_elevenlabs(voice_id, part_payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"validation_error\",\"code\":\"",
       "stage": "tts"
     },
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "f6190a5d6048eebc",
-      "priority": "high",
-      "reason": "2 occurrence(s): note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=3797b6f436aefe92 error: tts failed: del_id) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in build_tts_text raise ",
+      "fingerprint": "097e42cce65eb14b",
+      "priority": "medium",
+      "reason": "1 occurrence(s): note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script note: visual symbols: identity repeats for <n> consecutive scenes starting at scene <n> governor stage=tts state=start soft=252s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=a708b5f07032b518 error: tts failed: r: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"validation_error\",\"code\":\"uns",
       "stage": "build_pass"
     }
   ],
-  "run_id": "593bbdcd6c8a4b1b9e04cf44f3e767c4",
+  "run_id": "ebc61ac5849f45fe9c144b86b5bb0f06",
   "schema_version": 1,
   "slug": "black-wall-street-ep1-the-elevator",
   "stages": {
     "build_pass": {
-      "attempts": 2,
-      "failures": 2,
+      "attempts": 1,
+      "failures": 1,
       "p50_success_s": null,
       "p95_success_s": null,
       "success_durations_s": [],
       "successes": 0,
       "timeouts": 0,
-      "total_duration_s": 4.004
+      "total_duration_s": 2.002
     },
     "tts": {
-      "attempts": 2,
-      "failures": 2,
+      "attempts": 1,
+      "failures": 1,
       "p50_success_s": null,
       "p95_success_s": null,
       "success_durations_s": [],
       "successes": 0,
       "timeouts": 0,
-      "total_duration_s": 2.005
+      "total_duration_s": 1.003
     }
   },
   "status": "failed"
