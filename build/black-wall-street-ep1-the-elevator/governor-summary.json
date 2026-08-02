@@ -1,0 +1,54 @@
+{
+  "finished_at": "2026-08-02T12:43:50+00:00",
+  "github_run_id": "30748381163",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "1bd6ecd3d568b41e",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "error: script is <n> words | fix: aim for <n>-<n> words total",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "build failed (unknown); retry budget 1 exhausted. fingerprint=cfa37fce1315aafd. ERROR: script is 953 words | FIX: aim for 300-400 words total",
+  "mode": "recover",
+  "passes": 2,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "1bd6ecd3d568b41e",
+      "priority": "high",
+      "reason": "2 occurrence(s): error: script is <n> words | fix: aim for <n>-<n> words total",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "13c5f250ff164dfd80bcf8c8bd888d35",
+  "schema_version": 1,
+  "slug": "black-wall-street-ep1-the-elevator",
+  "stages": {
+    "build_pass": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 2.004
+    }
+  },
+  "status": "failed"
+}
