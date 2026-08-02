@@ -338,7 +338,7 @@ def tts_fingerprint(script: "dict", model_id: "str") -> "str":
     """Identity of the voice take: text+tags+voice+model+stability. If any of it
     changes, a cached vo.mp3 is stale and must be regenerated."""
     import hashlib
-    text, tags, _scene_chunks = build_tts_text(script, model_id)
+    text, tags = build_tts_text(script, model_id)
     basis = "|".join([
         text,
         json.dumps(tags, ensure_ascii=False),
@@ -350,7 +350,7 @@ def tts_fingerprint(script: "dict", model_id: "str") -> "str":
     return hashlib.sha256(basis.encode("utf-8")).hexdigest()[:16]
 
 
-def build_tts_text(script: dict, model_id: str) -> tuple[str, list[list[str]]]:
+def _scene_tagged_chunks(script: dict, model_id: str) -> tuple[list[str], list[list[str]]]:
     scenes = script.get("scenes") or []
     chunks: list[str] = []
     applied: list[list[str]] = []
@@ -364,11 +364,14 @@ def build_tts_text(script: dict, model_id: str) -> tuple[str, list[list[str]]]:
         prefix = " ".join(f"[{tag}]" for tag in tags)
         chunks.append(f"{prefix} {text}".strip())
         applied.append(tags)
+    return chunks, applied
 
-    tagged_text = " ".join(chunks)
+
+def build_tts_text(script: dict, model_id: str) -> tuple[str, list[list[str]]]:
     # Long supplied scripts are synthesized in scene-boundary chunks (see
     # _synthesize_chunked); the single-request character limit is applied there.
-    return tagged_text, applied, chunks
+    chunks, applied = _scene_tagged_chunks(script, model_id)
+    return " ".join(chunks), applied
 
 
 def build_request(script: dict) -> tuple[str, str, str | None, dict, dict, list[list[str]]]:
@@ -376,7 +379,8 @@ def build_request(script: dict) -> tuple[str, str, str | None, dict, dict, list[
     model_id = resolve_model_id(script)
     stability_mode = resolve_stability_mode(script, model_id)
     voice_settings = resolve_voice_settings(script, model_id)
-    text, applied_tags, scene_chunks = build_tts_text(script, model_id)
+    scene_chunks, applied_tags = _scene_tagged_chunks(script, model_id)
+    text = " ".join(scene_chunks)
     payload: dict[str, object] = {
         "text": text,
         "model_id": model_id,
