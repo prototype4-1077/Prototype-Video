@@ -1,36 +1,43 @@
 {
-  "finished_at": "2026-08-02T13:25:03+00:00",
-  "github_run_id": "30749707930",
+  "finished_at": "2026-08-02T14:18:07+00:00",
+  "github_run_id": "30749960984",
   "incidents": [
     {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "4a39a658d3d9c433",
-      "kind": "failure",
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "kind": "timeout",
       "last_item": null,
-      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=5bb4942ac2c4d1d0 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ototype-video<path> line <n>, in main footage.fetch_scene(build_dir, script, index, used) file \"<path> line <n>",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
-    },
-    {
-      "count": 2,
-      "failure_class": "unknown",
-      "fingerprint": "5bb4942ac2c4d1d0",
-      "kind": "failure",
-      "last_item": null,
-      "normalized_error": "cess' is not defined during handling of the above exception, another exception occurred: traceback (most recent call last): file \"<path> line <n>, in <module> raise systemexit(cli()) ^^^^^ file \"<path> line <n>, in cli main(build_dir, args[<n>] if len(args) > <n> else none) file \"<path> line <n>, in main footage.fetch_scene(build_dir, script, index, used) file \"<path> line <n>, in fetch_scene time.sleep(<n> * attempt",
-      "stage": "footage"
     }
   ],
-  "last_message": "footage failed (unknown); retry budget 1 exhausted. fingerprint=5bb4942ac2c4d1d0. ERROR: footage batch [0,2,4,6,8,10,12,14,16,18,20,22,24]: ototype-Video/pipeline/storyline_footage.py\", line 251, in main",
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep2-one-shot/final_youtube.mp4",
   "mode": "recover",
-  "passes": 4,
+  "passes": 8,
   "policy": {
     "align": {
       "hard_timeout_s": 300.0,
       "historical_p95_s": 1.0,
       "idle_timeout_s": 33.01,
-      "sample_count": 43,
+      "sample_count": 45,
       "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "altsheet": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 6.04,
+      "idle_timeout_s": 48.13,
+      "sample_count": 36,
+      "soft_timeout_s": 48.13,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 75.33,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 255.98,
       "source": "history"
     },
     "build_pass": {
@@ -41,6 +48,22 @@
       "soft_timeout_s": 1800.0,
       "source": "explicit"
     },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.02,
+      "idle_timeout_s": 33.07,
+      "sample_count": 94,
+      "soft_timeout_s": 33.07,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 30.12,
+      "idle_timeout_s": 120.37,
+      "sample_count": 200,
+      "soft_timeout_s": 120.37,
+      "source": "history"
+    },
     "footage": {
       "hard_timeout_s": 600.0,
       "historical_p95_s": 235.62,
@@ -49,47 +72,121 @@
       "soft_timeout_s": 510.0,
       "source": "history"
     },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 15.95,
+      "idle_timeout_s": 120.0,
+      "sample_count": 43,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
     "transcribe": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 23.03,
+      "historical_p95_s": 24.02,
       "idle_timeout_s": 180.0,
-      "sample_count": 43,
+      "sample_count": 45,
       "soft_timeout_s": 180.0,
       "source": "history"
     },
     "tts": {
       "hard_timeout_s": 480.0,
-      "historical_p95_s": 73.96,
+      "historical_p95_s": 80.06,
       "idle_timeout_s": 180.0,
-      "sample_count": 43,
-      "soft_timeout_s": 251.87,
+      "sample_count": 45,
+      "soft_timeout_s": 270.17,
       "source": "history"
     }
   },
-  "quality": {},
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep2-one-shot",
+    "checked_at": "2026-08-02T14:18:07+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 500.225,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "youtube": {
+        "avg_kbps": 7277,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.002,
+        "exists": true,
+        "expected_duration_s": 500.225,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep2-one-shot/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 500.227007,
+          "bit_rate": 7277249.0,
+          "duration_s": 500.227007,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 500.166667,
+          "width": 1920
+        },
+        "size_bytes": 455034608,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
   "recommendations": [
     {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "5bb4942ac2c4d1d0",
-      "priority": "high",
-      "reason": "2 occurrence(s): cess' is not defined during handling of the above exception, another exception occurred: traceback (most recent call last): file \"<path> line <n>, in <module> raise systemexit(cli()) ^^^^^ file \"<path> line <n>, in cli main(build_dir, args[<n>] if len(args) > <n> else none) file \"<path> line <n>, in main footage.fetch_scene(build_dir, script, index, used) file \"<path> line <n>, in fetch_scene time.sleep(<n> * attempt",
-      "stage": "footage"
-    },
-    {
-      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "4a39a658d3d9c433",
-      "priority": "high",
-      "reason": "2 occurrence(s): note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=5bb4942ac2c4d1d0 error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ototype-video<path> line <n>, in main footage.fetch_scene(build_dir, script, index, used) file \"<path> line <n>",
+      "action": "Inspect this stage's provider/worker path; the Governor now terminates it and preserves completed artifacts.",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
       "stage": "build_pass"
     },
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (216.1s).",
+      "reason": "Largest measured latency contribution in this run (2904.6s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "2b9ca4bf384d4a379c8a637653a53697",
+  "run_id": "8e3b15f880cd402d81d2848a71ea825c",
   "schema_version": 1,
   "slug": "black-wall-street-ep2-one-shot",
   "stages": {
@@ -105,53 +202,203 @@
       "timeouts": 0,
       "total_duration_s": 1.002
     },
-    "build_pass": {
-      "attempts": 4,
-      "failures": 2,
-      "p50_success_s": 106.066,
-      "p95_success_s": 163.694,
+    "altsheet": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.013,
+      "p95_success_s": 1.013,
       "success_durations_s": [
-        170.097,
-        42.034
+        1.013
       ],
-      "successes": 2,
+      "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 216.136
+      "total_duration_s": 1.013
+    },
+    "assemble": {
+      "attempts": 26,
+      "failures": 0,
+      "p50_success_s": 86.216,
+      "p95_success_s": 106.755,
+      "success_durations_s": [
+        95.745,
+        95.851,
+        78.667,
+        85.642,
+        73.57,
+        87.793,
+        74.613,
+        94.764,
+        73.601,
+        87.685,
+        73.597,
+        85.74,
+        69.582,
+        66.563,
+        95.734,
+        106.991,
+        94.734,
+        94.723,
+        86.692,
+        96.964,
+        66.628,
+        67.553,
+        57.496,
+        71.679,
+        106.048,
+        107.988
+      ],
+      "successes": 26,
+      "timeouts": 0,
+      "total_duration_s": 2196.643
+    },
+    "build_pass": {
+      "attempts": 8,
+      "failures": 1,
+      "p50_success_s": 63.103,
+      "p95_success_s": 485.443,
+      "success_durations_s": [
+        181.105,
+        44.041,
+        161.227,
+        2.003,
+        63.103,
+        37.092,
+        615.873
+      ],
+      "successes": 7,
+      "timeouts": 1,
+      "total_duration_s": 2904.584
+    },
+    "credits": {
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 1.009,
+      "p95_success_s": 1.026,
+      "success_durations_s": [
+        1.005,
+        1.009,
+        1.028
+      ],
+      "successes": 3,
+      "timeouts": 0,
+      "total_duration_s": 3.042
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 18.059,
+      "p95_success_s": 49.173,
+      "success_durations_s": [
+        1.01,
+        16.053,
+        54.31,
+        20.066
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 91.439
     },
     "footage": {
-      "attempts": 2,
-      "failures": 2,
-      "p50_success_s": null,
-      "p95_success_s": null,
-      "success_durations_s": [],
-      "successes": 0,
+      "attempts": 3,
+      "failures": 0,
+      "p50_success_s": 62.102,
+      "p95_success_s": 150.409,
+      "success_durations_s": [
+        160.221,
+        1.003,
+        62.102
+      ],
+      "successes": 3,
       "timeouts": 0,
-      "total_duration_s": 2.004
+      "total_duration_s": 223.326
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 35.117,
+      "p95_success_s": 35.117,
+      "success_durations_s": [
+        35.117
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 35.117
+    },
+    "probe": {
+      "attempts": 28,
+      "failures": 0,
+      "p50_success_s": 1.01,
+      "p95_success_s": 1.011,
+      "success_durations_s": [
+        1.01,
+        1.009,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.009,
+        1.01,
+        1.009,
+        1.01,
+        1.01,
+        1.014,
+        1.009,
+        1.009,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.01,
+        1.009,
+        1.011
+      ],
+      "successes": 28,
+      "timeouts": 0,
+      "total_duration_s": 28.275
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 58.334,
+      "p95_success_s": 58.334,
+      "success_durations_s": [
+        58.334
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 58.334
     },
     "transcribe": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 39.035,
-      "p95_success_s": 39.035,
+      "p50_success_s": 41.039,
+      "p95_success_s": 41.039,
       "success_durations_s": [
-        39.035
+        41.039
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 39.035
+      "total_duration_s": 41.039
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 169.098,
-      "p95_success_s": 169.098,
+      "p50_success_s": 180.105,
+      "p95_success_s": 180.105,
       "success_durations_s": [
-        169.098
+        180.105
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 169.098
+      "total_duration_s": 180.105
     }
   },
-  "status": "failed"
+  "status": "done"
 }
