@@ -494,10 +494,9 @@ def _synthesize_chunked(root: Path, voice_id: str, payload: dict,
     for index, part in enumerate(parts):
         part_payload = dict(payload)
         part_payload["text"] = part
-        if index > 0:
-            part_payload["previous_text"] = parts[index - 1][-400:]
-        if index + 1 < len(parts):
-            part_payload["next_text"] = parts[index + 1][:400]
+        # NOTE: previous_text/next_text are rejected by eleven_v3
+        # ("unsupported_model", HTTP 400). Parts split on scene boundaries,
+        # where a fresh breath is natural, so no cross-part conditioning.
         response = _call_elevenlabs(voice_id, part_payload)
         audio = response.get("audio_base64")
         alignment = (response.get("alignment")
