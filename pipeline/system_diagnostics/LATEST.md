@@ -1,6 +1,6 @@
 # System Diagnostic
 
-Generated: 2026-08-01T22:11:57+00:00
+Generated: 2026-08-03T18:58:35+00:00
 
 Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 
@@ -15,7 +15,7 @@ Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 ### [HIGH] Evidence Coverage
 - Area: `visual_memory`
 - Code: `visual:evidence_coverage:general`
-- Evidence: "Only 93 of 2958 scene records have a human decision (3.1%)."
+- Evidence: "Only 93 of 3158 scene records have a human decision (2.9%)."
 - Action: Do not convert automated risk frequency into house rules. Review the highest-risk asset-backed queue first.
 
 ### [MEDIUM] The evolution queue is flooded with taxonomy gaps
@@ -33,7 +33,7 @@ Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 ### [MEDIUM] Too few reviewable videos have exported human feedback
 - Area: `learning`
 - Code: `human_feedback_coverage_low`
-- Evidence: {"coverage": 0.093, "feedback_count": 4, "feedback_slugs": ["belief-is-gravity", "no-disagreement-here", "the-edge-of-you-is-negotiable", "the-person-isnt-here"], "reviewable_count": 43, "reviewable_slugs": ["a-chair-not-a-throne", "belief-is-gravity", "beliefs-are-software-updates", "dispatch-path-selftest", "emotions-are-a-dashboard", "heaven-is-when-nothing-is-outside-me", "i-became-the-eye-behind-every-eye", "i-left-myself-at-the-party", "i-remembered-the-future", "i-was-gone-eleven-minutes", "june-oxley-folks-aint-roadblocks-tier1", "june-oxley-left-the-vehicle", "low-battery-thoughts", "my-thumb-has-a-gambling-problem", "no-disagreement-here", "the-adjacent-mind", "the-alphabet-beneath-things", "the-argument-between-ink-and-paper", "the-blueprint-recognizes-the-building", "the-dog-you-stopped-walking", "the-edge-of-you-is-negotiable", "the-emotion-scam-tier1", "the-future-is-built-in-the-next-ten-seconds", "the-infinite-library", "the-mercy-of-the-filter", "the-person-isnt-here", "the-present-has-side-doors", "the-reality-machine-dmt-v3", "the-roads-that-keep-walking", "the-room-has-more-than-one-window", "the-rooms-inside-this-moment", "the-shift-has-no-date", "the-symbols-are-dreaming-you", "the-tabs-still-open", "the-universe-behind-every-no", "the-universe-keeps-its-options-open", "the-witness-without-a-face", "tomorrow-uses-old-footage", "two-earths-one-grocery-store", "who-wrote-the-menu", "wonder-is-a-glitch", "your-emergency-contact", "your-inner-bodyguard"]}
+- Evidence: {"coverage": 0.0889, "feedback_count": 4, "feedback_slugs": ["belief-is-gravity", "no-disagreement-here", "the-edge-of-you-is-negotiable", "the-person-isnt-here"], "reviewable_count": 45, "reviewable_slugs": ["a-chair-not-a-throne", "belief-is-gravity", "beliefs-are-software-updates", "black-wall-street-ep1-the-elevator", "black-wall-street-ep2-one-shot", "dispatch-path-selftest", "emotions-are-a-dashboard", "heaven-is-when-nothing-is-outside-me", "i-became-the-eye-behind-every-eye", "i-left-myself-at-the-party", "i-remembered-the-future", "i-was-gone-eleven-minutes", "june-oxley-folks-aint-roadblocks-tier1", "june-oxley-left-the-vehicle", "low-battery-thoughts", "my-thumb-has-a-gambling-problem", "no-disagreement-here", "the-adjacent-mind", "the-alphabet-beneath-things", "the-argument-between-ink-and-paper", "the-blueprint-recognizes-the-building", "the-dog-you-stopped-walking", "the-edge-of-you-is-negotiable", "the-emotion-scam-tier1", "the-future-is-built-in-the-next-ten-seconds", "the-infinite-library", "the-mercy-of-the-filter", "the-person-isnt-here", "the-present-has-side-doors", "the-reality-machine-dmt-v3", "the-roads-that-keep-walking", "the-room-has-more-than-one-window", "the-rooms-inside-this-moment", "the-shift-has-no-date", "the-symbols-are-dreaming-you", "the-tabs-still-open", "the-universe-behind-every-no", "the-universe-keeps-its-options-open", "the-witness-without-a-face", "tomorrow-uses-old-footage", "two-earths-one-grocery-store", "who-wrote-the-menu", "wonder-is-a-glitch", "your-emergency-contact", "your-inner-bodyguard"]}
 - Action: Review the highest-value completed videos first. Keep automated risk tags as screening evidence until James supplies a decision.
 
 ### [MEDIUM] Some operational solutions still need verification
@@ -45,7 +45,7 @@ Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 ### [MEDIUM] Youtube queue contains already-published videos
 - Area: `publishing`
 - Code: `youtube_published_still_queued`
-- Evidence: ["a-chair-not-a-throne", "beliefs-are-software-updates", "beliefs-are-software-updates-short", "no-disagreement-here", "the-adjacent-mind", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-infinite-library", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "the-room-has-more-than-one-window", "tomorrow-uses-old-footage", "who-wrote-the-menu", "wonder-is-a-glitch", "you-are-a-flame-wearing-a-name-tag", "your-emergency-contact", "your-inner-bodyguard"]
+- Evidence: ["a-chair-not-a-throne", "beliefs-are-software-updates", "beliefs-are-software-updates-short", "emotions-are-a-dashboard", "no-disagreement-here", "the-adjacent-mind", "the-edge-of-you-is-negotiable", "the-forecast-in-your-chest", "the-future-is-built-in-the-next-ten-seconds", "the-infinite-library", "the-museum-that-repaints-itself", "the-person-you-replaced", "the-press-secretary-in-your-skull", "the-reality-machine-dmt-v3", "the-room-has-more-than-one-window", "the-shift-has-no-date", "tomorrow-uses-old-footage", "two-earths-one-grocery-store", "who-wrote-the-menu", "wonder-is-a-glitch", "you-are-a-flame-wearing-a-name-tag", "your-emergency-contact", "your-inner-bodyguard"]
 - Action: Keep the metadata queue if useful, but rely on durable receipt checks and make duplicate posting require an explicit force flag.
 
 ### [MEDIUM] Quality warning repeats: long_black_interval
@@ -63,7 +63,7 @@ Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 ### [MEDIUM] Asset Coverage
 - Area: `visual_memory`
 - Code: `visual:asset_coverage:general`
-- Evidence: "Only 131 of 2958 records retain a reviewable asset (4.4%)."
+- Evidence: "Only 131 of 3158 records retain a reviewable asset (4.1%)."
 - Action: Persist representative frames or durable release references for completed scenes so historical feedback remains inspectable.
 
 ### [MEDIUM] Low Approval Cohort
@@ -117,7 +117,7 @@ Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 ### [LOW] Permanent stock exclusion now has a measured supply signal
 - Area: `asset_selection`
 - Code: `stock_supply:no_current_starvation_signal`
-- Evidence: {"exclusions": {"banned_ids": 122, "used_ids": 1046}, "fallback_rate": 0.0156, "low_supply_rate": 0.01, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 36, "scenes_analyzed": 703, "state": "no_current_starvation_signal"}
+- Evidence: {"exclusions": {"banned_ids": 122, "used_ids": 1046}, "fallback_rate": 0.0145, "low_supply_rate": 0.0092, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 38, "scenes_analyzed": 757, "state": "no_current_starvation_signal"}
 - Action: Keep permanent exclusion unchanged; continue monitoring candidate supply and fallback rate.
 
 ## Authority boundary
