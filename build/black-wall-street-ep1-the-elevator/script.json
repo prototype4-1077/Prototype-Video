@@ -8,1008 +8,376 @@
  "render_outputs": [
   "youtube"
  ],
- "target_duration_seconds": 476,
- "estimated_words_per_second": 2.0,
+ "supplied_script": true,
+ "target_duration_seconds": 497,
+ "estimated_words_per_second": 1.9,
  "elevenlabs_voice_id": "MHPwHxLx0nmGIb5Jnbly",
  "elevenlabs_model": "eleven_v3",
- "max_still_source_ratio": 0.6,
+ "max_still_source_ratio": 1.0,
+ "hero_art_policy": "runtime_scene_generation",
  "science_fidelity": "metaphor",
- "evidence_boundary": "Survivor testimony of the documented 1921 Tulsa Race Massacre. The narrator and her family are fictional; every surrounding event follows the documented record. Spiritual framing is her perception and never blames victims.",
- "desired_movement": "From unaware comfort to witnessing how a lie, a newspaper, and a mob unmade a city - while the spirit of Greenwood stays unbroken.",
- "grounding": "Greenwood Avenue, the Drexel Building elevator, the Tulsa Tribune, the courthouse line, the Frisco tracks.",
- "invitation": "Follow all ten parts - one survivor telling the whole story, start to finish.",
+ "evidence_boundary": "Survivor-memory retelling of the documented 1921 Tulsa Race Massacre. Narrator and family are fictional; surrounding events follow the record. Hedged names and dates are deliberate memory texture, not errors.",
+ "desired_movement": "Campfire testimony: a 106-year-old reaching back, nicknames outliving names, sensation outliving statistics.",
+ "grounding": "Her porch, the fire, the brass elevator box, the tracks, the whistle before sunup.",
+ "invitation": "Ten parts, one story, told to you by the fire.",
  "optimization_target": "story_series",
- "era_style": "1921 documentary, black and white with hand-tinted moments",
- "source_script_sha256": "9e9d5a55287d914a80710b0b737e1733ddbba14db784ea40cbc2c5aac1268e69",
+ "era_style": "1921 memory, black and white with hand-tinted moments",
+ "source_script_sha256": "f83e298bb346b1c864ad13e3268bf5a93229ec0a22646a781b85203bdc0baf5a",
  "scenes": [
   {
-   "text": "They set this machine in front of me and asked what I remember. Child, I am one hundred and six years old. Memory is near all I own, and it don't sit quiet. Lean in close now. Let me tell you about the world we built.",
+   "text": "Come close, baby, this fire don't reach far. They want me to talk into that little machine. A hundred and six years old... alright then. Let me reach back and get it for you. All of it.",
    "epistemic_role": "testimony",
-   "audio_tags": [],
-   "keywords": [
-    "machine",
-    "front",
-    "asked"
+   "audio_tags": [
+    "gentle laugh"
    ],
-   "semantic_anchor": "1920s Black main-street bustle, storefronts",
+   "keywords": [
+    "close",
+    "don't",
+    "reach"
+   ],
+   "semantic_anchor": "front porch at night, rocking",
    "visual_function": "hook",
-   "symbol_family": "architecture",
-   "primary_symbol": "1920s Black main-street bustle",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, 1920s Black main-street bustle, storefronts and hats",
-   "archival_url": "https://archive.org/download/Martinez1927/Martinez1927_512kb.mp4",
-   "archival_start": 120,
-   "archival_duration": 18,
-   "archival_title": "Martinez, California Scenes (1927)",
-   "archival_license": "Public domain / archive.org item",
-   "start": 0.0,
-   "kw_times": {
-    "machine": 0.8,
-    "front": 1.46,
-    "asked": 2.96
-   },
-   "motion_kind": "video",
-   "duration": 24.68,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 5.5663,
-    "active_region_ratio": 0.981,
-    "frame_difference": 60.2471
-   },
-   "clip_fingerprint": "291a12539d1300d7",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_00.mp4",
-   "source_url": "https://archive.org/download/Martinez1927/Martinez1927_512kb.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Martinez, California Scenes (1927)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "machine",
-     "png": "youtube_cap_00_kw0.png"
-    },
-    {
-     "kw": "front",
-     "png": "youtube_cap_00_kw1.png"
-    },
-    {
-     "kw": "asked",
-     "png": "youtube_cap_00_kw2.png"
-    }
-   ]
+   "symbol_family": "object_tool",
+   "primary_symbol": "front porch at night",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, front porch at night, rocking chair, oil lantern glow, quilt over the rail, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, front porch at night, rocking chair, oil lantern glow, quilt over the rail"
   },
   {
-   "text": "Greenwood. Thirty-five square blocks on the north side of Tulsa, Oklahoma. Ten thousand of us. White folks took to calling it Black Wall Street. We just called it ours.",
+   "text": "Greenwood. North side of Tulsa. White folks called it Black Wall Street. We just called it ours. Every face on that street knew your mama. That's the part no book ever got right.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
     "greenwood",
-    "thirty",
-    "square"
+    "north",
+    "tulsa"
    ],
-   "semantic_anchor": "crowds outside Black-owned businesses, Sir",
+   "semantic_anchor": "prosperous Black business district street",
    "visual_function": "witness",
-   "symbol_family": "identity",
-   "primary_symbol": "crowds outside Black-owned businesses",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, crowds outside Black-owned businesses, Sir Jones style",
-   "archival_url": "https://archive.org/download/Martinez1927/Martinez1927_512kb.mp4",
-   "archival_start": 300,
-   "archival_duration": 18,
-   "archival_title": "Martinez, California Scenes (1927)",
-   "archival_license": "Public domain / archive.org item",
-   "start": 24.68,
-   "kw_times": {
-    "greenwood": 24.68,
-    "square": 26.32
-   },
-   "motion_kind": "video",
-   "duration": 17.52,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 6.7382,
-    "active_region_ratio": 0.9976,
-    "frame_difference": 54.6129
-   },
-   "clip_fingerprint": "8ba3a308d42ea073",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_01.mp4",
-   "source_url": "https://archive.org/download/Martinez1927/Martinez1927_512kb.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Martinez, California Scenes (1927)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "greenwood",
-     "png": "youtube_cap_01_kw0.png"
-    },
-    {
-     "kw": "thirty",
-     "png": "youtube_cap_01_kw1.png"
-    },
-    {
-     "kw": "square",
-     "png": "youtube_cap_01_kw2.png"
-    }
-   ]
-  },
-  {
-   "text": "We had the Stradford, finest colored-owned hotel in America. The Dreamland Theatre, seven hundred fifty seats and a piano that never slept. Doctors, lawyers, two newspapers of our own.",
-   "epistemic_role": "testimony",
-   "audio_tags": [],
-   "keywords": [
-    "stradford",
-    "finest",
-    "colored"
-   ],
-   "semantic_anchor": "Stradford Hotel and Dreamland Theatre",
-   "visual_function": "witness",
-   "symbol_family": "architecture",
-   "primary_symbol": "Stradford Hotel and Dreamland",
+   "symbol_family": "object_tool",
+   "primary_symbol": "prosperous Black business district",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, prosperous 1921 Black business district street, brick hotel with striped awnings, theater marquee, parked Model T cars, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "start": 42.2,
-   "kw_times": {
-    "stradford": 43.88,
-    "finest": 44.74
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 20.72,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.7317,
-    "active_region_ratio": 0.4393,
-    "frame_difference": 4.0319
-   },
-   "clip_fingerprint": "218d335c18ba2c62",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_02.mp4",
-   "stock_id": 34075476,
-   "pexels_id": 34075476,
-   "stock_frame_url": "https://images.pexels.com/videos/34075476/astronomy-clouds-colorful-cosmos-34075476.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/stunning-space-nebula-with-vibrant-colors-34075476/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "stradford",
-     "png": "youtube_cap_02_kw0.png"
-    },
-    {
-     "kw": "finest",
-     "png": "youtube_cap_02_kw1.png"
-    },
-    {
-     "kw": "colored",
-     "png": "youtube_cap_02_kw2.png"
-    }
-   ]
+   "image_prompt": "authentic 1921 documentary photograph, prosperous Black business district street, brick storefronts, striped awnings, people in Sunday hats, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, prosperous Black business district street, brick storefronts, striped awnings, people in Sunday hats"
   },
   {
-   "text": "A dollar came into Greenwood and stayed, passing hand to hand to hand before it ever left. That wasn't luck, sugar. That was a people agreeing on what they were worth.",
+   "text": "We had a hotel so fine the floors talked back when you walked. A picture theater with seats clean to the back of forever. And a piano somewhere going all night long. Lord, that piano.",
+   "epistemic_role": "testimony",
+   "audio_tags": [
+    "warm"
+   ],
+   "keywords": [
+    "hotel",
+    "floors",
+    "talked"
+   ],
+   "semantic_anchor": "ornate theater marquee lit at",
+   "visual_function": "witness",
+   "symbol_family": "object_tool",
+   "primary_symbol": "ornate theater marquee lit",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, ornate theater marquee lit at dusk on a brick main street, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, ornate theater marquee lit at dusk on a brick main street"
+  },
+  {
+   "text": "A dollar didn't leave our neighborhood in a hurry. It went from the barber to the grocer to the church plate, taking its sweet time. Daddy said that's what respect looks like when it circulates.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
     "dollar",
-    "greenwood",
-    "stayed"
+    "didn't",
+    "leave"
    ],
-   "semantic_anchor": "church congregation pouring out, families",
+   "semantic_anchor": "shopkeeper hands passing a dollar",
    "visual_function": "witness",
-   "symbol_family": "identity",
-   "primary_symbol": "church congregation pouring out",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, church congregation pouring out, families in Sunday best",
-   "archival_url": "https://archive.org/download/098771/098771.mp4",
-   "archival_start": 200,
-   "archival_duration": 18,
-   "archival_title": "Home movie, late 1920s (Prelinger)",
-   "archival_license": "Public domain / archive.org item",
-   "start": 62.92,
-   "kw_times": {
-    "dollar": 63.32,
-    "greenwood": 64.44,
-    "stayed": 65.88
-   },
-   "motion_kind": "video",
-   "duration": 18.36,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 8.8432,
-    "active_region_ratio": 0.9284,
-    "frame_difference": 33.9258
-   },
-   "clip_fingerprint": "5c47904910297424",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_03.mp4",
-   "source_url": "https://archive.org/download/098771/098771.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Home movie, late 1920s (Prelinger)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "dollar",
-     "png": "youtube_cap_03_kw0.png"
-    },
-    {
-     "kw": "greenwood",
-     "png": "youtube_cap_03_kw1.png"
-    },
-    {
-     "kw": "stayed",
-     "png": "youtube_cap_03_kw2.png"
-    }
-   ]
+   "symbol_family": "object_tool",
+   "primary_symbol": "shopkeeper hands passing a",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, shopkeeper hands passing a dollar bill across a worn wooden counter, general store shelves, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, shopkeeper hands passing a dollar bill across a worn wooden counter, general store shelves"
   },
   {
-   "text": "My daddy was Dr. Ambrose Freeman. Office up a narrow stair on Greenwood Avenue, his name painted gold on the glass. Mama was his nurse when she wasn't being my mother — which she'd tell you was the harder job.",
+   "text": "My daddy doctored folks up a narrow stair, his name in gold paint on the glass. Smelled like iodine and peppermint up there. Mama nursed beside him when she wasn't nursing me.",
    "epistemic_role": "testimony",
-   "audio_tags": [],
+   "audio_tags": [
+    "soft"
+   ],
    "keywords": [
     "daddy",
-    "ambrose",
-    "freeman"
+    "doctored",
+    "folks"
    ],
-   "semantic_anchor": "frosted-glass office door, \"A. FREEMAN",
+   "semantic_anchor": "frosted glass office door with",
    "visual_function": "witness",
-   "symbol_family": "architecture",
-   "primary_symbol": "frosted-glass office door, \"A.",
+   "symbol_family": "object_tool",
+   "primary_symbol": "frosted glass office door",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, frosted glass office door with gold leaf physician lettering, narrow wooden staircase, oil sconce light, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "start": 81.28,
-   "kw_times": {
-    "daddy": 81.8,
-    "ambrose": 83.16,
-    "freeman": 83.72
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 21.96,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.9011,
-    "active_region_ratio": 0.3147,
-    "frame_difference": 18.0473
-   },
-   "clip_fingerprint": "87629543c99a0313",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_04.mp4",
-   "stock_id": 4749122,
-   "pexels_id": 4749122,
-   "stock_frame_url": "https://images.pexels.com/videos/4749122/adreatic-adreatic-sea-diver-freediver-4749122.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/man-swimming-underwater-in-blue-sea-water-4749122/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "daddy",
-     "png": "youtube_cap_04_kw0.png"
-    },
-    {
-     "kw": "ambrose",
-     "png": "youtube_cap_04_kw1.png"
-    },
-    {
-     "kw": "freeman",
-     "png": "youtube_cap_04_kw2.png"
-    }
-   ]
+   "image_prompt": "authentic 1921 documentary photograph, frosted glass office door with gold leaf physician lettering, narrow wooden staircase, oil sconce, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, frosted glass office door with gold leaf physician lettering, narrow wooden staircase, oil sconce"
   },
   {
-   "text": "I was eight that spring. Sunday dresses, penny candy, patent-leather shoes. In the one photograph we saved, somebody tinted my ribbon pink by hand. I remember that ribbon better than some whole years.",
+   "text": "I was eight. Had one good ribbon and patent shoes that pinched like a crawdad. In the one photograph we saved, somebody tinted my ribbon pink by hand. I loved that ribbon more than some people.",
    "epistemic_role": "testimony",
-   "audio_tags": [],
+   "audio_tags": [
+    "laughs"
+   ],
    "keywords": [
     "eight",
-    "spring",
-    "sunday"
+    "ribbon",
+    "patent"
    ],
-   "semantic_anchor": "family porch portrait, child's hair",
+   "semantic_anchor": "family of three on a",
    "visual_function": "witness",
    "symbol_family": "identity",
-   "primary_symbol": "family porch portrait, child's",
+   "primary_symbol": "family of three on",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "hand-tinted 1921 photograph, Black family of three on a wooden porch in Sunday best, mother father and small daughter with pink hair ribbon, formal portrait, delicate watercolor tint over black and white silver print, vintage postcard style, soft muted colors",
-   "human_role": "narrator",
-   "start": 103.24,
-   "kw_times": {
-    "eight": 103.78,
-    "spring": 104.34,
-    "sunday": 106.04
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 21.78,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.2743,
-    "active_region_ratio": 0.2046,
-    "frame_difference": 18.2873
-   },
-   "clip_fingerprint": "06d58afeb9cabe14",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_05.mp4",
-   "stock_id": 2632737,
-   "pexels_id": 2632737,
-   "stock_frame_url": "https://images.pexels.com/videos/2632737/free-video-2632737.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/underwater-footage-of-rising-bubbles-2632737/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "eight",
-     "png": "youtube_cap_05_kw0.png"
-    },
-    {
-     "kw": "spring",
-     "png": "youtube_cap_05_kw1.png"
-    },
-    {
-     "kw": "sunday",
-     "png": "youtube_cap_05_kw2.png"
-    }
-   ]
+   "image_prompt": "hand-tinted 1921 photograph, family of three on a wooden porch in Sunday best, small girl with pink hair ribbon, formal portrait, delicate watercolor tint over black and white silver print, vintage postcard style, soft muted colors",
+   "query": "1920s archival photograph, family of three on a wooden porch in Sunday best, small girl with pink hair ribbon, formal portrait"
   },
   {
-   "text": "Daddy used to say Greenwood was a thought before it was a town. Imagination is the workshop, Opal. Everything out here got built twice — once inside somebody, once in the brick.",
+   "text": "Daddy used to say Greenwood got built twice. Once inside somebody's head, once in brick. Took me eighty years to understand him. Everything you ever seen started out as a dream somebody kept.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
     "daddy",
     "greenwood",
-    "thought"
+    "built"
    ],
-   "semantic_anchor": "children playing in a dirt",
+   "semantic_anchor": "rows of new brick buildings",
    "visual_function": "witness",
-   "symbol_family": "identity",
-   "primary_symbol": "children playing in a",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, children playing in a dirt lot, jump rope, wagons",
-   "archival_url": "https://archive.org/download/098771/098771.mp4",
-   "archival_start": 420,
-   "archival_duration": 18,
-   "archival_title": "Home movie, late 1920s (Prelinger)",
-   "archival_license": "Public domain / archive.org item",
-   "start": 125.02,
-   "kw_times": {
-    "daddy": 125.02,
-    "greenwood": 126.3,
-    "thought": 128.18
-   },
-   "motion_kind": "video",
-   "duration": 19.14,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 6.349,
-    "active_region_ratio": 0.9764,
-    "frame_difference": 36.6194
-   },
-   "clip_fingerprint": "2298362225969dae",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_06.mp4",
-   "source_url": "https://archive.org/download/098771/098771.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Home movie, late 1920s (Prelinger)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "daddy",
-     "png": "youtube_cap_06_kw0.png"
-    },
-    {
-     "kw": "greenwood",
-     "png": "youtube_cap_06_kw1.png"
-    },
-    {
-     "kw": "thought",
-     "png": "youtube_cap_06_kw2.png"
-    }
-   ]
-  },
-  {
-   "text": "We had our own schools too. Booker T. Washington High stood up on that hill like it knew something. We were not waiting on anybody's permission to be somebody. We already were.",
-   "epistemic_role": "testimony",
-   "audio_tags": [],
-   "keywords": [
-    "schools",
-    "booker",
-    "washington"
-   ],
-   "semantic_anchor": "Booker T. Washington High School",
-   "visual_function": "witness",
-   "symbol_family": "architecture",
-   "primary_symbol": "Booker T. Washington High",
+   "symbol_family": "object_tool",
+   "primary_symbol": "rows of new brick",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, proud brick high school building on a rise, students on the front steps in the distance, morning light, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "start": 144.16,
-   "kw_times": {
-    "schools": 145.46,
-    "booker": 147.68,
-    "washington": 148.54
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 18.26,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 1.1099,
-    "active_region_ratio": 0.7969,
-    "frame_difference": 11.2225
-   },
-   "clip_fingerprint": "3fbdad5a13e27dc4",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_07.mp4",
-   "stock_id": 9902185,
-   "pexels_id": 9902185,
-   "stock_frame_url": "https://images.pexels.com/videos/9902185/pexels-photo-9902185.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/a-man-standing-by-a-window-and-looking-outside-9902185/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "schools",
-     "png": "youtube_cap_07_kw0.png"
-    },
-    {
-     "kw": "booker",
-     "png": "youtube_cap_07_kw1.png"
-    },
-    {
-     "kw": "washington",
-     "png": "youtube_cap_07_kw2.png"
-    }
-   ]
+   "image_prompt": "authentic 1921 documentary photograph, rows of new brick buildings with scaffolds, morning light, builders at work in the distance, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, rows of new brick buildings with scaffolds, morning light, builders at work in the distance"
   },
   {
-   "text": "Monday, May thirtieth, 1921. Memorial Day. Flags all down Main Street, veterans marching, most stores shut. The parade was downtown — the white part of town — but a workday don't stop for everybody.",
+   "text": "Monday. Memorial Day. Must have been the last of May, because the flags was out and the stores was shut. Now hold my hand through this next part, baby. This is where it turns.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
     "monday",
-    "thirtieth",
-    "memorial"
+    "memorial",
+    "because"
    ],
-   "semantic_anchor": "Memorial Day parade, flags, marching",
+   "semantic_anchor": "American flags on quiet storefronts",
+   "visual_function": "witness",
+   "symbol_family": "object_tool",
+   "primary_symbol": "American flags on quiet",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, American flags on quiet storefronts, closed shop signs, empty morning street, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, American flags on quiet storefronts, closed shop signs, empty morning street"
+  },
+  {
+   "text": "There was a boy shined shoes downtown. Everybody called him Diamond Dick. Pretty boy. Grin like he owed you money and knew you'd forgive him. His given name? Gone, child. The grin stayed.",
+   "epistemic_role": "testimony",
+   "audio_tags": [
+    "fond"
+   ],
+   "keywords": [
+    "there",
+    "shined",
+    "shoes"
+   ],
+   "semantic_anchor": "young Black man at a",
    "visual_function": "witness",
    "symbol_family": "identity",
-   "primary_symbol": "Memorial Day parade, flags",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, Memorial Day parade, flags, marching veterans, 1921",
-   "archival_url": "https://archive.org/download/Kinogramca./Kinogramca._512kb.mp4",
-   "archival_start": 60,
-   "archival_duration": 18,
-   "archival_title": "Kinograms Newsreel (1925)",
-   "archival_license": "Public domain / archive.org item",
-   "start": 162.42,
-   "kw_times": {
-    "monday": 162.42,
-    "thirtieth": 164.63,
-    "memorial": 167.78
-   },
-   "motion_kind": "video",
-   "duration": 24.28,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 3.014,
-    "active_region_ratio": 0.468,
-    "frame_difference": 21.3282
-   },
-   "clip_fingerprint": "b2f17d26be76bfcb",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_08.mp4",
-   "source_url": "https://archive.org/download/Kinogramca./Kinogramca._512kb.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Kinograms Newsreel (1925)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "monday",
-     "png": "youtube_cap_08_kw0.png"
-    },
-    {
-     "kw": "thirtieth",
-     "png": "youtube_cap_08_kw1.png"
-    },
-    {
-     "kw": "memorial",
-     "png": "youtube_cap_08_kw2.png"
-    }
-   ]
-  },
-  {
-   "text": "Dick Rowland was nineteen. Shined shoes on Main. Folks called him Diamond Dick. I knew his grin the way a child knows grown folks — by the kindness or the lack of it. His was kindness.",
-   "epistemic_role": "testimony",
-   "audio_tags": [],
-   "keywords": [
-    "rowland",
-    "nineteen",
-    "shined"
-   ],
-   "semantic_anchor": "shoeshine stand on Main Street",
-   "visual_function": "witness",
-   "symbol_family": "architecture",
-   "primary_symbol": "shoeshine stand on Main",
+   "primary_symbol": "young Black man at",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, young Black man at a shoeshine stand on a busy main street, kind confident grin, customer shoe on the brass rest, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "human_role": "relationship",
-   "start": 186.7,
-   "kw_times": {
-    "rowland": 187.04,
-    "nineteen": 188.207,
-    "shined": 189.033
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 21.16,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 5.9804,
-    "active_region_ratio": 0.9749,
-    "frame_difference": 19.7623
-   },
-   "clip_fingerprint": "2b5b43c7e408879e",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_09.mp4",
-   "stock_id": 18222675,
-   "pexels_id": 18222675,
-   "stock_frame_url": "https://images.pexels.com/videos/18222675/after-rain-after-the-rain-backwater-blur-18222675.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/rain-drops-on-the-windshield-of-a-car-at-night-18222675/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "rowland",
-     "png": "youtube_cap_09_kw0.png"
-    },
-    {
-     "kw": "nineteen",
-     "png": "youtube_cap_09_kw1.png"
-    },
-    {
-     "kw": "shined",
-     "png": "youtube_cap_09_kw2.png"
-    }
-   ]
+   "image_prompt": "authentic 1921 documentary photograph, young Black man at a shoeshine stand, warm grin, customer shoe on the brass rest, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, young Black man at a shoeshine stand, warm grin, customer shoe on the brass rest"
   },
   {
-   "text": "Jim Crow did its arithmetic on him daily. The only washroom a colored man could use downtown sat at the top of the Drexel Building. To reach it, you rode the elevator. That is all that boy was doing.",
+   "text": "A colored man couldn't use just any washroom downtown. The one they left us sat at the top of a tall building, and you rode a little elevator to get there. That's all that boy went to do. Ride up. Come down.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
-    "arithmetic",
-    "daily",
+    "colored",
+    "couldn't",
     "washroom"
    ],
-   "semantic_anchor": "Drexel Building exterior, 319 South",
+   "semantic_anchor": "tall downtown office building, stone",
    "visual_function": "witness",
-   "symbol_family": "architecture",
-   "primary_symbol": "Drexel Building exterior, 319",
+   "symbol_family": "object_tool",
+   "primary_symbol": "tall downtown office building",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, 1921 downtown office building, stone facade and revolving door, pedestrians in straw boaters, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "start": 207.86,
-   "kw_times": {
-    "arithmetic": 209.0,
-    "daily": 210.4,
-    "washroom": 212.72
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 20.26,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 1.9155,
-    "active_region_ratio": 0.5278,
-    "frame_difference": 11.3521
-   },
-   "clip_fingerprint": "87c06f955fc27c4e",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_10.mp4",
-   "stock_id": 9902178,
-   "pexels_id": 9902178,
-   "stock_frame_url": "https://images.pexels.com/videos/9902178/pexels-photo-9902178.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/tv-and-man-looking-through-window-9902178/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "arithmetic",
-     "png": "youtube_cap_10_kw0.png"
-    },
-    {
-     "kw": "daily",
-     "png": "youtube_cap_10_kw1.png"
-    },
-    {
-     "kw": "washroom",
-     "png": "youtube_cap_10_kw2.png"
-    }
-   ]
+   "image_prompt": "authentic 1921 documentary photograph, tall downtown office building, stone facade and revolving door, pedestrians in boaters, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, tall downtown office building, stone facade and revolving door, pedestrians in boaters"
   },
   {
-   "text": "The elevator girl was Sarah Page, seventeen, white, working her shift same as any Monday. Two young people in a box of brass and cable. History has squeezed into smaller rooms than that, child. Not many.",
+   "text": "A girl ran that elevator. Young. White. I never learned her name long enough to forget it. Two children in a brass box, and history squeezing in there with them. It's a small room, history. Fits anywhere.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
     "elevator",
-    "sarah",
-    "seventeen"
+    "young",
+    "white"
    ],
-   "semantic_anchor": "downtown Tulsa street, streetcars and",
+   "semantic_anchor": "ornate brass scissor-gate elevator interior",
    "visual_function": "witness",
-   "symbol_family": "transport",
-   "primary_symbol": "downtown Tulsa street, streetcars",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, downtown Tulsa street, streetcars and awnings",
-   "archival_url": "https://archive.org/download/SeeingLo1920/SeeingLo1920_512kb.mp4",
-   "archival_start": 180,
-   "archival_duration": 18,
-   "archival_title": "Seeing London (1920)",
-   "archival_license": "Public domain / archive.org item",
-   "human_role": "relationship",
-   "start": 228.12,
-   "kw_times": {
-    "elevator": 228.36,
-    "sarah": 229.94,
-    "seventeen": 231.99
-   },
-   "motion_kind": "video",
-   "duration": 24.32,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.5163,
-    "active_region_ratio": 0.3502,
-    "frame_difference": 5.081
-   },
-   "clip_fingerprint": "c4692af2d7c5f651",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_11.mp4",
-   "source_url": "https://archive.org/download/SeeingLo1920/SeeingLo1920_512kb.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Seeing London (1920)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "elevator",
-     "png": "youtube_cap_11_kw0.png"
-    },
-    {
-     "kw": "sarah",
-     "png": "youtube_cap_11_kw1.png"
-    },
-    {
-     "kw": "seventeen",
-     "png": "youtube_cap_11_kw2.png"
-    }
-   ]
+   "symbol_family": "object_tool",
+   "primary_symbol": "ornate brass scissor-gate elevator",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, ornate brass scissor-gate elevator interior, operator stool, overhead lamp, empty, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, ornate brass scissor-gate elevator interior, operator stool, overhead lamp, empty"
   },
   {
-   "text": "The car lurched. He stumbled. His hand caught her arm the way you would catch anybody's arm. She hollered. He ran — because a colored boy in 1921 knew exactly what a holler could cost him.",
+   "text": "The car jumped. He stumbled. His hand caught her arm, the way you'd catch anybody. And she hollered. And he ran. Because a colored boy in that town knew arithmetic, and a holler was a number too big.",
    "epistemic_role": "testimony",
-   "audio_tags": [],
+   "audio_tags": [
+    "lower"
+   ],
    "keywords": [
-    "lurched",
+    "jumped",
     "stumbled",
     "caught"
    ],
-   "semantic_anchor": "elevator gate, close on the",
+   "semantic_anchor": "elevator floor indicator dial above",
    "visual_function": "witness",
-   "symbol_family": "transport",
-   "primary_symbol": "elevator gate, close on",
+   "symbol_family": "object_tool",
+   "primary_symbol": "elevator floor indicator dial",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, ornate brass scissor-gate elevator interior, operator stool and control lever, empty, overhead lamp, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "start": 252.44,
-   "kw_times": {
-    "lurched": 253.26,
-    "stumbled": 254.56,
-    "caught": 256.64
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 20.7,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 1.7718,
-    "active_region_ratio": 0.5277,
-    "frame_difference": 14.6092
-   },
-   "clip_fingerprint": "944f50b0112c1a0a",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_12.mp4",
-   "stock_id": 34230929,
-   "pexels_id": 34230929,
-   "stock_frame_url": "https://images.pexels.com/videos/34230929/pexels-photo-34230929.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/full-moon-behind-dramatic-clouds-at-night-34230929/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "lurched",
-     "png": "youtube_cap_12_kw0.png"
-    },
-    {
-     "kw": "stumbled",
-     "png": "youtube_cap_12_kw1.png"
-    },
-    {
-     "kw": "caught",
-     "png": "youtube_cap_12_kw2.png"
-    }
-   ]
+   "image_prompt": "authentic 1921 documentary photograph, elevator floor indicator dial above closed doors, dramatic shadow, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, elevator floor indicator dial above closed doors, dramatic shadow"
   },
   {
-   "text": "A clerk from the store next door heard the scream, saw a Black boy running, and let his imagination finish the story. Fear writes fast, child. Faster than truth can lace its shoes.",
+   "text": "A clerk next door heard the scream and let his imagination finish the story. That's all it took, sugar. One man's imagination. Fear writes fast, and it don't stop to check its spelling.",
    "epistemic_role": "testimony",
-   "audio_tags": [],
+   "audio_tags": [
+    "slow"
+   ],
    "keywords": [
     "clerk",
-    "store",
-    "heard"
+    "heard",
+    "scream"
    ],
-   "semantic_anchor": "Renberg's clothing store window",
+   "semantic_anchor": "clothing store window with suited",
    "visual_function": "witness",
-   "symbol_family": "architecture",
-   "primary_symbol": "Renberg's clothing store window",
+   "symbol_family": "object_tool",
+   "primary_symbol": "clothing store window with",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, 1921 clothing store display window, suited mannequins, street reflections in the glass, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "start": 273.14,
-   "kw_times": {
-    "clerk": 273.36,
-    "store": 274.16,
-    "heard": 275.3
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 17.92,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 1.1651,
-    "active_region_ratio": 0.4983,
-    "frame_difference": 60.6495
-   },
-   "clip_fingerprint": "54fa35c543927f8d",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_13.mp4",
-   "stock_id": 7122113,
-   "pexels_id": 7122113,
-   "stock_frame_url": "https://images.pexels.com/videos/7122113/abstract-black-cancer-cigarette-7122113.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/smoke-in-dark-background-7122113/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "clerk",
-     "png": "youtube_cap_13_kw0.png"
-    },
-    {
-     "kw": "store",
-     "png": "youtube_cap_13_kw1.png"
-    },
-    {
-     "kw": "heard",
-     "png": "youtube_cap_13_kw2.png"
-    }
-   ]
+   "image_prompt": "authentic 1921 documentary photograph, clothing store window with suited mannequins, a running silhouette reflected in the glass, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, clothing store window with suited mannequins, a running silhouette reflected in the glass"
   },
   {
-   "text": "Now here is what nobody led with: the police who talked to Sarah Page didn't smell much fire in it. No charge she would swear to. The detectives shrugged. On any honest day, that is where it ends.",
+   "text": "Now here's what they don't tell you. The police wasn't even sure anything happened. The girl wouldn't swear to nothing. On any honest day, that's where it dies. It just wasn't going to be an honest day.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
-    "nobody",
-    "police",
-    "talked"
+    "here's",
+    "don't",
+    "police"
    ],
-   "semantic_anchor": "police station exterior, officers on",
+   "semantic_anchor": "police station front desk, open",
    "visual_function": "witness",
-   "symbol_family": "architecture",
-   "primary_symbol": "police station exterior, officers",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, police station exterior, officers on steps",
-   "archival_url": "https://archive.org/download/Kinogramca./Kinogramca._512kb.mp4",
-   "archival_start": 200,
-   "archival_duration": 18,
-   "archival_title": "Kinograms Newsreel (1925)",
-   "archival_license": "Public domain / archive.org item",
-   "start": 291.06,
-   "kw_times": {
-    "nobody": 292.18,
-    "police": 294.98,
-    "talked": 295.74
-   },
-   "motion_kind": "video",
-   "duration": 21.72,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 7.1769,
-    "active_region_ratio": 0.9955,
-    "frame_difference": 29.5362
-   },
-   "clip_fingerprint": "becca4fae3b462f2",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_14.mp4",
-   "source_url": "https://archive.org/download/Kinogramca./Kinogramca._512kb.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Kinograms Newsreel (1925)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "nobody",
-     "png": "youtube_cap_14_kw0.png"
-    },
-    {
-     "kw": "police",
-     "png": "youtube_cap_14_kw1.png"
-    },
-    {
-     "kw": "talked",
-     "png": "youtube_cap_14_kw2.png"
-    }
-   ]
+   "symbol_family": "object_tool",
+   "primary_symbol": "police station front desk",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, police station front desk, open ledger book, officer cap resting on the counter, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, police station front desk, open ledger book, officer cap resting on the counter"
   },
   {
-   "text": "That night we slept easy under our own roofs, in the town we built twice. I have spent a hundred years learning how precious an easy sleep is, child. That was the last one for a long while.",
+   "text": "That night we slept easy under our own roofs. You don't know a sleep is precious till you count how few of them you got left. That was the last easy one for a long, long while.",
    "epistemic_role": "testimony",
-   "audio_tags": [],
+   "audio_tags": [
+    "soft"
+   ],
    "keywords": [
     "night",
     "slept",
     "under"
    ],
-   "semantic_anchor": "dusk over Greenwood rooftops, warm",
+   "semantic_anchor": "dusk over district rooftops, chimneys",
    "visual_function": "witness",
-   "symbol_family": "time_memory",
-   "primary_symbol": "dusk over Greenwood rooftops",
+   "symbol_family": "object_tool",
+   "primary_symbol": "dusk over district rooftops",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "hand-tinted 1921 photograph, rooftops of a small prosperous district at dusk, chimneys and a church steeple, warm amber sky, delicate watercolor tint over black and white silver print, vintage postcard style, soft muted colors",
-   "symbol_query": "record needle travels across spinning vinyl beside old photographs soft window light",
-   "symbol_family_source": "planner",
-   "human_role": "relationship",
-   "start": 312.78,
-   "kw_times": {
-    "night": 313.24,
-    "slept": 313.92,
-    "under": 314.82
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 23.74,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 1.4319,
-    "active_region_ratio": 0.5324,
-    "frame_difference": 4.7431
-   },
-   "clip_fingerprint": "993e8c68ba3380c5",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_15.mp4",
-   "stock_id": 1793534,
-   "pexels_id": 1793534,
-   "stock_frame_url": "https://images.pexels.com/videos/1793534/free-video-1793534.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/playing-music-with-an-old-vinyl-record-1793534/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "night",
-     "png": "youtube_cap_15_kw0.png"
-    },
-    {
-     "kw": "slept",
-     "png": "youtube_cap_15_kw1.png"
-    },
-    {
-     "kw": "under",
-     "png": "youtube_cap_15_kw2.png"
-    }
-   ]
+   "image_prompt": "hand-tinted 1921 photograph, dusk over district rooftops, chimneys and a church steeple, warm amber sky, delicate watercolor tint over black and white silver print, vintage postcard style, soft muted colors",
+   "query": "1920s archival photograph, dusk over district rooftops, chimneys and a church steeple, warm amber sky"
   },
   {
-   "text": "Tuesday morning, May thirty-first, they arrested Dick anyway, quiet, and set him in the courthouse jail. Sheriff Willard McCullough held the keys. Remember his name. Goodness wore every color that week.",
+   "text": "Tuesday morning they came got Diamond Dick anyway, quiet, and set him in the courthouse jail. The sheriff, Mac-something, big square man, held them keys honest. Remember him kind, whoever he was.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
     "tuesday",
     "morning",
-    "thirty"
+    "diamond"
    ],
-   "semantic_anchor": "courthouse jail corridor, barred cell",
+   "semantic_anchor": "courthouse jail corridor, iron bars",
    "visual_function": "witness",
-   "symbol_family": "architecture",
-   "primary_symbol": "courthouse jail corridor, barred",
+   "symbol_family": "object_tool",
+   "primary_symbol": "courthouse jail corridor, iron",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
    "image_prompt": "authentic 1921 documentary photograph, courthouse jail corridor, iron bars, single wooden chair, one shaft of window light, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "start": 336.52,
-   "kw_times": {
-    "tuesday": 336.52,
-    "morning": 337.18
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 23.06,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.1753,
-    "active_region_ratio": 0.114,
-    "frame_difference": 2.7393
-   },
-   "clip_fingerprint": "b502bd540737ac36",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_16.mp4",
-   "stock_id": 12286525,
-   "pexels_id": 12286525,
-   "stock_frame_url": "https://images.pexels.com/videos/12286525/pexels-photo-12286525.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/stars-in-space-12286525/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "tuesday",
-     "png": "youtube_cap_16_kw0.png"
-    },
-    {
-     "kw": "morning",
-     "png": "youtube_cap_16_kw1.png"
-    },
-    {
-     "kw": "thirty",
-     "png": "youtube_cap_16_kw2.png"
-    }
-   ]
+   "query": "1920s archival photograph, courthouse jail corridor, iron bars, single wooden chair, one shaft of window light"
   },
   {
-   "text": "Greenwood didn't know one thing about it yet. Supper smells drifting, the Dreamland piano warming up, men sweeping their own storefronts. We were rich in the way that counts — we belonged to each other.",
+   "text": "Greenwood didn't know one thing yet. Supper going, piano tuning up, men sweeping their own doorsteps. We was rich the way that counts, baby. We belonged to each other. You hear me? Belonged.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
@@ -1017,609 +385,239 @@
     "didn't",
     "thing"
    ],
-   "semantic_anchor": "Greenwood evening street life, storefront",
+   "semantic_anchor": "evening street with lit shop",
    "visual_function": "witness",
    "symbol_family": "object_tool",
-   "primary_symbol": "Greenwood evening street life",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, Greenwood evening street life, storefront lamps",
-   "archival_url": "https://archive.org/download/Martinez1927/Martinez1927_512kb.mp4",
-   "archival_start": 600,
-   "archival_duration": 18,
-   "archival_title": "Martinez, California Scenes (1927)",
-   "archival_license": "Public domain / archive.org item",
-   "start": 359.58,
-   "kw_times": {
-    "greenwood": 359.58,
-    "didn't": 360.42,
-    "thing": 361.46
-   },
-   "motion_kind": "video",
-   "duration": 21.52,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 7.2725,
-    "active_region_ratio": 0.9943,
-    "frame_difference": 50.3759
-   },
-   "clip_fingerprint": "dc9659f2f41e3332",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_17.mp4",
-   "source_url": "https://archive.org/download/Martinez1927/Martinez1927_512kb.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Martinez, California Scenes (1927)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "greenwood",
-     "png": "youtube_cap_17_kw0.png"
-    },
-    {
-     "kw": "didn't",
-     "png": "youtube_cap_17_kw1.png"
-    },
-    {
-     "kw": "thing",
-     "png": "youtube_cap_17_kw2.png"
-    }
-   ]
+   "primary_symbol": "evening street with lit",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, evening street with lit shop windows, cafe chairs, a broom leaning on a doorframe, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, evening street with lit shop windows, cafe chairs, a broom leaning on a doorframe"
   },
   {
-   "text": "But downtown, an afternoon paper needed selling. The Tulsa Tribune. And there is no cheaper fuel on God's green earth than a white woman's scream and a Black man's name.",
+   "text": "But downtown there was an afternoon paper needed selling. And there is no cheaper kindling on God's green earth than a white girl's scream and a Black boy's name set in the same line of type.",
    "epistemic_role": "testimony",
-   "audio_tags": [],
+   "audio_tags": [
+    "darker"
+   ],
    "keywords": [
     "downtown",
-    "afternoon",
-    "paper"
+    "there",
+    "afternoon"
    ],
-   "semantic_anchor": "Tulsa Tribune building signage",
-   "visual_function": "witness",
-   "symbol_family": "document",
-   "primary_symbol": "Tulsa Tribune building signage",
-   "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
-   "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, 1921 newspaper office building, tall windows, newsprint rolls stacked at the loading dock, delivery truck, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "start": 381.1,
-   "kw_times": {
-    "downtown": 381.46,
-    "afternoon": 383.32,
-    "paper": 384.02
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 19.02,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 2.6682,
-    "active_region_ratio": 0.8034,
-    "frame_difference": 4.9717
-   },
-   "clip_fingerprint": "095af3bf7b4a6c67",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_18.mp4",
-   "stock_id": 37334334,
-   "pexels_id": 37334334,
-   "stock_frame_url": "https://images.pexels.com/videos/37334334/4k-nature-aquarium-aquatic-ecosystem-coral-gardens-37334334.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/sunlit-underwater-view-with-turtle-in-crystal-clear-ocean-37334334/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "downtown",
-     "png": "youtube_cap_18_kw0.png"
-    },
-    {
-     "kw": "afternoon",
-     "png": "youtube_cap_18_kw1.png"
-    },
-    {
-     "kw": "paper",
-     "png": "youtube_cap_18_kw2.png"
-    }
-   ]
-  },
-  {
-   "text": "They set it in type: NAB NEGRO FOR ATTACKING GIRL IN AN ELEVATOR. Eight words, most of them seasoning on a story that had no meat. A match, child, dipped in ink.",
-   "epistemic_role": "testimony",
-   "audio_tags": [],
-   "keywords": [
-    "negro",
-    "attacking",
-    "elevator"
-   ],
-   "semantic_anchor": "linotype machine, headline block in",
+   "semantic_anchor": "newspaper building at dusk, tall",
    "visual_function": "witness",
    "symbol_family": "object_tool",
-   "primary_symbol": "linotype machine, headline block",
+   "primary_symbol": "newspaper building at dusk",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, linotype typesetting machine closeup in a print shop, rows of metal type gleaming, operator hands at the keys, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "human_role": "relationship",
-   "start": 400.12,
-   "kw_times": {
-    "negro": 404.12,
-    "attacking": 406.44,
-    "elevator": 408.28
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 23.46,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 2.7651,
-    "active_region_ratio": 0.9738,
-    "frame_difference": 4.5199
-   },
-   "clip_fingerprint": "eb9fa9db5c23ed59",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_19.mp4",
-   "stock_id": 30343257,
-   "pexels_id": 30343257,
-   "stock_frame_url": "https://images.pexels.com/videos/30343257/mond-hinter-dunklen-wolken-30343257.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/full-moon-shrouded-by-dramatic-clouds-30343257/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "negro",
-     "png": "youtube_cap_19_kw0.png"
-    },
-    {
-     "kw": "attacking",
-     "png": "youtube_cap_19_kw1.png"
-    },
-    {
-     "kw": "elevator",
-     "png": "youtube_cap_19_kw2.png"
-    }
-   ]
+   "image_prompt": "authentic 1921 documentary photograph, newspaper building at dusk, tall lit windows, newsprint rolls stacked at the dock, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, newspaper building at dusk, tall lit windows, newsprint rolls stacked at the dock"
   },
   {
-   "text": "And deeper in that paper, folks swore, an invitation to a lynching, printed plain. Go look for it today. That page is torn out of every archive by somebody's careful hand. Paper burns, baby. Witness don't.",
+   "text": "I can't quote you the headline. I was eight years old. But grown folks said it plain. The paper all but printed an invitation. Come to the courthouse tonight. Bring your rope.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
-    "deeper",
-    "paper",
-    "folks"
+    "can't",
+    "quote",
+    "headline"
    ],
-   "semantic_anchor": "press room, rolls thundering through",
+   "semantic_anchor": "linotype machine closeup, rows of",
    "visual_function": "witness",
    "symbol_family": "object_tool",
-   "primary_symbol": "press room, rolls thundering",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, press room, rolls thundering through the press",
-   "archival_url": "https://archive.org/download/Communic1927/Communic1927_512kb.mp4",
-   "archival_start": 520,
-   "archival_duration": 18,
-   "archival_title": "Communication: A Film Lesson (1927)",
-   "archival_license": "Public domain / archive.org item",
-   "start": 423.58,
-   "kw_times": {
-    "deeper": 423.7,
-    "paper": 424.64,
-    "folks": 426.06
-   },
-   "motion_kind": "video",
-   "duration": 25.4,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 1.0967,
-    "active_region_ratio": 0.8947,
-    "frame_difference": 17.7729
-   },
-   "clip_fingerprint": "74c96f35d231038e",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_20.mp4",
-   "source_url": "https://archive.org/download/Communic1927/Communic1927_512kb.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Communication: A Film Lesson (1927)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "deeper",
-     "png": "youtube_cap_20_kw0.png"
-    },
-    {
-     "kw": "paper",
-     "png": "youtube_cap_20_kw1.png"
-    },
-    {
-     "kw": "folks",
-     "png": "youtube_cap_20_kw2.png"
-    }
-   ]
+   "primary_symbol": "linotype machine closeup, rows",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, linotype machine closeup, rows of metal type, operator hands at the keys, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, linotype machine closeup, rows of metal type, operator hands at the keys"
   },
   {
-   "text": "A little after three, the Tribune hit the street. Newsboys hollering that headline on every corner downtown. Folks said you could stand on our side of the tracks and feel it coming. Like weather.",
+   "text": "And here is the part that makes my hands cold. Go look for that page today. Torn out. Every copy, every archive, one careful hand. Paper can be cut, baby. What I carry can't.",
+   "epistemic_role": "testimony",
+   "audio_tags": [
+    "cold"
+   ],
+   "keywords": [
+    "makes",
+    "hands",
+    "today"
+   ],
+   "semantic_anchor": "newspaper with a ragged torn-out",
+   "visual_function": "witness",
+   "symbol_family": "object_tool",
+   "primary_symbol": "newspaper with a ragged",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, newspaper with a ragged torn-out column on dark wood beside a lamp, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, newspaper with a ragged torn-out column on dark wood beside a lamp"
+  },
+  {
+   "text": "Papers hit the street middle of the afternoon. Newsboys hollering it corner to corner. Folks said you could stand on our side of the tracks and feel it coming. Like weather. Like a green sky.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
-    "little",
-    "after",
-    "three"
+    "papers",
+    "street",
+    "middle"
    ],
-   "semantic_anchor": "newsboys hawking papers on a",
+   "semantic_anchor": "newsboys with paper bundles on",
    "visual_function": "witness",
    "symbol_family": "identity",
-   "primary_symbol": "newsboys hawking papers on",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, newsboys hawking papers on a corner",
-   "archival_url": "https://archive.org/download/Communic1927/Communic1927_512kb.mp4",
-   "archival_start": 620,
-   "archival_duration": 18,
-   "archival_title": "Communication: A Film Lesson (1927)",
-   "archival_license": "Public domain / archive.org item",
-   "start": 448.98,
-   "kw_times": {
-    "little": 449.22,
-    "after": 449.58,
-    "three": 450.02
-   },
-   "motion_kind": "video",
-   "duration": 19.46,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 1.2068,
-    "active_region_ratio": 0.9357,
-    "frame_difference": 12.4897
-   },
-   "clip_fingerprint": "99ffb555a1cb49a8",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_21.mp4",
-   "source_url": "https://archive.org/download/Communic1927/Communic1927_512kb.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Communication: A Film Lesson (1927)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "little",
-     "png": "youtube_cap_21_kw0.png"
-    },
-    {
-     "kw": "after",
-     "png": "youtube_cap_21_kw1.png"
-    },
-    {
-     "kw": "three",
-     "png": "youtube_cap_21_kw2.png"
-    }
-   ]
+   "primary_symbol": "newsboys with paper bundles",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, newsboys with paper bundles on a corner, men in hats reaching for copies, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, newsboys with paper bundles on a corner, men in hats reaching for copies"
   },
   {
-   "text": "By suppertime, white Tulsa had chewed that story down to one word: rope. A mob had lynched a white boy in this same town not a year before, and the law just watched. Everybody knew the recipe worked.",
+   "text": "By suppertime the talk downtown was rope. They had lynched a white boy in that same town not a year before, and the law just watched it happen. Everybody knew the recipe worked. Everybody.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
     "suppertime",
-    "white",
-    "tulsa"
+    "downtown",
+    "lynched"
    ],
-   "semantic_anchor": "cluster of white men reading",
+   "semantic_anchor": "empty town square at dusk",
    "visual_function": "witness",
-   "symbol_family": "document",
-   "primary_symbol": "cluster of white men",
+   "symbol_family": "object_tool",
+   "primary_symbol": "empty town square at",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, cluster of white men in straw boaters and fedoras reading a newspaper together on a sidewalk, stern faces, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "start": 468.44,
-   "kw_times": {
-    "suppertime": 469.64,
-    "white": 470.84,
-    "tulsa": 471.33
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 23.14,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.1883,
-    "active_region_ratio": 0.099,
-    "frame_difference": 3.5628
-   },
-   "clip_fingerprint": "297f9c7f30ef9267",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_22.mp4",
-   "stock_id": 13141960,
-   "pexels_id": 13141960,
-   "stock_frame_url": "https://images.pexels.com/videos/13141960/paisaje-naturaleza-nubes-montanas-vientos-arboles-colombia-13141960.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/fog-over-vegatation-at-night-13141960/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "suppertime",
-     "png": "youtube_cap_22_kw0.png"
-    },
-    {
-     "kw": "white",
-     "png": "youtube_cap_22_kw1.png"
-    },
-    {
-     "kw": "tulsa",
-     "png": "youtube_cap_22_kw2.png"
-    }
-   ]
+   "image_prompt": "authentic 1921 documentary photograph, empty town square at dusk, long shadows, courthouse in the distance, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, empty town square at dusk, long shadows, courthouse in the distance"
   },
   {
-   "text": "By seven-thirty they were collecting outside the courthouse. Hundreds, then more. McCullough barred the doors, killed the elevator, put riflemen on the stairs. The mob asked for Dick Rowland. The sheriff said no.",
+   "text": "Come dark they was collecting at the courthouse. Hundreds first. Then more than I got numbers for. And that sheriff, bless him, barred his own doors and told that crowd one word. No.",
    "epistemic_role": "testimony",
    "audio_tags": [],
    "keywords": [
-    "seven",
-    "thirty",
-    "collecting"
+    "collecting",
+    "courthouse",
+    "hundreds"
    ],
-   "semantic_anchor": "courthouse exterior, crowd thickening at",
-   "visual_function": "witness",
-   "symbol_family": "element",
-   "primary_symbol": "courthouse exterior, crowd thickening",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, courthouse exterior, crowd thickening at dusk",
-   "archival_url": "https://archive.org/download/Kinogramca./Kinogramca._512kb.mp4",
-   "archival_start": 300,
-   "archival_duration": 18,
-   "archival_title": "Kinograms Newsreel (1925)",
-   "archival_license": "Public domain / archive.org item",
-   "human_role": "collective",
-   "start": 491.58,
-   "kw_times": {
-    "collecting": 495.02
-   },
-   "motion_kind": "video",
-   "duration": 24.72,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 4.8864,
-    "active_region_ratio": 0.9727,
-    "frame_difference": 40.7795
-   },
-   "clip_fingerprint": "ca710ea7fdd198ed",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_23.mp4",
-   "source_url": "https://archive.org/download/Kinogramca./Kinogramca._512kb.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Kinograms Newsreel (1925)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "seven",
-     "png": "youtube_cap_23_kw0.png"
-    },
-    {
-     "kw": "thirty",
-     "png": "youtube_cap_23_kw1.png"
-    },
-    {
-     "kw": "collecting",
-     "png": "youtube_cap_23_kw2.png"
-    }
-   ]
-  },
-  {
-   "text": "Down on Greenwood, men who had worn this country's uniform in France set down their suppers and stood up. If the law could not hold that line, they would. Not rage, child. Arithmetic. They knew what mobs do.",
-   "epistemic_role": "testimony",
-   "audio_tags": [],
-   "keywords": [
-    "greenwood",
-    "country's",
-    "uniform"
-   ],
-   "semantic_anchor": "portrait of Black WWI veterans",
+   "semantic_anchor": "courthouse at night, dense crowd",
    "visual_function": "witness",
    "symbol_family": "identity",
-   "primary_symbol": "portrait of Black WWI",
+   "primary_symbol": "courthouse at night, dense",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, formal studio portrait of Black World War One soldiers in uniform, campaign hats, dignified upright posture, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "human_role": "narrator",
-   "start": 516.3,
-   "kw_times": {
-    "greenwood": 517.34,
-    "country's": 520.8,
-    "uniform": 521.46
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 24.78,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 1.8959,
-    "active_region_ratio": 0.8943,
-    "frame_difference": 12.1418
-   },
-   "clip_fingerprint": "e5c5ff0d11054910",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_24.mp4",
-   "stock_id": 3130376,
-   "pexels_id": 3130376,
-   "stock_frame_url": "https://images.pexels.com/videos/3130376/free-video-3130376.jpg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/water-droplets-sliding-down-a-glass-window-3130376/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "greenwood",
-     "png": "youtube_cap_24_kw0.png"
-    },
-    {
-     "kw": "country's",
-     "png": "youtube_cap_24_kw1.png"
-    },
-    {
-     "kw": "uniform",
-     "png": "youtube_cap_24_kw2.png"
-    }
-   ]
+   "image_prompt": "authentic 1921 documentary photograph, courthouse at night, dense crowd of men in hats outside, lit windows, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, courthouse at night, dense crowd of men in hats outside, lit windows"
   },
   {
-   "text": "Daddy locked the office early. Mama held my hand too tight, and the air had changed — you could taste tomorrow in it, like copper. Next time I'll tell you how one gun went off and the whole world tore its shirt.",
+   "text": "And down our way, men who had soldiered in France set down their suppers and stood up. Some still had the Army coat. If the law couldn't hold the line, they would. That's not rage, child. That's arithmetic.",
    "epistemic_role": "testimony",
-   "audio_tags": [],
+   "audio_tags": [
+    "proud"
+   ],
+   "keywords": [
+    "soldiered",
+    "france",
+    "suppers"
+   ],
+   "semantic_anchor": "formal studio portrait of Black",
+   "visual_function": "witness",
+   "symbol_family": "identity",
+   "primary_symbol": "formal studio portrait of",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, formal studio portrait of Black World War One soldiers in uniform, campaign hats, dignified, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, formal studio portrait of Black World War One soldiers in uniform, campaign hats, dignified"
+  },
+  {
+   "text": "Daddy locked the office early. Mama held my hand too tight the whole walk home, and I taste copper just telling it. The air had changed. You could feel tomorrow coming, and it was coming armed.",
+   "epistemic_role": "testimony",
+   "audio_tags": [
+    "low"
+   ],
    "keywords": [
     "daddy",
     "locked",
     "office"
    ],
-   "semantic_anchor": "dark street, lamplight, two figures",
+   "semantic_anchor": "night street, two figures walking",
+   "visual_function": "witness",
+   "symbol_family": "identity",
+   "primary_symbol": "night street, two figures",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, night street, two figures walking under gas lamps, long shadows, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, night street, two figures walking under gas lamps, long shadows"
+  },
+  {
+   "text": "One gun is going to go off outside that courthouse, baby. Nobody will ever know whose finger. And the whole world is going to tear its shirt. But that's tomorrow's telling, not tonight's.",
+   "epistemic_role": "testimony",
+   "audio_tags": [
+    "whispers"
+   ],
+   "keywords": [
+    "going",
+    "outside",
+    "courthouse"
+   ],
+   "semantic_anchor": "single revolver lying on stone",
    "visual_function": "witness",
    "symbol_family": "object_tool",
-   "primary_symbol": "dark street, lamplight, two",
-   "narrative_mode": "stock_ok",
-   "query": "1920s archival film, dark street, lamplight, two figures walking",
-   "archival_url": "https://archive.org/download/SeeingLo1920/SeeingLo1920_512kb.mp4",
-   "archival_start": 700,
-   "archival_duration": 18,
-   "archival_title": "Seeing London (1920)",
-   "archival_license": "Public domain / archive.org item",
-   "start": 541.08,
-   "kw_times": {
-    "daddy": 541.08,
-    "locked": 541.74,
-    "office": 542.36
-   },
-   "motion_kind": "video",
-   "duration": 22.64,
-   "motion_mode": "stock",
-   "motion_source": "archival",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 3.199,
-    "active_region_ratio": 0.717,
-    "frame_difference": 28.8993
-   },
-   "clip_fingerprint": "663f79b111d3819d",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_25.mp4",
-   "source_url": "https://archive.org/download/SeeingLo1920/SeeingLo1920_512kb.mp4",
-   "source_license": "Public domain / archive.org item",
-   "source_title": "Seeing London (1920)",
-   "stock_frame_url_checked": true,
-   "youtube_kw_overlays": [
-    {
-     "kw": "daddy",
-     "png": "youtube_cap_25_kw0.png"
-    },
-    {
-     "kw": "locked",
-     "png": "youtube_cap_25_kw1.png"
-    },
-    {
-     "kw": "office",
-     "png": "youtube_cap_25_kw2.png"
-    }
-   ]
-  },
-  {
-   "text": "This is Black Wall Street, part one of ten. I'm telling the whole story, child — every part of it, right here on this channel. Go on and find part two. The night I lost my easy sleep is waiting on you.",
-   "epistemic_role": "testimony",
-   "audio_tags": [],
-   "keywords": [
-    "black",
-    "street",
-    "telling"
-   ],
-   "semantic_anchor": "Greenwood Avenue street sign against",
-   "visual_function": "witness",
-   "symbol_family": "transport",
-   "primary_symbol": "Greenwood Avenue street sign",
+   "primary_symbol": "single revolver lying on",
    "narrative_mode": "hero",
-   "motion_kind": "video",
-   "motion_mode": "stock",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
    "hero_style": "photoreal_era",
-   "image_prompt": "authentic 1921 documentary photograph, cast iron street lamp and empty brick district corner under a smoke gray overcast sky, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
-   "start": 563.72,
-   "kw_times": {
-    "black": 565.18,
-    "street": 565.88,
-    "telling": 570.04
-   },
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "duration": 23.885,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.493,
-    "active_region_ratio": 0.2683,
-    "frame_difference": 2.4039
-   },
-   "clip_fingerprint": "818d853e358c95b5",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/clip_26.mp4",
-   "stock_id": 15040626,
-   "pexels_id": 15040626,
-   "stock_frame_url": "https://images.pexels.com/videos/15040626/pexels-photo-15040626.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/street-lights-on-a-foggy-night-by-the-sea-15040626/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "black",
-     "png": "youtube_cap_26_kw0.png"
-    },
-    {
-     "kw": "street",
-     "png": "youtube_cap_26_kw1.png"
-    },
-    {
-     "kw": "telling",
-     "png": "youtube_cap_26_kw2.png"
-    }
-   ]
-  }
- ],
- "supplied_script": true,
- "voiceover": "vo.mp3",
- "elevenlabs_voice_name": "custom",
- "elevenlabs_stability_mode": "creative",
- "voiceover_config": {
-  "provider": "ElevenLabs",
-  "voice_id": "MHPwHxLx0nmGIb5Jnbly",
-  "voice_name": "custom",
-  "model_id": "eleven_v3",
-  "stability_mode": "creative",
-  "voice_settings": {
-   "stability": 0.0,
-   "similarity_boost": 0.75,
-   "style": 0.0,
-   "speed": 0.91
+   "image_prompt": "authentic 1921 documentary photograph, single revolver lying on stone courthouse steps in lamplight, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, single revolver lying on stone courthouse steps in lamplight"
   },
-  "audio_tags_enabled": true
- },
- "still_image_policy": "closest_stock_frame_full_enhancement",
- "music_choice": 3,
- "music_variant_count": 1,
- "music_variants": [
   {
-   "file": "music_03.wav",
-   "label": "Deep Current",
-   "source": "generated",
-   "variant": 3,
-   "index": 3,
-   "selected": true
+   "text": "This here is part one of ten. I'm telling it all, start to finish, right on this channel. Go find part two when you're ready. The fire will still be lit. I will still be here.",
+   "epistemic_role": "testimony",
+   "audio_tags": [
+    "warm"
+   ],
+   "keywords": [
+    "telling",
+    "start",
+    "finish"
+   ],
+   "semantic_anchor": "porch at night, empty rocking",
+   "visual_function": "witness",
+   "symbol_family": "object_tool",
+   "primary_symbol": "porch at night, empty",
+   "narrative_mode": "hero",
+   "hero": true,
+   "motion_kind": "animated_still",
+   "motion_mode": "cinemagraph",
+   "hero_style": "photoreal_era",
+   "image_prompt": "authentic 1921 documentary photograph, porch at night, empty rocking chair, lantern burning low, black and white silver gelatin print, fine film grain, period-correct 1920s clothing and architecture, dignified historical tone",
+   "query": "1920s archival photograph, porch at night, empty rocking chair, lantern burning low"
   }
- ],
- "music": "music_03.wav"
+ ]
 }
