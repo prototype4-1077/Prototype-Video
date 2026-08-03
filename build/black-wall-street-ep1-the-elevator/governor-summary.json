@@ -1,6 +1,6 @@
 {
-  "finished_at": "2026-08-02T14:26:02+00:00",
-  "github_run_id": "30749960180",
+  "finished_at": "2026-08-03T13:00:44+00:00",
+  "github_run_id": "30811853394",
   "incidents": [
     {
       "count": 1,
@@ -14,7 +14,7 @@
   ],
   "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/final_youtube.mp4",
   "mode": "recover",
-  "passes": 8,
+  "passes": 6,
   "policy": {
     "align": {
       "hard_timeout_s": 300.0,
@@ -24,59 +24,51 @@
       "soft_timeout_s": 33.01,
       "source": "history"
     },
-    "altsheet": {
-      "hard_timeout_s": 300.0,
-      "historical_p95_s": 6.04,
-      "idle_timeout_s": 48.13,
-      "sample_count": 36,
-      "soft_timeout_s": 48.13,
-      "source": "history"
-    },
     "assemble": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 75.33,
+      "historical_p95_s": 107.02,
       "idle_timeout_s": 240.0,
       "sample_count": 200,
-      "soft_timeout_s": 255.98,
+      "soft_timeout_s": 351.07,
       "source": "history"
     },
     "build_pass": {
-      "hard_timeout_s": 1800.0,
+      "hard_timeout_s": 1669.1286805699997,
       "historical_p95_s": null,
-      "idle_timeout_s": 1800.0,
+      "idle_timeout_s": 1669.1286805699997,
       "sample_count": 0,
-      "soft_timeout_s": 1800.0,
+      "soft_timeout_s": 1669.1286805699997,
       "source": "explicit"
     },
     "credits": {
       "hard_timeout_s": 300.0,
-      "historical_p95_s": 1.02,
-      "idle_timeout_s": 33.07,
-      "sample_count": 94,
-      "soft_timeout_s": 33.07,
+      "historical_p95_s": 1.03,
+      "idle_timeout_s": 33.08,
+      "sample_count": 100,
+      "soft_timeout_s": 33.08,
       "source": "history"
     },
     "ffmpeg": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 30.12,
-      "idle_timeout_s": 120.37,
+      "historical_p95_s": 30.32,
+      "idle_timeout_s": 120.95,
       "sample_count": 200,
-      "soft_timeout_s": 120.37,
+      "soft_timeout_s": 120.95,
       "source": "history"
     },
-    "footage": {
-      "hard_timeout_s": 600.0,
-      "historical_p95_s": 235.62,
-      "idle_timeout_s": 255.0,
-      "sample_count": 39,
-      "soft_timeout_s": 510.0,
+    "hero": {
+      "hard_timeout_s": 1200.0,
+      "historical_p95_s": 50.87,
+      "idle_timeout_s": 182.61,
+      "sample_count": 185,
+      "soft_timeout_s": 182.61,
       "source": "history"
     },
     "prep": {
       "hard_timeout_s": 900.0,
-      "historical_p95_s": 15.95,
+      "historical_p95_s": 22.27,
       "idle_timeout_s": 120.0,
-      "sample_count": 43,
+      "sample_count": 45,
       "soft_timeout_s": 120.0,
       "source": "history"
     },
@@ -89,11 +81,11 @@
       "source": "history"
     },
     "quality": {
-      "hard_timeout_s": 1316.593921102,
+      "hard_timeout_s": 1274.379031604,
       "historical_p95_s": null,
-      "idle_timeout_s": 1316.593921102,
+      "idle_timeout_s": 1274.379031604,
       "sample_count": 0,
-      "soft_timeout_s": 1316.593921102,
+      "soft_timeout_s": 1274.379031604,
       "source": "explicit"
     },
     "transcribe": {
@@ -115,14 +107,14 @@
   },
   "quality": {
     "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator",
-    "checked_at": "2026-08-02T14:26:02+00:00",
+    "checked_at": "2026-08-03T13:00:44+00:00",
     "deep_decode": true,
-    "expected_duration_s": 587.605,
+    "expected_duration_s": 521.123,
     "failures": [],
     "mode": "delivery",
     "outputs": {
       "youtube": {
-        "avg_kbps": 6858,
+        "avg_kbps": 4147,
         "deep_scan": {
           "black_intervals": 0,
           "black_longest_s": 0.0,
@@ -137,26 +129,26 @@
           "silence_longest_s": 0.0,
           "silence_total_s": 0
         },
-        "duration_difference_s": 0.022,
+        "duration_difference_s": 0.823,
         "exists": true,
-        "expected_duration_s": 587.605,
+        "expected_duration_s": 521.123,
         "failures": [],
         "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/black-wall-street-ep1-the-elevator/final_youtube.mp4",
         "probe": {
           "audio_codec": "aac",
-          "audio_duration_s": 587.627007,
-          "bit_rate": 6858384.0,
-          "duration_s": 587.627007,
+          "audio_duration_s": 520.289002,
+          "bit_rate": 4147344.0,
+          "duration_s": 520.3,
           "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
           "fps": 30.0,
           "has_audio": true,
           "has_video": true,
           "height": 1080,
           "video_codec": "h264",
-          "video_duration_s": 587.266667,
+          "video_duration_s": 520.3,
           "width": 1920
         },
-        "size_bytes": 503771502,
+        "size_bytes": 269732916,
         "warnings": []
       }
     },
@@ -182,172 +174,164 @@
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (3350.2s).",
+      "reason": "Largest measured latency contribution in this run (3392.5s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "b7f59dc8443f4ef7b945348f92d4fe84",
+  "run_id": "b82cf364c2794a0fa1badf1e1e00a33b",
   "schema_version": 1,
   "slug": "black-wall-street-ep1-the-elevator",
   "stages": {
     "align": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 1.002,
-      "p95_success_s": 1.002,
+      "p50_success_s": 1.003,
+      "p95_success_s": 1.003,
       "success_durations_s": [
-        1.002
+        1.003
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 1.002
-    },
-    "altsheet": {
-      "attempts": 1,
-      "failures": 0,
-      "p50_success_s": 1.008,
-      "p95_success_s": 1.008,
-      "success_durations_s": [
-        1.008
-      ],
-      "successes": 1,
-      "timeouts": 0,
-      "total_duration_s": 1.008
+      "total_duration_s": 1.003
     },
     "assemble": {
       "attempts": 26,
       "failures": 0,
-      "p50_success_s": 102.105,
-      "p95_success_s": 113.453,
+      "p50_success_s": 75.47,
+      "p95_success_s": 99.861,
       "success_durations_s": [
-        108.589,
-        81.49,
-        91.49,
-        81.47,
-        107.669,
-        100.635,
-        83.506,
-        87.544,
-        103.575,
-        103.668,
-        87.563,
-        103.592,
-        95.656,
-        89.617,
-        94.604,
-        107.754,
-        114.706,
-        93.514,
-        131.147,
-        109.696,
-        90.634,
-        104.763,
-        106.76,
-        109.687,
-        97.619,
-        108.81
+        79.45,
+        68.396,
+        75.394,
+        68.383,
+        69.412,
+        75.413,
+        91.558,
+        75.45,
+        82.477,
+        83.491,
+        102.628,
+        83.586,
+        85.586,
+        75.49,
+        64.39,
+        76.499,
+        69.418,
+        75.497,
+        67.371,
+        88.517,
+        65.443,
+        72.526,
+        78.525,
+        128.322,
+        71.478,
+        74.525
       ],
       "successes": 26,
       "timeouts": 0,
-      "total_duration_s": 2595.758
+      "total_duration_s": 2049.225
     },
     "build_pass": {
-      "attempts": 8,
+      "attempts": 6,
       "failures": 1,
-      "p50_success_s": 88.107,
-      "p95_success_s": 773.874,
+      "p50_success_s": 216.172,
+      "p95_success_s": 819.653,
       "success_durations_s": [
-        217.111,
-        45.025,
-        141.179,
-        2.003,
-        88.107,
-        44.092,
-        1012.487
+        1.003,
+        216.172,
+        47.048,
+        923.386,
+        404.72
       ],
-      "successes": 7,
+      "successes": 5,
       "timeouts": 1,
-      "total_duration_s": 3350.237
+      "total_duration_s": 3392.49
     },
     "credits": {
       "attempts": 3,
       "failures": 0,
-      "p50_success_s": 1.007,
-      "p95_success_s": 1.025,
+      "p50_success_s": 1.008,
+      "p95_success_s": 1.024,
       "success_durations_s": [
-        1.005,
-        1.007,
-        1.027
+        1.004,
+        1.008,
+        1.026
       ],
       "successes": 3,
       "timeouts": 0,
-      "total_duration_s": 3.039
+      "total_duration_s": 3.038
     },
     "ffmpeg": {
       "attempts": 4,
       "failures": 0,
-      "p50_success_s": 21.059,
-      "p95_success_s": 59.81,
+      "p50_success_s": 19.054,
+      "p95_success_s": 45.837,
       "success_durations_s": [
         1.008,
-        19.053,
-        66.295,
-        23.064
+        17.048,
+        50.209,
+        21.06
       ],
       "successes": 4,
       "timeouts": 0,
-      "total_duration_s": 109.42
+      "total_duration_s": 89.325
     },
-    "footage": {
-      "attempts": 3,
+    "hero": {
+      "attempts": 27,
       "failures": 0,
-      "p50_success_s": 87.093,
-      "p95_success_s": 134.894,
+      "p50_success_s": 33.05,
+      "p95_success_s": 39.453,
       "success_durations_s": [
-        140.205,
-        1.002,
-        87.093
+        28.037,
+        37.041,
+        40.045,
+        27.027,
+        28.034,
+        29.041,
+        41.055,
+        34.054,
+        31.053,
+        34.049,
+        37.061,
+        31.042,
+        35.052,
+        29.043,
+        25.041,
+        28.04,
+        33.05,
+        34.056,
+        33.043,
+        35.06,
+        33.05,
+        31.055,
+        33.055,
+        33.051,
+        38.071,
+        33.061,
+        31.057
       ],
-      "successes": 3,
+      "successes": 27,
       "timeouts": 0,
-      "total_duration_s": 228.3
+      "total_duration_s": 882.324
     },
     "prep": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 42.093,
-      "p95_success_s": 42.093,
+      "p50_success_s": 39.076,
+      "p95_success_s": 39.076,
       "success_durations_s": [
-        42.093
+        39.076
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 42.093
+      "total_duration_s": 39.076
     },
     "probe": {
       "attempts": 28,
       "failures": 0,
       "p50_success_s": 1.008,
-      "p95_success_s": 1.008,
+      "p95_success_s": 1.009,
       "success_durations_s": [
-        1.008,
-        1.008,
-        1.008,
-        1.008,
-        1.008,
-        1.008,
-        1.008,
-        1.008,
-        1.008,
-        1.007,
-        1.008,
-        1.008,
-        1.008,
-        1.008,
-        1.008,
-        1.008,
-        1.008,
-        1.008,
         1.008,
         1.009,
         1.008,
@@ -357,47 +341,65 @@
         1.008,
         1.008,
         1.008,
-        1.008
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.017,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.008,
+        1.009
       ],
       "successes": 28,
       "timeouts": 0,
-      "total_duration_s": 28.224
+      "total_duration_s": 28.235
     },
     "quality": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 72.332,
-      "p95_success_s": 72.332,
+      "p50_success_s": 56.216,
+      "p95_success_s": 56.216,
       "success_durations_s": [
-        72.332
+        56.216
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 72.332
+      "total_duration_s": 56.216
     },
     "transcribe": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 42.028,
-      "p95_success_s": 42.028,
+      "p50_success_s": 44.044,
+      "p95_success_s": 44.044,
       "success_durations_s": [
-        42.028
+        44.044
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 42.028
+      "total_duration_s": 44.044
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 216.107,
-      "p95_success_s": 216.107,
+      "p50_success_s": 215.175,
+      "p95_success_s": 215.175,
       "success_durations_s": [
-        216.107
+        215.175
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 216.107
+      "total_duration_s": 215.175
     }
   },
   "status": "done"
