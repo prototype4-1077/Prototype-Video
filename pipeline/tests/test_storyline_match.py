@@ -1,11 +1,14 @@
 from pathlib import Path
 import sys
+import tempfile
 import unittest
+from unittest import mock
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 import narrative_fidelity
 import storyboard
+import storyline_footage
 
 
 class NarrativeFidelityTests(unittest.TestCase):
@@ -66,6 +69,40 @@ class NarrativeFidelityTests(unittest.TestCase):
         }
         image = storyboard.frame(scene, 0.5)
         self.assertEqual(image.size, (storyboard.W, storyboard.H))
+
+    def test_preferred_storyboard_runs_before_effects_still(self):
+        with tempfile.TemporaryDirectory() as td:
+            script = {"scenes": [{"text": "Belief filters evidence."}]}
+            with mock.patch.object(
+                storyline_footage.storyboard, "render_scene",
+                return_value={"scene_index": 0, "output": "clip_00.mp4"},
+            ) as render, mock.patch.object(
+                storyline_footage, "_try_effects_still", return_value=True,
+            ) as effects:
+                plan = storyline_footage._render_storyboard(
+                    td, script, 0, "literal mechanism preferred",
+                    prefer_storyboard=True,
+                )
+
+            render.assert_called_once()
+            effects.assert_not_called()
+            self.assertEqual(plan["output"], "clip_00.mp4")
+
+    def test_generic_no_stock_fallback_keeps_effects_still_first(self):
+        with tempfile.TemporaryDirectory() as td:
+            script = {"scenes": [{"text": "An atmospheric line."}]}
+            with mock.patch.object(
+                storyline_footage.storyboard, "render_scene",
+            ) as render, mock.patch.object(
+                storyline_footage, "_try_effects_still", return_value=True,
+            ) as effects:
+                plan = storyline_footage._render_storyboard(
+                    td, script, 0, "no stock match",
+                )
+
+            effects.assert_called_once()
+            render.assert_not_called()
+            self.assertEqual(plan["result"], "effects_still")
 
 
 if __name__ == "__main__":

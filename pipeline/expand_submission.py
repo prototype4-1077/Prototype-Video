@@ -7,8 +7,10 @@ so it writes build/<slug>/submission.json:
       "title": "Beliefs Are Software Updates",
       "voice": "liam",            # optional: liam (default) | june
       "series_label": null,       # null/omit = standalone (no yellow eyebrow)
+      "visual_style": "literal_motion_graphics",  # optional graphics-first profile
       "scenes": [
-        {"text": "...", "visual": "a sleek phone glowing on a dark desk"},
+        {"text": "...", "visual": "a settings panel filters visible evidence"},
+        {"text": "...", "visual": "a real phone camera focusing", "visual_mode": "stock"},
         {"text": "...", "visual": "a camera lens focusing", "hero": true}
       ]
     }
@@ -32,6 +34,20 @@ TAGS_CYCLE = [["curious", "dry"], ["warm", "inviting"], ["playful", "knowing"],
               ["measured", "precise"], ["intimate", "wondering"], ["sly", "amused"],
               ["spacious", "quiet"], ["hushed", "near-whisper"]]
 MAX_CHARS = 220
+MOTION_GRAPHICS_STYLES = {
+    "literal_motion_graphics",
+    "motion_graphics",
+    "reality_motion_graphics",
+}
+VISUAL_MODE_ALIASES = {
+    "auto": "auto",
+    "hero": "hero",
+    "literal_graphic": "storyboard",
+    "motion_graphic": "storyboard",
+    "stock": "stock",
+    "stock_ok": "stock",
+    "storyboard": "storyboard",
+}
 
 
 def canonical_spoken_text(text: str) -> str:
@@ -71,11 +87,48 @@ def _split_long(text: str) -> list[str]:
     return [t for t in out if t]
 
 
+def _visual_mode(item: dict, visual_style: str) -> str:
+    """Resolve the small submission vocabulary to a production route."""
+    if item.get("hero"):
+        return "hero"
+    raw = item.get("visual_mode") or item.get("narrative_mode")
+    if raw is None:
+        return "storyboard" if visual_style in MOTION_GRAPHICS_STYLES else "stock"
+    normalized = re.sub(r"[\s-]+", "_", str(raw).strip().lower())
+    try:
+        return VISUAL_MODE_ALIASES[normalized]
+    except KeyError as exc:
+        allowed = ", ".join(sorted({"auto", "hero", "stock", "storyboard"}))
+        raise ValueError(f"unknown visual_mode {raw!r}; expected one of: {allowed}") from exc
+
+
+def _infer_visual_function(text: str, visual: str) -> str:
+    """Keep enough narrative intent for storyboard selection and reporting."""
+    blob = f"{text} {visual}".lower()
+    rules = (
+        ("recursion", ("recursive", "repeats itself", "inside itself", "loop")),
+        ("boundary", ("boundary", "border", "inside", "outside", "wall", "cage")),
+        ("choice", ("choice", "choose", "decide", "direction", "fork")),
+        ("perspective_shift", ("seeing", "perception", "perspective", "focus", "lens")),
+        ("transformation", ("become", "change", "rearrange", "turns into", "morph")),
+        ("mechanism", ("filter", "setting", "toggle", "counter", "interface", "system")),
+        ("contrast", (" but ", "instead", "rather than", "versus", " vs ", "not the")),
+    )
+    padded = f" {blob} "
+    for function, patterns in rules:
+        if any(pattern in padded for pattern in patterns):
+            return function
+    return "literal_anchor"
+
+
 def expand(slug: str, build_dir=None) -> dict:
     build_dir = Path(build_dir or (Path("build") / slug))
     sub = json.loads((build_dir / "submission.json").read_text(encoding="utf-8"))
     title = sub.get("title") or slug.replace("-", " ").title()
     series = sub.get("series_label")
+    visual_style = re.sub(
+        r"[\s-]+", "_", str(sub.get("visual_style") or "stock_hybrid").strip().lower()
+    )
     voice_id, voice_name = VOICES.get(str(sub.get("voice") or "liam").lower(), VOICES["liam"])
 
     raw = sub.get("scenes") or []
@@ -89,6 +142,7 @@ def expand(slug: str, build_dir=None) -> dict:
         spoken, inline_tags = extract_leading_performance_tags(str(item.get("text", "")))
         visual = (item.get("visual") or item.get("query")
                   or "cinematic evocative imagery for: " + spoken[:60])
+        visual_mode = _visual_mode(item, visual_style)
         for part_index, piece in enumerate(_split_long(spoken)):
             scene = {
                 "text": piece,
@@ -98,22 +152,33 @@ def expand(slug: str, build_dir=None) -> dict:
                     inline_tags if part_index == 0 else [],
                     TAGS_CYCLE[idx % len(TAGS_CYCLE)],
                 ),
-                "keywords": [],
-                "semantic_anchor": "beat %d" % (idx + 1),
-                "visual_function": "beat %d" % (idx + 1),
-                "primary_symbol": visual[:60],
+                "keywords": list(item.get("keywords") or []),
+                "semantic_anchor": item.get("semantic_anchor") or visual,
+                "visual_function": item.get("visual_function")
+                or _infer_visual_function(piece, visual),
+                "primary_symbol": item.get("primary_symbol") or visual[:60],
             }
             if item.get("symbol_family"):
                 scene["symbol_family"] = item["symbol_family"]
-            if item.get("hero"):
+            if visual_mode == "hero":
                 scene.update({
                     "narrative_mode": "hero", "hero": True, "hero_style": "effects",
                     "image_prompt": "cinematic photoreal, " + visual +
                     ", shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
                 })
-            else:
+            elif visual_mode == "storyboard":
+                scene.update({
+                    "narrative_mode": "storyboard", "query": visual,
+                    "motion_kind": "video", "motion_mode": "generated_graphic",
+                })
+            elif visual_mode == "stock":
                 scene.update({"narrative_mode": "stock_ok", "query": visual,
                               "motion_kind": "video", "motion_mode": "stock"})
+            else:
+                # No narrative_mode means storyboard.preferred() may choose a
+                # literal mechanism; otherwise the normal stock path remains.
+                scene.update({"query": visual, "motion_kind": "video",
+                              "motion_mode": "stock"})
             scenes.append(scene)
             texts.append(piece)
             idx += 1
@@ -124,6 +189,7 @@ def expand(slug: str, build_dir=None) -> dict:
 
     script = {
         "title": title, "slug": slug, "series_label": series,
+        "visual_style": visual_style,
         "title_mode": "standalone" if not series else "series",
         "genre": "concept", "science_fidelity": "metaphor",
         "evidence_boundary": sub.get("evidence_boundary")
@@ -166,6 +232,7 @@ def expand(slug: str, build_dir=None) -> dict:
     (build_dir / "package-status.json").write_text(json.dumps({
         "schema_version": 1, "slug": slug, "package_ready": True, "narration_locked": True,
         "scene_count": len(scenes), "word_count": len(narration.split()),
+        "visual_style": visual_style,
         "hero_art_mode": "runtime_scene_generation",
         "render_request_created": False, "blocked_reason": None,
         "source": "expanded from submission.json",

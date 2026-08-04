@@ -41,9 +41,11 @@ Commit **one small file**: `build/<slug>/submission.json`
   "title": "Beliefs Are Software Updates",
   "voice": "liam",
   "series_label": null,
+  "visual_style": "literal_motion_graphics",
   "scenes": [
-    { "text": "Most people think reality is stubborn.", "visual": "a dim room with one glowing screen" },
-    { "text": "I think it's just running old software.", "visual": "a progress bar filling on a bright screen", "hero": true }
+    { "text": "Most people think reality is stubborn.", "visual": "a settings panel locks every option except OLD BELIEF", "keywords": ["REALITY", "OLD BELIEF"], "visual_function": "mechanism" },
+    { "text": "Your phone does something similar.", "visual": "a real phone camera locking focus", "visual_mode": "stock" },
+    { "text": "Then the whole system opens.", "visual": "a luminous interface unfolding into deep space", "visual_mode": "hero" }
   ]
 }
 ```
@@ -69,6 +71,11 @@ a submission can still opt in with `"render_outputs": ["youtube", "portrait"]`.
 | `scenes[].text` | yes | Narration for that beat, verbatim. Never rewritten. |
 | `scenes[].visual` | recommended | Plain description of what's on screen. Physical objects/places beat abstractions. |
 | `scenes[].hero` | no | `true` = generated hero art instead of stock. Keep ≤ 5 per video. |
+| `visual_style` | no | Set `literal_motion_graphics` for the approved *Reality Was Never Hidden* grammar. Non-hero scenes become animated literal storyboards unless overridden. |
+| `scenes[].visual_mode` | no | `storyboard`, `stock`, `auto`, or `hero`. Use `stock` for exact documentary footage inside a graphics-first video. `auto` lets the literal-mechanism classifier decide. |
+| `scenes[].semantic_anchor` | no | A concise description of the idea the visual must prove. Defaults to `visual`. |
+| `scenes[].visual_function` | no | Prefer `literal_anchor`, `mechanism`, `contrast`, `recursion`, `boundary`, `choice`, `perspective_shift`, or `transformation`. |
+| `scenes[].keywords` | no | Up to four short labels or concepts used by literal motion graphics. |
 | `voice` | no | `liam` (default) or `june`. |
 | `series_label` | no | Omit/`null` for standalone (no yellow eyebrow). Set only for a real series (DMT, Oxley, Reality Machine). |
 | `invitation`, `end_card_question`, `evidence_boundary` | no | Sensible defaults are filled in. |
@@ -81,6 +88,17 @@ a submission can still opt in with `"render_outputs": ["youtube", "portrait"]`.
   objects, light, landscapes, paths, textures, time.
 - Avoid "no text / no words" phrasing in `visual` — it makes the classifier
   think the scene is *about* language.
+
+### Reproducing the Reality motion-graphics look
+
+Set `"visual_style": "literal_motion_graphics"`. Write each `visual` as an
+on-screen mechanism: a filter hiding evidence, counters changing value, a route
+redrawing itself, a scale tipping, or a focus box selecting one object. Add
+`visual_mode: "stock"` only where real footage represents the line exactly, and
+use a small number of `visual_mode: "hero"` scenes for cinematic visual peaks.
+
+This profile sends authored storyboard beats directly to `storyboard.py` before
+the effects-still fallback. Ordinary submissions remain stock-first.
 
 ---
 
