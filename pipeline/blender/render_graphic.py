@@ -256,9 +256,10 @@ def _panel(bpy, plan, name, label, x, z, width=2.8, height=1.0, color="cream", y
         palette[color], min(0.16, height * 0.16),
     )
     text_color = palette["background"] if color in {"cream", "gold"} else palette["cream"]
+    font_size = max(0.16, min(0.30, width * 1.55 / max(len(label), 8)))
     label_obj = _text(
         bpy, f"{name} text", label, (x, y - 0.205, z),
-        max(0.20, min(0.32, 4.8 / max(len(label), 10))),
+        font_size,
         text_color, width * 0.84,
     )
     return card, label_obj
