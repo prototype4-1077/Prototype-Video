@@ -1,3 +1,6 @@
+Exit code: 0
+Wall time: 1.1 seconds
+Output:
 name: Blender 3D Graphics Proof
 
 # Manual-only. Provisions the same headless Blender used by render.yml and
@@ -18,6 +21,14 @@ on:
         description: "Zero-based scene index, or all for one proof per graphic family"
         required: false
         default: "all"
+      output:
+        description: "Render preview PNGs or a complete animated MP4 clip"
+        required: false
+        type: choice
+        options:
+          - preview
+          - clip
+        default: preview
 
 permissions:
   contents: read
@@ -73,7 +84,7 @@ jobs:
           print("3D plan contract available for all nine graphic families")
           PY
 
-      - name: Render production 3D proof frame
+      - name: Render production 3D proof
         env:
           BLENDER_BIN: /opt/blender/blender
         run: |
@@ -96,10 +107,14 @@ jobs:
           else
             scenes=("$selection")
           fi
+          mode=(--preview)
+          if [[ "${{ github.event.inputs.output }}" == "clip" ]]; then
+            mode=()
+          fi
           for scene in "${scenes[@]}"; do
             python3 pipeline/blender_graphics.py \
               "build/${{ github.event.inputs.slug }}" \
-              --scene "$scene" --preview --output-dir proof-out
+              --scene "$scene" "${mode[@]}" --output-dir proof-out
           done
           ls -la proof-out
 
@@ -107,6 +122,9 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: blender-3d-graphics-proof
-          path: proof-out/*.png
+          path: |
+            proof-out/*.png
+            proof-out/*.mp4
           if-no-files-found: error
+
 
