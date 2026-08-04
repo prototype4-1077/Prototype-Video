@@ -44,6 +44,8 @@
   "max_kind_count": 2,
   "max_kind_run": 1
  },
+ "graphic_backend": "blender_3d",
+ "graphic_backend_policy": "prefer_3d_with_2d_fallback",
  "avoid_stock_ids": [
   13141960,
   19810466,
@@ -85,30 +87,12 @@
    "semantic_anchor": "An object can be physically present without becoming consciously relevant.",
    "visual_function": "perspective_shift",
    "primary_symbol": "A richly detailed ordinary room splits into layers while one",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "architecture",
    "narrative_mode": "stock_ok",
    "query": "A richly detailed ordinary room splits into layers while one set of keys remains present but visually ignored until a luminous focus field reveals it.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "start": 0.0,
-   "duration": 7.88,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.5636,
-    "active_region_ratio": 0.4813,
-    "frame_difference": 3.1302
-   },
-   "clip_fingerprint": "a6f39aed8e296714",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_00.mp4",
-   "stock_id": 10222220,
-   "pexels_id": 10222220,
-   "stock_frame_url": "https://images.pexels.com/videos/10222220/pexels-photo-10222220.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/back-of-teenage-pianist-10222220/"
+   "motion_mode": "stock"
   },
   {
    "text": "The room did not hide them. Your attention decided they did not count as visible yet.",
@@ -124,43 +108,13 @@
    "visual_function": "mechanism",
    "primary_symbol": "A viewfinder focus box passes over visible keys several time",
    "graphic_kind": "filter",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "perception",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A viewfinder focus box passes over visible keys several times before the RELEVANT toggle switches on and locks focus.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 7.88,
-   "duration": 6.38,
-   "kw_times": {
-    "VISIBLE": 12.7
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_01.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0656,
-    "active_region_ratio": 0.1109,
-    "frame_difference": 0.9963,
-    "stock_motion_gate_passed": false,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "027296b5fb90f11c",
-   "youtube_kw_overlays": [
-    {
-     "kw": "VISIBLE",
-     "png": "youtube_cap_01_kw0.png"
-    },
-    {
-     "kw": "RELEVANT",
-     "png": "youtube_cap_01_kw1.png"
-    }
-   ]
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "That sounds like a tiny mistake. It is actually a demonstration of how you experience almost everything.",
@@ -176,30 +130,13 @@
    "visual_function": "scale_shift",
    "primary_symbol": "A small missed-keys indicator expands into a full perception",
    "graphic_kind": "generic",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "geometry",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A small missed-keys indicator expands into a full perception interface controlling a room, street, conversation, and memory.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 14.26,
-   "duration": 6.92,
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_02.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0269,
-    "active_region_ratio": 0.1491,
-    "frame_difference": 2.8896,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "51b53a192903301b"
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "Put two people in the same grocery store. One notices prices. The other notices ingredients.",
@@ -211,31 +148,13 @@
    "semantic_anchor": "The same grocery aisle contains several categories of useful information.",
    "visual_function": "literal_anchor",
    "primary_symbol": "Real documentary footage moving through a grocery aisle with",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "collective",
    "narrative_mode": "stock_ok",
    "query": "Real documentary footage moving through a grocery aisle with price labels and ingredient panels clearly visible on products.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "unspecified",
-   "start": 21.18,
-   "duration": 6.78,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.5006,
-    "active_region_ratio": 0.4113,
-    "frame_difference": 21.2546
-   },
-   "clip_fingerprint": "7cb9252cef83f573",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_03.mp4",
-   "stock_id": 29846459,
-   "pexels_id": 29846459,
-   "stock_frame_url": "https://images.pexels.com/videos/29846459/convenience-stores-departmental-store-hypermarkets-local-city-market-29846459.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/woman-shopping-in-grocery-aisle-29846459/"
+   "human_role": "unspecified"
   },
   {
    "text": "A third person notices who looks impatient, and somebody's child notices only the cereal shaped like tiny cookies.",
@@ -253,30 +172,13 @@
    "visual_function": "contrast",
    "primary_symbol": "Four relevance counters rise independently over PRICE, INGRE",
    "graphic_kind": "counters",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "object_tool",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "Four relevance counters rise independently over PRICE, INGREDIENTS, MOOD, and COOKIE CEREAL while every category remains on the same screen.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 27.96,
-   "duration": 7.92,
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_04.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0379,
-    "active_region_ratio": 0.1206,
-    "frame_difference": 1.6121,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "bb1fbb5db845b3fc"
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "Nobody is seeing the complete store. Each person is receiving a personalized summary.",
@@ -292,43 +194,13 @@
    "visual_function": "contrast",
    "primary_symbol": "A balance scale compares COMPLETE STORE with PERSONAL SUMMAR",
    "graphic_kind": "scale",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "geometry",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A balance scale compares COMPLETE STORE with PERSONAL SUMMARY as thousands of details compress into four selected cards.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 35.88,
-   "duration": 6.58,
-   "kw_times": {
-    "COMPLETE STORE": 37.16
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_05.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0329,
-    "active_region_ratio": 0.2073,
-    "frame_difference": 3.1351,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "d431db760c109a03",
-   "youtube_kw_overlays": [
-    {
-     "kw": "COMPLETE STORE",
-     "png": "youtube_cap_05_kw0.png"
-    },
-    {
-     "kw": "PERSONAL SUMMARY",
-     "png": "youtube_cap_05_kw1.png"
-    }
-   ]
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "Your brain is not giving you a neutral livestream. It is editing for relevance in real time.",
@@ -345,47 +217,13 @@
    "visual_function": "mechanism",
    "primary_symbol": "A live camera interface routes incoming details through RELE",
    "graphic_kind": "perception",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "perception",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A live camera interface routes incoming details through RELEVANCE filter settings while unselected channels dim but remain present.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 42.46,
-   "duration": 6.36,
-   "kw_times": {
-    "RELEVANCE": 46.78
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_06.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.2822,
-    "active_region_ratio": 0.2211,
-    "frame_difference": 2.6151,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "4ddaad6a0592c25b",
-   "youtube_kw_overlays": [
-    {
-     "kw": "LIVE INPUT",
-     "png": "youtube_cap_06_kw0.png"
-    },
-    {
-     "kw": "RELEVANCE",
-     "png": "youtube_cap_06_kw1.png"
-    },
-    {
-     "kw": "EDIT",
-     "png": "youtube_cap_06_kw2.png"
-    }
-   ]
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "Light, memory, danger, desire, embarrassment, and the weird noise your refrigerator makes are all competing for limited space.",
@@ -402,30 +240,13 @@
    "visual_function": "mechanism",
    "primary_symbol": "Seven labeled signals race toward a narrow attention channel",
    "graphic_kind": "clock",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "language",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "Seven labeled signals race toward a narrow attention channel while a bandwidth counter reaches its limit.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 48.82,
-   "duration": 8.26,
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_07.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0082,
-    "active_region_ratio": 0.0723,
-    "frame_difference": 1.0018,
-    "stock_motion_gate_passed": false,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "41777f99066186af"
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "Most of that information has to be compressed, postponed, or ignored. This is not mystical. It is bandwidth.",
@@ -444,51 +265,13 @@
    "visual_function": "mechanism",
    "primary_symbol": "A bandwidth settings panel sends incoming cards into KEEP, L",
    "graphic_kind": "filter",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "object_tool",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A bandwidth settings panel sends incoming cards into KEEP, LATER, and IGNORE lanes as the meter stabilizes.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 57.08,
-   "duration": 7.82,
-   "kw_times": {
-    "BANDWIDTH": 63.42
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_08.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0664,
-    "active_region_ratio": 0.1154,
-    "frame_difference": 0.9571,
-    "stock_motion_gate_passed": false,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "718da00ad69886bd",
-   "youtube_kw_overlays": [
-    {
-     "kw": "KEEP",
-     "png": "youtube_cap_08_kw0.png"
-    },
-    {
-     "kw": "LATER",
-     "png": "youtube_cap_08_kw1.png"
-    },
-    {
-     "kw": "IGNORE",
-     "png": "youtube_cap_08_kw2.png"
-    },
-    {
-     "kw": "BANDWIDTH",
-     "png": "youtube_cap_08_kw3.png"
-    }
-   ]
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "Watch a busy sidewalk for red shoes, and suddenly red shoes appear everywhere.",
@@ -500,31 +283,13 @@
    "semantic_anchor": "A concrete search target becomes easier to notice in a busy environment.",
    "visual_function": "literal_anchor",
    "primary_symbol": "Real street footage of a busy pedestrian crossing where seve",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "collective",
    "narrative_mode": "stock_ok",
    "query": "Real street footage of a busy pedestrian crossing where several differently colored shoes can be clearly inspected.",
    "motion_kind": "video",
    "motion_mode": "stock",
-   "human_role": "observer",
-   "start": 64.9,
-   "duration": 5.46,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 5.6339,
-    "active_region_ratio": 0.6163,
-    "frame_difference": 32.4897
-   },
-   "clip_fingerprint": "92ed9f0466683a24",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_09.mp4",
-   "stock_id": 32267115,
-   "pexels_id": 32267115,
-   "stock_frame_url": "https://images.pexels.com/videos/32267115/bewegung-bewegungsunscharfe-busy-feet-city-vibes-32267115.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/dynamic-cityside-close-up-with-pedestrians-32267115/"
+   "human_role": "observer"
   },
   {
    "text": "If you expect rejection, your evidence board fills with delayed replies, short answers, and faces that are probably just tired.",
@@ -542,55 +307,14 @@
    "visual_function": "mechanism",
    "primary_symbol": "An evidence board rapidly pins DELAYED REPLY, SHORT ANSWER, ",
    "graphic_kind": "evidence",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "language",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "An evidence board rapidly pins DELAYED REPLY, SHORT ANSWER, and TIRED FACE beneath a preset verdict labeled REJECTION.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "human_role": "unspecified",
-   "start": 70.36,
-   "duration": 8.34,
-   "kw_times": {
-    "REJECTION": 71.08,
-    "DELAYED REPLY": 73.58,
-    "SHORT ANSWER": 74.82,
-    "TIRED FACE": 77.5
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_10.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.9725,
-    "active_region_ratio": 0.343,
-    "frame_difference": 6.7799,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "dbb0ac2c726f8421",
-   "youtube_kw_overlays": [
-    {
-     "kw": "REJECTION",
-     "png": "youtube_cap_10_kw0.png"
-    },
-    {
-     "kw": "DELAYED REPLY",
-     "png": "youtube_cap_10_kw1.png"
-    },
-    {
-     "kw": "SHORT ANSWER",
-     "png": "youtube_cap_10_kw2.png"
-    },
-    {
-     "kw": "TIRED FACE",
-     "png": "youtube_cap_10_kw3.png"
-    }
-   ]
+   "graphic_backend": "blender_3d",
+   "human_role": "unspecified"
   },
   {
    "text": "If you expect opportunity, the same world begins offering loose threads, useful conversations, and doors you can actually knock on.",
@@ -604,30 +328,13 @@
    "visual_function": "perspective_shift",
    "primary_symbol": "One city scene exists in multiple luminous layers as connect",
    "graphic_kind": "path",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "world_scale",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "One city scene exists in multiple luminous layers as connections, open doors, and possible routes reveal themselves without changing the underlying world.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 78.7,
-   "duration": 9.1,
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_11.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0208,
-    "active_region_ratio": 0.0875,
-    "frame_difference": 1.2556,
-    "stock_motion_gate_passed": false,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "cefd4428c00ac485"
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "The world did not instantly transform. Your ranking system changed, so different information reached the top.",
@@ -644,30 +351,13 @@
    "visual_function": "contrast",
    "primary_symbol": "A relevance counter reranks the same cards until OPPORTUNITY",
    "graphic_kind": "counters",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "time_memory",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A relevance counter reranks the same cards until OPPORTUNITY moves above THREAT while the source database remains unchanged.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 87.8,
-   "duration": 7.5,
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_12.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.033,
-    "active_region_ratio": 0.1263,
-    "frame_difference": 1.555,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "9dcf8477d493e9c7"
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "This does not mean painful events are imaginary, or that a better attitude makes every problem disappear.",
@@ -684,43 +374,13 @@
    "visual_function": "boundary",
    "primary_symbol": "A balance scale keeps REAL PROBLEM fully weighted while BETT",
    "graphic_kind": "scale",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "geometry",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A balance scale keeps REAL PROBLEM fully weighted while BETTER ATTENTION adds useful options without removing the problem.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 95.3,
-   "duration": 6.58,
-   "kw_times": {
-    "BETTER ATTENTION": 98.82
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_13.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0317,
-    "active_region_ratio": 0.2084,
-    "frame_difference": 3.0975,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "e3e9798bb0bff71e",
-   "youtube_kw_overlays": [
-    {
-     "kw": "REAL PROBLEM",
-     "png": "youtube_cap_13_kw0.png"
-    },
-    {
-     "kw": "BETTER ATTENTION",
-     "png": "youtube_cap_13_kw1.png"
-    }
-   ]
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "It means your experience contains both the event and the selection your mind makes from the event.",
@@ -737,49 +397,13 @@
    "visual_function": "mechanism",
    "primary_symbol": "Two connected cards labeled EVENT and SELECTION combine into",
    "graphic_kind": "generic",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "geometry",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "Two connected cards labeled EVENT and SELECTION combine into one larger card labeled EXPERIENCE.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 101.88,
-   "duration": 6.74,
-   "kw_times": {
-    "EVENT": 104.22,
-    "SELECTION": 105.3,
-    "EXPERIENCE": 102.54
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_14.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.1794,
-    "active_region_ratio": 0.2197,
-    "frame_difference": 6.0468,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "8119a1cd4935f8c9",
-   "youtube_kw_overlays": [
-    {
-     "kw": "EVENT",
-     "png": "youtube_cap_14_kw0.png"
-    },
-    {
-     "kw": "SELECTION",
-     "png": "youtube_cap_14_kw1.png"
-    },
-    {
-     "kw": "EXPERIENCE",
-     "png": "youtube_cap_14_kw2.png"
-    }
-   ]
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "Attention is not merely a flashlight. It is also a vote. Repeated attention tells your mind what deserves priority next time.",
@@ -796,49 +420,13 @@
    "visual_function": "recursion",
    "primary_symbol": "A focus box selects one signal repeatedly while its PRIORITY",
    "graphic_kind": "perception",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "perception",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A focus box selects one signal repeatedly while its PRIORITY counter rises and its channel grows wider on the next pass.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 108.62,
-   "duration": 9.8,
-   "kw_times": {
-    "ATTENTION": 108.62,
-    "VOTE": 112.34,
-    "PRIORITY": 116.12
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_15.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.253,
-    "active_region_ratio": 0.2129,
-    "frame_difference": 2.4698,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "a627d2ae62f8d74d",
-   "youtube_kw_overlays": [
-    {
-     "kw": "ATTENTION",
-     "png": "youtube_cap_15_kw0.png"
-    },
-    {
-     "kw": "VOTE",
-     "png": "youtube_cap_15_kw1.png"
-    },
-    {
-     "kw": "PRIORITY",
-     "png": "youtube_cap_15_kw2.png"
-    }
-   ]
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "Your phone camera does something similar. It cannot sharpen everything equally, so it chooses a subject and lets the background soften.",
@@ -850,30 +438,12 @@
    "semantic_anchor": "A camera must select a subject because it cannot focus every depth equally.",
    "visual_function": "literal_anchor",
    "primary_symbol": "Real close-up footage of a smartphone camera interface visib",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "object_tool",
    "narrative_mode": "stock_ok",
    "query": "Real close-up footage of a smartphone camera interface visibly shifting autofocus between a foreground object and its background.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "start": 118.42,
-   "duration": 8.2,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 5.7721,
-    "active_region_ratio": 0.4693,
-    "frame_difference": 20.4
-   },
-   "clip_fingerprint": "d252e02874b04ec3",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_16.mp4",
-   "stock_id": 4181136,
-   "pexels_id": 4181136,
-   "stock_frame_url": "https://images.pexels.com/videos/4181136/pexels-photo-4181136.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/close-up-shot-of-a-mobile-phone-s-camera-menu-4181136/"
+   "motion_mode": "stock"
   },
   {
    "text": "Your internal priorities are doing that with conversations, memories, possibilities, and even your opinion of yourself.",
@@ -890,48 +460,13 @@
    "visual_function": "mechanism",
    "primary_symbol": "Filter settings labeled CONVERSATIONS, MEMORIES, POSSIBILITI",
    "graphic_kind": "clock",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "identity",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "Filter settings labeled CONVERSATIONS, MEMORIES, POSSIBILITIES, and SELF-IMAGE adjust four separate focus channels.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 126.62,
-   "duration": 8.04,
-   "kw_times": {
-    "MEMORIES": 130.14,
-    "POSSIBILITIES": 130.98
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_17.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0087,
-    "active_region_ratio": 0.0791,
-    "frame_difference": 0.9988,
-    "stock_motion_gate_passed": false,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "59ad46efd9d16462",
-   "youtube_kw_overlays": [
-    {
-     "kw": "MEMORIES",
-     "png": "youtube_cap_17_kw0.png"
-    },
-    {
-     "kw": "POSSIBILITIES",
-     "png": "youtube_cap_17_kw1.png"
-    },
-    {
-     "kw": "SELF-IMAGE",
-     "png": "youtube_cap_17_kw2.png"
-    }
-   ]
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "That is good news, because a ranking can be examined. You can ask why one signal keeps receiving emergency status.",
@@ -948,47 +483,13 @@
    "visual_function": "transformation",
    "primary_symbol": "An EMERGENCY label is removed from one ordinary signal while",
    "graphic_kind": "labels",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "language",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "An EMERGENCY label is removed from one ordinary signal while an audit panel reveals the old rule that assigned it.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 134.66,
-   "duration": 8.3,
-   "kw_times": {
-    "EMERGENCY": 140.9
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_18.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.017,
-    "active_region_ratio": 0.1467,
-    "frame_difference": 2.9486,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "cfe98f113d2ba8e6",
-   "youtube_kw_overlays": [
-    {
-     "kw": "EMERGENCY",
-     "png": "youtube_cap_18_kw0.png"
-    },
-    {
-     "kw": "OLD RULE",
-     "png": "youtube_cap_18_kw1.png"
-    },
-    {
-     "kw": "REVIEW",
-     "png": "youtube_cap_18_kw2.png"
-    }
-   ]
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "You can deliberately notice what contradicts your fear, what supports your growth, and what has been quietly working all along.",
@@ -1006,47 +507,13 @@
    "visual_function": "perspective_shift",
    "primary_symbol": "An evidence board opens three new columns labeled CONTRADICT",
    "graphic_kind": "evidence",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "language",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "An evidence board opens three new columns labeled CONTRADICTION, GROWTH, and ALREADY WORKING as overlooked cards slide into view.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 142.96,
-   "duration": 8.12,
-   "kw_times": {
-    "GROWTH": 146.84
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_19.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.862,
-    "active_region_ratio": 0.3427,
-    "frame_difference": 5.5345,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "911a7dc674d43714",
-   "youtube_kw_overlays": [
-    {
-     "kw": "CONTRADICTION",
-     "png": "youtube_cap_19_kw0.png"
-    },
-    {
-     "kw": "GROWTH",
-     "png": "youtube_cap_19_kw1.png"
-    },
-    {
-     "kw": "ALREADY WORKING",
-     "png": "youtube_cap_19_kw2.png"
-    }
-   ]
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "Reality is larger than the version currently highlighted on your screen. The missing parts were not necessarily hidden. They may have been waiting to matter.",
@@ -1060,30 +527,13 @@
    "visual_function": "scale_shift",
    "primary_symbol": "A dark perception interface unfolds into a vast layered worl",
    "graphic_kind": "path",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "world_scale",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A dark perception interface unfolds into a vast layered world as muted details gain color, depth, motion, and connection beyond the original focus frame.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 151.08,
-   "duration": 10.8,
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_20.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0194,
-    "active_region_ratio": 0.0805,
-    "frame_difference": 1.2769,
-    "stock_motion_gate_passed": false,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "5b664a41b0afd15e"
+   "graphic_backend": "blender_3d"
   },
   {
    "text": "So look around today and ask one honest question: what has my attention been training me to see?",
@@ -1101,75 +551,13 @@
    "visual_function": "choice",
    "primary_symbol": "A clean focus interface pauses, clears its inherited preset,",
    "graphic_kind": "labels",
-   "visual_revision": "graphic-variety-v3",
+   "visual_revision": "blender-3d-v1",
    "symbol_family": "perception",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A clean focus interface pauses, clears its inherited preset, and presents one open question beside a slowly widening viewfinder.",
    "motion_kind": "video",
    "motion_mode": "generated_graphic",
-   "start": 161.88,
-   "duration": 8.314,
-   "kw_times": {
-    "ATTENTION": 166.3,
-    "TRAINING": 167.04,
-    "WHAT DO I SEE?": 165.64
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_21.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0176,
-    "active_region_ratio": 0.1457,
-    "frame_difference": 2.9647,
-    "stock_motion_gate_passed": true,
-    "graphic_motion_gate_passed": true,
-    "motion_gate": "generated_graphic"
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "e89522dd561663cd",
-   "youtube_kw_overlays": [
-    {
-     "kw": "ATTENTION",
-     "png": "youtube_cap_21_kw0.png"
-    },
-    {
-     "kw": "TRAINING",
-     "png": "youtube_cap_21_kw1.png"
-    },
-    {
-     "kw": "WHAT DO I SEE?",
-     "png": "youtube_cap_21_kw2.png"
-    }
-   ]
+   "graphic_backend": "blender_3d"
   }
- ],
- "voiceover": "vo.mp3",
- "voiceover_config": {
-  "provider": "ElevenLabs",
-  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
-  "voice_name": "Liam - Energetic, Social Media Creator",
-  "model_id": "eleven_v3",
-  "stability_mode": "creative",
-  "voice_settings": {
-   "stability": 0.0,
-   "similarity_boost": 0.75,
-   "style": 0.0,
-   "speed": 0.97
-  },
-  "audio_tags_enabled": true
- },
- "music_variants": [
-  {
-   "file": "music_03.wav",
-   "label": "Deep Current",
-   "source": "generated",
-   "variant": 3,
-   "index": 3,
-   "selected": true
-  }
- ],
- "music": "music_03.wav"
+ ]
 }
