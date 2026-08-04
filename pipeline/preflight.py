@@ -323,6 +323,39 @@ def assess(
     for violation in graphic_report.get("violations") or []:
         blockers.append(_block("graphic_composition_plan", str(violation), store=store))
 
+    allowed_backends = {"pil_2d", "blender_3d"}
+    configured_backend = str(script.get("graphic_backend") or "pil_2d").strip().lower()
+    graphic_scenes = [
+        scene for scene in script.get("scenes") or []
+        if str(scene.get("narrative_mode") or "").lower() in {
+            "storyboard", "literal_graphic",
+        }
+    ]
+    scene_backends = [
+        str(scene.get("graphic_backend") or configured_backend).strip().lower()
+        for scene in graphic_scenes
+    ]
+    invalid_backends = sorted({
+        backend for backend in [configured_backend, *scene_backends]
+        if backend not in allowed_backends
+    })
+    backend_report = {
+        "configured": configured_backend,
+        "policy": str(script.get("graphic_backend_policy") or "2d_only"),
+        "graphic_scene_count": len(graphic_scenes),
+        "blender_3d_scene_count": scene_backends.count("blender_3d"),
+        "pil_2d_scene_count": scene_backends.count("pil_2d"),
+        "invalid_backends": invalid_backends,
+        "passed": not invalid_backends,
+    }
+    checks["graphic_backend"] = backend_report
+    if invalid_backends:
+        blockers.append(_block(
+            "graphic_backend_invalid",
+            "Unsupported graphic backend(s): " + ", ".join(invalid_backends),
+            store=store,
+        ))
+
     still = _still_budget(script)
     checks["planned_still_budget"] = still
     if not still["passed"]:

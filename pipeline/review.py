@@ -84,7 +84,12 @@ def _why_chosen(scene):
     function = scene.get("visual_function") or "literal_anchor"
     purpose = FUNCTION_LABELS.get(function, function.replace("_", " "))
     family = (scene.get("symbol_family") or "visual").replace("_", " ")
-    source = scene.get("motion_mode") or scene.get("motion_source") or "moving footage"
+    source = (
+        scene.get("graphic_backend")
+        or scene.get("motion_mode")
+        or scene.get("motion_source")
+        or "moving footage"
+    )
     return (
         f"Chosen to {purpose}: {anchor}. The {family} symbol family keeps the "
         f"visual language varied, and {source} was used to preserve visible motion."
@@ -106,7 +111,15 @@ def _scene_payload(scene, index, preview=None):
         "why_chosen": _why_chosen(scene),
         "visual_function": scene.get("visual_function"),
         "symbol_family": scene.get("symbol_family"),
-        "motion_mode": scene.get("motion_mode") or scene.get("motion_source"),
+        "motion_mode": (
+            scene.get("graphic_backend")
+            or scene.get("motion_mode")
+            or scene.get("motion_source")
+        ),
+        "graphic_kind": scene.get("graphic_kind"),
+        "graphic_backend": scene.get("graphic_backend"),
+        "graphic_dimension": scene.get("graphic_dimension"),
+        "graphic_variant": scene.get("graphic_variant"),
         "source_id": source_id,
         "source_url": scene.get("source_url"),
         "decision": "unreviewed",

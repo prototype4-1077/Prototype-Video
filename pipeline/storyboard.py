@@ -16,6 +16,7 @@ import subprocess
 import numpy as np
 from PIL import Image, ImageDraw, ImageFilter, ImageFont
 
+import blender_graphics
 import motion
 from video_format import BAND_HEIGHT as H, BAND_WIDTH as W, FPS
 
@@ -744,13 +745,109 @@ def _graphic_motion_evidence(evidence: dict) -> dict:
     return result
 
 
+def _clear_visual_source(scene: dict) -> None:
+    for key in (
+        "stock_id", "pexels_id", "stock_frame_url", "stock_frame_url_checked",
+        "source_url", "source_title", "source_license", "hero", "hero_generated",
+        "hero_fallback", "hero_fallback_reason", "still_reference_scene",
+        "still_reference_stock_id", "still_reference_source", "still_reference_url",
+        "still_reference_frame",
+    ):
+        scene.pop(key, None)
+
+
 def render_scene(build_dir: str, script: dict, index: int) -> dict:
     scene = script["scenes"][int(index)]
     duration = max(float(scene.get("duration") or 5.0), 0.5)
     output = Path(build_dir) / f"clip_{int(index):02d}.mp4"
     output.parent.mkdir(parents=True, exist_ok=True)
+    requested_backend = blender_graphics.backend_for(script, scene)
+    scene["graphic_backend_requested"] = requested_backend
+    expected_fingerprint = motion.scene_visual_fingerprint(scene)
+    if blender_graphics.requested(script, scene):
+        if (
+            scene.get("storyboard_generated")
+            and scene.get("graphic_backend") == blender_graphics.BACKEND
+            and scene.get("clip_fingerprint") == expected_fingerprint
+            and output.exists()
+            and output.stat().st_size > 100_000
+        ):
+            evidence = _graphic_motion_evidence(
+                scene.get("motion_evidence") or motion.temporal_evidence(str(output))
+            )
+            if evidence.get("passes"):
+                return {
+                    "scene_index": int(index),
+                    "text": scene.get("text"),
+                    "keywords": phrases(scene),
+                    "semantic_anchor": scene.get("semantic_anchor"),
+                    "query": scene.get("query"),
+                    "output": output.name,
+                    "graphic_kind": graphic_kind(scene),
+                    "graphic_backend": blender_graphics.BACKEND,
+                    "graphic_variant": scene.get("graphic_variant"),
+                    "motion_evidence": evidence,
+                    "cached": True,
+                }
+        try:
+            rendered = blender_graphics.render_scene(
+                build_dir, script, int(index), phrases(scene),
+            )
+            evidence = _graphic_motion_evidence(motion.temporal_evidence(str(output)))
+            if not evidence.get("passes"):
+                raise blender_graphics.BlenderRenderError(
+                    f"3D graphic lacks sufficient motion: {evidence}"
+                )
+        except (blender_graphics.BlenderUnavailable, blender_graphics.BlenderRenderError) as exc:
+            output.unlink(missing_ok=True)
+            scene["graphic_backend"] = "pil_2d"
+            scene["graphic_dimension"] = "2d"
+            scene["graphic_backend_fallback_reason"] = str(exc)[-1200:]
+        else:
+            plan_3d = rendered["plan"]
+            _clear_visual_source(scene)
+            scene.update(
+                {
+                    "clip": str(output),
+                    "narrative_mode": "literal_graphic",
+                    "motion_kind": motion.VIDEO,
+                    "motion_mode": "generated_graphic",
+                    "motion_source": "blender_3d_storyboard",
+                    "motion_verified": True,
+                    "motion_evidence": evidence,
+                    "storyboard_generated": True,
+                    "storyboard_version": 2,
+                    "graphic_kind": graphic_kind(scene),
+                    "graphic_backend": blender_graphics.BACKEND,
+                    "graphic_dimension": "3d",
+                    "graphic_variant": plan_3d["variant"],
+                    "graphic_plan_version": plan_3d["schema_version"],
+                    "clip_fingerprint": motion.scene_visual_fingerprint(scene),
+                }
+            )
+            scene.pop("graphic_backend_fallback_reason", None)
+            plan = {
+                "scene_index": int(index),
+                "text": scene.get("text"),
+                "keywords": phrases(scene),
+                "semantic_anchor": scene.get("semantic_anchor"),
+                "graphic_kind": graphic_kind(scene),
+                "graphic_backend": blender_graphics.BACKEND,
+                "graphic_dimension": "3d",
+                "graphic_variant": plan_3d["variant"],
+                "query": scene.get("query"),
+                "output": output.name,
+                "motion_evidence": evidence,
+            }
+            (Path(build_dir) / f"storyboard_{int(index):02d}.json").write_text(
+                json.dumps(plan, indent=2, ensure_ascii=False) + "\n",
+                encoding="utf-8",
+            )
+            return plan
     if (
         scene.get("storyboard_generated")
+        and scene.get("graphic_backend", "pil_2d") == "pil_2d"
+        and scene.get("clip_fingerprint") == expected_fingerprint
         and output.exists()
         and output.stat().st_size > 100_000
     ):
@@ -799,14 +896,7 @@ def render_scene(build_dir: str, script: dict, index: int) -> dict:
     evidence = _graphic_motion_evidence(motion.temporal_evidence(str(output)))
     if not evidence.get("passes"):
         raise RuntimeError(f"generated storyboard lacks sufficient motion: {evidence}")
-    for key in (
-        "stock_id", "pexels_id", "stock_frame_url", "stock_frame_url_checked",
-        "source_url", "source_title", "source_license", "hero", "hero_generated",
-        "hero_fallback", "hero_fallback_reason", "still_reference_scene",
-        "still_reference_stock_id", "still_reference_source", "still_reference_url",
-        "still_reference_frame",
-    ):
-        scene.pop(key, None)
+    _clear_visual_source(scene)
     scene.update(
         {
             "clip": str(output),
@@ -819,6 +909,8 @@ def render_scene(build_dir: str, script: dict, index: int) -> dict:
             "storyboard_generated": True,
             "storyboard_version": 1,
             "graphic_kind": graphic_kind(scene),
+            "graphic_backend": "pil_2d",
+            "graphic_dimension": "2d",
             "clip_fingerprint": motion.scene_visual_fingerprint(scene),
         }
     )
@@ -828,6 +920,8 @@ def render_scene(build_dir: str, script: dict, index: int) -> dict:
         "keywords": phrases(scene),
         "semantic_anchor": scene.get("semantic_anchor"),
         "graphic_kind": graphic_kind(scene),
+        "graphic_backend": "pil_2d",
+        "graphic_dimension": "2d",
         "query": scene.get("query"),
         "output": output.name,
         "motion_evidence": evidence,

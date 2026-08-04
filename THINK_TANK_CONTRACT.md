@@ -42,6 +42,7 @@ Commit **one small file**: `build/<slug>/submission.json`
   "voice": "liam",
   "series_label": null,
   "visual_style": "literal_motion_graphics",
+  "graphic_backend": "blender_3d",
   "scenes": [
     { "text": "Most people think reality is stubborn.", "visual": "a settings panel locks every option except OLD BELIEF", "keywords": ["REALITY", "OLD BELIEF"], "visual_function": "mechanism" },
     { "text": "Your phone does something similar.", "visual": "a real phone camera locking focus", "visual_mode": "stock" },
@@ -77,6 +78,8 @@ a submission can still opt in with `"render_outputs": ["youtube", "portrait"]`.
 | `scenes[].visual_function` | no | Prefer `literal_anchor`, `mechanism`, `contrast`, `recursion`, `boundary`, `choice`, `perspective_shift`, or `transformation`. |
 | `scenes[].keywords` | no | Up to four short labels or concepts used by literal motion graphics. |
 | `scenes[].graphic_kind` | required for `literal_motion_graphics` | One of `labels`, `path`, `counters`, `clock`, `perception`, `evidence`, `filter`, `scale`, or `generic`. The default policy requires all nine, no more than twice each, with no consecutive repeat. |
+| `graphic_backend` | no | `blender_3d` is the default for `literal_motion_graphics`; `pil_2d` retains the flat legacy renderer. Blender scenes use the same nine semantic families with real depth, camera movement, lighting, and stable scene-specific variants. |
+| `scenes[].graphic_backend` | no | Per-scene override for a storyboard beat. Stock and hero scenes ignore this field. |
 | `avoid_stock_ids` | no | Stock IDs that this revision must never reuse. Completed-video memory is also excluded automatically. |
 | `voice` | no | `liam` (default) or `june`. |
 | `series_label` | no | Omit/`null` for standalone (no yellow eyebrow). Set only for a real series (DMT, Oxley, Reality Machine). |
@@ -99,8 +102,10 @@ redrawing itself, a scale tipping, or a focus box selecting one object. Add
 `visual_mode: "stock"` only where real footage represents the line exactly, and
 use a small number of `visual_mode: "hero"` scenes for cinematic visual peaks.
 
-This profile sends authored storyboard beats directly to `storyboard.py` before
-the effects-still fallback. Ordinary submissions remain stock-first.
+This profile sends authored storyboard beats directly to the Blender 3D graphic
+backend before the legacy 2D and effects-still fallbacks. Every 3D clip records
+its family, variant, backend, and motion evidence in the scene review. Ordinary
+submissions remain stock-first.
 
 ---
 

@@ -82,6 +82,12 @@ class ExpandSubmissionTests(unittest.TestCase):
             self.assertEqual(scenes[0]["visual_function"], "mechanism")
             self.assertEqual(scenes[0]["keywords"], ["BELIEF", "EVIDENCE"])
             self.assertEqual(scenes[0]["graphic_kind"], "filter")
+            self.assertEqual(script["graphic_backend"], "blender_3d")
+            self.assertEqual(scenes[0]["graphic_backend"], "blender_3d")
+            self.assertEqual(
+                script["graphic_backend_policy"],
+                "prefer_3d_with_2d_fallback",
+            )
             self.assertEqual(script["graphic_policy"]["min_kinds"], 9)
             self.assertEqual(scenes[1]["narrative_mode"], "stock_ok")
             self.assertEqual(scenes[2]["narrative_mode"], "hero")
@@ -97,6 +103,19 @@ class ExpandSubmissionTests(unittest.TestCase):
 
             with self.assertRaisesRegex(ValueError, "unknown visual_mode"):
                 expand_submission.expand("a-broken-test", build)
+
+    def test_unknown_graphic_backend_is_rejected(self):
+        with tempfile.TemporaryDirectory() as td:
+            build = Path(td)
+            (build / "submission.json").write_text(json.dumps({
+                "title": "A Broken Backend",
+                "visual_style": "literal_motion_graphics",
+                "graphic_backend": "imaginary_4d",
+                "scenes": [{"text": "A line.", "graphic_kind": "generic"}],
+            }), encoding="utf-8")
+
+            with self.assertRaisesRegex(ValueError, "unknown graphic_backend"):
+                expand_submission.expand("a-broken-backend", build)
 
 
 if __name__ == "__main__":

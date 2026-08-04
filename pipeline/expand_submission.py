@@ -39,6 +39,7 @@ MOTION_GRAPHICS_STYLES = {
     "motion_graphics",
     "reality_motion_graphics",
 }
+GRAPHIC_BACKENDS = {"pil_2d", "blender_3d"}
 VISUAL_MODE_ALIASES = {
     "auto": "auto",
     "hero": "hero",
@@ -130,6 +131,15 @@ def expand(slug: str, build_dir=None) -> dict:
         r"[\s-]+", "_", str(sub.get("visual_style") or "stock_hybrid").strip().lower()
     )
     visual_revision = str(sub.get("visual_revision") or "").strip()
+    graphic_backend = str(
+        sub.get("graphic_backend")
+        or ("blender_3d" if visual_style in MOTION_GRAPHICS_STYLES else "pil_2d")
+    ).strip().lower().replace("-", "_")
+    if graphic_backend not in GRAPHIC_BACKENDS:
+        raise ValueError(
+            f"unknown graphic_backend {graphic_backend!r}; expected one of: "
+            + ", ".join(sorted(GRAPHIC_BACKENDS))
+        )
     voice_id, voice_name = VOICES.get(str(sub.get("voice") or "liam").lower(), VOICES["liam"])
 
     raw = sub.get("scenes") or []
@@ -172,9 +182,18 @@ def expand(slug: str, build_dir=None) -> dict:
                     ", shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
                 })
             elif visual_mode == "storyboard":
+                scene_backend = str(
+                    item.get("graphic_backend") or graphic_backend
+                ).strip().lower().replace("-", "_")
+                if scene_backend not in GRAPHIC_BACKENDS:
+                    raise ValueError(
+                        f"unknown scene graphic_backend {scene_backend!r}; expected one of: "
+                        + ", ".join(sorted(GRAPHIC_BACKENDS))
+                    )
                 scene.update({
                     "narrative_mode": "storyboard", "query": visual,
                     "motion_kind": "video", "motion_mode": "generated_graphic",
+                    "graphic_backend": scene_backend,
                 })
             elif visual_mode == "stock":
                 scene.update({"narrative_mode": "stock_ok", "query": visual,
@@ -225,6 +244,9 @@ def expand(slug: str, build_dir=None) -> dict:
             "require_explicit": True, "min_kinds": 9,
             "max_kind_count": 2, "max_kind_run": 1,
         } if visual_style in MOTION_GRAPHICS_STYLES else {}),
+        "graphic_backend": graphic_backend,
+        "graphic_backend_policy": sub.get("graphic_backend_policy")
+        or ("prefer_3d_with_2d_fallback" if graphic_backend == "blender_3d" else "2d_only"),
         "avoid_stock_ids": list(sub.get("avoid_stock_ids") or []),
         "max_still_source_ratio": 0.50,
         "still_image_policy": "closest_stock_frame_full_enhancement",
