@@ -7,23 +7,40 @@
       "passed": true,
       "profile": null
     },
-    "hero_readiness": {
+    "graphic_compositions": {
       "applicable": true,
-      "committed_hero": false,
+      "counts": {
+        "clock": 2,
+        "counters": 2,
+        "evidence": 2,
+        "filter": 2,
+        "generic": 2,
+        "labels": 2,
+        "path": 2,
+        "perception": 2,
+        "scale": 2
+      },
+      "invalid_scene_indexes": [],
+      "kind_count": 9,
+      "longest_run": {
+        "kind": "path",
+        "length": 1
+      },
+      "missing_explicit_scene_indexes": [],
       "passed": true,
-      "policy": "runtime_generated",
-      "runtime_scene_generation": true,
-      "scene_prompt_count": 3
+      "scene_count": 18,
+      "violations": []
+    },
+    "hero_readiness": {
+      "applicable": false,
+      "passed": true,
+      "policy": "motion_only_no_static_hero"
     },
     "planned_still_budget": {
       "cap": 0.5,
-      "estimated_ratio": 0.141414,
+      "estimated_ratio": 0.0,
       "passed": true,
-      "still_scene_indexes": [
-        0,
-        12,
-        20
-      ],
+      "still_scene_indexes": [],
       "used_exact_durations": false
     },
     "source_narration": {
@@ -36,10 +53,10 @@
         "collective": 1,
         "identity": 1,
         "language": 3,
-        "nature": 1,
         "object_tool": 2,
         "pathway": 11,
-        "time_memory": 1
+        "time_memory": 1,
+        "world_scale": 1
       },
       "generic_human_ratio": 0.0,
       "human_presence_ratio": 0.1818,
@@ -89,12 +106,12 @@
       "scene_count": 22,
       "scenes": [
         {
-          "effective_query": "",
+          "effective_query": "A person stands inside a vast luminous map while a possible future destination sends glowing route instructions backward through branching roads into the present.",
           "generic_human": false,
           "human_present": true,
           "human_role": "unspecified",
           "index": 0,
-          "original_query": null,
+          "original_query": "A person stands inside a vast luminous map while a possible future destination sends glowing route instructions backward through branching roads into the present.",
           "primary_symbol": "a person stands inside a vast luminous map while a possible",
           "query_family": "pathway",
           "selected_family": null,
@@ -269,12 +286,12 @@
           "visual_function": "choice"
         },
         {
-          "effective_query": "",
+          "effective_query": "A traveler crosses an immense branching landscape as one route reveals a conversation, a learning station, and an open doorway previously hidden in shadow.",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 12,
-          "original_query": null,
+          "original_query": "A traveler crosses an immense branching landscape as one route reveals a conversation, a learning station, and an open doorway previously hidden in shadow.",
           "primary_symbol": "a traveler crosses an immense branching landscape as one rou",
           "query_family": "pathway",
           "selected_family": null,
@@ -389,14 +406,14 @@
           "visual_function": "transformation"
         },
         {
-          "effective_query": "",
+          "effective_query": "A traveler walks through a luminous unfinished world while each grounded step draws new roads, alters distant terrain, and opens several credible futures.",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 20,
-          "original_query": null,
+          "original_query": "A traveler walks through a luminous unfinished world while each grounded step draws new roads, alters distant terrain, and opens several credible futures.",
           "primary_symbol": "a traveler walks through a luminous unfinished world while e",
-          "query_family": "nature",
+          "query_family": "world_scale",
           "selected_family": null,
           "semantic_anchor": "Present action continually revises the map of possible futures.",
           "symbol_family": "world_scale",
