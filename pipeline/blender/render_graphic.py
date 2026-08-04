@@ -119,7 +119,9 @@ def _text(bpy, name, value, location, size, rgba, width=5.0, align="CENTER"):
     data.bevel_depth = 0.008
     data.bevel_resolution = 2
     data.space_character = 1.05
-    if width:
+    # Blender offsets centered text when a wrapping box is also assigned. Keep
+    # centered labels geometry-centered; wrapping boxes are only for left copy.
+    if width and align != "CENTER":
         data.text_boxes[0].width = width
     obj = bpy.data.objects.new(name, data)
     bpy.context.collection.objects.link(obj)
@@ -515,7 +517,7 @@ def _scale_scene(bpy, plan, frame_end):
     beam.keyframe_insert(data_path="rotation_euler", frame=round(frame_end * 0.55))
     beam.rotation_euler.y = math.radians(-2)
     beam.keyframe_insert(data_path="rotation_euler", frame=frame_end)
-    for index, x in enumerate((-4.25, 4.25)):
+    for index, x in enumerate((-3.95, 3.95)):
         z = 2.2 + (0.35 if index else -0.25)
         _curve(
             bpy, f"Scale cord {index}",
@@ -528,10 +530,11 @@ def _scale_scene(bpy, plan, frame_end):
         pan.keyframe_insert(data_path="location", frame=round(frame_end * 0.55))
         pan.location.z = z + (0.10 if index else -0.10)
         pan.keyframe_insert(data_path="location", frame=frame_end)
-        label = " + ".join(plan["labels"][index * 2 : index * 2 + 2])
+        pair = plan["labels"][index * 2 : index * 2 + 2]
+        label = "\n".join(pair)
         text = _text(
             bpy, f"Scale label {index}", label,
-            (x, -0.28, z), 0.24, palette["background"], 2.45,
+            (x, -0.28, z), 0.22, palette["cream"], 2.20,
         )
         _pop(text, 15 + index * 12, 30 + index * 12)
 
