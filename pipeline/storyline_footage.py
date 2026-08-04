@@ -175,6 +175,7 @@ def main(build_dir: str, idx: str | None = None):
         for scene in script.get("scenes", [])
         if scene.get("stock_id") or scene.get("pexels_id")
     }
+    used.update(script.get("avoid_stock_ids") or [])
     if idx is None:
         targets = list(range(len(script.get("scenes", []))))
     else:  # single index or comma-separated batch (one process = one CLIP load)

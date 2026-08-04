@@ -70,6 +70,43 @@ class NarrativeFidelityTests(unittest.TestCase):
         image = storyboard.frame(scene, 0.5)
         self.assertEqual(image.size, (storyboard.W, storyboard.H))
 
+    def test_explicit_graphic_kind_overrides_keyword_router(self):
+        scene = {
+            "query": "filter settings panel",
+            "graphic_kind": "path",
+        }
+        self.assertEqual(storyboard.graphic_kind(scene), "path")
+
+    def test_graphic_diversity_rejects_repeated_compositions(self):
+        script = {
+            "visual_style": "literal_motion_graphics",
+            "graphic_policy": {
+                "require_explicit": True,
+                "min_kinds": 3,
+                "max_kind_count": 1,
+                "max_kind_run": 1,
+            },
+            "scenes": [
+                {"narrative_mode": "storyboard", "graphic_kind": "labels"},
+                {"narrative_mode": "storyboard", "graphic_kind": "labels"},
+                {"narrative_mode": "storyboard", "graphic_kind": "path"},
+            ],
+        }
+        report = storyboard.graphic_diversity(script)
+        self.assertFalse(report["passed"])
+        self.assertEqual(report["counts"], {"labels": 2, "path": 1})
+        self.assertTrue(any("only 2 graphic compositions" in item for item in report["violations"]))
+
+    def test_graphic_motion_gate_accepts_local_interface_motion(self):
+        evidence = storyboard._graphic_motion_evidence({
+            "passes": False,
+            "active_region_ratio": 0.07,
+            "frame_difference": 0.9,
+        })
+        self.assertTrue(evidence["passes"])
+        self.assertFalse(evidence["stock_motion_gate_passed"])
+        self.assertTrue(evidence["graphic_motion_gate_passed"])
+
     def test_preferred_storyboard_runs_before_effects_still(self):
         with tempfile.TemporaryDirectory() as td:
             script = {"scenes": [{"text": "Belief filters evidence."}]}

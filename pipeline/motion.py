@@ -952,7 +952,8 @@ def scene_visual_fingerprint(scene):
     import json as _json
     payload = {key: scene.get(key) for key in (
         "hero", "hero_style", "image_prompt", "query", "symbol_query",
-        "pexels_id", "stock_id", "narrative_mode",
+        "pexels_id", "stock_id", "narrative_mode", "graphic_kind",
+        "visual_revision",
     )}
     if scene.get("hero") or scene.get("hero_style") or scene.get("image_prompt"):
         # Still-derived clips also depend on the motion engine version; stock

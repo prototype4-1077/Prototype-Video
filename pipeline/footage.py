@@ -349,7 +349,8 @@ def backfill_source_metadata(scene):
 
 def fetch_scene(bd, s, i, used_ids):
     m = memory()
-    avoid = set(m["used_ids"]) | set(m["banned_ids"]) | used_ids
+    explicit_avoid = set(s.get("avoid_stock_ids") or [])
+    avoid = set(m["used_ids"]) | set(m["banned_ids"]) | used_ids | explicit_avoid
     sc = s["scenes"][i]
     out = f"{bd}/clip_{i:02d}.mp4"
     if (os.path.exists(out) and os.path.getsize(out) > 100_000 and
@@ -420,6 +421,12 @@ def fetch_scene(bd, s, i, used_ids):
         print(f"WARN scene {i}: ARCHIVAL SOURCE UNAVAILABLE after 3 tries; "
               "falling back to stock search - era look compromised for this scene")
     pinned_id = sc.get("stock_id") or sc.get("pexels_id")
+    if pinned_id in explicit_avoid:
+        print(f"scene {i}: pinned stock {pinned_id} is explicitly excluded; searching fresh")
+        for field in ("stock_id", "pexels_id", "clip", "source_url", "source_title",
+                      "source_license", "motion_verified", "motion_evidence"):
+            sc.pop(field, None)
+        pinned_id = None
     if pinned_id:  # reproducible re-runs: fetch the exact chosen clip
         try:
             pid = pinned_id

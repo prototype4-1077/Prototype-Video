@@ -41,6 +41,10 @@ ABSTRACT_TERMS = {
     "fear", "importance", "impossible", "love", "normal", "perception",
     "popularity", "realistic", "selfish", "success", "value", "worth",
 }
+GRAPHIC_KINDS = (
+    "labels", "path", "counters", "clock", "perception", "evidence",
+    "filter", "scale", "generic",
+)
 
 
 def _font(name: str, size: int):
@@ -96,6 +100,8 @@ def preferred(
         return True
     if mode in {"stock", "stock_ok", "atmosphere"}:
         return False
+    if scene.get("graphic_kind"):
+        return True
     fraction = float(index or 0) / max(float(total or 1), 1.0)
     if fraction > 0.72:
         return False
@@ -236,6 +242,12 @@ def _path(image, scene, progress):
     x = points[point_index][0] * (1 - fraction) + points[point_index + 1][0] * fraction
     y = points[point_index][1] * (1 - fraction) + points[point_index + 1][1] * fraction
     draw.ellipse(
+        (x - 70, y - 48, x + 70, y + 48),
+        fill=(204, 219, 190),
+        outline=CYAN,
+        width=5,
+    )
+    draw.ellipse(
         (x - 12, y - 12, x + 12, y + 12),
         fill=CYAN,
         outline=(255, 255, 255),
@@ -367,6 +379,14 @@ def _clock(image, scene, progress):
         fill=INK,
         anchor="mm",
     )
+    sweep_x = max(W // 2 + 35, int(W // 2 + (W // 2 - 90) * _ease(progress)))
+    draw.rounded_rectangle(
+        (W // 2 + 25, 105, sweep_x, 155),
+        12,
+        fill=(82, 34, 56),
+        outline=MAGENTA,
+        width=3,
+    )
 
 
 def _perception(image, scene, progress):
@@ -491,6 +511,12 @@ def _filter(image, scene, progress):
         [(110, 125), (410, 125), (545, H - 90), (290, H - 90)],
         fill=(236, 229, 190),
     )
+    wipe_x = int(110 + 420 * _ease(progress))
+    draw.polygon(
+        [(110, 125), (min(wipe_x, 410), 125),
+         (min(wipe_x + 135, 545), H - 90), (290, H - 90)],
+        fill=(188, 224, 215),
+    )
     draw.rounded_rectangle(
         (620, 90, 1010, H - 55),
         20,
@@ -564,8 +590,15 @@ def _generic(image, scene, progress):
     draw.ellipse((dot - 10, 460, dot + 10, 480), fill=CORAL)
 
 
-def frame(scene: dict, progress: float) -> Image.Image:
-    image = _background(progress)
+def graphic_kind(scene: dict) -> str:
+    explicit = str(scene.get("graphic_kind") or "").strip().lower().replace("-", "_")
+    if explicit:
+        if explicit not in GRAPHIC_KINDS:
+            raise ValueError(
+                f"unknown graphic_kind {explicit!r}; expected one of: "
+                + ", ".join(GRAPHIC_KINDS)
+            )
+        return explicit
     blob = " ".join(
         str(value or "").lower()
         for value in (
@@ -575,39 +608,140 @@ def frame(scene: dict, progress: float) -> Image.Image:
         )
     )
     if "filter" in blob or "setting" in blob or "toggle" in blob:
-        _filter(image, scene, progress)
+        return "filter"
     elif "scale" in blob or ("deception" in blob and "inherit" in blob):
-        _scale(image, scene, progress)
+        return "scale"
     elif any(
         word in blob
         for word in (
             "receipt", "evidence", "exhibit", "belief lens", "love note", "selfish",
         )
     ):
-        _evidence(image, scene, progress)
+        return "evidence"
     elif any(
         word in blob
         for word in (
             "autofocus", "preset", "recognize", "viewfinder", "symbol recognition",
         )
     ):
-        _perception(image, scene, progress)
+        return "perception"
     elif any(word in blob for word in ("exhaustion", "ambition", "fear", "realistic")):
-        _clock(image, scene, progress)
+        return "clock"
     elif any(word in blob for word in ("money", "popularity", "value", "worth", "counter")):
-        _counters(image, scene, progress)
+        return "counters"
     elif any(word in blob for word in ("maze", "route", "path", "walk past", "guide")):
-        _path(image, scene, progress)
+        return "path"
     elif any(
         word in blob
         for word in (
             "label", "name tag", "stamp", "success", "failure", "normal", "impossible",
         )
     ):
-        _labels(image, scene, progress)
-    else:
-        _generic(image, scene, progress)
+        return "labels"
+    return "generic"
+
+
+def graphic_diversity(script: dict) -> dict:
+    scenes = [
+        (index, scene)
+        for index, scene in enumerate(script.get("scenes") or [])
+        if str(scene.get("narrative_mode") or "").lower() in {
+            "storyboard", "literal_graphic",
+        }
+    ]
+    policy = script.get("graphic_policy") or {}
+    active = str(script.get("visual_style") or "").lower() in {
+        "literal_motion_graphics", "motion_graphics", "reality_motion_graphics",
+    }
+    kinds, missing, invalid = [], [], []
+    for index, scene in scenes:
+        if active and policy.get("require_explicit", True) and not scene.get("graphic_kind"):
+            missing.append(index)
+        try:
+            kinds.append(graphic_kind(scene))
+        except ValueError:
+            invalid.append(index)
+    counts = {kind: kinds.count(kind) for kind in GRAPHIC_KINDS if kind in kinds}
+    longest_kind, longest_length, current_kind, current_length = None, 0, None, 0
+    for kind in kinds:
+        if kind == current_kind:
+            current_length += 1
+        else:
+            current_kind, current_length = kind, 1
+        if current_length > longest_length:
+            longest_kind, longest_length = kind, current_length
+    violations = []
+    if active and scenes:
+        minimum = min(int(policy.get("min_kinds", 8)), len(scenes))
+        maximum = int(policy.get("max_kind_count", 2))
+        max_run = int(policy.get("max_kind_run", 1))
+        if missing:
+            violations.append(
+                "literal motion graphics require explicit graphic_kind on scenes: "
+                + ", ".join(str(index) for index in missing)
+            )
+        if invalid:
+            violations.append(
+                "invalid graphic_kind on scenes: "
+                + ", ".join(str(index) for index in invalid)
+            )
+        if len(counts) < minimum:
+            violations.append(
+                f"only {len(counts)} graphic compositions across {len(scenes)} storyboard scenes; "
+                f"use at least {minimum}"
+            )
+        overused = [f"{kind}={count}" for kind, count in counts.items() if count > maximum]
+        if overused:
+            violations.append(
+                f"graphic compositions exceed max {maximum}: " + ", ".join(overused)
+            )
+        if longest_length > max_run:
+            violations.append(
+                f"graphic composition {longest_kind!r} repeats {longest_length} times consecutively; "
+                f"max is {max_run}"
+            )
+    return {
+        "applicable": active,
+        "scene_count": len(scenes),
+        "kind_count": len(counts),
+        "counts": counts,
+        "longest_run": {"kind": longest_kind, "length": longest_length},
+        "missing_explicit_scene_indexes": missing,
+        "invalid_scene_indexes": invalid,
+        "passed": not violations,
+        "violations": violations,
+    }
+
+
+def frame(scene: dict, progress: float) -> Image.Image:
+    image = _background(progress)
+    renderers = {
+        "labels": _labels,
+        "path": _path,
+        "counters": _counters,
+        "clock": _clock,
+        "perception": _perception,
+        "evidence": _evidence,
+        "filter": _filter,
+        "scale": _scale,
+        "generic": _generic,
+    }
+    renderers[graphic_kind(scene)](image, scene, progress)
     return image
+
+
+def _graphic_motion_evidence(evidence: dict) -> dict:
+    """Apply a UI-motion gate without weakening the real-footage standard."""
+    result = dict(evidence)
+    result["stock_motion_gate_passed"] = bool(result.get("passes"))
+    graphic_passed = (
+        float(result.get("active_region_ratio") or 0.0) >= 0.05
+        and float(result.get("frame_difference") or 0.0) >= 0.75
+    )
+    result["graphic_motion_gate_passed"] = bool(graphic_passed)
+    result["passes"] = bool(result.get("passes") or graphic_passed)
+    result["motion_gate"] = "generated_graphic"
+    return result
 
 
 def render_scene(build_dir: str, script: dict, index: int) -> dict:
@@ -621,6 +755,7 @@ def render_scene(build_dir: str, script: dict, index: int) -> dict:
         and output.stat().st_size > 100_000
     ):
         evidence = scene.get("motion_evidence") or motion.temporal_evidence(str(output))
+        evidence = _graphic_motion_evidence(evidence)
         if evidence.get("passes"):
             return {
                 "scene_index": int(index),
@@ -661,7 +796,7 @@ def render_scene(build_dir: str, script: dict, index: int) -> dict:
             stderr.decode("utf-8", "replace")[-1200:]
             or "ffmpeg storyboard encode failed"
         )
-    evidence = motion.temporal_evidence(str(output))
+    evidence = _graphic_motion_evidence(motion.temporal_evidence(str(output)))
     if not evidence.get("passes"):
         raise RuntimeError(f"generated storyboard lacks sufficient motion: {evidence}")
     for key in (
@@ -683,6 +818,7 @@ def render_scene(build_dir: str, script: dict, index: int) -> dict:
             "motion_evidence": evidence,
             "storyboard_generated": True,
             "storyboard_version": 1,
+            "graphic_kind": graphic_kind(scene),
             "clip_fingerprint": motion.scene_visual_fingerprint(scene),
         }
     )
@@ -691,6 +827,7 @@ def render_scene(build_dir: str, script: dict, index: int) -> dict:
         "text": scene.get("text"),
         "keywords": phrases(scene),
         "semantic_anchor": scene.get("semantic_anchor"),
+        "graphic_kind": graphic_kind(scene),
         "query": scene.get("query"),
         "output": output.name,
         "motion_evidence": evidence,

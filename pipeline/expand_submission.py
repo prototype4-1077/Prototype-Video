@@ -129,6 +129,7 @@ def expand(slug: str, build_dir=None) -> dict:
     visual_style = re.sub(
         r"[\s-]+", "_", str(sub.get("visual_style") or "stock_hybrid").strip().lower()
     )
+    visual_revision = str(sub.get("visual_revision") or "").strip()
     voice_id, voice_name = VOICES.get(str(sub.get("voice") or "liam").lower(), VOICES["liam"])
 
     raw = sub.get("scenes") or []
@@ -158,6 +159,10 @@ def expand(slug: str, build_dir=None) -> dict:
                 or _infer_visual_function(piece, visual),
                 "primary_symbol": item.get("primary_symbol") or visual[:60],
             }
+            if item.get("graphic_kind"):
+                scene["graphic_kind"] = item["graphic_kind"]
+            if visual_revision:
+                scene["visual_revision"] = visual_revision
             if item.get("symbol_family"):
                 scene["symbol_family"] = item["symbol_family"]
             if visual_mode == "hero":
@@ -216,6 +221,11 @@ def expand(slug: str, build_dir=None) -> dict:
         or "Liam - warm, sly, a brilliant friend at midnight; spacious and intimate through the turn, near-whisper on the closing question.",
         "visual_policy": {"mode": "diverse_symbols", "max_human_ratio": 0.70,
                           "max_family_run": 6, "max_generic_human_run": 1, "min_families": 4},
+        "graphic_policy": sub.get("graphic_policy") or ({
+            "require_explicit": True, "min_kinds": 9,
+            "max_kind_count": 2, "max_kind_run": 1,
+        } if visual_style in MOTION_GRAPHICS_STYLES else {}),
+        "avoid_stock_ids": list(sub.get("avoid_stock_ids") or []),
         "max_still_source_ratio": 0.50,
         "still_image_policy": "closest_stock_frame_full_enhancement",
         "music_choice": 3, "music_variant_count": 1,

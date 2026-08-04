@@ -76,6 +76,8 @@ a submission can still opt in with `"render_outputs": ["youtube", "portrait"]`.
 | `scenes[].semantic_anchor` | no | A concise description of the idea the visual must prove. Defaults to `visual`. |
 | `scenes[].visual_function` | no | Prefer `literal_anchor`, `mechanism`, `contrast`, `recursion`, `boundary`, `choice`, `perspective_shift`, or `transformation`. |
 | `scenes[].keywords` | no | Up to four short labels or concepts used by literal motion graphics. |
+| `scenes[].graphic_kind` | required for `literal_motion_graphics` | One of `labels`, `path`, `counters`, `clock`, `perception`, `evidence`, `filter`, `scale`, or `generic`. The default policy requires all nine, no more than twice each, with no consecutive repeat. |
+| `avoid_stock_ids` | no | Stock IDs that this revision must never reuse. Completed-video memory is also excluded automatically. |
 | `voice` | no | `liam` (default) or `june`. |
 | `series_label` | no | Omit/`null` for standalone (no yellow eyebrow). Set only for a real series (DMT, Oxley, Reality Machine). |
 | `invitation`, `end_card_question`, `evidence_boundary` | no | Sensible defaults are filled in. |

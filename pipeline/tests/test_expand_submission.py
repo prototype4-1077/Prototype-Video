@@ -52,6 +52,7 @@ class ExpandSubmissionTests(unittest.TestCase):
                         "keywords": ["BELIEF", "EVIDENCE"],
                         "semantic_anchor": "belief filters visible evidence",
                         "visual_function": "mechanism",
+                        "graphic_kind": "filter",
                     },
                     {
                         "text": "Then your phone camera does the same thing.",
@@ -80,6 +81,8 @@ class ExpandSubmissionTests(unittest.TestCase):
             self.assertEqual(scenes[0]["semantic_anchor"], "belief filters visible evidence")
             self.assertEqual(scenes[0]["visual_function"], "mechanism")
             self.assertEqual(scenes[0]["keywords"], ["BELIEF", "EVIDENCE"])
+            self.assertEqual(scenes[0]["graphic_kind"], "filter")
+            self.assertEqual(script["graphic_policy"]["min_kinds"], 9)
             self.assertEqual(scenes[1]["narrative_mode"], "stock_ok")
             self.assertEqual(scenes[2]["narrative_mode"], "hero")
             self.assertNotIn("narrative_mode", scenes[3])
