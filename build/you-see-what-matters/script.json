@@ -38,12 +38,40 @@
   "max_generic_human_run": 1,
   "min_families": 4
  },
+ "graphic_policy": {
+  "require_explicit": true,
+  "min_kinds": 9,
+  "max_kind_count": 2,
+  "max_kind_run": 1
+ },
+ "avoid_stock_ids": [
+  13141960,
+  19810466,
+  13752470,
+  4181137,
+  8197902,
+  36214844,
+  18748018,
+  7947491,
+  7205338,
+  9902185,
+  2836008,
+  5971457,
+  29042106,
+  34845727,
+  34436237,
+  37334334,
+  7691735,
+  34804677,
+  15291824,
+  6498971
+ ],
  "max_still_source_ratio": 0.5,
  "still_image_policy": "closest_stock_frame_full_enhancement",
  "music_choice": 3,
  "music_variant_count": 1,
  "caption_policy": "minimal_keywords_only",
- "hero_art_policy": "runtime_generated",
+ "hero_art_policy": "motion_only_no_static_hero",
  "hero_art_status": "runtime_generation_allowed",
  "scenes": [
   {
@@ -57,34 +85,12 @@
    "semantic_anchor": "An object can be physically present without becoming consciously relevant.",
    "visual_function": "perspective_shift",
    "primary_symbol": "A richly detailed ordinary room splits into layers while one",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "architecture",
-   "narrative_mode": "hero",
-   "hero": false,
-   "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, A richly detailed ordinary room splits into layers while one set of keys remains present but visually ignored until a luminous focus field reveals it., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
-   "start": 0.0,
-   "duration": 7.88,
+   "narrative_mode": "stock_ok",
+   "query": "A richly detailed ordinary room splits into layers while one set of keys remains present but visually ignored until a luminous focus field reveals it.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "hero_fallback": "stock",
-   "hero_fallback_reason": "reference_conditioned_provider_unavailable",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.1883,
-    "active_region_ratio": 0.099,
-    "frame_difference": 3.5628
-   },
-   "clip_fingerprint": "a686a3a21f54a559",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_00.mp4",
-   "stock_id": 13141960,
-   "pexels_id": 13141960,
-   "stock_frame_url": "https://images.pexels.com/videos/13141960/paisaje-naturaleza-nubes-montanas-vientos-arboles-colombia-13141960.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/fog-over-vegatation-at-night-13141960/"
+   "motion_mode": "stock"
   },
   {
    "text": "The room did not hide them. Your attention decided they did not count as visible yet.",
@@ -99,44 +105,13 @@
    "semantic_anchor": "Attention determines which visible object enters awareness.",
    "visual_function": "mechanism",
    "primary_symbol": "A viewfinder focus box passes over visible keys several time",
+   "graphic_kind": "filter",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "perception",
-   "narrative_mode": "atmosphere",
+   "narrative_mode": "storyboard",
    "query": "A viewfinder focus box passes over visible keys several times before the RELEVANT toggle switches on and locks focus.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "start": 7.88,
-   "duration": 5.98,
-   "kw_times": {
-    "VISIBLE": 12.24
-   },
-   "image_prompt": "Attention determines which visible object enters awareness.",
-   "hero_style": ", cinematic 35mm film still, photorealistic, anamorphic lens character, shallow depth of field with a real out-of-focus foreground element close to camera, subject in the middle distance, deep background falling into atmospheric haze, one motivated practical light source, natural surface textures and small real-world imperfections, fine film grain, muted filmic color grade, exactly one impossible element photographed as physically real and lit by the scene's own light, documentary magical realism, deep three-plane composition, no text, no words, no letters, no captions, no labels, no diagrams, no watermark, not an illustration, not digital art",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 3.196,
-    "active_region_ratio": 0.362,
-    "frame_difference": 20.0112
-   },
-   "clip_fingerprint": "c7d493e1a7603656",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_01.mp4",
-   "stock_id": 19810466,
-   "pexels_id": 19810466,
-   "stock_frame_url": "https://images.pexels.com/videos/19810466/amsterdam-bikes-boat-canal-19810466.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/a-person-holding-a-camera-in-front-of-them-19810466/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "VISIBLE",
-     "png": "youtube_cap_01_kw0.png"
-    },
-    {
-     "kw": "RELEVANT",
-     "png": "youtube_cap_01_kw1.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "That sounds like a tiny mistake. It is actually a demonstration of how you experience almost everything.",
@@ -151,26 +126,13 @@
    "semantic_anchor": "A minor attention failure reveals a general perception system.",
    "visual_function": "scale_shift",
    "primary_symbol": "A small missed-keys indicator expands into a full perception",
+   "graphic_kind": "generic",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "geometry",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A small missed-keys indicator expands into a full perception interface controlling a room, street, conversation, and memory.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "start": 13.86,
-   "duration": 6.9,
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_02.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0116,
-    "active_region_ratio": 0.0952,
-    "frame_difference": 1.6515
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "fe8b151733507c25"
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "Put two people in the same grocery store. One notices prices. The other notices ingredients.",
@@ -182,30 +144,12 @@
    "semantic_anchor": "The same grocery aisle contains several categories of useful information.",
    "visual_function": "literal_anchor",
    "primary_symbol": "Real documentary footage moving through a grocery aisle with",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "collective",
    "narrative_mode": "stock_ok",
    "query": "Real documentary footage moving through a grocery aisle with price labels and ingredient panels clearly visible on products.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "human_role": "unspecified",
-   "start": 20.76,
-   "duration": 6.04,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 11.3876,
-    "active_region_ratio": 0.9972,
-    "frame_difference": 34.9875
-   },
-   "clip_fingerprint": "9092da3f3a041ea2",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_03.mp4",
-   "stock_id": 13752470,
-   "pexels_id": 13752470,
-   "stock_frame_url": "https://images.pexels.com/videos/13752470/food-market-supermarket-13752470.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/blurred-video-of-market-interior-13752470/"
+   "motion_mode": "stock"
   },
   {
    "text": "A third person notices who looks impatient, and somebody's child notices only the cereal shaped like tiny cookies.",
@@ -222,26 +166,13 @@
    "semantic_anchor": "Different priorities rank different details inside the same environment.",
    "visual_function": "contrast",
    "primary_symbol": "Four relevance counters rise independently over PRICE, INGRE",
+   "graphic_kind": "counters",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "object_tool",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "Four relevance counters rise independently over PRICE, INGREDIENTS, MOOD, and COOKIE CEREAL while every category remains on the same screen.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "start": 26.8,
-   "duration": 7.46,
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_04.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0357,
-    "active_region_ratio": 0.1218,
-    "frame_difference": 1.6403
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "157a0b98a85942d5"
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "Nobody is seeing the complete store. Each person is receiving a personalized summary.",
@@ -256,39 +187,13 @@
    "semantic_anchor": "Perception compresses a complex environment into a manageable personal summary.",
    "visual_function": "contrast",
    "primary_symbol": "A balance scale compares COMPLETE STORE with PERSONAL SUMMAR",
+   "graphic_kind": "scale",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "geometry",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A balance scale compares COMPLETE STORE with PERSONAL SUMMARY as thousands of details compress into four selected cards.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "start": 34.26,
-   "duration": 6.94,
-   "kw_times": {
-    "COMPLETE STORE": 35.3
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_05.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0296,
-    "active_region_ratio": 0.2051,
-    "frame_difference": 3.1116
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "b1173cc432efd0a0",
-   "youtube_kw_overlays": [
-    {
-     "kw": "COMPLETE STORE",
-     "png": "youtube_cap_05_kw0.png"
-    },
-    {
-     "kw": "PERSONAL SUMMARY",
-     "png": "youtube_cap_05_kw1.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "Your brain is not giving you a neutral livestream. It is editing for relevance in real time.",
@@ -304,49 +209,13 @@
    "semantic_anchor": "The brain edits incoming information according to relevance.",
    "visual_function": "mechanism",
    "primary_symbol": "A live camera interface routes incoming details through RELE",
+   "graphic_kind": "perception",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "perception",
-   "narrative_mode": "atmosphere",
+   "narrative_mode": "storyboard",
    "query": "A live camera interface routes incoming details through RELEVANCE filter settings while unselected channels dim but remain present.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "start": 41.2,
-   "duration": 6.9,
-   "kw_times": {
-    "RELEVANCE": 45.38
-   },
-   "hero": true,
-   "image_prompt": "The brain edits incoming information according to relevance.",
-   "hero_style": ", cinematic 35mm film still, photorealistic, anamorphic lens character, shallow depth of field with a real out-of-focus foreground element close to camera, subject in the middle distance, deep background falling into atmospheric haze, one motivated practical light source, natural surface textures and small real-world imperfections, fine film grain, muted filmic color grade, exactly one impossible element photographed as physically real and lit by the scene's own light, documentary magical realism, deep three-plane composition, no text, no words, no letters, no captions, no labels, no diagrams, no watermark, not an illustration, not digital art",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 8.7207,
-    "active_region_ratio": 0.9712,
-    "frame_difference": 22.1824
-   },
-   "clip_fingerprint": "c977c2ba0fbf42f7",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_06.mp4",
-   "stock_id": 4181137,
-   "pexels_id": 4181137,
-   "stock_frame_url": "https://images.pexels.com/videos/4181137/pexels-photo-4181137.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/a-shot-of-a-mobile-phone-s-camera-menu-4181137/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "LIVE INPUT",
-     "png": "youtube_cap_06_kw0.png"
-    },
-    {
-     "kw": "RELEVANCE",
-     "png": "youtube_cap_06_kw1.png"
-    },
-    {
-     "kw": "EDIT",
-     "png": "youtube_cap_06_kw2.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "Light, memory, danger, desire, embarrassment, and the weird noise your refrigerator makes are all competing for limited space.",
@@ -362,26 +231,13 @@
    "semantic_anchor": "Many signals compete for limited conscious bandwidth.",
    "visual_function": "mechanism",
    "primary_symbol": "Seven labeled signals race toward a narrow attention channel",
+   "graphic_kind": "clock",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "language",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "Seven labeled signals race toward a narrow attention channel while a bandwidth counter reaches its limit.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "start": 48.1,
-   "duration": 9.26,
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_07.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0347,
-    "active_region_ratio": 0.1254,
-    "frame_difference": 1.5488
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "7f2a10c1ca1413af"
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "Most of that information has to be compressed, postponed, or ignored. This is not mystical. It is bandwidth.",
@@ -399,53 +255,13 @@
    "semantic_anchor": "Limited bandwidth requires information to be selected or discarded.",
    "visual_function": "mechanism",
    "primary_symbol": "A bandwidth settings panel sends incoming cards into KEEP, L",
+   "graphic_kind": "filter",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "object_tool",
-   "narrative_mode": "atmosphere",
+   "narrative_mode": "storyboard",
    "query": "A bandwidth settings panel sends incoming cards into KEEP, LATER, and IGNORE lanes as the meter stabilizes.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "start": 57.36,
-   "duration": 7.7,
-   "kw_times": {
-    "BANDWIDTH": 63.3
-   },
-   "hero": true,
-   "image_prompt": "Limited bandwidth requires information to be selected or discarded.",
-   "hero_style": ", cinematic 35mm film still, photorealistic, anamorphic lens character, shallow depth of field with a real out-of-focus foreground element close to camera, subject in the middle distance, deep background falling into atmospheric haze, one motivated practical light source, natural surface textures and small real-world imperfections, fine film grain, muted filmic color grade, exactly one impossible element photographed as physically real and lit by the scene's own light, documentary magical realism, deep three-plane composition, no text, no words, no letters, no captions, no labels, no diagrams, no watermark, not an illustration, not digital art",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 3.4061,
-    "active_region_ratio": 0.9803,
-    "frame_difference": 12.167
-   },
-   "clip_fingerprint": "1eea60078e80355d",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_08.mp4",
-   "stock_id": 8197902,
-   "pexels_id": 8197902,
-   "stock_frame_url": "https://images.pexels.com/videos/8197902/pexels-photo-8197902.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/close-up-of-a-mixing-console-8197902/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "KEEP",
-     "png": "youtube_cap_08_kw0.png"
-    },
-    {
-     "kw": "LATER",
-     "png": "youtube_cap_08_kw1.png"
-    },
-    {
-     "kw": "IGNORE",
-     "png": "youtube_cap_08_kw2.png"
-    },
-    {
-     "kw": "BANDWIDTH",
-     "png": "youtube_cap_08_kw3.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "Watch a busy sidewalk for red shoes, and suddenly red shoes appear everywhere.",
@@ -457,30 +273,12 @@
    "semantic_anchor": "A concrete search target becomes easier to notice in a busy environment.",
    "visual_function": "literal_anchor",
    "primary_symbol": "Real street footage of a busy pedestrian crossing where seve",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "collective",
    "narrative_mode": "stock_ok",
    "query": "Real street footage of a busy pedestrian crossing where several differently colored shoes can be clearly inspected.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "human_role": "observer",
-   "start": 65.06,
-   "duration": 5.56,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 3.074,
-    "active_region_ratio": 0.7408,
-    "frame_difference": 25.0655
-   },
-   "clip_fingerprint": "c4a6bd2035870714",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_09.mp4",
-   "stock_id": 36214844,
-   "pexels_id": 36214844,
-   "stock_frame_url": "https://images.pexels.com/videos/36214844/pexels-photo-36214844.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/busy-urban-street-with-pedestrians-walking-36214844/"
+   "motion_mode": "stock"
   },
   {
    "text": "If you expect rejection, your evidence board fills with delayed replies, short answers, and faces that are probably just tired.",
@@ -497,51 +295,13 @@
    "semantic_anchor": "An expectation of rejection recruits ambiguous details as confirming evidence.",
    "visual_function": "mechanism",
    "primary_symbol": "An evidence board rapidly pins DELAYED REPLY, SHORT ANSWER, ",
+   "graphic_kind": "evidence",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "language",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "An evidence board rapidly pins DELAYED REPLY, SHORT ANSWER, and TIRED FACE beneath a preset verdict labeled REJECTION.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "human_role": "unspecified",
-   "start": 70.62,
-   "duration": 8.4,
-   "kw_times": {
-    "REJECTION": 71.4,
-    "DELAYED REPLY": 73.84,
-    "SHORT ANSWER": 75.12,
-    "TIRED FACE": 77.94
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_10.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.9262,
-    "active_region_ratio": 0.3545,
-    "frame_difference": 6.9129
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "54bf32c330d3465a",
-   "youtube_kw_overlays": [
-    {
-     "kw": "REJECTION",
-     "png": "youtube_cap_10_kw0.png"
-    },
-    {
-     "kw": "DELAYED REPLY",
-     "png": "youtube_cap_10_kw1.png"
-    },
-    {
-     "kw": "SHORT ANSWER",
-     "png": "youtube_cap_10_kw2.png"
-    },
-    {
-     "kw": "TIRED FACE",
-     "png": "youtube_cap_10_kw3.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "If you expect opportunity, the same world begins offering loose threads, useful conversations, and doors you can actually knock on.",
@@ -554,34 +314,13 @@
    "semantic_anchor": "A different relevance setting reveals opportunities already present in the environment.",
    "visual_function": "perspective_shift",
    "primary_symbol": "One city scene exists in multiple luminous layers as connect",
+   "graphic_kind": "path",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "world_scale",
-   "narrative_mode": "hero",
-   "hero": false,
-   "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, One city scene exists in multiple luminous layers as connections, open doors, and possible routes reveal themselves without changing the underlying world., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
-   "start": 79.02,
-   "duration": 9.08,
+   "narrative_mode": "storyboard",
+   "query": "One city scene exists in multiple luminous layers as connections, open doors, and possible routes reveal themselves without changing the underlying world.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "hero_fallback": "stock",
-   "hero_fallback_reason": "reference_conditioned_provider_unavailable",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 2.2261,
-    "active_region_ratio": 0.9473,
-    "frame_difference": 3.9935
-   },
-   "clip_fingerprint": "e21c2fd8f2a4cfab",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_11.mp4",
-   "stock_id": 18748018,
-   "pexels_id": 18748018,
-   "stock_frame_url": "https://images.pexels.com/videos/18748018/bright-sun-eclipse-golden-sun-18748018.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/eclipse-solar-18748018/"
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "The world did not instantly transform. Your ranking system changed, so different information reached the top.",
@@ -597,26 +336,13 @@
    "semantic_anchor": "Changing relevance alters conscious results without changing the entire external world.",
    "visual_function": "contrast",
    "primary_symbol": "A relevance counter reranks the same cards until OPPORTUNITY",
+   "graphic_kind": "counters",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "time_memory",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A relevance counter reranks the same cards until OPPORTUNITY moves above THREAT while the source database remains unchanged.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "start": 88.1,
-   "duration": 7.44,
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_12.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0348,
-    "active_region_ratio": 0.1337,
-    "frame_difference": 1.6465
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "7139bd3ff1e85e4f"
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "This does not mean painful events are imaginary, or that a better attitude makes every problem disappear.",
@@ -632,39 +358,13 @@
    "semantic_anchor": "Selective attention does not erase genuine hardship.",
    "visual_function": "boundary",
    "primary_symbol": "A balance scale keeps REAL PROBLEM fully weighted while BETT",
+   "graphic_kind": "scale",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "geometry",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A balance scale keeps REAL PROBLEM fully weighted while BETTER ATTENTION adds useful options without removing the problem.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "start": 95.54,
-   "duration": 6.66,
-   "kw_times": {
-    "BETTER ATTENTION": 99.02
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_13.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0303,
-    "active_region_ratio": 0.2072,
-    "frame_difference": 3.0849
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "6ec09ec0a49261ed",
-   "youtube_kw_overlays": [
-    {
-     "kw": "REAL PROBLEM",
-     "png": "youtube_cap_13_kw0.png"
-    },
-    {
-     "kw": "BETTER ATTENTION",
-     "png": "youtube_cap_13_kw1.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "It means your experience contains both the event and the selection your mind makes from the event.",
@@ -680,45 +380,13 @@
    "semantic_anchor": "Experience combines external events with internal selection.",
    "visual_function": "mechanism",
    "primary_symbol": "Two connected cards labeled EVENT and SELECTION combine into",
+   "graphic_kind": "generic",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "geometry",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "Two connected cards labeled EVENT and SELECTION combine into one larger card labeled EXPERIENCE.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "start": 102.2,
-   "duration": 6.74,
-   "kw_times": {
-    "EVENT": 104.66,
-    "SELECTION": 105.8,
-    "EXPERIENCE": 103.04
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_14.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0244,
-    "active_region_ratio": 0.1615,
-    "frame_difference": 2.8869
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "49d708fe08216dd1",
-   "youtube_kw_overlays": [
-    {
-     "kw": "EVENT",
-     "png": "youtube_cap_14_kw0.png"
-    },
-    {
-     "kw": "SELECTION",
-     "png": "youtube_cap_14_kw1.png"
-    },
-    {
-     "kw": "EXPERIENCE",
-     "png": "youtube_cap_14_kw2.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "Attention is not merely a flashlight. It is also a vote. Repeated attention tells your mind what deserves priority next time.",
@@ -734,45 +402,13 @@
    "semantic_anchor": "Repeated attention trains future relevance rankings.",
    "visual_function": "recursion",
    "primary_symbol": "A focus box selects one signal repeatedly while its PRIORITY",
+   "graphic_kind": "perception",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "perception",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A focus box selects one signal repeatedly while its PRIORITY counter rises and its channel grows wider on the next pass.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "start": 108.94,
-   "duration": 10.02,
-   "kw_times": {
-    "ATTENTION": 108.94,
-    "VOTE": 112.74,
-    "PRIORITY": 116.56
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_15.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0401,
-    "active_region_ratio": 0.1275,
-    "frame_difference": 1.6662
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "df15c96cac4100ec",
-   "youtube_kw_overlays": [
-    {
-     "kw": "ATTENTION",
-     "png": "youtube_cap_15_kw0.png"
-    },
-    {
-     "kw": "VOTE",
-     "png": "youtube_cap_15_kw1.png"
-    },
-    {
-     "kw": "PRIORITY",
-     "png": "youtube_cap_15_kw2.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "Your phone camera does something similar. It cannot sharpen everything equally, so it chooses a subject and lets the background soften.",
@@ -784,29 +420,12 @@
    "semantic_anchor": "A camera must select a subject because it cannot focus every depth equally.",
    "visual_function": "literal_anchor",
    "primary_symbol": "Real close-up footage of a smartphone camera interface visib",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "object_tool",
    "narrative_mode": "stock_ok",
    "query": "Real close-up footage of a smartphone camera interface visibly shifting autofocus between a foreground object and its background.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "start": 118.96,
-   "duration": 8.22,
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 1.604,
-    "active_region_ratio": 0.8589,
-    "frame_difference": 4.4108
-   },
-   "clip_fingerprint": "20a3c06c8a1213f4",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_16.mp4",
-   "stock_id": 7947491,
-   "pexels_id": 7947491,
-   "stock_frame_url": "https://images.pexels.com/videos/7947491/adult-blur-business-charts-7947491.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/an-animated-graph-on-a-smartphone-7947491/"
+   "motion_mode": "stock"
   },
   {
    "text": "Your internal priorities are doing that with conversations, memories, possibilities, and even your opinion of yourself.",
@@ -822,50 +441,13 @@
    "semantic_anchor": "Internal priorities focus several domains of personal experience.",
    "visual_function": "mechanism",
    "primary_symbol": "Filter settings labeled CONVERSATIONS, MEMORIES, POSSIBILITI",
+   "graphic_kind": "clock",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "identity",
-   "narrative_mode": "atmosphere",
+   "narrative_mode": "storyboard",
    "query": "Filter settings labeled CONVERSATIONS, MEMORIES, POSSIBILITIES, and SELF-IMAGE adjust four separate focus channels.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "start": 127.18,
-   "duration": 8.14,
-   "kw_times": {
-    "MEMORIES": 130.8,
-    "POSSIBILITIES": 131.52
-   },
-   "hero": true,
-   "image_prompt": "Internal priorities focus several domains of personal experience.",
-   "hero_style": ", cinematic 35mm film still, photorealistic, anamorphic lens character, shallow depth of field with a real out-of-focus foreground element close to camera, subject in the middle distance, deep background falling into atmospheric haze, one motivated practical light source, natural surface textures and small real-world imperfections, fine film grain, muted filmic color grade, exactly one impossible element photographed as physically real and lit by the scene's own light, documentary magical realism, deep three-plane composition, no text, no words, no letters, no captions, no labels, no diagrams, no watermark, not an illustration, not digital art",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 8.6668,
-    "active_region_ratio": 0.9978,
-    "frame_difference": 19.0905
-   },
-   "clip_fingerprint": "bbf203c002dff9b7",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_17.mp4",
-   "stock_id": 7205338,
-   "pexels_id": 7205338,
-   "stock_frame_url": "https://images.pexels.com/videos/7205338/pexels-photo-7205338.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/photographer-fixing-the-camera-7205338/",
-   "youtube_kw_overlays": [
-    {
-     "kw": "MEMORIES",
-     "png": "youtube_cap_17_kw0.png"
-    },
-    {
-     "kw": "POSSIBILITIES",
-     "png": "youtube_cap_17_kw1.png"
-    },
-    {
-     "kw": "SELF-IMAGE",
-     "png": "youtube_cap_17_kw2.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "That is good news, because a ranking can be examined. You can ask why one signal keeps receiving emergency status.",
@@ -881,43 +463,13 @@
    "semantic_anchor": "Automatic relevance rankings can be consciously examined.",
    "visual_function": "transformation",
    "primary_symbol": "An EMERGENCY label is removed from one ordinary signal while",
+   "graphic_kind": "labels",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "language",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "An EMERGENCY label is removed from one ordinary signal while an audit panel reveals the old rule that assigned it.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "start": 135.32,
-   "duration": 8.04,
-   "kw_times": {
-    "EMERGENCY": 141.32
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_18.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.0167,
-    "active_region_ratio": 0.1355,
-    "frame_difference": 3.0032
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "83e5848443e09c8d",
-   "youtube_kw_overlays": [
-    {
-     "kw": "EMERGENCY",
-     "png": "youtube_cap_18_kw0.png"
-    },
-    {
-     "kw": "OLD RULE",
-     "png": "youtube_cap_18_kw1.png"
-    },
-    {
-     "kw": "REVIEW",
-     "png": "youtube_cap_18_kw2.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "You can deliberately notice what contradicts your fear, what supports your growth, and what has been quietly working all along.",
@@ -934,43 +486,13 @@
    "semantic_anchor": "Deliberate attention can include useful evidence that fear previously excluded.",
    "visual_function": "perspective_shift",
    "primary_symbol": "An evidence board opens three new columns labeled CONTRADICT",
+   "graphic_kind": "evidence",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "language",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "An evidence board opens three new columns labeled CONTRADICTION, GROWTH, and ALREADY WORKING as overlooked cards slide into view.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "start": 143.36,
-   "duration": 8.62,
-   "kw_times": {
-    "GROWTH": 147.46
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_19.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.8928,
-    "active_region_ratio": 0.3403,
-    "frame_difference": 5.5223
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "1b08351aba297d8f",
-   "youtube_kw_overlays": [
-    {
-     "kw": "CONTRADICTION",
-     "png": "youtube_cap_19_kw0.png"
-    },
-    {
-     "kw": "GROWTH",
-     "png": "youtube_cap_19_kw1.png"
-    },
-    {
-     "kw": "ALREADY WORKING",
-     "png": "youtube_cap_19_kw2.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "Reality is larger than the version currently highlighted on your screen. The missing parts were not necessarily hidden. They may have been waiting to matter.",
@@ -983,34 +505,13 @@
    "semantic_anchor": "Reality contains more information than the currently highlighted conscious version.",
    "visual_function": "scale_shift",
    "primary_symbol": "A dark perception interface unfolds into a vast layered worl",
+   "graphic_kind": "path",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "world_scale",
-   "narrative_mode": "hero",
-   "hero": false,
-   "hero_style": "effects",
-   "image_prompt": "cinematic photoreal, A dark perception interface unfolds into a vast layered world as muted details gain color, depth, motion, and connection beyond the original focus frame., shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
-   "start": 151.98,
-   "duration": 10.12,
+   "narrative_mode": "storyboard",
+   "query": "A dark perception interface unfolds into a vast layered world as muted details gain color, depth, motion, and connection beyond the original focus frame.",
    "motion_kind": "video",
-   "motion_mode": "stock",
-   "still_reference_policy": "closest_stock_frame_full_enhancement",
-   "hero_fallback": "stock",
-   "hero_fallback_reason": "reference_conditioned_provider_unavailable",
-   "motion_source": "pexels",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 1.1099,
-    "active_region_ratio": 0.7969,
-    "frame_difference": 11.2225
-   },
-   "clip_fingerprint": "fe911b3cb64ac32b",
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_20.mp4",
-   "stock_id": 9902185,
-   "pexels_id": 9902185,
-   "stock_frame_url": "https://images.pexels.com/videos/9902185/pexels-photo-9902185.jpeg?auto=compress&cs=tinysrgb&fit=crop&h=630&w=1200",
-   "stock_frame_url_checked": true,
-   "source_url": "https://www.pexels.com/video/a-man-standing-by-a-window-and-looking-outside-9902185/"
+   "motion_mode": "generated_graphic"
   },
   {
    "text": "So look around today and ask one honest question: what has my attention been training me to see?",
@@ -1027,71 +528,13 @@
    "semantic_anchor": "The viewer can question what repeated attention has trained them to notice.",
    "visual_function": "choice",
    "primary_symbol": "A clean focus interface pauses, clears its inherited preset,",
+   "graphic_kind": "labels",
+   "visual_revision": "graphic-variety-v2",
    "symbol_family": "perception",
-   "narrative_mode": "literal_graphic",
+   "narrative_mode": "storyboard",
    "query": "A clean focus interface pauses, clears its inherited preset, and presents one open question beside a slowly widening viewfinder.",
    "motion_kind": "video",
-   "motion_mode": "generated_graphic",
-   "start": 162.1,
-   "duration": 9.296,
-   "kw_times": {
-    "ATTENTION": 167.28,
-    "TRAINING": 168.1,
-    "WHAT DO I SEE?": 166.52
-   },
-   "clip": "/home/runner/work/Prototype-Video/Prototype-Video/build/you-see-what-matters/clip_21.mp4",
-   "motion_source": "literal_storyboard",
-   "motion_verified": true,
-   "motion_evidence": {
-    "passes": true,
-    "samples": 9,
-    "residual_flow_p75": 0.2768,
-    "active_region_ratio": 0.2153,
-    "frame_difference": 2.4568
-   },
-   "storyboard_generated": true,
-   "storyboard_version": 1,
-   "clip_fingerprint": "d7a08d8857666096",
-   "youtube_kw_overlays": [
-    {
-     "kw": "ATTENTION",
-     "png": "youtube_cap_21_kw0.png"
-    },
-    {
-     "kw": "TRAINING",
-     "png": "youtube_cap_21_kw1.png"
-    },
-    {
-     "kw": "WHAT DO I SEE?",
-     "png": "youtube_cap_21_kw2.png"
-    }
-   ]
+   "motion_mode": "generated_graphic"
   }
- ],
- "voiceover": "vo.mp3",
- "voiceover_config": {
-  "provider": "ElevenLabs",
-  "voice_id": "TX3LPaxmHKxFdv7VOQHJ",
-  "voice_name": "Liam - Energetic, Social Media Creator",
-  "model_id": "eleven_v3",
-  "stability_mode": "creative",
-  "voice_settings": {
-   "stability": 0.0,
-   "similarity_boost": 0.75,
-   "style": 0.0,
-   "speed": 0.97
-  },
-  "audio_tags_enabled": true
- },
- "music_variants": [
-  {
-   "file": "music_03.wav",
-   "label": "Deep Current",
-   "source": "generated",
-   "variant": 3,
-   "index": 3,
-   "selected": true
-  }
- ],
- "music": "music_03.wav"
+ ]
 }
