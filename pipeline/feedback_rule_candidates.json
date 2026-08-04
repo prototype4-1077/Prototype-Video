@@ -1,997 +1,991 @@
 {
- "schema_version": 1,
- "generated_at": "2026-08-03T18:58:35+00:00",
- "source_note_count": 154,
- "source_scene_feedback_count": 29,
- "unique_commented_evidence": 154,
- "candidate_count": 14,
- "candidates": [
-  {
-   "id": "effects_still_preference",
-   "title": "Use a strong still with effects when stock cannot explain the beat",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 13,
-   "affected_slugs": [
-    "jester-who-knew-my-name",
-    "the-loop",
-    "the-room-behind-you"
-   ],
-   "decisions": {
-    "approved": 1,
-    "overall revise": 1,
-    "revise": 6,
-    "unknown": 5
-   },
-   "examples": [
+  "schema_version": 1,
+  "generated_at": "2026-08-04T12:07:04+00:00",
+  "source_note_count": 154,
+  "source_scene_feedback_count": 29,
+  "unique_commented_evidence": 154,
+  "candidate_count": 14,
+  "candidates": [
     {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Correction: no more than 35% of finished runtime may come from still images in any form. Static slides, Ken Burns, depth animation, cinemagraph treatment, and staged keyframe animation all count toward the same still-derived 35%. At least 65% must be genuine recorded or generated temporal footage with people, objects, or environments actually moving; the permitted stills should still receive the motion treatment.",
-     "query": null,
-     "profile": null
+      "id": "effects_still_preference",
+      "title": "Use a strong still with effects when stock cannot explain the beat",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 13,
+      "affected_slugs": [
+        "jester-who-knew-my-name",
+        "the-loop",
+        "the-room-behind-you"
+      ],
+      "decisions": {
+        "approved": 1,
+        "overall revise": 1,
+        "revise": 6,
+        "unknown": 5
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Correction: no more than 35% of finished runtime may come from still images in any form. Static slides, Ken Burns, depth animation, cinemagraph treatment, and staged keyframe animation all count toward the same still-derived 35%. At least 65% must be genuine recorded or generated temporal footage with people, objects, or environments actually moving; the permitted stills should still receive the motion treatment.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 5,
+          "decision": "approved",
+          "comment": "Since we introduce this person as the Jester, I would keep the same (or like) appearance of this person as the Jester throughout the video. Even if it meant still images based on this individual scene.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 24,
+          "decision": "revise",
+          "comment": "I would find one of the bells that sit on the counter that you ring when the hotel attendant is not at her desk. I would look for a hand that just keeps tapping the bell. If not still image.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-loop",
+          "scene_number": 2,
+          "decision": "revise",
+          "comment": "this is not a hamster in a wheel. not sure what's in the cage. Lets try a still image that depicts the loop. Keep it magical and eerie.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": 8,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": 14,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": 17,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": 18,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": null,
+          "decision": "overall revise",
+          "comment": "Lets replace the Text Boxes with still images with any special effects.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "STANDING RULE (fallback visuals): when genuine stock footage cannot be found for a scene, the pipeline auto-generates an APPEALING SPECIAL-EFFECTS STILL IMAGE that represents the line (via hero.py effects style) — never a plain text/label graphic box. Implemented in storyline_footage._render_storyboard.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "STORYLINE STANDARD (set by the approved 'The Room Behind You'): the viewer must be able to SEE the storyline scene by scene. Every visual literally depicts its spoken line's object/mechanism (game render-distance -> game footage; blind spot -> eye with void pupil; brain faking it -> painted-over wall). Concrete beats use genuine moving stock; abstract beats use effects stills. Keep this bar on every video.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "EFFECTS STILLS: James wants generated stills to carry HEAVY, layered special effects (god rays, dense particles, energy trails, mist, bokeh, flares, iridescent glow) - maximally cinematic, never plain. Style lives in storyline_footage.EFFECTS_STILL_STYLE.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     },
     {
-     "source": "note",
-     "slug": "jester-who-knew-my-name",
-     "scene_number": 5,
-     "decision": "approved",
-     "comment": "Since we introduce this person as the Jester, I would keep the same (or like) appearance of this person as the Jester throughout the video. Even if it meant still images based on this individual scene.",
-     "query": null,
-     "profile": null
+      "id": "caption_restraint",
+      "title": "Do not print performance tags or dense paragraph captions",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 8,
+      "affected_slugs": [
+        "no-disagreement-here",
+        "the-room-behind-you"
+      ],
+      "decisions": {
+        "overall revise": 1,
+        "revise": 3,
+        "unknown": 4
+      },
+      "examples": [
+        {
+          "source": "scene_feedback",
+          "slug": "the-room-behind-you",
+          "scene_number": 1,
+          "decision": "revise",
+          "comment": "With the text box you can't can see it because of the title. Not sure about text boxes as the first scene.",
+          "query": "dark empty living room dim doorway lamplight",
+          "profile": null
+        },
+        {
+          "source": "scene_feedback",
+          "slug": "no-disagreement-here",
+          "scene_number": 1,
+          "decision": "revise",
+          "comment": "would put a person shaking their head no. Also, take out [softly] out of the caption. Please take all voice tags out of the caption.",
+          "query": "macro shot of a hand hovering between two bar magnets that resist each other",
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "James liked the How_Reality_Works reference slides: letterboxed band, mystical/surreal footage, captions on the black bar. That is now the default look.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "v5: word-synced captions (whisper), CLIP footage matching (CI), -14 LUFS master, GitHub Actions render farm option.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Title card: 2x size (190px Baloo ExtraBold), ALL-CAPS, multi-line stack allowed, may extend past the letterbox band but never into captions.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Visual-symbol training from the 2026-07-14 reference: match the mechanism of each spoken line, not merely its mood. People are valid symbols only when they have a clear role; do not default to generic thoughtful-person footage. Deliberately alternate human, collective, perception, language, architecture, pathway, identity, time/memory, tool, nature, world-scale, geometry, transformation, and light/atmosphere symbols. Prefer one precise physical metaphor, limit repeated families and props, and ask whether the idea would remain legible with captions hidden.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": null,
+          "decision": "overall revise",
+          "comment": "Lets replace the Text Boxes with still images with any special effects.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "no-disagreement-here",
+          "scene_number": 10,
+          "decision": "revise",
+          "comment": "Would probably make the animation of the text box showing how belief and truth.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     },
     {
-     "source": "note",
-     "slug": "jester-who-knew-my-name",
-     "scene_number": 24,
-     "decision": "revise",
-     "comment": "I would find one of the bells that sit on the counter that you ring when the hotel attendant is not at her desk. I would look for a hand that just keeps tapping the bell. If not still image.",
-     "query": null,
-     "profile": null
+      "id": "character_lip_sync",
+      "title": "Visible speaking character requires mouth movement",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 5,
+      "affected_slugs": [
+        "jester-who-knew-my-name"
+      ],
+      "decisions": {
+        "revise": 2,
+        "unknown": 3
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "v5: word-synced captions (whisper), CLIP footage matching (CI), -14 LUFS master, GitHub Actions render farm option.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Music bed at 0.21 (slightly louder). Clips must never visibly restart/loop mid-scene: pipeline stretches or boomerangs short clips and prefers clips >= scene duration.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Tricky props (e.g. dominoes): if a query misfires twice, curate manually - search the Pexels API, eyeball thumbnails, then PIN the clip by setting scene pexels_id (re-fetch-by-id makes it deterministic).",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 10,
+          "decision": "revise",
+          "comment": "Tv would be fine if it was the person from scene 5 sitting on it. Maybe an enhanced still clip (with motion effects) of a Jester.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 29,
+          "decision": "revise",
+          "comment": "Maybe a slide of just a mouth laughing. Make sure it matches the person's color of the rest of the slides.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     },
     {
-     "source": "note",
-     "slug": "the-loop",
-     "scene_number": 2,
-     "decision": "revise",
-     "comment": "this is not a hamster in a wheel. not sure what's in the cage. Lets try a still image that depicts the loop. Keep it magical and eerie.",
-     "query": null,
-     "profile": null
+      "id": "dmt_motion_language",
+      "title": "DMT videos benefit from psychedelic moving graphics in moderation",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 5,
+      "affected_slugs": [
+        "jester-who-knew-my-name"
+      ],
+      "decisions": {
+        "revise": 4,
+        "unknown": 1
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Approved DMT: The Room Before Birth. Psychedelic moving graphics strongly enhance DMT videos and should remain a signature accent. For a roughly 2.5-minute, 25-scene DMT video, use one or two fewer abstract psychedelic-motion scenes than this cut, preserving more contrast with grounded or literal footage.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 2,
+          "decision": "revise",
+          "comment": "Not Bad but since this is a DMT video I would try to make the scenery look like the rest of the video. Maybe mystical folding walls.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 1,
+          "decision": "revise",
+          "comment": "For DMT Boxes with labels don't come across right. We can make it a rule to start dmt videos with exquisite psychedelic visuals.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 16,
+          "decision": "revise",
+          "comment": "Boxes with text should not be in DMT videos.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "jester-who-knew-my-name",
+          "scene_number": 24,
+          "decision": "revise",
+          "comment": "Again, Boxes with labels probably not in DMt videos. Other videos are fine.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     },
     {
-     "source": "note",
-     "slug": "the-room-behind-you",
-     "scene_number": 8,
-     "decision": "revise",
-     "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
-     "query": null,
-     "profile": null
+      "id": "stock_first_preference",
+      "title": "Prefer genuine moving stock when a direct match exists",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 5,
+      "affected_slugs": [
+        "the-edge-of-you-is-negotiable"
+      ],
+      "decisions": {
+        "revise": 1,
+        "unknown": 4
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Default still and hero slides must look like natural photographic frames that match the surrounding stock footage. Avoid gold fog, heavy volumetric haze, silhouetted figures, theatrical fantasy lighting, and visibly synthetic staging unless explicitly requested.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Still-image training from 2026-07-14: acquire genuine stock slides first, then choose the closest related selected stock-video frame and use that exact frame as the generated still's visual reference. Every still receives the full natural-photo, exposure/detail, depth/background, internal-motion, practical-light, grade, and grain treatment; preserve supplied originals, reject pan/zoom-only slides, keep all still-derived time inside the 35% cap, and fall back to genuine footage rather than emit an unreferenced generated still.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Other Versions of You was fully rejected. Start ordinary videos from genuine literal stock footage for every scene. Avoid multiple unrelated faces; prefer consistent hands, rear views, objects, places, and physical actions. Do not use deterministic symbolic graphics, generic low-grade graphics, hero images, or stills unless exact stock searching has genuinely failed and James explicitly accepts a substantially higher-grade fallback. Narrative correspondence and premium photographic realism outrank abstract visual cleverness.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "STANDING RULE (fallback visuals): when genuine stock footage cannot be found for a scene, the pipeline auto-generates an APPEALING SPECIAL-EFFECTS STILL IMAGE that represents the line (via hero.py effects style) — never a plain text/label graphic box. Implemented in storyline_footage._render_storyboard.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-edge-of-you-is-negotiable",
+          "scene_number": 11,
+          "decision": "revise",
+          "comment": "Hand/cane fusion looks synthetic and risks malformed fingers. Replace with real stock footage of a gloved hand using a cane or tool, emphasizing repeated controlled motion; no morphing, dissolving, or exposed fingers.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     },
     {
-     "source": "note",
-     "slug": "the-room-behind-you",
-     "scene_number": 14,
-     "decision": "revise",
-     "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
-     "query": null,
-     "profile": null
+      "id": "visual_semantic_match",
+      "title": "Visual must clearly represent the spoken concept",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 5,
+      "affected_slugs": [
+        "the-room-behind-you"
+      ],
+      "decisions": {
+        "revise": 4,
+        "unknown": 1
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Other Versions of You was fully rejected. Start ordinary videos from genuine literal stock footage for every scene. Avoid multiple unrelated faces; prefer consistent hands, rear views, objects, places, and physical actions. Do not use deterministic symbolic graphics, generic low-grade graphics, hero images, or stills unless exact stock searching has genuinely failed and James explicitly accepts a substantially higher-grade fallback. Narrative correspondence and premium photographic realism outrank abstract visual cleverness.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": 8,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": 14,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": 17,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": 18,
+          "decision": "revise",
+          "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     },
     {
-     "source": "note",
-     "slug": "the-room-behind-you",
-     "scene_number": 17,
-     "decision": "revise",
-     "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
-     "query": null,
-     "profile": null
+      "id": "deep_parallax",
+      "title": "Concept backgrounds should use strong layered depth",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 3,
+      "affected_slugs": [
+        "no-disagreement-here"
+      ],
+      "decisions": {
+        "approved": 1,
+        "unknown": 2
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Hero shots exist: scene flag hero:true + image_prompt generates free AI imagery (pollinations, keyless) animated with 2.5D depth parallax. Use on 2-4 impossible-metaphor beats, the thumbnail scene, and closers.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "PHOTOREAL DOCTRINE: hero stills are now photographs-of-the-impossible (see pipeline/PHOTOREAL_STYLE.md). Film-still language, one impossible element lit by scene light, mandatory three-plane depth (near occluder / mid subject / far haze). Never 'digital art'. DMT trance slides keep the stylized aura. Motion engine multiplane-v1 gives dolly-zoom/orbit/push-in/rack-focus deep parallax.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "no-disagreement-here",
+          "scene_number": 21,
+          "decision": "approved",
+          "comment": "Can we add a 3D effect with the picture moving or zooming out. Every still picture should have some sort slow zoom out.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     },
     {
-     "source": "note",
-     "slug": "the-room-behind-you",
-     "scene_number": 18,
-     "decision": "revise",
-     "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
-     "query": null,
-     "profile": null
+      "id": "title_safe_zone",
+      "title": "Titles must remain readable inside platform crop zones",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 3,
+      "affected_slugs": [],
+      "decisions": {
+        "unknown": 3
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Scene 0 is the thumbnail: it must show picture + title from frame one (no fade-in), and its query should be an especially striking LIT visual.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Tricky props (e.g. dominoes): if a query misfires twice, curate manually - search the Pexels API, eyeball thumbnails, then PIN the clip by setting scene pexels_id (re-fetch-by-id makes it deterministic).",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Hero shots exist: scene flag hero:true + image_prompt generates free AI imagery (pollinations, keyless) animated with 2.5D depth parallax. Use on 2-4 impossible-metaphor beats, the thumbnail scene, and closers.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     },
     {
-     "source": "note",
-     "slug": "the-room-behind-you",
-     "scene_number": null,
-     "decision": "overall revise",
-     "comment": "Lets replace the Text Boxes with still images with any special effects.",
-     "query": null,
-     "profile": null
+      "id": "literal_action_accuracy",
+      "title": "Literal actions must visibly perform the stated action",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 2,
+      "affected_slugs": [
+        "the-loop",
+        "the-room-behind-you"
+      ],
+      "decisions": {
+        "revise": 2
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": "the-loop",
+          "scene_number": 12,
+          "decision": "revise",
+          "comment": "Doesn't look like it painting a door. Looks like its painting the ground.",
+          "query": null,
+          "profile": null
+        },
+        {
+          "source": "note",
+          "slug": "the-room-behind-you",
+          "scene_number": 2,
+          "decision": "revise",
+          "comment": "I would do a person actually walking through a house.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     },
     {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "STANDING RULE (fallback visuals): when genuine stock footage cannot be found for a scene, the pipeline auto-generates an APPEALING SPECIAL-EFFECTS STILL IMAGE that represents the line (via hero.py effects style) — never a plain text/label graphic box. Implemented in storyline_footage._render_storyboard.",
-     "query": null,
-     "profile": null
+      "id": "cartoon_animation_definition",
+      "title": "Animated requests mean coherent cartoon animation",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 1,
+      "affected_slugs": [],
+      "decisions": {
+        "unknown": 1
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Approved Can You Fly?. Keep question marks, exclamation points, and ACCESS DENIED graphics in a cohesive shared color and template, but avoid flat or cartoonish treatment. Future punctuation and warning beats should use slick high-resolution 3D dimensional materials, realistic cinematic light, depth, and motion, or literal human interaction such as a person holding a question mark. Preserve visual-system cohesion while making the result tactile, premium, and photographic.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     },
     {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "STORYLINE STANDARD (set by the approved 'The Room Behind You'): the viewer must be able to SEE the storyline scene by scene. Every visual literally depicts its spoken line's object/mechanism (game render-distance -> game footage; blind spot -> eye with void pupil; brain faking it -> painted-over wall). Concrete beats use genuine moving stock; abstract beats use effects stills. Keep this bar on every video.",
-     "query": null,
-     "profile": null
+      "id": "dramatic_object_specificity",
+      "title": "Use the most conceptually specific version of a physical object",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 1,
+      "affected_slugs": [
+        "the-loop"
+      ],
+      "decisions": {
+        "revise": 1
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": "the-loop",
+          "scene_number": 27,
+          "decision": "revise",
+          "comment": "I like the rocking chair idea, but an empty wooden rocking chair on a front porch rocking would increase the dramatic effect. It highlights the point of the rocking chair.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     },
     {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "EFFECTS STILLS: James wants generated stills to carry HEAVY, layered special effects (god rays, dense particles, energy trails, mist, bokeh, flares, iridescent glow) - maximally cinematic, never plain. Style lives in storyline_footage.EFFECTS_STILL_STYLE.",
-     "query": null,
-     "profile": null
+      "id": "graphics_quality_floor",
+      "title": "Reject low-grade or unclear generic graphics",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 1,
+      "affected_slugs": [
+        "the-loop"
+      ],
+      "decisions": {
+        "revise": 1
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": "the-loop",
+          "scene_number": 11,
+          "decision": "revise",
+          "comment": "Again terrible graphics, we really need to upgrade that.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "scene_continuity",
+      "title": "Adjacent conceptual beats should share a coherent visual world",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 1,
+      "affected_slugs": [],
+      "decisions": {
+        "unknown": 1
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Permanent title layout rule (2026-07-16): use at most 2 words per title line; allow 3 only when one is a short connector/function word such as \"I\", \"a\", \"the\", \"on\", \"of\", or \"to\".",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
+    },
+    {
+      "id": "voice_identity",
+      "title": "Preserve the exact requested narrator and supplied audio",
+      "status": "provisional",
+      "human_promotion_required": true,
+      "evidence_count": 1,
+      "affected_slugs": [],
+      "decisions": {
+        "unknown": 1
+      },
+      "examples": [
+        {
+          "source": "note",
+          "slug": null,
+          "scene_number": null,
+          "decision": null,
+          "comment": "Approved Other Versions of You stock-first rebuild: genuine moving stock in all 16 scenes, literal premium-realistic visual matches, no generated graphics or stills, and exact supplied narration bytes. Preserve this successful standard for ordinary stock-only rerenders.",
+          "query": null,
+          "profile": null
+        }
+      ],
+      "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
     }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "caption_restraint",
-   "title": "Do not print performance tags or dense paragraph captions",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 8,
-   "affected_slugs": [
-    "no-disagreement-here",
-    "the-room-behind-you"
-   ],
-   "decisions": {
-    "overall revise": 1,
-    "revise": 3,
-    "unknown": 4
-   },
-   "examples": [
+  ],
+  "uncategorized_count": 110,
+  "uncategorized_examples": [
     {
-     "source": "scene_feedback",
-     "slug": "the-room-behind-you",
-     "scene_number": 1,
-     "decision": "revise",
-     "comment": "With the text box you can't can see it because of the title. Not sure about text boxes as the first scene.",
-     "query": "dark empty living room dim doorway lamplight",
-     "profile": null
+      "source": "scene_feedback",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 1,
+      "decision": "revise",
+      "comment": "Maybe an animated still frame of a Jester (DMT Style) and a man standing in front of him or her. I would probable use the person in frame 5 (slide 5) as the Jester. Because that person seemingly have more scenes in the slide.",
+      "query": "adult man sits on a couch in a warm lived-in room talking animatedly to a friend, leans forward and gestures with both hands while curtains move in window light, genuine documentary footage with continuous body and environmental motion",
+      "profile": null
     },
     {
-     "source": "scene_feedback",
-     "slug": "no-disagreement-here",
-     "scene_number": 1,
-     "decision": "revise",
-     "comment": "would put a person shaking their head no. Also, take out [softly] out of the caption. Please take all voice tags out of the caption.",
-     "query": "macro shot of a hand hovering between two bar magnets that resist each other",
-     "profile": null
+      "source": "scene_feedback",
+      "slug": "the-edge-of-you-is-negotiable",
+      "scene_number": 1,
+      "decision": "approved",
+      "comment": "Approved as rendered.",
+      "query": "a realistic silicone prosthetic resting beside a paintbrush on a bare wooden table, warm lab lamp, shallow depth, subtle motion",
+      "profile": null
     },
     {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "James liked the How_Reality_Works reference slides: letterboxed band, mystical/surreal footage, captions on the black bar. That is now the default look.",
-     "query": null,
-     "profile": null
+      "source": "scene_feedback",
+      "slug": "the-person-isnt-here",
+      "scene_number": 1,
+      "decision": "revise",
+      "comment": "We have used this slide multiple times in the last 6 videos. We need to increase variety. Plus, vaguely follows story line. I would put two people arguing.",
+      "query": "two chairs facing each other across a warm table, one occupied and one empty, slow camera push through moving window light",
+      "profile": null
     },
     {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "v5: word-synced captions (whisper), CLIP footage matching (CI), -14 LUFS master, GitHub Actions render farm option.",
-     "query": null,
-     "profile": null
+      "source": "scene_feedback",
+      "slug": "the-person-isnt-here",
+      "scene_number": 3,
+      "decision": "revise",
+      "comment": "I like the slide but its a stretch to illustrate whats being said. I would show two people arguing again, but different angle.",
+      "query": "a falling wooden block strikes a ceramic cup and sends it sliding across a brightly side-lit table",
+      "profile": null
     },
     {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Title card: 2x size (190px Baloo ExtraBold), ALL-CAPS, multi-line stack allowed, may extend past the letterbox band but never into captions.",
-     "query": null,
-     "profile": null
+      "source": "scene_feedback",
+      "slug": "the-person-isnt-here",
+      "scene_number": 4,
+      "decision": "revise",
+      "comment": "We have used this slide multiple times. I would show like a slide bar of people with each person being highlighted as they move past the selector.",
+      "query": "hands sort partial portrait photographs into illuminated archive drawers as the camera tracks sideways",
+      "profile": null
     },
     {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Visual-symbol training from the 2026-07-14 reference: match the mechanism of each spoken line, not merely its mood. People are valid symbols only when they have a clear role; do not default to generic thoughtful-person footage. Deliberately alternate human, collective, perception, language, architecture, pathway, identity, time/memory, tool, nature, world-scale, geometry, transformation, and light/atmosphere symbols. Prefer one precise physical metaphor, limit repeated families and props, and ask whether the idea would remain legible with captions hidden.",
-     "query": null,
-     "profile": null
+      "source": "scene_feedback",
+      "slug": "the-person-isnt-here",
+      "scene_number": 13,
+      "decision": "revise",
+      "comment": "I would show two people facing opposite directions with thier backs touching. As if mad at each other.",
+      "query": "two security cameras rotate toward each other in a well-lit corridor, each filling the other's monitor",
+      "profile": null
     },
     {
-     "source": "note",
-     "slug": "the-room-behind-you",
-     "scene_number": null,
-     "decision": "overall revise",
-     "comment": "Lets replace the Text Boxes with still images with any special effects.",
-     "query": null,
-     "profile": null
+      "source": "scene_feedback",
+      "slug": "the-person-isnt-here",
+      "scene_number": 16,
+      "decision": "revise",
+      "comment": "This picture is a strech from whats being said. I would put something that involves a camera angle.",
+      "query": "a camera circles a sculpture, revealing a different shape with every smoothly changing angle",
+      "profile": null
     },
     {
-     "source": "note",
-     "slug": "no-disagreement-here",
-     "scene_number": 10,
-     "decision": "revise",
-     "comment": "Would probably make the animation of the text box showing how belief and truth.",
-     "query": null,
-     "profile": null
+      "source": "scene_feedback",
+      "slug": "the-person-isnt-here",
+      "scene_number": 17,
+      "decision": "revise",
+      "comment": "I would put a computer screen here that says loading.",
+      "query": "an old arcade screen loads portrait fragments one by one while its progress bar advances in warm neon light",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "the-person-isnt-here",
+      "scene_number": 18,
+      "decision": "revise",
+      "comment": "I would put a slide of a ugly door opening.",
+      "query": "a solid apartment door closes and its deadbolt turns while soft morning light remains visible through nearby windows",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "the-person-isnt-here",
+      "scene_number": 19,
+      "decision": "revise",
+      "comment": "I would show someone drawing a white chalk line on the concrete.",
+      "query": "window-blind shadows resembling bars slide away from an editing monitor as the room fills with daylight",
+      "profile": null
+    },
+    {
+      "source": "scene_feedback",
+      "slug": "the-person-isnt-here",
+      "scene_number": 23,
+      "decision": "revise",
+      "comment": "I would show pictures of people",
+      "query": "fingers remove blank sticky notes from around a printed portrait until only the photograph remains",
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "Voice: Liam (TX3LPaxmHKxFdv7VOQHJ). James sometimes records his own VO in ElevenLabs and uploads the mp3 - drop it in the build dir as vo.mp3.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "Format switched to 9:16 (1080x1920) on 2026-07-09. All future videos are phone-ratio.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "Mood: LIT-but-moody, not near-black. Prefer window light, god rays, lamplight, golden hour. A few dark slides fine; majority must have visible lighting. Ending scenes must match the words literally.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "Approved The Old Version. Still too many dark scenes: keep the lit-but-moody look but lift exposure/brightness across more slides. Prefer visibly illuminated faces, rooms, landscapes, window light, god rays, lamplight, and golden hour; reserve near-dark footage for only a few intentional beats. No rerender needed for this approved version.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "Music bed at 0.26 (raised twice from 0.16; James kept wanting it louder - keep it clearly audible under the VO).",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "Training v8: open with rapid same-color hook montage (1-3s beats), vary rhythm (short punches vs 8-14s holds), word-literal prop slides, 3-5 human/face beats incl. pointing-at-camera on direct address, closer slide visually reframes premise, final line echoes the title. See style_profile v8 section.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "DMT genre exists: set genre:dmt in script.json for trip/visionary scripts (title usually says DMT). Vivid saturated visuals, narrator room anchor, literal metaphor building, long morphing holds. See style_profile DMT section.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "v11: generative cinematic score (chord pads, reverb, stereo, genre-aware) + synthesized sound design (title/closer sub-drops, whooshes after long holds, closer riser). All free/synthesized, automatic.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "v12: footage from NASA/Prelinger/Wikimedia/Pixabay too (keyless, namespaced ids). Every scene saves top-3 alternates (alts.json + alts_sheet.jpg artifact); use learn.py pin <bd> <i> <id> to swap surgically.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "v13: renders auto-publish permanent GitHub Releases (video-<slug>); batch workflow renders multiple slugs in parallel; issue studio works keyless via pollinations text fallback.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "v14: taste vector live - record/swap feed a learned aesthetic embedding (pipeline/taste.npz, commit it with memory.json). Ranker blends it automatically once 8+ approved embeddings exist.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "Identity-specific footage must visibly match the named identity and action. For entering scenes, show a front-facing subject crossing into the room; avoid back-of-head shots that read as leaving.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "June Oxley videos are explicit opt-in only: use candid Southern rural/front-porch scenes, ordinary literal props and warm visible light, with occasional deadpan cosmic interruptions; use the dedicated twangy porch music profile. Never apply this style to other videos.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "June Oxley is an old white man. Keep this identity consistent in every June Oxley script, character description, human footage query, and generated hero image; do not portray him as Black.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "No more than 35% of finished runtime may be static-image slides. Pan/zoom/Ken Burns alone still counts as static. Prefer true footage or generated motion for ordinary actions; animate supplied stills with depth-separated/internal motion or controlled keyframe evolution, and measure the cap by seconds rather than scene count.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "Rejected The Belief Filter and renamed it Can You Fly?. Preserve approved scenes 1, 7, 23-27, 29-33, and 35. Revision grammar: 2 moving exclamation mark; 3 rooftop person with arms out; 4 moving question mark; 5 directional street sign and never guns; 6 two people staring; 8 one of those belief-scene people alone in an empty room; 9 choose a different person; 10 person shaking head no; 11 and 19 brain schematics; 12 hang glider; 15 protected-house security sign; 16 police officer badge; 17 matching puzzle with a door; 18 flashing red emergency beacon; 20 glasses or magnifier; 21 access denied; 28 crossed or circled question mark; 34 actual living-room furniture; 36 courtroom witness testifying; 37 person putting on glasses. Match literal mechanism first, then metaphor. Use enhanced stock-frame-conditioned stills when exact footage is unavailable.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": null,
+      "scene_number": null,
+      "decision": null,
+      "comment": "Every finished video must include a standalone per-scene review survey with numbered previews, narration, visual description, why the visual was chosen, Approve/Needs revision controls, and scene comments. Apply the exported feedback JSON through learn.py survey so approvals, rejections, and comments train future renders.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 3,
+      "decision": "approved",
+      "comment": "Very DMTish.",
+      "query": null,
+      "profile": null
+    },
+    {
+      "source": "note",
+      "slug": "jester-who-knew-my-name",
+      "scene_number": 4,
+      "decision": "approved",
+      "comment": "I like this it fits",
+      "query": null,
+      "profile": null
     }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "character_lip_sync",
-   "title": "Visible speaking character requires mouth movement",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 5,
-   "affected_slugs": [
-    "jester-who-knew-my-name"
-   ],
-   "decisions": {
-    "revise": 2,
-    "unknown": 3
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "v5: word-synced captions (whisper), CLIP footage matching (CI), -14 LUFS master, GitHub Actions render farm option.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Music bed at 0.21 (slightly louder). Clips must never visibly restart/loop mid-scene: pipeline stretches or boomerangs short clips and prefers clips >= scene duration.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Tricky props (e.g. dominoes): if a query misfires twice, curate manually - search the Pexels API, eyeball thumbnails, then PIN the clip by setting scene pexels_id (re-fetch-by-id makes it deterministic).",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "jester-who-knew-my-name",
-     "scene_number": 10,
-     "decision": "revise",
-     "comment": "Tv would be fine if it was the person from scene 5 sitting on it. Maybe an enhanced still clip (with motion effects) of a Jester.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "jester-who-knew-my-name",
-     "scene_number": 29,
-     "decision": "revise",
-     "comment": "Maybe a slide of just a mouth laughing. Make sure it matches the person's color of the rest of the slides.",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "dmt_motion_language",
-   "title": "DMT videos benefit from psychedelic moving graphics in moderation",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 5,
-   "affected_slugs": [
-    "jester-who-knew-my-name"
-   ],
-   "decisions": {
-    "revise": 4,
-    "unknown": 1
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Approved DMT: The Room Before Birth. Psychedelic moving graphics strongly enhance DMT videos and should remain a signature accent. For a roughly 2.5-minute, 25-scene DMT video, use one or two fewer abstract psychedelic-motion scenes than this cut, preserving more contrast with grounded or literal footage.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "jester-who-knew-my-name",
-     "scene_number": 2,
-     "decision": "revise",
-     "comment": "Not Bad but since this is a DMT video I would try to make the scenery look like the rest of the video. Maybe mystical folding walls.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "jester-who-knew-my-name",
-     "scene_number": 1,
-     "decision": "revise",
-     "comment": "For DMT Boxes with labels don't come across right. We can make it a rule to start dmt videos with exquisite psychedelic visuals.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "jester-who-knew-my-name",
-     "scene_number": 16,
-     "decision": "revise",
-     "comment": "Boxes with text should not be in DMT videos.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "jester-who-knew-my-name",
-     "scene_number": 24,
-     "decision": "revise",
-     "comment": "Again, Boxes with labels probably not in DMt videos. Other videos are fine.",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "stock_first_preference",
-   "title": "Prefer genuine moving stock when a direct match exists",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 5,
-   "affected_slugs": [
-    "the-edge-of-you-is-negotiable"
-   ],
-   "decisions": {
-    "revise": 1,
-    "unknown": 4
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Default still and hero slides must look like natural photographic frames that match the surrounding stock footage. Avoid gold fog, heavy volumetric haze, silhouetted figures, theatrical fantasy lighting, and visibly synthetic staging unless explicitly requested.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Still-image training from 2026-07-14: acquire genuine stock slides first, then choose the closest related selected stock-video frame and use that exact frame as the generated still's visual reference. Every still receives the full natural-photo, exposure/detail, depth/background, internal-motion, practical-light, grade, and grain treatment; preserve supplied originals, reject pan/zoom-only slides, keep all still-derived time inside the 35% cap, and fall back to genuine footage rather than emit an unreferenced generated still.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Other Versions of You was fully rejected. Start ordinary videos from genuine literal stock footage for every scene. Avoid multiple unrelated faces; prefer consistent hands, rear views, objects, places, and physical actions. Do not use deterministic symbolic graphics, generic low-grade graphics, hero images, or stills unless exact stock searching has genuinely failed and James explicitly accepts a substantially higher-grade fallback. Narrative correspondence and premium photographic realism outrank abstract visual cleverness.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "STANDING RULE (fallback visuals): when genuine stock footage cannot be found for a scene, the pipeline auto-generates an APPEALING SPECIAL-EFFECTS STILL IMAGE that represents the line (via hero.py effects style) — never a plain text/label graphic box. Implemented in storyline_footage._render_storyboard.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "the-edge-of-you-is-negotiable",
-     "scene_number": 11,
-     "decision": "revise",
-     "comment": "Hand/cane fusion looks synthetic and risks malformed fingers. Replace with real stock footage of a gloved hand using a cane or tool, emphasizing repeated controlled motion; no morphing, dissolving, or exposed fingers.",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "visual_semantic_match",
-   "title": "Visual must clearly represent the spoken concept",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 5,
-   "affected_slugs": [
-    "the-room-behind-you"
-   ],
-   "decisions": {
-    "revise": 4,
-    "unknown": 1
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Other Versions of You was fully rejected. Start ordinary videos from genuine literal stock footage for every scene. Avoid multiple unrelated faces; prefer consistent hands, rear views, objects, places, and physical actions. Do not use deterministic symbolic graphics, generic low-grade graphics, hero images, or stills unless exact stock searching has genuinely failed and James explicitly accepts a substantially higher-grade fallback. Narrative correspondence and premium photographic realism outrank abstract visual cleverness.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "the-room-behind-you",
-     "scene_number": 8,
-     "decision": "revise",
-     "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "the-room-behind-you",
-     "scene_number": 14,
-     "decision": "revise",
-     "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "the-room-behind-you",
-     "scene_number": 17,
-     "decision": "revise",
-     "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "the-room-behind-you",
-     "scene_number": 18,
-     "decision": "revise",
-     "comment": "Do a Still image that represents what's being said. The still image should have special effects.",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "deep_parallax",
-   "title": "Concept backgrounds should use strong layered depth",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 3,
-   "affected_slugs": [
-    "no-disagreement-here"
-   ],
-   "decisions": {
-    "approved": 1,
-    "unknown": 2
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Hero shots exist: scene flag hero:true + image_prompt generates free AI imagery (pollinations, keyless) animated with 2.5D depth parallax. Use on 2-4 impossible-metaphor beats, the thumbnail scene, and closers.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "PHOTOREAL DOCTRINE: hero stills are now photographs-of-the-impossible (see pipeline/PHOTOREAL_STYLE.md). Film-still language, one impossible element lit by scene light, mandatory three-plane depth (near occluder / mid subject / far haze). Never 'digital art'. DMT trance slides keep the stylized aura. Motion engine multiplane-v1 gives dolly-zoom/orbit/push-in/rack-focus deep parallax.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "no-disagreement-here",
-     "scene_number": 21,
-     "decision": "approved",
-     "comment": "Can we add a 3D effect with the picture moving or zooming out. Every still picture should have some sort slow zoom out.",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "title_safe_zone",
-   "title": "Titles must remain readable inside platform crop zones",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 3,
-   "affected_slugs": [],
-   "decisions": {
-    "unknown": 3
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Scene 0 is the thumbnail: it must show picture + title from frame one (no fade-in), and its query should be an especially striking LIT visual.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Tricky props (e.g. dominoes): if a query misfires twice, curate manually - search the Pexels API, eyeball thumbnails, then PIN the clip by setting scene pexels_id (re-fetch-by-id makes it deterministic).",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Hero shots exist: scene flag hero:true + image_prompt generates free AI imagery (pollinations, keyless) animated with 2.5D depth parallax. Use on 2-4 impossible-metaphor beats, the thumbnail scene, and closers.",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "literal_action_accuracy",
-   "title": "Literal actions must visibly perform the stated action",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 2,
-   "affected_slugs": [
-    "the-loop",
-    "the-room-behind-you"
-   ],
-   "decisions": {
-    "revise": 2
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": "the-loop",
-     "scene_number": 12,
-     "decision": "revise",
-     "comment": "Doesn't look like it painting a door. Looks like its painting the ground.",
-     "query": null,
-     "profile": null
-    },
-    {
-     "source": "note",
-     "slug": "the-room-behind-you",
-     "scene_number": 2,
-     "decision": "revise",
-     "comment": "I would do a person actually walking through a house.",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "cartoon_animation_definition",
-   "title": "Animated requests mean coherent cartoon animation",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 1,
-   "affected_slugs": [],
-   "decisions": {
-    "unknown": 1
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Approved Can You Fly?. Keep question marks, exclamation points, and ACCESS DENIED graphics in a cohesive shared color and template, but avoid flat or cartoonish treatment. Future punctuation and warning beats should use slick high-resolution 3D dimensional materials, realistic cinematic light, depth, and motion, or literal human interaction such as a person holding a question mark. Preserve visual-system cohesion while making the result tactile, premium, and photographic.",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "dramatic_object_specificity",
-   "title": "Use the most conceptually specific version of a physical object",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 1,
-   "affected_slugs": [
-    "the-loop"
-   ],
-   "decisions": {
-    "revise": 1
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": "the-loop",
-     "scene_number": 27,
-     "decision": "revise",
-     "comment": "I like the rocking chair idea, but an empty wooden rocking chair on a front porch rocking would increase the dramatic effect. It highlights the point of the rocking chair.",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "graphics_quality_floor",
-   "title": "Reject low-grade or unclear generic graphics",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 1,
-   "affected_slugs": [
-    "the-loop"
-   ],
-   "decisions": {
-    "revise": 1
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": "the-loop",
-     "scene_number": 11,
-     "decision": "revise",
-     "comment": "Again terrible graphics, we really need to upgrade that.",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "scene_continuity",
-   "title": "Adjacent conceptual beats should share a coherent visual world",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 1,
-   "affected_slugs": [],
-   "decisions": {
-    "unknown": 1
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Permanent title layout rule (2026-07-16): use at most 2 words per title line; allow 3 only when one is a short connector/function word such as \"I\", \"a\", \"the\", \"on\", \"of\", or \"to\".",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "id": "voice_identity",
-   "title": "Preserve the exact requested narrator and supplied audio",
-   "status": "provisional",
-   "human_promotion_required": true,
-   "evidence_count": 1,
-   "affected_slugs": [],
-   "decisions": {
-    "unknown": 1
-   },
-   "examples": [
-    {
-     "source": "note",
-     "slug": null,
-     "scene_number": null,
-     "decision": null,
-     "comment": "Approved Other Versions of You stock-first rebuild: genuine moving stock in all 16 scenes, literal premium-realistic visual matches, no generated graphics or stills, and exact supplied narration bytes. Preserve this successful standard for ordinary stock-only rerenders.",
-     "query": null,
-     "profile": null
-    }
-   ],
-   "promotion_requirement": "Review examples for a shared root cause, find at least one counterexample or scope boundary, then encode a regression test before production promotion."
-  },
-  {
-   "rule": "When James supplies hand-picked media (Pexels IDs or photos), map one asset per scene by narration meaning and pin exactly: videos via scene pexels_id, photos committed as hero_NN_raw.jpg with animated_still effects. His curation OVERRIDES generated art and search. First applied: black-wall-street-ep1-the-elevator v3, 2026-08-03.",
-   "source": "james_direct_instruction",
-   "status": "candidate",
-   "comment": "Black Wall Street Ep1: 23 pinned videos + 4 photo heroes from his 28-file upload; asset 14214648 (water tower/standpipe) reserved for Ep2."
-  }
- ],
- "uncategorized_count": 110,
- "uncategorized_examples": [
-  {
-   "source": "scene_feedback",
-   "slug": "jester-who-knew-my-name",
-   "scene_number": 1,
-   "decision": "revise",
-   "comment": "Maybe an animated still frame of a Jester (DMT Style) and a man standing in front of him or her. I would probable use the person in frame 5 (slide 5) as the Jester. Because that person seemingly have more scenes in the slide.",
-   "query": "adult man sits on a couch in a warm lived-in room talking animatedly to a friend, leans forward and gestures with both hands while curtains move in window light, genuine documentary footage with continuous body and environmental motion",
-   "profile": null
-  },
-  {
-   "source": "scene_feedback",
-   "slug": "the-edge-of-you-is-negotiable",
-   "scene_number": 1,
-   "decision": "approved",
-   "comment": "Approved as rendered.",
-   "query": "a realistic silicone prosthetic resting beside a paintbrush on a bare wooden table, warm lab lamp, shallow depth, subtle motion",
-   "profile": null
-  },
-  {
-   "source": "scene_feedback",
-   "slug": "the-person-isnt-here",
-   "scene_number": 1,
-   "decision": "revise",
-   "comment": "We have used this slide multiple times in the last 6 videos. We need to increase variety. Plus, vaguely follows story line. I would put two people arguing.",
-   "query": "two chairs facing each other across a warm table, one occupied and one empty, slow camera push through moving window light",
-   "profile": null
-  },
-  {
-   "source": "scene_feedback",
-   "slug": "the-person-isnt-here",
-   "scene_number": 3,
-   "decision": "revise",
-   "comment": "I like the slide but its a stretch to illustrate whats being said. I would show two people arguing again, but different angle.",
-   "query": "a falling wooden block strikes a ceramic cup and sends it sliding across a brightly side-lit table",
-   "profile": null
-  },
-  {
-   "source": "scene_feedback",
-   "slug": "the-person-isnt-here",
-   "scene_number": 4,
-   "decision": "revise",
-   "comment": "We have used this slide multiple times. I would show like a slide bar of people with each person being highlighted as they move past the selector.",
-   "query": "hands sort partial portrait photographs into illuminated archive drawers as the camera tracks sideways",
-   "profile": null
-  },
-  {
-   "source": "scene_feedback",
-   "slug": "the-person-isnt-here",
-   "scene_number": 13,
-   "decision": "revise",
-   "comment": "I would show two people facing opposite directions with thier backs touching. As if mad at each other.",
-   "query": "two security cameras rotate toward each other in a well-lit corridor, each filling the other's monitor",
-   "profile": null
-  },
-  {
-   "source": "scene_feedback",
-   "slug": "the-person-isnt-here",
-   "scene_number": 16,
-   "decision": "revise",
-   "comment": "This picture is a strech from whats being said. I would put something that involves a camera angle.",
-   "query": "a camera circles a sculpture, revealing a different shape with every smoothly changing angle",
-   "profile": null
-  },
-  {
-   "source": "scene_feedback",
-   "slug": "the-person-isnt-here",
-   "scene_number": 17,
-   "decision": "revise",
-   "comment": "I would put a computer screen here that says loading.",
-   "query": "an old arcade screen loads portrait fragments one by one while its progress bar advances in warm neon light",
-   "profile": null
-  },
-  {
-   "source": "scene_feedback",
-   "slug": "the-person-isnt-here",
-   "scene_number": 18,
-   "decision": "revise",
-   "comment": "I would put a slide of a ugly door opening.",
-   "query": "a solid apartment door closes and its deadbolt turns while soft morning light remains visible through nearby windows",
-   "profile": null
-  },
-  {
-   "source": "scene_feedback",
-   "slug": "the-person-isnt-here",
-   "scene_number": 19,
-   "decision": "revise",
-   "comment": "I would show someone drawing a white chalk line on the concrete.",
-   "query": "window-blind shadows resembling bars slide away from an editing monitor as the room fills with daylight",
-   "profile": null
-  },
-  {
-   "source": "scene_feedback",
-   "slug": "the-person-isnt-here",
-   "scene_number": 23,
-   "decision": "revise",
-   "comment": "I would show pictures of people",
-   "query": "fingers remove blank sticky notes from around a printed portrait until only the photograph remains",
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "Voice: Liam (TX3LPaxmHKxFdv7VOQHJ). James sometimes records his own VO in ElevenLabs and uploads the mp3 - drop it in the build dir as vo.mp3.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "Format switched to 9:16 (1080x1920) on 2026-07-09. All future videos are phone-ratio.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "Mood: LIT-but-moody, not near-black. Prefer window light, god rays, lamplight, golden hour. A few dark slides fine; majority must have visible lighting. Ending scenes must match the words literally.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "Approved The Old Version. Still too many dark scenes: keep the lit-but-moody look but lift exposure/brightness across more slides. Prefer visibly illuminated faces, rooms, landscapes, window light, god rays, lamplight, and golden hour; reserve near-dark footage for only a few intentional beats. No rerender needed for this approved version.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "Music bed at 0.26 (raised twice from 0.16; James kept wanting it louder - keep it clearly audible under the VO).",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "Training v8: open with rapid same-color hook montage (1-3s beats), vary rhythm (short punches vs 8-14s holds), word-literal prop slides, 3-5 human/face beats incl. pointing-at-camera on direct address, closer slide visually reframes premise, final line echoes the title. See style_profile v8 section.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "DMT genre exists: set genre:dmt in script.json for trip/visionary scripts (title usually says DMT). Vivid saturated visuals, narrator room anchor, literal metaphor building, long morphing holds. See style_profile DMT section.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "v11: generative cinematic score (chord pads, reverb, stereo, genre-aware) + synthesized sound design (title/closer sub-drops, whooshes after long holds, closer riser). All free/synthesized, automatic.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "v12: footage from NASA/Prelinger/Wikimedia/Pixabay too (keyless, namespaced ids). Every scene saves top-3 alternates (alts.json + alts_sheet.jpg artifact); use learn.py pin <bd> <i> <id> to swap surgically.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "v13: renders auto-publish permanent GitHub Releases (video-<slug>); batch workflow renders multiple slugs in parallel; issue studio works keyless via pollinations text fallback.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "v14: taste vector live - record/swap feed a learned aesthetic embedding (pipeline/taste.npz, commit it with memory.json). Ranker blends it automatically once 8+ approved embeddings exist.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "Identity-specific footage must visibly match the named identity and action. For entering scenes, show a front-facing subject crossing into the room; avoid back-of-head shots that read as leaving.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "June Oxley videos are explicit opt-in only: use candid Southern rural/front-porch scenes, ordinary literal props and warm visible light, with occasional deadpan cosmic interruptions; use the dedicated twangy porch music profile. Never apply this style to other videos.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "June Oxley is an old white man. Keep this identity consistent in every June Oxley script, character description, human footage query, and generated hero image; do not portray him as Black.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "No more than 35% of finished runtime may be static-image slides. Pan/zoom/Ken Burns alone still counts as static. Prefer true footage or generated motion for ordinary actions; animate supplied stills with depth-separated/internal motion or controlled keyframe evolution, and measure the cap by seconds rather than scene count.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "Rejected The Belief Filter and renamed it Can You Fly?. Preserve approved scenes 1, 7, 23-27, 29-33, and 35. Revision grammar: 2 moving exclamation mark; 3 rooftop person with arms out; 4 moving question mark; 5 directional street sign and never guns; 6 two people staring; 8 one of those belief-scene people alone in an empty room; 9 choose a different person; 10 person shaking head no; 11 and 19 brain schematics; 12 hang glider; 15 protected-house security sign; 16 police officer badge; 17 matching puzzle with a door; 18 flashing red emergency beacon; 20 glasses or magnifier; 21 access denied; 28 crossed or circled question mark; 34 actual living-room furniture; 36 courtroom witness testifying; 37 person putting on glasses. Match literal mechanism first, then metaphor. Use enhanced stock-frame-conditioned stills when exact footage is unavailable.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": null,
-   "scene_number": null,
-   "decision": null,
-   "comment": "Every finished video must include a standalone per-scene review survey with numbered previews, narration, visual description, why the visual was chosen, Approve/Needs revision controls, and scene comments. Apply the exported feedback JSON through learn.py survey so approvals, rejections, and comments train future renders.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": "jester-who-knew-my-name",
-   "scene_number": 3,
-   "decision": "approved",
-   "comment": "Very DMTish.",
-   "query": null,
-   "profile": null
-  },
-  {
-   "source": "note",
-   "slug": "jester-who-knew-my-name",
-   "scene_number": 4,
-   "decision": "approved",
-   "comment": "I like this it fits",
-   "query": null,
-   "profile": null
-  }
- ],
- "authority_boundary": "These are candidate rules, not production policy. No candidate may alter scripts, visual routing, voices, or publishing until a human reviews scope and a regression test exists."
+  ],
+  "authority_boundary": "These are candidate rules, not production policy. No candidate may alter scripts, visual routing, voices, or publishing until a human reviews scope and a regression test exists."
 }
