@@ -176,23 +176,23 @@ def _look_at(obj, target, mathutils):
 def _camera(bpy, mathutils, plan, frame_end):
     variant = int(plan["variant"])
     starts = (
-        (0.0, -18.0, 3.15),
-        (-1.1, -18.4, 3.35),
-        (1.0, -18.2, 3.05),
-        (-0.5, -17.8, 2.85),
-        (0.7, -18.3, 3.45),
-        (0.0, -18.6, 3.10),
+        (0.0, -19.0, 3.15),
+        (-0.4, -19.3, 3.35),
+        (0.4, -19.1, 3.05),
+        (-0.3, -18.8, 2.85),
+        (0.35, -19.2, 3.45),
+        (0.0, -19.4, 3.10),
     )
     ends = (
-        (0.5, -16.5, 3.30),
-        (0.7, -16.8, 3.15),
-        (-0.8, -16.6, 3.30),
-        (0.3, -16.9, 3.55),
-        (-0.5, -16.3, 3.20),
-        (0.8, -17.0, 3.28),
+        (0.3, -17.8, 3.30),
+        (0.35, -18.0, 3.15),
+        (-0.35, -17.9, 3.30),
+        (0.2, -18.1, 3.55),
+        (-0.3, -17.7, 3.20),
+        (0.4, -18.2, 3.28),
     )
     data = bpy.data.cameras.new("Graphic Camera")
-    data.lens = 51 - (variant % 3) * 2
+    data.lens = 46 - (variant % 3)
     camera = bpy.data.objects.new("Graphic Camera", data)
     bpy.context.collection.objects.link(camera)
     camera.location = starts[variant]
