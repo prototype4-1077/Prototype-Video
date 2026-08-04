@@ -94,6 +94,21 @@ class BlenderGraphicsTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "unsupported Blender graphic kind"):
             blender_graphics.plan_for({}, scene, 0, ["A"])
 
+    def test_clip_scene_writes_to_proof_directory(self):
+        script = {"scenes": [dict(self._scene("path"), keywords=["A", "B"])]}
+        with tempfile.TemporaryDirectory() as td:
+            build = Path(td) / "build"
+            output_dir = Path(td) / "proof"
+            build.mkdir()
+            (build / "script.json").write_text(json.dumps(script), encoding="utf-8")
+            with mock.patch.object(
+                blender_graphics, "_invoke", side_effect=lambda _plan, output, **_: output,
+            ) as invoke:
+                output = blender_graphics.clip_scene(build, 0, output_dir)
+
+            self.assertEqual(output, output_dir / "scene-01-path.mp4")
+            self.assertEqual(invoke.call_args.args[0]["kind"], "path")
+
 
 if __name__ == "__main__":
     unittest.main()

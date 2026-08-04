@@ -302,11 +302,11 @@ def _path_scene(bpy, plan, frame_end):
     palette = plan["palette"]
     mirror = -1 if plan["variant"] % 2 else 1
     points = [
-        (-6.7 * mirror, 0.35, 1.0),
+        (-6.0 * mirror, 0.35, 1.0),
         (-3.8 * mirror, 0.20, 2.45),
         (-0.8 * mirror, 0.65, 1.55),
         (2.2 * mirror, 0.10, 3.20),
-        (6.2 * mirror, 0.55, 2.25),
+        (5.3 * mirror, 0.55, 2.25),
     ]
     road = _curve(bpy, "Extruded route", points, palette["coral"], 0.13)
     road.data.bevel_factor_end = 0.01

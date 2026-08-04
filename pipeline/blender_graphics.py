@@ -285,6 +285,22 @@ def preview_scene(
     return _invoke(plan, output, blender=blender, preview=True)
 
 
+def clip_scene(
+    build_dir: str | os.PathLike[str],
+    index: int,
+    output_dir: str | os.PathLike[str],
+    *,
+    blender: str | None = None,
+) -> Path:
+    build = Path(build_dir)
+    script = json.loads((build / "script.json").read_text(encoding="utf-8"))
+    scene = script["scenes"][int(index)]
+    raw_labels = scene.get("keywords") or [scene.get("primary_symbol")]
+    plan = plan_for(script, scene, int(index), list(raw_labels or []))
+    output = Path(output_dir) / f"scene-{int(index) + 1:02d}-{plan['kind']}.mp4"
+    return _invoke(plan, output, blender=blender)
+
+
 def cli(argv=None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("build_dir", type=Path)
@@ -293,13 +309,9 @@ def cli(argv=None) -> int:
     parser.add_argument("--blender", default=None)
     parser.add_argument("--preview", action="store_true")
     args = parser.parse_args(argv)
-    if not args.preview:
-        raise SystemExit("the standalone CLI currently requires --preview")
-    output = preview_scene(
-        args.build_dir,
-        args.scene,
-        args.output_dir,
-        blender=args.blender,
+    renderer = preview_scene if args.preview else clip_scene
+    output = renderer(
+        args.build_dir, args.scene, args.output_dir, blender=args.blender,
     )
     print(output)
     return 0
