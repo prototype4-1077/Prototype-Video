@@ -1,3 +1,4 @@
+import os
 """Generative cinematic score engine v3 (fully synthesized - no licensing, no APIs).
 Usage: python3 music.py <out.wav> <seconds> [vo.mp3|-] [genre|-] [profile|-] [variant]
 - slow minor chord pads with detuned voices + synthetic reverb (real stereo)
@@ -155,6 +156,19 @@ def _porch_score(n, seconds, rng, variant=1):
 
 
 def gen(path, seconds, vo=None, genre=None, profile=None, variant=1):
+    # James can commit build/<slug>/music_override.mp3 (e.g. a public-domain
+    # spiritual) - it replaces the synthesized score outright, looped/faded to fit.
+    _bd = os.path.dirname(os.path.abspath(path))
+    _ov = os.path.join(_bd, "music_override.mp3")
+    if os.path.exists(_ov) and os.path.getsize(_ov) > 100_000:
+        import subprocess
+        subprocess.run(
+            ["ffmpeg", "-y", "-loglevel", "error", "-stream_loop", "-1",
+             "-i", _ov, "-t", f"{float(seconds):.2f}", "-ar", str(SR), "-ac", "2",
+             "-af", f"volume=0.9,afade=t=in:st=0:d=2,afade=t=out:st={max(0.0,float(seconds)-3):.2f}:d=3",
+             path], check=True, timeout=300)
+        print(f"music: {seconds:.1f}s from committed override music_override.mp3")
+        return
     vo = None if vo in (None, "", "-") else vo
     genre = None if genre in (None, "", "-") else genre
     profile = None if profile in (None, "", "-") else profile

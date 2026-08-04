@@ -8,7 +8,7 @@ then advances the build as far as it can within a ~30s budget and exits with:
     DONE -> final_youtube.mp4 (default) -> finished
     ERROR: <what> | FIX: <how>      -> fix, then run again
 Every step is resumable; running again never breaks anything."""
-import json, os, shutil, subprocess, sys, tempfile, time, urllib.request
+import json, os, re, shutil, subprocess, sys, tempfile, time, urllib.request
 
 import motion
 import hero
@@ -114,8 +114,9 @@ def validate(bd):
     for i, x in enumerate(sc):
         if not x.get("text"):
             err(f"scene {i} has no text", "every scene needs a 'text' sentence")
-        if len(x["text"]) > 220:
-            err(f"scene {i} text too long ({len(x['text'])} chars)", "split it into two scenes")
+        spoken_len = len(re.sub(r"\[[^\[\]]{1,48}\]", "", x["text"]))
+        if spoken_len > 220:
+            err(f"scene {i} text too long ({spoken_len} spoken chars)", "split it into two scenes")
         low = x["text"].lower()
         for k in x.get("keywords", []):
             if k.lower().split()[0] not in low:

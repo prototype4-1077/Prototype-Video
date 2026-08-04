@@ -249,7 +249,7 @@ def assess(
     overlong = [
         (index, len(str(scene.get("text") or "")))
         for index, scene in enumerate(script.get("scenes") or [])
-        if len(str(scene.get("text") or "")) > 220
+        if len(re.sub(r"\[[^\[\]]{1,48}\]", "", str(scene.get("text") or ""))) > 220
     ]
     if overlong:
         detail = ", ".join(f"scene {index} is {length} chars" for index, length in overlong[:5])
