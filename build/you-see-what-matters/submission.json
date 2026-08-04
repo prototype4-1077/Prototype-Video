@@ -3,6 +3,13 @@
   "voice": "liam",
   "series_label": null,
   "visual_style": "literal_motion_graphics",
+  "visual_revision": "graphic-variety-v2",
+  "avoid_stock_ids": [
+    13141960, 19810466, 13752470, 4181137, 8197902, 36214844,
+    18748018, 7947491, 7205338, 9902185, 2836008, 5971457,
+    29042106, 34845727, 34436237, 37334334, 7691735,
+    34804677, 15291824, 6498971
+  ],
   "voice_standard": "Speak like a perceptive friend revealing a useful mental habit. Keep it conversational, lightly funny, and concrete. Build from curiosity to clarity, then finish with calm personal agency. Let the questions breathe and avoid sounding mystical or preachy.",
   "desired_movement": "From assuming perception is a neutral recording to recognizing that attention ranks reality by personal relevance, then using that insight deliberately.",
   "grounding": "Attention and perception are described through simplified visual metaphors. The script does not claim that noticing something causes it to exist or that people can perceive everything consciously.",
@@ -13,7 +20,7 @@
     {
       "text": "Quick question. Have you ever looked for your keys, failed to see them, then found them exactly where you already checked?",
       "visual": "A richly detailed ordinary room splits into layers while one set of keys remains present but visually ignored until a luminous focus field reveals it.",
-      "visual_mode": "hero",
+      "visual_mode": "stock",
       "audio_tags": ["curious", "lightly amused"],
       "semantic_anchor": "An object can be physically present without becoming consciously relevant.",
       "visual_function": "perspective_shift",
@@ -26,6 +33,7 @@
       "audio_tags": ["knowing"],
       "semantic_anchor": "Attention determines which visible object enters awareness.",
       "visual_function": "mechanism",
+      "graphic_kind": "filter",
       "symbol_family": "perception"
     },
     {
@@ -35,6 +43,7 @@
       "audio_tags": ["more direct"],
       "semantic_anchor": "A minor attention failure reveals a general perception system.",
       "visual_function": "scale_shift",
+      "graphic_kind": "generic",
       "symbol_family": "geometry"
     },
     {
@@ -53,6 +62,7 @@
       "audio_tags": ["playful"],
       "semantic_anchor": "Different priorities rank different details inside the same environment.",
       "visual_function": "contrast",
+      "graphic_kind": "counters",
       "symbol_family": "object_tool"
     },
     {
@@ -62,6 +72,7 @@
       "audio_tags": ["measured"],
       "semantic_anchor": "Perception compresses a complex environment into a manageable personal summary.",
       "visual_function": "contrast",
+      "graphic_kind": "scale",
       "symbol_family": "geometry"
     },
     {
@@ -71,6 +82,7 @@
       "audio_tags": ["precise"],
       "semantic_anchor": "The brain edits incoming information according to relevance.",
       "visual_function": "mechanism",
+      "graphic_kind": "perception",
       "symbol_family": "perception"
     },
     {
@@ -80,6 +92,7 @@
       "audio_tags": ["dryly amused"],
       "semantic_anchor": "Many signals compete for limited conscious bandwidth.",
       "visual_function": "mechanism",
+      "graphic_kind": "clock",
       "symbol_family": "language"
     },
     {
@@ -89,6 +102,7 @@
       "audio_tags": ["grounded", "firm"],
       "semantic_anchor": "Limited bandwidth requires information to be selected or discarded.",
       "visual_function": "mechanism",
+      "graphic_kind": "filter",
       "symbol_family": "object_tool"
     },
     {
@@ -107,15 +121,16 @@
       "audio_tags": ["compassionate"],
       "semantic_anchor": "An expectation of rejection recruits ambiguous details as confirming evidence.",
       "visual_function": "mechanism",
+      "graphic_kind": "evidence",
       "symbol_family": "language"
     },
     {
       "text": "If you expect opportunity, the same world begins offering loose threads, useful conversations, and doors you can actually knock on.",
       "visual": "One city scene exists in multiple luminous layers as connections, open doors, and possible routes reveal themselves without changing the underlying world.",
-      "visual_mode": "hero",
       "audio_tags": ["building", "hopeful"],
       "semantic_anchor": "A different relevance setting reveals opportunities already present in the environment.",
       "visual_function": "perspective_shift",
+      "graphic_kind": "path",
       "symbol_family": "world_scale"
     },
     {
@@ -125,6 +140,7 @@
       "audio_tags": ["clear"],
       "semantic_anchor": "Changing relevance alters conscious results without changing the entire external world.",
       "visual_function": "contrast",
+      "graphic_kind": "counters",
       "symbol_family": "time_memory"
     },
     {
@@ -134,6 +150,7 @@
       "audio_tags": ["serious", "assuring"],
       "semantic_anchor": "Selective attention does not erase genuine hardship.",
       "visual_function": "boundary",
+      "graphic_kind": "scale",
       "symbol_family": "geometry"
     },
     {
@@ -143,6 +160,7 @@
       "audio_tags": ["measured"],
       "semantic_anchor": "Experience combines external events with internal selection.",
       "visual_function": "mechanism",
+      "graphic_kind": "generic",
       "symbol_family": "geometry"
     },
     {
@@ -152,6 +170,7 @@
       "audio_tags": ["with quiet intensity"],
       "semantic_anchor": "Repeated attention trains future relevance rankings.",
       "visual_function": "recursion",
+      "graphic_kind": "perception",
       "symbol_family": "perception"
     },
     {
@@ -170,6 +189,7 @@
       "audio_tags": ["intimate"],
       "semantic_anchor": "Internal priorities focus several domains of personal experience.",
       "visual_function": "mechanism",
+      "graphic_kind": "clock",
       "symbol_family": "identity"
     },
     {
@@ -179,6 +199,7 @@
       "audio_tags": ["encouraging"],
       "semantic_anchor": "Automatic relevance rankings can be consciously examined.",
       "visual_function": "transformation",
+      "graphic_kind": "labels",
       "symbol_family": "language"
     },
     {
@@ -188,15 +209,16 @@
       "audio_tags": ["warm", "building"],
       "semantic_anchor": "Deliberate attention can include useful evidence that fear previously excluded.",
       "visual_function": "perspective_shift",
+      "graphic_kind": "evidence",
       "symbol_family": "language"
     },
     {
       "text": "Reality is larger than the version currently highlighted on your screen. The missing parts were not necessarily hidden. They may have been waiting to matter.",
       "visual": "A dark perception interface unfolds into a vast layered world as muted details gain color, depth, motion, and connection beyond the original focus frame.",
-      "visual_mode": "hero",
       "audio_tags": ["spacious", "profound"],
       "semantic_anchor": "Reality contains more information than the currently highlighted conscious version.",
       "visual_function": "scale_shift",
+      "graphic_kind": "path",
       "symbol_family": "world_scale"
     },
     {
@@ -206,6 +228,7 @@
       "audio_tags": ["quiet", "inviting"],
       "semantic_anchor": "The viewer can question what repeated attention has trained them to notice.",
       "visual_function": "choice",
+      "graphic_kind": "labels",
       "symbol_family": "perception"
     }
   ]
