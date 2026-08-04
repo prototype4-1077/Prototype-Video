@@ -7,23 +7,40 @@
       "passed": true,
       "profile": null
     },
-    "hero_readiness": {
+    "graphic_compositions": {
       "applicable": true,
-      "committed_hero": false,
+      "counts": {
+        "clock": 2,
+        "counters": 2,
+        "evidence": 2,
+        "filter": 2,
+        "generic": 2,
+        "labels": 2,
+        "path": 2,
+        "perception": 2,
+        "scale": 2
+      },
+      "invalid_scene_indexes": [],
+      "kind_count": 9,
+      "longest_run": {
+        "kind": "filter",
+        "length": 1
+      },
+      "missing_explicit_scene_indexes": [],
       "passed": true,
-      "policy": "runtime_generated",
-      "runtime_scene_generation": true,
-      "scene_prompt_count": 3
+      "scene_count": 18,
+      "violations": []
+    },
+    "hero_readiness": {
+      "applicable": false,
+      "passed": true,
+      "policy": "motion_only_no_static_hero"
     },
     "planned_still_budget": {
       "cap": 0.5,
-      "estimated_ratio": 0.166247,
+      "estimated_ratio": 0.0,
       "passed": true,
-      "still_scene_indexes": [
-        0,
-        11,
-        20
-      ],
+      "still_scene_indexes": [],
       "used_exact_durations": false
     },
     "source_narration": {
@@ -38,10 +55,10 @@
         "human": 1,
         "identity": 1,
         "language": 3,
-        "nature": 1,
         "object_tool": 5,
         "perception": 4,
-        "time_memory": 1
+        "time_memory": 1,
+        "world_scale": 1
       },
       "generic_human_ratio": 0.0455,
       "human_presence_ratio": 0.1364,
@@ -91,12 +108,12 @@
       "scene_count": 22,
       "scenes": [
         {
-          "effective_query": "",
+          "effective_query": "A richly detailed ordinary room splits into layers while one set of keys remains present but visually ignored until a luminous focus field reveals it.",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 0,
-          "original_query": null,
+          "original_query": "A richly detailed ordinary room splits into layers while one set of keys remains present but visually ignored until a luminous focus field reveals it.",
           "primary_symbol": "a richly detailed ordinary room splits into layers while one",
           "query_family": "architecture",
           "selected_family": null,
@@ -256,14 +273,14 @@
           "visual_function": "mechanism"
         },
         {
-          "effective_query": "",
+          "effective_query": "One city scene exists in multiple luminous layers as connections, open doors, and possible routes reveal themselves without changing the underlying world.",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 11,
-          "original_query": null,
+          "original_query": "One city scene exists in multiple luminous layers as connections, open doors, and possible routes reveal themselves without changing the underlying world.",
           "primary_symbol": "one city scene exists in multiple luminous layers as connect",
-          "query_family": "nature",
+          "query_family": "world_scale",
           "selected_family": null,
           "semantic_anchor": "A different relevance setting reveals opportunities already present in the environment.",
           "symbol_family": "world_scale",
@@ -391,12 +408,12 @@
           "visual_function": "perspective_shift"
         },
         {
-          "effective_query": "",
+          "effective_query": "A dark perception interface unfolds into a vast layered world as muted details gain color, depth, motion, and connection beyond the original focus frame.",
           "generic_human": false,
           "human_present": false,
           "human_role": null,
           "index": 20,
-          "original_query": null,
+          "original_query": "A dark perception interface unfolds into a vast layered world as muted details gain color, depth, motion, and connection beyond the original focus frame.",
           "primary_symbol": "a dark perception interface unfolds into a vast layered worl",
           "query_family": "architecture",
           "selected_family": null,
