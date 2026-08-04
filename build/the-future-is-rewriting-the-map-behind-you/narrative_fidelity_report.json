@@ -1,0 +1,1384 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "narrative_fidelity_first": true,
+    "strict_first_fraction": 0.72,
+    "minimum_anchor_coverage": 0.18,
+    "minimum_human_anchor_coverage": 0.1,
+    "fallback_when_no_direct_stock_match": "literal_storyboard",
+    "mood_never_overrides_story": true
+  },
+  "scenes": [
+    {
+      "scene_index": 0,
+      "text": "Here is a strange thought. The future you expect may already be directing who you are today.",
+      "query": null,
+      "narrative_mode_before": "hero",
+      "result": "stock_fallback_from_storyboard",
+      "candidate_decisions": [
+        {
+          "stock_id": 13141960,
+          "base_score": 81.5,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 81.5
+        },
+        {
+          "stock_id": 30449698,
+          "base_score": 79.08,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 79.08
+        },
+        {
+          "stock_id": 15040626,
+          "base_score": 71.27,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 71.27
+        },
+        {
+          "stock_id": 34061737,
+          "base_score": 70.59,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 70.59
+        },
+        {
+          "stock_id": 15753459,
+          "base_score": 69.64,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 69.64
+        },
+        {
+          "stock_id": 7615705,
+          "base_score": 66.92,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 66.92
+        },
+        {
+          "stock_id": 13141636,
+          "base_score": 66.78,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 66.78
+        },
+        {
+          "stock_id": 29796963,
+          "base_score": 65.05,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 65.05
+        },
+        {
+          "stock_id": 34659069,
+          "base_score": 64.58,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 64.58
+        },
+        {
+          "stock_id": 8679940,
+          "base_score": 42.18,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 42.18
+        },
+        {
+          "stock_id": 8679941,
+          "base_score": 41.7,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 41.7
+        },
+        {
+          "stock_id": "coverr:coverr-posing-with-christmas-bags-8768",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-businesswoman-checking-the-time-on-her-watch-2682",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-old-man-drawing-in-a-notebook-7324",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-man-stands-by-the-sea-at-sunset",
+          "base_score": 29.54,
+          "anchor_coverage": 0.083,
+          "accepted": false,
+          "reason": "anchor coverage 0.08 below 0.10",
+          "final_score": 32.04
+        },
+        {
+          "stock_id": "coverr:coverr-serene-beach-escape",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-rubs-his-face-near-the-sea",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-puts-on-wetsuit",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-sunset-fetch-playtime-with-dog",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-waves-to-photographer",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-sunbathes-and-checks-the-phone",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-cheerful-guy-takes-selfie-indoors",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-casual-outdoor-sneaker-tying",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-city-viewpoint-contemplation",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-tourist-taking-selfie-with-hollywood-sign",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": 8679945,
+          "base_score": 24.66,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 24.66
+        },
+        {
+          "stock_id": 8679947,
+          "base_score": 18.97,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 18.97
+        },
+        {
+          "stock_id": 8679949,
+          "base_score": 15.72,
+          "anchor_coverage": 0.0,
+          "accepted": false,
+          "reason": "anchor coverage 0.00 below 0.10",
+          "final_score": 15.72
+        }
+      ],
+      "plan": {
+        "scene_index": 0,
+        "result": "stock_fallback_from_storyboard",
+        "fallback_reason": "no stock candidate represented the spoken anchors; storyboard lacked motion",
+        "stock_id": 13141960
+      }
+    },
+    {
+      "scene_index": 1,
+      "text": "I do not mean tomorrow is shooting laser beams into Tuesday. Time can keep its dignity.",
+      "query": "A serious timeline rejects a cartoon LASER FROM TOMORROW label with a red stamp while the metaphor indicator remains active.",
+      "narrative_mode_before": "storyboard",
+      "result": "literal_storyboard",
+      "plan": {
+        "scene_index": 1,
+        "text": "I do not mean tomorrow is shooting laser beams into Tuesday. Time can keep its dignity.",
+        "keywords": [
+          "TOMORROW",
+          "NO LASER",
+          "METAPHOR"
+        ],
+        "semantic_anchor": "The argument is about expectation, not literal backward causation.",
+        "query": "A serious timeline rejects a cartoon LASER FROM TOMORROW label with a red stamp while the metaphor indicator remains active.",
+        "output": "clip_01.mp4",
+        "motion_evidence": {
+          "passes": true,
+          "samples": 9,
+          "residual_flow_p75": 0.0239,
+          "active_region_ratio": 0.1599,
+          "frame_difference": 2.9915
+        },
+        "fallback_reason": "literal mechanism preferred"
+      }
+    },
+    {
+      "scene_index": 2,
+      "text": "I mean your prediction of what comes next changes the route you take before anything has happened.",
+      "query": "A route map receives an EXPECTED OUTCOME pin, then redraws every present arrow before the traveler moves.",
+      "narrative_mode_before": "storyboard",
+      "result": "stock_fallback_from_storyboard",
+      "plan": {
+        "scene_index": 2,
+        "result": "stock_fallback_from_storyboard",
+        "fallback_reason": "literal mechanism preferred; storyboard lacked motion",
+        "stock_id": 2836008
+      }
+    },
+    {
+      "scene_index": 3,
+      "text": "Imagine expecting a meeting to go badly. Before it starts, your shoulders tighten, your answers shorten, and your patience leaves.",
+      "query": "Real documentary footage of a person waiting outside a meeting room, checking notes, tightening posture, and taking a guarded breath.",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 5971457,
+      "candidate_decisions": [
+        {
+          "stock_id": 5971457,
+          "base_score": 85.3,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 85.3
+        },
+        {
+          "stock_id": 6601993,
+          "base_score": 75.44,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 75.44
+        },
+        {
+          "stock_id": 7652154,
+          "base_score": 73.35,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 73.35
+        },
+        {
+          "stock_id": 4100690,
+          "base_score": 68.04,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 68.04
+        },
+        {
+          "stock_id": 34506428,
+          "base_score": 68.04,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 68.04
+        },
+        {
+          "stock_id": 6535744,
+          "base_score": 67.06,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 72.06
+        },
+        {
+          "stock_id": 36343656,
+          "base_score": 62.45,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 62.45
+        },
+        {
+          "stock_id": 38493696,
+          "base_score": 61.8,
+          "anchor_coverage": 0.083,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 64.3
+        },
+        {
+          "stock_id": 7683485,
+          "base_score": 61.09,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 61.09
+        },
+        {
+          "stock_id": 6062525,
+          "base_score": 59.37,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 59.37
+        },
+        {
+          "stock_id": 7522361,
+          "base_score": 56.32,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 56.32
+        },
+        {
+          "stock_id": 35660685,
+          "base_score": 55.81,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 55.81
+        },
+        {
+          "stock_id": 853759,
+          "base_score": 55.27,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 55.27
+        },
+        {
+          "stock_id": 29031537,
+          "base_score": 52.71,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 52.71
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-man-talking-on-a-virtual-meeting-4792",
+          "base_score": 31.1,
+          "anchor_coverage": 0.083,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 33.6
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-happily-talks-on-a-virtual-meeting-9706",
+          "base_score": 31.1,
+          "anchor_coverage": 0.083,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 33.6
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-actively-and-seriously-talks-during-a-virtual-meeting-3045",
+          "base_score": 31.1,
+          "anchor_coverage": 0.083,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 33.6
+        },
+        {
+          "stock_id": "coverr:coverr-coworkers-make-notes-in-a-notebook-6261",
+          "base_score": 31.1,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 31.1
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-man-using-a-wireless-mouse-8923",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-man-typing-on-the-keyboard-4926",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-young-man-putting-on-his-headphones-1437",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-analyzing-cryptocurrency-trends-3453",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-crypto-wallet-5213",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-cryptocurrency-trade-platform-5007",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-printer-at-work-in-the-office-5252",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-the-sensory-screen-on-the-printer-machine-4383",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-guy-puts-the-paper-in-the-printer-machine-4871",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-colleagues-discussing-work-351",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-young-man-adjusts-an-electric-fan-in-the-office-8393",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-teamwork-in-the-office-7943",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 4,
+      "text": "The meeting has not failed. But your forecast has already selected the defensive route.",
+      "query": "A navigation panel highlights DEFEND before the meeting begins while OPEN, ASK, and LISTEN routes become dim.",
+      "narrative_mode_before": "storyboard",
+      "result": "literal_storyboard",
+      "plan": {
+        "scene_index": 4,
+        "text": "The meeting has not failed. But your forecast has already selected the defensive route.",
+        "keywords": [
+          "DEFEND",
+          "OPEN",
+          "ASK",
+          "LISTEN"
+        ],
+        "semantic_anchor": "The forecast selects defensive behavior before receiving evidence.",
+        "query": "A navigation panel highlights DEFEND before the meeting begins while OPEN, ASK, and LISTEN routes become dim.",
+        "output": "clip_04.mp4",
+        "motion_evidence": {
+          "passes": true,
+          "samples": 9,
+          "residual_flow_p75": 0.9421,
+          "active_region_ratio": 0.353,
+          "frame_difference": 6.4371
+        },
+        "fallback_reason": "literal mechanism preferred"
+      }
+    },
+    {
+      "scene_index": 5,
+      "text": "You speak coldly. They sense distance and become cautious. Congratulations, your prediction has recruited a production team.",
+      "query": "A sequence of labeled cards activates in order: EXPECT BADLY, SPEAK COLDLY, SENSE DISTANCE, RESPOND CAUTIOUSLY.",
+      "narrative_mode_before": "storyboard",
+      "result": "literal_storyboard",
+      "plan": {
+        "scene_index": 5,
+        "text": "You speak coldly. They sense distance and become cautious. Congratulations, your prediction has recruited a production team.",
+        "keywords": [
+          "EXPECT",
+          "ACT",
+          "REACTION",
+          "RESULT"
+        ],
+        "semantic_anchor": "Expectation changes behavior, which changes another person's response.",
+        "query": "A sequence of labeled cards activates in order: EXPECT BADLY, SPEAK COLDLY, SENSE DISTANCE, RESPOND CAUTIOUSLY.",
+        "output": "clip_05.mp4",
+        "motion_evidence": {
+          "passes": true,
+          "samples": 9,
+          "residual_flow_p75": 0.1335,
+          "active_region_ratio": 0.2077,
+          "frame_difference": 4.473
+        },
+        "fallback_reason": "literal mechanism preferred"
+      }
+    },
+    {
+      "scene_index": 6,
+      "text": "That response strengthens the belief. The map redraws itself using the road it persuaded you to take.",
+      "query": "A circular route carries RESULT back to BELIEF, thickening the same road and making alternative paths narrower on each loop.",
+      "narrative_mode_before": "storyboard",
+      "result": "stock_fallback_from_storyboard",
+      "plan": {
+        "scene_index": 6,
+        "result": "stock_fallback_from_storyboard",
+        "fallback_reason": "literal mechanism preferred; storyboard lacked motion",
+        "stock_id": 29042106
+      }
+    },
+    {
+      "scene_index": 7,
+      "text": "Then your evidence board fills with proof that meetings go badly, excluding the part where you arrived wearing emotional body armor.",
+      "query": "An evidence board pins CAUTIOUS REPLY and AWKWARD SILENCE while a large BODY ARMOR cause card is pushed outside the frame.",
+      "narrative_mode_before": "storyboard",
+      "result": "literal_storyboard",
+      "plan": {
+        "scene_index": 7,
+        "text": "Then your evidence board fills with proof that meetings go badly, excluding the part where you arrived wearing emotional body armor.",
+        "keywords": [
+          "PROOF",
+          "AWKWARD SILENCE",
+          "BODY ARMOR"
+        ],
+        "semantic_anchor": "The mind records confirming results while excluding its own contribution.",
+        "query": "An evidence board pins CAUTIOUS REPLY and AWKWARD SILENCE while a large BODY ARMOR cause card is pushed outside the frame.",
+        "output": "clip_07.mp4",
+        "motion_evidence": {
+          "passes": true,
+          "samples": 9,
+          "residual_flow_p75": 0.8137,
+          "active_region_ratio": 0.3246,
+          "frame_difference": 5.4582
+        },
+        "fallback_reason": "literal mechanism preferred"
+      }
+    },
+    {
+      "scene_index": 8,
+      "text": "You say, I knew it. Sometimes what you knew was actually an instruction disguised as a forecast.",
+      "query": "A FORECAST card flips over to reveal INSTRUCTION printed on the back as an I KNEW IT counter clicks upward.",
+      "narrative_mode_before": "storyboard",
+      "result": "literal_storyboard",
+      "plan": {
+        "scene_index": 8,
+        "text": "You say, I knew it. Sometimes what you knew was actually an instruction disguised as a forecast.",
+        "keywords": [
+          "FORECAST",
+          "INSTRUCTION",
+          "I KNEW IT"
+        ],
+        "semantic_anchor": "A prediction can function as an instruction while appearing passive.",
+        "query": "A FORECAST card flips over to reveal INSTRUCTION printed on the back as an I KNEW IT counter clicks upward.",
+        "output": "clip_08.mp4",
+        "motion_evidence": {
+          "passes": true,
+          "samples": 9,
+          "residual_flow_p75": 0.0304,
+          "active_region_ratio": 0.112,
+          "frame_difference": 1.5426
+        },
+        "fallback_reason": "literal mechanism preferred"
+      }
+    },
+    {
+      "scene_index": 9,
+      "text": "The prediction did not control everything. Other people have choices, accidents happen, and reality ignores everyone's spreadsheet occasionally.",
+      "query": "A balance scale keeps EXPECTATION on one side while OTHER PEOPLE, CHANCE, and CONDITIONS add independent weight to the other.",
+      "narrative_mode_before": "storyboard",
+      "result": "literal_storyboard",
+      "plan": {
+        "scene_index": 9,
+        "text": "The prediction did not control everything. Other people have choices, accidents happen, and reality ignores everyone's spreadsheet occasionally.",
+        "keywords": [
+          "EXPECTATION",
+          "OTHER PEOPLE",
+          "CHANCE",
+          "CONDITIONS"
+        ],
+        "semantic_anchor": "Expectation influences outcomes but does not control every variable.",
+        "query": "A balance scale keeps EXPECTATION on one side while OTHER PEOPLE, CHANCE, and CONDITIONS add independent weight to the other.",
+        "output": "clip_09.mp4",
+        "motion_evidence": {
+          "passes": true,
+          "samples": 9,
+          "residual_flow_p75": 0.0296,
+          "active_region_ratio": 0.2108,
+          "frame_difference": 3.0504
+        },
+        "fallback_reason": "literal mechanism preferred"
+      }
+    },
+    {
+      "scene_index": 10,
+      "text": "Still, expectations affect what you practice, attempt, persist through, and treat as important.",
+      "query": "Four control sliders labeled PRACTICE, ATTEMPT, PERSIST, and NOTICE move together beneath an EXPECTATION setting.",
+      "narrative_mode_before": "storyboard",
+      "result": "stock_fallback_from_storyboard",
+      "plan": {
+        "scene_index": 10,
+        "result": "stock_fallback_from_storyboard",
+        "fallback_reason": "literal mechanism preferred; storyboard lacked motion",
+        "stock_id": 34845727
+      }
+    },
+    {
+      "scene_index": 11,
+      "text": "Expect rejection, and you may never make the request. Expect failure, and preparation starts feeling like wasted effort.",
+      "query": "A route to REQUEST closes before departure while a PREPARATION counter drains under a FAILURE destination sign.",
+      "narrative_mode_before": "storyboard",
+      "result": "literal_storyboard",
+      "plan": {
+        "scene_index": 11,
+        "text": "Expect rejection, and you may never make the request. Expect failure, and preparation starts feeling like wasted effort.",
+        "keywords": [
+          "REJECTION",
+          "REQUEST",
+          "FAILURE",
+          "PREPARATION"
+        ],
+        "semantic_anchor": "Negative expectations can remove attempts and preparation from the present.",
+        "query": "A route to REQUEST closes before departure while a PREPARATION counter drains under a FAILURE destination sign.",
+        "output": "clip_11.mp4",
+        "motion_evidence": {
+          "passes": true,
+          "samples": 9,
+          "residual_flow_p75": 0.0354,
+          "active_region_ratio": 0.1223,
+          "frame_difference": 1.6252
+        },
+        "fallback_reason": "literal mechanism preferred"
+      }
+    },
+    {
+      "scene_index": 12,
+      "text": "Expect change is possible, and you may notice a conversation, skill, or opening that hopelessness would miss.",
+      "query": null,
+      "narrative_mode_before": "hero",
+      "result": "stock",
+      "stock_id": 37334334,
+      "candidate_decisions": [
+        {
+          "stock_id": 37334334,
+          "base_score": 83.74,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 83.74
+        },
+        {
+          "stock_id": 2632737,
+          "base_score": 80.39,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 80.39
+        },
+        {
+          "stock_id": 4749122,
+          "base_score": 73.97,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 73.97
+        },
+        {
+          "stock_id": 8686153,
+          "base_score": 70.74,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 70.74
+        },
+        {
+          "stock_id": 30144129,
+          "base_score": 67.43,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 67.43
+        },
+        {
+          "stock_id": 35753045,
+          "base_score": 65.88,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 65.88
+        },
+        {
+          "stock_id": 38579846,
+          "base_score": 65.17,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 65.17
+        },
+        {
+          "stock_id": 35531090,
+          "base_score": 65.13,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 65.13
+        },
+        {
+          "stock_id": 34399429,
+          "base_score": 63.49,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 63.49
+        },
+        {
+          "stock_id": 34448740,
+          "base_score": 57.01,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 57.01
+        },
+        {
+          "stock_id": 4300092,
+          "base_score": 55.96,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 55.96
+        },
+        {
+          "stock_id": 8950664,
+          "base_score": 47.43,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 47.43
+        },
+        {
+          "stock_id": 11342028,
+          "base_score": 35.8,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 35.8
+        },
+        {
+          "stock_id": "coverr:coverr-posing-with-christmas-bags-8768",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-businesswoman-checking-the-time-on-her-watch-2682",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-old-man-drawing-in-a-notebook-7324",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-man-stands-by-the-sea-at-sunset",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-serene-beach-escape",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-rubs-his-face-near-the-sea",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-puts-on-wetsuit",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-sunset-fetch-playtime-with-dog",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-waves-to-photographer",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-sunbathes-and-checks-the-phone",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-cheerful-guy-takes-selfie-indoors",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-casual-outdoor-sneaker-tying",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-city-viewpoint-contemplation",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-tourist-taking-selfie-with-hollywood-sign",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 13,
+      "text": "Positive expectations can be blind too. Confidence helps. Pretending the bridge is finished while driving toward the gap does not.",
+      "query": "A confidence meter rises beside a route map, but a bridge status panel clearly marks an unfinished gap ahead.",
+      "narrative_mode_before": "storyboard",
+      "result": "stock_fallback_from_storyboard",
+      "plan": {
+        "scene_index": 13,
+        "result": "stock_fallback_from_storyboard",
+        "fallback_reason": "literal mechanism preferred; storyboard lacked motion",
+        "stock_id": 34436237
+      }
+    },
+    {
+      "scene_index": 14,
+      "text": "This is not forced optimism. It is refusing to let one untested future become today's manager.",
+      "query": "An UNTESTED FUTURE badge loses administrator access while TODAY regains control of the decision panel.",
+      "narrative_mode_before": "storyboard",
+      "result": "literal_storyboard",
+      "plan": {
+        "scene_index": 14,
+        "text": "This is not forced optimism. It is refusing to let one untested future become today's manager.",
+        "keywords": [
+          "UNTESTED FUTURE",
+          "TODAY",
+          "ADMIN ACCESS"
+        ],
+        "semantic_anchor": "An untested forecast should not control present decisions automatically.",
+        "query": "An UNTESTED FUTURE badge loses administrator access while TODAY regains control of the decision panel.",
+        "output": "clip_14.mp4",
+        "motion_evidence": {
+          "passes": true,
+          "samples": 9,
+          "residual_flow_p75": 0.2512,
+          "active_region_ratio": 0.2363,
+          "frame_difference": 6.2378
+        },
+        "fallback_reason": "literal mechanism preferred"
+      }
+    },
+    {
+      "scene_index": 15,
+      "text": "Treat a forecast as a hypothesis, not a command. Let it make a suggestion, then require current evidence.",
+      "query": "A FORECAST label is moved from COMMAND to HYPOTHESIS while a current-evidence gate opens for review.",
+      "narrative_mode_before": "storyboard",
+      "result": "literal_storyboard",
+      "plan": {
+        "scene_index": 15,
+        "text": "Treat a forecast as a hypothesis, not a command. Let it make a suggestion, then require current evidence.",
+        "keywords": [
+          "FORECAST",
+          "HYPOTHESIS",
+          "CURRENT EVIDENCE"
+        ],
+        "semantic_anchor": "Forecasts become more useful when treated as testable hypotheses.",
+        "query": "A FORECAST label is moved from COMMAND to HYPOTHESIS while a current-evidence gate opens for review.",
+        "output": "clip_15.mp4",
+        "motion_evidence": {
+          "passes": true,
+          "samples": 9,
+          "residual_flow_p75": 0.8134,
+          "active_region_ratio": 0.343,
+          "frame_difference": 5.5938
+        },
+        "fallback_reason": "literal mechanism preferred"
+      }
+    },
+    {
+      "scene_index": 16,
+      "text": "Your navigation app does not call you a failure when a road closes. It updates the map and finds another route.",
+      "query": "Real close-up footage of a navigation map rerouting around a clearly marked road closure while the destination remains selected.",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 7691735,
+      "candidate_decisions": [
+        {
+          "stock_id": 30638874,
+          "base_score": 74.42,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 74.42
+        },
+        {
+          "stock_id": 7691735,
+          "base_score": 74.35,
+          "anchor_coverage": 0.146,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 78.72
+        },
+        {
+          "stock_id": 5302853,
+          "base_score": 74.0,
+          "anchor_coverage": 0.083,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 76.5
+        },
+        {
+          "stock_id": 6258206,
+          "base_score": 73.4,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 73.4
+        },
+        {
+          "stock_id": 34195868,
+          "base_score": 70.25,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 70.25
+        },
+        {
+          "stock_id": 33803331,
+          "base_score": 69.7,
+          "anchor_coverage": 0.062,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 71.57
+        },
+        {
+          "stock_id": 3010206,
+          "base_score": 69.62,
+          "anchor_coverage": 0.083,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 72.12
+        },
+        {
+          "stock_id": 31260431,
+          "base_score": 68.01,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 68.01
+        },
+        {
+          "stock_id": 15174179,
+          "base_score": 64.62,
+          "anchor_coverage": 0.146,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 69.0
+        },
+        {
+          "stock_id": 3723524,
+          "base_score": 64.42,
+          "anchor_coverage": 0.146,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 68.79
+        },
+        {
+          "stock_id": 11240137,
+          "base_score": 62.17,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 62.17
+        },
+        {
+          "stock_id": 7431509,
+          "base_score": 59.55,
+          "anchor_coverage": 0.083,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 62.05
+        },
+        {
+          "stock_id": 7431752,
+          "base_score": 41.67,
+          "anchor_coverage": 0.146,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 46.04
+        },
+        {
+          "stock_id": "coverr:coverr-posing-with-christmas-bags-8768",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-businesswoman-checking-the-time-on-her-watch-2682",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-old-man-drawing-in-a-notebook-7324",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-man-stands-by-the-sea-at-sunset",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-serene-beach-escape",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-rubs-his-face-near-the-sea",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-puts-on-wetsuit",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-sunset-fetch-playtime-with-dog",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-waves-to-photographer",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-sunbathes-and-checks-the-phone",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-cheerful-guy-takes-selfie-indoors",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-casual-outdoor-sneaker-tying",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-city-viewpoint-contemplation",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-tourist-taking-selfie-with-hollywood-sign",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 17,
+      "text": "A useful expectation should do the same. It gives direction without becoming emotionally attached to one road.",
+      "query": "One destination stays fixed while three route lines adapt around changing barriers without triggering a FAILURE alarm.",
+      "narrative_mode_before": "storyboard",
+      "result": "stock_fallback_from_storyboard",
+      "plan": {
+        "scene_index": 17,
+        "result": "stock_fallback_from_storyboard",
+        "fallback_reason": "literal mechanism preferred; storyboard lacked motion",
+        "stock_id": 34804677
+      }
+    },
+    {
+      "scene_index": 18,
+      "text": "Ask yourself: what future am I rehearsing, and what behavior does that rehearsal produce today?",
+      "query": "A timeline conveyor shows FUTURE REHEARSAL entering one end and TODAY'S BEHAVIOR emerging from the other for inspection.",
+      "narrative_mode_before": "storyboard",
+      "result": "literal_storyboard",
+      "plan": {
+        "scene_index": 18,
+        "text": "Ask yourself: what future am I rehearsing, and what behavior does that rehearsal produce today?",
+        "keywords": [
+          "FUTURE REHEARSAL",
+          "TODAY'S BEHAVIOR"
+        ],
+        "semantic_anchor": "The viewer can inspect how a rehearsed future changes present behavior.",
+        "query": "A timeline conveyor shows FUTURE REHEARSAL entering one end and TODAY'S BEHAVIOR emerging from the other for inspection.",
+        "output": "clip_18.mp4",
+        "motion_evidence": {
+          "passes": true,
+          "samples": 9,
+          "residual_flow_p75": 0.0217,
+          "active_region_ratio": 0.1315,
+          "frame_difference": 2.85
+        },
+        "fallback_reason": "literal mechanism preferred"
+      }
+    },
+    {
+      "scene_index": 19,
+      "text": "You are not trying to predict perfectly. You are choosing a prediction that keeps you honest, responsive, and capable of moving.",
+      "query": "Three route settings labeled HONEST, RESPONSIVE, and MOVING replace a rigid PERFECT PREDICTION preset.",
+      "narrative_mode_before": "storyboard",
+      "result": "stock_fallback_from_storyboard",
+      "plan": {
+        "scene_index": 19,
+        "result": "stock_fallback_from_storyboard",
+        "fallback_reason": "literal mechanism preferred; storyboard lacked motion",
+        "stock_id": 15291824
+      }
+    },
+    {
+      "scene_index": 20,
+      "text": "The future is not a finished destination waiting to judge you. It is partly a map you keep revising with every step.",
+      "query": null,
+      "narrative_mode_before": "hero",
+      "result": "stock",
+      "stock_id": 9902185,
+      "candidate_decisions": [
+        {
+          "stock_id": 9902185,
+          "base_score": 77.11,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 77.11
+        },
+        {
+          "stock_id": 2069138,
+          "base_score": 60.27,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 60.27
+        },
+        {
+          "stock_id": 19217899,
+          "base_score": 56.07,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 56.07
+        },
+        {
+          "stock_id": 9902178,
+          "base_score": 52.84,
+          "anchor_coverage": 0.083,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 55.34
+        },
+        {
+          "stock_id": 10577436,
+          "base_score": 49.04,
+          "anchor_coverage": 0.083,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 51.54
+        },
+        {
+          "stock_id": 16834999,
+          "base_score": 36.47,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 36.47
+        },
+        {
+          "stock_id": "coverr:coverr-through-a-cave-1474",
+          "base_score": 31.1,
+          "anchor_coverage": 0.083,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 33.6
+        }
+      ]
+    },
+    {
+      "scene_index": 21,
+      "text": "So before you follow the next arrow, ask who drew it. Was it reality, old fear, or a future that has never been tested?",
+      "query": "Three arrows labeled REALITY, OLD FEAR, and UNTESTED FUTURE pause at a junction while the traveler selects REVIEW before moving.",
+      "narrative_mode_before": "storyboard",
+      "result": "stock_fallback_from_storyboard",
+      "plan": {
+        "scene_index": 21,
+        "result": "stock_fallback_from_storyboard",
+        "fallback_reason": "literal mechanism preferred; storyboard lacked motion",
+        "stock_id": 6498971
+      }
+    }
+  ]
+}
