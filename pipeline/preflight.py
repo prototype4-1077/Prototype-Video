@@ -23,7 +23,7 @@ import profiles
 import visual_symbols
 from governor import failure_fingerprint
 import operational_memory
-import storyboard
+import graphic_plan
 
 SCHEMA_VERSION = 1
 
@@ -318,7 +318,7 @@ def assess(
     for warning in symbol_report.get("warnings") or []:
         warnings.append({"code": "visual_symbol_warning", "message": str(warning)})
 
-    graphic_report = storyboard.graphic_diversity(script)
+    graphic_report = graphic_plan.diversity(script)
     checks["graphic_compositions"] = graphic_report
     for violation in graphic_report.get("violations") or []:
         blockers.append(_block("graphic_composition_plan", str(violation), store=store))
