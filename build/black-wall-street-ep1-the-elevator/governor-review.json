@@ -1,11 +1,19 @@
 {
-  "generated_at": "2026-08-04T12:25:37+00:00",
+  "generated_at": "2026-08-04T13:28:56+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "long_black_interval": 2,
     "low_bitrate": 8
   },
   "recommendations": [
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "7f0ae4a56577d65a",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
     {
       "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
       "category": "recurring_incident",
@@ -23,22 +31,26 @@
       "stage": "build_pass"
     },
     {
-      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 2 build(s)",
-      "fingerprint": "dd39869b090c1b69",
-      "priority": "medium",
-      "stage": "build_pass"
-    },
-    {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=77.0s, p95=1080.9s",
+      "evidence": "p50=77.1s, p95=1079.9s",
       "priority": "medium",
       "stage": "build_pass"
     }
   ],
   "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "7f0ae4a56577d65a",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.6s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "black-wall-street-ep1-the-elevator",
+        "the-witness-without-a-face"
+      ],
+      "stage": "build_pass"
+    },
     {
       "count": 2,
       "failure_class": "transient",
@@ -60,29 +72,6 @@
       "slugs": [
         "the-mercy-of-the-filter",
         "beliefs-are-software-updates"
-      ],
-      "stage": "build_pass"
-    },
-    {
-      "count": 2,
-      "failure_class": "transient",
-      "fingerprint": "dd39869b090c1b69",
-      "kind": "timeout",
-      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.2s; last useful progress <n>.0s ago.",
-      "slugs": [
-        "i-was-gone-eleven-minutes",
-        "black-wall-street-ep1-the-elevator"
-      ],
-      "stage": "build_pass"
-    },
-    {
-      "count": 1,
-      "failure_class": "transient",
-      "fingerprint": "7f0ae4a56577d65a",
-      "kind": "timeout",
-      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.6s; last useful progress <n>.0s ago.",
-      "slugs": [
-        "the-witness-without-a-face"
       ],
       "stage": "build_pass"
     },
@@ -118,6 +107,17 @@
         "no-disagreement-here"
       ],
       "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "dd39869b090c1b69",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.2s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "i-was-gone-eleven-minutes"
+      ],
+      "stage": "build_pass"
     }
   ],
   "runs_analyzed": 45,
@@ -136,40 +136,40 @@
       "total_duration_s": 45.091
     },
     "altsheet": {
-      "attempts": 36,
+      "attempts": 37,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.008,
-      "p95_success_s": 6.042,
-      "sample_count": 36,
-      "successes": 36,
+      "p95_success_s": 6.041,
+      "sample_count": 37,
+      "successes": 37,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 76.518
+      "total_duration_s": 77.527
     },
     "assemble": {
       "attempts": 1234,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 38.199,
-      "p95_success_s": 83.5,
+      "p95_success_s": 86.941,
       "sample_count": 1234,
       "successes": 1234,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 53562.622
+      "total_duration_s": 53949.622
     },
     "build_pass": {
-      "attempts": 241,
-      "failure_rate": 0.0415,
+      "attempts": 242,
+      "failure_rate": 0.0413,
       "failures": 10,
-      "p50_success_s": 77.049,
-      "p95_success_s": 1080.882,
-      "sample_count": 231,
-      "successes": 231,
-      "timeout_rate": 0.0415,
+      "p50_success_s": 77.094,
+      "p95_success_s": 1079.874,
+      "sample_count": 232,
+      "successes": 232,
+      "timeout_rate": 0.0413,
       "timeouts": 10,
-      "total_duration_s": 75678.624
+      "total_duration_s": 75487.207
     },
     "credits": {
       "attempts": 100,
@@ -181,7 +181,7 @@
       "successes": 100,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 100.865
+      "total_duration_s": 100.864
     },
     "ffmpeg": {
       "attempts": 212,
@@ -193,43 +193,43 @@
       "successes": 212,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2017.4
+      "total_duration_s": 2027.551
     },
     "footage": {
-      "attempts": 39,
+      "attempts": 40,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 134.132,
-      "p95_success_s": 235.616,
-      "sample_count": 39,
-      "successes": 39,
+      "p50_success_s": 134.159,
+      "p95_success_s": 235.471,
+      "sample_count": 40,
+      "successes": 40,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 5332.82
+      "total_duration_s": 5481.039
     },
     "hero": {
-      "attempts": 239,
+      "attempts": 216,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 33.061,
-      "p95_success_s": 50.086,
-      "sample_count": 239,
-      "successes": 239,
+      "p50_success_s": 34.566,
+      "p95_success_s": 50.092,
+      "sample_count": 216,
+      "successes": 216,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 7681.725
+      "total_duration_s": 6910.651
     },
     "prep": {
       "attempts": 45,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 13.032,
-      "p95_success_s": 22.273,
+      "p50_success_s": 13.028,
+      "p95_success_s": 18.461,
       "sample_count": 45,
       "successes": 45,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 613.608
+      "total_duration_s": 583.556
     },
     "probe": {
       "attempts": 1297,
@@ -241,19 +241,19 @@
       "successes": 1297,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1309.058
+      "total_duration_s": 1309.086
     },
     "quality": {
       "attempts": 45,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 26.142,
-      "p95_success_s": 66.702,
+      "p95_success_s": 68.197,
       "sample_count": 45,
       "successes": 45,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1427.872
+      "total_duration_s": 1440.019
     },
     "transcribe": {
       "attempts": 45,
@@ -265,7 +265,7 @@
       "successes": 45,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 821.702
+      "total_duration_s": 820.714
     },
     "tts": {
       "attempts": 45,
@@ -277,7 +277,7 @@
       "successes": 45,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2908.699
+      "total_duration_s": 2879.662
     }
   },
   "statuses": {
