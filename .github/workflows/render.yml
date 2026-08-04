@@ -47,8 +47,11 @@ concurrency:
 jobs:
   render:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 150
     container: ${{ inputs.use_container && 'ghcr.io/1974jwatson/tiktok-render:latest' || '' }}
+    env:
+      BLENDER_VERSION: "4.2.0"
+      BLENDER_SERIES: "Blender4.2"
     steps:
       - uses: actions/checkout@v4
 
@@ -88,6 +91,47 @@ jobs:
           python-version: "3.11"
           cache: pip
 
+      - name: Detect 3D graphic scenes
+        id: blender_graphics
+        shell: bash
+        env:
+          LONG_RENDER: ${{ inputs.long_render }}
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          import os
+          from pathlib import Path
+
+          script = json.loads(Path("build/${{ inputs.slug }}/script.json").read_text(encoding="utf-8"))
+          configured = str(script.get("graphic_backend") or "pil_2d").lower()
+          requested = configured == "blender_3d" or any(
+              str(scene.get("graphic_backend") or "").lower() == "blender_3d"
+              for scene in script.get("scenes") or []
+          )
+          long_render = str(os.environ.get("LONG_RENDER") or "").lower() == "true"
+          print(f"required={'true' if requested else 'false'}")
+          print(f"overall_timeout={7200 if requested else (4680 if long_render else 2700)}")
+          print(f"build_budget={6900 if requested else 3600}")
+          PY
+
+      - name: Cache Blender
+        id: cache_blender
+        if: ${{ !inputs.use_container && steps.blender_graphics.outputs.required == 'true' }}
+        uses: actions/cache@v4
+        with:
+          path: /opt/blender
+          key: blender-${{ env.BLENDER_VERSION }}-linux-x64
+
+      - name: Download Blender
+        if: ${{ !inputs.use_container && steps.blender_graphics.outputs.required == 'true' && steps.cache_blender.outputs.cache-hit != 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          url="https://download.blender.org/release/${BLENDER_SERIES}/blender-${BLENDER_VERSION}-linux-x64.tar.xz"
+          curl -fL --retry 3 --retry-delay 2 -o /tmp/blender.tar.xz "$url"
+          sudo mkdir -p /opt/blender
+          sudo tar -xJf /tmp/blender.tar.xz -C /opt/blender --strip-components=1
+
       - name: Cache models (whisper, CLIP, depth)
         uses: actions/cache@v4
         with:
@@ -99,7 +143,20 @@ jobs:
 
       - name: System deps
         if: ${{ !inputs.use_container }}
-        run: sudo apt-get update -q && sudo apt-get install -y -q ffmpeg
+        env:
+          BLENDER_REQUIRED: ${{ steps.blender_graphics.outputs.required }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          sudo apt-get update -q
+          sudo apt-get install -y -q ffmpeg
+          if [[ "$BLENDER_REQUIRED" == "true" ]]; then
+            sudo apt-get install -y -q \
+              libx11-6 libxi6 libxxf86vm1 libxfixes3 libxrender1 libxrandr2 \
+              libxinerama1 libxcursor1 libxkbcommon0 libsm6 libgl1 libegl1 \
+              libglu1-mesa libwayland-client0 libwayland-egl1 libdbus-1-3 xz-utils
+            /opt/blender/blender --background --version
+          fi
 
       - name: Validate supplied media and preserve long-script intent
         shell: bash
@@ -207,14 +264,16 @@ jobs:
         env:
           SEMANTIC_CLIP: "1"
           GOVERNOR_MODE: "recover"
-          BUILD_PASS_BUDGET: "3600"
+          BUILD_PASS_BUDGET: ${{ steps.blender_graphics.outputs.build_budget }}
+          BLENDER_BIN: /opt/blender/blender
+          BLENDER_SCENE_TIMEOUT: "900"
           TRANSCRIBE_CHUNK_SECONDS: "100000"
           GOVERNOR_CONSOLE_HEARTBEATS: "1"
           GOVERNOR_HEARTBEAT_SECONDS: "15"
           PYTHONUNBUFFERED: "1"
         run: |
           python3 pipeline/run_governed.py "build/${{ inputs.slug }}" \
-            --max-passes 200 --overall-timeout ${{ inputs.long_render && '4680' || '2700' }}
+            --max-passes 200 --overall-timeout ${{ steps.blender_graphics.outputs.overall_timeout }}
           python3 - "build/${{ inputs.slug }}/script.json" <<'PY'
           import json
           import os
@@ -367,3 +426,4 @@ jobs:
           done
           echo "unable to push render outcome after 5 attempts" >&2
           exit 1
+
