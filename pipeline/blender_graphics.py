@@ -14,7 +14,7 @@ from video_format import BAND_HEIGHT, BAND_WIDTH, FPS
 
 
 BACKEND = "blender_3d"
-PLAN_VERSION = 1
+PLAN_VERSION = 2
 GRAPHIC_KINDS = (
     "labels", "path", "counters", "clock", "perception", "evidence",
     "filter", "scale", "generic",
@@ -146,6 +146,8 @@ def plan_for(
             "width": BAND_WIDTH,
             "height": BAND_HEIGHT,
             "fps": FPS,
+            "frame_step": 2,
+            "work_resolution_percentage": 75,
             "engine": "BLENDER_WORKBENCH",
             "transparent": False,
         },
@@ -197,6 +199,17 @@ def _invoke(
     if not renderer.exists():
         raise BlenderRenderError(f"Blender renderer is missing: {renderer}")
     output.parent.mkdir(parents=True, exist_ok=True)
+    frame_step = max(1, int(plan["render"].get("frame_step") or 1))
+    work_percentage = max(
+        25, min(100, int(plan["render"].get("work_resolution_percentage") or 100)),
+    )
+    optimized = not preview and (frame_step > 1 or work_percentage < 100)
+    render_output = (
+        output.with_name(f"{output.stem}.blender{output.suffix}")
+        if optimized else output
+    )
+    output.unlink(missing_ok=True)
+    render_output.unlink(missing_ok=True)
     plan_path = output.with_suffix(".plan.json")
     plan_path.write_text(
         json.dumps(plan, indent=2, ensure_ascii=True) + "\n",
@@ -212,7 +225,7 @@ def _invoke(
         "--plan",
         str(plan_path),
         "--output",
-        str(output),
+        str(render_output),
     ]
     if preview:
         command.append("--preview")
@@ -237,10 +250,43 @@ def _invoke(
         raise BlenderRenderError(
             f"Blender scene {plan['scene_index']} failed: {detail}"
         )
-    if not output.exists() or output.stat().st_size < (20_000 if preview else 100_000):
+    if (
+        not render_output.exists()
+        or render_output.stat().st_size < (20_000 if preview else 100_000)
+    ):
         raise BlenderRenderError(
             f"Blender scene {plan['scene_index']} produced no usable output"
         )
+    if optimized:
+        ffmpeg = shutil.which("ffmpeg")
+        if not ffmpeg:
+            raise BlenderRenderError("ffmpeg is required to normalize optimized 3D clips")
+        filters = (
+            f"setpts={frame_step}*PTS,fps={int(plan['render']['fps'])},"
+            f"scale={int(plan['render']['width'])}:{int(plan['render']['height'])}:"
+            "flags=lanczos"
+        )
+        normalized = subprocess.run(
+            [
+                ffmpeg, "-v", "error", "-y", "-i", str(render_output),
+                "-an", "-vf", filters,
+                "-t", f"{float(plan['duration_seconds']):.3f}",
+                "-c:v", "libx264", "-preset", "veryfast", "-crf", "17",
+                "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(output),
+            ],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=max(180, int(float(plan["duration_seconds"]) * 15)),
+        )
+        render_output.unlink(missing_ok=True)
+        if normalized.returncode:
+            raise BlenderRenderError(
+                "3D clip normalization failed: "
+                + (normalized.stderr or normalized.stdout or "unknown ffmpeg error")[-1200:]
+            )
+        if not output.exists() or output.stat().st_size < 100_000:
+            raise BlenderRenderError("3D clip normalization produced no usable output")
     return output
 
 

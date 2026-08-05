@@ -42,6 +42,8 @@ class BlenderGraphicsTests(unittest.TestCase):
             self.assertEqual(plan["backend"], "blender_3d")
             self.assertEqual(plan["render"]["width"], storyboard.W)
             self.assertEqual(plan["render"]["height"], storyboard.H)
+            self.assertEqual(plan["render"]["frame_step"], 2)
+            self.assertEqual(plan["render"]["work_resolution_percentage"], 75)
 
     def test_scene_variant_is_deterministic_and_meaning_sensitive(self):
         scene = self._scene("path")
@@ -108,6 +110,62 @@ class BlenderGraphicsTests(unittest.TestCase):
 
             self.assertEqual(output, output_dir / "scene-01-path.mp4")
             self.assertEqual(invoke.call_args.args[0]["kind"], "path")
+
+    def test_optimized_render_is_normalized_to_delivery_dimensions(self):
+        plan = blender_graphics.plan_for(
+            {}, self._scene("path"), 0, ["A", "B", "C", "D"],
+        )
+        with tempfile.TemporaryDirectory() as td:
+            output = Path(td) / "clip.mp4"
+
+            def fake_run(command, **_kwargs):
+                target = Path(command[-1])
+                target.write_bytes(b"3" * 150_000)
+                return mock.Mock(returncode=0, stdout="", stderr="")
+
+            with mock.patch.object(
+                blender_graphics, "find_blender", return_value=sys.executable,
+            ), mock.patch.object(
+                blender_graphics.subprocess, "run", side_effect=fake_run,
+            ) as run:
+                result = blender_graphics._invoke(plan, output)
+
+            self.assertEqual(result, output)
+            self.assertTrue(output.exists())
+            self.assertFalse(output.with_name("clip.blender.mp4").exists())
+            ffmpeg_command = run.call_args_list[1].args[0]
+            filters = ffmpeg_command[ffmpeg_command.index("-vf") + 1]
+            self.assertIn("setpts=2*PTS", filters)
+            self.assertIn("scale=1080:608", filters)
+
+    def test_cached_2d_fallback_is_reused_within_one_visual_revision(self):
+        scene = self._scene("path")
+        scene.update({
+            "narrative_mode": "literal_graphic",
+            "graphic_backend_requested": "blender_3d",
+            "graphic_backend": "pil_2d",
+            "graphic_dimension": "2d",
+            "graphic_plan_version": blender_graphics.PLAN_VERSION,
+            "graphic_backend_fallback_reason": "prior render failed",
+            "storyboard_generated": True,
+            "motion_evidence": {
+                "passes": True,
+                "active_region_ratio": 0.2,
+                "frame_difference": 3.0,
+            },
+        })
+        scene["clip_fingerprint"] = storyboard.motion.scene_visual_fingerprint(scene)
+        script = {"graphic_backend": "blender_3d", "scenes": [scene]}
+        with tempfile.TemporaryDirectory() as td:
+            (Path(td) / "clip_00.mp4").write_bytes(b"2" * 150_000)
+            with mock.patch.object(
+                storyboard.blender_graphics, "render_scene",
+            ) as render:
+                result = storyboard.render_scene(td, script, 0)
+
+            render.assert_not_called()
+            self.assertTrue(result["cached"])
+            self.assertEqual(result["graphic_backend"], "pil_2d")
 
 
 if __name__ == "__main__":

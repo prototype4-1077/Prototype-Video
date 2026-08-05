@@ -763,6 +763,8 @@ def render_scene(build_dir: str, script: dict, index: int) -> dict:
     output.parent.mkdir(parents=True, exist_ok=True)
     requested_backend = blender_graphics.backend_for(script, scene)
     scene["graphic_backend_requested"] = requested_backend
+    if requested_backend == blender_graphics.BACKEND:
+        scene["graphic_plan_version"] = blender_graphics.PLAN_VERSION
     expected_fingerprint = motion.scene_visual_fingerprint(scene)
     if blender_graphics.requested(script, scene):
         if (
@@ -786,6 +788,30 @@ def render_scene(build_dir: str, script: dict, index: int) -> dict:
                     "graphic_kind": graphic_kind(scene),
                     "graphic_backend": blender_graphics.BACKEND,
                     "graphic_variant": scene.get("graphic_variant"),
+                    "motion_evidence": evidence,
+                    "cached": True,
+                }
+        if (
+            scene.get("storyboard_generated")
+            and scene.get("graphic_backend") == "pil_2d"
+            and scene.get("graphic_backend_fallback_reason")
+            and scene.get("clip_fingerprint") == expected_fingerprint
+            and output.exists()
+            and output.stat().st_size > 100_000
+        ):
+            evidence = _graphic_motion_evidence(
+                scene.get("motion_evidence") or motion.temporal_evidence(str(output))
+            )
+            if evidence.get("passes"):
+                return {
+                    "scene_index": int(index),
+                    "text": scene.get("text"),
+                    "keywords": phrases(scene),
+                    "semantic_anchor": scene.get("semantic_anchor"),
+                    "query": scene.get("query"),
+                    "output": output.name,
+                    "graphic_kind": graphic_kind(scene),
+                    "graphic_backend": "pil_2d",
                     "motion_evidence": evidence,
                     "cached": True,
                 }

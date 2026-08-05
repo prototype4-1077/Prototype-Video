@@ -594,8 +594,11 @@ def _configure(bpy, plan, output, preview):
     render = plan["render"]
     scene.render.resolution_x = int(render["width"])
     scene.render.resolution_y = int(render["height"])
-    scene.render.resolution_percentage = 100
+    scene.render.resolution_percentage = (
+        100 if preview else int(render.get("work_resolution_percentage") or 100)
+    )
     scene.render.fps = int(render["fps"])
+    scene.frame_step = 1 if preview else max(1, int(render.get("frame_step") or 1))
     scene.render.image_settings.file_format = "PNG" if preview else "FFMPEG"
     scene.render.film_transparent = bool(render.get("transparent", False))
     engines = (
