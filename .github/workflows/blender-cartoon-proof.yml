@@ -49,7 +49,7 @@ jobs:
           sudo apt-get install -y -q \
             libx11-6 libxi6 libxxf86vm1 libxfixes3 libxrender1 libxrandr2 \
             libxinerama1 libxcursor1 libxkbcommon0 libsm6 libgl1 libegl1 \
-            libglu1-mesa libwayland-client0 libwayland-egl1 libdbus-1-3 xz-utils
+            libglu1-mesa libwayland-client0 libwayland-egl1 libdbus-1-3 xz-utils ffmpeg
 
       - name: Cache Blender
         id: cache-blender
@@ -123,6 +123,7 @@ jobs:
             proof-out/*.png
             proof-out/*.mp4
           if-no-files-found: error
+
 
 
 
