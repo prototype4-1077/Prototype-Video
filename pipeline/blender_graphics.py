@@ -14,7 +14,7 @@ from video_format import BAND_HEIGHT, BAND_WIDTH, FPS
 
 
 BACKEND = "blender_3d"
-PLAN_VERSION = 3
+PLAN_VERSION = 4
 GRAPHIC_KINDS = (
     "labels", "path", "counters", "clock", "perception", "evidence",
     "filter", "scale", "generic",
@@ -146,8 +146,8 @@ def plan_for(
             "width": BAND_WIDTH,
             "height": BAND_HEIGHT,
             "fps": FPS,
-            "work_fps": 15,
-            "work_resolution_percentage": 75,
+            "strategy": "keyframe_composite",
+            "keyframe_count": 5,
             "engine": "BLENDER_WORKBENCH",
             "transparent": False,
         },
@@ -171,9 +171,9 @@ def validate_plan(plan: dict) -> None:
         errors.append("render dimensions must be positive")
     if int(render.get("fps") or 0) <= 0:
         errors.append("render fps must be positive")
-    work_fps = int(render.get("work_fps") or render.get("fps") or 0)
-    if work_fps <= 0 or work_fps > int(render.get("fps") or 0):
-        errors.append("work_fps must be positive and no greater than delivery fps")
+    if render.get("strategy") == "keyframe_composite":
+        if int(render.get("keyframe_count") or 0) < 3:
+            errors.append("keyframe_composite requires at least three keyframes")
     if float(plan.get("duration_seconds") or 0) < 0.5:
         errors.append("duration_seconds must be at least 0.5")
     if errors:
@@ -187,6 +187,62 @@ def find_blender(explicit: str | None = None) -> str:
             "Blender was requested but is unavailable; install Blender or set BLENDER_BIN"
         )
     return str(candidate)
+
+
+def _compose_keyframes(plan: dict, frames: list[Path], output: Path) -> None:
+    ffmpeg = shutil.which("ffmpeg")
+    if not ffmpeg:
+        raise BlenderRenderError("ffmpeg is required to animate 3D keyframes")
+    render = plan["render"]
+    fps = int(render["fps"])
+    width = int(render["width"])
+    height = int(render["height"])
+    duration = float(plan["duration_seconds"])
+    fade = min(0.24, max(0.10, duration / (len(frames) * 7.0)))
+    segment = (duration + fade * (len(frames) - 1)) / len(frames)
+    frame_count = max(2, int(round(segment * fps)))
+    command = [ffmpeg, "-v", "error", "-y"]
+    for frame in frames:
+        command.extend(["-loop", "1", "-t", f"{segment:.4f}", "-i", str(frame)])
+    filters = []
+    for index in range(len(frames)):
+        zoom = "min(zoom+0.0007,1.045)" if index % 2 == 0 else "min(zoom+0.0005,1.035)"
+        filters.append(
+            f"[{index}:v]scale={width}:{height}:flags=lanczos,"
+            f"zoompan=z='{zoom}':x='iw/2-(iw/zoom/2)':"
+            f"y='ih/2-(ih/zoom/2)':d={frame_count}:s={width}x{height}:fps={fps},"
+            f"setsar=1,format=yuv420p[v{index}]"
+        )
+    current = "v0"
+    for index in range(1, len(frames)):
+        result = f"x{index}"
+        offset = index * (segment - fade)
+        filters.append(
+            f"[{current}][v{index}]xfade=transition=fade:duration={fade:.4f}:"
+            f"offset={offset:.4f}[{result}]"
+        )
+        current = result
+    filters.append(f"[{current}]noise=alls=2:allf=t+u[delivery]")
+    command.extend([
+        "-filter_complex", ";".join(filters),
+        "-map", "[delivery]", "-an", "-t", f"{duration:.3f}",
+        "-c:v", "libx264", "-preset", "veryfast", "-crf", "17",
+        "-pix_fmt", "yuv420p", "-movflags", "+faststart", str(output),
+    ])
+    result = subprocess.run(
+        command,
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=max(180, int(duration * 20)),
+    )
+    if result.returncode:
+        raise BlenderRenderError(
+            "3D keyframe animation failed: "
+            + (result.stderr or result.stdout or "unknown ffmpeg error")[-1200:]
+        )
+    if not output.exists() or output.stat().st_size < 100_000:
+        raise BlenderRenderError("3D keyframe animation produced no usable output")
 
 
 def _invoke(
@@ -203,11 +259,20 @@ def _invoke(
         raise BlenderRenderError(f"Blender renderer is missing: {renderer}")
     output.parent.mkdir(parents=True, exist_ok=True)
     delivery_fps = max(1, int(plan["render"].get("fps") or FPS))
-    work_fps = max(1, int(plan["render"].get("work_fps") or delivery_fps))
+    keyframed = (
+        not preview
+        and plan["render"].get("strategy") == "keyframe_composite"
+    )
+    frame_dir = output.with_name(f"{output.stem}.frames")
+    if keyframed:
+        shutil.rmtree(frame_dir, ignore_errors=True)
     work_percentage = max(
         25, min(100, int(plan["render"].get("work_resolution_percentage") or 100)),
     )
-    optimized = not preview and (work_fps < delivery_fps or work_percentage < 100)
+    optimized = (
+        not preview and not keyframed
+        and work_percentage < 100
+    )
     render_output = (
         output.with_name(f"{output.stem}.blender{output.suffix}")
         if optimized else output
@@ -233,6 +298,8 @@ def _invoke(
     ]
     if preview:
         command.append("--preview")
+    elif keyframed:
+        command.append("--keyframes")
     timeout = max(
         int(os.environ.get("BLENDER_SCENE_TIMEOUT", "900")),
         int(float(plan["duration_seconds"]) * 20),
@@ -254,7 +321,18 @@ def _invoke(
         raise BlenderRenderError(
             f"Blender scene {plan['scene_index']} failed: {detail}"
         )
-    if (
+    if keyframed:
+        frames = sorted(frame_dir.glob("frame-*.png"))
+        expected = int(plan["render"].get("keyframe_count") or 5)
+        if len(frames) != expected or any(frame.stat().st_size < 20_000 for frame in frames):
+            raise BlenderRenderError(
+                f"Blender scene {plan['scene_index']} produced {len(frames)}/{expected} keyframes"
+            )
+        try:
+            _compose_keyframes(plan, frames, output)
+        finally:
+            shutil.rmtree(frame_dir, ignore_errors=True)
+    elif (
         not render_output.exists()
         or render_output.stat().st_size < (20_000 if preview else 100_000)
     ):

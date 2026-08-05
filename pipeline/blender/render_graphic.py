@@ -14,6 +14,7 @@ def _args():
     parser.add_argument("--plan", required=True)
     parser.add_argument("--output", required=True)
     parser.add_argument("--preview", action="store_true")
+    parser.add_argument("--keyframes", action="store_true")
     return parser.parse_args(argv)
 
 
@@ -589,27 +590,13 @@ def _interpolation(bpy):
                 point.interpolation = "BEZIER"
 
 
-def _retime_actions(bpy, ratio):
-    if abs(float(ratio) - 1.0) < 1e-6:
-        return
-    for action in bpy.data.actions:
-        for curve in action.fcurves:
-            for point in curve.keyframe_points:
-                for coordinate in (point.handle_left, point.co, point.handle_right):
-                    coordinate.x = 1.0 + (coordinate.x - 1.0) * ratio
-
-
 def _configure(bpy, plan, output, preview):
     scene = bpy.context.scene
     render = plan["render"]
     scene.render.resolution_x = int(render["width"])
     scene.render.resolution_y = int(render["height"])
-    scene.render.resolution_percentage = (
-        100 if preview else int(render.get("work_resolution_percentage") or 100)
-    )
-    scene.render.fps = int(
-        render["fps"] if preview else render.get("work_fps") or render["fps"]
-    )
+    scene.render.resolution_percentage = 100
+    scene.render.fps = int(render["fps"])
     scene.frame_step = 1
     scene.render.image_settings.file_format = "PNG" if preview else "FFMPEG"
     scene.render.film_transparent = bool(render.get("transparent", False))
@@ -664,29 +651,30 @@ def main():
 
     plan = json.loads(Path(args.plan).read_text(encoding="utf-8"))
     _clear(bpy)
-    delivery_fps = int(plan["render"]["fps"])
-    work_fps = int(plan["render"].get("work_fps") or delivery_fps)
-    design_frame_end = max(
-        2, round(float(plan["duration_seconds"]) * delivery_fps),
-    )
-    frame_end = design_frame_end
+    fps = int(plan["render"]["fps"])
+    frame_end = max(2, round(float(plan["duration_seconds"]) * fps))
     bpy.context.scene.frame_start = 1
     bpy.context.scene.frame_end = frame_end
     _stage(bpy, plan)
     _header(bpy, plan)
     BUILDERS[plan["kind"]](bpy, plan, frame_end)
     _camera(bpy, mathutils, plan, frame_end)
-    if not args.preview and work_fps != delivery_fps:
-        _retime_actions(bpy, work_fps / delivery_fps)
-        frame_end = max(2, round(float(plan["duration_seconds"]) * work_fps))
-        bpy.context.scene.frame_end = frame_end
     _interpolation(bpy)
     output = Path(args.output).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)
-    _configure(bpy, plan, output, args.preview)
+    _configure(bpy, plan, output, args.preview or args.keyframes)
     if args.preview:
         bpy.context.scene.frame_set(max(2, round(frame_end * 0.58)))
         bpy.ops.render.render(write_still=True)
+    elif args.keyframes:
+        frame_dir = output.with_name(f"{output.stem}.frames")
+        frame_dir.mkdir(parents=True, exist_ok=True)
+        count = int(plan["render"].get("keyframe_count") or 5)
+        for index in range(count):
+            progress = 0.10 + 0.84 * index / max(count - 1, 1)
+            bpy.context.scene.frame_set(max(2, round(frame_end * progress)))
+            bpy.context.scene.render.filepath = str(frame_dir / f"frame-{index:02d}.png")
+            bpy.ops.render.render(write_still=True)
     else:
         bpy.ops.render.render(animation=True)
 

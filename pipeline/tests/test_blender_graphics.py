@@ -42,8 +42,8 @@ class BlenderGraphicsTests(unittest.TestCase):
             self.assertEqual(plan["backend"], "blender_3d")
             self.assertEqual(plan["render"]["width"], storyboard.W)
             self.assertEqual(plan["render"]["height"], storyboard.H)
-            self.assertEqual(plan["render"]["work_fps"], 15)
-            self.assertEqual(plan["render"]["work_resolution_percentage"], 75)
+            self.assertEqual(plan["render"]["strategy"], "keyframe_composite")
+            self.assertEqual(plan["render"]["keyframe_count"], 5)
 
     def test_scene_variant_is_deterministic_and_meaning_sensitive(self):
         scene = self._scene("path")
@@ -111,7 +111,7 @@ class BlenderGraphicsTests(unittest.TestCase):
             self.assertEqual(output, output_dir / "scene-01-path.mp4")
             self.assertEqual(invoke.call_args.args[0]["kind"], "path")
 
-    def test_optimized_render_is_normalized_to_delivery_dimensions(self):
+    def test_keyframe_render_is_composited_to_delivery_dimensions(self):
         plan = blender_graphics.plan_for(
             {}, self._scene("path"), 0, ["A", "B", "C", "D"],
         )
@@ -119,8 +119,13 @@ class BlenderGraphicsTests(unittest.TestCase):
             output = Path(td) / "clip.mp4"
 
             def fake_run(command, **_kwargs):
-                target = Path(command[-1])
-                target.write_bytes(b"3" * 150_000)
+                if "--keyframes" in command:
+                    frame_dir = output.with_name("clip.frames")
+                    frame_dir.mkdir()
+                    for index in range(5):
+                        (frame_dir / f"frame-{index:02d}.png").write_bytes(b"p" * 25_000)
+                else:
+                    Path(command[-1]).write_bytes(b"3" * 150_000)
                 return mock.Mock(returncode=0, stdout="", stderr="")
 
             with mock.patch.object(
@@ -132,11 +137,11 @@ class BlenderGraphicsTests(unittest.TestCase):
 
             self.assertEqual(result, output)
             self.assertTrue(output.exists())
-            self.assertFalse(output.with_name("clip.blender.mp4").exists())
+            self.assertFalse(output.with_name("clip.frames").exists())
             ffmpeg_command = run.call_args_list[1].args[0]
-            filters = ffmpeg_command[ffmpeg_command.index("-vf") + 1]
+            filters = ffmpeg_command[ffmpeg_command.index("-filter_complex") + 1]
             self.assertIn("fps=30", filters)
-            self.assertNotIn("setpts", filters)
+            self.assertIn("xfade=transition=fade", filters)
             self.assertIn("scale=1080:608", filters)
 
     def test_cached_2d_fallback_is_reused_within_one_visual_revision(self):
