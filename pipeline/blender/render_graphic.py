@@ -589,6 +589,16 @@ def _interpolation(bpy):
                 point.interpolation = "BEZIER"
 
 
+def _retime_actions(bpy, ratio):
+    if abs(float(ratio) - 1.0) < 1e-6:
+        return
+    for action in bpy.data.actions:
+        for curve in action.fcurves:
+            for point in curve.keyframe_points:
+                for coordinate in (point.handle_left, point.co, point.handle_right):
+                    coordinate.x = 1.0 + (coordinate.x - 1.0) * ratio
+
+
 def _configure(bpy, plan, output, preview):
     scene = bpy.context.scene
     render = plan["render"]
@@ -597,8 +607,10 @@ def _configure(bpy, plan, output, preview):
     scene.render.resolution_percentage = (
         100 if preview else int(render.get("work_resolution_percentage") or 100)
     )
-    scene.render.fps = int(render["fps"])
-    scene.frame_step = 1 if preview else max(1, int(render.get("frame_step") or 1))
+    scene.render.fps = int(
+        render["fps"] if preview else render.get("work_fps") or render["fps"]
+    )
+    scene.frame_step = 1
     scene.render.image_settings.file_format = "PNG" if preview else "FFMPEG"
     scene.render.film_transparent = bool(render.get("transparent", False))
     engines = (
@@ -652,14 +664,22 @@ def main():
 
     plan = json.loads(Path(args.plan).read_text(encoding="utf-8"))
     _clear(bpy)
-    fps = int(plan["render"]["fps"])
-    frame_end = max(2, round(float(plan["duration_seconds"]) * fps))
+    delivery_fps = int(plan["render"]["fps"])
+    work_fps = int(plan["render"].get("work_fps") or delivery_fps)
+    design_frame_end = max(
+        2, round(float(plan["duration_seconds"]) * delivery_fps),
+    )
+    frame_end = design_frame_end
     bpy.context.scene.frame_start = 1
     bpy.context.scene.frame_end = frame_end
     _stage(bpy, plan)
     _header(bpy, plan)
     BUILDERS[plan["kind"]](bpy, plan, frame_end)
     _camera(bpy, mathutils, plan, frame_end)
+    if not args.preview and work_fps != delivery_fps:
+        _retime_actions(bpy, work_fps / delivery_fps)
+        frame_end = max(2, round(float(plan["duration_seconds"]) * work_fps))
+        bpy.context.scene.frame_end = frame_end
     _interpolation(bpy)
     output = Path(args.output).resolve()
     output.parent.mkdir(parents=True, exist_ok=True)

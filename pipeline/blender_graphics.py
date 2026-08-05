@@ -14,7 +14,7 @@ from video_format import BAND_HEIGHT, BAND_WIDTH, FPS
 
 
 BACKEND = "blender_3d"
-PLAN_VERSION = 2
+PLAN_VERSION = 3
 GRAPHIC_KINDS = (
     "labels", "path", "counters", "clock", "perception", "evidence",
     "filter", "scale", "generic",
@@ -146,7 +146,7 @@ def plan_for(
             "width": BAND_WIDTH,
             "height": BAND_HEIGHT,
             "fps": FPS,
-            "frame_step": 2,
+            "work_fps": 15,
             "work_resolution_percentage": 75,
             "engine": "BLENDER_WORKBENCH",
             "transparent": False,
@@ -171,6 +171,9 @@ def validate_plan(plan: dict) -> None:
         errors.append("render dimensions must be positive")
     if int(render.get("fps") or 0) <= 0:
         errors.append("render fps must be positive")
+    work_fps = int(render.get("work_fps") or render.get("fps") or 0)
+    if work_fps <= 0 or work_fps > int(render.get("fps") or 0):
+        errors.append("work_fps must be positive and no greater than delivery fps")
     if float(plan.get("duration_seconds") or 0) < 0.5:
         errors.append("duration_seconds must be at least 0.5")
     if errors:
@@ -199,11 +202,12 @@ def _invoke(
     if not renderer.exists():
         raise BlenderRenderError(f"Blender renderer is missing: {renderer}")
     output.parent.mkdir(parents=True, exist_ok=True)
-    frame_step = max(1, int(plan["render"].get("frame_step") or 1))
+    delivery_fps = max(1, int(plan["render"].get("fps") or FPS))
+    work_fps = max(1, int(plan["render"].get("work_fps") or delivery_fps))
     work_percentage = max(
         25, min(100, int(plan["render"].get("work_resolution_percentage") or 100)),
     )
-    optimized = not preview and (frame_step > 1 or work_percentage < 100)
+    optimized = not preview and (work_fps < delivery_fps or work_percentage < 100)
     render_output = (
         output.with_name(f"{output.stem}.blender{output.suffix}")
         if optimized else output
@@ -262,7 +266,7 @@ def _invoke(
         if not ffmpeg:
             raise BlenderRenderError("ffmpeg is required to normalize optimized 3D clips")
         filters = (
-            f"setpts={frame_step}*PTS,fps={int(plan['render']['fps'])},"
+            f"fps={delivery_fps},"
             f"scale={int(plan['render']['width'])}:{int(plan['render']['height'])}:"
             "flags=lanczos"
         )

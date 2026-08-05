@@ -42,7 +42,7 @@ class BlenderGraphicsTests(unittest.TestCase):
             self.assertEqual(plan["backend"], "blender_3d")
             self.assertEqual(plan["render"]["width"], storyboard.W)
             self.assertEqual(plan["render"]["height"], storyboard.H)
-            self.assertEqual(plan["render"]["frame_step"], 2)
+            self.assertEqual(plan["render"]["work_fps"], 15)
             self.assertEqual(plan["render"]["work_resolution_percentage"], 75)
 
     def test_scene_variant_is_deterministic_and_meaning_sensitive(self):
@@ -135,7 +135,8 @@ class BlenderGraphicsTests(unittest.TestCase):
             self.assertFalse(output.with_name("clip.blender.mp4").exists())
             ffmpeg_command = run.call_args_list[1].args[0]
             filters = ffmpeg_command[ffmpeg_command.index("-vf") + 1]
-            self.assertIn("setpts=2*PTS", filters)
+            self.assertIn("fps=30", filters)
+            self.assertNotIn("setpts", filters)
             self.assertIn("scale=1080:608", filters)
 
     def test_cached_2d_fallback_is_reused_within_one_visual_revision(self):
