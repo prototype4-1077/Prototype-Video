@@ -1,10 +1,25 @@
 from __future__ import annotations
 
 import copy
+from contextlib import ExitStack
+from dataclasses import replace
 import hashlib
 import json
+import math
+import tempfile
 import unittest
 from pathlib import Path
+from types import SimpleNamespace
+from unittest import mock
+
+import cv2
+import numpy as np
+
+import pipeline.cartoon_connected_region_mechanics as mechanics
+from pipeline.cartoon_reconstruction_locked_patch import (
+    extract_locked_patches,
+    load_reconstruction_contract,
+)
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -199,7 +214,7 @@ class ConnectedRegionMechanicsContractTests(unittest.TestCase):
         self.assertEqual(tracks["torso_translation_source_px"], [[0,0],[-4,1],[5,8],[9,12],[-2,-4],[1.5,3],[-0.75,-1.5],[0.25,0.75],[0,0]])
         self.assertEqual(tracks["torso_rotation_deg"], [0,-0.35,0.75,1.1,-0.3,0.22,-0.1,0.04,0])
         self.assertEqual(tracks["head_absolute_translation_source_px"], [[0,0],[-4.5,1.5],[5.5,9],[10,14],[-2.5,-5],[1.8,3.7],[-0.95,-1.9],[0.35,0.95],[0,0]])
-        self.assertEqual(tracks["head_absolute_rotation_deg"], [0,-0.55,1.05,1.55,-0.55,0.37,-0.18,0.07,0])
+        self.assertEqual(tracks["head_absolute_rotation_deg"], [0,-0.3575,0.6825,1.0075,-0.3575,0.2405,-0.117,0.0455,0])
         self.assertEqual(tracks["left_hand_absolute_translation_source_px"], [[0,0],[-1,1],[2,4],[5,7],[-1,-2],[1,2],[-0.5,-1],[0.25,0.5],[0,0]])
         self.assertEqual(tracks["left_hand_absolute_rotation_deg"], [0,-0.1,0.25,0.5,-0.2,0.12,-0.06,0.02,0])
         self.assertEqual(tracks["right_hand_mug_absolute_translation_source_px"], [[0,0],[-2,1],[4,5],[7,8],[-1,-2],[1,2],[-0.5,-1],[0.25,0.5],[0,0]])
@@ -219,8 +234,8 @@ class ConnectedRegionMechanicsContractTests(unittest.TestCase):
         rows = {row["id"]: row for row in self.contract["region_mechanics"]["regions"]}
         self.assertEqual(rows["left_boot"]["registered_anchor_source_xy"], [553.0, 915.0])
         self.assertEqual(rows["right_boot"]["registered_anchor_source_xy"], [737.0, 864.0])
-        self.assertEqual(rows["left_boot"]["sole_receiver_source_xy"], [[600.0,915.0],[510.0,918.0]])
-        self.assertEqual(rows["right_boot"]["sole_receiver_source_xy"], [[692.0,866.0],[782.0,864.0]])
+        self.assertEqual(rows["left_boot"]["sole_receiver_source_xy"], [[537.0,915.0],[572.0,915.0]])
+        self.assertEqual(rows["right_boot"]["sole_receiver_source_xy"], [[717.0,864.0],[752.0,864.0]])
         for identifier in ("left_boot", "right_boot"):
             boot = rows[identifier]
             self.assertEqual(boot["mechanic"], "identity_contact_lock")
@@ -343,7 +358,7 @@ class ConnectedRegionMechanicsContractTests(unittest.TestCase):
         self.assertEqual(video["codec"], "h264")
         self.assertEqual(video["pixel_format"], "yuv420p")
         self.assertEqual(video["audio"], "none")
-        self.assertEqual(delivery["contact_sheet"]["review_frames"], [1, 13, 25, 37, 49])
+        self.assertEqual(delivery["contact_sheet"]["review_frames"], [1, 7, 13, 19, 25, 31, 37, 43, 49])
         self.assertTrue(delivery["video"]["filename"].endswith(".mp4"))
         self.assertTrue(delivery["contact_sheet"]["filename"].endswith(".png"))
         self.assertTrue(delivery["report"]["filename"].endswith(".json"))
@@ -438,6 +453,685 @@ class ConnectedRegionMechanicsContractTests(unittest.TestCase):
         for mutated, expected in mutations:
             with self.subTest(expected=expected):
                 self.assertIn(expected, _violations(mutated))
+
+
+class ConnectedRegionMechanicsRuntimeTests(unittest.TestCase):
+    """Adversarial checks for evidence produced by the real Phase 31 runtime."""
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        cls.contract = mechanics.load_connected_region_mechanics_contract(CONTRACT_PATH)
+        phase30_path = mechanics._locked_path(cls.contract["phase30_lock"]["contract"], "Phase30 contract")
+        cls.phase30_contract = load_reconstruction_contract(phase30_path)
+        # Rendering needs the locked supports but not the more expensive Phase 30
+        # reconstruction evaluation.  The full evaluator below performs that audit.
+        cls.patches = extract_locked_patches(cls.phase30_contract)
+
+    def test_runtime_rejects_any_canonical_contract_mutation(self) -> None:
+        mutations: list[tuple[str, dict]] = []
+
+        changed_track = copy.deepcopy(self.contract)
+        changed_track["motion_clock"]["tracks"]["head_absolute_translation_source_px"][3][0] += 1
+        mutations.append(("changed motion track", changed_track))
+
+        loosened_gate = copy.deepcopy(self.contract)
+        loosened_gate["quality_gates"]["motion"]["maximum_nonboot_centroid_step_preview_px_per_frame"] = 400.0
+        mutations.append(("loosened quality gate", loosened_gate))
+
+        deleted_delivery_gate = copy.deepcopy(self.contract)
+        del deleted_delivery_gate["quality_gates"]["delivery"]["required_decoded_frame_count"]
+        mutations.append(("deleted delivery gate", deleted_delivery_gate))
+
+        empty_report_schema = copy.deepcopy(self.contract)
+        empty_report_schema["report_schema"]["required_top_level_fields"] = []
+        mutations.append(("empty report schema", empty_report_schema))
+
+        for label, mutated in mutations:
+            with self.subTest(label=label):
+                with self.assertRaisesRegex(
+                    mechanics.ConnectedRegionMechanicsError,
+                    "complete Phase31 contract",
+                ):
+                    mechanics._validate_contract(mutated)
+
+    def test_head_hands_and_mug_are_absolute_source_space_transforms(self) -> None:
+        frame_number = 19
+        rendered = mechanics.render_flat_mechanics_frame(
+            self.contract,
+            self.patches,
+            frame_number,
+        )
+        try:
+            state = rendered.motion_state["tracks"]
+            rows = {row["id"]: row for row in self.contract["region_mechanics"]["regions"]}
+            cases = (
+                (
+                    "head_neck",
+                    "head_absolute_translation_source_px",
+                    "head_absolute_rotation_deg",
+                ),
+                (
+                    "left_hand",
+                    "left_hand_absolute_translation_source_px",
+                    "left_hand_absolute_rotation_deg",
+                ),
+                (
+                    "right_hand_mug",
+                    "right_hand_mug_absolute_translation_source_px",
+                    "right_hand_mug_absolute_rotation_deg",
+                ),
+            )
+            for identifier, translation_track, rotation_track in cases:
+                with self.subTest(region=identifier):
+                    pivot = np.asarray(rows[identifier]["pivot_source_xy"], dtype=np.float64)
+                    expected = mechanics._affine_about(
+                        pivot,
+                        np.asarray(state[translation_track], dtype=np.float64),
+                        float(state[rotation_track]),
+                    )
+                    np.testing.assert_allclose(
+                        rendered.region_transforms[identifier],
+                        expected,
+                        rtol=0.0,
+                        atol=1e-12,
+                    )
+                    actual_translation = mechanics._transform_point(expected, pivot) - pivot
+                    np.testing.assert_allclose(
+                        actual_translation,
+                        np.asarray(state[translation_track], dtype=np.float64),
+                        rtol=0.0,
+                        atol=1e-12,
+                    )
+        finally:
+            rendered.close()
+
+    def test_boot_seam_shadow_and_balance_helpers_react_to_rendered_geometry(self) -> None:
+        rendered = mechanics.render_flat_mechanics_frame(self.contract, self.patches, 1)
+        try:
+            base = mechanics._measure_boot_frame(self.contract, rendered, "left_boot")
+            shifted_registered_boot = np.zeros_like(rendered.registered_region_masks["left_boot"])
+            shifted_registered_boot[:-24] = rendered.registered_region_masks["left_boot"][24:]
+            shifted_boot = cv2.resize(
+                shifted_registered_boot.astype(np.uint8),
+                mechanics.PREVIEW_SIZE,
+                interpolation=cv2.INTER_NEAREST,
+            ) > 0
+            shifted_registered_masks = dict(rendered.registered_region_masks)
+            shifted_registered_masks["left_boot"] = shifted_registered_boot
+            shifted_masks = dict(rendered.preview_region_masks)
+            shifted_masks["left_boot"] = shifted_boot
+            shifted_frame = SimpleNamespace(
+                registered_region_masks=shifted_registered_masks,
+                preview_region_masks=shifted_masks,
+                preview_shadow_mask=rendered.preview_shadow_mask,
+            )
+            shifted = mechanics._measure_boot_frame(self.contract, shifted_frame, "left_boot")
+            self.assertGreater(shifted["anchor_residual"], base["anchor_residual"])
+            self.assertGreater(shifted["sole_clearance"], base["sole_clearance"])
+            self.assertGreater(
+                float(np.max(np.linalg.norm(shifted["endpoints"] - base["endpoints"], axis=1))),
+                10.0,
+            )
+
+            no_shadow_frame = SimpleNamespace(
+                registered_region_masks=rendered.registered_region_masks,
+                preview_region_masks=rendered.preview_region_masks,
+                preview_shadow_mask=np.zeros_like(rendered.preview_shadow_mask),
+            )
+            self.assertTrue(
+                math.isinf(
+                    mechanics._measure_boot_frame(
+                        self.contract,
+                        no_shadow_frame,
+                        "left_boot",
+                    )["shadow_gap"]
+                )
+            )
+
+            first = rendered.preview_region_masks["head_neck"]
+            second = rendered.preview_region_masks["torso_shell"]
+            actual_gap = mechanics._minimum_mask_distance(first, second)
+            missing_support = np.zeros_like(second)
+            self.assertGreater(
+                mechanics._minimum_mask_distance(first, missing_support),
+                actual_gap,
+            )
+
+            islanded = first.copy()
+            islanded[0:3, 0:3] = True
+            self.assertGreater(
+                mechanics._secondary_component_fraction(islanded),
+                mechanics._secondary_component_fraction(first),
+            )
+
+            preview_scale_x = mechanics.PREVIEW_SIZE[0] / 1672.0
+            final_alpha = rendered.registered_flat_rgba[:, :, 3] > 16
+            centroid_x = mechanics._centroid(final_alpha)[0] * preview_scale_x
+            support_x = np.concatenate(
+                [
+                    mechanics._measure_boot_frame(self.contract, rendered, identifier)["endpoints"][:, 0]
+                    for identifier in ("left_boot", "right_boot")
+                ]
+            )
+            expected_margin = min(
+                centroid_x - float(np.min(support_x)),
+                float(np.max(support_x)) - centroid_x,
+            )
+            self.assertTrue(np.isfinite(expected_margin))
+            shifted_alpha = np.zeros_like(final_alpha)
+            shifted_alpha[:, 30:] = final_alpha[:, :-30]
+            shifted_centroid_x = mechanics._centroid(shifted_alpha)[0] * preview_scale_x
+            shifted_margin = min(
+                shifted_centroid_x - float(np.min(support_x)),
+                float(np.max(support_x)) - shifted_centroid_x,
+            )
+            self.assertNotAlmostEqual(shifted_margin, expected_margin, places=6)
+        finally:
+            rendered.close()
+
+    def test_opaque_loop_frames_require_known_background_segmentation(self) -> None:
+        rendered = mechanics.render_flat_mechanics_frame(self.contract, self.patches, 1)
+        try:
+            decoded_rgb = rendered.preview_rgba[:, :, :3]
+            opaque_video_alpha = np.ones(decoded_rgb.shape[:2], dtype=bool)
+            expected_character = cv2.resize(
+                (rendered.registered_flat_rgba[:, :, 3] > 0).astype(np.uint8),
+                mechanics.PREVIEW_SIZE,
+                interpolation=cv2.INTER_NEAREST,
+            ) > 0
+            self.assertGreater(
+                int(np.count_nonzero(opaque_video_alpha)),
+                int(np.count_nonzero(expected_character)),
+                "decoded H.264 alpha cannot be treated as character evidence",
+            )
+
+            background_rgb = np.asarray(
+                self.contract["diagnostic_render"]["canvas_background_rgb"],
+                dtype=np.uint8,
+            )
+            shadow_rgb = np.asarray((8, 9, 11), dtype=np.uint8)
+            differs_from_background = np.any(decoded_rgb != background_rgb, axis=2)
+            known_shadow_only = rendered.preview_shadow_mask & np.all(
+                decoded_rgb == shadow_rgb,
+                axis=2,
+            )
+            segmented_character = differs_from_background & ~known_shadow_only
+            np.testing.assert_array_equal(segmented_character, expected_character)
+        finally:
+            rendered.close()
+
+    def test_locked_patch_injection_rejects_mask_only_corruption(self) -> None:
+        candidate = dict(self.patches)
+        original = candidate["left_boot"]
+        corrupted = original.semantic_support_mask.copy()
+        corrupted[0, 0] = ~corrupted[0, 0]
+        candidate["left_boot"] = replace(original, semantic_support_mask=corrupted)
+        with self.assertRaisesRegex(
+            mechanics.ConnectedRegionMechanicsError,
+            "left_boot locked patch semantic_support_mask mismatch",
+        ):
+            mechanics._require_exact_locked_patches(self.patches, candidate)
+
+    def test_decoded_delivery_rejects_a_corrupted_middle_frame(self) -> None:
+        background = np.asarray((18, 20, 24), dtype=np.uint8)
+        subject = np.asarray((216, 140, 74), dtype=np.uint8)
+        reference = []
+        masks = []
+        for _ in range(49):
+            frame = np.empty((48, 64, 3), dtype=np.uint8)
+            frame[:] = background
+            frame[12:40, 20:44] = subject
+            mask = np.zeros((48, 64), dtype=bool)
+            mask[12:40, 20:44] = True
+            reference.append(frame)
+            masks.append(mask)
+        decoded = [frame.copy() for frame in reference]
+        decoded[24][12:40, 20:44] = background
+        audit = mechanics._audit_decoded_delivery(
+            self.contract,
+            reference,
+            masks,
+            decoded,
+            {"decoded_frame_count_probe": 49},
+        )
+        self.assertFalse(audit["full_decode_passed"])
+        self.assertFalse(audit["records"][24]["passed"])
+        self.assertEqual(audit["records"][24]["character_mask_iou"], 0.0)
+
+    def test_subject_roi_psnr_is_not_inflated_by_constant_background(self) -> None:
+        reference = np.zeros((64, 64, 3), dtype=np.uint8)
+        decoded = reference.copy()
+        mask = np.zeros((64, 64), dtype=bool)
+        mask[24:40, 24:40] = True
+        reference[mask] = (200, 100, 50)
+        decoded[mask] = (80, 180, 220)
+        psnr, roi_pixels = mechanics._subject_roi_psnr(
+            reference,
+            decoded,
+            mask,
+            mask,
+            2,
+        )
+        self.assertLess(psnr, 15.0)
+        self.assertLess(roi_pixels, reference.shape[0] * reference.shape[1] // 4)
+
+    def test_all_49_frames_use_final_registered_mask_and_matrix_evidence(self) -> None:
+        seen_frames: list[int] = []
+        component_counts = {identifier: [] for identifier in mechanics.REGION_IDS}
+        union_components: list[int] = []
+        centroids = {identifier: [] for identifier in mechanics.REGION_IDS}
+        cages = {identifier: [] for identifier in ("lower_garment", "left_sleeve", "right_sleeve")}
+        rigid_angles = {identifier: [] for identifier in ("torso_shell", "head_neck", "left_hand", "right_hand_mug")}
+        head_magnitudes: list[float] = []
+        boot_rows = {identifier: [] for identifier in ("left_boot", "right_boot")}
+        seam_overlaps = {
+            f"{row['a']}__{row['b']}": []
+            for row in self.contract["support_overlap_seams"]["required_pairs"]
+        }
+        seam_gaps = {key: [] for key in seam_overlaps}
+        secondary_fractions: list[float] = []
+        balance_margins: list[float] = []
+        original_render = mechanics.render_flat_mechanics_frame
+        preview_scale = np.asarray(
+            (mechanics.PREVIEW_SIZE[0] / 1672.0, mechanics.PREVIEW_SIZE[1] / 941.0),
+            dtype=np.float64,
+        )
+        rows = {row["id"]: row for row in self.contract["region_mechanics"]["regions"]}
+
+        def audited_render(*args, **kwargs):
+            rendered = original_render(*args, **kwargs)
+            seen_frames.append(rendered.frame)
+            threshold = int(self.contract["contact_and_topology_gates"]["topology_alpha_threshold_exclusive"])
+            union = rendered.registered_flat_rgba[:, :, 3] > threshold
+            union_components.append(mechanics._components(union))
+            for identifier in mechanics.REGION_IDS:
+                final_mask = rendered.preview_region_masks[identifier]
+                component_counts[identifier].append(mechanics._components(final_mask))
+                centroids[identifier].append(mechanics._centroid(final_mask))
+            for identifier in cages:
+                cages[identifier].append(
+                    rendered.cage_controls[identifier]["destination"].copy() * preview_scale
+                )
+            for identifier in rigid_angles:
+                matrix = rendered.region_transforms[identifier]
+                rigid_angles[identifier].append(float(np.degrees(np.arctan2(matrix[1, 0], matrix[0, 0]))))
+            head_pivot = np.asarray(rows["head_neck"]["pivot_source_xy"], dtype=np.float64)
+            head_magnitudes.append(
+                float(
+                    np.linalg.norm(
+                        mechanics._transform_point(rendered.region_transforms["head_neck"], head_pivot)
+                        - head_pivot
+                    )
+                )
+            )
+            frame_boot_rows = {
+                identifier: mechanics._measure_boot_frame(self.contract, rendered, identifier)
+                for identifier in boot_rows
+            }
+            for identifier, row in frame_boot_rows.items():
+                boot_rows[identifier].append(row)
+            for row in self.contract["support_overlap_seams"]["required_pairs"]:
+                key = f"{row['a']}__{row['b']}"
+                first = rendered.registered_region_masks[row["a"]]
+                second = rendered.registered_region_masks[row["b"]]
+                seam_overlaps[key].append(int(np.count_nonzero(first & second)))
+                first_preview = cv2.resize(
+                    first.astype(np.uint8), mechanics.PREVIEW_SIZE, interpolation=cv2.INTER_NEAREST
+                ) > 0
+                second_preview = cv2.resize(
+                    second.astype(np.uint8), mechanics.PREVIEW_SIZE, interpolation=cv2.INTER_NEAREST
+                ) > 0
+                seam_gaps[key].append(mechanics._minimum_mask_distance(first_preview, second_preview))
+                secondary_fractions.append(
+                    mechanics._secondary_component_fraction(first_preview & second_preview)
+                )
+            centroid_x = mechanics._centroid(union)[0] * preview_scale[0]
+            support_x = np.concatenate(
+                [row["endpoints"][:, 0] for row in frame_boot_rows.values()]
+            )
+            balance_margins.append(
+                min(
+                    centroid_x - float(np.min(support_x)),
+                    float(np.max(support_x)) - centroid_x,
+                )
+            )
+            return rendered
+
+        with mock.patch.object(mechanics, "render_flat_mechanics_frame", side_effect=audited_render):
+            try:
+                envelope = mechanics.evaluate_connected_region_mechanics(self.contract)
+            except mechanics.ConnectedRegionMechanicsError as exc:
+                disconnected = {
+                    identifier: [frame for frame, count in zip(seen_frames, counts) if count != 1]
+                    for identifier, counts in component_counts.items()
+                    if any(count != 1 for count in counts)
+                }
+                self.fail(
+                    f"49-frame Phase31 preflight did not pass: {exc}; "
+                    f"rendered_frames={len(seen_frames)}; disconnected_final_masks={disconnected}"
+                )
+
+        self.assertEqual(seen_frames, list(range(1, 50)))
+        self.assertTrue(envelope["mechanics_passed"])
+        self.assertFalse(envelope["machine_passed"])
+        self.assertTrue(envelope["delivery_pending"])
+        report = envelope["report"]
+
+        self.assertEqual(max(union_components), 1)
+        self.assertTrue(
+            all(count == 1 for counts in component_counts.values() for count in counts),
+            "every final registered region mask at alpha >16 must remain connected",
+        )
+
+        expected_centroid_step = max(
+            float(np.linalg.norm(current - previous))
+            for identifier, values in centroids.items()
+            if identifier not in ("left_boot", "right_boot")
+            for previous, current in zip(values, values[1:])
+        )
+        self.assertAlmostEqual(
+            report["motion_bounds"]["maximum_nonboot_centroid_step_preview_px_per_frame"],
+            expected_centroid_step,
+            places=9,
+        )
+        expected_cage_step = max(
+            float(np.max(np.linalg.norm(current - previous, axis=1)))
+            for values in cages.values()
+            for previous, current in zip(values, values[1:])
+        )
+        self.assertAlmostEqual(
+            report["motion_bounds"]["maximum_cage_vertex_step_preview_px_per_frame"],
+            expected_cage_step,
+            places=9,
+        )
+        expected_rotation_step = max(
+            abs(current - previous)
+            for values in rigid_angles.values()
+            for previous, current in zip(values, values[1:])
+        )
+        self.assertAlmostEqual(
+            report["motion_bounds"]["maximum_rotation_step_deg_per_frame"],
+            expected_rotation_step,
+            places=9,
+        )
+        self.assertAlmostEqual(
+            report["motion_bounds"]["maximum_head_total_translation_magnitude_source_px"],
+            max(head_magnitudes),
+            places=9,
+        )
+
+        all_boot_rows = [row for values in boot_rows.values() for row in values]
+        self.assertAlmostEqual(
+            report["boot_contacts"]["maximum_sole_distance_p95_preview_px"],
+            max(row["sole_distance_p95"] for row in all_boot_rows),
+            places=9,
+        )
+        self.assertAlmostEqual(
+            report["boot_contacts"]["maximum_shadow_gap_preview_px"],
+            max(row["shadow_gap"] for row in all_boot_rows),
+            places=9,
+        )
+        endpoint_motion = max(
+            float(np.max(np.linalg.norm(current["endpoints"] - previous["endpoints"], axis=1)))
+            for values in boot_rows.values()
+            for previous, current in zip(values, values[1:])
+        )
+        self.assertAlmostEqual(
+            report["boot_contacts"]["maximum_endpoint_motion_preview_px_per_frame"],
+            endpoint_motion,
+            places=9,
+        )
+
+        self.assertEqual(
+            report["seam_support"]["per_pair_minimum_overlap_pixels"],
+            {key: min(values) for key, values in seam_overlaps.items()},
+        )
+        all_gaps = [value for values in seam_gaps.values() for value in values]
+        self.assertAlmostEqual(
+            report["seam_support"]["maximum_socket_gap_preview_px"],
+            max(all_gaps),
+            places=9,
+        )
+        self.assertAlmostEqual(
+            report["seam_support"]["maximum_secondary_edge_fraction"],
+            max(secondary_fractions),
+            places=9,
+        )
+        self.assertAlmostEqual(
+            report["balance"]["minimum_center_of_mass_horizontal_margin_in_two_sole_hull_preview_px"],
+            min(balance_margins),
+            places=9,
+        )
+
+    def test_require_delivery_true_fails_before_any_encode(self) -> None:
+        with self.assertRaisesRegex(
+            mechanics.ConnectedRegionMechanicsError,
+            "delivery is required but has not been encoded and audited",
+        ):
+            mechanics.evaluate_connected_region_mechanics(
+                self.contract,
+                require_delivery=True,
+            )
+
+
+class ConnectedRegionMechanicsDeliveryTransactionTests(unittest.TestCase):
+    """Fast mocked checks for the one-encode, all-or-nothing publisher."""
+
+    def setUp(self) -> None:
+        self.contract = _read_json(CONTRACT_PATH)
+        self.reference_rgb = [np.zeros((2, 2, 3), dtype=np.uint8) for _ in range(49)]
+        self.reference_masks = [np.ones((2, 2), dtype=bool) for _ in range(49)]
+
+    @staticmethod
+    def _report() -> dict:
+        return {
+            "proof": {
+                "diagnostic_sequence_sha256": "reference-sequence",
+                "in_memory_only": True,
+                "media_rendered": False,
+            },
+            "motion_bounds": {
+                "decoded_first_last_alpha_iou": None,
+                "decoded_first_last_psnr_db": None,
+                "passed": False,
+            },
+            "provenance": {},
+            "delivery": {"passed": False},
+            "gate_results": [],
+            "machine_passed": False,
+        }
+
+    @staticmethod
+    def _probe() -> dict:
+        return {
+            "width": 960,
+            "height": 540,
+            "codec": "h264",
+            "pixel_format": "yuv420p",
+            "stream_count": 1,
+            "video_stream_count": 1,
+            "audio_stream_count": 0,
+            "r_frame_rate": "30/1",
+            "avg_frame_rate": "30/1",
+            "time_base": "1/90000",
+            "duration_ts": 147000,
+            "stream_duration_rational": "49/30",
+            "duration_seconds": 49 / 30,
+            "container_duration_seconds": 49 / 30,
+            "container_duration_error_seconds": 0.0,
+        }
+
+    @staticmethod
+    def _audit() -> dict:
+        return {
+            "loop_iou": 1.0,
+            "loop_psnr": 99.0,
+            "full_decode_passed": True,
+            "decoded_sequence_sha256": "decoded-sequence",
+            "background_candidates": [[18, 20, 24], [8, 9, 11]],
+            "minimum_rgb_distance": 32.0,
+            "dilation_px": 2,
+            "minimum_iou": 1.0,
+            "mean_iou": 1.0,
+            "minimum_psnr": 99.0,
+            "mean_psnr": 99.0,
+            "records": [],
+        }
+
+    @staticmethod
+    def _gate_results(_contract: dict, measured: dict) -> list[dict]:
+        identifiers = (
+            "provenance.required_phase31_contract_sha256_match",
+            "provenance.required_phase31_implementation_sha256_match",
+            "motion.minimum_decoded_first_last_alpha_iou",
+            "delivery.required_video_file",
+            "delivery.required_contact_sheet_file",
+            "delivery.required_report_file",
+        )
+        return [
+            {
+                "id": identifier,
+                "measured": measured[identifier],
+                "operator": "equal",
+                "threshold": True,
+                "passed": bool(measured[identifier]),
+            }
+            for identifier in identifiers
+        ]
+
+    def _run_mocked_delivery(
+        self,
+        output_dir: Path,
+        *,
+        probe_side_effect: Exception | None = None,
+    ) -> tuple[dict | None, list[Path], list[bool]]:
+        contract = copy.deepcopy(self.contract)
+        contract["delivery"]["output_directory"] = str(output_dir)
+        encoded_paths: list[Path] = []
+        report_states: list[bool] = []
+        real_write_json = mechanics._write_json_atomically
+
+        def encode(_ffmpeg, _frames, path, _contract) -> None:
+            encoded_paths.append(path)
+            path.write_bytes(b"one-encode")
+
+        def write_contact_sheet(_frames, _keys, path) -> None:
+            path.write_bytes(b"decoded-contact-sheet")
+
+        def write_json(path, payload) -> None:
+            report_states.append(bool(payload["machine_passed"]))
+            real_write_json(path, payload)
+
+        probe = mock.Mock(
+            side_effect=probe_side_effect,
+            return_value=self._probe(),
+        )
+        report = self._report()
+        with ExitStack() as stack:
+            stack.enter_context(mock.patch.object(mechanics, "_validate_contract"))
+            stack.enter_context(
+                mock.patch.object(
+                    mechanics,
+                    "evaluate_connected_region_mechanics",
+                    return_value={
+                        "mechanics_passed": True,
+                        "machine_passed": False,
+                        "delivery_pending": True,
+                        "report": report,
+                    },
+                )
+            )
+            stack.enter_context(
+                mock.patch.object(
+                    mechanics,
+                    "_collect_delivery_references",
+                    return_value=(
+                        self.reference_rgb,
+                        self.reference_masks,
+                        "reference-sequence",
+                    ),
+                )
+            )
+            stack.enter_context(mock.patch.object(mechanics, "_encode_h264_once", side_effect=encode))
+            stack.enter_context(mock.patch.object(mechanics, "_probe_phase31_video", probe))
+            stack.enter_context(
+                mock.patch.object(
+                    mechanics,
+                    "_decode_exact_rgb_frames",
+                    return_value=self.reference_rgb,
+                )
+            )
+            stack.enter_context(
+                mock.patch.object(
+                    mechanics,
+                    "_audit_decoded_delivery",
+                    return_value=self._audit(),
+                )
+            )
+            stack.enter_context(
+                mock.patch.object(
+                    mechanics,
+                    "_write_decoded_keyframe_contact_sheet",
+                    side_effect=write_contact_sheet,
+                )
+            )
+            stack.enter_context(mock.patch.object(mechanics, "_gate_results", side_effect=self._gate_results))
+            stack.enter_context(mock.patch.object(mechanics, "_validate_report_schema"))
+            stack.enter_context(mock.patch.object(mechanics, "_write_json_atomically", side_effect=write_json))
+            if probe_side_effect is not None:
+                with self.assertRaises(type(probe_side_effect)):
+                    mechanics.render_connected_region_mechanics(contract)
+                return None, encoded_paths, report_states
+            result = mechanics.render_connected_region_mechanics(contract)
+            return result, encoded_paths, report_states
+
+    def test_delivery_encodes_once_then_atomically_publishes_complete_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            output_dir = Path(temporary) / "phase31-delivery"
+            report, encoded_paths, report_states = self._run_mocked_delivery(output_dir)
+            self.assertEqual(len(encoded_paths), 1)
+            self.assertNotEqual(encoded_paths[0].parent, output_dir)
+            self.assertTrue(encoded_paths[0].parent.name.startswith(".phase31-delivery.staging-"))
+            self.assertEqual(report_states, [False, True])
+            self.assertTrue(report["machine_passed"])
+            self.assertTrue(output_dir.is_dir())
+            self.assertTrue((output_dir / self.contract["delivery"]["video"]["filename"]).is_file())
+            self.assertTrue((output_dir / self.contract["delivery"]["contact_sheet"]["filename"]).is_file())
+            final_report = _read_json(
+                output_dir / self.contract["delivery"]["report"]["filename"]
+            )
+            self.assertTrue(final_report["machine_passed"])
+            self.assertEqual(list(Path(temporary).glob(".*.staging-*")), [])
+
+    def test_delivery_failure_removes_staging_and_leaves_no_final_directory(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            output_dir = Path(temporary) / "phase31-delivery"
+            report, encoded_paths, report_states = self._run_mocked_delivery(
+                output_dir,
+                probe_side_effect=mechanics.ConnectedRegionMechanicsError("probe failed"),
+            )
+            self.assertIsNone(report)
+            self.assertEqual(len(encoded_paths), 1)
+            self.assertEqual(report_states, [])
+            self.assertFalse(output_dir.exists())
+            self.assertEqual(list(Path(temporary).glob(".*.staging-*")), [])
+
+    def test_existing_final_directory_blocks_before_evaluation_or_encode(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary:
+            output_dir = Path(temporary) / "phase31-delivery"
+            output_dir.mkdir()
+            contract = copy.deepcopy(self.contract)
+            contract["delivery"]["output_directory"] = str(output_dir)
+            with mock.patch.object(mechanics, "_validate_contract"), mock.patch.object(
+                mechanics, "evaluate_connected_region_mechanics"
+            ) as evaluate, mock.patch.object(mechanics, "_encode_h264_once") as encode:
+                with self.assertRaisesRegex(
+                    mechanics.ConnectedRegionMechanicsError,
+                    "delivery directory already exists",
+                ):
+                    mechanics.render_connected_region_mechanics(contract)
+            evaluate.assert_not_called()
+            encode.assert_not_called()
 
 
 if __name__ == "__main__":

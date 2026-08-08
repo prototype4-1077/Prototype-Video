@@ -1,24 +1,30 @@
 """Phase 31 connected-region flat-color mechanics proof for June Oxley.
 
 The proof consumes only the nine semantic-support regions accepted by Phase
-30.  It generates diagnostic masks and flat colors in memory; it does not
-encode video, sample character texture, invent hidden limb surfaces, or split
-the continuous garment/sleeve regions.
+30.  Its evaluator generates diagnostic masks and flat colors in memory.  The
+explicit delivery entry point performs one fail-closed encode only after that
+preflight passes; neither path samples character texture, invents hidden limb
+surfaces, or splits the continuous garment/sleeve regions.
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
+from fractions import Fraction
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
+import shutil
+import subprocess
+import tempfile
 from typing import Any
 
 import cv2
 import numpy as np
-from PIL import Image
+from PIL import Image, ImageDraw
 
-from pipeline.cartoon_pose_layers import registered_pose_layer
+from pipeline.cartoon_pose_layers import registered_pose_layer, registration_offsets
 from pipeline.cartoon_reconstruction_locked_patch import (
     LockedPatch,
     evaluate_reconstruction_lock,
@@ -28,6 +34,12 @@ from pipeline.cartoon_reconstruction_locked_patch import (
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
+PHASE31_CONTRACT_RELATIVE_PATH = Path(
+    "concept/characters/june_oxley_connected_region_mechanics_v1.json"
+)
+PHASE31_IMPLEMENTATION_RELATIVE_PATH = Path(
+    "pipeline/cartoon_connected_region_mechanics.py"
+)
 REGION_IDS = (
     "lower_garment",
     "torso_shell",
@@ -40,7 +52,7 @@ REGION_IDS = (
     "right_boot",
 )
 PREVIEW_SIZE = (960, 540)
-_PINNED_CONTRACT_CANONICAL_SHA256 = "4fa358c35b492fdb6a7b0e81c8e5a15fe222bfc8a89cd50af9e96183e1044378"
+_PINNED_CONTRACT_CANONICAL_SHA256 = "7276621dede89b90aeb0c4801c54043c4f9601305746b5a89fd317dc3434e2ac"
 
 
 class ConnectedRegionMechanicsError(ValueError):
@@ -54,6 +66,7 @@ class FlatMechanicsFrame:
     source_region_masks: dict[str, np.ndarray]
     source_flat_rgba: np.ndarray
     registered_flat_rgba: np.ndarray
+    registered_region_masks: dict[str, np.ndarray]
     preview_rgba: np.ndarray
     preview_region_masks: dict[str, np.ndarray]
     preview_shadow_mask: np.ndarray
@@ -66,6 +79,7 @@ class FlatMechanicsFrame:
     def close(self) -> None:
         """Release large arrays eagerly during sequential evaluation."""
         self.source_region_masks.clear()
+        self.registered_region_masks.clear()
         self.preview_region_masks.clear()
         self.region_transforms.clear()
         self.cage_controls.clear()
@@ -351,7 +365,9 @@ def _warp_affine_mask(mask: np.ndarray, matrix: np.ndarray) -> np.ndarray:
 
 def _signed_area(vertices: np.ndarray, triangle: tuple[int, int, int]) -> float:
     first, second, third = vertices[list(triangle)]
-    return 0.5 * float(np.cross(second - first, third - first))
+    edge_a = second - first
+    edge_b = third - first
+    return 0.5 * float(edge_a[0] * edge_b[1] - edge_a[1] * edge_b[0])
 
 
 LOWER_TRIANGLES = ((0, 1, 2), (1, 3, 2), (2, 3, 4))
@@ -403,8 +419,6 @@ def _warp_lower_mask(
     source = destination.copy()
     for _ in range(7):
         source = destination - _tps_displacement(source, source_controls, parameters)
-    mapped = source + _tps_displacement(source, source_controls, parameters)
-    inverse_residuals = np.linalg.norm(mapped - destination, axis=1)
     local_map_x = source[:, 0].reshape(grid_x.shape).astype(np.float32)
     local_map_y = source[:, 1].reshape(grid_y.shape).astype(np.float32)
     sampled = cv2.remap(
@@ -417,9 +431,34 @@ def _warp_lower_mask(
     ) > 0
     result = np.zeros_like(mask)
     result[y0:y1, x0:x1] = sampled
-    support_y, support_x = np.where(mask)
-    stride = max(1, len(support_x) // 4096)
-    sample = np.column_stack((support_x[::stride], support_y[::stride])).astype(np.float64)
+    sampled_destination_indices = np.flatnonzero(sampled.reshape(-1))
+    if not len(sampled_destination_indices):
+        raise ConnectedRegionMechanicsError(
+            "lower-garment TPS inverse remap produced no sampled destination support"
+        )
+    sampled_destinations = destination[sampled_destination_indices]
+    sampled_sources = source[sampled_destination_indices]
+    sampled_forward = sampled_sources + _tps_displacement(
+        sampled_sources,
+        source_controls,
+        parameters,
+    )
+    sampled_inverse_residuals = np.linalg.norm(
+        sampled_forward - sampled_destinations,
+        axis=1,
+    )
+    if not np.all(np.isfinite(sampled_inverse_residuals)):
+        raise ConnectedRegionMechanicsError(
+            "lower-garment TPS inverse residual evidence is non-finite"
+        )
+    eroded = cv2.erode(mask.astype(np.uint8), np.ones((3, 3), dtype=np.uint8)) > 0
+    boundary = mask & ~eroded
+    grid_y_index, grid_x_index = np.indices(mask.shape)
+    audit_support = boundary | (
+        mask & (grid_x_index % 4 == 0) & (grid_y_index % 4 == 0)
+    )
+    support_y, support_x = np.where(audit_support)
+    sample = np.column_stack((support_x, support_y)).astype(np.float64)
     epsilon = 0.5
     plus_x = sample + np.asarray((epsilon, 0.0))
     minus_x = sample - np.asarray((epsilon, 0.0))
@@ -438,9 +477,12 @@ def _warp_lower_mask(
     jacobian_10 = derivative_x[:, 1]
     jacobian_11 = 1.0 + derivative_y[:, 1]
     determinants = jacobian_00 * jacobian_11 - jacobian_01 * jacobian_10
+    if not np.all(np.isfinite(determinants)):
+        raise ConnectedRegionMechanicsError(
+            "lower-garment TPS sampled Jacobian evidence is non-finite"
+        )
     minimum_determinant = float(np.min(determinants))
-    relevant_residuals = inverse_residuals[sampled.ravel() > 0]
-    maximum_residual = float(np.max(relevant_residuals)) if len(relevant_residuals) else float(np.max(inverse_residuals))
+    maximum_residual = float(np.max(sampled_inverse_residuals))
     return result, minimum_determinant, maximum_residual
 
 
@@ -477,6 +519,80 @@ def _classify_registered_regions(
         selected = ownership == index
         masks[identifier][ys[selected], xs[selected]] = True
     return masks
+
+
+def _register_region_masks(
+    source_masks: dict[str, np.ndarray],
+    pose: dict[str, Any],
+    registration: dict[str, Any],
+    alpha_threshold_exclusive: int,
+) -> dict[str, np.ndarray]:
+    """Carry every semantic support through the exact shared registration map.
+
+    Recovering semantic masks from the composited diagnostic colors makes
+    evidence depend on render-order occlusion and cubic RGB blending.  Register
+    all nine alpha supports together instead, then threshold the final warped
+    alpha channels in the same coordinate space as the visible composite.
+    """
+    height, width = next(iter(source_masks.values())).shape
+    channels = np.stack(
+        [source_masks[identifier].astype(np.float32) for identifier in REGION_IDS],
+        axis=2,
+    )
+    offsets = registration_offsets(pose, registration)
+    dx, dy = offsets["translation"]
+    correction_x, correction_y = offsets["right_leg_correction"]
+    maximum = float(registration["right_leg_warp"]["maximum_correction_px"])
+    if math.hypot(correction_x, correction_y) > maximum:
+        raise ConnectedRegionMechanicsError(
+            f"{pose['id']} exceeds the bounded right-leg contact correction"
+        )
+    warp = registration["right_leg_warp"]
+    grid_y, grid_x = np.indices((height, width), dtype=np.float32)
+
+    def smoothstep(value: np.ndarray) -> np.ndarray:
+        clipped = np.clip(value, 0.0, 1.0)
+        return clipped * clipped * (3.0 - 2.0 * clipped)
+
+    weight_x = smoothstep(
+        (grid_x - float(warp["x_falloff_start"]))
+        / (float(warp["x_falloff_end"]) - float(warp["x_falloff_start"]))
+    )
+    weight_y = smoothstep(
+        (grid_y - float(warp["y_falloff_start"]))
+        / (float(warp["y_falloff_end"]) - float(warp["y_falloff_start"]))
+    )
+    weight = weight_x * weight_y
+    map_x = grid_x - correction_x * weight
+    map_y = grid_y - correction_y * weight
+    affine = np.asarray(((1.0, 0.0, dx), (0.0, 1.0, dy)), dtype=np.float32)
+    # Keep semantic evidence discrete.  The RGB composite still uses the
+    # production bicubic registration, while the parallel ID channels use the
+    # exact same geometry maps with nearest-neighbor sampling so colors and
+    # occlusion cannot invent or erase topology.
+    translated = cv2.warpAffine(
+        channels,
+        affine,
+        (width, height),
+        flags=cv2.INTER_NEAREST,
+        borderMode=cv2.BORDER_CONSTANT,
+        borderValue=0.0,
+    )
+    corrected = cv2.remap(
+        translated,
+        map_x,
+        map_y,
+        interpolation=cv2.INTER_NEAREST,
+        borderMode=cv2.BORDER_CONSTANT,
+        borderValue=0.0,
+    )
+    if corrected.ndim != 3 or corrected.shape[2] != len(REGION_IDS):
+        raise ConnectedRegionMechanicsError("registered semantic channel inventory changed")
+    threshold = float(alpha_threshold_exclusive) / 255.0
+    return {
+        identifier: corrected[:, :, index] > threshold
+        for index, identifier in enumerate(REGION_IDS)
+    }
 
 
 def _receiving_shadow_preview(contract: dict[str, Any]) -> np.ndarray:
@@ -527,32 +643,41 @@ def _measure_boot_frame(
     """Measure a registered visible boot against its pinned receiver geometry."""
     scale = np.asarray((PREVIEW_SIZE[0] / 1672.0, PREVIEW_SIZE[1] / 941.0), dtype=np.float64)
     row = next(item for item in contract["region_mechanics"]["regions"] if item["id"] == identifier)
-    boot = rendered.preview_region_masks[identifier]
-    anchor = np.asarray(row["registered_anchor_source_xy"], dtype=np.float64) * scale
-    _, anchor_residual = _nearest_mask_point(boot, anchor)
-    receiver = np.asarray(row["sole_receiver_source_xy"], dtype=np.float64) * scale
+    boot = rendered.registered_region_masks[identifier]
+    anchor = np.asarray(row["registered_anchor_source_xy"], dtype=np.float64)
+    nearest_anchor, _ = _nearest_mask_point(boot, anchor)
+    anchor_residual = float(np.linalg.norm((nearest_anchor - anchor) * scale))
+    receiver = np.asarray(row["sole_receiver_source_xy"], dtype=np.float64)
     amounts = np.linspace(0.0, 1.0, 31)
     receiver_samples = receiver[0][None, :] * (1.0 - amounts[:, None]) + receiver[1][None, :] * amounts[:, None]
     signed_distances = []
+    euclidean_distances = []
     closest_points = []
     for point in receiver_samples:
         x = int(round(float(point[0])))
-        x0, x1 = max(0, x - 1), min(boot.shape[1], x + 2)
-        ys, xs = np.where(boot[:, x0:x1])
-        if len(ys):
-            # The sole is the lowest visible boot pixel near the receiver sample.
-            max_y = int(np.max(ys))
-            candidate_xs = xs[ys == max_y] + x0
-            sole = np.asarray((float(candidate_xs[np.argmin(np.abs(candidate_xs - point[0]))]), float(max_y)))
-            distance = float(np.linalg.norm(sole - point))
+        x0, x1 = max(0, x - 2), min(boot.shape[1], x + 3)
+        candidates = []
+        for column in range(x0, x1):
+            column_y = np.where(boot[:, column])[0]
+            if len(column_y):
+                candidates.append((float(column), float(np.max(column_y))))
+        if candidates:
+            candidate_points = np.asarray(candidates, dtype=np.float64)
+            candidate_distances = np.linalg.norm(
+                (candidate_points - point[None, :]) * scale[None, :], axis=1
+            )
+            sole = candidate_points[int(np.argmin(candidate_distances))]
         else:
-            sole, distance = _nearest_mask_point(boot, point)
-        closest_points.append(sole)
+            sole, _ = _nearest_mask_point(boot, point)
+        closest_points.append(sole * scale)
         # Positive means visible boot geometry penetrates below the receiver;
         # negative means clearance above it.
-        signed_distances.append(float(sole[1] - point[1]))
-    absolute = np.abs(np.asarray(signed_distances, dtype=np.float64))
-    shadow_gap = _minimum_mask_distance(boot, rendered.preview_shadow_mask)
+        signed_distances.append(float((sole[1] - point[1]) * scale[1]))
+        euclidean_distances.append(float(np.linalg.norm((sole - point) * scale)))
+    absolute = np.asarray(euclidean_distances, dtype=np.float64)
+    shadow_gap = _minimum_mask_distance(
+        rendered.preview_region_masks[identifier], rendered.preview_shadow_mask
+    )
     return {
         "anchor_residual": anchor_residual,
         "sole_distance_p95": float(np.percentile(absolute, 95)),
@@ -729,13 +854,26 @@ def render_flat_mechanics_frame(
         registered = np.asarray(registered_image, dtype=np.uint8).copy()
     finally:
         registered_image.close()
-    registered_region_masks = _classify_registered_regions(
-        registered, contract["diagnostic_render"]["palette"]
+    registered_region_masks = _register_region_masks(
+        transformed,
+        pose,
+        control["contact_registration"],
+        int(contract["contact_and_topology_gates"]["topology_alpha_threshold_exclusive"]),
     )
+    for identifier, registered_mask in registered_region_masks.items():
+        if _components(registered_mask) != 1:
+            raise ConnectedRegionMechanicsError(
+                f"frame {frame} disconnects registered {identifier} at full resolution"
+            )
     preview_region_masks = {
         identifier: cv2.resize(mask.astype(np.uint8), PREVIEW_SIZE, interpolation=cv2.INTER_NEAREST) > 0
         for identifier, mask in registered_region_masks.items()
     }
+    for identifier, preview_mask in preview_region_masks.items():
+        if _components(preview_mask) != 1:
+            raise ConnectedRegionMechanicsError(
+                f"frame {frame} disconnects registered {identifier} at preview resolution"
+            )
     preview_character = cv2.resize(registered, PREVIEW_SIZE, interpolation=cv2.INTER_NEAREST)
     background = np.empty((PREVIEW_SIZE[1], PREVIEW_SIZE[0], 4), dtype=np.uint8)
     background[:, :, :3] = np.asarray(contract["diagnostic_render"]["canvas_background_rgb"], dtype=np.uint8)
@@ -750,6 +888,7 @@ def render_flat_mechanics_frame(
         source_region_masks=transformed,
         source_flat_rgba=raw_flat,
         registered_flat_rgba=registered,
+        registered_region_masks=registered_region_masks,
         preview_rgba=background,
         preview_region_masks=preview_region_masks,
         preview_shadow_mask=shadow_mask,
@@ -824,6 +963,7 @@ def _validate_report_schema(report: dict[str, Any], contract: dict[str, Any]) ->
     schema = contract["report_schema"]
     _require_equal(set(report), set(schema["required_top_level_fields"]), "report top-level fields")
     section_map = {
+        "proof": "proof_fields",
         "phase30_lock": "phase30_lock_fields",
         "timing": "timing_fields",
         "render_order": "render_order_fields",
@@ -840,15 +980,98 @@ def _validate_report_schema(report: dict[str, Any], contract: dict[str, Any]) ->
     }
     for section, schema_key in section_map.items():
         _require_equal(set(report[section]), set(schema[schema_key]), f"{section} report fields")
+    proof = report["proof"]
+    proof_hash = str(proof["diagnostic_sequence_sha256"])
+    if len(proof_hash) != 64 or any(character not in "0123456789abcdef" for character in proof_hash):
+        raise ConnectedRegionMechanicsError("proof diagnostic sequence SHA-256 is invalid")
+    for field in (
+        "in_memory_first_last_alpha_iou",
+        "in_memory_first_last_psnr_db",
+        "lower_garment_minimum_sampled_tps_jacobian_determinant",
+        "lower_garment_maximum_inverse_fixed_point_residual_source_px",
+    ):
+        if not math.isfinite(float(proof[field])):
+            raise ConnectedRegionMechanicsError(f"proof field {field} is non-finite")
+    expected_phase31_provenance = _phase31_provenance()
+    for field, expected in expected_phase31_provenance.items():
+        _require_equal(
+            report["provenance"][field],
+            expected,
+            f"Phase31 report provenance {field}",
+        )
     for index, record in enumerate(report["region_inventory"]):
         _require_equal(set(record), set(schema["region_record_fields"]), f"region report fields {index}")
     for index, record in enumerate(report["gate_results"]):
         _require_equal(set(record), set(schema["gate_result_fields"]), f"gate report fields {index}")
+    delivery_records = report["delivery"]["per_frame_reference_vs_decoded"]
+    if delivery_records:
+        _require_equal(len(delivery_records), 49, "delivery frame metric count")
+        _require_equal(
+            [record["frame"] for record in delivery_records],
+            list(range(1, 50)),
+            "delivery frame metric order",
+        )
+        for index, record in enumerate(delivery_records):
+            _require_equal(
+                set(record),
+                set(schema["delivery_frame_metric_fields"]),
+                f"delivery frame metric fields {index}",
+            )
+            for field in ("character_mask_iou", "subject_roi_psnr_db"):
+                if not math.isfinite(float(record[field])):
+                    raise ConnectedRegionMechanicsError(
+                        f"delivery frame {index + 1} field {field} is non-finite"
+                    )
+    if report["delivery"]["passed"]:
+        _require_equal(
+            report["delivery"]["decoded_review_frames"],
+            contract["timing"]["key_frames"],
+            "decoded delivery review frames",
+        )
+        _require_equal(
+            report["delivery"]["contact_sheet_from_decoded_frames"],
+            True,
+            "decoded contact sheet provenance",
+        )
 
 
 def _maximum_matrix_error(first: dict[str, np.ndarray], last: dict[str, np.ndarray]) -> float:
     values = [float(np.max(np.abs(first[key] - last[key]))) for key in first]
     return max(values, default=0.0)
+
+
+def _require_exact_locked_patches(
+    expected: dict[str, LockedPatch],
+    candidate: dict[str, LockedPatch],
+) -> None:
+    """Reject injected geometry unless every locked field is byte-exact."""
+    _require_equal(set(candidate), set(expected), "evaluation patch inventory")
+    array_fields = (
+        "rgba",
+        "source_mask",
+        "semantic_support_mask",
+        "semantic_owner_mask",
+        "rest_owner_mask",
+    )
+    scalar_fields = ("identifier", "kind", "bbox_xyxy", "source_coordinate_hash")
+    for identifier in REGION_IDS:
+        locked = expected[identifier]
+        supplied = candidate[identifier]
+        for field in scalar_fields:
+            _require_equal(
+                getattr(supplied, field),
+                getattr(locked, field),
+                f"{identifier} locked patch {field}",
+            )
+        for field in array_fields:
+            supplied_array = np.asarray(getattr(supplied, field))
+            locked_array = np.asarray(getattr(locked, field))
+            if supplied_array.dtype != locked_array.dtype or not np.array_equal(
+                supplied_array, locked_array
+            ):
+                raise ConnectedRegionMechanicsError(
+                    f"{identifier} locked patch {field} mismatch"
+                )
 
 
 def evaluate_connected_region_mechanics(
@@ -863,13 +1086,15 @@ def evaluate_connected_region_mechanics(
     The return value is an envelope containing a schema-exact report plus a
     separate ``mechanics_passed`` preflight result.  Delivery and decoded-media
     gates remain explicitly pending until ``render_connected_region_mechanics``
-    is called by a later, authorized stage.
+    is called by the authorized delivery stage.
     """
     _validate_contract(contract)
     phase30_report, locked_patches, _, _ = _prepare_phase30(contract)
-    patches = locked_patches if phase30_patches is None else phase30_patches
-    if set(patches) != set(REGION_IDS):
-        raise ConnectedRegionMechanicsError("evaluation patches do not contain exactly nine regions")
+    if phase30_patches is None:
+        patches = locked_patches
+    else:
+        _require_exact_locked_patches(locked_patches, phase30_patches)
+        patches = phase30_patches
     timing = contract["timing"]
     frames = range(int(timing["frame_start"]), int(timing["frame_end"]) + 1)
     preview_scale = np.asarray(
@@ -911,6 +1136,7 @@ def evaluate_connected_region_mechanics(
     minimum_balance_margin = float("inf")
     flat_pixel_count = 0
     background_pixel_count = 0
+    character_pixels_outside_support = 0
     first_frame_data: FlatMechanicsFrame | None = None
     last_frame_data: FlatMechanicsFrame | None = None
     diagnostic_hash = hashlib.sha256()
@@ -920,19 +1146,26 @@ def evaluate_connected_region_mechanics(
             contract, patches, frame_number, transform_overrides=transform_overrides
         )
         overshoot_count += int(rendered.motion_state["interpolation_overshoot_count"])
-        tracks = rendered.motion_state["tracks"]
-        pelvis_translation = np.asarray(tracks["pelvis_translation_source_px"], dtype=np.float64)
+        lower_controls = rendered.cage_controls["lower_garment"]
+        pelvis_translation = (
+            lower_controls["destination"][0] - lower_controls["source"][0]
+        )
         pelvis_history.append(pelvis_translation)
         pelvis_translation_magnitudes.append(float(np.linalg.norm(pelvis_translation)))
-        torso_pivot = np.asarray(mechanics_rows["torso_shell"]["pivot_source_xy"], dtype=np.float64)
         head_pivot = np.asarray(mechanics_rows["head_neck"]["pivot_source_xy"], dtype=np.float64)
         head_translation_magnitudes.append(
             float(np.linalg.norm(_transform_point(rendered.region_transforms["head_neck"], head_pivot) - head_pivot))
         )
-        rotation_histories["torso"].append(float(tracks["torso_rotation_deg"]))
-        rotation_histories["head"].append(float(tracks["head_absolute_rotation_deg"]))
-        rotation_histories["left_hand"].append(float(tracks["left_hand_absolute_rotation_deg"]))
-        rotation_histories["right_hand_mug"].append(float(tracks["right_hand_mug_absolute_rotation_deg"]))
+        for history_key, region_id in (
+            ("torso", "torso_shell"),
+            ("head", "head_neck"),
+            ("left_hand", "left_hand"),
+            ("right_hand_mug", "right_hand_mug"),
+        ):
+            matrix = rendered.region_transforms[region_id]
+            rotation_histories[history_key].append(
+                float(math.degrees(math.atan2(matrix[1, 0], matrix[0, 0])))
+            )
 
         union = rendered.registered_flat_rgba[:, :, 3] > int(
             contract["contact_and_topology_gates"]["topology_alpha_threshold_exclusive"]
@@ -940,10 +1173,11 @@ def evaluate_connected_region_mechanics(
         union_components.append(_components(union))
         for identifier in REGION_IDS:
             mask = rendered.source_region_masks[identifier]
+            registered_mask = rendered.registered_region_masks[identifier]
             final_mask = rendered.preview_region_masks[identifier]
-            region_components[identifier].append(_components(final_mask))
+            region_components[identifier].append(_components(registered_mask))
             region_areas[identifier].append(int(np.count_nonzero(mask)))
-            final_region_areas[identifier].append(int(np.count_nonzero(final_mask)))
+            final_region_areas[identifier].append(int(np.count_nonzero(registered_mask)))
             region_centroids[identifier].append(_centroid(final_mask))
             matrix_histories[identifier].append(rendered.region_transforms[identifier].copy())
         for identifier in cage_histories:
@@ -955,36 +1189,68 @@ def evaluate_connected_region_mechanics(
         lower_inverse_residuals.append(rendered.lower_maximum_inverse_residual_source_px)
         for row in contract["support_overlap_seams"]["required_pairs"]:
             key = f"{row['a']}__{row['b']}"
-            first = rendered.source_region_masks[row["a"]]
-            second = rendered.source_region_masks[row["b"]]
-            raw_overlap = int(np.count_nonzero(first & second))
+            first = rendered.registered_region_masks[row["a"]]
+            second = rendered.registered_region_masks[row["b"]]
+            raw_overlap_mask = first & second
+            raw_overlap = int(np.count_nonzero(raw_overlap_mask))
             seam_raw[key].append(raw_overlap)
             first_preview = cv2.resize(first.astype(np.uint8), PREVIEW_SIZE, interpolation=cv2.INTER_NEAREST) > 0
             second_preview = cv2.resize(second.astype(np.uint8), PREVIEW_SIZE, interpolation=cv2.INTER_NEAREST) > 0
-            preview_overlap = int(np.count_nonzero(first_preview & second_preview))
+            preview_overlap_mask = first_preview & second_preview
+            preview_overlap = int(np.count_nonzero(preview_overlap_mask))
             seam_preview[key].append(preview_overlap)
             gap = _minimum_mask_distance(first_preview, second_preview)
             seam_gaps[key].append(gap)
-            zero_alpha_seam_paths += int(preview_overlap == 0)
-            seam_secondary_fractions.extend(
-                (_secondary_component_fraction(first_preview), _secondary_component_fraction(second_preview))
+            overlap_components = _components(preview_overlap_mask) if preview_overlap else 0
+            zero_alpha_seam_paths += int(preview_overlap == 0 or overlap_components != 1)
+            seam_secondary_fractions.append(
+                _secondary_component_fraction(preview_overlap_mask)
             )
 
+        frame_boot_measurements = {
+            identifier: _measure_boot_frame(contract, rendered, identifier)
+            for identifier in ("left_boot", "right_boot")
+        }
+        for identifier, row in frame_boot_measurements.items():
+            boot_measurements[identifier].append(row)
         union_centroid_x_registered = _centroid(union)[0] * preview_scale[0]
-        left_hull = 510.0 * preview_scale[0]
-        right_hull = 782.0 * preview_scale[0]
+        support_x = np.concatenate(
+            [row["endpoints"][:, 0] for row in frame_boot_measurements.values()]
+        )
+        left_hull = float(np.min(support_x))
+        right_hull = float(np.max(support_x))
         minimum_balance_margin = min(
             minimum_balance_margin,
             union_centroid_x_registered - left_hull,
             right_hull - union_centroid_x_registered,
         )
-        character_pixels = int(np.count_nonzero(rendered.registered_flat_rgba[:, :, 3]))
-        preview_character_pixels = int(round(character_pixels * preview_scale[0] * preview_scale[1]))
+        raw_character = rendered.source_flat_rgba[:, :, 3] > 0
+        transformed_support = np.logical_or.reduce(list(rendered.source_region_masks.values()))
+        character_pixels_outside_support += int(
+            np.count_nonzero(raw_character & ~transformed_support)
+        )
+        declared_colors = {
+            _hex_rgb(value) for value in contract["diagnostic_render"]["palette"].values()
+        }
+        actual_colors = {
+            tuple(int(component) for component in color)
+            for color in np.unique(
+                rendered.source_flat_rgba[raw_character, :3], axis=0
+            )
+        }
+        if not actual_colors.issubset(declared_colors):
+            raise ConnectedRegionMechanicsError(
+                f"frame {frame_number} contains undeclared diagnostic character colors"
+            )
+        preview_character_mask = cv2.resize(
+            (rendered.registered_flat_rgba[:, :, 3] > 0).astype(np.uint8),
+            PREVIEW_SIZE,
+            interpolation=cv2.INTER_NEAREST,
+        ) > 0
+        preview_character_pixels = int(np.count_nonzero(preview_character_mask))
         flat_pixel_count += preview_character_pixels
         background_pixel_count += PREVIEW_SIZE[0] * PREVIEW_SIZE[1] - preview_character_pixels
         diagnostic_hash.update(rendered.preview_rgba.tobytes())
-        for identifier in ("left_boot", "right_boot"):
-            boot_measurements[identifier].append(_measure_boot_frame(contract, rendered, identifier))
 
         if frame_number == timing["frame_start"]:
             first_frame_data = rendered
@@ -1084,8 +1350,12 @@ def evaluate_connected_region_mechanics(
         ),
         default=0.0,
     )
+    pelvis_by_frame = {
+        frame: pelvis_history[frame - int(timing["frame_start"])]
+        for frame in range(int(timing["frame_start"]), int(timing["frame_end"]) + 1)
+    }
     key_magnitudes = {
-        frame: float(np.linalg.norm(compile_motion_state(contract, frame)["tracks"]["pelvis_translation_source_px"]))
+        frame: float(np.linalg.norm(pelvis_by_frame[frame]))
         for frame in (25, 31, 37, 43, 49)
     }
     settle_order_passed = (
@@ -1192,16 +1462,13 @@ def evaluate_connected_region_mechanics(
             "maximum_head_total_translation_magnitude_source_px": max(head_translation_magnitudes),
             "maximum_torso_rotation_abs_deg": max(abs(value) for value in rotation_histories["torso"]),
             "maximum_head_relative_rotation_abs_deg": max(
-                abs(float(compile_motion_state(contract, frame)["tracks"]["head_absolute_rotation_deg"]))
-                for frame in frames
+                abs(value) for value in rotation_histories["head"]
             ),
             "maximum_left_hand_local_rotation_abs_deg": max(
-                abs(float(compile_motion_state(contract, frame)["tracks"]["left_hand_absolute_rotation_deg"]))
-                for frame in frames
+                abs(value) for value in rotation_histories["left_hand"]
             ),
             "maximum_right_hand_mug_local_rotation_abs_deg": max(
-                abs(float(compile_motion_state(contract, frame)["tracks"]["right_hand_mug_absolute_rotation_deg"]))
-                for frame in frames
+                abs(value) for value in rotation_histories["right_hand_mug"]
             ),
             "lower_garment_continuous": True,
             "lower_garment_foldover_count": 0,
@@ -1275,7 +1542,7 @@ def evaluate_connected_region_mechanics(
             "new_character_texture_pixel_count": 0,
             "ai_generated_pixel_count": 0,
             "inpainted_character_pixel_count": 0,
-            "character_shaped_pixels_outside_phase30_support": 0,
+            "character_shaped_pixels_outside_phase30_support": character_pixels_outside_support,
             "diagnostic_pixels_reported_separately": True,
             "passed": True,
         },
@@ -1285,18 +1552,47 @@ def evaluate_connected_region_mechanics(
             "character_texture_source_paths": [],
             "diagnostic_palette_id": "june_oxley_connected_region_mechanics_v1.palette",
             "paid_or_network_generation_used": False,
+            **_phase31_provenance(),
             "passed": True,
         },
         "delivery": {
             "video_path": None,
+            "video_sha256": None,
             "contact_sheet_path": None,
+            "contact_sheet_sha256": None,
             "report_path": None,
             "width": PREVIEW_SIZE[0],
             "height": PREVIEW_SIZE[1],
             "fps": timing["fps"],
+            "codec": None,
+            "pixel_format": None,
+            "stream_count": 0,
+            "video_stream_count": 0,
+            "audio_stream_count": 0,
+            "r_frame_rate": None,
+            "avg_frame_rate": None,
+            "time_base": None,
+            "duration_ts": 0,
+            "stream_duration_rational": None,
             "encoded_frame_count": 0,
             "decoded_frame_count": 0,
             "duration_seconds": 0.0,
+            "container_duration_seconds": 0.0,
+            "container_duration_error_seconds": None,
+            "full_decode_passed": False,
+            "reference_sequence_sha256": diagnostic_hash.hexdigest(),
+            "decoded_sequence_sha256": None,
+            "segmentation_method": None,
+            "segmentation_background_candidates_rgb": [],
+            "segmentation_minimum_rgb_distance": None,
+            "subject_roi_dilation_px": None,
+            "minimum_per_frame_character_mask_iou": None,
+            "mean_per_frame_character_mask_iou": None,
+            "minimum_per_frame_subject_roi_psnr_db": None,
+            "mean_per_frame_subject_roi_psnr_db": None,
+            "per_frame_reference_vs_decoded": [],
+            "decoded_review_frames": [],
+            "contact_sheet_from_decoded_frames": False,
             "passed": False,
         },
         "gates": contract["quality_gates"],
@@ -1365,12 +1661,28 @@ def evaluate_connected_region_mechanics(
         "pixel_policy.maximum_ai_generated_pixels": 0,
         "pixel_policy.maximum_inpainted_character_pixels": 0,
         "pixel_policy.required_diagnostic_pixels_reported_separately": True,
-        "pixel_policy.required_character_shaped_pixels_inside_phase30_support": True,
+        "pixel_policy.required_character_shaped_pixels_inside_phase30_support": character_pixels_outside_support == 0,
+        "provenance.required_phase31_contract_sha256_match": report["provenance"]["phase31_contract_sha256"] == _sha256(REPO_ROOT / PHASE31_CONTRACT_RELATIVE_PATH),
+        "provenance.required_phase31_implementation_sha256_match": report["provenance"]["phase31_implementation_sha256"] == _sha256(REPO_ROOT / PHASE31_IMPLEMENTATION_RELATIVE_PATH),
         "delivery.required_width": report["delivery"]["width"],
         "delivery.required_height": report["delivery"]["height"],
         "delivery.required_encoded_frame_count": report["delivery"]["encoded_frame_count"],
         "delivery.required_decoded_frame_count": report["delivery"]["decoded_frame_count"],
         "delivery.required_fps": report["delivery"]["fps"],
+        "delivery.required_codec": None,
+        "delivery.required_pixel_format": None,
+        "delivery.required_stream_count": 0,
+        "delivery.required_video_stream_count": 0,
+        "delivery.required_audio_stream_count": 0,
+        "delivery.required_r_frame_rate": None,
+        "delivery.required_avg_frame_rate": None,
+        "delivery.required_stream_duration_rational": None,
+        "delivery.maximum_container_duration_error_seconds": None,
+        "delivery.required_full_decode": False,
+        "delivery.minimum_per_frame_character_mask_iou": None,
+        "delivery.minimum_per_frame_subject_roi_psnr_db": None,
+        "delivery.required_decoded_review_frame_count": 0,
+        "delivery.required_contact_sheet_from_decoded_frames": False,
         "delivery.required_video_file": False,
         "delivery.required_contact_sheet_file": False,
         "delivery.required_report_file": False,
@@ -1415,3 +1727,558 @@ def evaluate_connected_region_mechanics(
         "delivery_pending": not report["delivery"]["passed"],
         "report": report,
     }
+
+
+def _collect_delivery_references(
+    contract: dict[str, Any],
+) -> tuple[list[np.ndarray], list[np.ndarray], str]:
+    """Render the exact evaluated preview sequence and its semantic masks."""
+    _, patches, _, _ = _prepare_phase30(contract)
+    rgb_frames: list[np.ndarray] = []
+    masks: list[np.ndarray] = []
+    digest = hashlib.sha256()
+    for frame_number in range(1, 50):
+        rendered = render_flat_mechanics_frame(contract, patches, frame_number)
+        try:
+            digest.update(rendered.preview_rgba.tobytes())
+            rgb_frames.append(np.ascontiguousarray(rendered.preview_rgba[:, :, :3]))
+            masks.append(
+                np.logical_or.reduce(list(rendered.preview_region_masks.values())).copy()
+            )
+        finally:
+            rendered.close()
+    return rgb_frames, masks, digest.hexdigest()
+
+
+def _resolve_executable(value: str | Path, label: str) -> str:
+    candidate = Path(value)
+    executable = str(candidate.resolve()) if candidate.is_file() else shutil.which(str(value))
+    if not executable:
+        raise ConnectedRegionMechanicsError(f"{label} executable is unavailable: {value}")
+    return executable
+
+
+def _encode_h264_once(
+    ffmpeg: str | Path,
+    frames: list[np.ndarray],
+    output_path: Path,
+    contract: dict[str, Any],
+) -> None:
+    """Perform the one authorized Phase 31 video encode, without retry."""
+    executable = _resolve_executable(ffmpeg, "FFmpeg")
+    video = contract["delivery"]["video"]
+    if output_path.exists():
+        raise ConnectedRegionMechanicsError(f"Phase31 video target already exists: {output_path}")
+    if len(frames) != int(video["frame_count"]):
+        raise ConnectedRegionMechanicsError("delivery reference frame count changed before encode")
+    process = subprocess.Popen(
+        [
+            executable,
+            "-n",
+            "-v",
+            "error",
+            "-f",
+            "rawvideo",
+            "-pixel_format",
+            "rgb24",
+            "-video_size",
+            f"{video['width']}x{video['height']}",
+            "-framerate",
+            str(video["fps"]),
+            "-i",
+            "pipe:0",
+            "-map",
+            "0:v:0",
+            "-an",
+            "-frames:v",
+            str(video["frame_count"]),
+            "-c:v",
+            "libx264",
+            "-preset",
+            "slow",
+            "-tune",
+            "animation",
+            "-crf",
+            "10",
+            "-pix_fmt",
+            "yuv420p",
+            "-r",
+            str(video["fps"]),
+            "-fps_mode",
+            "cfr",
+            "-g",
+            "1",
+            "-keyint_min",
+            "1",
+            "-sc_threshold",
+            "0",
+            "-bf",
+            "0",
+            "-video_track_timescale",
+            "90000",
+            str(output_path),
+        ],
+        stdin=subprocess.PIPE,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+    )
+    try:
+        if process.stdin is None:
+            raise ConnectedRegionMechanicsError("Phase31 encoder stdin is unavailable")
+        for index, frame in enumerate(frames, start=1):
+            expected_shape = (int(video["height"]), int(video["width"]), 3)
+            if frame.dtype != np.uint8 or frame.shape != expected_shape:
+                raise ConnectedRegionMechanicsError(
+                    f"delivery reference frame {index} has invalid shape or dtype"
+                )
+            process.stdin.write(np.ascontiguousarray(frame).tobytes())
+        process.stdin.close()
+        stderr = (
+            process.stderr.read().decode("utf-8", errors="replace")
+            if process.stderr is not None
+            else ""
+        )
+        code = process.wait()
+        if code != 0:
+            raise ConnectedRegionMechanicsError(
+                f"single Phase31 encode failed with code {code}: {stderr.strip()}"
+            )
+    except BaseException:
+        if process.poll() is None:
+            process.kill()
+        raise
+    if not output_path.is_file() or output_path.stat().st_size <= 0:
+        raise ConnectedRegionMechanicsError("single Phase31 encode produced no video")
+
+
+def _probe_phase31_video(ffprobe: str | Path, video_path: Path) -> dict[str, Any]:
+    executable = _resolve_executable(ffprobe, "FFprobe")
+    completed = subprocess.run(
+        [
+            executable,
+            "-v",
+            "error",
+            "-count_frames",
+            "-show_streams",
+            "-show_format",
+            "-of",
+            "json",
+            str(video_path),
+        ],
+        check=False,
+        capture_output=True,
+        text=True,
+        timeout=60,
+    )
+    if completed.returncode:
+        raise ConnectedRegionMechanicsError(
+            f"Phase31 ffprobe failed: {completed.stderr.strip()}"
+        )
+    payload = json.loads(completed.stdout)
+    streams = list(payload.get("streams") or [])
+    video_streams = [row for row in streams if row.get("codec_type") == "video"]
+    audio_streams = [row for row in streams if row.get("codec_type") == "audio"]
+    if len(streams) != 1 or len(video_streams) != 1 or audio_streams:
+        raise ConnectedRegionMechanicsError("Phase31 delivery stream inventory mismatch")
+    stream = video_streams[0]
+    try:
+        decoded_frames = int(stream["nb_read_frames"])
+        duration_ts = int(stream["duration_ts"])
+        time_base = str(stream["time_base"])
+        stream_duration = Fraction(duration_ts) * Fraction(time_base)
+        container_duration = float(payload["format"]["duration"])
+    except (KeyError, TypeError, ValueError, ZeroDivisionError) as exc:
+        raise ConnectedRegionMechanicsError("Phase31 delivery probe is incomplete") from exc
+    expected_duration = Fraction(49, 30)
+    if stream_duration != expected_duration:
+        raise ConnectedRegionMechanicsError(
+            f"Phase31 stream duration mismatch: {stream_duration} != {expected_duration}"
+        )
+    return {
+        "width": int(stream.get("width", 0)),
+        "height": int(stream.get("height", 0)),
+        "codec": str(stream.get("codec_name", "")),
+        "pixel_format": str(stream.get("pix_fmt", "")),
+        "stream_count": len(streams),
+        "video_stream_count": len(video_streams),
+        "audio_stream_count": len(audio_streams),
+        "r_frame_rate": str(stream.get("r_frame_rate", "")),
+        "avg_frame_rate": str(stream.get("avg_frame_rate", "")),
+        "time_base": time_base,
+        "duration_ts": duration_ts,
+        "stream_duration_rational": f"{stream_duration.numerator}/{stream_duration.denominator}",
+        "duration_seconds": float(stream_duration),
+        "container_duration_seconds": container_duration,
+        "container_duration_error_seconds": abs(container_duration - float(expected_duration)),
+        "decoded_frame_count_probe": decoded_frames,
+    }
+
+
+def _decode_exact_rgb_frames(
+    ffmpeg: str | Path,
+    video_path: Path,
+    width: int,
+    height: int,
+    expected_frames: int,
+) -> list[np.ndarray]:
+    executable = _resolve_executable(ffmpeg, "FFmpeg")
+    completed = subprocess.run(
+        [
+            executable,
+            "-v",
+            "error",
+            "-i",
+            str(video_path),
+            "-map",
+            "0:v:0",
+            "-fps_mode",
+            "passthrough",
+            "-f",
+            "rawvideo",
+            "-pix_fmt",
+            "rgb24",
+            "pipe:1",
+        ],
+        check=False,
+        capture_output=True,
+        timeout=120,
+    )
+    if completed.returncode:
+        raise ConnectedRegionMechanicsError(
+            f"Phase31 full decode failed: {completed.stderr.decode('utf-8', errors='replace').strip()}"
+        )
+    frame_bytes = int(width) * int(height) * 3
+    expected_bytes = frame_bytes * int(expected_frames)
+    if len(completed.stdout) != expected_bytes:
+        raise ConnectedRegionMechanicsError(
+            f"Phase31 decoded byte count mismatch: {len(completed.stdout)} != {expected_bytes}"
+        )
+    data = np.frombuffer(completed.stdout, dtype=np.uint8).reshape(
+        expected_frames, height, width, 3
+    )
+    return [np.ascontiguousarray(frame) for frame in data]
+
+
+def _segment_decoded_character(
+    rgb: np.ndarray,
+    background_candidates: np.ndarray,
+    minimum_rgb_distance: float,
+) -> np.ndarray:
+    samples = rgb.astype(np.float32)
+    candidates = np.asarray(background_candidates, dtype=np.float32)
+    distance = np.linalg.norm(
+        samples[:, :, None, :] - candidates[None, None, :, :], axis=3
+    )
+    return np.min(distance, axis=2) > float(minimum_rgb_distance)
+
+
+def _subject_roi_psnr(
+    reference: np.ndarray,
+    decoded: np.ndarray,
+    reference_mask: np.ndarray,
+    decoded_mask: np.ndarray,
+    dilation_px: int,
+) -> tuple[float, int]:
+    union = (reference_mask | decoded_mask).astype(np.uint8)
+    if dilation_px > 0:
+        size = int(dilation_px) * 2 + 1
+        union = cv2.dilate(union, np.ones((size, size), dtype=np.uint8))
+    roi = union > 0
+    count = int(np.count_nonzero(roi))
+    if not count:
+        raise ConnectedRegionMechanicsError("decoded subject ROI is empty")
+    difference = reference[roi].astype(np.float64) - decoded[roi].astype(np.float64)
+    mse = float(np.mean(difference * difference))
+    if mse == 0.0:
+        return 999.0, count
+    return float(10.0 * math.log10((255.0 * 255.0) / mse)), count
+
+
+def _audit_decoded_delivery(
+    contract: dict[str, Any],
+    reference_rgb: list[np.ndarray],
+    reference_masks: list[np.ndarray],
+    decoded_rgb: list[np.ndarray],
+    probe: dict[str, Any],
+) -> dict[str, Any]:
+    if not (len(reference_rgb) == len(reference_masks) == len(decoded_rgb) == 49):
+        raise ConnectedRegionMechanicsError("decoded delivery audit requires exactly 49 frames")
+    background = np.asarray(((18, 20, 24), (8, 9, 11)), dtype=np.uint8)
+    minimum_distance = 32.0
+    dilation_px = 2
+    delivery_gates = contract["quality_gates"]["delivery"]
+    minimum_iou = float(delivery_gates["minimum_per_frame_character_mask_iou"])
+    minimum_psnr = float(delivery_gates["minimum_per_frame_subject_roi_psnr_db"])
+    decoded_masks = [
+        _segment_decoded_character(frame, background, minimum_distance)
+        for frame in decoded_rgb
+    ]
+    records = []
+    for frame_number, (reference, decoded, reference_mask, decoded_mask) in enumerate(
+        zip(reference_rgb, decoded_rgb, reference_masks, decoded_masks), start=1
+    ):
+        iou = _mask_iou(reference_mask, decoded_mask)
+        psnr, roi_pixels = _subject_roi_psnr(
+            reference, decoded, reference_mask, decoded_mask, dilation_px
+        )
+        records.append(
+            {
+                "frame": frame_number,
+                "reference_frame_sha256": hashlib.sha256(reference.tobytes()).hexdigest(),
+                "decoded_frame_sha256": hashlib.sha256(decoded.tobytes()).hexdigest(),
+                "reference_subject_pixels": int(np.count_nonzero(reference_mask)),
+                "decoded_subject_pixels": int(np.count_nonzero(decoded_mask)),
+                "character_mask_iou": iou,
+                "subject_roi_pixels": roi_pixels,
+                "subject_roi_psnr_db": psnr,
+                "passed": bool(iou >= minimum_iou and psnr >= minimum_psnr),
+            }
+        )
+    loop_iou = _mask_iou(decoded_masks[0], decoded_masks[-1])
+    loop_psnr, _ = _subject_roi_psnr(
+        decoded_rgb[0], decoded_rgb[-1], decoded_masks[0], decoded_masks[-1], dilation_px
+    )
+    decoded_digest = hashlib.sha256()
+    for frame in decoded_rgb:
+        decoded_digest.update(frame.tobytes())
+    return {
+        "background_candidates": background.tolist(),
+        "minimum_rgb_distance": minimum_distance,
+        "dilation_px": dilation_px,
+        "decoded_masks": decoded_masks,
+        "records": records,
+        "minimum_iou": min(row["character_mask_iou"] for row in records),
+        "mean_iou": float(np.mean([row["character_mask_iou"] for row in records])),
+        "minimum_psnr": min(row["subject_roi_psnr_db"] for row in records),
+        "mean_psnr": float(np.mean([row["subject_roi_psnr_db"] for row in records])),
+        "loop_iou": loop_iou,
+        "loop_psnr": loop_psnr,
+        "decoded_sequence_sha256": decoded_digest.hexdigest(),
+        "full_decode_passed": bool(
+            probe["decoded_frame_count_probe"] == 49 and all(row["passed"] for row in records)
+        ),
+    }
+
+
+def _write_decoded_keyframe_contact_sheet(
+    decoded_rgb: list[np.ndarray],
+    key_frames: list[int],
+    output_path: Path,
+) -> None:
+    if key_frames != [1, 7, 13, 19, 25, 31, 37, 43, 49]:
+        raise ConnectedRegionMechanicsError("decoded contact sheet must use all nine motion keys")
+    if output_path.exists():
+        raise ConnectedRegionMechanicsError(f"Phase31 contact-sheet target already exists: {output_path}")
+    tile_size = (480, 270)
+    sheet = Image.new("RGB", (tile_size[0] * 3, tile_size[1] * 3), (18, 20, 24))
+    draw = ImageDraw.Draw(sheet)
+    try:
+        for index, frame_number in enumerate(key_frames):
+            tile = Image.fromarray(decoded_rgb[frame_number - 1], mode="RGB")
+            try:
+                tile = tile.resize(tile_size, resample=Image.Resampling.NEAREST)
+                x = (index % 3) * tile_size[0]
+                y = (index // 3) * tile_size[1]
+                sheet.paste(tile, (x, y))
+                draw.rectangle((x + 8, y + 8, x + 92, y + 32), fill=(18, 20, 24))
+                draw.text((x + 14, y + 12), f"FRAME {frame_number:02d}", fill=(255, 255, 255))
+            finally:
+                tile.close()
+        sheet.save(output_path, format="PNG", optimize=True)
+    finally:
+        sheet.close()
+
+
+def _write_json_atomically(path: Path, payload: dict[str, Any]) -> None:
+    temporary = path.with_suffix(path.suffix + ".tmp")
+    temporary.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    os.replace(temporary, path)
+
+
+def _phase31_provenance() -> dict[str, str]:
+    """Bind a report to the exact Phase 31 contract and auditor bytes."""
+    contract_path = REPO_ROOT / PHASE31_CONTRACT_RELATIVE_PATH
+    implementation_path = REPO_ROOT / PHASE31_IMPLEMENTATION_RELATIVE_PATH
+    if not contract_path.is_file() or not implementation_path.is_file():
+        raise ConnectedRegionMechanicsError("Phase31 provenance source is missing")
+    return {
+        "phase31_contract_path": PHASE31_CONTRACT_RELATIVE_PATH.as_posix(),
+        "phase31_contract_sha256": _sha256(contract_path),
+        "phase31_implementation_path": PHASE31_IMPLEMENTATION_RELATIVE_PATH.as_posix(),
+        "phase31_implementation_sha256": _sha256(implementation_path),
+    }
+
+
+def render_connected_region_mechanics(
+    contract: dict[str, Any],
+    *,
+    ffmpeg: str | Path = "ffmpeg",
+    ffprobe: str | Path = "ffprobe",
+) -> dict[str, Any]:
+    """Preflight, encode once, fully decode, audit, and finalize Phase 31."""
+    _validate_contract(contract)
+    output_dir = (REPO_ROOT / contract["delivery"]["output_directory"]).resolve()
+    output_dir.parent.mkdir(parents=True, exist_ok=True)
+    if output_dir.exists():
+        raise ConnectedRegionMechanicsError(
+            f"Phase31 delivery directory already exists: {output_dir}"
+        )
+    video_path = output_dir / contract["delivery"]["video"]["filename"]
+    contact_sheet_path = output_dir / contract["delivery"]["contact_sheet"]["filename"]
+    report_path = output_dir / contract["delivery"]["report"]["filename"]
+
+    envelope = evaluate_connected_region_mechanics(contract, require_delivery=False)
+    if not envelope["mechanics_passed"] or envelope["machine_passed"] or not envelope["delivery_pending"]:
+        raise ConnectedRegionMechanicsError("Phase31 preflight envelope is not delivery-ready")
+    report = envelope["report"]
+    reference_rgb, reference_masks, reference_hash = _collect_delivery_references(contract)
+    if reference_hash != report["proof"]["diagnostic_sequence_sha256"]:
+        raise ConnectedRegionMechanicsError("Phase31 reference sequence diverged after preflight")
+    staging_dir = Path(
+        tempfile.mkdtemp(prefix=f".{output_dir.name}.staging-", dir=output_dir.parent)
+    )
+    staged_video_path = staging_dir / video_path.name
+    staged_contact_sheet_path = staging_dir / contact_sheet_path.name
+    staged_report_path = staging_dir / report_path.name
+    try:
+        _encode_h264_once(ffmpeg, reference_rgb, staged_video_path, contract)
+        probe = _probe_phase31_video(ffprobe, staged_video_path)
+        video_spec = contract["delivery"]["video"]
+        decoded_rgb = _decode_exact_rgb_frames(
+            ffmpeg,
+            staged_video_path,
+            int(video_spec["width"]),
+            int(video_spec["height"]),
+            int(video_spec["frame_count"]),
+        )
+        audit = _audit_decoded_delivery(
+            contract, reference_rgb, reference_masks, decoded_rgb, probe
+        )
+        review_frames = list(contract["delivery"]["contact_sheet"]["review_frames"])
+        _write_decoded_keyframe_contact_sheet(
+            decoded_rgb, review_frames, staged_contact_sheet_path
+        )
+
+        report["proof"]["in_memory_only"] = False
+        report["proof"]["media_rendered"] = True
+        report["motion_bounds"]["decoded_first_last_alpha_iou"] = audit["loop_iou"]
+        report["motion_bounds"]["decoded_first_last_psnr_db"] = audit["loop_psnr"]
+        phase31_provenance = _phase31_provenance()
+        report["provenance"].update(phase31_provenance)
+        report["delivery"] = {
+            "video_path": str(video_path),
+            "video_sha256": _sha256(staged_video_path),
+            "contact_sheet_path": str(contact_sheet_path),
+            "contact_sheet_sha256": _sha256(staged_contact_sheet_path),
+            "report_path": str(report_path),
+            "width": probe["width"],
+            "height": probe["height"],
+            "fps": int(video_spec["fps"]),
+            "codec": probe["codec"],
+            "pixel_format": probe["pixel_format"],
+            "stream_count": probe["stream_count"],
+            "video_stream_count": probe["video_stream_count"],
+            "audio_stream_count": probe["audio_stream_count"],
+            "r_frame_rate": probe["r_frame_rate"],
+            "avg_frame_rate": probe["avg_frame_rate"],
+            "time_base": probe["time_base"],
+            "duration_ts": probe["duration_ts"],
+            "stream_duration_rational": probe["stream_duration_rational"],
+            "encoded_frame_count": len(reference_rgb),
+            "decoded_frame_count": len(decoded_rgb),
+            "duration_seconds": probe["duration_seconds"],
+            "container_duration_seconds": probe["container_duration_seconds"],
+            "container_duration_error_seconds": probe["container_duration_error_seconds"],
+            "full_decode_passed": audit["full_decode_passed"],
+            "reference_sequence_sha256": reference_hash,
+            "decoded_sequence_sha256": audit["decoded_sequence_sha256"],
+            "segmentation_method": "minimum_rgb_distance_from_known_opaque_background_and_shadow",
+            "segmentation_background_candidates_rgb": audit["background_candidates"],
+            "segmentation_minimum_rgb_distance": audit["minimum_rgb_distance"],
+            "subject_roi_dilation_px": audit["dilation_px"],
+            "minimum_per_frame_character_mask_iou": audit["minimum_iou"],
+            "mean_per_frame_character_mask_iou": audit["mean_iou"],
+            "minimum_per_frame_subject_roi_psnr_db": audit["minimum_psnr"],
+            "mean_per_frame_subject_roi_psnr_db": audit["mean_psnr"],
+            "per_frame_reference_vs_decoded": audit["records"],
+            "decoded_review_frames": review_frames,
+            "contact_sheet_from_decoded_frames": True,
+            "passed": False,
+        }
+
+        measured = {row["id"]: row["measured"] for row in report["gate_results"]}
+        measured.update(
+            {
+                "provenance.required_phase31_contract_sha256_match": (
+                    report["provenance"]["phase31_contract_sha256"]
+                    == _sha256(REPO_ROOT / PHASE31_CONTRACT_RELATIVE_PATH)
+                ),
+                "provenance.required_phase31_implementation_sha256_match": (
+                    report["provenance"]["phase31_implementation_sha256"]
+                    == _sha256(REPO_ROOT / PHASE31_IMPLEMENTATION_RELATIVE_PATH)
+                ),
+                "motion.minimum_decoded_first_last_alpha_iou": audit["loop_iou"],
+                "motion.minimum_decoded_first_last_psnr_db": audit["loop_psnr"],
+                "delivery.required_width": probe["width"],
+                "delivery.required_height": probe["height"],
+                "delivery.required_encoded_frame_count": len(reference_rgb),
+                "delivery.required_decoded_frame_count": len(decoded_rgb),
+                "delivery.required_fps": int(video_spec["fps"]),
+                "delivery.required_codec": probe["codec"],
+                "delivery.required_pixel_format": probe["pixel_format"],
+                "delivery.required_stream_count": probe["stream_count"],
+                "delivery.required_video_stream_count": probe["video_stream_count"],
+                "delivery.required_audio_stream_count": probe["audio_stream_count"],
+                "delivery.required_r_frame_rate": probe["r_frame_rate"],
+                "delivery.required_avg_frame_rate": probe["avg_frame_rate"],
+                "delivery.required_stream_duration_rational": probe["stream_duration_rational"],
+                "delivery.maximum_container_duration_error_seconds": probe["container_duration_error_seconds"],
+                "delivery.required_full_decode": audit["full_decode_passed"],
+                "delivery.minimum_per_frame_character_mask_iou": audit["minimum_iou"],
+                "delivery.minimum_per_frame_subject_roi_psnr_db": audit["minimum_psnr"],
+                "delivery.required_decoded_review_frame_count": len(review_frames),
+                "delivery.required_contact_sheet_from_decoded_frames": True,
+                "delivery.required_video_file": staged_video_path.is_file(),
+                "delivery.required_contact_sheet_file": staged_contact_sheet_path.is_file(),
+                "delivery.required_report_file": False,
+            }
+        )
+        report["gate_results"] = _gate_results(contract, measured)
+        report["machine_passed"] = False
+        _validate_report_schema(report, contract)
+        _write_json_atomically(staged_report_path, report)
+
+        measured["delivery.required_report_file"] = staged_report_path.is_file()
+        report["gate_results"] = _gate_results(contract, measured)
+        delivery_results = [
+            row for row in report["gate_results"] if row["id"].startswith("delivery.")
+        ]
+        motion_results = [
+            row for row in report["gate_results"] if row["id"].startswith("motion.")
+        ]
+        report["delivery"]["passed"] = bool(
+            all(row["passed"] for row in delivery_results)
+        )
+        report["motion_bounds"]["passed"] = bool(
+            all(row["passed"] for row in motion_results)
+        )
+        report["machine_passed"] = bool(
+            envelope["mechanics_passed"]
+            and report["delivery"]["passed"]
+            and report["motion_bounds"]["passed"]
+            and all(row["passed"] for row in report["gate_results"])
+        )
+        _validate_report_schema(report, contract)
+        _write_json_atomically(staged_report_path, report)
+        if not report["machine_passed"]:
+            failures = [
+                row["id"] for row in report["gate_results"] if not row["passed"]
+            ]
+            raise ConnectedRegionMechanicsError(
+                f"Phase31 encoded delivery failed closed: {failures}"
+            )
+        os.replace(staging_dir, output_dir)
+    except BaseException:
+        shutil.rmtree(staging_dir, ignore_errors=True)
+        raise
+    return report
