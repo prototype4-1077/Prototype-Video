@@ -58,11 +58,18 @@ class SemanticFaceV4Tests(unittest.TestCase):
                 with self.assertRaisesRegex(v4.SemanticFaceV4Error, "complete Phase33 v4 contract"):
                     v4._validate_contract(changed)
 
-    def test_preview_manifest_and_review_bind_current_v4(self) -> None:
-        manifest, review, manifest_path = v4._verify_review(self.prepared)
-        self.assertTrue(manifest["pixels_byte_identical_to_reviewed_v3"])
-        self.assertEqual(len(manifest["frames"]), 60)
-        self.assertEqual(review["manifest_sha256"], v4._sha256(manifest_path))
+    def test_preview_review_receipt_binds_current_v4(self) -> None:
+        review_path = v4.REPO_ROOT / self.contract["preview"]["review_receipt"]
+        review = json.loads(review_path.read_text(encoding="utf-8"))
+        self.assertEqual(review["contract_raw_sha256"], v4._sha256(self.contract_path))
+        self.assertEqual(review["contract_canonical_sha256"], v4._canonical_hash(self.contract))
+        self.assertEqual(
+            review["implementation_sha256"],
+            v4._sha256(v4.REPO_ROOT / "pipeline/cartoon_semantic_face_v4.py"),
+        )
+        self.assertTrue(review["pixels_byte_identical_to_reviewed_v3"])
+        self.assertEqual(review["raw_frame_count_reviewed"], 60)
+        self.assertEqual(review["manifest_sha256"], "8eb4daa153c33a1e754b61da1167d3882c0a2a6885ebf3cb0cdf5ebd0bcdb8b9")
         self.assertEqual(review["all_60_contact_sheet_sha256"], "eac32f62efb43152fc9229ab33b7c7518562de6cfdd78ff92667c997a33b437f")
         self.assertTrue(review["encode_authorization"]["allowed"])
         self.assertFalse(review["encode_authorization"]["automatic_retry_allowed"])

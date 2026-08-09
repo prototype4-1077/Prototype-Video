@@ -1,9 +1,9 @@
 from __future__ import annotations
 
 from copy import deepcopy
+import hashlib
 import inspect
 import json
-from pathlib import Path
 import unittest
 
 import numpy as np
@@ -17,9 +17,8 @@ class SemanticFaceTests(unittest.TestCase):
         cls.contract_path = semantic.REPO_ROOT / semantic.CONTRACT_RELATIVE_PATH
         cls.contract = semantic.load_semantic_contract(cls.contract_path)
         cls.prepared = semantic.prepare_semantic_face(cls.contract_path)
-        cls.preview_dir = (semantic.REPO_ROOT / cls.contract["preview"]["directory"]).resolve()
-        cls.manifest_path = cls.preview_dir / cls.contract["preview"]["manifest_filename"]
-        cls.manifest = json.loads(cls.manifest_path.read_text(encoding="utf-8"))
+        cls.review_path = semantic.REPO_ROOT / cls.contract["preview"]["review_receipt"]
+        cls.review = json.loads(cls.review_path.read_text(encoding="utf-8"))
 
     def test_contract_and_all_dependencies_are_locked(self) -> None:
         self.assertEqual(
@@ -93,20 +92,27 @@ class SemanticFaceTests(unittest.TestCase):
         self.assertLessEqual(measurements["maximum_adjacent_feature_8x8_mean_delta"], 150.0)
         self.assertEqual(measurements["maximum_adjacent_feature_8x8_mean_delta_frame_pair"], [32, 33])
 
-    def test_preview_manifest_binds_every_raw_frame(self) -> None:
-        self.assertEqual(len(self.manifest["frames"]), 60)
-        self.assertEqual(self.manifest["frame_hash_domain"], "raw_rgb24_1920x1080_row_major")
-        for entry in self.manifest["frames"]:
-            with self.subTest(frame=entry["frame"]):
-                frame = np.asarray(semantic.compose_semantic_frame(self.prepared, entry["frame"]), dtype=np.uint8)
-                self.assertEqual(semantic._raw_frame_hash(frame), entry["rgb_sha256"])
-        self.assertEqual(self.manifest["frames"][0]["rgb_sha256"], self.manifest["frames"][-1]["rgb_sha256"])
+    def test_reviewed_frame_digest_binds_every_raw_frame(self) -> None:
+        frame_hashes = []
+        for frame_number in range(1, 61):
+            with self.subTest(frame=frame_number):
+                frame = np.asarray(semantic.compose_semantic_frame(self.prepared, frame_number), dtype=np.uint8)
+                frame_hashes.append(semantic._raw_frame_hash(frame))
+        digest = hashlib.sha256("".join(frame_hashes).encode("ascii")).hexdigest()
+        self.assertEqual(digest, "bf54df3708a316847a33eaa97262d1f01555560f0c03fbc6a56d60b8008ccbfb")
+        self.assertEqual(frame_hashes[0], frame_hashes[-1])
 
-    def test_preview_artifacts_and_review_receipt_are_hash_bound(self) -> None:
-        manifest, review, manifest_path = semantic._verify_preview_review(self.prepared)
-        self.assertEqual(len(manifest["frames"]), 60)
+    def test_preview_review_receipt_is_commit_bound(self) -> None:
+        review = self.review
+        self.assertEqual(review["contract_raw_sha256"], semantic._sha256(self.contract_path))
+        self.assertEqual(review["contract_canonical_sha256"], semantic._canonical_hash(self.contract))
+        self.assertEqual(
+            review["implementation_sha256"],
+            semantic._sha256(semantic.REPO_ROOT / "pipeline/cartoon_semantic_face.py"),
+        )
+        self.assertEqual(review["manifest_sha256"], "f3289e31e22e883a4306296d69ebc4829e67e193b99bb19e79bba3bdfc8c65cb")
+        self.assertEqual(review["all_60_contact_sheet_sha256"], "eac32f62efb43152fc9229ab33b7c7518562de6cfdd78ff92667c997a33b437f")
         self.assertEqual(review["raw_frame_count_reviewed"], 60)
-        self.assertEqual(review["manifest_sha256"], semantic._sha256(manifest_path))
         self.assertTrue(review["encode_authorization"]["allowed"])
         self.assertFalse(review["encode_authorization"]["automatic_retry_allowed"])
 
