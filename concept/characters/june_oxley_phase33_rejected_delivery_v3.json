@@ -1,0 +1,73 @@
+{
+  "receipt_version": 1,
+  "character_id": "june_oxley",
+  "phase": "phase33_semantic_occlusion_proof",
+  "delivery_attempt_version": 3,
+  "status": "encoded_once_full_decode_one_locked_gate_failed_rejected",
+  "source_commit_at_attempt": "27668066bea4fd9a06303cc75856aa08d3c255fc",
+  "contract": {
+    "path": "concept/characters/june_oxley_phase33_semantic_face_v3.json",
+    "raw_sha256": "060b9120668a472c36f61ee0c744f9e6411303e69d2bf79ddf13645835d914db",
+    "canonical_sha256": "981c6f44fe675619ca49b9840834ba6eafe782365ed512da59e11b2a3290130e"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_semantic_face.py",
+    "sha256_at_attempt": "a93adf1e4d0ac13921c83e7a55f1ed5fc2654e1dc81e94438c570bf6f877ebaf"
+  },
+  "preview": {
+    "manifest_sha256": "f3289e31e22e883a4306296d69ebc4829e67e193b99bb19e79bba3bdfc8c65cb",
+    "review_receipt_sha256": "1d84d126d9c2567d1a1912fd5b8eda8a32860d3ec08861e7200a957d87f437ff",
+    "all_60_contact_sheet_sha256": "eac32f62efb43152fc9229ab33b7c7518562de6cfdd78ff92667c997a33b437f",
+    "key_pose_sheet_sha256": "5073b3e50e99dc6577c1e59255037c6d3b0faef7cacfea6a75a31b8b912cb249"
+  },
+  "video": {
+    "path": "../../outputs/edit/phase33-semantic-face-proof-v3-rejected-attempt-v3/june-phase33-semantic-face-proof-v3.mp4",
+    "sha256": "350f8aeb9cad5820c5d20506362822edfeae27674bd83daf1cb7ec96d1192173",
+    "bytes": 1194688,
+    "encoding_process_count": 1,
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 60,
+    "duration_seconds": 2.0,
+    "audio_stream_count": 0
+  },
+  "report": {
+    "path": "../../outputs/edit/phase33-semantic-face-proof-v3-rejected-attempt-v3/june-phase33-semantic-face-report-v3.json",
+    "sha256": "f3c85836ecfc1aebf5e5aad208180cfa9ab76b0a090f12ca5c372e186292c543",
+    "gate_count": 26,
+    "gates_passed": 25,
+    "gates_failed": 1
+  },
+  "decoded_evidence": {
+    "full_decode_frame_count": 60,
+    "worst_full_frame_psnr_db": 42.642228206314954,
+    "worst_face_psnr_db": 41.76582811367608,
+    "worst_face_ssim": 0.9888933499654134,
+    "worst_eye_psnr_db": 41.5250776026308,
+    "worst_mouth_psnr_db": 41.21561055473366,
+    "minimum_encoded_laplacian_variance": 284.7868041957944,
+    "first_last_decoded_psnr_db": 99.0,
+    "decoded_contact_sheet_sha256": "72f23cad8f83a2f3bcda0ab402f2f91190f3a993fd6519af636a58bbd0198e8b"
+  },
+  "failed_gate": {
+    "name": "decoded_local_temporal_pop",
+    "actual": 141.359375,
+    "operator": "<=",
+    "threshold": 52.0
+  },
+  "review_finding": "The decoded 32-to-33 frame pair shows a normal small B-to-A oral opening, not a one-frame visual discontinuity. The metric is dominated by a high-contrast cavity/tooth boundary crossing an 8x8 window. The locked 52.0 threshold is nevertheless binding and may not be revised after encoding.",
+  "required_next_attempt": [
+    "Use delivery attempt v4 and lock this rejection receipt.",
+    "Keep the reviewed v3 pixels and all semantic geometry unchanged unless a new unencoded review explicitly authorizes a visual change.",
+    "Set the decoded localized-motion gate before encoding in the same measurement domain as the render-free gate, with a bounded codec margin and an explicit one-frame full-replacement rejection floor.",
+    "Do not reuse or overwrite the v3 output directory and do not perform an automatic retry."
+  ],
+  "promotion_allowed": false,
+  "voiced_reencode_allowed": false,
+  "immutable": true,
+  "cash_cost": 0,
+  "paid_runtime_dependency": false
+}

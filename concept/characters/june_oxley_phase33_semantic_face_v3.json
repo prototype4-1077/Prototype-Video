@@ -1,0 +1,177 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase33_semantic_face_v3",
+  "phase": "phase33_semantic_occlusion_proof",
+  "character_id": "june_oxley",
+  "view_id": "CLOSE_HERO_FRONT_GS070",
+  "classification": "Silent semantic facial representation proof; human visual review required; not an accepted production delivery.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "locks": {
+    "phase32_control_receipt": {
+      "path": "concept/characters/june_oxley_phase32_acceptance_v3.json",
+      "sha256": "0db4743af04115d9a235f0a30a1d8d0a3b26ee2fbaafc89bd404d4e658f6a027"
+    },
+    "gs070_contract": {
+      "path": "concept/style_frames/june_golden_scene_gs070_resolution_v1.json",
+      "sha256": "ff5ae15bf49e4ab19c654948d4217b3202d3ddcffb3d1b9d617694c46d78b194"
+    },
+    "gs070_plate": {
+      "path": "concept/style_frames/june-golden-scene-gs070-resolution-plate-v1.png",
+      "sha256": "c54f82ef387121267829ec0a85c8fbf56830af2fd18c400ef777cfbb9044d029"
+    },
+    "gs070_registration_renderer": {
+      "path": "pipeline/cartoon_resolution_scene.py",
+      "sha256": "17230ed197ffc813dd6e2b48c794184db354d0194ae33f1d3d1d8df165002f26"
+    },
+    "paired_expression_contract": {
+      "path": "concept/style_frames/june_oxley_expression_atlas_v1.json",
+      "sha256": "0592cb604aba1a46b0117198821a6a92a172530e1de29b27fe86c3d8fc8bf210"
+    },
+    "paired_expression_image": {
+      "path": "concept/style_frames/june_oxley_expression_atlas_v1.png",
+      "sha256": "23a1e4fd24ca13ada1c34722905528b052993c0f37477195f13d2a5b6bcf462b"
+    },
+    "paired_viseme_contract": {
+      "path": "concept/style_frames/june_oxley_viseme_atlas_v1.json",
+      "sha256": "223e2f34665d630d7062c8e9d57ff43eb2d6735c8468411d305bd86ca34614e9"
+    },
+    "paired_viseme_image": {
+      "path": "concept/style_frames/june_oxley_viseme_atlas_v1.png",
+      "sha256": "73df92931fd6f0e5d276ab85524232479a23d7e3049feb47b0cff7058a24f201"
+    },
+    "rejected_v2_receipt": {
+      "path": "concept/characters/june_oxley_phase33_rejected_delivery_v2.json",
+      "sha256": "d2db9ac217fdd71bf5b0fbe762e0739fe038dcdb340f26668d924f0b54da4cb8"
+    }
+  },
+  "representation": {
+    "method": "source_aligned_semantic_occlusion_2p5d_v1",
+    "complete_eye_or_mouth_photo_crossfades_allowed": false,
+    "foreign_atlas_pixels_allowed": false,
+    "paired_canonical_atlas_semantic_lid_pixels_allowed": true,
+    "head_motion_allowed": false,
+    "camera_motion_allowed": false,
+    "audio_allowed": false,
+    "neutral_bypass_is_exact_source_plate": true,
+    "single_final_output_resample": true,
+    "depth_order_back_to_front": [
+      "authored_plate_open_eye_and_neutral_mouth",
+      "mouth_cavity",
+      "tongue",
+      "lower_teeth_jaw_driven",
+      "upper_teeth_skull_locked",
+      "upper_lip",
+      "lower_lip_jaw_driven",
+      "upper_lids",
+      "lower_lids",
+      "lid_crease",
+      "moustache_source_pixels",
+      "beard_clearance_source_pixels"
+    ]
+  },
+  "clock": {
+    "source_width": 1672,
+    "source_height": 941,
+    "output_width": 1920,
+    "output_height": 1080,
+    "fps": 30,
+    "frame_count": 60,
+    "duration_seconds": 2.0
+  },
+  "performance": {
+    "exact_neutral_frames": [1, 8, 19, 22, 60],
+    "blink_frames": [9, 18],
+    "blink_max_frames": [13, 14],
+    "mouth_keyframes": [
+      {"frame": 22, "pose": "neutral"},
+      {"frame": 28, "pose": "B"},
+      {"frame": 38, "pose": "A"},
+      {"frame": 48, "pose": "F"},
+      {"frame": 52, "pose": "F"},
+      {"frame": 60, "pose": "neutral"}
+    ],
+    "required_pose_order": ["neutral", "blink", "B", "A", "F", "neutral"]
+  },
+  "semantic_geometry_native_xy": {
+    "viewer_left_eye": {"center": [598, 236], "radius": [31, 24]},
+    "viewer_right_eye": {"center": [696, 252], "radius": [31, 25]},
+    "mouth_center": [635, 383],
+    "mouth_allowed_box": [500, 305, 755, 525],
+    "moustache_roi": [525, 318, 725, 392],
+    "beard_clearance_roi": [510, 382, 748, 512],
+    "feature_support_box": [510, 198, 748, 512]
+  },
+  "pose_geometry_native_px": {
+    "B": {"mouth_width": 74.0, "cavity_height": 3.0, "jaw_drop": 0.0, "upper_teeth": 0.0, "lower_teeth": 0.0, "tongue": 0.0},
+    "A": {"mouth_width": 100.0, "cavity_height": 40.0, "jaw_drop": 8.0, "upper_teeth": 0.32, "lower_teeth": 0.06, "tongue": 0.38},
+    "F": {"mouth_width": 78.0, "cavity_height": 16.0, "jaw_drop": 2.0, "upper_teeth": 0.62, "lower_teeth": 0.0, "tongue": 0.0},
+    "neutral": {"mouth_width": 0.0, "cavity_height": 0.0, "jaw_drop": 0.0, "upper_teeth": 0.0, "lower_teeth": 0.0, "tongue": 0.0}
+  },
+  "preencode_gates": {
+    "required_exact_endpoint_changed_pixels": 0,
+    "required_changes_outside_feature_support": 0,
+    "minimum_full_blink_iris_occlusion_ratio": 0.98,
+    "minimum_full_blink_lid_area_per_eye": 1700,
+    "minimum_A_cavity_area": 2700,
+    "maximum_B_cavity_area": 650,
+    "minimum_F_upper_teeth_area": 420,
+    "minimum_moustache_front_overlap_pixels": 260,
+    "minimum_beard_front_overlap_pixels": 8,
+    "maximum_multiply_owned_final_pixels": 0,
+    "maximum_adjacent_feature_8x8_mean_delta": 150.0,
+    "require_all_60_raw_frame_hashes": true,
+    "require_preview_review_receipt": true
+  },
+  "decoded_gates": {
+    "require_full_decode": true,
+    "minimum_full_frame_psnr_db_all_frames": 39.0,
+    "minimum_face_psnr_db_all_frames": 38.0,
+    "minimum_face_ssim_all_frames": 0.97,
+    "minimum_eye_psnr_db_all_frames": 38.0,
+    "minimum_mouth_psnr_db_all_frames": 38.0,
+    "minimum_encoded_laplacian_variance_all_frames": 80.0,
+    "maximum_decoded_adjacent_face_8x8_mean_delta": 52.0,
+    "face_roi_xyxy": [500, 185, 870, 620],
+    "eye_roi_xyxy": [625, 235, 850, 360],
+    "mouth_roi_xyxy": [595, 355, 855, 530]
+  },
+  "preview": {
+    "directory": "../../outputs/edit/phase33-semantic-face-preview-v3",
+    "manifest_filename": "june-phase33-semantic-preview-manifest-v3.json",
+    "contact_sheet_filename": "june-phase33-semantic-all-60-contact-v3.png",
+    "key_sheet_filename": "june-phase33-semantic-key-poses-v3.png",
+    "review_receipt": "concept/characters/june_oxley_phase33_semantic_preview_review_v3.json"
+  },
+  "delivery": {
+    "attempt_version": 3,
+    "output_directory": "../../outputs/edit/phase33-semantic-face-proof-v3",
+    "video_filename": "june-phase33-semantic-face-proof-v3.mp4",
+    "report_filename": "june-phase33-semantic-face-report-v3.json",
+    "decoded_contact_sheet_filename": "june-phase33-semantic-decoded-contact-v3.png",
+    "one_video_encode_without_retry": true,
+    "staged_atomic_directory_publication": true,
+    "encoding": {
+      "implementation": "libx264",
+      "crf": 0,
+      "preset": "slow",
+      "pixel_format": "yuv420p"
+    }
+  },
+  "failure_policy": {
+    "mode": "fail_closed",
+    "partial_success_allowed": false,
+    "fallback_allowed": false,
+    "automatic_reencode_allowed": false,
+    "caller_selected_output_directory_allowed": false,
+    "failed_encoded_attempt_is_preserved": true
+  },
+  "promotion_policy": {
+    "machine_pass_does_not_imply_artistic_acceptance": true,
+    "human_full_size_review_required": true,
+    "voiced_reencode_allowed_before_human_acceptance": false,
+    "phase32_three_quarter_adaptation_allowed_before_human_acceptance": false,
+    "reinforcement_learning_allowed": false
+  }
+}
