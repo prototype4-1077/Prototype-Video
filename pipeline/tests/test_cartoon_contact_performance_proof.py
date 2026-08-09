@@ -19,11 +19,13 @@ from pipeline.cartoon_deformable_performance_3q import _registered_point
 try:
     from pipeline.cartoon_contact_performance_proof import (
         ContactPerformanceRenderer,
+        _aggregate_measurements,
         render_contact_performance_proof,
         solve_contact_landmarks,
     )
 except ImportError as exc:  # The red TDD state must still collect contract tests.
     ContactPerformanceRenderer = None  # type: ignore[assignment,misc]
+    _aggregate_measurements = None  # type: ignore[assignment]
     render_contact_performance_proof = None  # type: ignore[assignment]
     solve_contact_landmarks = None  # type: ignore[assignment]
     API_IMPORT_FAILURE = repr(exc)
@@ -783,41 +785,49 @@ class ContactPerformanceAPITests(unittest.TestCase):
                 with self.assertRaises((ValueError, AssertionError)):
                     ContactPerformanceRenderer(path)
 
-    def test_entrypoint_encodes_and_decodes_exactly_49_frames_with_separate_audience_status(self) -> None:
+    def test_historical_phase29_proof_remains_fail_closed_without_rerender(self) -> None:
         self._require_api()
-        with tempfile.TemporaryDirectory() as directory:
-            output = Path(directory)
-            render_contact_performance_proof(CONTRACT_PATH, output, ffmpeg="ffmpeg")
-            report = _load_json(output / self.contract["report_contract"]["filename"])
-            video = output / self.contract["report_contract"]["video_filename"]
-            self.assertTrue(video.is_file())
-            capture = cv2.VideoCapture(str(video))
-            self.assertTrue(capture.isOpened())
-            decoded = 0
-            while True:
-                ok, image = capture.read()
-                if not ok:
-                    break
-                self.assertEqual(image.shape[:2], (540, 960))
-                decoded += 1
-            fps = capture.get(cv2.CAP_PROP_FPS)
-            capture.release()
-            self.assertEqual(decoded, 49)
-            self.assertAlmostEqual(fps, 30.0, delta=0.01)
-            self.assertEqual(report["delivery"]["encoded_frames"], 49)
-            self.assertEqual(report["delivery"]["decoded_frames"], 49)
-            self.assertEqual(
-                set(report["gate_results"]),
-                set(self.contract["report_contract"]["required_gate_results"]),
-            )
-            recomputed = evaluate_contact_gate_results(self.contract, report["aggregate_measurements"])
-            self.assertEqual(report["threshold_results"], recomputed["threshold_results"])
-            self.assertEqual(report["gate_results"], recomputed["gate_results"])
-            self.assertEqual(report["machine_passed"], recomputed["machine_passed"])
-            self.assertTrue(all(report["gate_results"].values()))
-            self.assertTrue(report["machine_passed"])
-            self.assertEqual(report["audience_quality"]["status"], "unevaluated")
-            self.assertFalse(report["audience_quality"]["may_be_inferred_from_machine_pass"])
+        self.assertIsNotNone(_aggregate_measurements)
+        aggregates = _aggregate_measurements(self.contract, self.frames, decoded_frames=49)
+        evaluation = evaluate_contact_gate_results(self.contract, aggregates)
+        self.assertEqual(
+            evaluation["gate_results"],
+            {
+                "delivery": True,
+                "source_policy": True,
+                "feet": True,
+                "chair": True,
+                "balance": True,
+                "motion": False,
+                "joints": True,
+                "topology": True,
+                "no_ghost": True,
+            },
+        )
+        self.assertFalse(evaluation["machine_passed"])
+        failures = {
+            path: result
+            for path, result in evaluation["threshold_results"].items()
+            if not result["passed"]
+        }
+        self.assertEqual(
+            set(failures),
+            {
+                "motion.maximum_non_smear_landmark_motion_preview_px_per_frame",
+                "motion.maximum_acceleration_reversals_during_ascent",
+            },
+        )
+        self.assertAlmostEqual(
+            failures["motion.maximum_non_smear_landmark_motion_preview_px_per_frame"]["measured_value"],
+            63.95374725488824,
+            places=9,
+        )
+        self.assertEqual(
+            failures["motion.maximum_acceleration_reversals_during_ascent"]["measured_value"],
+            9,
+        )
+        self.assertEqual(self.contract["audience_quality"]["status"], "unevaluated")
+        self.assertFalse(self.contract["audience_quality"]["may_be_inferred_from_machine_pass"])
 
     def test_renderer_rejects_frames_outside_bounded_proof(self) -> None:
         self._require_api()

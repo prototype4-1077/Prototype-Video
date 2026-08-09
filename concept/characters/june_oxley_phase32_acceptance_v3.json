@@ -1,0 +1,88 @@
+{
+  "receipt_version": 1,
+  "character_id": "june_oxley",
+  "phase": "phase32_reconstruction_locked_textured_mechanics",
+  "delivery_attempt_version": 3,
+  "audit_revision": 2,
+  "status": "machine_delivery_passed_human_review_pending",
+  "source_commit_at_attempt": "cdfb058fa855368dea07f0d6ce6f3f2d98d2b0ed",
+  "contract": {
+    "path": "concept/characters/june_oxley_reconstruction_locked_textured_mechanics_v1.json",
+    "raw_sha256": "c21059cbfa2aea6488681c0c59e36c1497ab6325b0ba3c126c929b078cc1fd61",
+    "canonical_sha256": "08c455de7b6f3511d15b19886606cc22d977b2397aaa81bf7d32fa41fc635535"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_reconstruction_locked_textured_mechanics.py",
+    "sha256": "ddb6a923397019d2164c17a9543c98ae8272b0ae03b5364496a629830c3c5bd4"
+  },
+  "report": {
+    "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v3/june-phase32-reconstruction-locked-textured-mechanics-report-v3.json",
+    "sha256": "a52f0ff0f8d22ce8e6abb093524c9ba8e616084a4f01f6f4e40a7643baaee7b6",
+    "bytes": 629746,
+    "preflight_passed": true,
+    "machine_passed": true,
+    "passed_gate_count": 76,
+    "failed_gate_count": 0
+  },
+  "video": {
+    "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v3/june-phase32-reconstruction-locked-textured-mechanics-v3.mp4",
+    "sha256": "cab1e6ec07a5a1948c968e1d04e5adfa32b697924f4693c7d31cdcf318d98f73",
+    "bytes": 52735619,
+    "encoding_process_count": 1,
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "frame_count": 49,
+    "fps": 30,
+    "audio_stream_count": 0
+  },
+  "review_artifacts": {
+    "contact_sheet": {
+      "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v3/june-phase32-reconstruction-locked-textured-contact-sheet-v3.png",
+      "sha256": "4f15ad9a00eca588cb7076b60435d05841228ca7e7a9ff08be7a405335c28756",
+      "bytes": 1498582,
+      "source": "fully_decoded_mp4_frames"
+    },
+    "identity_strip": {
+      "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v3/june-phase32-reconstruction-locked-textured-identity-strip-v3.png",
+      "sha256": "8ce66dc7cbbd2494bb6171aa1caaf7e48438bd6c8731cc958300602ebe61cedd",
+      "bytes": 766833,
+      "source": "fully_decoded_mp4_frames"
+    },
+    "seam_detail_sheet": {
+      "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v3/june-phase32-reconstruction-locked-textured-seam-detail-sheet-v3.png",
+      "sha256": "6a7d26b23950d91ad42158a319ce1a38627b6a93a72b6cc0cc9104c30fe5c382",
+      "bytes": 1079394,
+      "source": "fully_decoded_mp4_frames",
+      "selection": "rest_and_each_required_pair_candidate_disagreement_argmax"
+    }
+  },
+  "strengthened_evidence": {
+    "visible_alpha_threshold_exclusive_uint8": 16,
+    "maximum_visible_geometry_pixels_uncovered": 0,
+    "maximum_character_pixels_outside_visible_geometry": 0,
+    "required_region_component_inventory_matches_locked_source": true,
+    "required_character_union_components": 1,
+    "minimum_visible_seam_boundary_band_pixels_per_pair": 138,
+    "maximum_cross_owner_source_coordinate_divergence_p95_px": 13.309522642991462,
+    "lower_garment_jacobian_support_pixels_evaluated_per_moving_frame": 92851,
+    "tracked_material_point_count": 19508,
+    "maximum_tracked_material_point_velocity_preview_px_per_frame": 5.356180755551532,
+    "maximum_tracked_material_point_acceleration_preview_px_per_frame_squared": 2.4720834256391386,
+    "maximum_tracked_material_point_jerk_preview_px_per_frame_cubed": 1.4448301316729197
+  },
+  "decoded_quality": {
+    "minimum_subject_roi_psnr_db": 42.13159485467596,
+    "minimum_subject_roi_ssim": 0.9862520694732666,
+    "minimum_face_crop_psnr_db": 40.036451873788494,
+    "minimum_face_crop_ssim": 0.9872577786445618,
+    "first_last_subject_roi_psnr_db": 99.0
+  },
+  "review": {
+    "ai_assisted_decoded_artifact_inspection_completed": true,
+    "human_full_size_review_required": true,
+    "human_full_size_review_completed": false,
+    "facial_performance_promotion_allowed": false
+  },
+  "cash_cost": 0,
+  "paid_runtime_dependency": false
+}

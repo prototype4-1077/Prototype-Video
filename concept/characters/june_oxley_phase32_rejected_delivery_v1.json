@@ -1,0 +1,85 @@
+{
+  "receipt_version": 1,
+  "receipt_id": "june_oxley_phase32_rejected_delivery_v1",
+  "character_id": "june_oxley",
+  "phase": "phase32_reconstruction_locked_textured_mechanics",
+  "status": "decoded_delivery_rejected",
+  "retry_policy": "never_reencode_this_delivery_attempt",
+  "contract": {
+    "path": "concept/characters/june_oxley_reconstruction_locked_textured_mechanics_v1.json",
+    "canonical_sha256_at_attempt": "8024ae6ca9608ca7141c2e30843830755cc7585cb00507a3feb186afdad5b794"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_reconstruction_locked_textured_mechanics.py",
+    "sha256_at_attempt": "776586374c51a83c6a1786dce22ae979882d247b2067ad322781c78dd5b71660"
+  },
+  "encoding": {
+    "encoding_process_count": 1,
+    "codec": "libx264",
+    "preset": "slow",
+    "tune": "animation",
+    "crf": 10,
+    "gop": 1,
+    "b_frames": 0,
+    "pixel_format": "yuv420p",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 49
+  },
+  "report": {
+    "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v1-rejected/june-phase32-reconstruction-locked-textured-mechanics-report-v1.json",
+    "sha256": "7408faf85e90bf85d96d32c2f462ee2b6e1580d45a0b273c587c9bcfe32cea26",
+    "bytes": 444819,
+    "preflight_passed": true,
+    "machine_passed": false,
+    "gate_count": 74,
+    "passed_gate_count": 73,
+    "failed_gate_count": 1
+  },
+  "failed_gate": {
+    "id": "delivery.minimum_decoded_first_last_subject_roi_psnr_db",
+    "measured": 41.91126306002192,
+    "operator": ">=",
+    "threshold": 45.0,
+    "diagnosis": "The two byte-identical source endpoints were encoded as independent CRF-controlled intra frames and decoded with rate-control variance. All per-frame subject, face, sharpness, stream, duration, decode, and in-memory gates passed."
+  },
+  "video": {
+    "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v1-rejected/june-phase32-reconstruction-locked-textured-mechanics-v1.mp4",
+    "sha256": "a95d245c1e26d973a6e65c19b3da61816ed4051e772afc81083e41100ca9a6f8",
+    "bytes": 18886188,
+    "decoded_frame_count": 49
+  },
+  "review_artifacts": {
+    "contact_sheet": {
+      "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v1-rejected/june-phase32-reconstruction-locked-textured-contact-sheet-v1.png",
+      "sha256": "65946a01ff8d4ad0c5fb26904aec02896f8f9d74ae3db327c675f7cd736d2ce3",
+      "bytes": 3062578
+    },
+    "identity_strip": {
+      "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v1-rejected/june-phase32-reconstruction-locked-textured-identity-strip-v1.png",
+      "sha256": "a69c6d03c3a6ca2acb19064ce390aba65d1762025b28f12577c7deeb386a5ad2",
+      "bytes": 816821
+    },
+    "seam_detail_sheet": {
+      "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v1-rejected/june-phase32-reconstruction-locked-textured-seam-detail-sheet-v1.png",
+      "sha256": "8f10f9d6b4f4c0d1fb650c098a705d2d2a8210ad7139c949782357ce3fcf4752",
+      "bytes": 1899381
+    }
+  },
+  "codec_diagnostic": {
+    "method": "One decoded v1 frame repeated 49 times and encoded separately with libx264 CRF 0, all-intra, yuv420p.",
+    "result_frame_count": 49,
+    "decoded_first_last_equal": true,
+    "decoded_first_last_psnr_db": 99.0,
+    "diagnostic_video_sha256": "75084f6c96b630b141bf4abf31666a89def30b5359fef41a07d2a6aa989b67dc"
+  },
+  "next_delivery_attempt": {
+    "version": 2,
+    "required_new_output_directory": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v2",
+    "encoder_change_only": "libx264 CRF 0 instead of CRF 10",
+    "automatic_retry": false
+  },
+  "cash_cost": 0,
+  "paid_runtime_dependency": false
+}
