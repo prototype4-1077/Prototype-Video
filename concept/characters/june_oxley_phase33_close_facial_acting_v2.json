@@ -1,0 +1,140 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase33_close_facial_acting_v2",
+  "phase": "phase33_close_facial_acting_prototype",
+  "character_id": "june_oxley",
+  "delivery_attempt_version": 2,
+  "classification": "Corrective-delta close-view facial acting prototype candidate; exact authored plate at neutral/X, explicit feature ownership, human review required.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "promotion_policy": {
+    "audience_status": "prototype_candidate_human_review_required",
+    "accepted_delivery_publication_allowed": false,
+    "phase32_human_approval_required_for_accepted_delivery": true,
+    "voice_casting_approval_required_for_accepted_delivery": true
+  },
+  "locks": {
+    "base_contract_v1": {
+      "path": "concept/characters/june_oxley_phase33_close_facial_acting_v1.json",
+      "sha256": "0ff23c74ac158a5d0c5f412e935d53c62ca03eb09eaf2f87922f3fc384148a2b"
+    },
+    "base_implementation_v1": {
+      "path": "pipeline/cartoon_close_facial_acting.py",
+      "sha256": "be73e21cfa7f37a8b277d159348385eecd48ad65bf9c5ebb7804f7b6ffa5b09a"
+    },
+    "rejected_delivery_v1": {
+      "path": "concept/characters/june_oxley_phase33_rejected_delivery_v1.json",
+      "sha256": "459dd8be997176ecbf499768afa6915d10745580e391be312ef3855c37e43fdc"
+    }
+  },
+  "corrective_compositing": {
+    "base": "authored_gs070_plate",
+    "neutral_expression_state": "neutral",
+    "neutral_mouth_state": "X",
+    "neutral_and_x_change_source_pixels": false,
+    "method": "single_base_delta_sum_srgb_v1",
+    "expression_applied_before_global_head_motion": true,
+    "mouth_applied_before_global_head_motion": true,
+    "resample_count_after_feature_composite": 1,
+    "mouth_owns_expression_overlap": true,
+    "rgb_crop_painter_order_allowed": false,
+    "mouth_state_weights": {
+      "A": 0.45,
+      "B": 0.42,
+      "C": 0.48,
+      "D": 0.58,
+      "E": 0.48,
+      "F": 0.5,
+      "G": 0.45,
+      "H": 0.52,
+      "X": 0.0
+    },
+    "expression_state_weights": {
+      "neutral": 0.0,
+      "blink": 0.9,
+      "squint": 0.55,
+      "brow_raise": 0.45,
+      "brow_knit": 0.5,
+      "concern": 0.5,
+      "warm_eyes": 0.45,
+      "gaze_down": 0.55,
+      "compassion": 0.5
+    }
+  },
+  "inherited_clock": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 228,
+    "duration_seconds": 7.6,
+    "audio_sample_rate": 48000,
+    "audio_sample_count": 364800,
+    "audio_samples_per_frame": 1600
+  },
+  "performance": {
+    "attention_and_thought_frames": [1, 24],
+    "dialogue_frames": [25, 162],
+    "reaction_nod_frames": [168, 201],
+    "final_hold_frames": [202, 228],
+    "review_frames": [1, 12, 24, 25, 46, 79, 82, 111, 132, 162, 168, 180, 192, 201, 202, 228]
+  },
+  "corrective_quality_gates": {
+    "required_neutral_source_changed_pixels": 0,
+    "required_x_source_changed_pixels": 0,
+    "required_feature_overlap_pixels": 1,
+    "required_multiply_owned_overlap_pixels": 0,
+    "minimum_stable_identity_pixels": 150000,
+    "maximum_changed_pixels_outside_owned_feature_support": 0,
+    "minimum_bilateral_blink_mean_absolute_delta": 8.0,
+    "minimum_non_x_observed_frame_count": 40,
+    "maximum_adjacent_mouth_corrective_mean_absolute_delta": 11.0,
+    "maximum_adjacent_expression_corrective_mean_absolute_delta": 18.0
+  },
+  "decoded_quality_gate": {
+    "require_full_decode": true,
+    "minimum_full_frame_psnr_db": 38.0,
+    "minimum_face_psnr_db": 38.0,
+    "minimum_face_ssim": 0.97,
+    "minimum_eye_psnr_db": 38.0,
+    "minimum_mouth_psnr_db": 38.0,
+    "minimum_encoded_laplacian_variance": 30.0,
+    "face_roi_xyxy": [330, 0, 1050, 720],
+    "eye_roi_xyxy": [480, 110, 1010, 440],
+    "mouth_roi_xyxy": [500, 260, 980, 620]
+  },
+  "delivery": {
+    "output_directory": "../../outputs/edit/phase33-close-facial-acting-prototype-v2",
+    "video_filename": "june-phase33-close-facial-acting-prototype-v2.mp4",
+    "report_filename": "june-phase33-close-facial-acting-report-v2.json",
+    "caption_filename": "june-phase33-close-facial-acting-v2.srt",
+    "contact_sheet_filename": "june-phase33-decoded-contact-sheet-v2.png",
+    "blink_strip_filename": "june-phase33-decoded-blink-strip-v2.png",
+    "mouth_strip_filename": "june-phase33-decoded-mouth-strip-v2.png",
+    "ab_sheet_filename": "june-phase33-blinded-ab-vs-v1-v2.png",
+    "one_video_encode_without_retry": true,
+    "staged_atomic_directory_publication": true,
+    "encoding": {
+      "implementation": "libx264",
+      "preset": "slow",
+      "tune": "animation",
+      "crf": 12,
+      "pixel_format": "yuv420p",
+      "audio_codec": "aac",
+      "audio_bitrate": "256k"
+    }
+  },
+  "failure_policy": {
+    "mode": "fail_closed",
+    "partial_success_allowed": false,
+    "fallback_allowed": false,
+    "automatic_reencode_allowed": false,
+    "preview_required_before_encode": true
+  },
+  "known_limitations": [
+    "This remains a GS070 close-view adapter rather than facial correctives inside the Phase 32 three-quarter body pixels.",
+    "Corrective deltas reduce identity replacement but do not create semantic oral geometry or unseen surfaces.",
+    "The Piper Norman voice remains a human-casting candidate.",
+    "Human full-size and real-time review remain required; machine gates cannot judge acting taste."
+  ]
+}
