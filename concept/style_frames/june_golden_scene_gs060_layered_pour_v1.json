@@ -1,0 +1,292 @@
+{
+  "contract_version": 1,
+  "performance_id": "june_golden_scene_gs060_layered_pour_v1",
+  "character_id": "june_oxley",
+  "shot_id": "GS060",
+  "gate": "registered_pour_contact_and_liquid",
+  "classification": "AI-assisted authored-pose 2.5D animation with registered mug contact and deterministic local liquid; not final continuous topology deformation.",
+  "generation": {
+    "cash_cost": 0,
+    "paid_runtime_dependency": false,
+    "runtime": "Pillow + NumPy + FFmpeg",
+    "foreground_extraction": {
+      "tool": "rembg",
+      "version": "2.0.77",
+      "models": [
+        {
+          "name": "u2net",
+          "sha256": "8d10d2f3bb75ae3b6d527c77944fc5e7dcd94b29809d47a739a7a728a912b491"
+        },
+        {
+          "name": "u2net_human_seg",
+          "sha256": "01eb6a29a5c4d8edb30b56adad9bb3a2a0535338e480724a213e0acfd2d1c73c"
+        }
+      ],
+      "combination": "per-pixel maximum alpha, three-pixel dilation, 0.65-pixel edge blur",
+      "prop_recovery": "POSE_30_GRASP_POT unions a tight-crop u2net alpha pass so the dark pot remains visible before lift-off.",
+      "runtime_required": false,
+      "purpose": "Offline build-time derivation of pinned RGBA character, hand, ledger, mug, and coffee-pot layers; the production renderer consumes the derived pixels directly."
+    }
+  },
+  "identity_reference": {
+    "path": "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+    "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9"
+  },
+  "style_reference": {
+    "path": "concept/style_frames/june-golden-scene-gs060-style-target-v2.png",
+    "sha256": "1d194061898f6dbbae69af6e11c9e8b48f10f5403bf897a41d7f483439338a44"
+  },
+  "liquid_reference": {
+    "path": "concept/style_frames/june-golden-scene-gs060-performance-active-pour-v1.png",
+    "sha256": "17467e77428575768e5c91b05b0ee2ecd701c79589793358344cd840296281cb",
+    "runtime_consumed": false,
+    "purpose": "Visual provenance for coffee color, arc, width, landing, and steam only; deterministic local liquid is rendered over the liquid-free production pose."
+  },
+  "source_canvas": {
+    "width": 1672,
+    "height": 941
+  },
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 258,
+    "duration_seconds": 8.6,
+    "codec": "h264",
+    "pixel_format": "yuv420p"
+  },
+  "review_frames": [1, 30, 31, 32, 58, 59, 84, 85, 111, 112, 127, 128, 135, 136, 156, 176, 177, 184, 185, 230, 231, 258],
+  "background": {
+    "path": "concept/style_frames/june-golden-scene-gs060-clean-porch-v1.png",
+    "sha256": "fd9f1235e4721734c8bd1898967b4cd6596413ce6363c226c5e7f32867dcbcdc",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB",
+    "image_generation": {
+      "mode": "Codex built-in precise-object-edit",
+      "cash_cost": 0,
+      "paid_runtime_dependency": false,
+      "prompt_summary": "Remove June, both hands and arms, coffee pot, mug, coffee, and steam; reconstruct the exact empty porch and tabletop while retaining the same camera, lantern, road, ledger, pencil, lighting, and stylized material treatment."
+    },
+    "source_provenance": {
+      "path": "concept/style_frames/june-golden-scene-gs060-style-target-v2.png",
+      "sha256": "1d194061898f6dbbae69af6e11c9e8b48f10f5403bf897a41d7f483439338a44"
+    }
+  },
+  "contact_registration": {
+    "target_mug_rim_center": [1000.0, 692.0],
+    "maximum_mug_residual_px_source": 0.01,
+    "maximum_translation_px_source": 50.0,
+    "grounded_pot_contact": {
+      "target_registered_point": [1301.0, 834.0],
+      "pose_ids": ["POSE_00_PENCIL_POISED", "POSE_15_PENCIL_DOWN", "POSE_30_GRASP_POT"],
+      "maximum_residual_px_source": 24.0,
+      "purpose": "Bound the coffee pot to one readable tabletop position through the pre-lift drawings and prevent the rejected pot-teleport failure from returning."
+    }
+  },
+  "poses": [
+    {
+      "id": "POSE_00_PENCIL_POISED",
+      "action_progress": 0.0,
+      "foreground": {
+        "path": "concept/style_frames/june_gs060_pose_00_foreground_v1.png",
+        "sha256": "d3418d45741e5d5df4eeec6e46ea773e12ce27efbba12a7e3d0c533e9016b2bd",
+        "width": 1672,
+        "height": 941,
+        "mode": "RGBA"
+      },
+      "source_art": {
+        "path": "concept/style_frames/june-golden-scene-gs060-performance-pencil-poised-v1.png",
+        "sha256": "408b1d1f770a6bb88656d5a718848c8bc06279311ab1a7ad58176ea3967e4464"
+      },
+      "source_contacts": {
+        "mug_rim_center": [953.0, 685.0],
+        "pot_table_contact": [1254.0, 827.0]
+      }
+    },
+    {
+      "id": "POSE_15_PENCIL_DOWN",
+      "action_progress": 0.15,
+      "foreground": {
+        "path": "concept/style_frames/june_gs060_pose_15_foreground_v1.png",
+        "sha256": "9e282719da0f5357fbd6e065ed3e9e05939bb9d338b799617f0e6c9b5986b0f6",
+        "width": 1672,
+        "height": 941,
+        "mode": "RGBA"
+      },
+      "source_art": {
+        "path": "concept/style_frames/june-golden-scene-gs060-performance-pencil-down-v1.png",
+        "sha256": "acc7d53a4c656429e67566e4803398519397da81b6ee400efff851b254630907"
+      },
+      "source_contacts": {
+        "mug_rim_center": [953.0, 685.0],
+        "pot_table_contact": [1254.0, 827.0]
+      }
+    },
+    {
+      "id": "POSE_30_GRASP_POT",
+      "action_progress": 0.3,
+      "foreground": {
+        "path": "concept/style_frames/june_gs060_pose_30_foreground_v2.png",
+        "sha256": "87bc282b60cfbe313ebe200aeccd796eef015ea124c6cb2409e8d9758a5f31fb",
+        "width": 1672,
+        "height": 941,
+        "mode": "RGBA"
+      },
+      "source_art": {
+        "path": "concept/style_frames/june-golden-scene-gs060-performance-grasp-pot-registered-v3.png",
+        "sha256": "95efbcc6f557c4e5788a3c9be2f0821536753ae65defeabcac0bd5ce68328adb"
+      },
+      "source_contacts": {
+        "mug_rim_center": [967.0, 689.0],
+        "pot_table_contact": [1248.0, 827.0]
+      }
+    },
+    {
+      "id": "POSE_45_POT_LIFT",
+      "action_progress": 0.45,
+      "foreground": {
+        "path": "concept/style_frames/june_gs060_pose_45_foreground_v1.png",
+        "sha256": "133eaf8736805f8f070b62a48973ccbdfb280563f32462aae91f3b9bc4fd4d77",
+        "width": 1672,
+        "height": 941,
+        "mode": "RGBA"
+      },
+      "source_art": {
+        "path": "concept/style_frames/june-golden-scene-gs060-performance-pot-lift-v1.png",
+        "sha256": "fa41253a8094b0f6663ea7e057201fc0ed0dd2939f417c12d12d224543eaee24"
+      },
+      "source_contacts": {
+        "mug_rim_center": [1016.0, 692.0]
+      }
+    },
+    {
+      "id": "POSE_55_PRE_POUR",
+      "action_progress": 0.55,
+      "foreground": {
+        "path": "concept/style_frames/june_gs060_pose_55_foreground_v1.png",
+        "sha256": "c99c13556d027858e747346aff4777c12608efae57764f1d5b2a4a598907a652",
+        "width": 1672,
+        "height": 941,
+        "mode": "RGBA"
+      },
+      "source_art": {
+        "path": "concept/style_frames/june-golden-scene-gs060-performance-pre-pour-v1.png",
+        "sha256": "4d667d6eff013115ba09010906d4adfbe63ba9e999946097c4453cd93c618791"
+      },
+      "source_contacts": {
+        "mug_rim_center": [1012.0, 692.0],
+        "spout_tip": [966.0, 565.0]
+      }
+    },
+    {
+      "id": "POSE_70_FULL_TILT",
+      "action_progress": 0.7,
+      "foreground": {
+        "path": "concept/style_frames/june_gs060_pose_70_foreground_v1.png",
+        "sha256": "667bc12acc350cffaeb986322fca5a3116fc9021a2948514f4411b33f3caf0d4",
+        "width": 1672,
+        "height": 941,
+        "mode": "RGBA"
+      },
+      "source_art": {
+        "path": "concept/style_frames/june-golden-scene-gs060-performance-full-tilt-v1.png",
+        "sha256": "0b9df8a91c42e2b2b4dbdf64614c9ac8fe0b0d7ee8f2038ad8618073421ff1ca"
+      },
+      "source_contacts": {
+        "mug_rim_center": [1000.0, 692.0],
+        "spout_tip": [947.0, 578.0]
+      }
+    }
+  ],
+  "timeline": [
+    {"start_frame": 1, "end_frame": 30, "type": "pose", "pose_id": "POSE_00_PENCIL_POISED"},
+    {"start_frame": 31, "end_frame": 31, "type": "smear", "from_pose_id": "POSE_00_PENCIL_POISED", "to_pose_id": "POSE_15_PENCIL_DOWN", "travel": [5, 3]},
+    {"start_frame": 32, "end_frame": 57, "type": "pose", "pose_id": "POSE_15_PENCIL_DOWN"},
+    {"start_frame": 58, "end_frame": 58, "type": "smear", "from_pose_id": "POSE_15_PENCIL_DOWN", "to_pose_id": "POSE_30_GRASP_POT", "travel": [14, 1]},
+    {"start_frame": 59, "end_frame": 83, "type": "pose", "pose_id": "POSE_30_GRASP_POT"},
+    {"start_frame": 84, "end_frame": 84, "type": "smear", "from_pose_id": "POSE_30_GRASP_POT", "to_pose_id": "POSE_45_POT_LIFT", "travel": [1, -12]},
+    {"start_frame": 85, "end_frame": 110, "type": "pose", "pose_id": "POSE_45_POT_LIFT"},
+    {"start_frame": 111, "end_frame": 111, "type": "smear", "from_pose_id": "POSE_45_POT_LIFT", "to_pose_id": "POSE_55_PRE_POUR", "travel": [7, 3]},
+    {"start_frame": 112, "end_frame": 126, "type": "pose", "pose_id": "POSE_55_PRE_POUR"},
+    {"start_frame": 127, "end_frame": 127, "type": "smear", "from_pose_id": "POSE_55_PRE_POUR", "to_pose_id": "POSE_70_FULL_TILT", "travel": [8, 2]},
+    {"start_frame": 128, "end_frame": 184, "type": "pose", "pose_id": "POSE_70_FULL_TILT"},
+    {"start_frame": 185, "end_frame": 185, "type": "smear", "from_pose_id": "POSE_70_FULL_TILT", "to_pose_id": "POSE_55_PRE_POUR", "travel": [-8, -2]},
+    {"start_frame": 186, "end_frame": 198, "type": "pose", "pose_id": "POSE_55_PRE_POUR"},
+    {"start_frame": 199, "end_frame": 199, "type": "smear", "from_pose_id": "POSE_55_PRE_POUR", "to_pose_id": "POSE_45_POT_LIFT", "travel": [-7, -3]},
+    {"start_frame": 200, "end_frame": 213, "type": "pose", "pose_id": "POSE_45_POT_LIFT"},
+    {"start_frame": 214, "end_frame": 214, "type": "smear", "from_pose_id": "POSE_45_POT_LIFT", "to_pose_id": "POSE_30_GRASP_POT", "travel": [-1, 12]},
+    {"start_frame": 215, "end_frame": 229, "type": "pose", "pose_id": "POSE_30_GRASP_POT"},
+    {"start_frame": 230, "end_frame": 230, "type": "smear", "from_pose_id": "POSE_30_GRASP_POT", "to_pose_id": "POSE_15_PENCIL_DOWN", "travel": [-14, -1]},
+    {"start_frame": 231, "end_frame": 258, "type": "pose", "pose_id": "POSE_15_PENCIL_DOWN"}
+  ],
+  "liquid": {
+    "active_pose_id": "POSE_70_FULL_TILT",
+    "onset_frames": [128, 135],
+    "continuous_frames": [136, 176],
+    "taper_frames": [177, 184],
+    "registered_spout_tip": [947.0, 578.0],
+    "landing_point": [1000.0, 700.0],
+    "receiving_ellipse": {
+      "center": [1000.0, 702.0],
+      "radius_x": 54.0,
+      "radius_y": 11.0
+    },
+    "mug_front_occlusion": {
+      "bounds": [920, 700, 1135, 900],
+      "top_y": 700
+    },
+    "stream": {
+      "maximum_width_px_source": 11.0,
+      "base_color": [96, 43, 16, 235],
+      "mid_color": [166, 82, 30, 236],
+      "highlight_color": [236, 158, 66, 190],
+      "curve_bias": 0.24,
+      "micro_wobble_px": 1.4
+    },
+    "contact_gate": {
+      "maximum_spout_start_error_px_source": 0.01,
+      "maximum_spill_pixels_source": 0
+    }
+  },
+  "camera": {
+    "easing": "ease_in_out_cubic",
+    "start_zoom": 1.0,
+    "end_zoom": 1.016,
+    "focus_start": [0.5, 0.5],
+    "focus_end": [0.51, 0.49]
+  },
+  "effects": {
+    "steam": {
+      "start_frame": 136,
+      "origin": [1000.0, 690.0],
+      "strand_count": 3,
+      "strength": 0.65
+    },
+    "light_breathe": {
+      "strength": 0.0035
+    }
+  },
+  "visibility_audit": {
+    "face": true,
+    "ledger": true,
+    "pencil": true,
+    "coffee_pot": true,
+    "mug": true,
+    "coffee_stream": true,
+    "support_foot": false,
+    "support_foot_remediation": "Preserve the previously proved GS030 wide standing/weight-transfer shot immediately before this medium GS060 insert in the final master; this crop must not claim a foot-visibility pass."
+  },
+  "encoded_quality_gate": {
+    "minimum_review_frame_psnr_db": 38.0,
+    "minimum_review_frame_laplacian_variance": 30.0
+  },
+  "prohibited_methods": [
+    "full-frame optical flow",
+    "multi-frame cross-dissolve",
+    "paid runtime generation",
+    "unregistered mug motion",
+    "baked liquid reference as runtime source",
+    "false support-foot visibility claim"
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "review_version": 1,
+  "character_id": "june_oxley",
+  "phase": "phase33_semantic_occlusion_proof",
+  "attempt_version": 3,
+  "status": "all_60_unencoded_frames_reviewed_encode_once_allowed",
+  "reviewed_at": "2026-08-09",
+  "contract_raw_sha256": "060b9120668a472c36f61ee0c744f9e6411303e69d2bf79ddf13645835d914db",
+  "contract_canonical_sha256": "981c6f44fe675619ca49b9840834ba6eafe782365ed512da59e11b2a3290130e",
+  "implementation_sha256": "a93adf1e4d0ac13921c83e7a55f1ed5fc2654e1dc81e94438c570bf6f877ebaf",
+  "manifest_sha256": "f3289e31e22e883a4306296d69ebc4829e67e193b99bb19e79bba3bdfc8c65cb",
+  "all_60_contact_sheet_sha256": "eac32f62efb43152fc9229ab33b7c7518562de6cfdd78ff92667c997a33b437f",
+  "key_pose_sheet_sha256": "5073b3e50e99dc6577c1e59255037c6d3b0faef7cacfea6a75a31b8b912cb249",
+  "raw_frame_count_reviewed": 60,
+  "review_scope": "Representation-level silent proof only; authorization covers exactly one pinned v3 H.264 encode and does not grant artistic or production promotion.",
+  "accepted_findings": [
+    "Frames 1, 8, 19, 22, and 60 return to the authored GS070 plate without a neutral face replacement.",
+    "The bilateral blink preserves the authored outer eye contours and uses only paired canonical lid surfaces inside explicit eye openings.",
+    "B, A, and F are visually distinct and use depth-ordered cavity, tongue, teeth, lips, moustache, and beard-clearance ownership.",
+    "The previous doubled irises, translucent eyes, complete face crops, and mouth-through-beard dissolves are absent.",
+    "All sixty frames were inspected in sequence through the complete contact sheet; the larger key sheet was used for full-size feature review."
+  ],
+  "known_limitations": [
+    "The procedural oral surfaces remain flatter and simpler than the authored GS070 skin and hair rendering.",
+    "The proof contains only B, A, and F and is not a complete lip-sync inventory.",
+    "There is no gaze, brow, cheek, head, camera, voice, or body acting in this isolated representation test.",
+    "A machine pass after encoding will still require decoded full-size visual review before any voiced or three-quarter adaptation."
+  ],
+  "encode_authorization": {
+    "allowed": true,
+    "maximum_video_encoder_processes": 1,
+    "output_directory_must_match_contract": true,
+    "automatic_retry_allowed": false,
+    "audio_allowed": false
+  },
+  "cash_cost": 0,
+  "paid_runtime_dependency": false
+}

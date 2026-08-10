@@ -1,0 +1,62 @@
+{
+  "receipt_version": 1,
+  "candidate_id": "phase36_ledger_pour_candidate_02_audio_only",
+  "built_at_utc": "2026-08-10T21:33:03Z",
+  "build_attempt": 1,
+  "verdict": "PHASE36_CANDIDATE02_UNENCODED_AUDIO_ONLY_MACHINE_PASS_HUMAN_LISTEN_REQUIRED",
+  "source_commit": "82f03c451de22c781b5279473a30ec0b7ec8b952",
+  "authorization": {
+    "path": "collab/CLAUDE_REVIEW_2026-08-10_2116Z.md",
+    "hash_domain": "lf_normalized_text",
+    "sha256": "649fb80582554ec639385c4c61716dc01c7e15efb13183be141588a763155df8",
+    "verdict": "PHASE36_CANDIDATE02_AUDIO_ONLY_UNENCODED_BUILD_ALLOWED"
+  },
+  "contract": {
+    "path": "concept/characters/june_oxley_phase36_candidate02_audio_repair_v1.json",
+    "raw_sha256": "815da88bcc31ef32c68f45d8b86c88495a1fa8438af02bf337c15e003ba9f76b",
+    "canonical_sha256": "da0514789f41939e8ac7457dbf233b417c2ebd2767c55fb3daf01d24c6d1991f"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_ledger_pour_audio_repair.py",
+    "sha256": "e2130649dde270f28013fa91196186d4749f32985158ed33bfd4b28505f2c096"
+  },
+  "artifacts": {
+    "june-phase36-ledger-pour-mix-v2.wav": {
+      "bytes": 2908844,
+      "sha256": "f498ba44f9443b2b025da6fe607322df7f47a7b22ce2a82e987419602ff3d781",
+      "pcm_data_sha256": "24f32febdb18206956fff3ea2de7119dc43a00f9eab37780b94edc948871cb46"
+    },
+    "june-phase36-ledger-pour-audio-repair-manifest-v2.json": {
+      "bytes": 5945,
+      "sha256": "7393f75faafa19e3102ca4be356b4b50380a83ed89628a500797108f946cddf4",
+      "canonical_sha256": "1739f826ebc1e2fdc1e6f2831a870519e1d9fd9dfb50c04e3ceac486a7cf26f6"
+    }
+  },
+  "machine_result": {
+    "passed": true,
+    "gates_passed": 16,
+    "gates_failed": 0,
+    "maximum_stereo_exact_zero_run_samples": 0,
+    "fully_zero_picture_frames": 0,
+    "changed_sample_frames": 39839,
+    "unchanged_prefix_channel_values": 237120,
+    "unchanged_dialogue_suffix_channel_values": 652800,
+    "clipped_channel_values": 0,
+    "peak_dbfs": -1.2935266236292526
+  },
+  "picture": {
+    "rerendered": false,
+    "files_written": 0,
+    "frame_count_reused_by_reference": 303,
+    "archive_sha256": "93eb2cd752d745a6f6fd534912ff68ee24e7bf72cf7cd406d2a366adea97d404",
+    "frame_hash_inventory_canonical_sha256": "d09bcdc6a3c86e26e9ce77070f18504f3101e4b87edfc54e169e3b4b641a6451"
+  },
+  "disposition": {
+    "candidate_immutable": true,
+    "further_build_attempt_allowed": false,
+    "human_audio_review_required": true,
+    "promotion_allowed": false,
+    "encode_allowed": false,
+    "picture_mutation_allowed": false
+  }
+}

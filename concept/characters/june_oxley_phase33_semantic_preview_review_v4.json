@@ -1,0 +1,36 @@
+{
+  "review_version": 1,
+  "character_id": "june_oxley",
+  "phase": "phase33_semantic_occlusion_proof",
+  "attempt_version": 4,
+  "status": "byte_identical_v3_frames_reviewed_v4_encode_once_allowed",
+  "reviewed_at": "2026-08-09",
+  "contract_raw_sha256": "230092c163766a2566def689bd33dbd0e332f2e9a83b59fa15c12c0059776b2b",
+  "contract_canonical_sha256": "cd7c3dda9c6b33b54d458ecb7b354a7a29e8181aee11edcb827f8ddb31dd51cf",
+  "implementation_sha256": "0bd0a134a8006b2221338d1914d1ff8004b5e369fe7928985ee5f7bea072d18e",
+  "manifest_sha256": "8eb4daa153c33a1e754b61da1167d3882c0a2a6885ebf3cb0cdf5ebd0bcdb8b9",
+  "all_60_contact_sheet_sha256": "eac32f62efb43152fc9229ab33b7c7518562de6cfdd78ff92667c997a33b437f",
+  "key_pose_sheet_sha256": "e5ec6213338e10ccc2ddad1af6321e9d40e149b6967e35dff81c611eabad9ab7",
+  "raw_frame_count_reviewed": 60,
+  "pixels_byte_identical_to_reviewed_v3": true,
+  "evidence_contract_review": {
+    "v3_render_free_local_delta": 121.921875,
+    "v4_output_domain_preencode_local_delta": 139.84375,
+    "v3_decoded_local_delta": 141.359375,
+    "v4_locked_threshold": 150.0,
+    "full_replacement_reference": 255.0,
+    "accepted": true,
+    "reason": "The threshold is fixed before v4 encoding, covers the immutable intended cavity/tooth boundary motion with a narrow codec margin, and remains 105 levels below a full one-frame local replacement."
+  },
+  "encode_authorization": {
+    "allowed": true,
+    "maximum_video_encoder_processes": 1,
+    "output_directory_must_match_contract": true,
+    "automatic_retry_allowed": false,
+    "audio_allowed": false
+  },
+  "promotion_granted": false,
+  "human_decoded_review_still_required": true,
+  "cash_cost": 0,
+  "paid_runtime_dependency": false
+}

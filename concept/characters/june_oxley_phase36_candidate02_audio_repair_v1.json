@@ -1,0 +1,132 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase36_candidate02_audio_repair_v1",
+  "phase": "phase36_candidate02_audio_only_continuity_repair",
+  "character_id": "june_oxley",
+  "classification": "Fail-closed audio-only repair scaffold for rejected Phase 36 Candidate 01; all 303 RGB frames and the lossless picture archive remain immutable references; no image render, picture copy, video encode, resampling, or lossy audio is allowed.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "implementation_path": "pipeline/cartoon_ledger_pour_audio_repair.py",
+  "locks": {
+    "candidate01_failure_receipt": {
+      "path": "collab/phase36_candidate_01/candidate01-review-failure-v1.json",
+      "sha256": "bd11323a9e416a439b70d21e99a21b41beb5fc98679590b476485f2e46a9d5c1"
+    },
+    "candidate01_manifest": {
+      "path": "collab/phase36_candidate_01/june-phase36-ledger-pour-manifest-v1.json",
+      "sha256": "0c97ba94987b8fabf1e1dd0d9c7b1229cfa6edc240ec9ef1fcccf3d45405d9a2"
+    },
+    "candidate01_pcm_wav": {
+      "path": "collab/phase36_candidate_01/june-phase36-ledger-pour-mix-v1.wav",
+      "sha256": "d9450edd9a9fe7037b6565dbca31cae67ad0b7c574038c2c9fca0c399e338207"
+    },
+    "candidate02_bridge_wav": {
+      "path": "concept/audio/june_phase36_candidate02_bridge_v1.wav",
+      "sha256": "ed938d8b77ed43939018ebabf875ef50d6dd5385ebf5648ef559659780ff432f"
+    },
+    "candidate02_phase26_source_wav": {
+      "path": "concept/audio/june_phase36_candidate02_phase26_source_v1.wav",
+      "sha256": "e902365f51006d3018af3ffd57e014c11e2e264cedb0a0e0aafa070823460570"
+    },
+    "phase33_delivery_mix": {
+      "path": "concept/audio/june_phase33_direct_address_mix_v1.wav",
+      "sha256": "e5cd5ebd9f52f4c6a1cb1682a61c42ff812069fd3eb30789bf1cca28a718ea39"
+    }
+  },
+  "candidate01_picture_reference": {
+    "external_archive_path": "../../outputs/edit/phase36-ledger-pour-lossless-v1-candidate-01/june-phase36-ledger-pour-rgb24-xor-v1.gz",
+    "archive_sha256": "93eb2cd752d745a6f6fd534912ff68ee24e7bf72cf7cd406d2a366adea97d404",
+    "archive_bytes": 415959046,
+    "frame_count": 303,
+    "frame_hash_inventory_canonical_sha256": "d09bcdc6a3c86e26e9ce77070f18504f3101e4b87edfc54e169e3b4b641a6451",
+    "candidate01_manifest_canonical_sha256": "59bc48a1abf6fa656eee270dceade88204135c87f86255dfb3bdd551d87a3695",
+    "copy_picture_archive_into_candidate02": false,
+    "decode_or_render_images": false,
+    "picture_rerender_allowed": false,
+    "picture_mutation_allowed": false,
+    "external_archive_required_for_audio_only_build": false,
+    "external_archive_required_for_future_picture_audio_delivery_binding": true
+  },
+  "audio": {
+    "sample_rate": 48000,
+    "channels": 2,
+    "bits_per_sample": 24,
+    "sample_count": 484800,
+    "samples_per_picture_frame": 1600,
+    "candidate01_pcm_data_sha256": "5f6cd536af0691509bc53982970cdef5ccdd2a27ce5966415356dd01fa2cb689",
+    "bridge_sample_count": 39840,
+    "bridge_pcm_data_sha256": "5dcd0513a742b197bbbc39f5796f311c81e234d90891e2e543835b5a7b9dcaf7",
+    "unchanged_prefix": [0, 118560],
+    "replacement_span": [118560, 158400],
+    "unchanged_dialogue_suffix": [158400, 484800],
+    "crossfade_span": [118560, 120000],
+    "crossfade_samples": 1440,
+    "crossfade_curve": "equal_power_cos_sin_t_i_over_1439_round_to_nearest_even",
+    "source_provenance": {
+      "phase26_master_path": "../../outputs/edit/phase26-sound/full-render-v2/stems/MIX_MASTER_STEREO.wav",
+      "phase26_master_sha256": "bff9ae4db51cd11f19833e82d1e9afb721b1499221013a46ee025c1acbd9a832",
+      "phase26_master_sample_span": [1457760, 1497600],
+      "committed_phase26_source_pcm_data_sha256": "6c49c390d1c201a0a6e5c8e3ebfc86d06ae4228c4c5b8b792854f23a9d8eec71",
+      "phase26_missing_predecessor_pcm_sha256": "4fd6079ea8250618334b848ee15c035b2c50d2c2df70fb9a5a27df80cb94420e",
+      "phase26_replacement_through_end_pcm_sha256": "18b18a4e395c5012fd46747acf7f1b157bdd6604f4b4afb8911f9284cbf183fb",
+      "candidate01_phase33_phase26_unchanged_suffix_pcm_sha256": "df5ae051ed945895b0f2302a0de5d1cd0287f92561b4c1ea42e3ea7d87ee9124"
+    },
+    "expected_candidate02_pcm_data_sha256": "24f32febdb18206956fff3ea2de7119dc43a00f9eab37780b94edc948871cb46",
+    "expected_candidate02_wav_sha256": "f498ba44f9443b2b025da6fe607322df7f47a7b22ce2a82e987419602ff3d781",
+    "expected_changed_sample_frames": 39839,
+    "resampling_allowed": false,
+    "loudness_processing_allowed": false,
+    "lossy_encoding_allowed": false
+  },
+  "authorization": {
+    "required_before_build": true,
+    "receipt": {
+      "path": "collab/CLAUDE_REVIEW_2026-08-10_2116Z.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "649fb80582554ec639385c4c61716dc01c7e15efb13183be141588a763155df8"
+    },
+    "required_verdict_field": "## Verdict:",
+    "required_verdict": "PHASE36_CANDIDATE02_AUDIO_ONLY_UNENCODED_BUILD_ALLOWED",
+    "required_binding_tokens": [
+      "bd11323a9e416a439b70d21e99a21b41beb5fc98679590b476485f2e46a9d5c1",
+      "0c97ba94987b8fabf1e1dd0d9c7b1229cfa6edc240ec9ef1fcccf3d45405d9a2",
+      "ed938d8b77ed43939018ebabf875ef50d6dd5385ebf5648ef559659780ff432f",
+      "f498ba44f9443b2b025da6fe607322df7f47a7b22ce2a82e987419602ff3d781"
+    ]
+  },
+  "gates": {
+    "required_picture_archive_reference_hash_unchanged": true,
+    "required_picture_frame_hash_inventory_unchanged": true,
+    "required_pcm24_readback_channel_values": 969600,
+    "required_unchanged_prefix_channel_values": 237120,
+    "required_unchanged_dialogue_suffix_channel_values": 652800,
+    "required_changed_sample_frames": 39839,
+    "maximum_stereo_exact_zero_run_samples": 48,
+    "required_fully_zero_picture_frames": 0,
+    "minimum_hard_cut_post_100ms_rms_dbfs": -60.0,
+    "minimum_hard_cut_post_100ms_active_pair_ratio": 0.99,
+    "minimum_output_frame_rms_dbfs": -60.0,
+    "maximum_same_porch_cut_100ms_rms_difference_db": 12.0,
+    "required_clipped_channel_values": 0,
+    "maximum_peak_dbfs": -1.0,
+    "required_output_files": 2,
+    "required_encoded_media_files": 0
+  },
+  "output": {
+    "directory": "../../outputs/edit/phase36-ledger-pour-audio-repair-v2",
+    "pcm_mix_filename": "june-phase36-ledger-pour-mix-v2.wav",
+    "manifest_filename": "june-phase36-ledger-pour-audio-repair-manifest-v2.json"
+  },
+  "failure_policy": {
+    "mode": "fail_closed",
+    "immutable_output": true,
+    "partial_success_allowed": false,
+    "automatic_retry_allowed": false,
+    "picture_render_allowed": false,
+    "subprocess_allowed": false,
+    "network_allowed": false,
+    "encode_allowed": false,
+    "future_encode_requires_new_binding": true
+  }
+}

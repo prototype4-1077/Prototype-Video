@@ -1,0 +1,60 @@
+{
+  "contract_version": 1,
+  "atlas_id": "june_oxley_canonical_expressions",
+  "atlas_version": "1.0.0",
+  "character_id": "june_oxley",
+  "image": {
+    "path": "concept/style_frames/june_oxley_expression_atlas_v1.png",
+    "sha256": "23a1e4fd24ca13ada1c34722905528b052993c0f37477195f13d2a5b6bcf462b",
+    "width": 1254,
+    "height": 1254,
+    "mode": "RGB"
+  },
+  "canonical_identity_reference": {
+    "path": "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+    "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9"
+  },
+  "paired_viseme_atlas": {
+    "path": "concept/style_frames/june_oxley_viseme_atlas_v1.png",
+    "sha256": "73df92931fd6f0e5d276ab85524232479a23d7e3049feb47b0cff7058a24f201"
+  },
+  "generation": {
+    "method": "built_in_image_generation_with_canonical_and_neutral_references",
+    "intent": "fixed-camera upper-face animation states for layered 2.5D performance",
+    "cash_cost": 0
+  },
+  "grid": {
+    "columns": 3,
+    "rows": 3,
+    "cell_width": 418,
+    "cell_height": 418,
+    "order": [
+      "neutral",
+      "blink",
+      "squint",
+      "brow_raise",
+      "brow_knit",
+      "concern",
+      "warm_eyes",
+      "gaze_down",
+      "compassion"
+    ]
+  },
+  "neutral_expression": "neutral",
+  "expression_patch_box": [65, 45, 353, 230],
+  "patch_feather_px": 14,
+  "invariants": [
+    "fixed straight-on camera and head silhouette",
+    "fixed shoulder wardrobe background scale and lighting",
+    "fixed ears nose hair and identity",
+    "only eyelids pupils gaze brows forehead and local upper cheeks may vary",
+    "mouth jaw moustache and beard are replaced by the paired viseme layer"
+  ],
+  "visual_gates": [
+    "blink closes both eyelids without head or brow drift",
+    "brow raise and brow knit have distinct silhouettes",
+    "gaze down moves pupils without turning the head",
+    "concern and compassion engage lower lids and inner brows",
+    "all nine cells preserve canonical June identity and camera registration"
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "receipt_version": 1,
+  "character_id": "june_oxley",
+  "phase": "phase33_close_facial_acting_prototype",
+  "delivery_attempt_version": 1,
+  "status": "machine_passed_ai_visual_review_rejected",
+  "source_commit_at_attempt": "0a9e655aca7c9bfd6103e60afb4dcfb675d90d90",
+  "contract": {
+    "path": "concept/characters/june_oxley_phase33_close_facial_acting_v1.json",
+    "raw_sha256": "0ff23c74ac158a5d0c5f412e935d53c62ca03eb09eaf2f87922f3fc384148a2b",
+    "canonical_sha256": "19c44426ec0caebe6d24fdafcd4f3092820391b469e95a49363e84c1443435ad"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_close_facial_acting.py",
+    "sha256_at_attempt": "be73e21cfa7f37a8b277d159348385eecd48ad65bf9c5ebb7804f7b6ffa5b09a"
+  },
+  "video": {
+    "path": "../../outputs/edit/phase33-close-facial-acting-prototype-v1/june-phase33-close-facial-acting-prototype-v1.mp4",
+    "sha256": "a4dba16a07568ea01adad00134f020f9a9b75764621a26ee3763812ae37d2ca7",
+    "encoding_process_count": 1,
+    "frame_count": 228,
+    "fps": 30,
+    "duration_seconds": 7.6,
+    "audio_sample_rate": 48000,
+    "machine_passed": true
+  },
+  "report": {
+    "path": "../../outputs/edit/phase33-close-facial-acting-prototype-v1/june-phase33-close-facial-acting-report-v1.json",
+    "sha256": "36c3087176507413f67289a6c9fcbc5ed9db42e26ac9bd77405549512b757e82",
+    "passed_gate_count": 41,
+    "failed_gate_count": 0
+  },
+  "ai_visual_review": {
+    "completed": true,
+    "accepted": false,
+    "reasons": [
+      "The registered neutral expression and X-mouth patches replace rather than preserve the authored GS070 neutral face.",
+      "Several visemes produce an over-wide oral cavity and abrupt teeth or lip scale changes that read as atlas swaps instead of speech.",
+      "The independently pasted mouth and upper-face RGB crops overlap and do not provide explicit semantic ownership in their shared cheek band.",
+      "Sharp decoded pixels and correct timing do not compensate for the identity and acting discontinuity."
+    ],
+    "required_repairs": [
+      "Use the authored plate as the exact neutral and X state.",
+      "Apply atlas states as bounded deltas from registered neutral patches.",
+      "Resolve expression and mouth overlap once through declared feature ownership.",
+      "Preview the complete acting beat from unencoded pixels before allowing a new versioned encode."
+    ]
+  },
+  "promotion_allowed": false,
+  "immutable": true,
+  "cash_cost": 0,
+  "paid_runtime_dependency": false
+}

@@ -1,0 +1,589 @@
+{
+  "contract_version": 1,
+  "adapter_id": "deformable_performance_3q",
+  "performance_id": "june_oxley_deformable_performance_3q_v1",
+  "character_id": "june_oxley",
+  "view_id": "WIDE_BODY_3Q",
+  "action_id": "STAND_UP",
+  "promotion_state": "gate_a_private_adapter_fixture",
+  "classification": "Production-compatible three-quarter wide-shot adapter candidate: five accepted June corrective drawings, continuous local landmark deformation between corrections, explicit mug/chair/support constraints, and the exact Phase 27 STAND_UP semantic clock.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "identity_invariants": {
+    "presentation": "elderly white rural man",
+    "sex": "male",
+    "build": "lean_wiry",
+    "hair": "short_thinning_white",
+    "facial_hair": "trimmed_white_beard_and_mustache",
+    "wardrobe": "dark_denim_jacket_blue_plaid_shirt_denim_overalls_brown_work_boots",
+    "prohibited_interpretations": [
+      "female",
+      "wife",
+      "hair_bun",
+      "clean_shaven",
+      "different_character_across_cut"
+    ]
+  },
+  "compatibility": {
+    "parent_rig": {
+      "path": "concept/characters/june_oxley_performance_rig_v1.json",
+      "sha256": "6ac4c5903dfa6e551391a845600f79ef98f9e91a4c5143e50c5b0555cee97c6f"
+    },
+    "replaces_adapter": "registered_pose_layers",
+    "replaces_action_only": "STAND_UP",
+    "preserved_actions": [
+      "POUR_COFFEE",
+      "DIRECT_ADDRESS"
+    ],
+    "preserved_master_clock": {
+      "frame_count": 657,
+      "cut_frames": [172, 430],
+      "video_frame_range_replaced": [1, 171],
+      "audio": "unchanged_phase26_rebased_audio",
+      "captions": "unchanged_phase26_rebased_captions"
+    }
+  },
+  "accepted_sources": {
+    "canonical_identity": {
+      "path": "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+      "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9",
+      "role": "identity_reference_only"
+    },
+    "phase27_interface": {
+      "path": "concept/characters/june_oxley_performance_rig_v1.json",
+      "sha256": "6ac4c5903dfa6e551391a845600f79ef98f9e91a4c5143e50c5b0555cee97c6f",
+      "role": "semantic_and_editorial_control"
+    },
+    "phase28_deformation_reference": {
+      "path": "concept/characters/june_oxley_deformable_rig_v1.json",
+      "sha256": "44a2c71b018a93b79aba97cf93928b70b657145720adedef82929ba20e7b79f5",
+      "role": "deformation_field_and_corrective_reference"
+    },
+    "gs030_control": {
+      "path": "concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json",
+      "sha256": "870ffd61fe25ba3702641eb0588379bff8628eaed186b08da521a40353507c22",
+      "role": "accepted_timing_contact_and_visual_control"
+    },
+    "background": {
+      "path": "concept/style_frames/june-golden-scene-gs030-clean-porch-v1.png",
+      "sha256": "c2ed99ead71cc526032908722916c67739d27741e1f1d4145fc276fe11f1e9dd",
+      "role": "runtime_background"
+    },
+    "neutral_3q_reference": {
+      "path": "concept/characters/puppet_sources/june_oxley_puppet_source_v1.png",
+      "sha256": "9c8cd2918c523c656fe3c67801a0d5eadbbb37eb185db1843f511b9efd70fb4c",
+      "role": "topology_and_texture_reference_only"
+    },
+    "seated_endpoint": {
+      "path": "concept/style_frames/june_gs030_pose_00_foreground_v1.png",
+      "sha256": "e5d9a25ded2e9e106cce3d915b28badd1bd7c0ce25c17f135be2a29ec4049d85",
+      "role": "runtime_registered_endpoint"
+    },
+    "leverage_corrective": {
+      "path": "concept/style_frames/june_gs030_pose_25_foreground_v1.png",
+      "sha256": "59eb85746bae9351d4011620fbb9776ae8eacf03ef56e81d0ed0813b87de45cc",
+      "role": "corrective_reference_not_full_frame_crossfade"
+    },
+    "weight_transfer_corrective": {
+      "path": "concept/style_frames/june_gs030_pose_50_foreground_v1.png",
+      "sha256": "6f3062b01ae6ead65664b99fcba23ca492b010611b7d125862fbc21e50ab3c8f",
+      "role": "corrective_reference_not_full_frame_crossfade"
+    },
+    "release_corrective": {
+      "path": "concept/style_frames/june_gs030_pose_75_foreground_v1.png",
+      "sha256": "1c5d3cb7af0a199ce5e7fe80831bd3764aaae91bdb860ea1a52c90db523233a6",
+      "role": "corrective_reference_not_full_frame_crossfade"
+    },
+    "standing_endpoint": {
+      "path": "concept/style_frames/june_gs030_pose_100_foreground_v1.png",
+      "sha256": "c8665a358c7f18fb159ce15c9bd381b433871a1f2f47f6b227e31cb08031e07d",
+      "role": "runtime_registered_endpoint"
+    }
+  },
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 171,
+    "duration_seconds": 5.7,
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio_policy": "silent_action_fixture_then_unchanged_stream_in_gate_b"
+  },
+  "source_canvas": {
+    "width": 1672,
+    "height": 941,
+    "coordinate_space": "gs030_source_pixels"
+  },
+  "semantic_interface": {
+    "compatibility_target": "june_oxley_performance_rig_v1.WIDE_BODY_3Q",
+    "input_channels": [
+      {
+        "id": "body_pose",
+        "kind": "continuous_deformable_pose",
+        "units": "normalized_progress_and_pose_parameters",
+        "required": true
+      },
+      {
+        "id": "root_contact",
+        "kind": "registered_support_constraint",
+        "units": "source_pixels",
+        "required": true
+      },
+      {
+        "id": "hand_contact",
+        "kind": "registered_grasp_and_chair_constraint",
+        "units": "source_pixels",
+        "required": true
+      },
+      {
+        "id": "prop_pose",
+        "kind": "constrained_mug_transform",
+        "units": "source_pixels_and_degrees",
+        "required": true
+      },
+      {
+        "id": "camera",
+        "kind": "bounded_transform",
+        "units": "normalized_frame",
+        "required": true
+      },
+      {
+        "id": "atmosphere",
+        "kind": "deterministic_procedural",
+        "units": "normalized_strength",
+        "required": true
+      }
+    ],
+    "output_channels": [
+      "rgba_character",
+      "rgba_mug",
+      "rgba_contact_shadow",
+      "rgba_light_wrap",
+      "landmarks",
+      "contact_residuals",
+      "occlusion_state"
+    ]
+  },
+  "topology": {
+    "deformation_method": "corrective_source_local_gaussian_inverse_warp",
+    "sampling": "premultiplied_rgba_cubic",
+    "runtime_cross_dissolve_allowed": false,
+    "full_frame_optical_flow_allowed": false,
+    "whole_character_generation_at_runtime": false,
+    "layer_derivation": "semantic control and review regions for the v1 corrective-source warp; independent painted masks remain a future promotion path if the whole-figure Gate A visual review fails",
+    "layers": [
+      {"id": "receiving_shadow", "depth": 0, "kind": "procedural", "required": true},
+      {"id": "left_upper_leg", "depth": 10, "kind": "deformable_limb", "required": true},
+      {"id": "left_lower_leg", "depth": 11, "kind": "deformable_limb", "required": true},
+      {"id": "left_boot", "depth": 12, "kind": "rigid_contact_part", "required": true},
+      {"id": "right_upper_leg", "depth": 20, "kind": "deformable_limb", "required": true},
+      {"id": "right_lower_leg", "depth": 21, "kind": "deformable_limb", "required": true},
+      {"id": "right_boot", "depth": 22, "kind": "rigid_contact_part", "required": true},
+      {"id": "pelvis", "depth": 30, "kind": "deformable_core", "required": true},
+      {"id": "torso", "depth": 31, "kind": "deformable_core", "required": true},
+      {"id": "costume_hip_overlap_corrective", "depth": 32, "kind": "corrective_patch", "required": true},
+      {"id": "left_upper_arm", "depth": 40, "kind": "deformable_limb", "required": true},
+      {"id": "left_lower_arm", "depth": 41, "kind": "deformable_limb", "required": true},
+      {"id": "left_hand", "depth": 42, "kind": "articulated_contact_part", "required": true},
+      {"id": "chair_grasp_corrective", "depth": 43, "kind": "corrective_patch", "required": true},
+      {"id": "right_upper_arm", "depth": 50, "kind": "deformable_limb", "required": true},
+      {"id": "right_lower_arm", "depth": 51, "kind": "deformable_limb", "required": true},
+      {"id": "right_hand", "depth": 52, "kind": "articulated_contact_part", "required": true},
+      {"id": "mug", "depth": 53, "kind": "rigid_constrained_prop", "required": true},
+      {"id": "mug_grasp_corrective", "depth": 54, "kind": "corrective_patch", "required": true},
+      {"id": "neck", "depth": 59, "kind": "deformable_identity_part", "required": true},
+      {"id": "head", "depth": 60, "kind": "deformable_identity_part", "required": true},
+      {"id": "costume_shoulder_overlap_corrective", "depth": 61, "kind": "corrective_patch", "required": true},
+      {"id": "light_wrap", "depth": 90, "kind": "procedural", "required": true}
+    ],
+    "required_occlusion_relationships": [
+      "chair_arm_over_left_forearm_before_release",
+      "left_fingers_over_chair_arm_before_release",
+      "right_fingers_over_mug_handle_for_all_frames",
+      "mug_handle_between_right_palm_and_fingers",
+      "jacket_over_overalls_at_hip_flexion",
+      "boots_over_receiving_shadow"
+    ]
+  },
+  "runtime_asset_pack": {
+    "version": 1,
+    "coordinate_space": "unregistered_gs030_foreground_pixels",
+    "honest_representation": "Five accepted whole-figure RGBA corrective sources are locally deformed through the same anatomical landmark interface. The topology rows above are semantic control and review regions in v1, not claims that 23 independent painted replacement layers already exist.",
+    "source_selection": "nearest_progress_corrective",
+    "source_switch_frames": [75, 83, 91, 95],
+    "runtime_cross_dissolve": false,
+    "local_smear_travel_pixels": 3,
+    "normalization_floor": 0.025,
+    "crop_padding_pixels": 42,
+    "landmark_order": [
+      "head",
+      "neck",
+      "chest",
+      "pelvis",
+      "left_shoulder",
+      "left_elbow",
+      "left_hand",
+      "right_shoulder",
+      "right_elbow",
+      "right_hand",
+      "mug_center",
+      "left_hip",
+      "left_knee",
+      "left_ankle",
+      "left_foot",
+      "right_hip",
+      "right_knee",
+      "right_ankle",
+      "right_foot"
+    ],
+    "influence_radius_pixels": {
+      "head": 96,
+      "neck": 92,
+      "chest": 150,
+      "pelvis": 145,
+      "left_shoulder": 105,
+      "left_elbow": 92,
+      "left_hand": 78,
+      "right_shoulder": 105,
+      "right_elbow": 90,
+      "right_hand": 76,
+      "mug_center": 86,
+      "left_hip": 112,
+      "left_knee": 118,
+      "left_ankle": 96,
+      "left_foot": 88,
+      "right_hip": 112,
+      "right_knee": 118,
+      "right_ankle": 96,
+      "right_foot": 88
+    },
+    "corrective_sources": [
+      {
+        "progress": 0.0,
+        "source_role": "seated_endpoint",
+        "pose_id": "POSE_00_SEATED",
+        "landmarks": {
+          "head": [607, 138], "neck": [592, 242], "chest": [565, 350], "pelvis": [575, 515],
+          "left_shoulder": [455, 270], "left_elbow": [348, 418], "left_hand": [390, 526],
+          "right_shoulder": [664, 272], "right_elbow": [704, 332], "right_hand": [758, 360], "mug_center": [713, 334],
+          "left_hip": [505, 520], "left_knee": [512, 655], "left_ankle": [522, 790], "left_foot": [553, 893],
+          "right_hip": [650, 520], "right_knee": [675, 635], "right_ankle": [690, 750], "right_foot": [737, 842]
+        }
+      },
+      {
+        "progress": 0.25,
+        "source_role": "leverage_corrective",
+        "pose_id": "POSE_25_LEVERAGE",
+        "landmarks": {
+          "head": [688, 126], "neck": [661, 224], "chest": [645, 334], "pelvis": [616, 520],
+          "left_shoulder": [526, 263], "left_elbow": [408, 412], "left_hand": [410, 523],
+          "right_shoulder": [742, 257], "right_elbow": [770, 319], "right_hand": [824, 339], "mug_center": [786, 318],
+          "left_hip": [552, 526], "left_knee": [557, 650], "left_ankle": [553, 780], "left_foot": [552, 893],
+          "right_hip": [684, 521], "right_knee": [694, 637], "right_ankle": [700, 748], "right_foot": [728, 837]
+        }
+      },
+      {
+        "progress": 0.5,
+        "source_role": "weight_transfer_corrective",
+        "pose_id": "POSE_50_WEIGHT_TRANSFER",
+        "landmarks": {
+          "head": [673, 116], "neck": [648, 215], "chest": [628, 326], "pelvis": [604, 516],
+          "left_shoulder": [510, 251], "left_elbow": [407, 407], "left_hand": [382, 509],
+          "right_shoulder": [730, 250], "right_elbow": [755, 315], "right_hand": [814, 343], "mug_center": [776, 318],
+          "left_hip": [543, 519], "left_knee": [533, 642], "left_ankle": [525, 778], "left_foot": [552, 893],
+          "right_hip": [676, 518], "right_knee": [684, 633], "right_ankle": [690, 751], "right_foot": [725, 838]
+        }
+      },
+      {
+        "progress": 0.75,
+        "source_role": "release_corrective",
+        "pose_id": "POSE_75_RELEASE",
+        "landmarks": {
+          "head": [676, 100], "neck": [655, 196], "chest": [632, 307], "pelvis": [614, 480],
+          "left_shoulder": [530, 235], "left_elbow": [482, 372], "left_hand": [472, 500],
+          "right_shoulder": [738, 232], "right_elbow": [766, 306], "right_hand": [830, 335], "mug_center": [797, 304],
+          "left_hip": [558, 495], "left_knee": [559, 635], "left_ankle": [558, 790], "left_foot": [557, 921],
+          "right_hip": [674, 493], "right_knee": [674, 625], "right_ankle": [685, 766], "right_foot": [713, 874]
+        }
+      },
+      {
+        "progress": 1.0,
+        "source_role": "standing_endpoint",
+        "pose_id": "POSE_100_STANDING",
+        "landmarks": {
+          "head": [650, 98], "neck": [636, 195], "chest": [616, 304], "pelvis": [603, 468],
+          "left_shoulder": [519, 234], "left_elbow": [488, 378], "left_hand": [482, 518],
+          "right_shoulder": [735, 231], "right_elbow": [767, 307], "right_hand": [850, 334], "mug_center": [818, 300],
+          "left_hip": [554, 493], "left_knee": [550, 646], "left_ankle": [551, 802], "left_foot": [556, 926],
+          "right_hip": [662, 489], "right_knee": [660, 627], "right_ankle": [674, 776], "right_foot": [714, 883]
+        }
+      }
+    ]
+  },
+  "action": {
+    "id": "STAND_UP",
+    "frame_count": 171,
+    "source_master_frames": [226, 396],
+    "review_frames": [1, 57, 64, 70, 71, 74, 75, 76, 78, 82, 83, 84, 86, 90, 91, 92, 94, 95, 96, 100, 104, 108, 109, 171],
+    "declared_local_smear_frames": [91],
+    "full_frame_smear_allowed": false,
+    "segments": [
+      {"id": "SEATED_HOLD", "start_frame": 1, "end_frame": 57, "intent": "settled readable setup"},
+      {"id": "ANTICIPATION", "start_frame": 58, "end_frame": 70, "intent": "nose, chest, and pelvis shift toward the feet while the chair hand loads"},
+      {"id": "LEVERAGE", "start_frame": 71, "end_frame": 78, "intent": "chair hand and planted feet initiate lift"},
+      {"id": "WEIGHT_TRANSFER", "start_frame": 79, "end_frame": 86, "intent": "pelvis and legs lead while the shoulders and mug follow"},
+      {"id": "RELEASE", "start_frame": 87, "end_frame": 95, "intent": "chair hand releases and the delayed torso catches the hips"},
+      {"id": "SETTLE", "start_frame": 96, "end_frame": 108, "intent": "small vertical overshoot, compression, and recovery without disturbing the mug"},
+      {"id": "STANDING_HOLD", "start_frame": 109, "end_frame": 171, "intent": "stable result and editorial handoff"}
+    ]
+  },
+  "performance_tracks": {
+    "body_pose": {
+      "interpolation": "ease_in_out_cubic_unless_key_overrides",
+      "keyframes": [
+        {"frame": 1, "stand_progress": 0.0, "pelvis_progress": 0.0, "torso_progress": 0.0, "anticipation": 0.0, "settle_y_px": 0.0, "torso_pitch_degrees": 8.0},
+        {"frame": 57, "stand_progress": 0.0, "pelvis_progress": 0.0, "torso_progress": 0.0, "anticipation": 0.0, "settle_y_px": 0.0, "torso_pitch_degrees": 8.0},
+        {"frame": 64, "stand_progress": 0.0, "pelvis_progress": 0.0, "torso_progress": 0.0, "anticipation": 0.55, "settle_y_px": 0.0, "torso_pitch_degrees": 11.0},
+        {"frame": 70, "stand_progress": 0.0, "pelvis_progress": 0.0, "torso_progress": 0.0, "anticipation": 1.0, "settle_y_px": 0.0, "torso_pitch_degrees": 13.0},
+        {"frame": 71, "stand_progress": 0.04, "pelvis_progress": 0.06, "torso_progress": 0.01, "anticipation": 0.78, "settle_y_px": 0.0, "torso_pitch_degrees": 12.0},
+        {"frame": 78, "stand_progress": 0.25, "pelvis_progress": 0.32, "torso_progress": 0.16, "anticipation": 0.0, "settle_y_px": 0.0, "torso_pitch_degrees": 8.0},
+        {"frame": 86, "stand_progress": 0.5, "pelvis_progress": 0.6, "torso_progress": 0.4, "anticipation": 0.0, "settle_y_px": 0.0, "torso_pitch_degrees": 4.0},
+        {"frame": 94, "stand_progress": 0.75, "pelvis_progress": 0.84, "torso_progress": 0.68, "anticipation": 0.0, "settle_y_px": 0.0, "torso_pitch_degrees": 1.5},
+        {"frame": 95, "stand_progress": 0.93, "pelvis_progress": 0.96, "torso_progress": 0.73, "anticipation": 0.0, "settle_y_px": 0.0, "torso_pitch_degrees": 0.5},
+        {"frame": 96, "stand_progress": 1.0, "pelvis_progress": 1.0, "torso_progress": 0.77, "anticipation": 0.0, "settle_y_px": 0.0, "torso_pitch_degrees": -1.2},
+        {"frame": 100, "stand_progress": 1.0, "pelvis_progress": 1.0, "torso_progress": 1.0, "anticipation": 0.0, "settle_y_px": -5.0, "torso_pitch_degrees": 0.6},
+        {"frame": 104, "stand_progress": 1.0, "pelvis_progress": 1.0, "torso_progress": 1.0, "anticipation": 0.0, "settle_y_px": 3.0, "torso_pitch_degrees": -0.2},
+        {"frame": 108, "stand_progress": 1.0, "pelvis_progress": 1.0, "torso_progress": 1.0, "anticipation": 0.0, "settle_y_px": 0.0, "torso_pitch_degrees": 0.0},
+        {"frame": 171, "stand_progress": 1.0, "pelvis_progress": 1.0, "torso_progress": 1.0, "anticipation": 0.0, "settle_y_px": 0.0, "torso_pitch_degrees": 0.0}
+      ]
+    },
+    "root_contact": {
+      "interpolation": "ease_in_out_cubic",
+      "phase_ranges": [
+        {"start_frame": 1, "end_frame": 70, "support_phase": "chair_plus_bilateral_feet"},
+        {"start_frame": 71, "end_frame": 78, "support_phase": "left_foot_chair_hand_right_toe"},
+        {"start_frame": 79, "end_frame": 171, "support_phase": "bilateral_feet"}
+      ],
+      "keyframes": [
+        {"frame": 1, "root": [590.0, 630.0], "center_of_mass_proxy": [607.0, 690.0], "support_phase": "chair_plus_bilateral_feet"},
+        {"frame": 57, "root": [590.0, 630.0], "center_of_mass_proxy": [607.0, 690.0], "support_phase": "chair_plus_bilateral_feet"},
+        {"frame": 64, "root": [600.0, 642.0], "center_of_mass_proxy": [618.0, 700.0], "support_phase": "chair_plus_bilateral_feet"},
+        {"frame": 70, "root": [610.0, 648.0], "center_of_mass_proxy": [630.0, 706.0], "support_phase": "chair_plus_bilateral_feet"},
+        {"frame": 78, "root": [616.0, 596.0], "center_of_mass_proxy": [632.0, 671.0], "support_phase": "left_foot_chair_hand_right_toe"},
+        {"frame": 86, "root": [622.0, 545.0], "center_of_mass_proxy": [636.0, 649.0], "support_phase": "bilateral_feet"},
+        {"frame": 95, "root": [631.0, 475.0], "center_of_mass_proxy": [641.0, 620.0], "support_phase": "bilateral_feet"},
+        {"frame": 96, "root": [633.0, 468.0], "center_of_mass_proxy": [642.0, 616.0], "support_phase": "bilateral_feet"},
+        {"frame": 100, "root": [633.0, 462.0], "center_of_mass_proxy": [642.0, 610.0], "support_phase": "bilateral_feet"},
+        {"frame": 104, "root": [633.0, 471.0], "center_of_mass_proxy": [642.0, 619.0], "support_phase": "bilateral_feet"},
+        {"frame": 108, "root": [633.0, 468.0], "center_of_mass_proxy": [642.0, 616.0], "support_phase": "bilateral_feet"},
+        {"frame": 171, "root": [633.0, 468.0], "center_of_mass_proxy": [642.0, 616.0], "support_phase": "bilateral_feet"}
+      ],
+      "support_regions": {
+        "chair_plus_bilateral_feet": {"x_interval": [520.0, 760.0], "y_interval": [610.0, 930.0]},
+        "left_foot_chair_hand_right_toe": {"x_interval": [545.0, 742.0], "y_interval": [540.0, 920.0]},
+        "bilateral_feet": {"x_interval": [550.0, 740.0], "y_interval": [590.0, 930.0]}
+      }
+    },
+    "hand_contact": {
+      "contacts": [
+        {
+          "id": "chair_hand",
+          "character_socket": "left_palm_chair_grip",
+          "target_kind": "chair_arm",
+          "active_frame_ranges": [[1, 78]],
+          "release_frame": 79,
+          "target_keyframes": [
+            {"frame": 1, "point": [390.0, 550.0]},
+            {"frame": 70, "point": [390.0, 550.0]},
+            {"frame": 78, "point": [411.0, 545.0]}
+          ],
+          "maximum_error_px": 3.0
+        },
+        {
+          "id": "mug_hand",
+          "character_socket": "right_palm_mug_grip",
+          "target_kind": "mug_handle",
+          "active_frame_ranges": [[1, 171]],
+          "release_frame": null,
+          "target_keyframes": [
+            {"frame": 1, "point": [758.0, 382.0]},
+            {"frame": 70, "point": [760.0, 381.0]},
+            {"frame": 78, "point": [825.0, 361.0]},
+            {"frame": 86, "point": [815.0, 365.0]},
+            {"frame": 95, "point": [843.0, 324.0]},
+            {"frame": 96, "point": [847.0, 323.0]},
+            {"frame": 100, "point": [848.0, 318.0]},
+            {"frame": 104, "point": [847.0, 325.0]},
+            {"frame": 108, "point": [847.0, 323.0]},
+            {"frame": 171, "point": [847.0, 323.0]}
+          ],
+          "maximum_error_px": 3.0
+        }
+      ]
+    },
+    "prop_pose": {
+      "prop_id": "june_enamel_mug",
+      "parent_contact": "mug_hand",
+      "interpolation": "ease_in_out_cubic",
+      "keyframes": [
+        {"frame": 1, "origin": [713.0, 356.0], "rotation_degrees": 0.0},
+        {"frame": 70, "origin": [715.0, 355.0], "rotation_degrees": 0.0},
+        {"frame": 78, "origin": [787.0, 340.0], "rotation_degrees": -1.5},
+        {"frame": 86, "origin": [777.0, 340.0], "rotation_degrees": -0.5},
+        {"frame": 95, "origin": [811.0, 291.0], "rotation_degrees": 0.5},
+        {"frame": 96, "origin": [815.0, 289.0], "rotation_degrees": 0.0},
+        {"frame": 100, "origin": [816.0, 284.0], "rotation_degrees": -0.35},
+        {"frame": 104, "origin": [815.0, 291.0], "rotation_degrees": 0.2},
+        {"frame": 108, "origin": [815.0, 289.0], "rotation_degrees": 0.0},
+        {"frame": 171, "origin": [815.0, 289.0], "rotation_degrees": 0.0}
+      ],
+      "maximum_rotation_degrees": 4.0,
+      "continuity_required": true,
+      "duplicate_render_allowed": false
+    },
+    "camera": {
+      "interpolation": "ease_in_out_cubic",
+      "keyframes": [
+        {"frame": 1, "zoom": 1.0, "focus": [0.5, 0.5]},
+        {"frame": 171, "zoom": 1.012, "focus": [0.5, 0.486]}
+      ]
+    },
+    "atmosphere": {
+      "deterministic_seed": 2901,
+      "steam_strand_count": 2,
+      "steam_strength": 0.55,
+      "light_breathe_strength": 0.004,
+      "contact_shadow_opacity": 54,
+      "contact_shadow_blur_radius": 9.0
+    }
+  },
+  "contact_constraints": {
+    "chair_seat": {
+      "active_frame_ranges": [[1, 70]],
+      "release_frame": 71,
+      "character_socket": "pelvis_chair_seat",
+      "target_region": [[470.0, 590.0], [650.0, 690.0]],
+      "maximum_error_px": 3.0
+    },
+    "left_boot": {
+      "active_frame_ranges": [[1, 171]],
+      "target_point": [553.0, 915.0],
+      "phases": [
+        {"start_frame": 1, "end_frame": 70, "mode": "flat_support"},
+        {"start_frame": 71, "end_frame": 86, "mode": "toe_pivot", "maximum_heel_travel_px": 16.0},
+        {"start_frame": 87, "end_frame": 171, "mode": "flat_support"}
+      ],
+      "maximum_error_px": 3.0
+    },
+    "right_boot": {
+      "active_frame_ranges": [[1, 171]],
+      "target_point": [737.0, 864.0],
+      "phases": [
+        {"start_frame": 1, "end_frame": 70, "mode": "flat_support"},
+        {"start_frame": 71, "end_frame": 94, "mode": "toe_pivot", "maximum_heel_travel_px": 22.0},
+        {"start_frame": 95, "end_frame": 171, "mode": "flat_support"}
+      ],
+      "maximum_error_px": 3.0
+    }
+  },
+  "endpoint_registration": {
+    "seated": {
+      "frame": 1,
+      "source_role": "seated_endpoint",
+      "maximum_control_difference_px": 2.0,
+      "minimum_control_psnr_db": 38.0
+    },
+    "standing": {
+      "frame": 171,
+      "source_role": "standing_endpoint",
+      "maximum_control_difference_px": 2.0,
+      "minimum_control_psnr_db": 38.0
+    }
+  },
+  "gate_declarations": {
+    "delivery_integrity": {
+      "evaluation": "machine",
+      "required_for_gate_a": true,
+      "criteria": {
+        "exact_width": 1920,
+        "exact_height": 1080,
+        "exact_fps": 30,
+        "exact_frame_count": 171,
+        "exact_duration_seconds": 5.7,
+        "require_full_decode": true,
+        "require_deterministic_report": true,
+        "require_content_hashes": true,
+        "gate_b_assembled_frame_count": 657,
+        "gate_b_unchanged_downstream_picture": true,
+        "gate_b_unchanged_audio_captions_and_cuts": true
+      }
+    },
+    "mechanical_integrity": {
+      "evaluation": "machine_plus_visual_review",
+      "required_for_gate_a": true,
+      "criteria": {
+        "maximum_contact_error_px_p95": 3.0,
+        "maximum_contact_violation_fraction": 0.05,
+        "maximum_mug_penetration_frames": 0,
+        "maximum_mug_disappearance_frames": 0,
+        "maximum_duplicated_finger_frames": 0,
+        "maximum_broken_occlusion_frames": 0,
+        "require_center_of_mass_in_active_support_region": true,
+        "require_declared_heel_toe_articulation": true,
+        "maximum_action_landmark_step_output_px": 24.0,
+        "maximum_hold_landmark_step_output_px": 8.0,
+        "maximum_foldover_frames": 0,
+        "maximum_joint_collapse_frames": 0,
+        "maximum_texture_tear_frames": 0,
+        "maximum_alpha_seam_frames": 0,
+        "maximum_costume_gap_frames": 0,
+        "require_endpoint_registration": true,
+        "review_speeds": [1.0, 0.25]
+      }
+    },
+    "audience_quality": {
+      "evaluation": "blinded_gate_b_panel",
+      "required_for_gate_a": false,
+      "status_before_gate_b": "unevaluated",
+      "may_be_inferred_from_delivery_or_mechanics": false,
+      "criteria": {
+        "minimum_silent_action_read_fraction": 0.8,
+        "minimum_same_character_fraction_across_pour_cut": 0.9,
+        "require_noninferior_identity_to_control": true,
+        "require_noninferior_action_clarity_to_control": true,
+        "require_noninferior_visible_artifacts_to_control": true,
+        "require_noninferior_overall_preference_to_control": true,
+        "require_setup_change_result_without_labels": true,
+        "require_second_novel_shot_without_new_whole_character_generation": true
+      }
+    }
+  },
+  "report_contract": {
+    "required_top_level_sections": [
+      "delivery_integrity",
+      "mechanical_integrity",
+      "audience_quality"
+    ],
+    "gate_a_audience_status": "unevaluated",
+    "aggregate_quality_pass_allowed": false,
+    "promotion_requires": "all_gate_a_delivery_and_mechanical_criteria_then_blinded_gate_b_audience_evidence"
+  },
+  "prohibited_methods": [
+    "full_frame_optical_flow",
+    "whole_character_cross_dissolve",
+    "unregistered_planted_contact_motion",
+    "empty_hand_stand_substitution",
+    "mug_baked_into_body_without_contact_reporting",
+    "straight_on_face_atlas_pasted_on_three_quarter_head",
+    "paid_runtime_generation",
+    "single_aggregate_quality_score",
+    "audience_gate_marked_passed_without_blinded_gate_b_evidence"
+  ],
+  "known_limitations": [
+    "This contract covers only the exact 171-frame GS030 stand action in WIDE_BODY_3Q.",
+    "The accepted endpoint plates still require deterministic build-time decomposition into the declared topology.",
+    "Gate A can prove delivery and mechanics but cannot prove audience quality.",
+    "A second novel shot remains a Gate B promotion requirement, not evidence provided by this fixture."
+  ]
+}

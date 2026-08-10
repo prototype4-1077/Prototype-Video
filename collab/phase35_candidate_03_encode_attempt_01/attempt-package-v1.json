@@ -1,0 +1,62 @@
+{
+  "package_version": 1,
+  "phase": "phase35_candidate03_authorized_av_proof",
+  "attempt_version": 1,
+  "status": "machine_av_successor_audit_failed_no_retry_allowed",
+  "authorization_consumed": true,
+  "automatic_retry_allowed": false,
+  "accepted_full_cartoon_production_delivery": false,
+  "source_manifest_sha256": "250b678686f87c5cdcabeaedd0f6e39833b9dcaa7d2387c76fa8fe016b2885fe",
+  "source_archive_sha256": "b5908bfce4ac10ad7e3ad74e58a8cf9f8e352033b14c1828315e96cd615f6e0f",
+  "files": [
+    {
+      "file": ".phase35-candidate03-av-proof-v1.attempt-v1.claim.json",
+      "bytes": 2222,
+      "sha256": "3fa711c0daa371275290a26d22835e7c45a0b62e79471c64d5c111ab70f224fd"
+    },
+    {
+      "file": "failure-v1.json",
+      "bytes": 4826,
+      "sha256": "94ff0ad2f99ac44f8160c0ff944733f3b097e4d4fc572d293a8ae20bf3b3cadc"
+    },
+    {
+      "file": "ffmpeg-stderr-v1.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "june-phase35-candidate03-av-proof-report-v1.json",
+      "bytes": 145139,
+      "sha256": "406f966ce3d7acd06b2b6d35fab965017035002a4ad8b9cb2088e714e955bbb7"
+    },
+    {
+      "file": "june-phase35-candidate03-av-proof-v1.mp4",
+      "bytes": 44473026,
+      "sha256": "34d601605407d354dfbf77d545d444e9d884b0ec744a1e0d6712ca49b32fec39"
+    },
+    {
+      "file": "june-phase35-candidate03-decoded-review-v1.png",
+      "bytes": 5246344,
+      "sha256": "ed620f97668e7342ca4d10fadb2915eea355b2171d2f111c5e176b11ac896b32"
+    },
+    {
+      "file": "phase35-candidate03-source-decoded-diff-v1.png",
+      "bytes": 4265253,
+      "sha256": "0a474c1477a5d33edbd045095bbea0e2696a918d10a6f8efe307fab57a65b9d5"
+    }
+  ],
+  "source_gate_count": 27,
+  "source_gates_passed": 27,
+  "decoded_gate_count": 46,
+  "decoded_gates_passed": 40,
+  "decoded_gates_failed": 6,
+  "failed_gate_names": [
+    "video_color_transfer",
+    "video_color_primaries",
+    "face_psnr",
+    "eye_psnr",
+    "mouth_psnr",
+    "same_domain_pairwise_codec_delta"
+  ],
+  "human_real_time_motion_and_audio_review_required": true
+}

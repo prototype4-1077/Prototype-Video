@@ -1,0 +1,103 @@
+{
+  "receipt_version": 1,
+  "character_id": "june_oxley",
+  "phase": "phase33_close_facial_acting_prototype",
+  "delivery_attempt_version": 2,
+  "status": "machine_proxy_gates_passed_ai_visual_review_rejected_representation",
+  "source_commit_at_attempt": "0a9e655aca7c9bfd6103e60afb4dcfb675d90d90",
+  "contract": {
+    "path": "concept/characters/june_oxley_phase33_close_facial_acting_v2.json",
+    "raw_sha256": "8c9a01079e924c8c0c1ea10ad1bdd619978656b5d2c12ab8392d1c81d4900378",
+    "canonical_sha256": "00d127a19db8f7ee9fadb4559ab4d4401e8f324e138dfd40049a28c61de03c59"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_close_facial_acting_v2.py",
+    "sha256_at_attempt": "2ee4f17723d2a192a8dcac76222ed40a5968f4d6c287cf2047de2bb85fe17ae6"
+  },
+  "video": {
+    "path": "../../outputs/edit/phase33-close-facial-acting-prototype-v2/june-phase33-close-facial-acting-prototype-v2.mp4",
+    "sha256": "bd43dcf1560ccc64ed3cd56bbb1c968e962c5e662fbdf0032960f9167ab37faa",
+    "bytes": 7668651,
+    "encoding_process_count": 1,
+    "frame_count": 228,
+    "fps": 30,
+    "duration_seconds": 7.6,
+    "audio_sample_rate": 48000,
+    "audio_channels": 2
+  },
+  "report": {
+    "path": "../../outputs/edit/phase33-close-facial-acting-prototype-v2/june-phase33-close-facial-acting-report-v2.json",
+    "sha256": "73bc1e4a69e4f7b6829de60d435a6f79e761b7fd55073c2128a950aa82add4d5",
+    "proxy_gate_count": 30,
+    "proxy_gates_passed": 30,
+    "proxy_gates_failed": 0,
+    "machine_passed_field_scope": "codec_clock_registered_mask_and_sampled_decode_proxies_only"
+  },
+  "review_artifacts": {
+    "unencoded_preview": {
+      "path": "../../outputs/edit/phase33-close-facial-acting-v2-unencoded-preview-b.png",
+      "sha256": "a9953e438f55e728608ebc95589cb703a38ef809616590452d59cf7827fa2565"
+    },
+    "decoded_contact_sheet": {
+      "path": "../../outputs/edit/phase33-close-facial-acting-prototype-v2/june-phase33-decoded-contact-sheet-v2.png",
+      "sha256": "9330cbe6ae0e8a5304302f9060699d4a14f8dc3c0c5d10f4ad25681daa74d75c"
+    },
+    "decoded_blink_strip": {
+      "path": "../../outputs/edit/phase33-close-facial-acting-prototype-v2/june-phase33-decoded-blink-strip-v2.png",
+      "sha256": "9ce49e98611de4e81391551602365e09f5f23aa90ae58352dc2c35fa895a1d12"
+    },
+    "decoded_mouth_strip": {
+      "path": "../../outputs/edit/phase33-close-facial-acting-prototype-v2/june-phase33-decoded-mouth-strip-v2.png",
+      "sha256": "cd1db5dcdf01faf451ccc06056d1ff00e7d3b76a2e55e93f25d5d18d6fd70c9b"
+    },
+    "blinded_ab_vs_v1": {
+      "path": "../../outputs/edit/phase33-close-facial-acting-prototype-v2/june-phase33-blinded-ab-vs-v1-v2.png",
+      "sha256": "6aed315a4190dcdfffcb4d6b9c086fd1ade22c8d5cd1b106768152d130a92690"
+    }
+  },
+  "what_v2_improved": [
+    "Neutral expression and X mouth change zero authored source pixels.",
+    "All 11,376 shared feature pixels have one declared owner.",
+    "The worst hard face replacements and ballooned mouth poses from v1 are suppressed.",
+    "The exact audio/video clock, single-encoder-process invocation, full frame decode, and delivery stream remain useful infrastructure."
+  ],
+  "ai_visual_review": {
+    "completed": true,
+    "accepted_as_artistic_prototype": false,
+    "accepted_as_technical_experiment": true,
+    "reasons": [
+      "Gaze and blink transitions show doubled or translucent irises, eyelids, and eye contours.",
+      "Mouth states dissolve through the moustache and beard instead of forming physically ordered lips, jaw, cavity, teeth, and tongue.",
+      "Several visemes collapse into the same soft smile or dark slit, reducing speech readability.",
+      "Attenuating RGB crops traded v1's exaggeration for weak acting without repairing anatomy.",
+      "The machine gates validate containment, clock, codec, and sampled encoding fidelity; they do not validate semantic facial topology or artistic quality."
+    ]
+  },
+  "independent_audit_limitations": [
+    "The atlas states are subtracted from the authored plate rather than from registered neutral/X states, so weighted states remain attenuated atlas replacements rather than true neutral-relative correctives.",
+    "The renderer accepts arbitrary output directories, so the recorded single encoder process does not enforce one immutable encode across alternate paths.",
+    "The required pre-encode preview is a 16-still sheet and is not bound to the complete 228-frame source, implementation, contract, or an explicit review verdict.",
+    "The contract's one-resample claim is false: some feature pixels pass through overlapping cubic shoulder and head warps and then a LANCZOS camera resize.",
+    "Decoded eye, mouth, face, and sharpness fidelity was sampled at 16 review frames rather than evaluated on all 228 frames.",
+    "Stable identity evidence is pre-warp mask scope, not source-aligned final-frame identity evidence.",
+    "Blink and mouth-motion gates are RGB-delta proxies that a brightness flash or wrong repeated blob could satisfy.",
+    "Encoded AAC content and audio/visual lag were not decoded and compared to the locked mix.",
+    "Mean feature-step gates can hide a localized one-frame pop.",
+    "Endpoint semantics are incomplete.",
+    "The v2-left/v1-right A/B assignment is fixed and therefore is not genuinely blinded.",
+    "A failed render can leak a staging directory if the single rejected-path name already exists."
+  ],
+  "required_next_representation": {
+    "id": "gs070_semantic_occlusion_aware_2p5d_face_v1",
+    "eyes": ["sclera", "iris_pupil", "upper_lid", "lower_lid", "brow"],
+    "mouth": ["cavity", "upper_teeth_skull_locked", "lower_teeth_jaw_driven", "tongue", "upper_lip", "lower_lip", "moustache", "chin", "beard_clearance"],
+    "deformation": "local_landmark_mesh_piecewise_affine_or_moving_least_squares",
+    "occlusion": "explicit_depth_order_and_masks_no_complete_feature_photo_crossfades",
+    "first_proof": "60 frames: neutral, bilateral blink, B-to-A-to-F articulation, return to exact neutral, head motion disabled"
+  },
+  "promotion_allowed": false,
+  "human_review_still_useful": true,
+  "immutable": true,
+  "cash_cost": 0,
+  "paid_runtime_dependency": false
+}

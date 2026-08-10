@@ -1,0 +1,35 @@
+{
+  "contract_version": 1,
+  "search_space_id": "june_oxley_shape_lab",
+  "search_space_version": "1.0.0",
+  "character_id": "june_oxley",
+  "asset_id": "june_oxley_hero_rig",
+  "asset_version": "3.0.0",
+  "generator": "stdlib_uniform_ticks_v1",
+  "objectives": [
+    {"name": "identity", "direction": "maximize"},
+    {"name": "silhouette", "direction": "maximize"},
+    {"name": "expression_readability", "direction": "maximize"},
+    {"name": "render_seconds", "direction": "minimize"}
+  ],
+  "parameters": [
+    {"name": "head.width", "group": "head", "kind": "float", "minimum": 0.255, "maximum": 0.320, "default": 0.285, "step": 0.001},
+    {"name": "head.depth", "group": "head", "kind": "float", "minimum": 0.220, "maximum": 0.275, "default": 0.245, "step": 0.001},
+    {"name": "head.height", "group": "head", "kind": "float", "minimum": 0.350, "maximum": 0.420, "default": 0.390, "step": 0.001},
+    {"name": "nose.projection", "group": "face", "kind": "float", "minimum": 0.075, "maximum": 0.130, "default": 0.102, "step": 0.001},
+    {"name": "nose.width", "group": "face", "kind": "float", "minimum": 0.043, "maximum": 0.070, "default": 0.052, "step": 0.001},
+    {"name": "nose.bridge_projection", "group": "face", "kind": "float", "minimum": 0.015, "maximum": 0.045, "default": 0.030, "step": 0.001},
+    {"name": "cheek.left_projection", "group": "face", "kind": "float", "minimum": 0.022, "maximum": 0.060, "default": 0.040, "step": 0.001},
+    {"name": "cheek.right_projection", "group": "face", "kind": "float", "minimum": 0.020, "maximum": 0.055, "default": 0.035, "step": 0.001},
+    {"name": "jaw.left_projection", "group": "face", "kind": "float", "minimum": 0.008, "maximum": 0.035, "default": 0.020, "step": 0.001},
+    {"name": "jaw.right_projection", "group": "face", "kind": "float", "minimum": 0.008, "maximum": 0.032, "default": 0.017, "step": 0.001},
+    {"name": "chin.projection", "group": "face", "kind": "float", "minimum": 0.020, "maximum": 0.060, "default": 0.038, "step": 0.001},
+    {"name": "eye.separation", "group": "eyes", "kind": "float", "minimum": 0.095, "maximum": 0.125, "default": 0.105, "step": 0.001},
+    {"name": "eye.scale", "group": "eyes", "kind": "float", "minimum": 0.85, "maximum": 1.10, "default": 1.00, "step": 0.01},
+    {"name": "brow.asymmetry", "group": "eyes", "kind": "float", "minimum": -0.030, "maximum": 0.030, "default": 0.006, "step": 0.001},
+    {"name": "mouth.width_scale", "group": "mouth", "kind": "float", "minimum": 0.90, "maximum": 1.30, "default": 1.10, "step": 0.01},
+    {"name": "mouth.height_scale", "group": "mouth", "kind": "float", "minimum": 0.90, "maximum": 1.40, "default": 1.18, "step": 0.01},
+    {"name": "beard.width_scale", "group": "hair", "kind": "float", "minimum": 0.85, "maximum": 1.15, "default": 1.00, "step": 0.01},
+    {"name": "torso.width_scale", "group": "body", "kind": "float", "minimum": 0.88, "maximum": 1.10, "default": 1.00, "step": 0.01}
+  ]
+}

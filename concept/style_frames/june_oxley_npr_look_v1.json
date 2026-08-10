@@ -1,0 +1,58 @@
+{
+  "contract_version": 1,
+  "look_id": "june_oxley_storybook_npr",
+  "style_version": "1.0.0",
+  "engine": "BLENDER_EEVEE_NEXT",
+  "intent": "Warm Appalachian storybook dimensionality with graphic silhouettes, tactile surfaces, restrained highlights, and readable elderly facial acting.",
+  "palette": {
+    "ink": [0.035, 0.022, 0.020],
+    "world": [0.026, 0.045, 0.082],
+    "shadow_tint": [0.30, 0.34, 0.46],
+    "warm_light": [1.0, 0.60, 0.28],
+    "cool_light": [0.36, 0.56, 1.0]
+  },
+  "toon": {
+    "enabled": true,
+    "thresholds": [0.38, 0.72],
+    "levels": [0.34, 0.72, 1.08],
+    "exclude_materials": ["Window Warmth", "Visible Lantern Glow", "June Eye Catchlight"]
+  },
+  "outlines": {
+    "enabled": true,
+    "mode": "freestyle",
+    "thickness_px": 1.35,
+    "color": [0.035, 0.022, 0.020],
+    "silhouette": true,
+    "crease": true,
+    "material_boundary": false
+  },
+  "lighting": {
+    "key": {"energy": 1120, "color": [1.0, 0.58, 0.28], "size": 4.2},
+    "fill": {"energy": 390, "color": [0.34, 0.52, 1.0], "size": 5.5},
+    "lantern": {"energy": 620, "color": [1.0, 0.26, 0.075], "size": 1.8},
+    "rim": {"energy": 780, "color": [0.42, 0.62, 1.0], "size": 3.2},
+    "world_strength": 0.24
+  },
+  "camera": {
+    "depth_of_field": true,
+    "f_stop": 4.2,
+    "focus_target": [0.0, 0.0, 2.25]
+  },
+  "compositor": {
+    "glow": true,
+    "glow_threshold": 1.15,
+    "glow_mix": -0.93
+  },
+  "render": {
+    "review_samples": 24,
+    "performance_samples": 16,
+    "color_look": "AgX - Medium High Contrast"
+  },
+  "promotion_gates": [
+    "nine Golden Scene poses preserve silhouette and eye readability",
+    "A-H/X visemes remain distinct under toon quantization",
+    "line weight does not bridge eyelids, mustache, or mouth cavity",
+    "warm key and cool rim separate June from the porch",
+    "full 453-frame render preserves temporal line stability"
+  ]
+}

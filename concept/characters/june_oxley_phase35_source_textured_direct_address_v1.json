@@ -1,0 +1,170 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase35_source_textured_direct_address_v1",
+  "phase": "phase35_source_textured_direct_address_integration",
+  "character_id": "june_oxley",
+  "view_id": "CLOSE_HERO_FRONT_GS070",
+  "classification": "Unencoded voiced-timing integration preview; exact-frame visual review required before any encode; not full-cartoon delivery.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "locks": {
+    "phase34_contract": {
+      "path": "concept/characters/june_oxley_phase34_source_textured_visemes_v1.json",
+      "sha256": "87da5306148eac5e4d49bf6613c8912b58eb9c6434c9927bd0925de6f7d654de"
+    },
+    "phase34_renderer": {
+      "path": "pipeline/cartoon_source_textured_face.py",
+      "sha256": "73cd8ab14a474019160ed88a321caaf2164cec35c370dec21c32afba1354c95e"
+    },
+    "phase34_candidate08_manifest": {
+      "path": "collab/phase34_candidate_08/june-phase34-source-textured-visemes-preview-manifest-v1.json",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "5fa917cd2fc8e1069a75b3696d81a80d45211e37f5c3e8626598b7efd9cb78fe"
+    },
+    "phase34_candidate08_archive": {
+      "path": "collab/phase34_candidate_08/june-phase34-source-textured-visemes-rgb24-xor-v1.gz",
+      "sha256": "30f17179fd4fe9cd0f531b559269e187d3b8c888d90b5a5f8a770356ff6cd705"
+    },
+    "phase34_successor_audit": {
+      "path": "collab/phase34_candidate_08_successor_audit_v2/june-phase34-candidate08-successor-audit-v2.json",
+      "sha256": "fde411b4fd7a9604f726a3a29bb28ec6512839fc1585f75da18dc5c957672184"
+    },
+    "gs070_scene_contract": {
+      "path": "concept/style_frames/june_golden_scene_gs070_resolution_v1.json",
+      "sha256": "ff5ae15bf49e4ab19c654948d4217b3202d3ddcffb3d1b9d617694c46d78b194"
+    },
+    "gs070_plate": {
+      "path": "concept/style_frames/june-golden-scene-gs070-resolution-plate-v1.png",
+      "sha256": "c54f82ef387121267829ec0a85c8fbf56830af2fd18c400ef777cfbb9044d029"
+    },
+    "dialogue_audio": {
+      "path": "concept/audio/june_phase33_direct_address_dialogue_v1.wav",
+      "sha256": "8bff6520880639ba6e01cb94b64a0c232e4cfc1d009423231845d935f433b000"
+    },
+    "delivery_mix": {
+      "path": "concept/audio/june_phase33_direct_address_mix_v1.wav",
+      "sha256": "e5cd5ebd9f52f4c6a1cb1682a61c42ff812069fd3eb30789bf1cca28a718ea39"
+    },
+    "viseme_cues": {
+      "path": "concept/style_frames/june_phase33_direct_address_rhubarb_v1.json",
+      "sha256": "b97a7aa3ebba5fff832128c19cedb9b8609d6851281838f734126ec7150cd117"
+    },
+    "expression_cues": {
+      "path": "concept/style_frames/june_phase33_direct_address_expression_v1.json",
+      "sha256": "0f77e13486a3f67abc65cf98de2857b5e0b06c5058bf46bc6c394cc8d5cefe8f"
+    },
+    "body_motion": {
+      "path": "concept/style_frames/june_phase33_direct_address_body_motion_v1.json",
+      "sha256": "47f29b99ce8c2db42f3e2c5e79bc174ded2b9849a626eafbed2b06ef9a73b8c9"
+    },
+    "viseme_planner": {
+      "path": "pipeline/cartoon_viseme_atlas.py",
+      "sha256": "ed0bce61091380ba024bef5d8d9312ca9ece8198d79ad5bb6a1c7afeca6e1bc9"
+    },
+    "expression_planner": {
+      "path": "pipeline/cartoon_expression_atlas.py",
+      "sha256": "98c8721d0ec99c57019b56c826260afd00b3d95dcf5ec64cb3f84c37a2dadb12"
+    },
+    "hero_scene_renderer": {
+      "path": "pipeline/cartoon_hero_scene.py",
+      "sha256": "6ba45971c328cb8543d227507b56e44ca50cdb10ae451e6a7659e8ccd2983d21"
+    }
+  },
+  "clock": {
+    "source_width": 1672,
+    "source_height": 941,
+    "output_width": 1920,
+    "output_height": 1080,
+    "fps": 30,
+    "frame_count": 228,
+    "duration_seconds": 7.6,
+    "audio_sample_rate": 48000,
+    "audio_sample_count": 364800,
+    "audio_samples_per_frame": 1600
+  },
+  "performance": {
+    "viseme_transition_frames": 2,
+    "supported_visemes": ["A", "B", "C", "D", "E", "F", "G", "H", "X"],
+    "required_cue_visemes": ["A", "B", "C", "E", "F", "G", "H", "X"],
+    "semantic_blink_state": "blink",
+    "blink_curves": [
+      {
+        "id": "dialogue_blink_01",
+        "frames": [77, 78, 79, 80, 81, 82, 83, 84, 85],
+        "closures": [0.0, 0.15625, 0.5, 0.84375, 1.0, 0.84375, 0.5, 0.15625, 0.0]
+      },
+      {
+        "id": "settle_blink_02",
+        "frames": [169, 170, 171, 172, 173, 174, 175, 176, 177],
+        "closures": [0.0, 0.15625, 0.5, 0.84375, 1.0, 0.84375, 0.5, 0.15625, 0.0]
+      }
+    ],
+    "nonblink_upper_face_policy": "authored_plate_exact",
+    "final_settle_start_frame": 202,
+    "required_review_frames": [1, 12, 24, 25, 46, 79, 82, 111, 132, 162, 168, 180, 192, 201, 202, 228]
+  },
+  "representation": {
+    "face_source": "accepted_phase34_candidate08_source_textured_semantic_compositor",
+    "full_face_or_mouth_atlas_crossfade_allowed": false,
+    "rejected_phase33_bitmap_expression_atlas_allowed": false,
+    "mouth_timing_source": "locked_rhubarb_frame_center_sampling_with_two_frame_cubic_coarticulation",
+    "blink_timing_source": "locked_expression_cue_centers_with_preregistered_phase34_native_nine_frame_closure_curves",
+    "body_camera_atmosphere_source": "locked_phase33_direct_address_motion_and_gs070_scene_rig",
+    "head_motion_allowed": true,
+    "body_motion_allowed": true,
+    "camera_motion_allowed": true,
+    "atmosphere_motion_allowed": true,
+    "audio_used_for_timing_only": true,
+    "audio_or_video_encode_allowed": false,
+    "runtime_ai_generation_allowed": false,
+    "reinforcement_learning_allowed": false,
+    "single_threaded_control_adapter": true
+  },
+  "preencode_gates": {
+    "required_input_hash_mismatches": 0,
+    "required_frame_count": 228,
+    "required_audio_sample_count": 364800,
+    "required_audio_samples_per_frame": 1600,
+    "required_changed_pixels_outside_phase34_feature_support": 0,
+    "required_depth_order_violation_pixels": 0,
+    "required_folded_triangles": 0,
+    "minimum_full_blink_iris_occlusion_ratio": 0.98,
+    "minimum_semantic_blink_count": 2,
+    "minimum_full_blink_frame_count": 2,
+    "minimum_non_x_frame_count": 80,
+    "minimum_final_exact_x_frame_count": 27,
+    "accepted_candidate08_same_domain_maximum_source_pop": 152.9947967529297,
+    "maximum_native_face_temporal_excess_over_accepted_candidate08": 0.01,
+    "maximum_final_composed_face_adjacent_8x8_mean_delta": 170.0,
+    "maximum_adjacent_oral_activation_delta": 0.5,
+    "required_final_hold_body_controls_zero": true,
+    "required_complete_rgb_hash_inventory": true,
+    "required_lossless_rgb_archive_verified_frames": 228
+  },
+  "preview": {
+    "directory": "../../outputs/edit/phase35-source-textured-direct-address-preview-v1",
+    "manifest_filename": "june-phase35-source-textured-direct-address-preview-manifest-v1.json",
+    "lossless_frame_archive_filename": "june-phase35-source-textured-direct-address-rgb24-xor-v1.gz",
+    "contact_sheet_filename": "june-phase35-source-textured-direct-address-all-228-v1.png",
+    "key_sheet_filename": "june-phase35-source-textured-direct-address-key-beats-v1.png",
+    "face_timeline_filename": "june-phase35-source-textured-direct-address-face-timeline-v1.png",
+    "blink_sheet_filename": "june-phase35-source-textured-direct-address-blinks-v1.png",
+    "motion_sheet_filename": "june-phase35-source-textured-direct-address-motion-v1.png"
+  },
+  "failure_policy": {
+    "mode": "fail_closed",
+    "immutable_output": true,
+    "partial_success_allowed": false,
+    "fallback_allowed": false,
+    "automatic_threshold_change_allowed": false,
+    "encode_on_preview_pass_allowed": false
+  },
+  "promotion_policy": {
+    "machine_pass_does_not_imply_artistic_acceptance": true,
+    "exact_frame_human_review_required": true,
+    "voice_casting_human_approval_required": true,
+    "one_encode_receipt_required_after_visual_acceptance": true,
+    "accepted_full_cartoon_production_delivery": false
+  }
+}

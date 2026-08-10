@@ -1,0 +1,151 @@
+{
+  "version": 1,
+  "production": "june-golden-scene-twelve-dollar-mug",
+  "status": "ai_assisted_key_pose_performance_prototype",
+  "approval_required": true,
+  "profile": "youtube",
+  "source_scene": "../../examples/june-golden-scene-twelve-dollar-mug.json",
+  "source_timeline_offset_seconds": 7.5,
+  "fps": 30,
+  "width": 1920,
+  "height": 1080,
+  "duration_seconds": 15.1,
+  "frame_count": 453,
+  "lip_sync": {
+    "path": "june_golden_scene_rhubarb_lipsync_v1.json",
+    "sha256": "4e59733c26f519fd9f7b596a163a6c58e4fcb90c4525063a5fb0a71732eccc5c",
+    "generator": "Rhubarb Lip Sync 1.14.0",
+    "recognizer": "pocketSphinx",
+    "cue_count": 77,
+    "transition_frames": 2,
+    "interpolation": "LINEAR"
+  },
+  "generator": {
+    "mode": "Codex built-in image generation with canonical June reference conditioning",
+    "api_key_required": false,
+    "paid_runtime_dependency": false,
+    "purpose": "Authored performance key poses for a zero-cost limited-animation proof; not a substitute for final rig deformation."
+  },
+  "identity_reference": {
+    "path": "june-oxley-canonical-turnaround-v1.png",
+    "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9",
+    "width": 1536,
+    "height": 1024
+  },
+  "shots": [
+    {
+      "id": "GS030",
+      "beat": "seated_to_stand_with_mug",
+      "duration_seconds": 5.7,
+      "frame_count": 171,
+      "transition_style": "grounded_rise",
+      "keyframes": [
+        {
+          "phase": "start",
+          "frame": 0,
+          "path": "june-golden-scene-gs030-performance-start-v1.png",
+          "sha256": "19499060768d51f2aa84f7c7e6bea94b0f9732ad35a9201c15f299bb76beb961",
+          "width": 1672,
+          "height": 941,
+          "intent": "Both boots planted; June seated with mug protected and chair contact readable."
+        },
+        {
+          "phase": "mid",
+          "frame": 92,
+          "path": "june-golden-scene-gs030-style-target-v2.png",
+          "sha256": "5bab7b35aa5b01a4a166f2c0968ee8686bc6be6241696c8baa755c0a4b5812f3",
+          "width": 1672,
+          "height": 941,
+          "intent": "Weight passes over the support foot as the chair arm supplies force."
+        },
+        {
+          "phase": "end",
+          "frame": 170,
+          "path": "june-golden-scene-gs030-performance-end-v1.png",
+          "sha256": "db58683190bfa5818670e61d20812024c6065ab941dd907352f77b6c702f64b0",
+          "width": 1672,
+          "height": 941,
+          "intent": "June arrives standing, balanced, with the mug still protected."
+        }
+      ]
+    },
+    {
+      "id": "GS040",
+      "beat": "retrieve_ledger",
+      "duration_seconds": 5.6,
+      "frame_count": 168,
+      "transition_style": "prop_and_gaze",
+      "keyframes": [
+        {
+          "phase": "start",
+          "frame": 0,
+          "path": "june-golden-scene-gs040-performance-start-v1.png",
+          "sha256": "474310976e2cd68a4bbd8d7ae94d4f792ff8376626f009febe45ae69098501c5",
+          "width": 1672,
+          "height": 941,
+          "intent": "June initiates the ledger reach with the late crooked smile withheld."
+        },
+        {
+          "phase": "mid",
+          "frame": 88,
+          "path": "june-golden-scene-gs040-style-target-v2.png",
+          "sha256": "37f24c8ac5fa14492e9d7c5ec6b8abccade55e5f44f0195a95a1e05c4b6d2105",
+          "width": 1672,
+          "height": 941,
+          "intent": "Ledger and pencil are established while the restrained joke lands."
+        },
+        {
+          "phase": "end",
+          "frame": 167,
+          "path": "june-golden-scene-gs040-performance-end-v1.png",
+          "sha256": "818cb224ca87847a75425290d3f669ea4d46bb03332c6c09e3841878934c4ae9",
+          "width": 1672,
+          "height": 940,
+          "intent": "The prop action resolves and June's gaze finds the unseen visitor."
+        }
+      ]
+    },
+    {
+      "id": "GS050",
+      "beat": "compassion_hold",
+      "duration_seconds": 3.8,
+      "frame_count": 114,
+      "transition_style": "expression_release",
+      "keyframes": [
+        {
+          "phase": "start",
+          "frame": 0,
+          "path": "june-golden-scene-gs050-performance-start-v1.png",
+          "sha256": "1d88794a72bc0e2e1531e5f39c09fc6552df37804c202f114696b4cb6a4ec6d1",
+          "width": 1672,
+          "height": 941,
+          "intent": "The ledger smile is still present as June begins to notice the visitor."
+        },
+        {
+          "phase": "mid",
+          "frame": 58,
+          "path": "june-golden-scene-gs050-style-target-v2.png",
+          "sha256": "37bd827d27e20f5c2a99c0b29e3e5dd825d8c1787782ceb0ebc1142f737e4deb",
+          "width": 1672,
+          "height": 941,
+          "intent": "The smile releases, lower lids engage, and the gaze drops off-camera."
+        },
+        {
+          "phase": "end",
+          "frame": 113,
+          "path": "june-golden-scene-gs050-performance-end-v1.png",
+          "sha256": "a9082eeb9b8eba5aea8ec15790425f2893aee6325d57c4c6e965e93c4e2b2ce3",
+          "width": 1672,
+          "height": 941,
+          "intent": "June settles into the still compassion hold and leaves room for the breath."
+        }
+      ]
+    }
+  ],
+  "classification": "AI-assisted key-pose limited-animation performance slice; not final topology deformation.",
+  "known_limits": [
+    "Generated key poses contain small camera, prop, and topology discontinuities between poses.",
+    "Motion synthesis between poses cannot replace a continuously deforming production rig.",
+    "The inherited local scratch voice is non-canonical."
+  ]
+}

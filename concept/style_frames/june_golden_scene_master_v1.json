@@ -1,0 +1,218 @@
+{
+  "contract_version": 1,
+  "master_id": "june_golden_scene_master_v1",
+  "production": "june-golden-scene-twelve-dollar-mug",
+  "character_id": "june_oxley",
+  "generation": {
+    "runtime": "local Python, Pillow, OpenCV, and FFmpeg",
+    "cash_cost": 0,
+    "paid_runtime_dependency": false
+  },
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 1164,
+    "duration_seconds": 38.8,
+    "codec": "H.264",
+    "pixel_format": "yuv420p"
+  },
+  "encoded_quality_gate": {
+    "minimum_review_frame_psnr_db": 38.0,
+    "minimum_encoded_laplacian_variance": 30.0
+  },
+  "plates": {
+    "gs010_establishing": {
+      "path": "concept/style_frames/june-golden-scene-gs010-style-target-v2.png",
+      "sha256": "bb8bf8a21ab05710325d03480f245debf3407ae8fd328dd7ecab0a9d4a3f0481",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    "gs020_mug_chip": {
+      "path": "concept/style_frames/june-golden-scene-gs020-style-target-v2.png",
+      "sha256": "fd7e3b0789d06a7dca7ca0f75c8b93c49bd24b60b2d279e14df3a472e1e0e354",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    "gs040_ledger_start": {
+      "path": "concept/style_frames/june-golden-scene-gs040-performance-start-v1.png",
+      "sha256": "474310976e2cd68a4bbd8d7ae94d4f792ff8376626f009febe45ae69098501c5",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    "gs040_ledger_insert": {
+      "path": "concept/style_frames/june_oxley_ledger_insert_v1.png",
+      "sha256": "6b11c1c41455b7e44851146c459a3299bef8c0d7082ac6025701fdde097d87d7",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    "gs040_ledger_end": {
+      "path": "concept/style_frames/june-golden-scene-gs040-performance-end-v1.png",
+      "sha256": "818cb224ca87847a75425290d3f669ea4d46bb03332c6c09e3841878934c4ae9",
+      "width": 1672,
+      "height": 940,
+      "mode": "RGB"
+    },
+    "gs050_compassion_start": {
+      "path": "concept/style_frames/june-golden-scene-gs050-performance-start-v1.png",
+      "sha256": "1d88794a72bc0e2e1531e5f39c09fc6552df37804c202f114696b4cb6a4ec6d1",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    },
+    "gs050_compassion_end": {
+      "path": "concept/style_frames/june-golden-scene-gs050-performance-end-v1.png",
+      "sha256": "a9082eeb9b8eba5aea8ec15790425f2893aee6325d57c4c6e965e93c4e2b2ce3",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB"
+    }
+  },
+  "rendered_sources": {
+    "GS030": {
+      "expected_gate": "registered_layered_body_mechanics",
+      "frame_count": 171,
+      "duration_seconds": 5.7
+    },
+    "GS060": {
+      "expected_gate": "registered_pour_contact_and_liquid",
+      "frame_count": 258,
+      "duration_seconds": 8.6
+    },
+    "GS070": {
+      "expected_gate": "gs070_registered_resolution_production_pixels",
+      "frame_count": 228,
+      "duration_seconds": 7.6
+    }
+  },
+  "shots": [
+    {
+      "id": "GS010",
+      "start_frame": 1,
+      "end_frame": 129,
+      "duration_seconds": 4.3,
+      "source": {"type": "plate_sequence"},
+      "segments": [
+        {
+          "start_frame": 1,
+          "end_frame": 129,
+          "plate_id": "gs010_establishing",
+          "camera": {"start_zoom": 1.0, "end_zoom": 1.03, "focus_start": [0.48, 0.50], "focus_end": [0.45, 0.49], "easing": "ease_in_out_cubic"},
+          "effects": {"light_breathe": {"strength": 0.004}}
+        }
+      ]
+    },
+    {
+      "id": "GS020",
+      "start_frame": 130,
+      "end_frame": 225,
+      "duration_seconds": 3.2,
+      "source": {"type": "plate_sequence"},
+      "segments": [
+        {
+          "start_frame": 130,
+          "end_frame": 225,
+          "plate_id": "gs020_mug_chip",
+          "camera": {"start_zoom": 1.0, "end_zoom": 1.018, "focus_start": [0.58, 0.55], "focus_end": [0.585, 0.55], "easing": "ease_in_out_cubic"},
+          "effects": {"light_breathe": {"strength": 0.003}}
+        }
+      ]
+    },
+    {
+      "id": "GS030",
+      "start_frame": 226,
+      "end_frame": 396,
+      "duration_seconds": 5.7,
+      "source": {"type": "rendered_shot", "source_id": "GS030"},
+      "segments": []
+    },
+    {
+      "id": "GS040",
+      "start_frame": 397,
+      "end_frame": 564,
+      "duration_seconds": 5.6,
+      "source": {"type": "plate_sequence"},
+      "segments": [
+        {
+          "start_frame": 397,
+          "end_frame": 452,
+          "plate_id": "gs040_ledger_start",
+          "camera": {"start_zoom": 1.0, "end_zoom": 1.012, "focus_start": [0.45, 0.49], "focus_end": [0.46, 0.50], "easing": "ease_in_out_cubic"},
+          "effects": {"light_breathe": {"strength": 0.004}}
+        },
+        {
+          "start_frame": 453,
+          "end_frame": 508,
+          "plate_id": "gs040_ledger_insert",
+          "camera": {"start_zoom": 1.0, "end_zoom": 1.035, "focus_start": [0.54, 0.61], "focus_end": [0.56, 0.62], "easing": "ease_in_out_cubic"},
+          "effects": {"light_breathe": {"strength": 0.004}}
+        },
+        {
+          "start_frame": 509,
+          "end_frame": 564,
+          "plate_id": "gs040_ledger_end",
+          "camera": {"start_zoom": 1.0, "end_zoom": 1.015, "focus_start": [0.45, 0.49], "focus_end": [0.44, 0.49], "easing": "ease_in_out_cubic"},
+          "effects": {"light_breathe": {"strength": 0.003}}
+        }
+      ]
+    },
+    {
+      "id": "GS050",
+      "start_frame": 565,
+      "end_frame": 678,
+      "duration_seconds": 3.8,
+      "minimum_post_dialogue_hold_frames": 24,
+      "source": {"type": "plate_sequence"},
+      "segments": [
+        {
+          "start_frame": 565,
+          "end_frame": 620,
+          "plate_id": "gs050_compassion_start",
+          "camera": {"start_zoom": 1.0, "end_zoom": 1.0, "focus_start": [0.39, 0.43], "focus_end": [0.39, 0.43], "easing": "ease_in_out_cubic"},
+          "effects": {"light_breathe": {"strength": 0.002}}
+        },
+        {
+          "start_frame": 621,
+          "end_frame": 678,
+          "plate_id": "gs050_compassion_end",
+          "camera": {"start_zoom": 1.0, "end_zoom": 1.02, "focus_start": [0.39, 0.43], "focus_end": [0.39, 0.42], "easing": "ease_in_out_cubic"},
+          "effects": {"light_breathe": {"strength": 0.002}}
+        }
+      ]
+    },
+    {
+      "id": "GS060",
+      "start_frame": 679,
+      "end_frame": 936,
+      "duration_seconds": 8.6,
+      "source": {"type": "rendered_shot", "source_id": "GS060"},
+      "segments": []
+    },
+    {
+      "id": "GS070",
+      "start_frame": 937,
+      "end_frame": 1164,
+      "duration_seconds": 7.6,
+      "source": {"type": "rendered_shot", "source_id": "GS070"},
+      "segments": []
+    }
+  ],
+  "continuity_invariants": [
+    "the shot spans are exactly GS010 129 GS020 96 GS030 171 GS040 168 GS050 114 GS060 258 and GS070 228 frames",
+    "rendered GS030 GS060 and GS070 frames map one-to-one with no retiming or interpolation",
+    "plate changes are declared hard cuts on action or emotional beats",
+    "the cream enamel mug retains its faded blue rim and stable upper-right chip",
+    "the ledger and short yellow pencil remain visually consistent",
+    "no optical flow cross-dissolve or paid runtime service is used",
+    "the final master is silent unless an explicit local scratch or approved final mix is supplied"
+  ],
+  "known_picture_boundaries": [
+    "GS010 is a high-detail establishing hold and does not yet articulate the visible mouth",
+    "GS020 preserves thumb contact and the mug chip but does not yet deform the thumb independently",
+    "GS040 and GS050 use authored pose cuts rather than continuous limb or facial topology deformation"
+  ]
+}

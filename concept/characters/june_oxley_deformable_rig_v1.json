@@ -1,0 +1,209 @@
+{
+  "contract_version": 1,
+  "rig_id": "june_oxley_deformable_rig_v1",
+  "character_id": "june_oxley",
+  "classification": "Single-view continuously deforming 2.5D production rig: approved high-resolution painterly pixels driven by a deterministic skeletal deformation field, planted-contact pins, and localized joint-volume correctives.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "identity_invariants": {
+    "presentation": "elderly white rural man",
+    "sex": "male",
+    "build": "lean_wiry",
+    "hair": "short_thinning_white",
+    "facial_hair": "trimmed_white_beard_and_mustache",
+    "prohibited_interpretations": ["female", "wife", "hair_bun", "clean_shaven"]
+  },
+  "source_art": {
+    "path": "concept/characters/puppet_sources/june_oxley_puppet_source_v1.png",
+    "sha256": "9c8cd2918c523c656fe3c67801a0d5eadbbb37eb185db1843f511b9efd70fb4c",
+    "width": 1024,
+    "height": 1536,
+    "mode": "RGBA",
+    "generation": {
+      "tool": "Codex built-in ImageGen",
+      "cash_cost": 0,
+      "paid_runtime_dependency": false,
+      "reference_paths": [
+        "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+        "concept/style_frames/june_gs030_pose_100_foreground_v1.png"
+      ],
+      "prompt_summary": "Exact elderly male June identity, lean wiry build, short thinning white hair, trimmed white beard and mustache; neutral three-quarter A-pose; complete clean anatomy; flat green chroma background; premium painterly theatrical cartoon finish."
+    },
+    "alpha_derivation": {
+      "source_path": "concept/characters/puppet_sources/june_oxley_puppet_source_v1_chroma.png",
+      "source_sha256": "66e910ee234cd1cbce785a69a11c5b671136fa2b6b885c9db236bc711e19d701",
+      "method": "remove_chroma_key.py auto-key border, soft matte, despill, one-pixel edge contraction",
+      "runtime_required": false
+    }
+  },
+  "background": {
+    "path": "concept/style_frames/june-golden-scene-gs030-clean-porch-v1.png",
+    "sha256": "c2ed99ead71cc526032908722916c67739d27741e1f1d4145fc276fe11f1e9dd",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB"
+  },
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 360,
+    "duration_seconds": 12.0,
+    "codec": "h264",
+    "pixel_format": "yuv420p"
+  },
+  "placement": {
+    "sprite_height": 1000,
+    "character_center_x": 950,
+    "source_center_x": 510,
+    "source_baseline_y": 1410,
+    "output_baseline_y": 1018
+  },
+  "layers": [
+    {
+      "id": "body_base",
+      "depth": 0,
+      "source": "source_art",
+      "excludes": ["right_arm_foreground"]
+    },
+    {
+      "id": "right_arm_foreground",
+      "depth": 1,
+      "source": "source_art",
+      "mask_polygon_source_pixels": [[635, 350], [700, 365], [725, 400], [755, 560], [785, 715], [805, 800], [790, 885], [720, 900], [685, 820], [680, 720], [650, 610], [625, 500], [620, 420]],
+      "feather_source_pixels": 4.0,
+      "bound_nodes": ["screen_right_shoulder", "screen_right_elbow", "screen_right_wrist", "screen_right_hand"]
+    }
+  ],
+  "skeleton": {
+    "coordinate_space": "source_art_pixels",
+    "nodes": [
+      {"id": "head", "point": [500, 165], "influence_radius": 150},
+      {"id": "neck", "point": [515, 300], "influence_radius": 110},
+      {"id": "chest", "point": [510, 490], "influence_radius": 190},
+      {"id": "root", "point": [510, 730], "influence_radius": 190},
+      {"id": "pelvis", "point": [510, 790], "influence_radius": 160},
+      {"id": "screen_left_shoulder", "point": [355, 390], "influence_radius": 120},
+      {"id": "screen_left_elbow", "point": [285, 610], "influence_radius": 108},
+      {"id": "screen_left_wrist", "point": [265, 745], "influence_radius": 84},
+      {"id": "screen_left_hand", "point": [275, 830], "influence_radius": 76},
+      {"id": "screen_right_shoulder", "point": [665, 390], "influence_radius": 120},
+      {"id": "screen_right_elbow", "point": [735, 610], "influence_radius": 108},
+      {"id": "screen_right_wrist", "point": [760, 745], "influence_radius": 84},
+      {"id": "screen_right_hand", "point": [750, 820], "influence_radius": 76},
+      {"id": "screen_left_hip", "point": [430, 790], "influence_radius": 120},
+      {"id": "screen_left_knee", "point": [380, 1040], "influence_radius": 125},
+      {"id": "screen_left_ankle", "point": [370, 1225], "influence_radius": 94},
+      {"id": "screen_left_foot", "point": [355, 1360], "influence_radius": 76},
+      {"id": "screen_right_hip", "point": [585, 790], "influence_radius": 120},
+      {"id": "screen_right_knee", "point": [590, 1040], "influence_radius": 125},
+      {"id": "screen_right_ankle", "point": [590, 1225], "influence_radius": 94},
+      {"id": "screen_right_foot", "point": [620, 1355], "influence_radius": 76}
+    ],
+    "stationary_contact_pins": ["screen_left_foot", "screen_right_foot"]
+  },
+  "deformation": {
+    "method": "continuous_gaussian_skeletal_inverse_warp",
+    "sampling": "premultiplied-RGBA cubic remap",
+    "background_mode": "transparent_constant",
+    "normalization_floor": 0.02,
+    "contact_pin_radius": 88,
+    "joint_correctives": [
+      {"id": "right_elbow_volume", "node": "screen_right_elbow", "radius": 105, "expand_x": 0.055, "expand_y": 0.025},
+      {"id": "left_knee_volume", "node": "screen_left_knee", "radius": 120, "expand_x": 0.07, "expand_y": -0.02},
+      {"id": "right_knee_volume", "node": "screen_right_knee", "radius": 120, "expand_x": 0.07, "expand_y": -0.02}
+    ],
+    "secondary_motion": {
+      "period_frames": 120,
+      "vertical_source_pixels": {
+        "head": -3.0,
+        "neck": -2.2,
+        "chest": -1.6,
+        "screen_left_shoulder": -1.4,
+        "screen_right_shoulder": -1.4
+      }
+    }
+  },
+  "poses": {
+    "NEUTRAL": {"deltas": {}, "correctives": {}},
+    "TURN": {
+      "deltas": {
+        "head": [18, -4], "neck": [10, -2], "chest": [6, 0], "root": [3, 0], "pelvis": [2, 0],
+        "screen_left_shoulder": [20, -2], "screen_right_shoulder": [-18, 2]
+      },
+      "correctives": {}
+    },
+    "REACH": {
+      "deltas": {
+        "head": [14, -3], "neck": [8, -2], "chest": [4, -2], "root": [2, 0],
+        "screen_left_shoulder": [10, 0], "screen_right_shoulder": [8, -5],
+        "screen_right_elbow": [70, -75], "screen_right_wrist": [130, -165], "screen_right_hand": [155, -180]
+      },
+      "correctives": {"right_elbow_volume": 0.8}
+    },
+    "HAND_OFF": {
+      "deltas": {
+        "head": [20, -4], "neck": [11, -2], "chest": [6, -3], "root": [3, 0],
+        "screen_left_shoulder": [10, 0], "screen_right_shoulder": [10, -6],
+        "screen_right_elbow": [85, -80], "screen_right_wrist": [155, -170], "screen_right_hand": [190, -180]
+      },
+      "correctives": {"right_elbow_volume": 1.0}
+    },
+    "SIT": {
+      "deltas": {
+        "head": [0, 70], "neck": [0, 80], "chest": [0, 90], "root": [0, 120], "pelvis": [0, 130],
+        "screen_left_shoulder": [0, 85], "screen_left_elbow": [-5, 82], "screen_left_wrist": [-8, 72], "screen_left_hand": [-8, 65],
+        "screen_right_shoulder": [0, 85], "screen_right_elbow": [5, 82], "screen_right_wrist": [8, 72], "screen_right_hand": [8, 65],
+        "screen_left_hip": [-12, 120], "screen_left_knee": [-35, 35],
+        "screen_right_hip": [12, 120], "screen_right_knee": [35, 35]
+      },
+      "correctives": {"left_knee_volume": 1.0, "right_knee_volume": 1.0}
+    }
+  },
+  "timeline": [
+    {"frame": 1, "pose": "NEUTRAL"},
+    {"frame": 30, "pose": "NEUTRAL"},
+    {"frame": 60, "pose": "TURN"},
+    {"frame": 90, "pose": "TURN"},
+    {"frame": 150, "pose": "REACH"},
+    {"frame": 165, "pose": "HAND_OFF"},
+    {"frame": 180, "pose": "REACH"},
+    {"frame": 210, "pose": "NEUTRAL"},
+    {"frame": 270, "pose": "SIT"},
+    {"frame": 330, "pose": "NEUTRAL"},
+    {"frame": 360, "pose": "NEUTRAL"}
+  ],
+  "actions": [
+    {"id": "TURN", "start_frame": 31, "end_frame": 90, "review_frames": [45, 60, 90]},
+    {"id": "REACH", "start_frame": 91, "end_frame": 150, "review_frames": [120, 150]},
+    {"id": "HAND_OFF", "start_frame": 151, "end_frame": 210, "review_frames": [165, 180, 210]},
+    {"id": "SIT_DOWN", "start_frame": 211, "end_frame": 270, "review_frames": [240, 270]},
+    {"id": "STAND_UP", "start_frame": 271, "end_frame": 330, "review_frames": [300, 330]}
+  ],
+  "review_frames": [1, 60, 90, 120, 150, 165, 180, 210, 240, 270, 300, 330, 360],
+  "quality_gate": {
+    "maximum_foot_contact_drift_output_px": 1.5,
+    "minimum_right_hand_excursion_output_px": 95.0,
+    "minimum_root_vertical_excursion_output_px": 70.0,
+    "maximum_landmark_step_output_px": 8.0,
+    "minimum_alpha_area_ratio": 0.86,
+    "maximum_alpha_area_ratio": 1.14,
+    "minimum_unique_landmark_poses": 180,
+    "minimum_encoded_review_laplacian_variance": 35.0,
+    "require_exact_frame_count": true,
+    "require_full_decode": true
+  },
+  "prohibited_methods": [
+    "full-frame optical flow",
+    "cross-dissolved body poses",
+    "paid runtime generation",
+    "unconstrained foot translation",
+    "promotion of the off-model Blender v8 mesh"
+  ],
+  "known_limitations": [
+    "This v1 deformation rig owns one premium three-quarter standing view; large camera-angle changes still require view-specific source art.",
+    "The proof exercises broad body controls but does not yet integrate June's close-view viseme and expression atlases.",
+    "The hand-off action has a free hand and no receiving character or prop constraint yet.",
+    "The generated puppet source is a build-time AI-assisted production drawing; every runtime frame is deterministic and local."
+  ]
+}

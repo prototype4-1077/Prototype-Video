@@ -1,0 +1,46 @@
+{
+  "contract_version": 1,
+  "reward_id": "june_oxley_npr_reward",
+  "reward_version": "1.0.0",
+  "intent": "Learn which art-directed storybook NPR settings work for each shot while protecting identity, acting, and temporal stability.",
+  "objectives": [
+    {"name": "identity", "direction": "maximize", "minimum": 0.0, "maximum": 1.0, "weight": 0.22, "hard_gate": 0.80},
+    {"name": "expression_readability", "direction": "maximize", "minimum": 0.0, "maximum": 1.0, "weight": 0.18, "hard_gate": 0.78},
+    {"name": "temporal_stability", "direction": "maximize", "minimum": 0.0, "maximum": 1.0, "weight": 0.22, "hard_gate": 0.88},
+    {"name": "silhouette_readability", "direction": "maximize", "minimum": 0.0, "maximum": 1.0, "weight": 0.14, "hard_gate": 0.78},
+    {"name": "palette_harmony", "direction": "maximize", "minimum": 0.0, "maximum": 1.0, "weight": 0.10},
+    {"name": "human_preference", "direction": "maximize", "minimum": 0.0, "maximum": 1.0, "weight": 0.09},
+    {"name": "render_seconds", "direction": "minimize", "minimum": 0.0, "maximum": 60.0, "weight": 0.05, "hard_gate": 50.0}
+  ],
+  "look_features": [
+    {"name": "edge_strength", "path": "outlines.edge_strength", "minimum": 0.25, "maximum": 0.75},
+    {"name": "line_thickness", "path": "outlines.thickness_px", "minimum": 0.70, "maximum": 1.80},
+    {"name": "toon_shadow_threshold", "path": "toon.thresholds.0", "minimum": 0.25, "maximum": 0.50},
+    {"name": "toon_light_threshold", "path": "toon.thresholds.1", "minimum": 0.60, "maximum": 0.85},
+    {"name": "key_energy", "path": "lighting.key.energy", "minimum": 800.0, "maximum": 1400.0},
+    {"name": "fill_energy", "path": "lighting.fill.energy", "minimum": 200.0, "maximum": 650.0},
+    {"name": "rim_energy", "path": "lighting.rim.energy", "minimum": 400.0, "maximum": 1000.0},
+    {"name": "world_strength", "path": "lighting.world_strength", "minimum": 0.10, "maximum": 0.45},
+    {"name": "focus_depth", "path": "camera.f_stop", "minimum": 2.80, "maximum": 8.00},
+    {"name": "glow_mix", "path": "compositor.glow_mix", "minimum": -1.00, "maximum": -0.65}
+  ],
+  "context_features": [
+    {"name": "shot_scale", "minimum": 0.0, "maximum": 1.0},
+    {"name": "motion_intensity", "minimum": 0.0, "maximum": 1.0},
+    {"name": "emotion_intensity", "minimum": 0.0, "maximum": 1.0},
+    {"name": "background_complexity", "minimum": 0.0, "maximum": 1.0}
+  ],
+  "bandit": {
+    "algorithm": "linear_ucb_v1",
+    "ridge": 1.0,
+    "exploration": 0.32,
+    "feature_model": "intercept_plus_look_plus_context_plus_pairwise_interactions"
+  },
+  "promotion_authority": "human",
+  "zero_cash_constraints": [
+    "standard-library learner",
+    "local or GitHub-hosted Blender renders",
+    "no paid inference API",
+    "immutable observations and reproducible recommendations"
+  ]
+}

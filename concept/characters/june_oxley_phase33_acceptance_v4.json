@@ -1,0 +1,92 @@
+{
+  "receipt_version": 1,
+  "character_id": "june_oxley",
+  "phase": "phase33_semantic_occlusion_proof",
+  "delivery_attempt_version": 4,
+  "status": "machine_passed_ai_decoded_review_passed_human_review_pending",
+  "source_commit_at_attempt": "d6bb6f83c4ad9225ecb9aed76bcf09355cd117f3",
+  "scope": "Silent two-second semantic-face technical proof only; not a production cartoon or voiced performance.",
+  "contract": {
+    "path": "concept/characters/june_oxley_phase33_semantic_face_v4.json",
+    "raw_sha256": "230092c163766a2566def689bd33dbd0e332f2e9a83b59fa15c12c0059776b2b",
+    "canonical_sha256": "cd7c3dda9c6b33b54d458ecb7b354a7a29e8181aee11edcb827f8ddb31dd51cf"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_semantic_face_v4.py",
+    "sha256": "0bd0a134a8006b2221338d1914d1ff8004b5e369fe7928985ee5f7bea072d18e"
+  },
+  "preview_review": {
+    "path": "concept/characters/june_oxley_phase33_semantic_preview_review_v4.json",
+    "sha256": "779698dc19902ac423c87db23eecd16ee42ef754310f7a3a426b0f7b312fe381"
+  },
+  "report": {
+    "path": "../../outputs/edit/phase33-semantic-face-proof-v4/june-phase33-semantic-face-report-v4.json",
+    "sha256": "9fabc0d5cce538216564f729fed8cae25e506bd4ca551ee7333dc5886c7d254d",
+    "machine_passed": true,
+    "passed_gate_count": 15,
+    "failed_gate_count": 0
+  },
+  "video": {
+    "path": "../../outputs/edit/phase33-semantic-face-proof-v4/june-phase33-semantic-face-proof-v4.mp4",
+    "sha256": "350f8aeb9cad5820c5d20506362822edfeae27674bd83daf1cb7ec96d1192173",
+    "bytes": 1194688,
+    "encoding_process_count": 1,
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "width": 1920,
+    "height": 1080,
+    "frame_count": 60,
+    "fps": 30,
+    "duration_seconds": 2.0,
+    "audio_stream_count": 0
+  },
+  "decoded_evidence": {
+    "all_frames_decoded": true,
+    "contact_sheet": {
+      "path": "../../outputs/edit/phase33-semantic-face-proof-v4/june-phase33-semantic-decoded-contact-v4.png",
+      "sha256": "72f23cad8f83e2f3bcda0ab402f2f91190f3a993fd6519af636a58bbd0198e8b"
+    },
+    "full_size_key_pose_sheet": {
+      "path": "../../outputs/edit/phase33-v4-review/decoded-key-poses-v4.png",
+      "sha256": "ebca3c932fbc89e4ada9b768720bf1252b9f77020cf5825295924443a1e7860d",
+      "frame_order": [1, 8, 10, 13, 14, 18, 22, 28, 32, 33, 38, 48, 52, 56, 60]
+    },
+    "worst_full_frame_psnr_db": 42.642228206314954,
+    "worst_face_psnr_db": 41.76582811367608,
+    "worst_face_ssim": 0.9888933499654134,
+    "worst_eye_psnr_db": 41.5250776026308,
+    "worst_mouth_psnr_db": 41.21561055473366,
+    "minimum_encoded_laplacian_variance": 284.7868041957944,
+    "maximum_decoded_adjacent_face_8x8_mean_delta": 141.359375,
+    "predeclared_maximum_decoded_adjacent_face_8x8_mean_delta": 150.0,
+    "first_last_decoded_psnr_db": 99.0
+  },
+  "ai_assisted_decoded_visual_review": {
+    "completed": true,
+    "verdict": "pass_for_technical_semantic_proof",
+    "identity_background_and_body_remain_locked": true,
+    "bilateral_blink_has_complete_lid_occlusion": true,
+    "eye_socket_or_sclera_leak_artifacts_observed": false,
+    "B_A_F_visemes_are_visually_distinct": true,
+    "moustache_and_beard_reocclusion_holds": true,
+    "frame_32_to_33_one_frame_replacement_pop_observed": false,
+    "known_limitations": [
+      "The mouth is procedurally shaded and flatter than the authored face.",
+      "Only B, A, and F are demonstrated; the complete nine-viseme inventory is absent.",
+      "There is no jaw-volume deformation, cheek response, brow acting, gaze acting, head motion, body acting, atmosphere motion, dialogue, or audio.",
+      "The close-front face is not yet adapted to the Phase 32 three-quarter body rig."
+    ]
+  },
+  "promotion": {
+    "technical_semantic_proof_candidate": true,
+    "human_full_size_review_required": true,
+    "human_full_size_review_completed": false,
+    "accepted_production_delivery": false,
+    "voiced_reencode_allowed": false,
+    "phase32_adapter_allowed": false,
+    "next_unvoiced_material_revision_allowed": true
+  },
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "reinforcement_learning_used": false
+}

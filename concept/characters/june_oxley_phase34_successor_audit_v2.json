@@ -1,0 +1,103 @@
+{
+  "contract_version": 2,
+  "contract_id": "june_oxley_phase34_successor_audit_v2",
+  "phase": "phase34_same_domain_codec_delta_acceptance",
+  "character_id": "june_oxley",
+  "classification": "Successor audit of the consumed Candidate08 silent attempt; no render or encode; reusable facial-motion subsystem scope only; not a production cartoon delivery.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "locks": {
+    "candidate08_manifest": {
+      "path": "collab/phase34_candidate_08/june-phase34-source-textured-visemes-preview-manifest-v1.json",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "5fa917cd2fc8e1069a75b3696d81a80d45211e37f5c3e8626598b7efd9cb78fe"
+    },
+    "candidate08_archive": {
+      "path": "collab/phase34_candidate_08/june-phase34-source-textured-visemes-rgb24-xor-v1.gz",
+      "sha256": "30f17179fd4fe9cd0f531b559269e187d3b8c888d90b5a5f8a770356ff6cd705"
+    },
+    "phase34_contract": {
+      "path": "concept/characters/june_oxley_phase34_source_textured_visemes_v1.json",
+      "sha256": "87da5306148eac5e4d49bf6613c8912b58eb9c6434c9927bd0925de6f7d654de"
+    },
+    "candidate08_renderer": {
+      "path": "pipeline/cartoon_source_textured_face.py",
+      "sha256": "73cd8ab14a474019160ed88a321caaf2164cec35c370dec21c32afba1354c95e"
+    },
+    "candidate08_review_receipt": {
+      "path": "concept/characters/june_oxley_phase34_source_textured_preview_review_v1.json",
+      "sha256": "b1456d8afafbe1250057f3badec0f5ddef9e45f697d49a38fe731c160e6dc8b8"
+    },
+    "attempt01_delivery_implementation": {
+      "path": "pipeline/cartoon_source_textured_delivery.py",
+      "sha256": "3a81d875eed4e5d150732a46da8a64520d465dd4a4868760411e71dde743a022"
+    },
+    "attempt01_video": {
+      "path": "collab/phase34_candidate_08_silent_encode_attempt_01/june-phase34-source-textured-visemes-proof-v1.mp4",
+      "sha256": "6c5a4e7e189400e545f5bc2d55f2f87b536100267cd9d6a20488496646f30514"
+    },
+    "attempt01_report": {
+      "path": "collab/phase34_candidate_08_silent_encode_attempt_01/june-phase34-source-textured-visemes-report-v1.json",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "5ea5085e4fa5153355958e7cab0c9ca0ad5253decd5988c142b28ddf03956b44"
+    },
+    "attempt01_failure_receipt": {
+      "path": "collab/phase34_candidate_08_silent_encode_attempt_01/failure-v1.json",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "95d16386a8f6e59cc9fbb70c8e326d320970717a935af381f14dc5acd89ad5f1"
+    },
+    "claude_motion_review": {
+      "path": "collab/CLAUDE_REVIEW_2026-08-10_1240Z.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "69f8f3d7e318375193c9a3b30f87d6eccdf5e9eda47770b3f58d218531c48ff4"
+    }
+  },
+  "clock": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 24,
+    "frame_count": 96,
+    "duration_seconds": 4.0
+  },
+  "temporal_codec_gate": {
+    "source": "exact_candidate08_archived_rgb24_frames",
+    "decoded": "exact_attempt01_mp4_decoded_rgb24_frames",
+    "face_roi_xyxy": [500, 185, 870, 620],
+    "per_pair_metric": "maximum_8x8_box_filtered_mean_absolute_rgb_delta",
+    "pair_count": 95,
+    "maximum_absolute_pairwise_decoded_minus_source_delta": 2.0,
+    "absolute_source_or_decoded_pop_ceiling": 150.0,
+    "absolute_ceiling_is_advisory_only": true
+  },
+  "original_attempt_state": {
+    "required_machine_passed": false,
+    "required_gate_count": 68,
+    "required_gates_passed": 67,
+    "required_gates_failed": 1,
+    "required_failed_gate": "decoded_local_temporal_pop",
+    "required_encoder_process_count": 1,
+    "retry_allowed": false
+  },
+  "human_motion_review": {
+    "required_verdict": "MOTION_ACCEPTED_GATE_CONTRACT_DEFECT",
+    "standing_criteria_required_pass": [
+      "identity_stability",
+      "viseme_legibility",
+      "upper_face_stillness",
+      "jawline_beard_seam"
+    ]
+  },
+  "output": {
+    "directory": "../../outputs/edit/phase34-candidate08-successor-audit-v2",
+    "report_filename": "june-phase34-candidate08-successor-audit-v2.json",
+    "immutable": true
+  },
+  "promotion": {
+    "accept_reusable_silent_facial_motion_subsystem_on_pass": true,
+    "accept_full_cartoon_production_delivery": false,
+    "new_render_or_encode_authorized": false,
+    "voice_body_camera_scene_sound_integration_still_required": true,
+    "reinforcement_learning_used": false
+  }
+}

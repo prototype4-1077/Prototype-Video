@@ -1,0 +1,174 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase33_close_facial_acting_v1",
+  "phase": "phase33_close_facial_acting_prototype",
+  "character_id": "june_oxley",
+  "classification": "Reconstruction-audited close-view facial acting prototype candidate; not a reconstruction of the Phase 32 three-quarter face and not an accepted production delivery.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "promotion_policy": {
+    "phase32_human_approval_required_for_accepted_delivery": true,
+    "phase32_current_status": "machine_delivery_passed_human_review_pending",
+    "phase32_current_human_review_completed": false,
+    "phase32_current_facial_performance_promotion_allowed": false,
+    "prototype_render_allowed": true,
+    "accepted_delivery_publication_allowed": false,
+    "audience_status": "prototype_candidate_human_review_required"
+  },
+  "representation_policy": {
+    "phase32_view_id": "WIDE_BODY_3Q",
+    "phase33_view_id": "CLOSE_HERO_FRONT",
+    "close_view_adapter_is_phase32_face_reconstruction": false,
+    "cross_view_face_paste_allowed": false,
+    "straight_on_atlas_pixels_allowed_in_phase32_head": false,
+    "gs070_registered_atlas_reuse_allowed_only_in_close_view": true,
+    "shot_transition_for_later_body_integration": "hard_cut_only",
+    "reason": "The Phase 32 face is a small three-quarter source. The existing 418x418 frontal atlases cannot correct yaw, foreshortening, nose occlusion, dental perspective, or beard silhouette by affine registration."
+  },
+  "locks": {
+    "phase32_control_receipt": {
+      "path": "concept/characters/june_oxley_phase32_acceptance_v3.json",
+      "sha256": "0db4743af04115d9a235f0a30a1d8d0a3b26ee2fbaafc89bd404d4e658f6a027"
+    },
+    "gs070_close_view": {
+      "path": "concept/style_frames/june_golden_scene_gs070_resolution_v1.json",
+      "sha256": "ff5ae15bf49e4ab19c654948d4217b3202d3ddcffb3d1b9d617694c46d78b194"
+    },
+    "gs070_renderer": {
+      "path": "pipeline/cartoon_resolution_scene.py",
+      "sha256": "17230ed197ffc813dd6e2b48c794184db354d0194ae33f1d3d1d8df165002f26"
+    },
+    "viseme_atlas": {
+      "path": "concept/style_frames/june_oxley_viseme_atlas_v1.json",
+      "sha256": "223e2f34665d630d7062c8e9d57ff43eb2d6735c8468411d305bd86ca34614e9"
+    },
+    "expression_atlas": {
+      "path": "concept/style_frames/june_oxley_expression_atlas_v1.json",
+      "sha256": "0592cb604aba1a46b0117198821a6a92a172530e1de29b27fe86c3d8fc8bf210"
+    },
+    "dialogue_audio": {
+      "path": "concept/audio/june_phase33_direct_address_dialogue_v1.wav",
+      "sha256": "8bff6520880639ba6e01cb94b64a0c232e4cfc1d009423231845d935f433b000"
+    },
+    "delivery_mix": {
+      "path": "concept/audio/june_phase33_direct_address_mix_v1.wav",
+      "sha256": "e5cd5ebd9f52f4c6a1cb1682a61c42ff812069fd3eb30789bf1cca28a718ea39"
+    },
+    "viseme_cues": {
+      "path": "concept/style_frames/june_phase33_direct_address_rhubarb_v1.json",
+      "sha256": "b97a7aa3ebba5fff832128c19cedb9b8609d6851281838f734126ec7150cd117"
+    },
+    "expression_cues": {
+      "path": "concept/style_frames/june_phase33_direct_address_expression_v1.json",
+      "sha256": "0f77e13486a3f67abc65cf98de2857b5e0b06c5058bf46bc6c394cc8d5cefe8f"
+    },
+    "body_motion": {
+      "path": "concept/style_frames/june_phase33_direct_address_body_motion_v1.json",
+      "sha256": "47f29b99ce8c2db42f3e2c5e79bc174ded2b9849a626eafbed2b06ef9a73b8c9"
+    },
+    "dialogue_text": {
+      "path": "concept/scripts/june_phase33_direct_address_v1.txt",
+      "sha256": "b94ff737c7be3d2e3861ab3e6e418935cff7d91e16fd26b559a1e59165b5b2b0"
+    },
+    "sound_contract": {
+      "path": "concept/style_frames/june_golden_scene_master_sound_v1.json",
+      "sha256": "7fedd04d2c77804180a51bdebdc8779eb3ff0a4cf35c3c776c7a7104611db7ab"
+    }
+  },
+  "audio_provenance": {
+    "phase26_mix_master_sha256": "bff9ae4db51cd11f19833e82d1e9afb721b1499221013a46ee025c1acbd9a832",
+    "phase26_dialogue_stem_sha256": "34f23d0bb620da082cbd9666a01f844c4342ef7373bdb011a752f9de5c2b9802",
+    "source_start_sample": 1497600,
+    "source_end_sample_exclusive": 1824000,
+    "leading_silence_samples": 38400,
+    "derivation": "Exact source-frame slice 937-1140 shifted later by 24 frames; no time stretch, pitch shift, or hosted service."
+  },
+  "clock": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 228,
+    "duration_seconds": 7.6,
+    "audio_sample_rate": 48000,
+    "audio_samples_per_frame": 1600,
+    "audio_sample_count": 364800,
+    "delivery_audio_channels": 2,
+    "dialogue_audio_channels": 1
+  },
+  "performance": {
+    "plate_visible_start_frame": 1,
+    "attention_and_thought_frames": [1, 24],
+    "dialogue_frames": [25, 162],
+    "mouth_returns_to_authored_plate_frame": 168,
+    "reaction_nod_frames": [168, 201],
+    "final_hold_frames": [202, 228],
+    "final_hold_frame_count": 27,
+    "transition_frames": 2,
+    "review_frames": [1, 12, 24, 25, 46, 79, 82, 111, 132, 162, 168, 180, 192, 201, 202, 228],
+    "required_viseme_shapes_in_cues": ["A", "B", "C", "E", "F", "G", "H", "X"],
+    "required_expression_states": ["blink", "brow_raise", "compassion", "concern", "gaze_down", "neutral", "warm_eyes"],
+    "minimum_blink_cue_count": 2,
+    "dialogue": "Funny thing: the account got lighter before the debt did. What are you carrying just because the ledger says so?"
+  },
+  "feature_scope": {
+    "registered_mouth_box": [468, 252, 820, 501],
+    "registered_expression_box": [479, 127, 846, 357],
+    "stable_identity_region": [330, 20, 875, 610],
+    "feature_mask_support_threshold_uint8": 0,
+    "minimum_stable_identity_pixels": 150000,
+    "maximum_changed_pixels_outside_declared_feature_support": 0,
+    "minimum_feature_mask_pixels": 10000,
+    "minimum_bilateral_blink_mean_absolute_delta": 1.0,
+    "maximum_adjacent_feature_patch_mean_absolute_delta": 25.0
+  },
+  "decoded_quality_gate": {
+    "require_full_decode": true,
+    "minimum_full_frame_psnr_db": 38.0,
+    "minimum_face_psnr_db": 38.0,
+    "minimum_face_ssim": 0.97,
+    "minimum_eye_psnr_db": 38.0,
+    "minimum_mouth_psnr_db": 38.0,
+    "minimum_encoded_laplacian_variance": 30.0,
+    "face_roi_xyxy": [330, 0, 1050, 720],
+    "eye_roi_xyxy": [480, 110, 1010, 440],
+    "mouth_roi_xyxy": [500, 260, 980, 620]
+  },
+  "captions": [
+    {"id": "DX_015", "start_frame": 25, "end_frame": 44, "text": "Funny thing:"},
+    {"id": "DX_016", "start_frame": 46, "end_frame": 94, "text": "the account got lighter before the debt did."},
+    {"id": "DX_017", "start_frame": 97, "end_frame": 126, "text": "What are you carrying"},
+    {"id": "DX_018", "start_frame": 129, "end_frame": 166, "text": "just because the ledger says so?"}
+  ],
+  "delivery": {
+    "attempt_version": 1,
+    "output_directory": "../../outputs/edit/phase33-close-facial-acting-prototype-v1",
+    "video_filename": "june-phase33-close-facial-acting-prototype-v1.mp4",
+    "report_filename": "june-phase33-close-facial-acting-report-v1.json",
+    "caption_filename": "june-phase33-close-facial-acting-v1.srt",
+    "one_video_encode_without_retry": true,
+    "staged_atomic_directory_publication": true,
+    "encoding": {
+      "implementation": "libx264",
+      "preset": "slow",
+      "tune": "animation",
+      "crf": 12,
+      "pixel_format": "yuv420p",
+      "audio_codec": "aac",
+      "audio_bitrate": "256k"
+    }
+  },
+  "failure_policy": {
+    "mode": "fail_closed",
+    "partial_success_allowed": false,
+    "fallback_allowed": false,
+    "automatic_reencode_allowed": false,
+    "failed_candidate_may_be_promoted": false
+  },
+  "known_limitations": [
+    "This is a close-view adapter built from the GS070 authored plate and frontal atlases, not facial reconstruction inside the Phase 32 three-quarter full-body pixels.",
+    "The Piper Norman voice and AI-assisted close-view art remain release candidates requiring human casting and identity approval.",
+    "Feature topology is bounded by registered masks and pixel evidence; a future production rig still needs view-matched semantic oral and eye geometry.",
+    "No reinforcement learning is used because no blinded human preference dataset exists yet."
+  ]
+}

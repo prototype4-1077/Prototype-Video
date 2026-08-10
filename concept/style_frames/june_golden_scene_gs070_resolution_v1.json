@@ -1,0 +1,121 @@
+{
+  "contract_version": 1,
+  "plate_id": "june_golden_scene_gs070_resolution_plate",
+  "plate_version": "1.0.0",
+  "character_id": "june_oxley",
+  "shot_id": "GS070",
+  "image": {
+    "path": "concept/style_frames/june-golden-scene-gs070-resolution-plate-v1.png",
+    "sha256": "c54f82ef387121267829ec0a85c8fbf56830af2fd18c400ef777cfbb9044d029",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB"
+  },
+  "offer_insert": {
+    "path": "concept/style_frames/june_oxley_mug_held_insert_v1.png",
+    "sha256": "857e2e1584170d9264b0806bf74ae64e0a9a3845e0e6a1711c6b3897c2d2389c",
+    "width": 1672,
+    "height": 941,
+    "mode": "RGB"
+  },
+  "output": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 228,
+    "duration_seconds": 7.6
+  },
+  "sequence": {
+    "offer_insert_start_frame": 1,
+    "offer_insert_end_frame": 45,
+    "direct_address_start_frame": 46,
+    "dialogue_end_frame": 143,
+    "nod_start_frame": 157,
+    "nod_end_frame": 188,
+    "final_hold_start_frame": 202,
+    "final_hold_frames": 27,
+    "mouth_returns_to_authored_plate_frame": 145
+  },
+  "canonical_identity_reference": {
+    "path": "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+    "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9"
+  },
+  "paired_viseme_atlas": {
+    "path": "concept/style_frames/june_oxley_viseme_atlas_v1.png",
+    "sha256": "73df92931fd6f0e5d276ab85524232479a23d7e3049feb47b0cff7058a24f201"
+  },
+  "paired_expression_atlas": {
+    "path": "concept/style_frames/june_oxley_expression_atlas_v1.png",
+    "sha256": "23a1e4fd24ca13ada1c34722905528b052993c0f37477195f13d2a5b6bcf462b"
+  },
+  "atlas_registration": {
+    "cell_width": 418,
+    "cell_height": 418,
+    "scale": 1.5492,
+    "offset": [379.9149, -22.3971],
+    "affine_matrix": [
+      [1.52384528, -0.279078367, 379.914944],
+      [0.279078367, 1.52384528, -22.3970917]
+    ],
+    "mouth_patch_box": [110, 160, 318, 285],
+    "expression_patch_box": [100, 80, 320, 190],
+    "feature_mask_feather_px": 10,
+    "method": "SIFT similarity transfer from the registered canonical hero plate with manual landmark review",
+    "registration_inliers": 6,
+    "patch_color_match_strength": 0.78
+  },
+  "rig_regions": {
+    "head": [330, 20, 875, 610],
+    "shoulders": [30, 360, 1050, 941],
+    "wind_chime": [1270, 0, 1465, 365],
+    "lantern": [815, 70, 1015, 345],
+    "steam_origin": [1138, 688],
+    "camera_anchor": [0.43, 0.42]
+  },
+  "motion_bounds": {
+    "head_x_px": [-4.0, 4.0],
+    "head_y_px": [-5.0, 5.0],
+    "head_tilt_deg": [-1.25, 1.25],
+    "shoulder_x_px": [-2.0, 2.0],
+    "breath_y_px": [-2.5, 2.5],
+    "camera_push": [0.0, 0.02]
+  },
+  "encoded_quality_gate": {
+    "minimum_review_frame_psnr_db": 38.0,
+    "minimum_encoded_laplacian_variance": 30.0
+  },
+  "style_sources": [
+    {
+      "role": "porch_and_lighting_continuity",
+      "path": "concept/style_frames/june-golden-scene-gs070-style-target-v2.png",
+      "sha256": "9584700c9f2aa10d6dafa3e2224fbbc7b6b550c53d9217d6d2b31888bbd4b58d"
+    },
+    {
+      "role": "identity_emotion_and_release_pose",
+      "path": "concept/style_frames/june-golden-scene-gs070-portrait-style-target-v2.png",
+      "sha256": "9394fc5ace5b127832fc791f287ba614eefbbf22aba9359589ad9f316f4812df"
+    }
+  ],
+  "generation": {
+    "method": "built_in_image_generation_identity_preserving_landscape_recomposition",
+    "intent": "production-pixel close-hero plate for GS070 direct address",
+    "cash_cost": 0,
+    "paid_runtime_dependency": false
+  },
+  "invariants": [
+    "the held-mug macro and released-mug close plate are both authored production pixels",
+    "the cut occurs on exactly frame 46 with no interpolation between source plates",
+    "June returns his gaze to camera and the mug remains grounded on the table",
+    "the registered face atlases preserve June's canonical identity through dialogue",
+    "the compact nod completes before the final hold",
+    "head mouth and shoulders are locked during the final 27 frames while porch life continues",
+    "all motion is deterministic for the same cue contracts"
+  ],
+  "visual_gates": [
+    "feature-level atlas masks reveal no replacement of June's cheeks ears or beard silhouette",
+    "the mug offer release and direct-address beats read without narration",
+    "the mug chip hand anatomy direct gaze and beard silhouette remain stable",
+    "the final hold is alive through secondary light steam and dust rather than body bobbing",
+    "the encoded result is exactly 1920x1080 H.264 yuv420p at 30 fps for 228 frames"
+  ]
+}

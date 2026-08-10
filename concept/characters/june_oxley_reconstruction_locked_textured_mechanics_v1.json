@@ -1,0 +1,314 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_reconstruction_locked_textured_mechanics_v1",
+  "phase": "phase32_reconstruction_locked_textured_mechanics",
+  "character_id": "june_oxley",
+  "proof_type": "bounded_reconstruction_locked_textured_mechanics",
+  "purpose": "Prove that June Oxley's accepted pose-100 pixels survive the exact accepted Phase 31 connected-region micro-settle without identity drift, texture swim, dark alpha fringes, gaps, duplicate painted features, or hidden texture synthesis.",
+  "classification": "Textured identity and deformation proof; not yet a facial-performance or episode-quality approval.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "delivery_attempt_version": 3,
+  "audit_revision": 2,
+  "locks": {
+    "phase30_contract": {
+      "path": "concept/characters/june_oxley_reconstruction_locked_patch_v1.json",
+      "sha256": "a0592bcd44ee631491840d66cb424aa867a5bc5963601f4cf2355c3350dd46fd"
+    },
+    "phase30_implementation": {
+      "path": "pipeline/cartoon_reconstruction_locked_patch.py",
+      "sha256": "44703b447aa265a5ae38a6455b44e05196b0d7e22b4ad35d5d0283edaddb8b82"
+    },
+    "phase31_contract": {
+      "path": "concept/characters/june_oxley_connected_region_mechanics_v1.json",
+      "sha256": "24e9c6962b57a3de0cf0b37d8928549a9883a3afc30c817f3e4c68d97248863c"
+    },
+    "phase31_implementation": {
+      "path": "pipeline/cartoon_connected_region_mechanics.py",
+      "sha256": "0f085a96db8d32c3a0fad994c95e19b0bf25a569a70dd7f69a03a2d1d7792cb7"
+    },
+    "phase31_acceptance_receipt": {
+      "path": "concept/characters/june_oxley_phase31_acceptance_v1.json",
+      "sha256": "cd0339964d0af066cd6144b3c6efff930f90566a813c750a10291781d027c8ca",
+      "required_machine_passed": true,
+      "required_gate_count": 82
+    },
+    "phase32_rejected_delivery_receipt": {
+      "path": "concept/characters/june_oxley_phase32_rejected_delivery_v1.json",
+      "sha256": "aeaa35fbb9ae6b3d262ce4ffb630069447fe20891d84ac3889666e054fd0fcb6",
+      "required_status": "decoded_delivery_rejected",
+      "required_encoding_process_count": 1,
+      "required_failed_gate_count": 1
+    },
+    "phase32_superseded_delivery_receipt": {
+      "path": "concept/characters/june_oxley_phase32_superseded_delivery_v2.json",
+      "sha256": "47600b0842799bfc53e9c43e9805ae98ecc3b0d36f80c01dedf0a3ad86322f7e",
+      "required_status": "machine_delivery_passed_human_review_pending_superseded_by_audit_revision_2",
+      "required_machine_passed": true,
+      "required_gate_count": 74,
+      "required_encoding_process_count": 1
+    },
+    "accepted_character_source": {
+      "path": "concept/style_frames/june_gs030_pose_100_foreground_v1.png",
+      "sha256": "c8665a358c7f18fb159ce15c9bd381b433871a1f2f47f6b227e31cb08031e07d",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGBA",
+      "role": "sole_character_texture_source"
+    },
+    "clean_environment": {
+      "path": "concept/style_frames/june-golden-scene-gs030-clean-porch-v1.png",
+      "sha256": "c2ed99ead71cc526032908722916c67739d27741e1f1d4145fc276fe11f1e9dd",
+      "width": 1672,
+      "height": 941,
+      "mode": "RGB",
+      "role": "environment_only_never_character_texture"
+    },
+    "phase30_registered_rest_rgba_bytes_sha256": "5f3b0c400c815c665aec872ce9f739b2cceb0fa1728c5bd406ed98f53020f202"
+  },
+  "timing": {
+    "frame_start": 1,
+    "frame_end": 49,
+    "frame_count": 49,
+    "fps": 30,
+    "duration_rational": "49/30",
+    "key_frames": [1, 7, 13, 19, 25, 31, 37, 43, 49],
+    "motion_source": "exact_phase31_compile_motion_state_and_frame_renderer",
+    "first_last_exact": true
+  },
+  "texture_policy": {
+    "character_texture_source_count": 1,
+    "read_pixels_only_from_locked_patch_rgba_after_extraction": true,
+    "direct_source_plate_read_after_patch_extraction_allowed": false,
+    "new_character_texture_allowed": false,
+    "ai_generated_character_pixels_allowed": false,
+    "inpainted_character_pixels_allowed": false,
+    "hidden_surface_inference_allowed": false,
+    "working_color_space": "linear_srgb_premultiplied_alpha_float32",
+    "texture_interpolation": "bicubic_premultiplied_linear_rgb",
+    "mask_and_owner_interpolation": "nearest_neighbor",
+    "face_identity_source_roi_xyxy": [595, 25, 725, 190],
+    "face_identity_ssim_erosion_px": 5,
+    "registration_ringing_speckle_removal_allowed": true,
+    "maximum_registration_ringing_speckle_area_px": 1,
+    "unpremultiply_only_after_ownership_resolution": true,
+    "force_zero_rgb_where_alpha_zero": true,
+    "endpoint_policy": "exact_phase30_patch_local_recomposition_then_exact_phase27_registration_bypass"
+  },
+  "ownership_policy": {
+    "method": "transport_hard_owner_then_support_fallback_select_exactly_one_candidate",
+    "visible_alpha_threshold_exclusive_uint8": 16,
+    "priority": [
+      "right_hand_mug",
+      "left_hand",
+      "left_boot",
+      "right_boot",
+      "head_neck",
+      "left_sleeve",
+      "right_sleeve",
+      "lower_garment",
+      "torso_shell"
+    ],
+    "required_adjacent_pairs": [
+      ["head_neck", "torso_shell"],
+      ["left_sleeve", "torso_shell"],
+      ["right_sleeve", "torso_shell"],
+      ["left_hand", "left_sleeve"],
+      ["right_hand_mug", "right_sleeve"],
+      ["lower_garment", "torso_shell"],
+      ["left_boot", "lower_garment"],
+      ["right_boot", "lower_garment"]
+    ],
+    "alpha_over_between_character_regions_allowed": false,
+    "candidate_summing_allowed": false,
+    "support_fallback_only_when_no_transported_hard_owner": true,
+    "final_alpha_must_cover_phase31_geometry": true,
+    "visible_pixel_owner_count_required": 1
+  },
+  "scene": {
+    "background_source": "clean_environment_lock",
+    "fixed_camera": true,
+    "character_registration_count": 1,
+    "contact_shadow": {
+      "source": "final_registered_boot_masks_and_phase31_receivers",
+      "rgb": [38, 28, 25],
+      "opacity": 0.21176470588235294,
+      "source_blur_radius_px": 9,
+      "character_texture_claim": false
+    },
+    "steam_allowed": false,
+    "light_breathe_allowed": false,
+    "camera_motion_allowed": false
+  },
+  "quality_gates": {
+    "dependencies": {
+      "required_all_locked_hashes_match": true,
+      "required_phase30_machine_pass": true,
+      "required_phase31_acceptance_receipt_machine_pass": true,
+      "required_phase31_acceptance_gate_count": 82,
+      "required_nine_patch_rgba_hashes_match": true
+    },
+    "geometry": {
+      "minimum_registered_character_alpha_iou_to_phase31": 0.995,
+      "maximum_bidirectional_alpha_edge_chamfer_p95_preview_px": 1.0,
+      "minimum_registered_region_alpha_iou_to_phase31": 0.995,
+      "maximum_registered_region_alpha_edge_chamfer_p95_preview_px": 1.0,
+      "maximum_phase31_geometry_pixels_uncovered": 0,
+      "maximum_character_pixels_outside_phase31_geometry": 0,
+      "required_region_component_inventory_matches_locked_source": true,
+      "required_character_union_components": 1
+    },
+    "premultiplication": {
+      "maximum_nonfinite_values": 0,
+      "maximum_premultiplied_rgb_over_alpha_excess": 0.000001,
+      "maximum_nonzero_rgb_pixels_where_alpha_zero": 0,
+      "maximum_samples_outside_locked_patch_arrays": 0,
+      "maximum_generated_character_texture_pixels": 0,
+      "maximum_ai_generated_character_pixels": 0,
+      "maximum_inpainted_character_pixels": 0,
+      "required_character_texture_source_count": 1,
+      "minimum_valid_source_coordinate_fraction": 1.0
+    },
+    "ownership": {
+      "required_selected_owners_per_occupied_pixel": 1,
+      "maximum_multiply_composited_character_pixels": 0,
+      "maximum_unowned_alpha_pixels": 0,
+      "maximum_overlap_fallback_fraction": 0.02,
+      "maximum_internal_transparent_seam_paths": 0,
+      "maximum_source_aligned_visible_seam_band_rgb_error_p95": 12.0,
+      "maximum_secondary_alpha_edge_fraction": 0.005,
+      "minimum_visible_seam_boundary_band_pixels_per_pair": 100,
+      "maximum_cross_owner_source_coordinate_divergence_p95_px": 14.0
+    },
+    "deformation": {
+      "minimum_deformation_gradient_singular_value": 0.85,
+      "maximum_deformation_gradient_singular_value": 1.15,
+      "maximum_deformation_gradient_anisotropy": 1.22,
+      "maximum_deformation_gradient_shear_cosine": 0.12,
+      "maximum_tracked_material_point_velocity_preview_px_per_frame": 5.5,
+      "maximum_tracked_material_point_acceleration_preview_px_per_frame_squared": 2.5,
+      "maximum_tracked_material_point_jerk_preview_px_per_frame_cubed": 2.0
+    },
+    "texture": {
+      "minimum_source_aligned_region_rgb_psnr_db": 30.0,
+      "minimum_source_aligned_region_rgb_ssim": 0.94,
+      "minimum_source_aligned_face_rgb_psnr_db": 34.0,
+      "minimum_source_aligned_face_rgb_ssim": 0.97,
+      "minimum_motion_compensated_laplacian_variance_ratio": 0.70,
+      "maximum_motion_compensated_laplacian_variance_ratio": 1.30,
+      "maximum_mean_source_aligned_rgb_error": 4.0,
+      "maximum_p95_source_aligned_rgb_error": 12.0,
+      "maximum_endpoint_raw_rgba_mismatched_pixels": 0,
+      "maximum_endpoint_registered_rgba_mismatched_pixels": 0
+    },
+    "delivery": {
+      "required_width": 1920,
+      "required_height": 1080,
+      "required_fps": 30,
+      "required_encoded_frame_count": 49,
+      "required_decoded_frame_count": 49,
+      "required_codec": "h264",
+      "required_pixel_format": "yuv420p",
+      "required_stream_count": 1,
+      "required_video_stream_count": 1,
+      "required_audio_stream_count": 0,
+      "required_r_frame_rate": "30/1",
+      "required_avg_frame_rate": "30/1",
+      "required_stream_duration_rational": "49/30",
+      "maximum_container_duration_error_seconds": 0.001,
+      "required_full_decode": true,
+      "minimum_per_frame_subject_roi_psnr_db": 32.0,
+      "minimum_per_frame_subject_roi_ssim": 0.96,
+      "minimum_decoded_face_crop_psnr_db": 30.0,
+      "minimum_decoded_face_crop_ssim": 0.94,
+      "minimum_decoded_laplacian_variance_ratio": 0.75,
+      "maximum_decoded_laplacian_variance_ratio": 1.20,
+      "minimum_decoded_first_last_subject_roi_psnr_db": 45.0,
+      "required_decoded_review_frame_count": 9,
+      "required_contact_sheet_from_decoded_frames": true,
+      "required_identity_strip_from_decoded_frames": true,
+      "required_seam_sheet_from_decoded_frames": true,
+      "required_video_file": true,
+      "required_report_file": true
+    }
+  },
+  "measurement_calibration": {
+    "basis": "Exact accepted Phase 31 motion evaluated over all 49 frames before the Phase 32 encode boundary.",
+    "observed_maximum_deformation_gradient_anisotropy": 1.2177988368295538,
+    "anisotropy_frame": 19,
+    "legacy_sparse_observed_maximum_material_point_velocity_preview_px_per_frame": 4.863154517832324,
+    "audit_revision_2_observed_maximum_tracked_material_point_velocity_preview_px_per_frame": 5.356180755551532,
+    "velocity_region": "lower_garment",
+    "velocity_transition_frames": [21, 22],
+    "observed_minimum_visible_seam_boundary_band_pixels_per_pair": 138,
+    "observed_maximum_cross_owner_source_coordinate_divergence_p95_px": 13.309522642991462,
+    "threshold_policy": "Small round ceilings above the locked accepted-motion measurements. Seam evidence must be non-vacuous, source-coordinate divergence is measured at each actual owner handoff, and lower-garment Jacobians are evaluated at every semantic support pixel."
+  },
+  "delivery": {
+    "output_directory": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v3",
+    "video_filename": "june-phase32-reconstruction-locked-textured-mechanics-v3.mp4",
+    "report_filename": "june-phase32-reconstruction-locked-textured-mechanics-report-v3.json",
+    "contact_sheet_filename": "june-phase32-reconstruction-locked-textured-contact-sheet-v3.png",
+    "identity_strip_filename": "june-phase32-reconstruction-locked-textured-identity-strip-v3.png",
+    "seam_detail_sheet_filename": "june-phase32-reconstruction-locked-textured-seam-detail-sheet-v3.png",
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 49,
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "audio": "none",
+    "review_frames": [1, 7, 13, 19, 25, 31, 37, 43, 49],
+    "encoding": {
+      "implementation": "libx264",
+      "preset": "slow",
+      "tune": "animation",
+      "crf": 0,
+      "lossless_yuv": true,
+      "gop": 1,
+      "b_frames": 0,
+      "video_track_timescale": 90000
+    },
+    "one_encode_without_retry": true,
+    "staged_atomic_directory_publication": true,
+    "external_phase31_report_required_before_encode": true
+  },
+  "report_schema": {
+    "required_top_level_fields": [
+      "contract_id",
+      "proof",
+      "dependencies",
+      "geometry",
+      "premultiplication",
+      "ownership",
+      "deformation",
+      "texture",
+      "delivery",
+      "gate_results",
+      "machine_passed",
+      "audience_quality",
+      "cash_cost",
+      "paid_runtime_dependency"
+    ],
+    "gate_result_fields": ["id", "measured", "operator", "threshold", "passed"]
+  },
+  "failure_policy": {
+    "mode": "fail_closed",
+    "partial_success_allowed": false,
+    "fallback_allowed": false,
+    "automatic_reencode_allowed": false,
+    "on_dependency_mismatch": "raise",
+    "on_texture_provenance_mismatch": "raise",
+    "on_geometry_or_ownership_failure": "raise",
+    "on_deformation_or_identity_failure": "raise",
+    "on_delivery_failure": "raise",
+    "machine_pass_rule": "true_only_when_every_required_gate_and_delivery_artifact_passes"
+  },
+  "promotion_rule": {
+    "human_full_size_review_required": true,
+    "facial_performance_may_begin_only_after_machine_and_human_pass": true,
+    "reinforcement_learning_allowed": false,
+    "next_if_passed": "close_face_viseme_expression_atlas_and_six_to_ten_second_voiced_acting_shot"
+  }
+}

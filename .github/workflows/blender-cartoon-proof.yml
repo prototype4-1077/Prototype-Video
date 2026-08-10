@@ -2,7 +2,8 @@ name: Blender Cartoon Proof
 
 # Manual-only production-path proof. Provisions pinned Blender and Rhubarb
 # binaries, generates temporary dialogue audio, and uploads landscape + portrait
-# June Porch videos. Generated media remains an artifact and never enters Git.
+# proofs plus the exact 453-frame June v5 deformation gate. Generated media
+# remains an artifact and never enters Git.
 
 on:
   workflow_dispatch:
@@ -12,13 +13,14 @@ on:
         required: false
         default: "main"
 
+
 permissions:
   contents: read
 
 jobs:
   proof:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 90
     env:
       BLENDER_VERSION: "4.2.0"
       BLENDER_SERIES: "Blender4.2"
@@ -85,12 +87,10 @@ jobs:
 
       - name: Cartoon contract tests
         run: |
-          python3 -m pip install --quiet pytest
-          python3 -m pytest \
-            pipeline/tests/test_cartoon_motion.py \
-            pipeline/tests/test_cartoon_lipsync.py \
-            pipeline/tests/test_cartoon_vertical_slice.py \
-            pipeline/tests/test_cartoon_asset_library.py -q
+          python3 -m unittest discover \
+            -s pipeline/tests \
+            -p 'test_cartoon_*.py' \
+            -q
 
       - name: Generate temporary proof dialogue
         run: |
@@ -114,32 +114,44 @@ jobs:
             --output-dir proof-out
           find proof-out -maxdepth 2 -type f -print
 
-      - name: Build asset library and render full-resolution quality keyframes
-        run: |
-          set -euo pipefail
-          python3 -m pipeline.cartoon_asset_library \
-            examples/june-porch-vertical-slice.json \
-            concept/characters/june_oxley_asset_v2.json \
-            --blender /opt/blender/blender \
-            --ffmpeg ffmpeg \
-            --engine CYCLES \
-            --samples 12 \
-            --output-dir asset-quality-out
-          find asset-quality-out -maxdepth 3 -type f -print
-
-      - name: Upload proof videos, plans, and contact sheets
+      - name: Upload animated proof products immediately
         uses: actions/upload-artifact@v4
         with:
-          name: blender-cartoon-proof
+          name: blender-cartoon-proof-videos
           path: |
             proof-out/*.mp4
             proof-out/*.png
             proof-out/*.json
             proof-out/plans/*.json
+          if-no-files-found: error
+          retention-days: 14
+
+      - name: Build v5 asset library and render exact Golden Scene deformation gate
+        run: |
+          set -euo pipefail
+          python3 -m pipeline.cartoon_asset_library \
+            examples/june-golden-scene-twelve-dollar-mug.json \
+            concept/characters/june_oxley_asset_v5.json \
+            --blender /opt/blender/blender \
+            --ffmpeg ffmpeg \
+            --engine BLENDER_WORKBENCH \
+            --samples 1 \
+            --facial-engine BLENDER_WORKBENCH \
+            --facial-size 480 \
+            --facial-samples 1 \
+            --output-dir asset-quality-out
+          find asset-quality-out -maxdepth 3 -type f -print
+
+      - name: Upload v5 asset, deformation video, and review matrices
+        uses: actions/upload-artifact@v4
+        with:
+          name: blender-cartoon-asset-review-v5
+          path: |
             asset-quality-out/*.png
+            asset-quality-out/*.mp4
             asset-quality-out/*.json
             asset-quality-out/plans/*.json
             asset-quality-out/assets/*.blend
-            asset-quality-out/frames/**/*.png
           if-no-files-found: error
           retention-days: 14
+

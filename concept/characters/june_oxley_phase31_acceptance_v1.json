@@ -1,0 +1,55 @@
+{
+  "receipt_version": 1,
+  "receipt_id": "june_oxley_phase31_acceptance_v1",
+  "character_id": "june_oxley",
+  "phase": "phase31_connected_region_mechanics",
+  "accepted_contract_id": "june_oxley_connected_region_mechanics_v1",
+  "accepted_commit": "cdfb058fa855368dea07f0d6ce6f3f2d98d2b0ed",
+  "report": {
+    "path": "../../outputs/edit/phase31-connected-region-mechanics-v1/june-phase31-connected-region-mechanics-report-v1.json",
+    "sha256": "6ac15cdbee9908f282c7943d2db94e1fefab73c74c5b4f922a97b6abcc242863",
+    "machine_passed": true,
+    "passed_gate_count": 82,
+    "failed_gate_count": 0
+  },
+  "video": {
+    "path": "../../outputs/edit/phase31-connected-region-mechanics-v1/june-phase31-connected-region-mechanics-v1.mp4",
+    "sha256": "21777b5ad4b02d7be5ccf0e183243bcd974673a944f8f6ed4df0979da4180b36",
+    "codec": "h264",
+    "pixel_format": "yuv420p",
+    "width": 960,
+    "height": 540,
+    "fps": 30,
+    "frame_count": 49,
+    "duration_rational": "49/30",
+    "audio_stream_count": 0
+  },
+  "decoded_contact_sheet": {
+    "path": "../../outputs/edit/phase31-connected-region-mechanics-v1/june-phase31-connected-region-mechanics-contact-sheet-v1.png",
+    "sha256": "b43e6c1a31a184df1c3f2779414fb989207f7d31d4e090962baf5ceb14cad32b",
+    "review_frames": [1, 7, 13, 19, 25, 31, 37, 43, 49]
+  },
+  "accepted_evidence": {
+    "disconnected_registered_region_frames": 0,
+    "disconnected_registered_union_frames": 0,
+    "minimum_sampled_tps_jacobian_determinant": 0.948025496909266,
+    "maximum_tps_inverse_residual_source_px": 0.000002033838172301557,
+    "maximum_nonboot_centroid_step_preview_px_per_frame": 3.322596446673827,
+    "maximum_cage_vertex_step_preview_px_per_frame": 3.5843521444582,
+    "maximum_rotation_step_deg_per_frame": 0.33703703703703713,
+    "maximum_root_third_difference_preview_px_per_frame_cubed": 0.9750243110674279,
+    "minimum_balance_margin_preview_px": 47.7477070986663,
+    "worst_decoded_character_mask_iou": 0.9928481461642031,
+    "worst_decoded_subject_roi_psnr_db": 32.49736006906059,
+    "decoded_first_last_iou": 0.9990008688097307,
+    "decoded_first_last_subject_roi_psnr_db": 49.65024057365409
+  },
+  "audience_quality": {
+    "status": "mechanics_visual_review_passed_not_audience_ready",
+    "machine_gate_is_not_audience_approval": true,
+    "next_required_proof": "reconstruction_locked_textured_mechanics"
+  },
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_generation_used": false
+}

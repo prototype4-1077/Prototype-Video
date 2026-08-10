@@ -1,0 +1,62 @@
+{
+  "receipt_version": 1,
+  "character_id": "june_oxley",
+  "phase": "phase32_reconstruction_locked_textured_mechanics",
+  "delivery_attempt_version": 2,
+  "status": "machine_delivery_passed_human_review_pending_superseded_by_audit_revision_2",
+  "source_commit": "cdfb058fa855368dea07f0d6ce6f3f2d98d2b0ed",
+  "contract_at_attempt": {
+    "path": "concept/characters/june_oxley_reconstruction_locked_textured_mechanics_v1.json",
+    "raw_sha256": "76784366616d5dee3d2b8b6af5b1a63e248392c734dec1995b7526d27c768865",
+    "canonical_sha256": "2e5ef980b94096f0b86f45c4ac4483a28d2cdb3cd70b2f4932c53f9d95ea7e09"
+  },
+  "implementation_at_attempt": {
+    "path": "pipeline/cartoon_reconstruction_locked_textured_mechanics.py",
+    "sha256": "47c53f702b210ae2d53997d090e43d7793d46d5c2e89d6c27dfda5eb6606e5cb"
+  },
+  "report": {
+    "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v2/june-phase32-reconstruction-locked-textured-mechanics-report-v2.json",
+    "sha256": "6617743ad036d883b08661c9cb4ba8cc0bdd29035f1323e699e27fec91b0ca36",
+    "bytes": 444867,
+    "machine_passed": true,
+    "passed_gate_count": 74,
+    "failed_gate_count": 0,
+    "audience_status": "machine_delivery_passed_human_review_pending"
+  },
+  "video": {
+    "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v2/june-phase32-reconstruction-locked-textured-mechanics-v2.mp4",
+    "sha256": "9b577d54781ccc8ea94dd97752cdccf106a2303ed48b68c125daadde811da60d",
+    "bytes": 52733456,
+    "encoding_process_count": 1
+  },
+  "review_artifacts": {
+    "contact_sheet": {
+      "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v2/june-phase32-reconstruction-locked-textured-contact-sheet-v2.png",
+      "sha256": "3a82e8d67b05e2623e46491086d1636951a703ade1d6ed2d6ec031558687be2b",
+      "bytes": 1497358
+    },
+    "identity_strip": {
+      "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v2/june-phase32-reconstruction-locked-textured-identity-strip-v2.png",
+      "sha256": "6afe0e16627f82aefcc4f548897efe98f09ed81554ca51fd37d95a74aea1d8d9",
+      "bytes": 766620
+    },
+    "seam_detail_sheet": {
+      "path": "../../outputs/edit/phase32-reconstruction-locked-textured-mechanics-v2/june-phase32-reconstruction-locked-textured-seam-detail-sheet-v2.png",
+      "sha256": "0144201be252f82f3d898bbc1495d2348baa0d892e4714b8897017fa9b6d3472",
+      "bytes": 1534349
+    }
+  },
+  "supersession": {
+    "reason": "Audit revision 2 replaced mixed alpha semantics, sparse deformation sampling, vacuous seam evidence, and unbound report provenance.",
+    "strict_audit_observation": {
+      "frame": 19,
+      "alpha_at_or_below_16_coverage_holes_before_repair": 19,
+      "transparent_seam_paths_before_repair": 3,
+      "tracked_material_point_velocity_preview_px_per_frame": 5.356180755551532
+    },
+    "replacement_required": "delivery_attempt_version_3_one_encode_after_strengthened_preflight"
+  },
+  "human_full_size_review_completed": false,
+  "cash_cost": 0,
+  "paid_runtime_dependency": false
+}
