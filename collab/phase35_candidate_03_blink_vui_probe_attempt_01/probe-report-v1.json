@@ -1,0 +1,1013 @@
+{
+  "report_version": 1,
+  "attempt_id": "phase35_c03_blink_vui_probe_v1_attempt01",
+  "status": "METADATA_PROBE_REJECTED_NO_RETRY",
+  "machine_passed": false,
+  "authorization_consumed": true,
+  "scope": "one exact nine-frame Candidate03 blink H.264/MP4 VUI metadata diagnostic",
+  "authorization": {
+    "path": "collab/CLAUDE_REVIEW_2026-08-10_2312Z.md",
+    "hash_domain": "lf_normalized_text",
+    "sha256": "457fa6900366c7be202428e5108b2bba382de4094b44f5f1415bfbd9ae9efb51",
+    "verdict": "PHASE35_C03_BLINK_VUI_PROBE_V1_ATTEMPT01_ALLOWED"
+  },
+  "contract": {
+    "path": "concept/characters/june_oxley_phase35_candidate03_blink_vui_probe_v1.json",
+    "raw_sha256": "7b235637f370f9f75c33020f71f1d7de53fe1d34ab3417abb2de1683f85ee5d8",
+    "authorization_subject_sha256": "bfaffe5ad4cb8238d153766d677adc47fb69d1f8e0e5a2b9b2560132cd5ae594"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_source_textured_vui_probe.py",
+    "sha256": "93f94b12d9c1762183d89c6a3454c3da6ed8ade58dc5caae225444531ef067d6"
+  },
+  "attempt_claim": {
+    "file": "attempt-claim-v1.json",
+    "sha256": "6054f0c6f4c3a36fd9e87a3d984b914aac22b753a9c7602bb5a8019861da70e8"
+  },
+  "captured_state": {
+    "contract_raw_sha256": "7b235637f370f9f75c33020f71f1d7de53fe1d34ab3417abb2de1683f85ee5d8",
+    "authorization_subject_sha256": "bfaffe5ad4cb8238d153766d677adc47fb69d1f8e0e5a2b9b2560132cd5ae594",
+    "implementation_sha256": "93f94b12d9c1762183d89c6a3454c3da6ed8ade58dc5caae225444531ef067d6",
+    "locks": {
+      "attempt01_encoder_implementation": "82c56eddd8999c6aa50c0082cd92bba55fb25deab3829c5ab724b381b9ad61bb",
+      "attempt01_failure": "94ff0ad2f99ac44f8160c0ff944733f3b097e4d4fc572d293a8ae20bf3b3cadc",
+      "attempt01_report": "406f966ce3d7acd06b2b6d35fab965017035002a4ad8b9cb2088e714e955bbb7",
+      "claude_attempt01_audit": "9e02ff40fab839ad1ec927bc2e00f5a3bcc0834cce907214168969592e3f566e",
+      "source_contract": "68c763be79dd76447f6c33baf39ef79528fbbf1d6ea25a113c5550d63d62ba94",
+      "source_manifest": "250b678686f87c5cdcabeaedd0f6e39833b9dcaa7d2387c76fa8fe016b2885fe"
+    },
+    "local_source_manifest_sha256": "250b678686f87c5cdcabeaedd0f6e39833b9dcaa7d2387c76fa8fe016b2885fe",
+    "source_archive_sha256": "b5908bfce4ac10ad7e3ad74e58a8cf9f8e352033b14c1828315e96cd615f6e0f",
+    "ffmpeg_sha256": "228d7a8556258de907fdb55f36850078ebc7680b84ec30d84ea02e99bec1d1eb",
+    "ffprobe_sha256": "0fde260f5abd35c9cafd96f594cc76365a780c1b73a90e35b6a3409ea1db1bf0",
+    "command_template_sha256": "adfa4428329bda59281dfa7e2aa47cd1c9c73815d0ac1be5cbbc544ce73a75ad",
+    "authorization": {
+      "path": "collab/CLAUDE_REVIEW_2026-08-10_2312Z.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "457fa6900366c7be202428e5108b2bba382de4094b44f5f1415bfbd9ae9efb51",
+      "verdict": "PHASE35_C03_BLINK_VUI_PROBE_V1_ATTEMPT01_ALLOWED"
+    }
+  },
+  "source": {
+    "verified_archive_frames": 228,
+    "selected_frames": [
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85
+    ],
+    "selected_payload_bytes": 55987200,
+    "selected_payload_sha256": "a32e61dab0ab574727417e0ebf765e4ec06978d16190d1f4011525303de8d879"
+  },
+  "attempt01_defect": {
+    "report_sha256": "406f966ce3d7acd06b2b6d35fab965017035002a4ad8b9cb2088e714e955bbb7",
+    "failure_sha256": "94ff0ad2f99ac44f8160c0ff944733f3b097e4d4fc572d293a8ae20bf3b3cadc",
+    "failed_metadata_gates": [
+      "video_color_transfer",
+      "video_color_primaries"
+    ]
+  },
+  "toolchain": {
+    "ffmpeg": {
+      "path": "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffmpeg.exe",
+      "sha256": "228d7a8556258de907fdb55f36850078ebc7680b84ec30d84ea02e99bec1d1eb",
+      "version": "ffmpeg version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers"
+    },
+    "ffprobe": {
+      "path": "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffprobe.exe",
+      "sha256": "0fde260f5abd35c9cafd96f594cc76365a780c1b73a90e35b6a3409ea1db1bf0",
+      "version": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers"
+    },
+    "ffmpeg_version_command": [
+      "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffmpeg.exe",
+      "-version"
+    ],
+    "ffprobe_version_command": [
+      "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffprobe.exe",
+      "-version"
+    ],
+    "help_commands": [
+      [
+        "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffmpeg.exe",
+        "-hide_banner",
+        "-h",
+        "encoder=libx264"
+      ],
+      [
+        "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffmpeg.exe",
+        "-hide_banner",
+        "-h",
+        "decoder=h264"
+      ],
+      [
+        "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffmpeg.exe",
+        "-hide_banner",
+        "-h",
+        "demuxer=rawvideo"
+      ],
+      [
+        "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffmpeg.exe",
+        "-hide_banner",
+        "-h",
+        "muxer=mp4"
+      ],
+      [
+        "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffmpeg.exe",
+        "-hide_banner",
+        "-h",
+        "bsf=trace_headers"
+      ]
+    ]
+  },
+  "encoder": {
+    "command": [
+      "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffmpeg.exe",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-xerror",
+      "-abort_on",
+      "empty_output+empty_output_stream",
+      "-f",
+      "rawvideo",
+      "-pixel_format",
+      "rgb24",
+      "-video_size",
+      "1920x1080",
+      "-framerate",
+      "30",
+      "-i",
+      "pipe:0",
+      "-map",
+      "0:v:0",
+      "-map_metadata",
+      "-1",
+      "-map_chapters",
+      "-1",
+      "-sn",
+      "-dn",
+      "-an",
+      "-frames:v",
+      "9",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "slow",
+      "-tune",
+      "animation",
+      "-crf",
+      "0",
+      "-pix_fmt",
+      "yuv420p",
+      "-fps_mode",
+      "cfr",
+      "-color_range",
+      "tv",
+      "-colorspace",
+      "bt709",
+      "-color_primaries",
+      "bt709",
+      "-color_trc",
+      "bt709",
+      "-x264-params",
+      "fullrange=off:colorprim=bt709:transfer=bt709:colormatrix=bt709",
+      "-tag:v",
+      "avc1",
+      "-movflags",
+      "+faststart+write_colr",
+      "-n",
+      "C:\\Users\\jwats\\Documents\\Codex\\2026-07-28\\d\\outputs\\edit\\.phase35-c03-blink-vui-probe-v1-attempt01.partial-s5l4bai7\\june-phase35-c03-blink-vui-probe-v1.partial.mp4"
+    ],
+    "command_template": [
+      "$FFMPEG",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-xerror",
+      "-abort_on",
+      "empty_output+empty_output_stream",
+      "-f",
+      "rawvideo",
+      "-pixel_format",
+      "rgb24",
+      "-video_size",
+      "1920x1080",
+      "-framerate",
+      "30",
+      "-i",
+      "pipe:0",
+      "-map",
+      "0:v:0",
+      "-map_metadata",
+      "-1",
+      "-map_chapters",
+      "-1",
+      "-sn",
+      "-dn",
+      "-an",
+      "-frames:v",
+      "9",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "slow",
+      "-tune",
+      "animation",
+      "-crf",
+      "0",
+      "-pix_fmt",
+      "yuv420p",
+      "-fps_mode",
+      "cfr",
+      "-color_range",
+      "tv",
+      "-colorspace",
+      "bt709",
+      "-color_primaries",
+      "bt709",
+      "-color_trc",
+      "bt709",
+      "-x264-params",
+      "fullrange=off:colorprim=bt709:transfer=bt709:colormatrix=bt709",
+      "-tag:v",
+      "avc1",
+      "-movflags",
+      "+faststart+write_colr",
+      "-n",
+      "$OUTPUT"
+    ],
+    "command_template_sha256": "adfa4428329bda59281dfa7e2aa47cd1c9c73815d0ac1be5cbbc544ce73a75ad",
+    "process_count": 1,
+    "return_code": 0,
+    "source_frames_written": 9,
+    "source_bytes_written": 55987200,
+    "stderr": {
+      "file": "ffmpeg-stderr-v1.txt",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  },
+  "video": {
+    "file": "june-phase35-c03-blink-vui-probe-v1.mp4",
+    "bytes": 2803370,
+    "sha256": "ebde72592e6c6a7d55dd281816967d94ba47e338ed8a0b3aee862d88be148fc2"
+  },
+  "diagnostic_commands": {
+    "stream_probe": [
+      "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffprobe.exe",
+      "-v",
+      "error",
+      "-count_frames",
+      "-show_entries",
+      "stream=index,codec_type,codec_name,codec_tag_string,profile,pix_fmt,color_range,color_space,color_transfer,color_primaries,width,height,r_frame_rate,avg_frame_rate,nb_frames,nb_read_frames,start_time,duration,duration_ts,time_base:format=start_time,duration",
+      "-of",
+      "json",
+      "C:\\Users\\jwats\\Documents\\Codex\\2026-07-28\\d\\outputs\\edit\\.phase35-c03-blink-vui-probe-v1-attempt01.partial-s5l4bai7\\june-phase35-c03-blink-vui-probe-v1.mp4"
+    ],
+    "frame_probe": [
+      "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffprobe.exe",
+      "-v",
+      "error",
+      "-select_streams",
+      "v:0",
+      "-show_frames",
+      "-show_entries",
+      "frame=media_type,stream_index,width,height,pix_fmt,best_effort_timestamp,best_effort_timestamp_time,pkt_duration,pkt_duration_time,color_range,color_space,color_transfer,color_primaries",
+      "-of",
+      "json",
+      "C:\\Users\\jwats\\Documents\\Codex\\2026-07-28\\d\\outputs\\edit\\.phase35-c03-blink-vui-probe-v1-attempt01.partial-s5l4bai7\\june-phase35-c03-blink-vui-probe-v1.mp4"
+    ],
+    "sps_trace": [
+      "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffmpeg.exe",
+      "-hide_banner",
+      "-loglevel",
+      "info",
+      "-i",
+      "C:\\Users\\jwats\\Documents\\Codex\\2026-07-28\\d\\outputs\\edit\\.phase35-c03-blink-vui-probe-v1-attempt01.partial-s5l4bai7\\june-phase35-c03-blink-vui-probe-v1.mp4",
+      "-map",
+      "0:v:0",
+      "-c",
+      "copy",
+      "-bsf:v",
+      "trace_headers",
+      "-f",
+      "null",
+      "-"
+    ],
+    "decode": [
+      "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffmpeg.exe",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-xerror",
+      "-i",
+      "C:\\Users\\jwats\\Documents\\Codex\\2026-07-28\\d\\outputs\\edit\\.phase35-c03-blink-vui-probe-v1-attempt01.partial-s5l4bai7\\june-phase35-c03-blink-vui-probe-v1.mp4",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-sn",
+      "-dn",
+      "-f",
+      "rawvideo",
+      "-pix_fmt",
+      "rgb24",
+      "pipe:1"
+    ]
+  },
+  "stream_probe": {
+    "programs": [],
+    "stream_groups": [],
+    "streams": [
+      {
+        "index": 0,
+        "codec_name": "h264",
+        "profile": "High 4:4:4 Predictive",
+        "codec_type": "video",
+        "codec_tag_string": "avc1",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "r_frame_rate": "30/1",
+        "avg_frame_rate": "30/1",
+        "time_base": "1/15360",
+        "start_time": "0.000000",
+        "duration_ts": 4608,
+        "duration": "0.300000",
+        "nb_frames": "9",
+        "nb_read_frames": "9"
+      }
+    ],
+    "format": {
+      "start_time": "0.000000",
+      "duration": "0.300000"
+    }
+  },
+  "frame_probe": {
+    "frames": [
+      {
+        "media_type": "video",
+        "stream_index": 0,
+        "best_effort_timestamp": 0,
+        "best_effort_timestamp_time": "0.000000",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709",
+        "side_data_list": [
+          {
+            "side_data_type": "H.26[45] User Data Unregistered SEI message"
+          }
+        ]
+      },
+      {
+        "media_type": "video",
+        "stream_index": 0,
+        "best_effort_timestamp": 512,
+        "best_effort_timestamp_time": "0.033333",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709"
+      },
+      {
+        "media_type": "video",
+        "stream_index": 0,
+        "best_effort_timestamp": 1024,
+        "best_effort_timestamp_time": "0.066667",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709"
+      },
+      {
+        "media_type": "video",
+        "stream_index": 0,
+        "best_effort_timestamp": 1536,
+        "best_effort_timestamp_time": "0.100000",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709"
+      },
+      {
+        "media_type": "video",
+        "stream_index": 0,
+        "best_effort_timestamp": 2048,
+        "best_effort_timestamp_time": "0.133333",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709"
+      },
+      {
+        "media_type": "video",
+        "stream_index": 0,
+        "best_effort_timestamp": 2560,
+        "best_effort_timestamp_time": "0.166667",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709"
+      },
+      {
+        "media_type": "video",
+        "stream_index": 0,
+        "best_effort_timestamp": 3072,
+        "best_effort_timestamp_time": "0.200000",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709"
+      },
+      {
+        "media_type": "video",
+        "stream_index": 0,
+        "best_effort_timestamp": 3584,
+        "best_effort_timestamp_time": "0.233333",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709"
+      },
+      {
+        "media_type": "video",
+        "stream_index": 0,
+        "best_effort_timestamp": 4096,
+        "best_effort_timestamp_time": "0.266667",
+        "width": 1920,
+        "height": 1080,
+        "pix_fmt": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_primaries": "bt709",
+        "color_transfer": "bt709"
+      }
+    ]
+  },
+  "sps_vui": {
+    "video_signal_type_present_flag": [
+      1
+    ],
+    "video_full_range_flag": [
+      0
+    ],
+    "colour_description_present_flag": [
+      1
+    ],
+    "colour_primaries": [
+      1
+    ],
+    "transfer_characteristics": [
+      1
+    ],
+    "matrix_coefficients": [
+      1
+    ]
+  },
+  "mp4_colr": [
+    {
+      "path": "moov/trak/mdia/minf/stbl/stsd/avc1/colr",
+      "type": "nclx",
+      "payload_bytes": 11,
+      "primaries": 2,
+      "transfer": 2,
+      "matrix": 1,
+      "full_range_flag": 0,
+      "reserved_bits": 0
+    }
+  ],
+  "decoded": {
+    "decoder_process_count": 1,
+    "decoded_frame_count": 9,
+    "decoded_rgb24_bytes": 55987200,
+    "decoded_rgb24_sha256": "a0f093e08ae1e24b5e2d343877023995142632b5b5f5d5201309649617f06e5b",
+    "minimum_full_frame_psnr_db": 42.65527255467107,
+    "nearest_source_frame_order": [
+      77,
+      78,
+      79,
+      80,
+      81,
+      82,
+      83,
+      84,
+      85
+    ],
+    "frames": [
+      {
+        "probe_frame": 1,
+        "source_frame": 77,
+        "decoded_rgb_sha256": "ad2c18ae1e0803fa46aa76ea13dcae477b71f83657a4568cdc976910f34dc029",
+        "full_frame_psnr_db": 42.67155349296694,
+        "nearest_source_frame": 77,
+        "nearest_source_mse": 3.514997427983539
+      },
+      {
+        "probe_frame": 2,
+        "source_frame": 78,
+        "decoded_rgb_sha256": "fdfb9578b49afa7a35ff29a9f7c2532c8262b9deb87edadabbd35e7332c00fce",
+        "full_frame_psnr_db": 42.666469728936974,
+        "nearest_source_frame": 78,
+        "nearest_source_mse": 3.5191144225823043
+      },
+      {
+        "probe_frame": 3,
+        "source_frame": 79,
+        "decoded_rgb_sha256": "3476488b2c7e2493a46917ada08b594794b2e0842d2ffe91cac6bdf2befbbaf8",
+        "full_frame_psnr_db": 42.66037273826501,
+        "nearest_source_frame": 79,
+        "nearest_source_mse": 3.524058320473251
+      },
+      {
+        "probe_frame": 4,
+        "source_frame": 80,
+        "decoded_rgb_sha256": "4a6207fe3f905be11d033a5c028cd1e6e30e9d52020f3eebea9c818fa8370353",
+        "full_frame_psnr_db": 42.663310040604,
+        "nearest_source_frame": 80,
+        "nearest_source_mse": 3.5216756687242796
+      },
+      {
+        "probe_frame": 5,
+        "source_frame": 81,
+        "decoded_rgb_sha256": "7e5d7ad70cb1387a8de794d4ba917aa924c32bbf77c4bf8f1f4a8a1c9da532cf",
+        "full_frame_psnr_db": 42.67168299218066,
+        "nearest_source_frame": 81,
+        "nearest_source_mse": 3.514892618312757
+      },
+      {
+        "probe_frame": 6,
+        "source_frame": 82,
+        "decoded_rgb_sha256": "4e076a7c03706cb9f53c44fb026389aaf927a1530251984617704e046a540f6f",
+        "full_frame_psnr_db": 42.65527255467107,
+        "nearest_source_frame": 82,
+        "nearest_source_mse": 3.528199266975309
+      },
+      {
+        "probe_frame": 7,
+        "source_frame": 83,
+        "decoded_rgb_sha256": "ae4ba5f4cf5aa274b12c63fd6b1b1fc49d9f619c3e4b0d7e7257cec3361782e3",
+        "full_frame_psnr_db": 42.65559114073347,
+        "nearest_source_frame": 83,
+        "nearest_source_mse": 3.52794045781893
+      },
+      {
+        "probe_frame": 8,
+        "source_frame": 84,
+        "decoded_rgb_sha256": "93fa09bf151234ee851ce29dfaea11ee507726e95135d12ac276b9919f4a09e4",
+        "full_frame_psnr_db": 42.656018597257045,
+        "nearest_source_frame": 84,
+        "nearest_source_mse": 3.527593235596708
+      },
+      {
+        "probe_frame": 9,
+        "source_frame": 85,
+        "decoded_rgb_sha256": "7284ba36d62d541371d6a08897c9e5513047fab84be36d36094c03de16c3bbd7",
+        "full_frame_psnr_db": 42.656029680022755,
+        "nearest_source_frame": 85,
+        "nearest_source_mse": 3.527584233539095
+      }
+    ]
+  },
+  "gates": [
+    {
+      "name": "stream_count",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "video_stream_count",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "audio_stream_count",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "name": "other_stream_count",
+      "actual": 0,
+      "expected": 0,
+      "passed": true
+    },
+    {
+      "name": "video_codec",
+      "actual": "h264",
+      "expected": "h264",
+      "passed": true
+    },
+    {
+      "name": "video_codec_tag",
+      "actual": "avc1",
+      "expected": "avc1",
+      "passed": true
+    },
+    {
+      "name": "video_pixel_format",
+      "actual": "yuv420p",
+      "expected": "yuv420p",
+      "passed": true
+    },
+    {
+      "name": "video_geometry",
+      "actual": [
+        1920,
+        1080
+      ],
+      "expected": [
+        1920,
+        1080
+      ],
+      "passed": true
+    },
+    {
+      "name": "reported_frames",
+      "actual": 9,
+      "expected": 9,
+      "passed": true
+    },
+    {
+      "name": "read_frames",
+      "actual": 9,
+      "expected": 9,
+      "passed": true
+    },
+    {
+      "name": "r_frame_rate",
+      "actual": "30/1",
+      "expected": "30/1",
+      "passed": true
+    },
+    {
+      "name": "avg_frame_rate",
+      "actual": "30/1",
+      "expected": "30/1",
+      "passed": true
+    },
+    {
+      "name": "video_start",
+      "actual": "0.000000",
+      "expected": "0.000000",
+      "passed": true
+    },
+    {
+      "name": "video_duration",
+      "actual": "0.300000",
+      "expected": "0.300000",
+      "passed": true
+    },
+    {
+      "name": "container_start",
+      "actual": "0.000000",
+      "expected": "0.000000",
+      "passed": true
+    },
+    {
+      "name": "container_duration",
+      "actual": "0.300000",
+      "expected": "0.300000",
+      "passed": true
+    },
+    {
+      "name": "stream_color_metadata",
+      "actual": {
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": null,
+        "color_primaries": null
+      },
+      "expected": {
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": "bt709",
+        "color_primaries": "bt709"
+      },
+      "passed": false
+    },
+    {
+      "name": "frame_probe_count",
+      "actual": 9,
+      "expected": 9,
+      "passed": true
+    },
+    {
+      "name": "frame_color_metadata",
+      "actual": [
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        }
+      ],
+      "expected": [
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        },
+        {
+          "color_range": "tv",
+          "color_space": "bt709",
+          "color_transfer": "bt709",
+          "color_primaries": "bt709"
+        }
+      ],
+      "passed": true
+    },
+    {
+      "name": "frame_clock",
+      "actual": [
+        0.0,
+        0.033333,
+        0.066667,
+        0.1,
+        0.133333,
+        0.166667,
+        0.2,
+        0.233333,
+        0.266667
+      ],
+      "expected": [
+        0.0,
+        0.03333333333333333,
+        0.06666666666666667,
+        0.1,
+        0.13333333333333333,
+        0.16666666666666666,
+        0.2,
+        0.23333333333333334,
+        0.26666666666666666
+      ],
+      "passed": true
+    },
+    {
+      "name": "decoded_frame_count",
+      "actual": 9,
+      "expected": 9,
+      "passed": true
+    },
+    {
+      "name": "decoded_frame_order",
+      "actual": [
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85
+      ],
+      "expected": [
+        77,
+        78,
+        79,
+        80,
+        81,
+        82,
+        83,
+        84,
+        85
+      ],
+      "passed": true
+    },
+    {
+      "name": "decoded_full_frame_psnr",
+      "actual": 42.65527255467107,
+      "expected": 39.0,
+      "passed": true
+    },
+    {
+      "name": "mp4_colr_count",
+      "actual": 1,
+      "expected": 1,
+      "passed": true
+    },
+    {
+      "name": "mp4_colr_nclx",
+      "actual": {
+        "path": "moov/trak/mdia/minf/stbl/stsd/avc1/colr",
+        "type": "nclx",
+        "payload_bytes": 11,
+        "primaries": 2,
+        "transfer": 2,
+        "matrix": 1,
+        "full_range_flag": 0,
+        "reserved_bits": 0
+      },
+      "expected": {
+        "path": "moov/trak/mdia/minf/stbl/stsd/avc1/colr",
+        "type": "nclx",
+        "payload_bytes": 11,
+        "primaries": 1,
+        "transfer": 1,
+        "matrix": 1,
+        "full_range_flag": 0,
+        "reserved_bits": 0
+      },
+      "passed": false
+    },
+    {
+      "name": "sps_video_signal_type_present_flag",
+      "actual": [
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "sps_video_full_range_flag",
+      "actual": [
+        0
+      ],
+      "expected": [
+        0
+      ],
+      "passed": true
+    },
+    {
+      "name": "sps_colour_description_present_flag",
+      "actual": [
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "sps_colour_primaries",
+      "actual": [
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "sps_transfer_characteristics",
+      "actual": [
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "sps_matrix_coefficients",
+      "actual": [
+        1
+      ],
+      "expected": [
+        1
+      ],
+      "passed": true
+    }
+  ],
+  "gate_count": 31,
+  "gates_passed": 29,
+  "gates_failed": 2,
+  "failed_gates": [
+    "stream_color_metadata",
+    "mp4_colr_nclx"
+  ],
+  "disposition": {
+    "metadata_defects_cleared": false,
+    "attempt01_chroma_failures_cleared": false,
+    "full_phase35_encode_authorized": false,
+    "phase36_encode_authorized": false,
+    "candidate02_audio_mux_authorized": false,
+    "promotion_allowed": false,
+    "retry_allowed": false
+  }
+}

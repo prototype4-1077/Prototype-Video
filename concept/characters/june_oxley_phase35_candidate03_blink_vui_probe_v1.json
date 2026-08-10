@@ -110,7 +110,11 @@
   },
   "authorization": {
     "required_before_encoder_launch": true,
-    "receipt": null,
+    "receipt": {
+      "path": "collab/CLAUDE_REVIEW_2026-08-10_2312Z.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "457fa6900366c7be202428e5108b2bba382de4094b44f5f1415bfbd9ae9efb51"
+    },
     "required_verdict_field": "## Verdict:",
     "required_verdict": "PHASE35_C03_BLINK_VUI_PROBE_V1_ATTEMPT01_ALLOWED",
     "maximum_video_encoder_processes": 1,
