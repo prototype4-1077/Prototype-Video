@@ -23,7 +23,7 @@ import pipeline.cartoon_semantic_face as phase33
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase34_source_textured_visemes_v1.json"
 IMPLEMENTATION_RELATIVE_PATH = "pipeline/cartoon_source_textured_face.py"
-EXPECTED_CONTRACT_CANONICAL_SHA256 = "3ace2fa14cf4ce32fff803a711dbb6b747989cda27cbbf2924a4853d94db60c6"
+EXPECTED_CONTRACT_CANONICAL_SHA256 = "992f5aeeb203119bd4d00373f0a5060ab1b5aa835100295db6beaf4d69a9ae20"
 ORAL_OUTER_RING_EXCLUSION_PX = 24.0
 ORAL_OUTER_RING_SAFETY_GAP_PX = 4.0
 ORAL_OUTER_RING_COLOR_RULE = "red_dominant_lip_material_within_outer_distance_v1"
@@ -33,6 +33,7 @@ UPPER_DENTITION_CANONICAL_CELL = "E"
 UPPER_DENTITION_TARGET_WIDTH_PX = 88.0
 UPPER_DENTITION_TARGET_HEIGHT_PX = 16.0
 LAYER_WRITE_ALPHA_THRESHOLD_U8 = 1
+H_LIP_OCCLUSION_ALPHA_THRESHOLD_U8 = 64
 
 
 class SourceTexturedFaceError(RuntimeError):
@@ -73,6 +74,7 @@ class FrameEvidence:
     blink_closure: float
     iris_occlusion_ratios: list[float]
     lid_areas: list[int]
+    lid_write_areas: list[int]
     cavity_area: int
     upper_teeth_area: int
     upper_dentition_centroid_y: float
@@ -307,19 +309,31 @@ def _validate_contract(contract: dict[str, Any]) -> None:
     )
     _require_equal(
         representation["labiodental_F_layer"],
-        "source_lower_lip_over_canonical_incisor_window_v1", "labiodental F layer",
+        "source_lower_lip_over_canonical_incisor_window_v2", "labiodental F layer",
     )
     _require_equal(
         representation["tongue_H_layer"],
-        "authored_interior_textured_grooved_tip_v1", "tongue H layer",
+        "authored_textured_grooved_tip_with_source_lower_lip_occlusion_v2", "tongue H layer",
+    )
+    _require_equal(
+        representation["H_lower_lip_occlusion_alpha_threshold_u8"],
+        H_LIP_OCCLUSION_ALPHA_THRESHOLD_U8, "H lower-lip occlusion alpha threshold",
     )
     _require_equal(
         representation["F_to_G_bridge"],
-        "contact_retention_with_cavity_preopen_v1", "F to G bridge",
+        "linear_geometry_with_contact_retention_v2", "F to G bridge",
     )
     _require_equal(
         representation["cavity_edge_treatment"],
-        "source_textured_inner_feather_with_local_warm_grade_v1", "cavity edge treatment",
+        "local_source_textured_cavity_gradient_v2", "cavity edge treatment",
+    )
+    _require_equal(
+        representation["semantic_lid_write_evidence"],
+        "phase33_equivalent_alpha_support_and_final_owner_v1", "semantic lid evidence",
+    )
+    _require_equal(
+        representation["F_X_articulation_metric"],
+        "mean_absolute_rgb_delta_over_pinned_mouth_core_roi_v1", "F/X articulation metric",
     )
     _require_equal(contract["clock"], {
         "source_width": 1672, "source_height": 941, "output_width": 1920, "output_height": 1080,
@@ -485,6 +499,48 @@ def blink_closure(contract: dict[str, Any], frame_number: int) -> float:
     return _ease((end - frame_number) / max(end - peak_end, 1))
 
 
+def _semantic_lid_alpha_masks(
+    shape: tuple[int, int],
+    center: tuple[int, int],
+    radius: tuple[int, int],
+    closure: float,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    """Mirror Phase33's locked lid alpha writes for exact Phase34 evidence."""
+    upper = np.zeros(shape, dtype=np.uint8)
+    lower = np.zeros(shape, dtype=np.uint8)
+    crease_full = np.zeros(shape, dtype=np.uint8)
+    if closure <= 0.0:
+        return upper, lower, crease_full
+    cx, cy = center
+    rx, ry = radius
+    x1, y1 = cx - rx - 5, cy - ry - 12
+    x2, y2 = cx + rx + 6, cy + ry + 12
+    roi_height, roi_width = y2 - y1, x2 - x1
+    yy, xx = np.indices((roi_height, roi_width), dtype=np.float32)
+    local_cx, local_cy = cx - x1, cy - y1
+    ellipse = (((xx - local_cx) / rx) ** 2 + ((yy - local_cy) / ry) ** 2) <= 1.0
+    upper_edge = local_cy - ry + closure * (ry + 1.5)
+    lower_edge = local_cy + ry - closure * (ry + 1.5)
+    upper[y1:y2, x1:x2] = _soft((ellipse & (yy <= upper_edge)).astype(np.uint8) * 255, 0.7)
+    lower[y1:y2, x1:x2] = _soft((ellipse & (yy >= lower_edge)).astype(np.uint8) * 255, 0.7)
+    if closure > 0.72:
+        crease = np.zeros((roi_height, roi_width), dtype=np.uint8)
+        amplitude = 2.0 + 1.5 * closure
+        points = []
+        for x in range(local_cx - rx + 4, local_cx + rx - 3):
+            normalized = (x - local_cx) / float(rx)
+            y = int(round(local_cy + amplitude * (normalized * normalized - 0.45)))
+            points.append((x, y))
+        cv2.polylines(
+            crease, [np.asarray(points, dtype=np.int32)], False, 190, 1,
+            lineType=cv2.LINE_AA,
+        )
+        crease_full[y1:y2, x1:x2] = (
+            crease.astype(np.float32) * min(1.0, (closure - 0.72) / 0.28)
+        ).astype(np.uint8)
+    return upper, lower, crease_full
+
+
 def _pose_vector(contract: dict[str, Any], pose: str) -> np.ndarray:
     values = contract["pose_geometry_native_px"][pose]
     return np.asarray([values[name] for name in POSE_FIELDS], dtype=np.float32)
@@ -501,7 +557,8 @@ def mouth_controls(contract: dict[str, Any], frame_number: int) -> tuple[dict[st
                 return dict(zip(POSE_FIELDS, _pose_vector(contract, left_pose))), {
                     name: float(name == left_pose) for name in "ABCDEFGHX"
                 }
-            amount = _ease((frame_number - left_frame) / float(right_frame - left_frame))
+            linear_amount = (frame_number - left_frame) / float(right_frame - left_frame)
+            amount = linear_amount if (left_pose, right_pose) == ("F", "G") else _ease(linear_amount)
             values = (1.0 - amount) * _pose_vector(contract, left_pose) + amount * _pose_vector(contract, right_pose)
             weights = {name: 0.0 for name in "ABCDEFGHX"}
             weights[left_pose] = 1.0 - amount
@@ -921,14 +978,22 @@ def _compose_authored_oral_anatomy(
     width = float(pose["width"])
     opening = float(pose["opening"])
 
-    shadow = np.zeros_like(canvas)
     radial = np.clip(1.0 - np.sqrt(
         (mouth_u / max(width * 0.5, 1.0)) ** 2
         + (mouth_v / max(opening * 0.55, 1.0)) ** 2
     ), 0.0, 1.0)
-    shadow[:, :, 0] = np.clip(84.0 - 60.0 * radial, 0, 255).astype(np.uint8)
-    shadow[:, :, 1] = np.clip(38.0 - 31.0 * radial, 0, 255).astype(np.uint8)
-    shadow[:, :, 2] = np.clip(36.0 - 26.0 * radial, 0, 255).astype(np.uint8)
+    source_shadow = np.clip(
+        warped_source.astype(np.float32) * np.asarray([0.48, 0.43, 0.42], dtype=np.float32)
+        + np.asarray([2.0, 1.0, 2.0], dtype=np.float32),
+        0, 255,
+    )
+    core_shadow = np.zeros_like(source_shadow)
+    core_shadow[:] = np.asarray([22.0, 7.0, 10.0], dtype=np.float32)
+    core_weight = np.power(radial, 1.45)[:, :, None]
+    shadow = np.clip(
+        source_shadow * (1.0 - core_weight) + core_shadow * core_weight,
+        0, 255,
+    ).astype(np.uint8)
     cavity_alpha = np.clip(_soft(cavity, 0.8).astype(np.float32) * oral_activation, 0, 255).astype(np.uint8)
     _blend(canvas, shadow, cavity_alpha)
     active_cavity = cavity_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
@@ -1030,7 +1095,11 @@ def _compose_authored_oral_anatomy(
         UPPER_DENTITION_TARGET_WIDTH_PX, UPPER_DENTITION_TARGET_HEIGHT_PX, angle_degrees,
     )
     dental_visibility = oral_activation * (0.45 + 0.55 * float(pose["upper_teeth"]))
-    accumulated_upper_alpha = np.clip(unmasked_upper_alpha, 0.0, 1.0) * clip_alpha * dental_visibility
+    accumulated_upper_alpha = np.clip(
+        np.clip(unmasked_upper_alpha, 0.0, 1.0)
+        * clip_alpha * dental_visibility * (1.0 + 0.10 * f_weight),
+        0.0, 1.0,
+    )
     upper_rgb = np.zeros_like(canvas)
     upper_valid = accumulated_upper_alpha > 1e-5
     upper_rgb[upper_valid] = np.clip(
@@ -1063,10 +1132,10 @@ def _compose_authored_oral_anatomy(
 
     inner_edge = cv2.subtract(
         cavity,
-        cv2.erode(cavity, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))),
+        cv2.erode(cavity, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (13, 13))),
     )
     source_feather_alpha = np.clip(
-        _soft(inner_edge, 0.75).astype(np.float32) * (0.68 * oral_activation),
+        _soft(inner_edge, 0.85).astype(np.float32) * (0.82 * oral_activation),
         0, 255,
     ).astype(np.uint8)
     f_dental_window = (
@@ -1082,7 +1151,8 @@ def _compose_authored_oral_anatomy(
         0, 255,
     ).astype(np.uint8)
     graded_source_edge = np.clip(
-        warped_source.astype(np.float32) * np.asarray([0.68, 0.58, 0.56], dtype=np.float32),
+        warped_source.astype(np.float32) * np.asarray([0.74, 0.68, 0.66], dtype=np.float32)
+        + np.asarray([2.0, 1.0, 2.0], dtype=np.float32),
         0, 255,
     ).astype(np.uint8)
     _blend(canvas, graded_source_edge, source_feather_alpha)
@@ -1117,18 +1187,49 @@ def _compose_authored_oral_anatomy(
     _record_layer(coverage, lower_alpha, "source_lip_edge")
     owner[lower_write] = 7
 
+    h_lower_lip_core = (
+        tongue_tip_shape
+        & (np.abs(mouth_u) <= width * 0.31)
+        & (mouth_v >= opening * 0.16)
+        & (mouth_v <= opening * 0.38)
+        & cavity_hard
+    )
+    h_lower_lip_alpha = np.clip(
+        _soft(h_lower_lip_core.astype(np.uint8) * 255, 0.55).astype(np.float32)
+        * h_weight * oral_activation * 0.88,
+        0, 255,
+    ).astype(np.uint8)
+    _blend(canvas, warped_source, h_lower_lip_alpha)
+    h_lower_lip_write = h_lower_lip_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+    _record_layer(coverage, h_lower_lip_alpha, "source_lip_edge")
+    owner[h_lower_lip_write] = 7
+
+    f_lip_source = warped_source
+    if f_weight > 1e-4:
+        lift = 2.5
+        angle = math.radians(angle_degrees)
+        f_lip_source = cv2.warpAffine(
+            warped_source,
+            np.asarray([
+                [1.0, 0.0, -math.sin(angle) * lift],
+                [0.0, 1.0, -math.cos(angle) * lift],
+            ], dtype=np.float32),
+            (warped_source.shape[1], warped_source.shape[0]),
+            flags=cv2.INTER_LANCZOS4,
+            borderMode=cv2.BORDER_REFLECT_101,
+        )
     f_contact_core = (
-        (np.abs(mouth_u) <= width * 0.33)
-        & (mouth_v >= -0.5)
-        & (mouth_v <= max(2.0, opening * 0.25))
+        (np.abs(mouth_u) <= width * 0.34)
+        & (mouth_v >= 0.5)
+        & (mouth_v <= max(4.0, opening * 0.30))
         & cavity_hard
     )
     f_contact_alpha = np.clip(
         _soft(f_contact_core.astype(np.uint8) * 255, 0.55).astype(np.float32)
-        * f_weight * oral_activation * 0.92,
+        * f_weight * oral_activation * 0.96,
         0, 255,
     ).astype(np.uint8)
-    _blend(canvas, warped_source, f_contact_alpha)
+    _blend(canvas, f_lip_source, f_contact_alpha)
     f_contact_write = f_contact_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
     _record_layer(coverage, f_contact_alpha, "source_lip_edge")
     owner[f_contact_write] = 7
@@ -1162,14 +1263,20 @@ def _compose_authored_oral_anatomy(
     owner[beard_write] = 9
     f_visible_incisor = upper_teeth & ~(
         (source_feather_alpha > 24) | (upper_alpha > 24) | (lower_alpha > 24)
-        | (f_contact_alpha > 24) | (moustache_soft > 24) | (beard_soft > 24)
+        | (h_lower_lip_alpha > 24) | (f_contact_alpha > 24)
+        | (moustache_soft > 24) | (beard_soft > 24)
+    )
+    h_final_lower_lip_occlusion = (
+        (tongue_tip_alpha > 32)
+        & (h_lower_lip_alpha >= H_LIP_OCCLUSION_ALPHA_THRESHOLD_U8)
+        & (owner == 7)
     )
 
     seam_boundary = cv2.morphologyEx(
         cavity, cv2.MORPH_GRADIENT, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)),
     ) > 0
     seam_sources = (
-        source_feather_front | upper_ribbon | lower_ribbon | f_contact_write
+        source_feather_front | upper_ribbon | lower_ribbon | h_lower_lip_write | f_contact_write
         | moustache_front | beard_front
     ).astype(np.uint8)
     seam_sources = cv2.morphologyEx(
@@ -1201,7 +1308,7 @@ def _compose_authored_oral_anatomy(
         "upper_dentition_centroid_y": upper_centroid_y,
         "lower_teeth": int(lower_teeth.sum()),
         "tongue": int(tongue.sum()),
-        "lip_ribbon": int((source_feather_front | upper_ribbon | lower_ribbon).sum()),
+        "lip_ribbon": int((source_feather_front | upper_ribbon | lower_ribbon | h_lower_lip_write).sum()),
         "moustache_overlap": int(moustache_front.sum()),
         "beard_overlap": int(beard_front.sum()),
         "connected_source_seam_coverage_ratio": seam_coverage_ratio,
@@ -1216,7 +1323,7 @@ def _compose_authored_oral_anatomy(
         "h_tongue_tip_area": int((tongue_tip_alpha > 72).sum()) if h_weight > 0.5 else 0,
         "h_tongue_groove_pixels": int((groove_alpha > 48).sum()) if h_weight > 0.5 else 0,
         "h_tongue_lower_lip_occlusion_pixels": int(
-            ((tongue_tip_alpha > 32) & lower_write).sum()
+            h_final_lower_lip_occlusion.sum()
         ) if h_weight > 0.5 else 0,
         "source_texture_variance": float(texture_values.var()) if texture_values.size else 0.0,
     }
@@ -1295,19 +1402,28 @@ def _native_frame(
     closure = blink_closure(prepared.contract, frame_number)
     iris_ratios: list[float] = []
     lid_areas: list[int] = []
-    lid_owner = np.zeros_like(owner)
+    lid_write_areas: list[int] = []
     for eye_name in ("viewer_left_eye", "viewer_right_eye"):
         eye = geometry[eye_name]
+        lid_owner = np.zeros_like(owner)
         ratio, area = phase33._compose_eye_lids(
             canvas, plate, prepared.phase33_base.lid_texture, lid_owner,
             tuple(eye["center"]), tuple(eye["radius"]), closure,
         )
         iris_ratios.append(ratio)
         lid_areas.append(area)
-    owner[lid_owner == 7] = 10
-    owner[lid_owner == 8] = 11
-    owner[lid_owner == 9] = 12
-    _record_layer(coverage, (lid_owner > 0).astype(np.uint8) * 255, "eyelids")
+        upper_alpha, lower_alpha, crease_alpha = _semantic_lid_alpha_masks(
+            canvas.shape[:2], tuple(eye["center"]), tuple(eye["radius"]), closure,
+        )
+        upper_write = upper_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+        lower_write = lower_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+        crease_write = crease_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+        lid_alpha = np.maximum(np.maximum(upper_alpha, lower_alpha), crease_alpha)
+        _record_layer(coverage, lid_alpha, "eyelids")
+        owner[upper_write] = 10
+        owner[lower_write] = 11
+        owner[crease_write] = 12
+        lid_write_areas.append(int((upper_write | lower_write | crease_write).sum()))
 
     changed = np.any(canvas != plate, axis=2)
     outside = changed & ~prepared.feature_support
@@ -1326,6 +1442,7 @@ def _native_frame(
         blink_closure=closure,
         iris_occlusion_ratios=iris_ratios,
         lid_areas=lid_areas,
+        lid_write_areas=lid_write_areas,
         cavity_area=int(oral["cavity"]),
         upper_teeth_area=int(oral["upper_teeth"]),
         upper_dentition_centroid_y=float(oral["upper_dentition_centroid_y"]),
@@ -1439,6 +1556,9 @@ def _preflight(prepared: PreparedSourceTexturedFace) -> dict[str, Any]:
         first_frame = frames[int(key_frames[first])][0][y1:y2, x1:x2].astype(np.float32)
         second_frame = frames[int(key_frames[second])][0][y1:y2, x1:x2].astype(np.float32)
         confusable_pair_deltas[f"{first}/{second}"] = float(np.abs(first_frame - second_frame).mean())
+    fx1, fy1, fx2, fy2 = prepared.contract["semantic_geometry_native_xy"]["F_X_articulation_roi"]
+    f_articulation = frames[int(key_frames["F"])][0][fy1:fy2, fx1:fx2].astype(np.float32)
+    x_articulation = frames[int(key_frames["X"])][0][fy1:fy2, fx1:fx2].astype(np.float32)
     blink_peak = int(prepared.contract["performance"]["blink_max_frames"][-1])
     blink = frames[blink_peak][1]
     return {
@@ -1446,6 +1566,7 @@ def _preflight(prepared: PreparedSourceTexturedFace) -> dict[str, Any]:
         "maximum_changed_pixels_outside_feature_support": maximum_outside,
         "minimum_full_blink_iris_occlusion_ratio": min(blink.iris_occlusion_ratios),
         "minimum_full_blink_lid_area_per_eye": min(blink.lid_areas),
+        "minimum_full_blink_lid_write_area_per_eye": min(blink.lid_write_areas),
         "distinct_non_neutral_pose_hashes": len(pose_hashes),
         "minimum_open_pose_cavity_area": min(item.cavity_area for item in non_neutral.values()),
         "B_cavity_area": non_neutral["B"].cavity_area,
@@ -1490,11 +1611,18 @@ def _preflight(prepared: PreparedSourceTexturedFace) -> dict[str, Any]:
         "maximum_protected_landmark_displacement_px": max(protected_displacements, default=0.0),
         "confusable_pair_mouth_mean_absolute_deltas": confusable_pair_deltas,
         "minimum_confusable_pair_mouth_mean_absolute_delta": min(confusable_pair_deltas.values()),
+        "F_X_articulation_mean_absolute_delta": float(np.abs(f_articulation - x_articulation).mean()),
         "maximum_depth_order_violation_pixels": max(
             evidence.depth_order_violation_pixels for _, evidence in frames.values()
         ),
         "maximum_adjacent_feature_8x8_mean_delta": maximum_delta,
         "maximum_adjacent_feature_8x8_mean_delta_frame_pair": maximum_delta_pair,
+        "maximum_F_to_G_adjacent_feature_8x8_mean_delta": max(
+            _max_8x8_delta(frames[index][0], frames[index + 1][0], prepared.feature_support)
+            for index in (64, 65, 66)
+        ),
+        "frame_65_G_weight": frames[65][1].pose_weights["G"],
+        "frame_66_G_weight": frames[66][1].pose_weights["G"],
         "maximum_adjacent_oral_activation_delta": max(
             abs(frames[index + 1][1].oral_activation - frames[index][1].oral_activation)
             for index in range(1, frame_count)
@@ -1502,6 +1630,7 @@ def _preflight(prepared: PreparedSourceTexturedFace) -> dict[str, Any]:
         "frame_82_oral_activation": frames[82][1].oral_activation,
         "frame_82_oral_layer_write_pixels": frames[82][1].layer_write_counts.get("oral_interior", 0),
         "layer_write_alpha_threshold_u8": LAYER_WRITE_ALPHA_THRESHOLD_U8,
+        "H_lower_lip_occlusion_alpha_threshold_u8": H_LIP_OCCLUSION_ALPHA_THRESHOLD_U8,
         "frames_evaluated": frame_count,
         "source_identity_texture_only": True,
         "complete_feature_photo_crossfades_used": False,
@@ -1520,6 +1649,7 @@ def _preflight_gates(contract: dict[str, Any], metrics: dict[str, Any]) -> list[
         ("changed_pixels_outside_feature_support", metrics["maximum_changed_pixels_outside_feature_support"], "==", thresholds["required_changes_outside_feature_support"]),
         ("full_blink_iris_occlusion", metrics["minimum_full_blink_iris_occlusion_ratio"], ">=", thresholds["minimum_full_blink_iris_occlusion_ratio"]),
         ("full_blink_lid_area", metrics["minimum_full_blink_lid_area_per_eye"], ">=", thresholds["minimum_full_blink_lid_area_per_eye"]),
+        ("full_blink_lid_write_area", metrics["minimum_full_blink_lid_write_area_per_eye"], ">=", thresholds["minimum_full_blink_lid_write_area_per_eye"]),
         ("distinct_non_neutral_pose_hashes", metrics["distinct_non_neutral_pose_hashes"], "==", thresholds["required_distinct_non_neutral_pose_hashes"]),
         ("open_pose_cavity_area", metrics["minimum_open_pose_cavity_area"], ">=", thresholds["minimum_open_pose_cavity_area"]),
         ("B_cavity_area", metrics["B_cavity_area"], ">=", thresholds["minimum_B_cavity_area"]),
@@ -1550,8 +1680,14 @@ def _preflight_gates(contract: dict[str, Any], metrics: dict[str, Any]) -> list[
         ("output_viseme_changes_above_protected_margin", metrics["maximum_output_viseme_changed_pixels_above_protected_margin"], "==", thresholds["required_output_viseme_changed_pixels_above_protected_margin"]),
         ("protected_landmark_displacement", metrics["maximum_protected_landmark_displacement_px"], "<=", thresholds["maximum_protected_landmark_displacement_px"]),
         ("confusable_pose_separation", metrics["minimum_confusable_pair_mouth_mean_absolute_delta"], ">=", thresholds["minimum_confusable_pair_mouth_mean_absolute_delta"]),
+        ("F_X_articulation_mean_absolute_delta", metrics["F_X_articulation_mean_absolute_delta"], ">=", thresholds["minimum_F_X_articulation_mean_absolute_delta"]),
         ("depth_order_violation_pixels", metrics["maximum_depth_order_violation_pixels"], "==", thresholds["maximum_depth_order_violation_pixels"]),
         ("adjacent_feature_8x8_mean_delta", metrics["maximum_adjacent_feature_8x8_mean_delta"], "<=", thresholds["maximum_adjacent_feature_8x8_mean_delta"]),
+        ("F_to_G_adjacent_feature_8x8_mean_delta", metrics["maximum_F_to_G_adjacent_feature_8x8_mean_delta"], "<=", thresholds["maximum_F_to_G_adjacent_feature_8x8_mean_delta"]),
+        ("frame_65_G_weight_minimum", metrics["frame_65_G_weight"], ">=", thresholds["minimum_frame_65_G_weight"]),
+        ("frame_65_G_weight_maximum", metrics["frame_65_G_weight"], "<=", thresholds["maximum_frame_65_G_weight"]),
+        ("frame_66_G_weight_minimum", metrics["frame_66_G_weight"], ">=", thresholds["minimum_frame_66_G_weight"]),
+        ("frame_66_G_weight_maximum", metrics["frame_66_G_weight"], "<=", thresholds["maximum_frame_66_G_weight"]),
         ("adjacent_oral_activation_delta", metrics["maximum_adjacent_oral_activation_delta"], "<=", thresholds["maximum_adjacent_oral_activation_delta"]),
         ("frame_82_oral_activation", metrics["frame_82_oral_activation"], "<=", thresholds["maximum_frame_82_oral_activation"]),
         ("frame_82_oral_layer_write_pixels", metrics["frame_82_oral_layer_write_pixels"], ">=", thresholds["minimum_frame_82_oral_layer_write_pixels"]),

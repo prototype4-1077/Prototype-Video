@@ -30,6 +30,18 @@ class SourceTexturedFaceTests(unittest.TestCase):
         self.assertTrue(representation["registered_authored_oral_interior_atlas_allowed"])
         self.assertFalse(representation["generated_lip_pixels_allowed_in_final_composite"])
         self.assertFalse(representation["runtime_ai_generation_allowed"])
+        self.assertEqual(
+            representation["H_lower_lip_occlusion_alpha_threshold_u8"],
+            phase34.H_LIP_OCCLUSION_ALPHA_THRESHOLD_U8,
+        )
+        self.assertEqual(
+            representation["semantic_lid_write_evidence"],
+            "phase33_equivalent_alpha_support_and_final_owner_v1",
+        )
+        self.assertEqual(
+            representation["F_X_articulation_metric"],
+            "mean_absolute_rgb_delta_over_pinned_mouth_core_roi_v1",
+        )
 
     def test_all_locked_sources_match_their_declared_hashes(self) -> None:
         for name, reference in self.contract["locks"].items():
@@ -236,6 +248,30 @@ class SourceTexturedFaceTests(unittest.TestCase):
         self.assertEqual(activations[-1], 0.0)
         self.assertLessEqual(max(abs(b - a) for a, b in zip(activations, activations[1:])), 0.5)
         self.assertLessEqual(activations[-2], 0.27)
+
+    def test_F_to_G_geometry_uses_true_linear_intermediates(self) -> None:
+        _, weights_65 = phase34.mouth_controls(self.contract, 65)
+        _, weights_66 = phase34.mouth_controls(self.contract, 66)
+        self.assertAlmostEqual(weights_65["G"], 1.0 / 3.0)
+        self.assertAlmostEqual(weights_66["G"], 2.0 / 3.0)
+        self.assertAlmostEqual(weights_65["F"], 2.0 / 3.0)
+        self.assertAlmostEqual(weights_66["F"], 1.0 / 3.0)
+
+    def test_semantic_lid_evidence_includes_every_soft_alpha_write(self) -> None:
+        geometry = self.contract["semantic_geometry_native_xy"]["viewer_left_eye"]
+        upper, lower, crease = phase34._semantic_lid_alpha_masks(
+            (self.contract["clock"]["source_height"], self.contract["clock"]["source_width"]),
+            tuple(geometry["center"]), tuple(geometry["radius"]), 1.0,
+        )
+        combined = np.maximum(np.maximum(upper, lower), crease)
+        write = combined >= phase34.LAYER_WRITE_ALPHA_THRESHOLD_U8
+        self.assertGreater(int(write.sum()), self.contract["preencode_gates"]["minimum_full_blink_lid_area_per_eye"])
+        self.assertGreaterEqual(
+            int(write.sum()),
+            self.contract["preencode_gates"]["minimum_full_blink_lid_write_area_per_eye"],
+        )
+        self.assertGreater(int(((combined > 0) & (combined < 255)).sum()), 0)
+        self.assertGreater(int((crease >= phase34.LAYER_WRITE_ALPHA_THRESHOLD_U8).sum()), 0)
 
     def test_blink_is_native_24fps_and_returns_to_exact_neutral(self) -> None:
         expected = {4: 0.0, 5: 0.15625, 6: 0.5, 7: 0.84375, 8: 1.0, 9: 0.84375, 10: 0.5, 11: 0.15625, 12: 0.0, 13: 0.0}

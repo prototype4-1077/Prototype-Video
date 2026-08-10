@@ -7,22 +7,22 @@ Classification: unencoded technical/artistic preview; not production delivery
 
 ## Current result
 
-Phase 34 candidate-07 is the latest immutable exact-frame experiment. It preserves all 96
-reviewed RGB frames, proves lower-face soft-alpha writes, and adds dedicated F and H anatomy.
-It passes all pre-encode gates and 18 focused tests. It has not been encoded, has no review
-receipt, and is not artistically accepted.
+Phase 34 candidate-08 is the current exact-frame review candidate. It preserves all 96
+reviewed RGB frames, closes the remaining soft-lid and H-occlusion proof gaps, and clears
+the Candidate-07 visual blockers. It passes 46 pre-encode gates and 20 focused tests. It
+has not been encoded and has no manifest-bound Claude receipt yet.
 
-Review evidence is staged at `collab/phase34_candidate_07/`.
+Review evidence is staged at `collab/phase34_candidate_08/`.
 
-- Local Windows manifest SHA-256: `2127d59f0cbd1247fb858f8a0edf43b8ccf357602695502185974120fe389ff9`
-- LF-normalized Git/public manifest SHA-256: `3d23700d47ecbf2d3384f0f41eaffe3b69f196cbbbdf9ac9a6a9cf32f0bc0cce`
-- Exact-frame archive SHA-256: `0fd9137f3756efecc94e89a5a97d5603c08290ff8843415190c0036d302f94de`
-- Contract canonical SHA-256: `3ace2fa14cf4ce32fff803a711dbb6b747989cda27cbbf2924a4853d94db60c6`
-- Renderer SHA-256: `2faf32a261c4588370cc0f4df8d142cb70b44c74ea724ee36187f79f095c9429`
+- Local Windows manifest SHA-256: `4e30698c0c347e0c2862c6e8fc86d7fb2a814e2e21d894ebc9b8c8c63b0cc5fa`
+- LF-normalized Git/public manifest SHA-256: `5fa917cd2fc8e1069a75b3696d81a80d45211e37f5c3e8626598b7efd9cb78fe`
+- Exact-frame archive SHA-256: `30f17179fd4fe9cd0f531b559269e187d3b8c888d90b5a5f8a770356ff6cd705`
+- Contract canonical SHA-256: `992f5aeeb203119bd4d00373f0a5060ab1b5aa835100295db6beaf4d69a9ae20`
+- Renderer SHA-256: `73cd8ab14a474019160ed88a321caaf2164cec35c370dec21c32afba1354c95e`
 
 Local immutable preview:
 
-`../../outputs/edit/phase34-source-textured-visemes-preview-v1-candidate-07`
+`../../outputs/edit/phase34-source-textured-visemes-preview-v1-candidate-08`
 
 ## Architecture now proven
 
@@ -124,6 +124,21 @@ Candidate-07 blockers:
 - H's nominal lip-over-tongue metric accepts alpha down to 1/255 before later hair layers;
   it does not prove visibly meaningful final occlusion.
 
+## Candidate-08 exact review candidate
+
+Candidate-08 is preserved at `collab/phase34_candidate_08/` and is the first package after
+Candidate-04 that should be offered to Claude for an exact manifest-bound verdict.
+
+- Exact semantic-lid support: 2,683 and 2,773 pixels; final owners match draw order.
+- H final source-lip ownership over tongue: 207 pixels at alpha >=64.
+- F: 230 visible incisor pixels, 61 contact columns, 19-pixel cavity.
+- F/X mouth-core delta: 24.854; broad-field F/X remains 17.812 for transparency.
+- F-to-G intermediate weights: exactly 1/3 and 2/3; local delta 59.214 under 120.
+- Frame 82: 84 oral writes at 0.259259 activation; zero depth violations.
+- Upper-face viseme changes, outer-ring leakage, and forbidden dental pixels: zero.
+- Independent visual, code, and runtime audits found no P0/P1.
+- All 96 frames regenerate pixel-for-pixel; all seven review artifacts and all 46 gates match.
+
 ## Collaboration state
 
 At every session start, read `collab/PROTOCOL.md` and all new `collab/CLAUDE_*` notes.
@@ -132,20 +147,17 @@ silent encode. Do not exercise that approval: subsequent independent audits prov
 candidate-04's lip/overlap gates were hard-coded and that its exact 96 reviewed frames were
 not preserved. Candidate-05 supersedes it as the evidence architecture.
 
-Candidate-07 is preserved for Claude as an exact-frame before/after experiment, but should
-not receive an encode receipt. Candidate-08 must clear the visible and proof blockers first.
+Candidate-08 should now receive Claude's visual verdict bound to the public LF manifest hash.
+No silent encode is allowed before that receipt is committed and validated.
 
 ## Exact next steps
 
-1. Candidate-08: mirror exact semantic-lid alpha/crease writes into Phase34 coverage and
-   final ownership without changing the locked Phase33 dependency.
-2. Require meaningful final source-lip ownership over H's tongue, not a transparent pre-write.
-3. Increase F's delivery-scale incisor/lip contrast and shift the contact band downward.
-4. Use a linear F-to-G geometry interpolation so frames 65 and 66 are true intermediates.
-5. Derive the cavity edge from darkened local source texture instead of flat burgundy fill.
-6. Render a new immutable 96-frame archive, run independent code/visual audits, and ask Claude
-   for a manifest-bound verdict.
-7. Only after an accepted receipt, encode the exact reviewed archive once and fully decode-verify it.
+1. Publish Candidate-08 without changing its contract, renderer, manifest, archive, or frames.
+2. Ask Claude to review the exact package and commit a verdict binding the public LF hash.
+3. Validate the receipt against the public manifest and archive.
+4. Only after acceptance, encode the exact reviewed archive once and fully decode-verify it.
+5. Preserve the accepted facial beat as a reusable production subsystem, then integrate it
+   into voiced timing, body acting, multi-shot staging, sound, and sequence-level direction.
 
 Do not call candidate-07 a complete cartoon or production delivery. It proves a reusable,
 high-detail front-view facial pipeline. Body acting, multi-angle adaptation, voiced timing,
