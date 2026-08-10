@@ -1,0 +1,53 @@
+{
+  "provenance_version": 2,
+  "asset_id": "june_oxley_phase34_oral_interior_atlas_v3",
+  "created_utc_date": "2026-08-09",
+  "cash_cost_usd": 0,
+  "base_atlas": {
+    "path": "concept/characters/rig_assets/june_oxley_oral_interior_atlas_v2.png",
+    "sha256": "e374daacf876a02c975e6a606a4bd388534a202e63108a1f0b953c9c3f351efe",
+    "provenance_path": "concept/characters/june_oxley_phase34_oral_atlas_provenance_v1.json",
+    "provenance_sha256": "ded1f4ef6b91080b54c16d8f788f3f62ed1cbb29557b9a1645b51dd78e084494"
+  },
+  "G_replacement_generation": {
+    "mode": "built_in_image_generation_edit",
+    "reference_path": "concept/characters/rig_assets/june_oxley_oral_interior_atlas_source_v1.png",
+    "reference_sha256": "93163fece7d85a2e80f470fb3ef263f35a9bd91225f513c8fc2675944c058305",
+    "prompt": "Create exactly one isolated rounded O mouth interior for the G cell. Match the reference atlas premium hand-painted 3D storybook rendering, warm tooth enamel, tongue material, cavity depth, lighting, and front camera. Use a dark recessed cavity, clearly visible curved upper dental arc, subtle lower teeth, and a small amount of tongue. Center it on a perfectly flat #00ff00 chroma-key square with at least 20 percent padding on every side and a subtle five-degree clockwise slant. No face, skin, hair, labels, borders, text, watermark, cast shadow, or background texture; no sprite may touch an edge.",
+    "source_output": {
+      "path": "concept/characters/rig_assets/june_oxley_oral_G_source_v1.png",
+      "sha256": "f37d27c0b55f84975e17eba0f17fe5e395255ffc885c04f0aa8a5b1e881cdf40"
+    },
+    "matte_output": {
+      "path": "concept/characters/rig_assets/june_oxley_oral_G_v1.png",
+      "sha256": "b296800e4daedfbd4bd4370000e6251b1cbaa7bb028e8181f8be14cc7c46dfa2",
+      "detected_key_rgb_hex": "#0cee1e",
+      "transparent_pixels": 1395768,
+      "partially_transparent_pixels": 1147,
+      "edge_contract_pixels": 1
+    }
+  },
+  "repack": {
+    "implementation_path": "pipeline/build_june_oral_atlas_v3.py",
+    "implementation_sha256": "a921039534213e8bb6abcc5903166e4e8db88c78b1066c9a227840c883ea55da",
+    "cell_size": 418,
+    "G_minimum_padding_pixels": 24,
+    "premultiplied_alpha_resize": true,
+    "base_neighbor_pixels_borrowed": false,
+    "output": {
+      "path": "concept/characters/rig_assets/june_oxley_oral_interior_atlas_v3.png",
+      "sha256": "c242cfef81b96a24fdfe54abc1336c56c0f1c88095ba31a26d4adee36ca6416c",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA"
+    }
+  },
+  "usage_scope": {
+    "oral_interior_only": true,
+    "identity_pixels_allowed": false,
+    "generated_lips_allowed_in_final_composite": false,
+    "final_interior_must_be_clipped_inside_source_derived_lip_ribbons": true,
+    "runtime_network_required": false,
+    "runtime_generation_required": false
+  }
+}

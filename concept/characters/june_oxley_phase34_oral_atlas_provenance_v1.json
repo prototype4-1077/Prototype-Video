@@ -1,0 +1,48 @@
+{
+  "provenance_version": 1,
+  "asset_id": "june_oxley_phase34_oral_interior_atlas_v2",
+  "created_utc_date": "2026-08-09",
+  "cash_cost_usd": 0,
+  "generation": {
+    "mode": "built_in_image_generation_edit",
+    "reference_path": "concept/style_frames/june-golden-scene-gs070-resolution-plate-v1.png",
+    "reference_sha256": "c54f82ef387121267829ec0a85c8fbf56830af2fd18c400ef777cfbb9044d029",
+    "prompt": "Use case: stylized-concept. Asset type: production sprite atlas for an offline 2D cartoon facial rig. Use the approved June Oxley character plate only to match rendering style, warm lighting, tooth color, and scale cues. Create one perfectly regular 3-by-3 sprite atlas containing nine isolated front-facing mouth-interior shapes in reading order X, A, B, C, D, E, F, G, H. Share the same mouth center, scale, subtle five-degree clockwise slant, lighting, and coordinate registration. Match a premium hand-painted 3D storybook cartoon. Include recessed oral cavity, softly curved upper and lower teeth, tongue where appropriate, natural tooth segmentation, warm occlusion shadows, gum line, tongue shading, and antialiasing. Use a perfectly flat #00ff00 chroma-key background with equal cells and uniform padding. No face, skin, moustache, beard, nose, eyes, head, labels, grid lines, borders, text, watermark, cast shadow, or background texture.",
+    "source_output": {
+      "path": "concept/characters/rig_assets/june_oxley_oral_interior_atlas_source_v1.png",
+      "sha256": "93163fece7d85a2e80f470fb3ef263f35a9bd91225f513c8fc2675944c058305",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGB"
+    }
+  },
+  "matte": {
+    "implementation": "imagegen skill remove_chroma_key.py",
+    "arguments": [
+      "--auto-key", "border",
+      "--soft-matte",
+      "--transparent-threshold", "12",
+      "--opaque-threshold", "220",
+      "--despill",
+      "--edge-contract", "1"
+    ],
+    "detected_key_rgb_hex": "#03f90c",
+    "transparent_pixels": 1275971,
+    "partially_transparent_pixels": 6293,
+    "output": {
+      "path": "concept/characters/rig_assets/june_oxley_oral_interior_atlas_v2.png",
+      "sha256": "e374daacf876a02c975e6a606a4bd388534a202e63108a1f0b953c9c3f351efe",
+      "width": 1254,
+      "height": 1254,
+      "mode": "RGBA"
+    }
+  },
+  "usage_scope": {
+    "oral_interior_only": true,
+    "identity_pixels_allowed": false,
+    "generated_lips_allowed_in_final_composite": false,
+    "final_interior_must_be_clipped_inside_source_derived_lip_ribbons": true,
+    "runtime_network_required": false,
+    "runtime_generation_required": false
+  }
+}
