@@ -4,9 +4,9 @@ Date: 2026-08-10
 
 ## Current standing
 
-Phase 35 Candidate 03 is the authoritative, visually accepted **unencoded facial-performance integration proof**. It combines June's accepted source-textured face with the locked 7.6-second dialogue clock, Rhubarb visemes, body/head motion, camera motion, porch atmosphere, and Candidate 09's approved linear blink timing.
+Phase 35 Candidate 03 remains the authoritative, visually accepted **lossless facial-performance integration proof**. It combines June's accepted source-textured face with the locked 7.6-second dialogue clock, Rhubarb visemes, body/head motion, camera motion, porch atmosphere, and Candidate 09's approved linear blink timing.
 
-It is not yet a full-cartoon delivery. Claude independently ratified the exact manifest-bound visual proof in `collab/CLAUDE_REVIEW_2026-08-10_1712Z.md` and authorized exactly one versioned 7.6-second A/V proof encode of that binding.
+It is not yet a full-cartoon delivery. Claude independently ratified the exact manifest-bound visual proof in `collab/CLAUDE_REVIEW_2026-08-10_1712Z.md` and authorized exactly one versioned 7.6-second A/V proof encode of that binding. That authorization was consumed by Attempt 01. The immutable encoded attempt is mechanically healthy but machine-rejected; no retry is allowed.
 
 Candidate history:
 
@@ -28,6 +28,21 @@ Candidate history:
 - Local lossless archive: 242,333,440 bytes; omitted from Git because the exact 228-frame hash inventory and verified archive receipt are already bound in the manifest.
 
 Published visual evidence includes all 228 frames, 18 complete blink-table frames, the face timeline, key beats, motion sheet, and a 2x crop of F172-F176.
+
+## Encoded Attempt 01 — preserved rejection
+
+- Evidence directory: `collab/phase35_candidate_03_encode_attempt_01/`
+- Package manifest SHA-256: `24752d84275ca3257f32c852ce19be0589cbe017bb5e0a48b840b13c68b6d74b`
+- Video SHA-256: `34d601605407d354dfbf77d545d444e9d884b0ec744a1e0d6712ca49b32fec39`
+- Report SHA-256: `406f966ce3d7acd06b2b6d35fab965017035002a4ad8b9cb2088e714e955bbb7`
+- Failure receipt SHA-256: `94ff0ad2f99ac44f8160c0ff944733f3b097e4d4fc572d293a8ae20bf3b3cadc`
+- Attempt claim SHA-256: `3fa711c0daa371275290a26d22835e7c45a0b62e79471c64d5c111ab70f224fd`
+- Decoded review sheet SHA-256: `ed620f97668e7342ca4d10fadb2915eea355b2171d2f111c5e176b11ac896b32`
+- Source/decoded 8x diagnostic SHA-256: `0a474c1477a5d33edbd045095bbea0e2696a918d10a6f8efe307fab57a65b9d5`
+
+The attempt contains exactly 228 H.264 frames and one AAC-LC stereo stream at 48 kHz. Video, audio, and container clocks all start at zero and end at 7.6 seconds. Audio passes zero-lag correlation and SNR gates. Full-frame PSNR is 39.259 dB, face SSIM is 0.9884, and decoded adjacent face motion remains below the absolute ceiling at 143.5365 <= 170.
+
+Six gates failed. BT.709 range and colorspace are present, but transfer and primaries metadata were omitted. YUV 4:2:0 chroma conversion reduced regional PSNR (face 35.1635, eyes 32.4723, mouth 35.3119) and softened the fastest blink pairwise deltas by up to 3.125 against Claude's required <= 2.0 same-domain codec limit. Source-vs-decoded crops look nearly identical at normal scale, but this is still a real preregistered machine rejection and must not be relabeled as accepted.
 
 ## Machine result
 
@@ -55,10 +70,11 @@ Known P2 watch item: the single full-closure frame has a thin lid hairline when 
 This proof is still one direct-address shot. It does not yet demonstrate a full scene with physical prop action, editorial cuts, or the locked audio mux. The smallest production-quality continuation is:
 
 1. ~~Obtain independent exact-frame ratification of Candidate 03.~~ Complete in `collab/CLAUDE_REVIEW_2026-08-10_1712Z.md`.
-2. Make the one authorized, versioned 7.6-second A/V encode with the locked Phase 33 delivery mix and decoded audio/video receipt.
-3. Build the 10.1-second, 303-frame **Ledger Pour** slice: 75 frames of the accepted GS060 pour, 162 direct-address frames, then 66 compassion-close-up frames.
+2. ~~Make the one authorized, versioned 7.6-second A/V encode with the locked Phase 33 delivery mix and decoded audio/video receipt.~~ Attempt 01 was executed once and preserved as a machine rejection; it cannot be retried.
+3. Obtain real-time visual/audio review of the preserved attempt and treat it as reference-only unless an independent receipt says otherwise.
+4. Build the unencoded 10.1-second, 303-frame **Ledger Pour** slice: 75 frames of the accepted GS060 pour, 162 direct-address frames, then 66 compassion-close-up frames. Any future encode requires a new, separately bound authorization and should evaluate a 4:4:4 review master plus a compatible 4:2:0 distribution derivative.
 
-Do not rerender Candidate 03 or change its thresholds. The exact review receipt now permits one encode only; verify that encode against the lossless archive before beginning Ledger Pour.
+Do not rerender or re-encode Candidate 03, change its thresholds, delete the attempt claim, or overwrite the rejected-attempt directory. The lossless Candidate 03 source remains accepted; the encoded Attempt 01 remains rejected.
 
 Post-proof portability note: the live renderer subsequently replaced the optional `soundfile` WAV-header probe with a standard-library RIFF parser that explicitly validates PCM and WAVE_FORMAT_EXTENSIBLE PCM, so the Python 3.11 Linux CI suite does not require a new dependency. The exact renderer that produced Candidate 03 remains preserved in the archive above and in commit `b06981d`.
 
