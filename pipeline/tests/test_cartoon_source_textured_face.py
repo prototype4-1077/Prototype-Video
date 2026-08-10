@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from copy import deepcopy
 import inspect
+from pathlib import Path
+import tempfile
 import unittest
 
 import numpy as np
@@ -33,9 +35,20 @@ class SourceTexturedFaceTests(unittest.TestCase):
         for name, reference in self.contract["locks"].items():
             with self.subTest(name=name):
                 self.assertEqual(
-                    phase34._sha256(phase34.REPO_ROOT / reference["path"]),
+                    phase34._locked_source_hash(reference),
                     reference["sha256"],
                 )
+
+    def test_lf_normalized_text_lock_is_cross_platform(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            lf = Path(directory) / "lf.py"
+            crlf = Path(directory) / "crlf.py"
+            lf.write_bytes(b"one\ntwo\n")
+            crlf.write_bytes(b"one\r\ntwo\r\n")
+            self.assertEqual(
+                phase34._sha256_lf_normalized_text(lf),
+                phase34._sha256_lf_normalized_text(crlf),
+            )
 
     def test_cage_has_fixed_topology_and_neutral_is_an_exact_bypass(self) -> None:
         self.assertEqual(self.source.shape, (100, 2))
@@ -76,7 +89,7 @@ class SourceTexturedFaceTests(unittest.TestCase):
                 vectors.append(tuple(controls[field] for field in phase34.POSE_FIELDS))
         self.assertEqual(len(set(vectors)), 8)
 
-    def test_contract_mutations_reject_atlas_audio_rl_and_retry(self) -> None:
+    def test_contract_mutations_reject_identity_geometry_gates_paths_and_policy(self) -> None:
         mutations = (
             ("representation", "complete_eye_mouth_or_face_photo_crossfades_allowed", True),
             ("representation", "foreign_atlas_identity_pixels_allowed", True),
@@ -94,6 +107,23 @@ class SourceTexturedFaceTests(unittest.TestCase):
             with self.subTest(section=section, key=key):
                 with self.assertRaisesRegex(phase34.SourceTexturedFaceError, "complete Phase34 v1 contract"):
                     phase34._validate_contract(changed)
+        direct_mutations = (
+            ("preencode_gates", "maximum_adjacent_feature_8x8_mean_delta", 999999.0),
+            ("preencode_gates", "require_all_96_raw_frame_hashes", False),
+            ("preencode_gates", "require_lossless_review_frame_archive", False),
+            ("preencode_gates", "require_preview_review_receipt", False),
+            ("preview", "directory", "../../outputs/edit/redirected"),
+        )
+        for section, key, value in direct_mutations:
+            changed = deepcopy(self.contract)
+            changed[section][key] = value
+            with self.subTest(section=section, key=key):
+                with self.assertRaisesRegex(phase34.SourceTexturedFaceError, "complete Phase34 v1 contract"):
+                    phase34._validate_contract(changed)
+        changed = deepcopy(self.contract)
+        changed["pose_geometry_native_px"]["A"]["opening"] = 1.0
+        with self.assertRaisesRegex(phase34.SourceTexturedFaceError, "complete Phase34 v1 contract"):
+            phase34._validate_contract(changed)
 
     def test_preview_path_is_contract_pinned_and_immutable(self) -> None:
         expected = (phase34.REPO_ROOT / self.contract["preview"]["directory"]).resolve()
@@ -118,23 +148,67 @@ class SourceTexturedFaceTests(unittest.TestCase):
         self.assertEqual(set(cells), set("XABCDEFGH"))
         for name, cell in cells.items():
             with self.subTest(cell=name):
-                alpha = cell[:, :, 3]
-                self.assertGreater(int((alpha >= 16).sum()), 0)
+                alpha = cell.rgba[:, :, 3]
+                if name == "X":
+                    self.assertEqual(int((alpha >= 16).sum()), 0)
+                else:
+                    self.assertGreater(int((alpha >= 16).sum()), 0)
                 self.assertFalse((alpha[0] >= 16).any())
                 self.assertFalse((alpha[-1] >= 16).any())
                 self.assertFalse((alpha[:, 0] >= 16).any())
                 self.assertFalse((alpha[:, -1] >= 16).any())
+                self.assertEqual(int(((alpha > 8) & (cell.excluded_outer_ring > 8)).sum()), 0)
+                if name != "X":
+                    self.assertGreater(int((cell.upper_dentition_rgba[:, :, 3] >= 16).sum()), 0)
+                    dental_alpha = cell.upper_dentition_rgba[:, :, 3].astype(np.float64)
+                    yy, xx = np.indices(dental_alpha.shape, dtype=np.float64)
+                    self.assertLessEqual(
+                        abs(float((yy * dental_alpha).sum() / dental_alpha.sum()) - (dental_alpha.shape[0] - 1) * 0.5),
+                        0.51,
+                    )
+                    self.assertLessEqual(
+                        abs(float((xx * dental_alpha).sum() / dental_alpha.sum()) - (dental_alpha.shape[1] - 1) * 0.5),
+                        0.51,
+                    )
 
     def test_premultiplied_warp_cannot_pull_hidden_green_into_transparency(self) -> None:
         cell = np.zeros((24, 24, 4), dtype=np.uint8)
         cell[:, :, :3] = np.asarray([0, 255, 0], dtype=np.uint8)
         cell[8:16, 8:16, :3] = np.asarray([180, 60, 50], dtype=np.uint8)
         cell[8:16, 8:16, 3] = 255
-        premultiplied, alpha = phase34._warp_oral_cell(cell, (96, 96), (48.0, 48.0), 42.0, 28.0, 5.0)
+        oral_cell = phase34.OralCell(
+            rgba=cell,
+            excluded_outer_ring=np.zeros(cell.shape[:2], dtype=np.uint8),
+            upper_dentition_rgba=np.zeros((1, 1, 4), dtype=np.uint8),
+        )
+        premultiplied, alpha, excluded = phase34._warp_oral_cell(
+            oral_cell, (96, 96), (48.0, 48.0), 42.0, 28.0, 5.0,
+        )
         transparent = alpha <= 1e-6
         self.assertTrue(np.allclose(premultiplied[transparent], 0.0, atol=1e-4))
         visible_rgb = premultiplied[alpha > 0.5] / alpha[alpha > 0.5][:, None]
         self.assertLess(float(visible_rgb[:, 1].max()), 100.0)
+        self.assertEqual(int((excluded > 0).sum()), 0)
+
+    def test_lossless_frame_archive_round_trips_exact_rgb_bytes(self) -> None:
+        frames = []
+        for value in (0, 31, 31, 255):
+            frame = np.full((9, 13, 3), value, dtype=np.uint8)
+            frame[2:5, 4:8, 1] = 177
+            frames.append(phase34.Image.fromarray(frame, "RGB"))
+        with tempfile.TemporaryDirectory() as directory:
+            path = Path(directory) / "frames.gz"
+            written = phase34._write_lossless_frame_archive(frames, path)
+            read, restored = phase34._read_lossless_frame_archive(path)
+            self.assertEqual(read, written)
+            for expected, actual in zip(frames, restored, strict=True):
+                np.testing.assert_array_equal(np.asarray(expected), actual)
+
+    def test_unexpected_layer_overlap_gate_is_measured(self) -> None:
+        coverage = np.zeros((4, 4), dtype=np.uint16)
+        coverage[0, 0] = phase34.LAYER_BITS["source_warp"] | phase34.LAYER_BITS["cavity"]
+        coverage[1, 1] = phase34.LAYER_BITS["cavity"] | phase34.LAYER_BITS["eyelids"]
+        self.assertEqual(phase34._unexpected_layer_overlap_pixels(coverage), 1)
 
     def test_blink_is_native_24fps_and_returns_to_exact_neutral(self) -> None:
         expected = {4: 0.0, 5: 0.15625, 6: 0.5, 7: 0.84375, 8: 1.0, 9: 0.84375, 10: 0.5, 11: 0.15625, 12: 0.0, 13: 0.0}

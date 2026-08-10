@@ -1,7 +1,9 @@
 from __future__ import annotations
 
 import hashlib
+import os
 from pathlib import Path
+import tempfile
 
 import cv2
 import numpy as np
@@ -14,6 +16,10 @@ REPLACEMENT = REPO_ROOT / "concept/characters/rig_assets/june_oxley_oral_G_v1.pn
 OUTPUT = REPO_ROOT / "concept/characters/rig_assets/june_oxley_oral_interior_atlas_v3.png"
 CELL_SIZE = 418
 MINIMUM_CELL_PADDING = 24
+EXPECTED_BASE_SHA256 = "e374daacf876a02c975e6a606a4bd388534a202e63108a1f0b953c9c3f351efe"
+EXPECTED_REPLACEMENT_SHA256 = "b296800e4daedfbd4bd4370000e6251b1cbaa7bb028e8181f8be14cc7c46dfa2"
+EXPECTED_OUTPUT_SHA256 = "c242cfef81b96a24fdfe54abc1336c56c0f1c88095ba31a26d4adee36ca6416c"
+EXPECTED_OUTPUT_RGBA_SHA256 = "f12e0ece8e9da06d60aa18fe9fa43e91356301d2d2edff00d65f57649dd680f0"
 
 
 class OralAtlasBuildError(RuntimeError):
@@ -40,7 +46,33 @@ def _premultiplied_resize(rgba: np.ndarray, size: tuple[int, int]) -> np.ndarray
     return np.dstack((np.clip(rgb, 0, 255).astype(np.uint8), np.clip(resized_alpha * 255.0, 0, 255).astype(np.uint8)))
 
 
+def _rgba_sha256(rgba: np.ndarray) -> str:
+    return hashlib.sha256(np.ascontiguousarray(rgba).tobytes()).hexdigest()
+
+
+def _require_hash(path: Path, expected: str, label: str) -> None:
+    if not path.is_file():
+        raise OralAtlasBuildError(f"missing {label}: {path}")
+    actual = _sha256(path)
+    if actual != expected:
+        raise OralAtlasBuildError(f"{label} SHA-256 mismatch: {actual} != {expected}")
+
+
 def build() -> dict[str, str | int]:
+    _require_hash(BASE, EXPECTED_BASE_SHA256, "base atlas")
+    _require_hash(REPLACEMENT, EXPECTED_REPLACEMENT_SHA256, "G replacement")
+    if OUTPUT.exists():
+        _require_hash(OUTPUT, EXPECTED_OUTPUT_SHA256, "existing output atlas")
+        output_rgba = np.asarray(Image.open(OUTPUT).convert("RGBA"), dtype=np.uint8)
+        if _rgba_sha256(output_rgba) != EXPECTED_OUTPUT_RGBA_SHA256:
+            raise OralAtlasBuildError("existing output atlas RGBA pixels changed")
+        return {
+            "output": str(OUTPUT),
+            "sha256": EXPECTED_OUTPUT_SHA256,
+            "rgba_sha256": EXPECTED_OUTPUT_RGBA_SHA256,
+            "cell_size": CELL_SIZE,
+            "publication": "verified_existing_immutable_output",
+        }
     atlas = np.asarray(Image.open(BASE).convert("RGBA"), dtype=np.uint8).copy()
     replacement = np.asarray(Image.open(REPLACEMENT).convert("RGBA"), dtype=np.uint8)
     if atlas.shape != (CELL_SIZE * 3, CELL_SIZE * 3, 4):
@@ -62,11 +94,24 @@ def build() -> dict[str, str | int]:
     if np.any(cell[0, :, 3] >= 16) or np.any(cell[-1, :, 3] >= 16) or np.any(cell[:, 0, 3] >= 16) or np.any(cell[:, -1, 3] >= 16):
         raise OralAtlasBuildError("repacked G touches its cell boundary")
     atlas[2 * CELL_SIZE:3 * CELL_SIZE, CELL_SIZE:2 * CELL_SIZE] = cell
-    Image.fromarray(atlas, "RGBA").save(OUTPUT, format="PNG", optimize=True)
+    if _rgba_sha256(atlas) != EXPECTED_OUTPUT_RGBA_SHA256:
+        raise OralAtlasBuildError("rebuilt output RGBA pixels do not match the locked atlas")
+    descriptor, temporary_name = tempfile.mkstemp(prefix=f".{OUTPUT.name}.", suffix=".partial", dir=OUTPUT.parent)
+    os.close(descriptor)
+    temporary = Path(temporary_name)
+    try:
+        Image.fromarray(atlas, "RGBA").save(temporary, format="PNG", optimize=True)
+        _require_hash(temporary, EXPECTED_OUTPUT_SHA256, "staged output atlas")
+        os.replace(temporary, OUTPUT)
+    finally:
+        if temporary.exists():
+            temporary.unlink()
     return {
         "output": str(OUTPUT),
         "sha256": _sha256(OUTPUT),
+        "rgba_sha256": _rgba_sha256(atlas),
         "cell_size": CELL_SIZE,
+        "publication": "atomic_exact_hash_publish",
         "G_padding_top": y1,
         "G_padding_bottom": CELL_SIZE - (y1 + target_height),
         "G_padding_left": x1,

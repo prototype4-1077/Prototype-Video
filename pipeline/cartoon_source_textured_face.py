@@ -2,10 +2,12 @@ from __future__ import annotations
 
 import argparse
 from dataclasses import dataclass
+import gzip
 import hashlib
 import json
 import math
 import os
+import platform
 from pathlib import Path
 import shutil
 import tempfile
@@ -13,7 +15,7 @@ from typing import Any
 
 import cv2
 import numpy as np
-from PIL import Image, ImageDraw
+from PIL import Image, ImageDraw, __version__ as PILLOW_VERSION
 
 import pipeline.cartoon_semantic_face as phase33
 
@@ -21,10 +23,24 @@ import pipeline.cartoon_semantic_face as phase33
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase34_source_textured_visemes_v1.json"
 IMPLEMENTATION_RELATIVE_PATH = "pipeline/cartoon_source_textured_face.py"
+EXPECTED_CONTRACT_CANONICAL_SHA256 = "7312f237a0f114402d72e0ddd399eecde4a2e8883ff808715eb6b0f6e6950034"
+ORAL_OUTER_RING_EXCLUSION_PX = 24.0
+ORAL_OUTER_RING_SAFETY_GAP_PX = 4.0
+ORAL_OUTER_RING_COLOR_RULE = "red_dominant_lip_material_within_outer_distance_v1"
+ORAL_BLEND_GAMMA = 1.5
+MINIMUM_AUTHORED_ORAL_OPENING_PX = 8.0
+UPPER_DENTITION_TARGET_HEIGHT_PX = 16.0
 
 
 class SourceTexturedFaceError(RuntimeError):
     pass
+
+
+@dataclass(frozen=True)
+class OralCell:
+    rgba: np.ndarray
+    excluded_outer_ring: np.ndarray
+    upper_dentition_rgba: np.ndarray
 
 
 @dataclass
@@ -35,7 +51,7 @@ class PreparedSourceTexturedFace:
     source_points: np.ndarray
     triangles: np.ndarray
     feature_support: np.ndarray
-    oral_cells: dict[str, np.ndarray]
+    oral_cells: dict[str, OralCell]
     moustache_alpha: np.ndarray
     beard_alpha: np.ndarray
     preflight_measurements: dict[str, Any]
@@ -54,6 +70,7 @@ class FrameEvidence:
     lid_areas: list[int]
     cavity_area: int
     upper_teeth_area: int
+    upper_dentition_centroid_y: float
     lower_teeth_area: int
     tongue_area: int
     warped_source_pixels: int
@@ -61,8 +78,9 @@ class FrameEvidence:
     source_lip_ribbon_pixels: int
     moustache_front_overlap: int
     beard_front_overlap: int
+    connected_source_seam_coverage_ratio: float
     oral_pixels_outside_cavity: int
-    procedural_lip_color_pixels: int
+    generated_atlas_outer_ring_pixels: int
     changed_pixels: int
     changed_outside_support: int
     folded_triangles: int
@@ -70,7 +88,7 @@ class FrameEvidence:
     maximum_triangle_area_ratio: float
     maximum_triangle_condition_number: float
     final_owner_counts: dict[str, int]
-    multiply_owned_final_pixels: int
+    unexpected_layer_overlap_pixels: int
 
 
 OWNER_NAMES = {
@@ -95,6 +113,21 @@ POSE_FIELDS = (
     "cheek_l", "cheek_r", "beard_follow",
 )
 
+LAYER_BITS = {
+    "source_warp": 1,
+    "cavity": 2,
+    "oral_interior": 4,
+    "source_lip_edge": 8,
+    "moustache": 16,
+    "beard": 32,
+    "eyelids": 64,
+}
+ALLOWED_LAYER_OVERLAP_PAIRS = {
+    frozenset((first, second))
+    for index, first in enumerate((1, 2, 4, 8, 16, 32))
+    for second in (1, 2, 4, 8, 16, 32)[index + 1:]
+}
+
 
 def _sha256(path: str | Path) -> str:
     digest = hashlib.sha256()
@@ -108,9 +141,79 @@ def _raw_frame_hash(frame: np.ndarray) -> str:
     return hashlib.sha256(np.ascontiguousarray(frame).tobytes()).hexdigest()
 
 
+def _write_lossless_frame_archive(frames: list[Image.Image], path: str | Path) -> dict[str, Any]:
+    if not frames:
+        raise SourceTexturedFaceError("lossless review archive requires at least one frame")
+    first = np.asarray(frames[0].convert("RGB"), dtype=np.uint8)
+    height, width = first.shape[:2]
+    header = {
+        "format": "phase34_rgb24_xor_previous_gzip_v1",
+        "width": width,
+        "height": height,
+        "channels": 3,
+        "frame_count": len(frames),
+        "frame_bytes": int(first.size),
+        "xor_seed": "all_zero_rgb24_frame",
+    }
+    previous = np.zeros_like(first)
+    with Path(path).open("wb") as raw_handle:
+        with gzip.GzipFile(filename="", mode="wb", compresslevel=9, fileobj=raw_handle, mtime=0) as archive:
+            archive.write(
+                json.dumps(header, sort_keys=True, separators=(",", ":")).encode("utf-8") + b"\n"
+            )
+            for index, image in enumerate(frames, start=1):
+                frame = np.asarray(image.convert("RGB"), dtype=np.uint8)
+                if frame.shape != first.shape:
+                    raise SourceTexturedFaceError(
+                        f"lossless review frame {index} shape changed: {frame.shape} != {first.shape}"
+                    )
+                archive.write(np.bitwise_xor(frame, previous).tobytes(order="C"))
+                previous = frame
+    return header
+
+
+def _read_lossless_frame_archive(path: str | Path) -> tuple[dict[str, Any], list[np.ndarray]]:
+    with gzip.open(path, "rb") as archive:
+        header = json.loads(archive.readline().decode("utf-8"))
+        if header.get("format") != "phase34_rgb24_xor_previous_gzip_v1":
+            raise SourceTexturedFaceError(f"unsupported lossless archive format: {header.get('format')}")
+        shape = (int(header["height"]), int(header["width"]), int(header["channels"]))
+        frame_bytes = int(np.prod(shape))
+        if frame_bytes != int(header["frame_bytes"]):
+            raise SourceTexturedFaceError("lossless archive frame byte count is inconsistent")
+        previous = np.zeros(shape, dtype=np.uint8)
+        frames: list[np.ndarray] = []
+        for frame_number in range(1, int(header["frame_count"]) + 1):
+            payload = archive.read(frame_bytes)
+            if len(payload) != frame_bytes:
+                raise SourceTexturedFaceError(f"lossless archive frame {frame_number} is truncated")
+            delta = np.frombuffer(payload, dtype=np.uint8).reshape(shape)
+            frame = np.bitwise_xor(delta, previous)
+            frames.append(frame.copy())
+            previous = frame
+        if archive.read(1):
+            raise SourceTexturedFaceError("lossless archive has trailing payload")
+    return header, frames
+
+
 def _canonical_hash(payload: dict[str, Any]) -> str:
     encoded = json.dumps(payload, sort_keys=True, separators=(",", ":"), ensure_ascii=False).encode("utf-8")
     return hashlib.sha256(encoded).hexdigest()
+
+
+def _sha256_lf_normalized_text(path: str | Path) -> str:
+    data = Path(path).read_bytes().replace(b"\r\n", b"\n")
+    return hashlib.sha256(data).hexdigest()
+
+
+def _locked_source_hash(reference: dict[str, Any]) -> str:
+    path = _resolve_repo_path(reference["path"])
+    domain = reference.get("hash_domain", "raw_bytes")
+    if domain == "raw_bytes":
+        return _sha256(path)
+    if domain == "lf_normalized_text":
+        return _sha256_lf_normalized_text(path)
+    raise SourceTexturedFaceError(f"unsupported locked-source hash domain: {domain}")
 
 
 def _resolve_repo_path(relative: str) -> Path:
@@ -128,6 +231,10 @@ def _require_equal(actual: Any, expected: Any, label: str) -> None:
 
 
 def _validate_contract(contract: dict[str, Any]) -> None:
+    _require_equal(
+        _canonical_hash(contract), EXPECTED_CONTRACT_CANONICAL_SHA256,
+        "complete canonical contract SHA-256",
+    )
     _require_equal(contract["contract_version"], 1, "contract version")
     _require_equal(contract["contract_id"], "june_oxley_phase34_source_textured_visemes_v1", "contract id")
     _require_equal(contract["view_id"], "CLOSE_HERO_FRONT_GS070", "view")
@@ -149,8 +256,33 @@ def _validate_contract(contract: dict[str, Any]) -> None:
     _require_equal(representation["paired_canonical_lid_pixels_allowed"], True, "paired lids")
     _require_equal(representation["procedural_recessed_oral_anatomy_allowed"], True, "oral anatomy")
     _require_equal(
+        representation["oral_interior_atlas_outer_ring_exclusion_px"],
+        ORAL_OUTER_RING_EXCLUSION_PX, "atlas outer-ring exclusion",
+    )
+    _require_equal(
+        representation["oral_interior_atlas_outer_ring_safety_gap_px"],
+        ORAL_OUTER_RING_SAFETY_GAP_PX, "atlas outer-ring safety gap",
+    )
+    _require_equal(
+        representation["oral_interior_atlas_outer_ring_color_rule"],
+        ORAL_OUTER_RING_COLOR_RULE, "atlas outer-ring color rule",
+    )
+    _require_equal(
         representation["oral_interior_interpolation"],
-        "sharpened_registered_pose_blend_gamma_2", "oral interpolation",
+        "registered_pose_blend_gamma_1_5", "oral interpolation",
+    )
+    _require_equal(representation["oral_interior_blend_gamma"], ORAL_BLEND_GAMMA, "oral blend gamma")
+    _require_equal(
+        representation["minimum_authored_oral_interior_opening_px"],
+        MINIMUM_AUTHORED_ORAL_OPENING_PX, "minimum authored oral opening",
+    )
+    _require_equal(
+        representation["upper_dentition_transform"],
+        "independent_skull_anchored_affine_v1", "upper dentition transform",
+    )
+    _require_equal(
+        representation["upper_dentition_target_height_px"],
+        UPPER_DENTITION_TARGET_HEIGHT_PX, "upper dentition target height",
     )
     _require_equal(contract["clock"], {
         "source_width": 1672, "source_height": 941, "output_width": 1920, "output_height": 1080,
@@ -170,23 +302,44 @@ def _validate_contract(contract: dict[str, Any]) -> None:
         path = _resolve_repo_path(reference["path"])
         if not path.is_file():
             raise SourceTexturedFaceError(f"missing locked source {name}: {path}")
-        actual = _sha256(path)
+        actual = _locked_source_hash(reference)
         if actual != reference["sha256"]:
             raise SourceTexturedFaceError(f"{name} SHA-256 mismatch: {actual} != {reference['sha256']}")
 
 
 def load_contract(path: str | Path = REPO_ROOT / CONTRACT_RELATIVE_PATH) -> dict[str, Any]:
-    payload = json.loads(Path(path).resolve().read_text(encoding="utf-8"))
+    resolved = Path(path).resolve()
+    expected = (REPO_ROOT / CONTRACT_RELATIVE_PATH).resolve()
+    if resolved != expected:
+        raise SourceTexturedFaceError(f"Phase34 contract path is pinned: {resolved} != {expected}")
+    payload = json.loads(resolved.read_text(encoding="utf-8"))
     _validate_contract(payload)
     return payload
 
 
-def _load_oral_cells(path: str | Path) -> dict[str, np.ndarray]:
+def _center_rgba_on_alpha_centroid(rgba: np.ndarray) -> np.ndarray:
+    alpha = rgba[:, :, 3].astype(np.float64)
+    total = float(alpha.sum())
+    if total <= 0.0:
+        return np.zeros((1, 1, 4), dtype=np.uint8)
+    yy, xx = np.indices(alpha.shape, dtype=np.float64)
+    centroid_x = float((xx * alpha).sum() / total)
+    centroid_y = float((yy * alpha).sum() / total)
+    half_width = int(math.ceil(max(centroid_x, rgba.shape[1] - 1 - centroid_x))) + 2
+    half_height = int(math.ceil(max(centroid_y, rgba.shape[0] - 1 - centroid_y))) + 2
+    centered = np.zeros((2 * half_height + 1, 2 * half_width + 1, 4), dtype=np.uint8)
+    offset_x = int(round(half_width - centroid_x))
+    offset_y = int(round(half_height - centroid_y))
+    centered[offset_y:offset_y + rgba.shape[0], offset_x:offset_x + rgba.shape[1]] = rgba
+    return centered
+
+
+def _load_oral_cells(path: str | Path) -> dict[str, OralCell]:
     atlas = np.asarray(Image.open(path).convert("RGBA"), dtype=np.uint8)
     if atlas.shape != (1254, 1254, 4):
         raise SourceTexturedFaceError(f"oral atlas dimensions changed: {atlas.shape}")
     cell_size = 418
-    cells: dict[str, np.ndarray] = {}
+    cells: dict[str, OralCell] = {}
     for index, name in enumerate("XABCDEFGH"):
         row, column = divmod(index, 3)
         cell = atlas[row * cell_size:(row + 1) * cell_size, column * cell_size:(column + 1) * cell_size].copy()
@@ -203,11 +356,66 @@ def _load_oral_cells(path: str | Path) -> dict[str, np.ndarray]:
         y1, y2 = max(0, int(yy.min()) - pad), min(cell_size, int(yy.max()) + pad + 1)
         x1, x2 = max(0, int(xx.min()) - pad), min(cell_size, int(xx.max()) + pad + 1)
         crop = cell[y1:y2, x1:x2].copy()
+        original_alpha = crop[:, :, 3].copy()
         opaque = (crop[:, :, 3] > 8).astype(np.uint8)
         distance = cv2.distanceTransform(opaque, cv2.DIST_L2, 5)
-        inner = np.clip((distance - 8.0) / 5.0, 0.0, 1.0)
-        crop[:, :, 3] = np.clip(crop[:, :, 3].astype(np.float32) * inner, 0, 255).astype(np.uint8)
-        cells[name] = crop
+        red = crop[:, :, 0].astype(np.float32)
+        green = crop[:, :, 1].astype(np.float32)
+        blue = crop[:, :, 2].astype(np.float32)
+        dental_material = (
+            (red > 145.0)
+            & (green > 105.0)
+            & (blue > 70.0)
+            & (red < green * 1.55)
+        )
+        upper_half = np.indices(opaque.shape)[0] < opaque.shape[0] * 0.55
+        upper_dentition_core = (opaque > 0) & dental_material & upper_half
+        upper_dentition_mask = cv2.dilate(
+            upper_dentition_core.astype(np.uint8) * 255,
+            cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)),
+        )
+        upper_dentition_mask = cv2.GaussianBlur(upper_dentition_mask, (0, 0), 0.55)
+        upper_dentition = crop.copy()
+        upper_dentition[:, :, 3] = np.clip(
+            original_alpha.astype(np.float32) * (upper_dentition_mask.astype(np.float32) / 255.0),
+            0, 255,
+        ).astype(np.uint8)
+        upper_visible = upper_dentition[:, :, 3] > 8
+        upper_yy, upper_xx = np.where(upper_visible)
+        if upper_yy.size:
+            uy1, uy2 = max(0, int(upper_yy.min()) - 2), min(crop.shape[0], int(upper_yy.max()) + 3)
+            ux1, ux2 = max(0, int(upper_xx.min()) - 2), min(crop.shape[1], int(upper_xx.max()) + 3)
+            upper_dentition = upper_dentition[uy1:uy2, ux1:ux2].copy()
+            upper_dentition = _center_rgba_on_alpha_centroid(upper_dentition)
+        else:
+            upper_dentition = np.zeros((1, 1, 4), dtype=np.uint8)
+        lip_material = (
+            (red >= 85.0)
+            & (red > green * 1.28)
+            & (red > blue * 1.08)
+            & ~dental_material
+        )
+        excluded_bool = (opaque > 0) & (distance <= ORAL_OUTER_RING_EXCLUSION_PX) & lip_material
+        excluded = excluded_bool.astype(np.uint8) * 255
+        gap_radius = int(round(ORAL_OUTER_RING_SAFETY_GAP_PX))
+        gap_kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (2 * gap_radius + 1, 2 * gap_radius + 1))
+        excluded_with_gap = cv2.dilate(excluded, gap_kernel) > 0
+        retained = ((opaque > 0) & (~excluded_with_gap | dental_material)).astype(np.uint8)
+        retained_distance = cv2.distanceTransform(retained, cv2.DIST_L2, 5)
+        inner = np.clip(retained_distance / 5.0, 0.0, 1.0)
+        remove_upper_dentition = 1.0 - upper_dentition_mask.astype(np.float32) / 255.0
+        crop[:, :, 3] = np.clip(
+            original_alpha.astype(np.float32) * inner * remove_upper_dentition,
+            0, 255,
+        ).astype(np.uint8)
+        if name == "X":
+            crop[:, :, 3] = 0
+            upper_dentition[:, :, 3] = 0
+        cells[name] = OralCell(
+            rgba=crop,
+            excluded_outer_ring=excluded,
+            upper_dentition_rgba=upper_dentition,
+        )
     return cells
 
 
@@ -560,30 +768,42 @@ def _legacy_procedural_oral_anatomy_for_rejected_01(
     }
 
 
-def _warp_oral_cell(
-    cell: np.ndarray,
-    shape: tuple[int, int],
+def _oral_affine_matrix(
+    source_shape: tuple[int, int],
     center: tuple[float, float],
     target_width: float,
     target_height: float,
     angle_degrees: float,
-) -> tuple[np.ndarray, np.ndarray]:
-    height, width = shape
-    source_height, source_width = cell.shape[:2]
+) -> np.ndarray:
+    source_height, source_width = source_shape
     source_center_x = (source_width - 1) * 0.5
     source_center_y = (source_height - 1) * 0.5
     scale_x = max(2.0, target_width) / max(source_width, 1)
     scale_y = max(2.0, target_height) / max(source_height, 1)
     angle = math.radians(angle_degrees)
     cosine, sine = math.cos(angle), math.sin(angle)
-    matrix = np.asarray([
+    return np.asarray([
         [cosine * scale_x, -sine * scale_y,
          center[0] - cosine * scale_x * source_center_x + sine * scale_y * source_center_y],
         [sine * scale_x, cosine * scale_y,
          center[1] - sine * scale_x * source_center_x - cosine * scale_y * source_center_y],
     ], dtype=np.float32)
-    alpha = cell[:, :, 3].astype(np.float32) / 255.0
-    premultiplied = cell[:, :, :3].astype(np.float32) * alpha[:, :, None]
+
+
+def _warp_oral_cell(
+    cell: OralCell,
+    shape: tuple[int, int],
+    center: tuple[float, float],
+    target_width: float,
+    target_height: float,
+    angle_degrees: float,
+) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+    height, width = shape
+    matrix = _oral_affine_matrix(
+        cell.rgba.shape[:2], center, target_width, target_height, angle_degrees,
+    )
+    alpha = cell.rgba[:, :, 3].astype(np.float32) / 255.0
+    premultiplied = cell.rgba[:, :, :3].astype(np.float32) * alpha[:, :, None]
     warped_alpha = cv2.warpAffine(
         alpha, matrix, (width, height), flags=cv2.INTER_LANCZOS4,
         borderMode=cv2.BORDER_CONSTANT, borderValue=0,
@@ -592,11 +812,31 @@ def _warp_oral_cell(
         premultiplied, matrix, (width, height), flags=cv2.INTER_LANCZOS4,
         borderMode=cv2.BORDER_CONSTANT, borderValue=0,
     )
+    warped_excluded = cv2.warpAffine(
+        cell.excluded_outer_ring.astype(np.float32) / 255.0,
+        matrix, (width, height), flags=cv2.INTER_LINEAR,
+        borderMode=cv2.BORDER_CONSTANT, borderValue=0,
+    )
     warped_alpha = np.clip(warped_alpha, 0.0, 1.0)
     warped_premultiplied = np.clip(warped_premultiplied, 0.0, 255.0)
     warped_premultiplied = np.minimum(warped_premultiplied, warped_alpha[:, :, None] * 255.0)
     warped_premultiplied[warped_alpha <= 1e-6] = 0.0
-    return warped_premultiplied, warped_alpha
+    return warped_premultiplied, warped_alpha, np.clip(warped_excluded, 0.0, 1.0)
+
+
+def _record_layer(coverage: np.ndarray, mask: np.ndarray, layer_name: str) -> None:
+    coverage[np.asarray(mask) > 8] |= np.uint16(LAYER_BITS[layer_name])
+
+
+def _unexpected_layer_overlap_pixels(coverage: np.ndarray) -> int:
+    unexpected = np.zeros(coverage.shape, dtype=bool)
+    bits = tuple(LAYER_BITS.values())
+    for index, first in enumerate(bits):
+        for second in bits[index + 1:]:
+            if frozenset((first, second)) in ALLOWED_LAYER_OVERLAP_PAIRS:
+                continue
+            unexpected |= ((coverage & first) != 0) & ((coverage & second) != 0)
+    return int(unexpected.sum())
 
 
 def _compose_authored_oral_anatomy(
@@ -605,8 +845,10 @@ def _compose_authored_oral_anatomy(
     warped_moustache: np.ndarray,
     warped_beard: np.ndarray,
     owner: np.ndarray,
-    oral_cells: dict[str, np.ndarray],
+    coverage: np.ndarray,
+    oral_cells: dict[str, OralCell],
     center: tuple[float, float],
+    upper_dentition_anchor: tuple[float, float],
     pose: dict[str, float],
     pose_weights: dict[str, float],
     angle_degrees: float,
@@ -625,24 +867,47 @@ def _compose_authored_oral_anatomy(
     shadow[:, :, 0] = np.clip(24.0 + 30.0 * radial, 0, 255).astype(np.uint8)
     shadow[:, :, 1] = np.clip(7.0 + 10.0 * radial, 0, 255).astype(np.uint8)
     shadow[:, :, 2] = np.clip(10.0 + 10.0 * radial, 0, 255).astype(np.uint8)
-    _blend(canvas, shadow, _soft(cavity, 0.6))
+    cavity_alpha = _soft(cavity, 0.6)
+    _blend(canvas, shadow, cavity_alpha)
+    _record_layer(coverage, cavity_alpha, "cavity")
     owner[cavity_hard] = 2
 
     accumulated_premultiplied = np.zeros_like(canvas, dtype=np.float32)
     accumulated_alpha = np.zeros(canvas.shape[:2], dtype=np.float32)
-    sharpened = {name: float(weight) ** 2.0 for name, weight in pose_weights.items()}
+    accumulated_excluded = np.zeros(canvas.shape[:2], dtype=np.float32)
+    accumulated_upper_premultiplied = np.zeros_like(canvas, dtype=np.float32)
+    accumulated_upper_alpha = np.zeros(canvas.shape[:2], dtype=np.float32)
+    sharpened = {name: float(weight) ** ORAL_BLEND_GAMMA for name, weight in pose_weights.items()}
     normalizer = max(sum(sharpened.values()), 1e-9)
     sharpened = {name: weight / normalizer for name, weight in sharpened.items()}
     for name, weight in sharpened.items():
         if name == "X" or weight <= 1e-4:
             continue
-        premultiplied, alpha = _warp_oral_cell(
+        premultiplied, alpha, excluded = _warp_oral_cell(
             oral_cells[name], canvas.shape[:2], center,
             width * 0.98, opening * 0.96, angle_degrees,
         )
         accumulated_premultiplied += premultiplied * weight
         accumulated_alpha += alpha * weight
+        accumulated_excluded += excluded * weight
+        upper_cell = OralCell(
+            rgba=oral_cells[name].upper_dentition_rgba,
+            excluded_outer_ring=np.zeros(oral_cells[name].upper_dentition_rgba.shape[:2], dtype=np.uint8),
+            upper_dentition_rgba=np.zeros((1, 1, 4), dtype=np.uint8),
+        )
+        upper_premultiplied, upper_alpha, _ = _warp_oral_cell(
+            upper_cell, canvas.shape[:2], upper_dentition_anchor,
+            width * 0.78, UPPER_DENTITION_TARGET_HEIGHT_PX, angle_degrees,
+        )
+        accumulated_upper_premultiplied += upper_premultiplied * weight
+        accumulated_upper_alpha += upper_alpha * weight
     accumulated_alpha = np.clip(accumulated_alpha, 0.0, 1.0)
+    exclusion_guard = cv2.dilate(
+        (accumulated_excluded > 0.02).astype(np.uint8),
+        cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)),
+    ) > 0
+    accumulated_alpha[exclusion_guard] = 0.0
+    accumulated_premultiplied[exclusion_guard] = 0.0
     unmasked_alpha = accumulated_alpha.copy()
     inner_cavity = cv2.erode(cavity, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5)))
     clip_alpha = _soft(inner_cavity, 0.45).astype(np.float32) / 255.0
@@ -652,7 +917,26 @@ def _compose_authored_oral_anatomy(
     oral_rgb[valid] = np.clip(
         accumulated_premultiplied[valid] / unmasked_alpha[valid][:, None], 0, 255,
     ).astype(np.uint8)
-    _blend(canvas, oral_rgb, np.clip(accumulated_alpha * 255.0, 0, 255).astype(np.uint8))
+    oral_alpha_u8 = np.clip(accumulated_alpha * 255.0, 0, 255).astype(np.uint8)
+    _blend(canvas, oral_rgb, oral_alpha_u8)
+    _record_layer(coverage, oral_alpha_u8, "oral_interior")
+    generated_outer_ring = (
+        (accumulated_excluded > 0.20)
+        & (accumulated_alpha > 0.02)
+        & (clip_alpha > 0.02)
+    )
+
+    accumulated_upper_alpha = np.clip(accumulated_upper_alpha, 0.0, 1.0) * clip_alpha
+    upper_rgb = np.zeros_like(canvas)
+    upper_valid = accumulated_upper_alpha > 1e-5
+    upper_rgb[upper_valid] = np.clip(
+        accumulated_upper_premultiplied[upper_valid]
+        / np.maximum(accumulated_upper_alpha[upper_valid][:, None] / np.maximum(clip_alpha[upper_valid][:, None], 1e-5), 1e-5),
+        0, 255,
+    ).astype(np.uint8)
+    upper_alpha_u8 = np.clip(accumulated_upper_alpha * 255.0, 0, 255).astype(np.uint8)
+    _blend(canvas, upper_rgb, upper_alpha_u8)
+    _record_layer(coverage, upper_alpha_u8, "oral_interior")
 
     red = oral_rgb[:, :, 0].astype(np.float32)
     green = oral_rgb[:, :, 1].astype(np.float32)
@@ -660,8 +944,10 @@ def _compose_authored_oral_anatomy(
     visible = accumulated_alpha > 0.30
     teeth = visible & (red > 145.0) & (green > 105.0) & (blue > 70.0) & (red < green * 1.55)
     tongue = visible & (red > 105.0) & (green > 34.0) & (blue > 35.0) & (red > green * 1.50) & (mouth_v > -opening * 0.05)
-    upper_teeth = teeth & (mouth_v < 0.0)
     lower_teeth = teeth & (mouth_v >= 0.0)
+    upper_teeth = accumulated_upper_alpha > 0.30
+    upper_y, _ = np.where(upper_teeth)
+    upper_centroid_y = float(upper_y.mean()) if upper_y.size else 0.0
     owner[tongue] = 4
     owner[lower_teeth] = 5
     owner[upper_teeth] = 6
@@ -676,8 +962,10 @@ def _compose_authored_oral_anatomy(
     upper_alpha = _soft(upper_ribbon.astype(np.uint8) * 255, 0.55)
     lower_alpha = _soft(lower_ribbon.astype(np.uint8) * 255, 0.55)
     _blend(canvas, warped_source, upper_alpha)
+    _record_layer(coverage, upper_alpha, "source_lip_edge")
     owner[upper_ribbon] = 7
     _blend(canvas, warped_source, lower_alpha)
+    _record_layer(coverage, lower_alpha, "source_lip_edge")
     owner[lower_ribbon] = 7
 
     perimeter = cv2.subtract(
@@ -690,12 +978,36 @@ def _compose_authored_oral_anatomy(
     beard_alpha = (warped_beard.astype(np.float32) / 255.0) * (perimeter.astype(np.float32) / 255.0) * bottom_half
     moustache_alpha_u8 = np.clip(moustache_alpha * 255.0, 0, 255).astype(np.uint8)
     beard_alpha_u8 = np.clip(beard_alpha * 255.0, 0, 255).astype(np.uint8)
-    _blend(canvas, warped_source, _soft(moustache_alpha_u8, 0.45))
+    moustache_soft = _soft(moustache_alpha_u8, 0.45)
+    _blend(canvas, warped_source, moustache_soft)
+    _record_layer(coverage, moustache_soft, "moustache")
     moustache_front = moustache_alpha > 0.20
     owner[moustache_front] = 8
-    _blend(canvas, warped_source, _soft(beard_alpha_u8, 0.45))
+    beard_soft = _soft(beard_alpha_u8, 0.45)
+    _blend(canvas, warped_source, beard_soft)
+    _record_layer(coverage, beard_soft, "beard")
     beard_front = beard_alpha > 0.20
     owner[beard_front] = 9
+
+    seam_boundary = cv2.morphologyEx(
+        cavity, cv2.MORPH_GRADIENT, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)),
+    ) > 0
+    seam_sources = (upper_ribbon | lower_ribbon | moustache_front | beard_front).astype(np.uint8)
+    seam_sources = cv2.morphologyEx(
+        seam_sources, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9)),
+    )
+    labels_count, seam_labels = cv2.connectedComponents(seam_sources)
+    largest_boundary_coverage = 0
+    boundary_total = int(seam_boundary.sum())
+    for label in range(1, labels_count):
+        component = (seam_labels == label).astype(np.uint8)
+        expanded = cv2.dilate(component, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))) > 0
+        largest_boundary_coverage = max(
+            largest_boundary_coverage, int((expanded & seam_boundary).sum()),
+        )
+    seam_coverage_ratio = (
+        float(largest_boundary_coverage / boundary_total) if boundary_total else 1.0
+    )
 
     oral_union = visible | upper_teeth | lower_teeth | tongue
     texture_ring = cv2.subtract(
@@ -705,12 +1017,15 @@ def _compose_authored_oral_anatomy(
     return {
         "cavity": int(cavity_hard.sum()),
         "upper_teeth": int(upper_teeth.sum()),
+        "upper_dentition_centroid_y": upper_centroid_y,
         "lower_teeth": int(lower_teeth.sum()),
         "tongue": int(tongue.sum()),
         "lip_ribbon": int((upper_ribbon | lower_ribbon).sum()),
         "moustache_overlap": int(moustache_front.sum()),
         "beard_overlap": int(beard_front.sum()),
+        "connected_source_seam_coverage_ratio": seam_coverage_ratio,
         "oral_outside": int((oral_union & ~cavity_hard).sum()),
+        "generated_atlas_outer_ring": int(generated_outer_ring.sum()),
         "source_texture_variance": float(texture_values.var()) if texture_values.size else 0.0,
     }
 
@@ -723,6 +1038,7 @@ def _native_frame(
     plate = prepared.plate
     canvas = plate.copy()
     owner = np.zeros(plate.shape[:2], dtype=np.uint8)
+    coverage = np.zeros(plate.shape[:2], dtype=np.uint16)
     pose, weights = mouth_controls(prepared.contract, frame_number)
     geometry = prepared.contract["semantic_geometry_native_xy"]
     destination = _destination_points(prepared.contract, prepared.source_points, pose)
@@ -734,7 +1050,10 @@ def _native_frame(
     warped_source_pixels = 0
     oral = {
         "cavity": 0, "upper_teeth": 0, "lower_teeth": 0, "tongue": 0,
+        "upper_dentition_centroid_y": 0.0,
         "lip_ribbon": 0, "moustache_overlap": 0, "beard_overlap": 0, "oral_outside": 0,
+        "connected_source_seam_coverage_ratio": 1.0,
+        "generated_atlas_outer_ring": 0,
         "source_texture_variance": 0.0,
     }
     if pose["opening"] > 0.01 and pose["width"] > 0.01:
@@ -761,15 +1080,18 @@ def _native_frame(
         warped_source_pixels = int(changed_by_warp.sum())
         canvas[warp_support > 0] = warped_source[warp_support > 0]
         owner[changed_by_warp] = 1
+        _record_layer(coverage, changed_by_warp.astype(np.uint8) * 255, "source_warp")
         center = (
             float(geometry["mouth_center"][0]),
             float(geometry["mouth_center"][1]) + float(pose["jaw_drop"]) * 0.16,
         )
-        oral = _compose_authored_oral_anatomy(
-            canvas, warped_source, warped_moustache, warped_beard, owner,
-            prepared.oral_cells, center, pose, weights,
-            float(geometry["mouth_angle_degrees"]),
-        )
+        if pose["opening"] >= MINIMUM_AUTHORED_ORAL_OPENING_PX:
+            oral = _compose_authored_oral_anatomy(
+                canvas, warped_source, warped_moustache, warped_beard, owner, coverage,
+                prepared.oral_cells, center,
+                tuple(float(value) for value in geometry["upper_dentition_anchor_native_xy"]),
+                pose, weights, float(geometry["mouth_angle_degrees"]),
+            )
 
     closure = blink_closure(prepared.contract, frame_number)
     iris_ratios: list[float] = []
@@ -786,6 +1108,7 @@ def _native_frame(
     owner[lid_owner == 7] = 10
     owner[lid_owner == 8] = 11
     owner[lid_owner == 9] = 12
+    _record_layer(coverage, (lid_owner > 0).astype(np.uint8) * 255, "eyelids")
 
     changed = np.any(canvas != plate, axis=2)
     outside = changed & ~prepared.feature_support
@@ -800,6 +1123,7 @@ def _native_frame(
         lid_areas=lid_areas,
         cavity_area=int(oral["cavity"]),
         upper_teeth_area=int(oral["upper_teeth"]),
+        upper_dentition_centroid_y=float(oral["upper_dentition_centroid_y"]),
         lower_teeth_area=int(oral["lower_teeth"]),
         tongue_area=int(oral["tongue"]),
         warped_source_pixels=warped_source_pixels,
@@ -807,8 +1131,9 @@ def _native_frame(
         source_lip_ribbon_pixels=int(oral["lip_ribbon"]),
         moustache_front_overlap=int(oral["moustache_overlap"]),
         beard_front_overlap=int(oral["beard_overlap"]),
+        connected_source_seam_coverage_ratio=float(oral["connected_source_seam_coverage_ratio"]),
         oral_pixels_outside_cavity=int(oral["oral_outside"]),
-        procedural_lip_color_pixels=0,
+        generated_atlas_outer_ring_pixels=int(oral["generated_atlas_outer_ring"]),
         changed_pixels=int(changed.sum()),
         changed_outside_support=int(outside.sum()),
         folded_triangles=int(triangle_metrics["folded_triangles"]),
@@ -816,7 +1141,7 @@ def _native_frame(
         maximum_triangle_area_ratio=float(triangle_metrics["maximum_triangle_area_ratio"]),
         maximum_triangle_condition_number=float(triangle_metrics["maximum_triangle_condition_number"]),
         final_owner_counts=counts,
-        multiply_owned_final_pixels=0,
+        unexpected_layer_overlap_pixels=_unexpected_layer_overlap_pixels(coverage),
     )
     return canvas, evidence
 
@@ -912,6 +1237,10 @@ def _preflight(prepared: PreparedSourceTexturedFace) -> dict[str, Any]:
         "minimum_open_pose_cavity_area": min(item.cavity_area for item in non_neutral.values()),
         "B_cavity_area": non_neutral["B"].cavity_area,
         "E_upper_teeth_area": non_neutral["E"].upper_teeth_area,
+        "upper_dentition_anchor_y_range_px": (
+            max(item.upper_dentition_centroid_y for item in non_neutral.values())
+            - min(item.upper_dentition_centroid_y for item in non_neutral.values())
+        ),
         "H_tongue_area": non_neutral["H"].tongue_area,
         "minimum_warped_source_pixels_per_non_neutral_pose": min(item.warped_source_pixels for item in non_neutral.values()),
         "maximum_warped_source_pixels_per_non_neutral_pose": max(item.warped_source_pixels for item in non_neutral.values()),
@@ -921,9 +1250,14 @@ def _preflight(prepared: PreparedSourceTexturedFace) -> dict[str, Any]:
         "maximum_triangle_area_ratio": max(item.maximum_triangle_area_ratio for item in non_neutral.values()),
         "maximum_folded_triangles": max(item.folded_triangles for item in non_neutral.values()),
         "maximum_oral_pixels_outside_cavity": max(item.oral_pixels_outside_cavity for item in non_neutral.values()),
-        "maximum_procedural_lip_color_pixels": max(item.procedural_lip_color_pixels for item in non_neutral.values()),
+        "maximum_generated_atlas_outer_ring_pixels": max(
+            item.generated_atlas_outer_ring_pixels for item in non_neutral.values()
+        ),
         "minimum_moustache_front_overlap_pixels": min(item.moustache_front_overlap for item in non_neutral.values()),
         "minimum_beard_front_overlap_pixels": min(item.beard_front_overlap for item in non_neutral.values()),
+        "minimum_connected_source_seam_coverage_ratio": min(
+            item.connected_source_seam_coverage_ratio for item in non_neutral.values()
+        ),
         "minimum_source_lip_or_hair_seam_pixels_per_pose": min(
             item.source_lip_ribbon_pixels + item.moustache_front_overlap + item.beard_front_overlap
             for item in non_neutral.values()
@@ -934,13 +1268,23 @@ def _preflight(prepared: PreparedSourceTexturedFace) -> dict[str, Any]:
         "maximum_protected_landmark_displacement_px": max(protected_displacements, default=0.0),
         "confusable_pair_mouth_mean_absolute_deltas": confusable_pair_deltas,
         "minimum_confusable_pair_mouth_mean_absolute_delta": min(confusable_pair_deltas.values()),
-        "maximum_multiply_owned_final_pixels": max(item.multiply_owned_final_pixels for item in non_neutral.values()),
+        "maximum_unexpected_layer_overlap_pixels": max(
+            item.unexpected_layer_overlap_pixels for item in non_neutral.values()
+        ),
         "maximum_adjacent_feature_8x8_mean_delta": maximum_delta,
         "maximum_adjacent_feature_8x8_mean_delta_frame_pair": maximum_delta_pair,
+        "frame_82_authored_oral_pixels": (
+            frames[82][1].cavity_area
+            + frames[82][1].upper_teeth_area
+            + frames[82][1].lower_teeth_area
+            + frames[82][1].tongue_area
+        ),
         "frames_evaluated": frame_count,
         "source_identity_texture_only": True,
         "complete_feature_photo_crossfades_used": False,
-        "procedural_lip_color_used": False,
+        "generated_atlas_outer_ring_used": any(
+            item.generated_atlas_outer_ring_pixels > 0 for item in non_neutral.values()
+        ),
         "audio_used": False,
         "reinforcement_learning_used": False,
     }
@@ -957,6 +1301,7 @@ def _preflight_gates(contract: dict[str, Any], metrics: dict[str, Any]) -> list[
         ("open_pose_cavity_area", metrics["minimum_open_pose_cavity_area"], ">=", thresholds["minimum_open_pose_cavity_area"]),
         ("B_cavity_area", metrics["B_cavity_area"], ">=", thresholds["minimum_B_cavity_area"]),
         ("E_upper_teeth_area", metrics["E_upper_teeth_area"], ">=", thresholds["minimum_E_upper_teeth_area"]),
+        ("upper_dentition_anchor_y_range", metrics["upper_dentition_anchor_y_range_px"], "<=", thresholds["maximum_upper_dentition_anchor_y_range_px"]),
         ("H_tongue_area", metrics["H_tongue_area"], ">=", thresholds["minimum_H_tongue_area"]),
         ("warped_source_pixels", metrics["minimum_warped_source_pixels_per_non_neutral_pose"], ">=", thresholds["minimum_warped_source_pixels_per_non_neutral_pose"]),
         ("maximum_warped_source_pixels", metrics["maximum_warped_source_pixels_per_non_neutral_pose"], "<=", thresholds["maximum_warped_source_pixels_per_non_neutral_pose"]),
@@ -966,16 +1311,18 @@ def _preflight_gates(contract: dict[str, Any], metrics: dict[str, Any]) -> list[
         ("maximum_triangle_area_ratio", metrics["maximum_triangle_area_ratio"], "<=", thresholds["maximum_triangle_area_ratio"]),
         ("folded_triangles", metrics["maximum_folded_triangles"], "==", thresholds["required_folded_triangles"]),
         ("oral_pixels_outside_cavity", metrics["maximum_oral_pixels_outside_cavity"], "==", thresholds["required_oral_pixels_outside_cavity"]),
-        ("procedural_lip_color_pixels", metrics["maximum_procedural_lip_color_pixels"], "==", thresholds["required_procedural_lip_color_pixels"]),
+        ("generated_atlas_outer_ring_pixels", metrics["maximum_generated_atlas_outer_ring_pixels"], "==", thresholds["required_generated_atlas_outer_ring_pixels"]),
         ("moustache_front_overlap", metrics["minimum_moustache_front_overlap_pixels"], ">=", thresholds["minimum_moustache_front_overlap_pixels"]),
         ("beard_front_overlap", metrics["minimum_beard_front_overlap_pixels"], ">=", thresholds["minimum_beard_front_overlap_pixels"]),
+        ("connected_source_seam_coverage", metrics["minimum_connected_source_seam_coverage_ratio"], ">=", thresholds["minimum_connected_source_seam_coverage_ratio"]),
         ("source_lip_or_hair_seam", metrics["minimum_source_lip_or_hair_seam_pixels_per_pose"], ">=", thresholds["minimum_source_lip_or_hair_seam_pixels_per_pose"]),
         ("viseme_changes_above_alar_base", metrics["maximum_viseme_changed_pixels_above_alar_base"], "==", thresholds["required_viseme_changed_pixels_above_alar_base"]),
         ("output_viseme_changes_above_protected_margin", metrics["maximum_output_viseme_changed_pixels_above_protected_margin"], "==", thresholds["required_output_viseme_changed_pixels_above_protected_margin"]),
         ("protected_landmark_displacement", metrics["maximum_protected_landmark_displacement_px"], "<=", thresholds["maximum_protected_landmark_displacement_px"]),
         ("confusable_pose_separation", metrics["minimum_confusable_pair_mouth_mean_absolute_delta"], ">=", thresholds["minimum_confusable_pair_mouth_mean_absolute_delta"]),
-        ("multiply_owned_final_pixels", metrics["maximum_multiply_owned_final_pixels"], "==", thresholds["maximum_multiply_owned_final_pixels"]),
+        ("unexpected_layer_overlap_pixels", metrics["maximum_unexpected_layer_overlap_pixels"], "==", thresholds["maximum_unexpected_layer_overlap_pixels"]),
         ("adjacent_feature_8x8_mean_delta", metrics["maximum_adjacent_feature_8x8_mean_delta"], "<=", thresholds["maximum_adjacent_feature_8x8_mean_delta"]),
+        ("frame_82_authored_oral_pixels", metrics["frame_82_authored_oral_pixels"], "==", thresholds["required_frame_82_authored_oral_pixels"]),
     ]
     results = []
     for name, actual, operator, threshold in checks:
@@ -994,7 +1341,8 @@ def prepare_source_textured_face(
 ) -> PreparedSourceTexturedFace:
     contract_path = Path(path).resolve()
     contract = load_contract(contract_path)
-    base = phase33.prepare_semantic_face(REPO_ROOT / "concept/characters/june_oxley_phase33_semantic_face_v3.json")
+    phase33_contract = _resolve_repo_path(contract["locks"]["phase33_v3_contract"]["path"])
+    base = phase33.prepare_semantic_face(phase33_contract)
     clock = contract["clock"]
     if base.plate.shape != (clock["source_height"], clock["source_width"], 3):
         raise SourceTexturedFaceError(f"plate dimensions changed: {base.plate.shape}")
@@ -1161,6 +1509,8 @@ def write_unencoded_preview(
             )
             frames.append(frame)
             frame_hashes.append({"frame": frame_number, "rgb_sha256": _raw_frame_hash(np.asarray(frame, dtype=np.uint8))})
+        archive_path = stage / prepared.contract["preview"]["lossless_frame_archive_filename"]
+        archive_metadata = _write_lossless_frame_archive(frames, archive_path)
         labels = []
         for frame_number in range(1, frame_count + 1):
             _, weights = mouth_controls(prepared.contract, frame_number)
@@ -1197,15 +1547,29 @@ def write_unencoded_preview(
                 "canonical_sha256": _canonical_hash(prepared.contract),
             },
             "implementation": {"path": IMPLEMENTATION_RELATIVE_PATH, "sha256": _sha256(REPO_ROOT / IMPLEMENTATION_RELATIVE_PATH)},
+            "toolchain": {
+                "python": platform.python_version(),
+                "platform": platform.platform(),
+                "numpy": np.__version__,
+                "pillow": PILLOW_VERSION,
+                "opencv": cv2.__version__,
+            },
             "clock": prepared.contract["clock"],
             "frame_hash_domain": "raw_rgb24_1920x1080_row_major",
             "frames": frame_hashes,
+            "lossless_review_frame_archive": {
+                "file": archive_path.name,
+                "sha256": _sha256(archive_path),
+                **archive_metadata,
+            },
             "all_96_contact_sheet": {"file": contact_path.name, "sha256": _sha256(contact_path)},
             "key_pose_sheet": {"file": key_path.name, "sha256": _sha256(key_path)},
             "review_sheets": review_sheets,
             "preflight_measurements": prepared.preflight_measurements,
             "preflight_gates": _preflight_gates(prepared.contract, prepared.preflight_measurements),
             "complete_beat_review_required": True,
+            "all_96_raw_frame_hashes_present": len(frame_hashes) == 96,
+            "lossless_review_frame_archive_present": archive_path.is_file(),
             "final_encode_allowed_without_bound_review_receipt": False,
         }
         manifest_path = stage / prepared.contract["preview"]["manifest_filename"]

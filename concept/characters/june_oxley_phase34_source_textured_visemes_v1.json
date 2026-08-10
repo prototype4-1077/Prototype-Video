@@ -39,7 +39,8 @@
     },
     "blender_v8_pose_source": {
       "path": "pipeline/blender/render_vertical_slice.py",
-      "sha256": "7105a3abfdba0d70453e19c2fc093b3606f42d2f46d41cedc92aa2fe4b34d9bc"
+      "hash_domain": "lf_normalized_text",
+      "sha256": "410328d7ef78d1691e7f633f1b69990ab9451762d2d108d776f91eb4ecd2fa47"
     },
     "oral_interior_atlas": {
       "path": "concept/characters/rig_assets/june_oxley_oral_interior_atlas_v3.png",
@@ -47,7 +48,7 @@
     },
     "oral_interior_atlas_provenance": {
       "path": "concept/characters/june_oxley_phase34_oral_atlas_provenance_v2.json",
-      "sha256": "25a3d64b4eb63becde4c09bbe80b22386891e8ef0b2b34c958ffe0a882bf4e15"
+      "sha256": "ec9bce580f0a43d25df84a1f32b542d4d4bd50744ebffedb168501d4d5be6f84"
     }
   },
   "representation": {
@@ -59,7 +60,14 @@
     "procedural_lip_color_slabs_allowed": false,
     "procedural_recessed_oral_anatomy_allowed": true,
     "registered_authored_oral_interior_atlas_allowed": true,
-    "oral_interior_interpolation": "sharpened_registered_pose_blend_gamma_2",
+    "oral_interior_atlas_outer_ring_exclusion_px": 24.0,
+    "oral_interior_atlas_outer_ring_safety_gap_px": 4.0,
+    "oral_interior_atlas_outer_ring_color_rule": "red_dominant_lip_material_within_outer_distance_v1",
+    "oral_interior_interpolation": "registered_pose_blend_gamma_1_5",
+    "oral_interior_blend_gamma": 1.5,
+    "minimum_authored_oral_interior_opening_px": 8.0,
+    "upper_dentition_transform": "independent_skull_anchored_affine_v1",
+    "upper_dentition_target_height_px": 16.0,
     "generated_lip_pixels_allowed_in_final_composite": false,
     "runtime_ai_generation_allowed": false,
     "piecewise_affine_texture_deformation": true,
@@ -126,6 +134,7 @@
     "viewer_left_eye": {"center": [598, 236], "radius": [31, 24]},
     "viewer_right_eye": {"center": [696, 252], "radius": [31, 25]},
     "mouth_center": [635, 383],
+    "upper_dentition_anchor_native_xy": [635, 381],
     "mouth_angle_degrees": 5.0,
     "neutral_mouth_half_width": 77.0,
     "deformation_roi": [500, 330, 755, 495],
@@ -155,6 +164,7 @@
     "minimum_open_pose_cavity_area": 350,
     "minimum_B_cavity_area": 1800,
     "minimum_E_upper_teeth_area": 260,
+    "maximum_upper_dentition_anchor_y_range_px": 2.5,
     "minimum_H_tongue_area": 120,
     "minimum_warped_source_pixels_per_non_neutral_pose": 2500,
     "maximum_warped_source_pixels_per_non_neutral_pose": 45000,
@@ -164,17 +174,21 @@
     "maximum_triangle_area_ratio": 2.20,
     "required_folded_triangles": 0,
     "required_oral_pixels_outside_cavity": 0,
-    "required_procedural_lip_color_pixels": 0,
+    "required_generated_atlas_outer_ring_pixels": 0,
     "minimum_moustache_front_overlap_pixels": 180,
     "minimum_beard_front_overlap_pixels": 0,
+    "minimum_connected_source_seam_coverage_ratio": 0.95,
     "minimum_source_lip_or_hair_seam_pixels_per_pose": 350,
     "required_viseme_changed_pixels_above_alar_base": 0,
     "required_output_viseme_changed_pixels_above_protected_margin": 0,
     "maximum_protected_landmark_displacement_px": 0.5,
     "minimum_confusable_pair_mouth_mean_absolute_delta": 3.0,
-    "maximum_multiply_owned_final_pixels": 0,
+    "maximum_unexpected_layer_overlap_pixels": 0,
     "maximum_adjacent_feature_8x8_mean_delta": 150.0,
+    "required_frame_82_authored_oral_pixels": 0,
     "require_all_96_raw_frame_hashes": true,
+    "require_lossless_review_frame_archive": true,
+    "require_toolchain_record": true,
     "require_preview_review_receipt": true
   },
   "decoded_gates": {
@@ -200,6 +214,7 @@
     "upper_face_difference_sheet_filename": "june-phase34-source-textured-visemes-upper-face-differences-v1.png",
     "delivery_scale_sheet_filename": "june-phase34-source-textured-visemes-delivery-scale-v1.png",
     "articulation_specials_sheet_filename": "june-phase34-source-textured-visemes-articulation-specials-v1.png",
+    "lossless_frame_archive_filename": "june-phase34-source-textured-visemes-rgb24-xor-v1.gz",
     "review_receipt": "concept/characters/june_oxley_phase34_source_textured_preview_review_v1.json"
   },
   "delivery": {
