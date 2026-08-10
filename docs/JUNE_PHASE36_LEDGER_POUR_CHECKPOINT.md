@@ -38,7 +38,7 @@ The required allowed verdict is:
 
 `PHASE35_C03_ATTEMPT01_REJECTION_RATIFIED_REFERENCE_ONLY_PHASE36_UNENCODED_ALLOWED`
 
-No current Claude review contains it. Reviews from 1712Z and 1804Z predate Attempt 01 and cannot authorize Phase 36.
+`collab/CLAUDE_REVIEW_2026-08-10_1910Z.md` contains the allowed verdict and accepts the real-time picture/audio, but abbreviates the three evidence hashes. The strict gate therefore remains unauthorized until a Claude addendum repeats the structured verdict with all three complete hashes. Reviews from 1712Z and 1804Z predate Attempt 01 and cannot authorize Phase 36.
 
 ## Resume sequence
 
