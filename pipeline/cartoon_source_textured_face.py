@@ -23,7 +23,7 @@ import pipeline.cartoon_semantic_face as phase33
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase34_source_textured_visemes_v1.json"
 IMPLEMENTATION_RELATIVE_PATH = "pipeline/cartoon_source_textured_face.py"
-EXPECTED_CONTRACT_CANONICAL_SHA256 = "894f453758ad3b685487140702d90846068b8907803d90fc7e96c5a11d850b1d"
+EXPECTED_CONTRACT_CANONICAL_SHA256 = "3ace2fa14cf4ce32fff803a711dbb6b747989cda27cbbf2924a4853d94db60c6"
 ORAL_OUTER_RING_EXCLUSION_PX = 24.0
 ORAL_OUTER_RING_SAFETY_GAP_PX = 4.0
 ORAL_OUTER_RING_COLOR_RULE = "red_dominant_lip_material_within_outer_distance_v1"
@@ -32,6 +32,7 @@ ORAL_ACTIVATION_METHOD = "semantic_non_neutral_weight_v1"
 UPPER_DENTITION_CANONICAL_CELL = "E"
 UPPER_DENTITION_TARGET_WIDTH_PX = 88.0
 UPPER_DENTITION_TARGET_HEIGHT_PX = 16.0
+LAYER_WRITE_ALPHA_THRESHOLD_U8 = 1
 
 
 class SourceTexturedFaceError(RuntimeError):
@@ -86,6 +87,12 @@ class FrameEvidence:
     oral_pixels_outside_cavity: int
     generated_atlas_outer_ring_pixels: int
     upper_dentition_forbidden_source_pixels: int
+    f_visible_incisor_area: int
+    f_lower_lip_contact_length: int
+    f_cavity_height: int
+    h_tongue_tip_area: int
+    h_tongue_groove_pixels: int
+    h_tongue_lower_lip_occlusion_pixels: int
     changed_pixels: int
     changed_outside_support: int
     folded_triangles: int
@@ -93,6 +100,7 @@ class FrameEvidence:
     maximum_triangle_area_ratio: float
     maximum_triangle_condition_number: float
     final_owner_counts: dict[str, int]
+    layer_write_counts: dict[str, int]
     depth_order_violation_pixels: int
 
 
@@ -292,6 +300,26 @@ def _validate_contract(contract: dict[str, Any]) -> None:
     _require_equal(
         representation["upper_dentition_target_height_px"],
         UPPER_DENTITION_TARGET_HEIGHT_PX, "upper dentition target height",
+    )
+    _require_equal(
+        representation["layer_write_alpha_threshold_u8"],
+        LAYER_WRITE_ALPHA_THRESHOLD_U8, "layer write alpha threshold",
+    )
+    _require_equal(
+        representation["labiodental_F_layer"],
+        "source_lower_lip_over_canonical_incisor_window_v1", "labiodental F layer",
+    )
+    _require_equal(
+        representation["tongue_H_layer"],
+        "authored_interior_textured_grooved_tip_v1", "tongue H layer",
+    )
+    _require_equal(
+        representation["F_to_G_bridge"],
+        "contact_retention_with_cavity_preopen_v1", "F to G bridge",
+    )
+    _require_equal(
+        representation["cavity_edge_treatment"],
+        "source_textured_inner_feather_with_local_warm_grade_v1", "cavity edge treatment",
     )
     _require_equal(contract["clock"], {
         "source_width": 1672, "source_height": 941, "output_width": 1920, "output_height": 1080,
@@ -846,7 +874,7 @@ def _warp_oral_cell(
 
 
 def _record_layer(coverage: np.ndarray, mask: np.ndarray, layer_name: str) -> None:
-    coverage[np.asarray(mask) > 8] |= np.uint16(LAYER_BITS[layer_name])
+    coverage[np.asarray(mask) >= LAYER_WRITE_ALPHA_THRESHOLD_U8] |= np.uint16(LAYER_BITS[layer_name])
 
 
 def _depth_order_violation_pixels(owner: np.ndarray, coverage: np.ndarray) -> int:
@@ -898,13 +926,13 @@ def _compose_authored_oral_anatomy(
         (mouth_u / max(width * 0.5, 1.0)) ** 2
         + (mouth_v / max(opening * 0.55, 1.0)) ** 2
     ), 0.0, 1.0)
-    shadow[:, :, 0] = np.clip(72.0 - 48.0 * radial, 0, 255).astype(np.uint8)
-    shadow[:, :, 1] = np.clip(28.0 - 21.0 * radial, 0, 255).astype(np.uint8)
-    shadow[:, :, 2] = np.clip(30.0 - 20.0 * radial, 0, 255).astype(np.uint8)
+    shadow[:, :, 0] = np.clip(84.0 - 60.0 * radial, 0, 255).astype(np.uint8)
+    shadow[:, :, 1] = np.clip(38.0 - 31.0 * radial, 0, 255).astype(np.uint8)
+    shadow[:, :, 2] = np.clip(36.0 - 26.0 * radial, 0, 255).astype(np.uint8)
     cavity_alpha = np.clip(_soft(cavity, 0.8).astype(np.float32) * oral_activation, 0, 255).astype(np.uint8)
     _blend(canvas, shadow, cavity_alpha)
-    active_cavity = cavity_hard & (oral_activation > 0.02)
-    _record_layer(coverage, active_cavity.astype(np.uint8) * 255, "cavity")
+    active_cavity = cavity_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+    _record_layer(coverage, cavity_alpha, "cavity")
     owner[active_cavity] = 2
 
     accumulated_premultiplied = np.zeros_like(canvas, dtype=np.float32)
@@ -941,11 +969,54 @@ def _compose_authored_oral_anatomy(
     ).astype(np.uint8)
     oral_alpha_u8 = np.clip(accumulated_alpha * 255.0, 0, 255).astype(np.uint8)
     _blend(canvas, oral_rgb, oral_alpha_u8)
+    oral_write = oral_alpha_u8 >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+    _record_layer(coverage, oral_alpha_u8, "oral_interior")
+    owner[oral_write] = 3
     generated_outer_ring = (
         (accumulated_excluded > 0.20)
         & (accumulated_alpha > 0.02)
         & (clip_alpha > 0.02)
     )
+
+    f_weight = float(pose_weights.get("F", 0.0))
+    g_weight = float(pose_weights.get("G", 0.0))
+    fg_bridge = float(np.clip(4.0 * f_weight * g_weight, 0.0, 1.0))
+    h_weight = float(pose_weights.get("H", 0.0))
+    tongue_tip_shape = (
+        ((mouth_u / max(width * 0.29, 1.0)) ** 2
+         + ((mouth_v - opening * 0.16) / max(opening * 0.24, 1.0)) ** 2 <= 1.0)
+        & cavity_hard
+        & (mouth_v >= -opening * 0.02)
+    )
+    tongue_tip_alpha = np.clip(
+        _soft(tongue_tip_shape.astype(np.uint8) * 255, 0.65).astype(np.float32)
+        * h_weight * oral_activation * 0.88,
+        0, 255,
+    ).astype(np.uint8)
+    tongue_material = np.clip(
+        oral_rgb.astype(np.float32) * np.asarray([0.82, 0.70, 0.72], dtype=np.float32)
+        + np.asarray([38.0, 8.0, 12.0], dtype=np.float32),
+        0, 255,
+    ).astype(np.uint8)
+    _blend(canvas, tongue_material, tongue_tip_alpha)
+    tongue_tip_write = tongue_tip_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+    _record_layer(coverage, tongue_tip_alpha, "oral_interior")
+    owner[tongue_tip_write] = 4
+    tongue_groove = (
+        tongue_tip_shape
+        & (np.abs(mouth_u + 0.8) <= 1.5)
+        & (mouth_v >= opening * 0.05)
+    )
+    groove_alpha = np.clip(
+        _soft(tongue_groove.astype(np.uint8) * 255, 0.45).astype(np.float32)
+        * h_weight * oral_activation * 0.68,
+        0, 255,
+    ).astype(np.uint8)
+    groove_color = np.zeros_like(canvas)
+    groove_color[:] = np.asarray([78, 25, 31], dtype=np.uint8)
+    _blend(canvas, groove_color, groove_alpha)
+    _record_layer(coverage, groove_alpha, "oral_interior")
+    owner[groove_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8] = 4
 
     canonical_dentition = oral_cells[UPPER_DENTITION_CANONICAL_CELL]
     upper_cell = OralCell(
@@ -969,40 +1040,56 @@ def _compose_authored_oral_anatomy(
     ).astype(np.uint8)
     upper_alpha_u8 = np.clip(accumulated_upper_alpha * 255.0, 0, 255).astype(np.uint8)
     _blend(canvas, upper_rgb, upper_alpha_u8)
+    upper_write = upper_alpha_u8 >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+    _record_layer(coverage, upper_alpha_u8, "oral_interior")
+    owner[upper_write] = 6
 
     red = oral_rgb[:, :, 0].astype(np.float32)
     green = oral_rgb[:, :, 1].astype(np.float32)
     blue = oral_rgb[:, :, 2].astype(np.float32)
     visible = accumulated_alpha > 0.30
     teeth = visible & (red > 145.0) & (green > 105.0) & (blue > 70.0) & (red < green * 1.55)
-    tongue = visible & (red > 105.0) & (green > 34.0) & (blue > 35.0) & (red > green * 1.50) & (mouth_v > -opening * 0.05)
+    tongue = (
+        visible & (red > 105.0) & (green > 34.0) & (blue > 35.0)
+        & (red > green * 1.50) & (mouth_v > -opening * 0.05)
+    ) | (tongue_tip_alpha > 72)
     lower_teeth = teeth & (mouth_v >= 0.0)
     upper_teeth = accumulated_upper_alpha > 0.30
-    oral_visible = visible | upper_teeth
-    _record_layer(coverage, oral_visible.astype(np.uint8) * 255, "oral_interior")
     upper_y, _ = np.where(upper_teeth)
     upper_centroid_y = float(upper_y.mean()) if upper_y.size else 0.0
-    owner[visible] = 3
     owner[tongue] = 4
     owner[lower_teeth] = 5
-    owner[upper_teeth] = 6
+    owner[upper_write] = 6
 
     inner_edge = cv2.subtract(
         cavity,
         cv2.erode(cavity, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9))),
     )
     source_feather_alpha = np.clip(
-        _soft(inner_edge, 0.75).astype(np.float32) * (0.58 * oral_activation),
+        _soft(inner_edge, 0.75).astype(np.float32) * (0.68 * oral_activation),
+        0, 255,
+    ).astype(np.uint8)
+    f_dental_window = (
+        (np.abs(mouth_u) <= width * 0.28)
+        & (mouth_v >= -opening * 0.30)
+        & (mouth_v <= opening * 0.12)
+        & cavity_hard
+    )
+    source_feather_alpha = np.clip(
+        source_feather_alpha.astype(np.float32)
+        * (1.0 - f_dental_window.astype(np.float32) * f_weight * 0.88)
+        * (1.0 - 0.45 * fg_bridge),
         0, 255,
     ).astype(np.uint8)
     graded_source_edge = np.clip(
-        warped_source.astype(np.float32) * np.asarray([0.56, 0.43, 0.42], dtype=np.float32),
+        warped_source.astype(np.float32) * np.asarray([0.68, 0.58, 0.56], dtype=np.float32),
         0, 255,
     ).astype(np.uint8)
     _blend(canvas, graded_source_edge, source_feather_alpha)
+    source_feather_write = source_feather_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
     source_feather_front = source_feather_alpha > 24
-    _record_layer(coverage, source_feather_front.astype(np.uint8) * 255, "source_lip_edge")
-    owner[source_feather_front] = 7
+    _record_layer(coverage, source_feather_alpha, "source_lip_edge")
+    owner[source_feather_write] = 7
 
     upper_size = max(3, 3 + 2 * int(round(3.0 * float(pose["upper_roll"]))))
     lower_size = max(3, 3 + 2 * int(round(3.0 * float(pose["lower_roll"]))))
@@ -1013,12 +1100,43 @@ def _compose_authored_oral_anatomy(
     lower_ribbon = (cv2.subtract(lower_outer, inner) > 0) & (mouth_v >= -1.0)
     upper_alpha = _soft(upper_ribbon.astype(np.uint8) * 255, 0.55)
     lower_alpha = _soft(lower_ribbon.astype(np.uint8) * 255, 0.55)
+    f_window_suppression = 1.0 - f_dental_window.astype(np.float32) * f_weight * 0.92
+    bridge_reveal = 1.0 - 0.35 * fg_bridge
+    upper_alpha = np.clip(
+        upper_alpha.astype(np.float32) * f_window_suppression * bridge_reveal, 0, 255,
+    ).astype(np.uint8)
+    lower_alpha = np.clip(
+        lower_alpha.astype(np.float32) * f_window_suppression * bridge_reveal, 0, 255,
+    ).astype(np.uint8)
     _blend(canvas, warped_source, upper_alpha)
-    _record_layer(coverage, upper_ribbon.astype(np.uint8) * 255, "source_lip_edge")
-    owner[upper_ribbon] = 7
+    upper_write = upper_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+    _record_layer(coverage, upper_alpha, "source_lip_edge")
+    owner[upper_write] = 7
     _blend(canvas, warped_source, lower_alpha)
-    _record_layer(coverage, lower_ribbon.astype(np.uint8) * 255, "source_lip_edge")
-    owner[lower_ribbon] = 7
+    lower_write = lower_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+    _record_layer(coverage, lower_alpha, "source_lip_edge")
+    owner[lower_write] = 7
+
+    f_contact_core = (
+        (np.abs(mouth_u) <= width * 0.33)
+        & (mouth_v >= -0.5)
+        & (mouth_v <= max(2.0, opening * 0.25))
+        & cavity_hard
+    )
+    f_contact_alpha = np.clip(
+        _soft(f_contact_core.astype(np.uint8) * 255, 0.55).astype(np.float32)
+        * f_weight * oral_activation * 0.92,
+        0, 255,
+    ).astype(np.uint8)
+    _blend(canvas, warped_source, f_contact_alpha)
+    f_contact_write = f_contact_alpha >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+    _record_layer(coverage, f_contact_alpha, "source_lip_edge")
+    owner[f_contact_write] = 7
+    f_visible_incisor = upper_teeth & ~f_contact_write
+    f_tooth_contact = f_contact_write & (
+        cv2.dilate(upper_teeth.astype(np.uint8), cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (5, 5))) > 0
+    )
+    f_contact_columns = int(np.unique(np.where(f_tooth_contact)[1]).size) if f_tooth_contact.any() else 0
 
     perimeter = cv2.subtract(
         cv2.dilate(cavity, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (19, 19))),
@@ -1033,19 +1151,26 @@ def _compose_authored_oral_anatomy(
     moustache_soft = _soft(moustache_alpha_u8, 0.45)
     _blend(canvas, warped_source, moustache_soft)
     moustache_front = moustache_alpha > 0.20
-    _record_layer(coverage, moustache_front.astype(np.uint8) * 255, "moustache")
-    owner[moustache_front] = 8
+    moustache_write = moustache_soft >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+    _record_layer(coverage, moustache_soft, "moustache")
+    owner[moustache_write] = 8
     beard_soft = _soft(beard_alpha_u8, 0.45)
     _blend(canvas, warped_source, beard_soft)
     beard_front = beard_alpha > 0.20
-    _record_layer(coverage, beard_front.astype(np.uint8) * 255, "beard")
-    owner[beard_front] = 9
+    beard_write = beard_soft >= LAYER_WRITE_ALPHA_THRESHOLD_U8
+    _record_layer(coverage, beard_soft, "beard")
+    owner[beard_write] = 9
+    f_visible_incisor = upper_teeth & ~(
+        (source_feather_alpha > 24) | (upper_alpha > 24) | (lower_alpha > 24)
+        | (f_contact_alpha > 24) | (moustache_soft > 24) | (beard_soft > 24)
+    )
 
     seam_boundary = cv2.morphologyEx(
         cavity, cv2.MORPH_GRADIENT, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3, 3)),
     ) > 0
     seam_sources = (
-        source_feather_front | upper_ribbon | lower_ribbon | moustache_front | beard_front
+        source_feather_front | upper_ribbon | lower_ribbon | f_contact_write
+        | moustache_front | beard_front
     ).astype(np.uint8)
     seam_sources = cv2.morphologyEx(
         seam_sources, cv2.MORPH_CLOSE, cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (9, 9)),
@@ -1068,6 +1193,8 @@ def _compose_authored_oral_anatomy(
         cv2.dilate(cavity, np.ones((13, 13), np.uint8)), cavity,
     ) > 0
     texture_values = cv2.cvtColor(warped_source, cv2.COLOR_RGB2GRAY)[texture_ring]
+    cavity_y = np.where(cavity_hard)[0]
+    cavity_height = int(cavity_y.max() - cavity_y.min() + 1) if cavity_y.size else 0
     return {
         "cavity": int(cavity_hard.sum()),
         "upper_teeth": int(upper_teeth.sum()),
@@ -1083,6 +1210,14 @@ def _compose_authored_oral_anatomy(
         "upper_dentition_forbidden_source_pixels": int(
             canonical_dentition.upper_dentition_forbidden_source_pixels
         ),
+        "f_visible_incisor_area": int(f_visible_incisor.sum()) if f_weight > 0.5 else 0,
+        "f_lower_lip_contact_length": f_contact_columns if f_weight > 0.5 else 0,
+        "f_cavity_height": cavity_height if f_weight > 0.5 else 0,
+        "h_tongue_tip_area": int((tongue_tip_alpha > 72).sum()) if h_weight > 0.5 else 0,
+        "h_tongue_groove_pixels": int((groove_alpha > 48).sum()) if h_weight > 0.5 else 0,
+        "h_tongue_lower_lip_occlusion_pixels": int(
+            ((tongue_tip_alpha > 32) & lower_write).sum()
+        ) if h_weight > 0.5 else 0,
         "source_texture_variance": float(texture_values.var()) if texture_values.size else 0.0,
     }
 
@@ -1113,6 +1248,12 @@ def _native_frame(
         "connected_source_seam_coverage_ratio": 1.0,
         "generated_atlas_outer_ring": 0,
         "upper_dentition_forbidden_source_pixels": 0,
+        "f_visible_incisor_area": 0,
+        "f_lower_lip_contact_length": 0,
+        "f_cavity_height": 0,
+        "h_tongue_tip_area": 0,
+        "h_tongue_groove_pixels": 0,
+        "h_tongue_lower_lip_occlusion_pixels": 0,
         "source_texture_variance": 0.0,
     }
     if pose["opening"] > 0.01 and pose["width"] > 0.01:
@@ -1174,6 +1315,11 @@ def _native_frame(
         OWNER_NAMES[index]: int((owner == index).sum())
         for index in OWNER_NAMES if int((owner == index).sum()) > 0
     }
+    write_counts = {
+        name: int(((coverage & bit) != 0).sum())
+        for name, bit in LAYER_BITS.items()
+        if int(((coverage & bit) != 0).sum()) > 0
+    }
     evidence = FrameEvidence(
         pose_weights={name: float(value) for name, value in weights.items()},
         oral_activation=oral_activation,
@@ -1194,6 +1340,12 @@ def _native_frame(
         oral_pixels_outside_cavity=int(oral["oral_outside"]),
         generated_atlas_outer_ring_pixels=int(oral["generated_atlas_outer_ring"]),
         upper_dentition_forbidden_source_pixels=int(oral["upper_dentition_forbidden_source_pixels"]),
+        f_visible_incisor_area=int(oral["f_visible_incisor_area"]),
+        f_lower_lip_contact_length=int(oral["f_lower_lip_contact_length"]),
+        f_cavity_height=int(oral["f_cavity_height"]),
+        h_tongue_tip_area=int(oral["h_tongue_tip_area"]),
+        h_tongue_groove_pixels=int(oral["h_tongue_groove_pixels"]),
+        h_tongue_lower_lip_occlusion_pixels=int(oral["h_tongue_lower_lip_occlusion_pixels"]),
         changed_pixels=int(changed.sum()),
         changed_outside_support=int(outside.sum()),
         folded_triangles=int(triangle_metrics["folded_triangles"]),
@@ -1201,6 +1353,7 @@ def _native_frame(
         maximum_triangle_area_ratio=float(triangle_metrics["maximum_triangle_area_ratio"]),
         maximum_triangle_condition_number=float(triangle_metrics["maximum_triangle_condition_number"]),
         final_owner_counts=counts,
+        layer_write_counts=write_counts,
         depth_order_violation_pixels=_depth_order_violation_pixels(owner, coverage),
     )
     return canvas, evidence
@@ -1282,7 +1435,7 @@ def _preflight(prepared: PreparedSourceTexturedFace) -> dict[str, Any]:
         )
     x1, y1, x2, y2 = prepared.contract["semantic_geometry_native_xy"]["deformation_roi"]
     confusable_pair_deltas = {}
-    for first, second in (("A", "F"), ("C", "E"), ("B", "D"), ("G", "H")):
+    for first, second in (("A", "F"), ("C", "E"), ("B", "D"), ("G", "H"), ("F", "X")):
         first_frame = frames[int(key_frames[first])][0][y1:y2, x1:x2].astype(np.float32)
         second_frame = frames[int(key_frames[second])][0][y1:y2, x1:x2].astype(np.float32)
         confusable_pair_deltas[f"{first}/{second}"] = float(np.abs(first_frame - second_frame).mean())
@@ -1302,6 +1455,12 @@ def _preflight(prepared: PreparedSourceTexturedFace) -> dict[str, Any]:
             - min(item.upper_dentition_centroid_y for item in non_neutral.values())
         ),
         "H_tongue_area": non_neutral["H"].tongue_area,
+        "F_visible_incisor_area": non_neutral["F"].f_visible_incisor_area,
+        "F_lower_lip_contact_length": non_neutral["F"].f_lower_lip_contact_length,
+        "F_cavity_height": non_neutral["F"].f_cavity_height,
+        "H_tongue_tip_area": non_neutral["H"].h_tongue_tip_area,
+        "H_tongue_groove_pixels": non_neutral["H"].h_tongue_groove_pixels,
+        "H_tongue_lower_lip_occlusion_pixels": non_neutral["H"].h_tongue_lower_lip_occlusion_pixels,
         "minimum_warped_source_pixels_per_non_neutral_pose": min(item.warped_source_pixels for item in non_neutral.values()),
         "maximum_warped_source_pixels_per_non_neutral_pose": max(item.warped_source_pixels for item in non_neutral.values()),
         "minimum_source_texture_variance": min(item.source_texture_variance for item in non_neutral.values()),
@@ -1341,6 +1500,8 @@ def _preflight(prepared: PreparedSourceTexturedFace) -> dict[str, Any]:
             for index in range(1, frame_count)
         ),
         "frame_82_oral_activation": frames[82][1].oral_activation,
+        "frame_82_oral_layer_write_pixels": frames[82][1].layer_write_counts.get("oral_interior", 0),
+        "layer_write_alpha_threshold_u8": LAYER_WRITE_ALPHA_THRESHOLD_U8,
         "frames_evaluated": frame_count,
         "source_identity_texture_only": True,
         "complete_feature_photo_crossfades_used": False,
@@ -1365,6 +1526,12 @@ def _preflight_gates(contract: dict[str, Any], metrics: dict[str, Any]) -> list[
         ("E_upper_teeth_area", metrics["E_upper_teeth_area"], ">=", thresholds["minimum_E_upper_teeth_area"]),
         ("upper_dentition_anchor_y_range", metrics["upper_dentition_anchor_y_range_px"], "<=", thresholds["maximum_upper_dentition_anchor_y_range_px"]),
         ("H_tongue_area", metrics["H_tongue_area"], ">=", thresholds["minimum_H_tongue_area"]),
+        ("F_visible_incisor_area", metrics["F_visible_incisor_area"], ">=", thresholds["minimum_F_visible_incisor_area"]),
+        ("F_lower_lip_contact_length", metrics["F_lower_lip_contact_length"], ">=", thresholds["minimum_F_lower_lip_contact_length"]),
+        ("F_cavity_height", metrics["F_cavity_height"], ">=", thresholds["minimum_F_cavity_height"]),
+        ("H_tongue_tip_area", metrics["H_tongue_tip_area"], ">=", thresholds["minimum_H_tongue_tip_area"]),
+        ("H_tongue_groove_pixels", metrics["H_tongue_groove_pixels"], ">=", thresholds["minimum_H_tongue_groove_pixels"]),
+        ("H_tongue_lower_lip_occlusion", metrics["H_tongue_lower_lip_occlusion_pixels"], ">=", thresholds["minimum_H_tongue_lower_lip_occlusion_pixels"]),
         ("warped_source_pixels", metrics["minimum_warped_source_pixels_per_non_neutral_pose"], ">=", thresholds["minimum_warped_source_pixels_per_non_neutral_pose"]),
         ("maximum_warped_source_pixels", metrics["maximum_warped_source_pixels_per_non_neutral_pose"], "<=", thresholds["maximum_warped_source_pixels_per_non_neutral_pose"]),
         ("source_texture_variance", metrics["minimum_source_texture_variance"], ">=", thresholds["minimum_source_texture_variance"]),
@@ -1387,6 +1554,7 @@ def _preflight_gates(contract: dict[str, Any], metrics: dict[str, Any]) -> list[
         ("adjacent_feature_8x8_mean_delta", metrics["maximum_adjacent_feature_8x8_mean_delta"], "<=", thresholds["maximum_adjacent_feature_8x8_mean_delta"]),
         ("adjacent_oral_activation_delta", metrics["maximum_adjacent_oral_activation_delta"], "<=", thresholds["maximum_adjacent_oral_activation_delta"]),
         ("frame_82_oral_activation", metrics["frame_82_oral_activation"], "<=", thresholds["maximum_frame_82_oral_activation"]),
+        ("frame_82_oral_layer_write_pixels", metrics["frame_82_oral_layer_write_pixels"], ">=", thresholds["minimum_frame_82_oral_layer_write_pixels"]),
     ]
     results = []
     for name, actual, operator, threshold in checks:

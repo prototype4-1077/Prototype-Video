@@ -217,6 +217,14 @@ class SourceTexturedFaceTests(unittest.TestCase):
         owner[2, 2] = 3
         self.assertEqual(phase34._depth_order_violation_pixels(owner, coverage), 2)
 
+    def test_single_alpha_write_enters_depth_coverage(self) -> None:
+        coverage = np.zeros((2, 2), dtype=np.uint16)
+        alpha = np.zeros((2, 2), dtype=np.uint8)
+        alpha[0, 1] = phase34.LAYER_WRITE_ALPHA_THRESHOLD_U8
+        phase34._record_layer(coverage, alpha, "oral_interior")
+        self.assertNotEqual(int(coverage[0, 1] & phase34.LAYER_BITS["oral_interior"]), 0)
+        self.assertEqual(int(coverage[0, 0]), 0)
+
     def test_oral_activation_is_semantic_and_smooth_at_neutral_boundaries(self) -> None:
         activations = []
         for frame in (16, 17, 18, 19, 80, 81, 82, 83):

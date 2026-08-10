@@ -1,28 +1,28 @@
 # June Phase 34 source-textured face checkpoint
 
-Status date: 2026-08-09  
+Status date: 2026-08-10  
 Branch: `agent/june-hero-unified-sculpt-phase-5`  
 Draft PR: `#8`  
 Classification: unencoded technical/artistic preview; not production delivery
 
 ## Current result
 
-Phase 34 candidate-05 is the first review package that preserves all 96 exact reviewed
-RGB frames and closes the technical proof defects found in candidate-04. It passes all
-pre-encode gates and 16 focused tests. It has not been encoded, has no review receipt,
-and is not artistically accepted.
+Phase 34 candidate-07 is the latest immutable exact-frame experiment. It preserves all 96
+reviewed RGB frames, proves lower-face soft-alpha writes, and adds dedicated F and H anatomy.
+It passes all pre-encode gates and 18 focused tests. It has not been encoded, has no review
+receipt, and is not artistically accepted.
 
-Public review evidence is staged at `collab/phase34_candidate_05/`.
+Review evidence is staged at `collab/phase34_candidate_07/`.
 
-- Local Windows manifest SHA-256: `660f90067ef99efa147c0d25321741af96a345cd44eccd40cebd45cf1c67e3f6`
-- LF-normalized Git/public manifest SHA-256: `27b7498a89939efc9c9d526be1609427fa2e72f1a39a1a85df67fde437dd3817`
-- Exact-frame archive SHA-256: `ce53dcae6ef5195e8200393b91cc50975f59d1350161f92cfdbaf2153958075b`
-- Contract canonical SHA-256: `7312f237a0f114402d72e0ddd399eecde4a2e8883ff808715eb6b0f6e6950034`
-- Renderer SHA-256: `06be7b8eabb8dbe94cf43546727159d2f7c74970ceff8bd2146ecc39ceb00dc6`
+- Local Windows manifest SHA-256: `2127d59f0cbd1247fb858f8a0edf43b8ccf357602695502185974120fe389ff9`
+- LF-normalized Git/public manifest SHA-256: `3d23700d47ecbf2d3384f0f41eaffe3b69f196cbbbdf9ac9a6a9cf32f0bc0cce`
+- Exact-frame archive SHA-256: `0fd9137f3756efecc94e89a5a97d5603c08290ff8843415190c0036d302f94de`
+- Contract canonical SHA-256: `3ace2fa14cf4ce32fff803a711dbb6b747989cda27cbbf2924a4853d94db60c6`
+- Renderer SHA-256: `2faf32a261c4588370cc0f4df8d142cb70b44c74ea724ee36187f79f095c9429`
 
 Local immutable preview:
 
-`../../outputs/edit/phase34-source-textured-visemes-preview-v1-candidate-05`
+`../../outputs/edit/phase34-source-textured-visemes-preview-v1-candidate-07`
 
 ## Architecture now proven
 
@@ -102,6 +102,28 @@ Candidate-06 blockers:
   omitting 167-594 softly blended lower-face pixels in sampled frames. Candidate-07 must
   record actual alpha support and final writers at the same declared threshold.
 
+## Candidate-07 measured-articulation milestone
+
+Candidate-07 is preserved at `collab/phase34_candidate_07/` as a measured-articulation
+experiment. It is not an encode candidate.
+
+- Exact lower-face alpha support and final writers are recorded at 1/255.
+- Frame 82 proves 84 oral-interior writes with zero depth-order violations.
+- F has 89 visible incisor pixels, 56 contact columns, a 14-pixel cavity, and strong F/X
+  numerical separation, but remains too subtle at delivery scale.
+- H has a distinct 391-pixel tongue tip, 27-pixel groove, and 27 nominal lip-overlap pixels.
+- C/E mean separation is 14.166; identity and the upper face remain locked.
+- All 96 archived hashes and all review artifacts round-trip exactly.
+
+Candidate-07 blockers:
+
+- F is still nearly neutral at delivery scale and frame 65 to 66 still opens too abruptly.
+- Flat burgundy cavity corners remain in C/D/G/H.
+- Semantic eyelid soft-alpha and crease writes are not included in Phase34 coverage/final
+  ownership; roughly 700 full-blink fringe pixels can evade depth validation.
+- H's nominal lip-over-tongue metric accepts alpha down to 1/255 before later hair layers;
+  it does not prove visibly meaningful final occlusion.
+
 ## Collaboration state
 
 At every session start, read `collab/PROTOCOL.md` and all new `collab/CLAUDE_*` notes.
@@ -110,22 +132,21 @@ silent encode. Do not exercise that approval: subsequent independent audits prov
 candidate-04's lip/overlap gates were hard-coded and that its exact 96 reviewed frames were
 not preserved. Candidate-05 supersedes it as the evidence architecture.
 
-Candidate-05 will be offered to Claude as an exact-frame review experiment with special
-attention to frames 17-18, 33-34, 41-42, 49-50, 65-66, and 80-83. No receipt should be
-issued for an encode unless a later candidate clears the visual and integrity blockers.
+Candidate-07 is preserved for Claude as an exact-frame before/after experiment, but should
+not receive an encode receipt. Candidate-08 must clear the visible and proof blockers first.
 
 ## Exact next steps
 
-1. Candidate-07: record actual cavity/oral/dental/feather/ribbon/hair alpha-write support
-   and final owners at one explicit significance threshold.
-2. Add a dedicated F labiodental layer plus contact/cavity/separation gates.
-3. Add a shaped H tongue tip with groove/highlight and teeth/lower-lip occlusion gates.
-4. Pre-open the F-to-G cavity while retaining F contact through frame 65.
-5. Replace the remaining maroon corners with source-matched edge color/feather.
+1. Candidate-08: mirror exact semantic-lid alpha/crease writes into Phase34 coverage and
+   final ownership without changing the locked Phase33 dependency.
+2. Require meaningful final source-lip ownership over H's tongue, not a transparent pre-write.
+3. Increase F's delivery-scale incisor/lip contrast and shift the contact band downward.
+4. Use a linear F-to-G geometry interpolation so frames 65 and 66 are true intermediates.
+5. Derive the cavity edge from darkened local source texture instead of flat burgundy fill.
 6. Render a new immutable 96-frame archive, run independent code/visual audits, and ask Claude
    for a manifest-bound verdict.
 7. Only after an accepted receipt, encode the exact reviewed archive once and fully decode-verify it.
 
-Do not call candidate-05 a complete cartoon or production delivery. It proves a reusable,
+Do not call candidate-07 a complete cartoon or production delivery. It proves a reusable,
 high-detail front-view facial pipeline. Body acting, multi-angle adaptation, voiced timing,
 editing, sound, shot continuity, and full-sequence art direction remain separate production gates.
