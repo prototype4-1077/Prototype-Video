@@ -37,6 +37,15 @@
       "hash_domain": "lf_normalized_text",
       "sha256": "d45bf8fada6d102caf6c0b38d9f81ff4938b9475a6407421746f72e3f8df34cc"
     },
+    "phase35_attempt_review": {
+      "path": "collab/CLAUDE_REVIEW_2026-08-10_1910Z.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "9e02ff40fab839ad1ec927bc2e00f5a3bcc0834cce907214168969592e3f566e"
+    },
+    "phase36_candidate01_failure_receipt": {
+      "path": "collab/phase36_candidate_01/candidate01-review-failure-v1.json",
+      "sha256": "bd11323a9e416a439b70d21e99a21b41beb5fc98679590b476485f2e46a9d5c1"
+    },
     "phase26_sound_contract": {
       "path": "concept/style_frames/june_golden_scene_master_sound_v1.json",
       "sha256": "7fedd04d2c77804180a51bdebdc8779eb3ff0a4cf35c3c776c7a7104611db7ab"
@@ -77,14 +86,33 @@
   },
   "phase35_attempt_review_gate": {
     "required_before_build": true,
-    "review_directory": "collab",
-    "review_filename_glob": "CLAUDE_REVIEW_*.md",
+    "review_lock": "phase35_attempt_review",
     "required_verdict_field": "## Verdict:",
     "required_verdict": "PHASE35_C03_ATTEMPT01_REJECTION_RATIFIED_REFERENCE_ONLY_PHASE36_UNENCODED_ALLOWED",
     "forbidden_verdict": "PHASE35_C03_ATTEMPT01_VISUAL_OR_AUDIO_DEFECT_FOUND_PHASE36_BLOCKED",
+    "required_integrity_attestations": [
+      "All five declared SHA-256s recomputed locally on download",
+      "Exact match."
+    ],
+    "attempt_directory": "collab/phase35_candidate_03_encode_attempt_01",
+    "video_filename": "june-phase35-candidate03-av-proof-v1.mp4",
+    "failure_receipt_filename": "failure-v1.json",
+    "attempt_claim_filename": ".phase35-candidate03-av-proof-v1.attempt-v1.claim.json",
     "required_video_sha256": "34d601605407d354dfbf77d545d444e9d884b0ec744a1e0d6712ca49b32fec39",
     "required_failure_receipt_sha256": "94ff0ad2f99ac44f8160c0ff944733f3b097e4d4fc572d293a8ae20bf3b3cadc",
     "required_attempt_claim_sha256": "3fa711c0daa371275290a26d22835e7c45a0b62e79471c64d5c111ab70f224fd"
+  },
+  "phase36_candidate01_rejection_gate": {
+    "failure_receipt_lock": "phase36_candidate01_failure_receipt",
+    "required_candidate_id": "phase36_ledger_pour_candidate_01",
+    "required_verdict": "PHASE36_CANDIDATE01_REJECTED_AUDIO_CONTINUITY_NEW_BINDING_REQUIRED",
+    "required_disposition": {
+      "promotion_allowed": false,
+      "encode_allowed": false,
+      "candidate_immutable": true,
+      "automatic_retry_allowed": false,
+      "repair_requires_new_candidate_binding": true
+    }
   },
   "clock": {
     "width": 1920,

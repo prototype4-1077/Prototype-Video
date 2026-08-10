@@ -27,7 +27,7 @@ from pipeline import cartoon_shot_sequence as shot_sequence
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase36_ledger_pour_v1.json"
-EXPECTED_CONTRACT_CANONICAL_SHA256 = "6d164ee60686ae3722607806e3dcd5d8c54b29ce684503ac7f569a4068fc0962"
+EXPECTED_CONTRACT_CANONICAL_SHA256 = "d1900e8ee1e9584a4f4197038375119554e402f9d2664cdfcb8ba5f78fa3f8d9"
 ARCHIVE_FORMAT = "phase36_rgb24_xor_previous_gzip_v1"
 PHASE35_ARCHIVE_FORMAT = "phase35_rgb24_xor_previous_gzip_v1"
 FACE_ROI = (500, 185, 870, 620)
@@ -260,41 +260,84 @@ def _phase35_manifest(contract: dict[str, Any]) -> dict[str, Any]:
     return manifest
 
 
+def _phase35_attempt_artifact_paths(contract: dict[str, Any]) -> dict[str, Path]:
+    gate = contract["phase35_attempt_review_gate"]
+    directory = _repo_path(str(gate["attempt_directory"]))
+    expected = (REPO_ROOT / "collab/phase35_candidate_03_encode_attempt_01").resolve()
+    _require_equal(directory, expected, "Phase35 Attempt01 evidence directory")
+    return {
+        "video": directory / str(gate["video_filename"]),
+        "failure_receipt": directory / str(gate["failure_receipt_filename"]),
+        "attempt_claim": directory / str(gate["attempt_claim_filename"]),
+    }
+
+
 def _phase35_attempt_review(contract: dict[str, Any]) -> dict[str, str] | None:
     gate = contract["phase35_attempt_review_gate"]
-    review_directory = _repo_path(str(gate["review_directory"]))
-    _require_equal(review_directory, (REPO_ROOT / "collab").resolve(), "Phase35 attempt review directory")
-    required_tokens = (
-        str(gate["required_verdict"]),
-        str(gate["required_video_sha256"]),
-        str(gate["required_failure_receipt_sha256"]),
-        str(gate["required_attempt_claim_sha256"]),
-    )
+    reference = contract["locks"][str(gate["review_lock"])]
+    path = _repo_path(str(reference["path"]))
+    payload = path.read_bytes()
+    if reference.get("hash_domain") == "lf_normalized_text":
+        digest = hashlib.sha256(payload.replace(b"\r\n", b"\n")).hexdigest()
+    elif "hash_domain" not in reference:
+        digest = hashlib.sha256(payload).hexdigest()
+    else:
+        raise LedgerPourError("unsupported Phase35 post-attempt review hash domain")
+    _require_equal(digest, reference["sha256"], "Phase35 post-attempt review receipt SHA-256")
+    text = payload.decode("utf-8")
     allowed_line = f"{gate['required_verdict_field']} {gate['required_verdict']}"
     blocked_line = f"{gate['required_verdict_field']} {gate['forbidden_verdict']}"
-    matches: list[tuple[Path, str]] = []
-    blocked_receipts: list[Path] = []
-    for candidate in sorted(review_directory.glob(str(gate["review_filename_glob"]))):
-        if not candidate.is_file():
-            continue
-        payload = candidate.read_bytes()
-        text = payload.decode("utf-8")
-        lines = [line.strip() for line in text.splitlines()]
-        if blocked_line in lines:
-            blocked_receipts.append(candidate.resolve())
-        if lines.count(allowed_line) == 1 and all(token in text for token in required_tokens[1:]):
-            matches.append((candidate.resolve(), hashlib.sha256(payload).hexdigest()))
-    if blocked_receipts:
+    lines = [line.strip() for line in text.splitlines()]
+    if blocked_line in lines or lines.count(allowed_line) != 1:
         return None
-    if not matches:
+    if not all(str(attestation) in text for attestation in gate["required_integrity_attestations"]):
         return None
-    if len(matches) != 1:
-        raise LedgerPourError("Phase35 post-attempt review receipt is ambiguous")
-    path, digest = matches[0]
+    artifacts = _phase35_attempt_artifact_paths(contract)
+    expected_hashes = {
+        "video": str(gate["required_video_sha256"]),
+        "failure_receipt": str(gate["required_failure_receipt_sha256"]),
+        "attempt_claim": str(gate["required_attempt_claim_sha256"]),
+    }
+    for name, artifact in artifacts.items():
+        if not artifact.is_file():
+            raise LedgerPourError(f"Phase35 Attempt01 {name} is missing")
+        _require_equal(_sha256(artifact), expected_hashes[name], f"Phase35 Attempt01 {name} SHA-256")
     return {
         "path": path.relative_to(REPO_ROOT).as_posix(),
+        "hash_domain": str(reference.get("hash_domain", "raw_bytes")),
         "sha256": digest,
         "verdict": str(gate["required_verdict"]),
+    }
+
+
+def _phase36_candidate01_rejection(contract: dict[str, Any]) -> dict[str, Any]:
+    gate = contract["phase36_candidate01_rejection_gate"]
+    reference = contract["locks"][str(gate["failure_receipt_lock"])]
+    path = _repo_path(str(reference["path"]))
+    payload = path.read_bytes()
+    _require_equal(
+        hashlib.sha256(payload).hexdigest(),
+        reference["sha256"],
+        "Phase36 Candidate01 failure receipt SHA-256",
+    )
+    try:
+        receipt = json.loads(payload.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise LedgerPourError("Phase36 Candidate01 failure receipt is not valid UTF-8 JSON") from exc
+    _require_equal(receipt.get("candidate_id"), gate["required_candidate_id"], "Phase36 rejected candidate id")
+    _require_equal(receipt.get("verdict"), gate["required_verdict"], "Phase36 Candidate01 rejection verdict")
+    disposition = receipt.get("disposition")
+    if not isinstance(disposition, dict):
+        raise LedgerPourError("Phase36 Candidate01 failure receipt omits disposition")
+    for name, expected in gate["required_disposition"].items():
+        _require_equal(disposition.get(name), expected, f"Phase36 Candidate01 rejection disposition {name}")
+    return {
+        "path": path.relative_to(REPO_ROOT).as_posix(),
+        "sha256": str(reference["sha256"]),
+        "candidate_id": str(receipt["candidate_id"]),
+        "verdict": str(receipt["verdict"]),
+        "automatic_retry_allowed": bool(disposition["automatic_retry_allowed"]),
+        "repair_requires_new_candidate_binding": bool(disposition["repair_requires_new_candidate_binding"]),
     }
 
 
@@ -330,6 +373,10 @@ def _capture_execution_state(
         "external": {
             "phase35_manifest_sha256": _sha256(_phase35_paths(contract)[0]),
             "phase35_archive_sha256": _sha256(_phase35_paths(contract)[1]),
+            **{
+                f"phase35_attempt_{name}_sha256": _sha256(artifact)
+                for name, artifact in _phase35_attempt_artifact_paths(contract).items()
+            },
         },
         "phase23_runtime_assets": _phase23_runtime_asset_hashes(contract),
         "phase35_attempt_review": {
@@ -823,6 +870,12 @@ def write_unencoded_preview(
     development_label: str | None = None,
 ) -> dict[str, Any]:
     contract = load_contract(path, require_external=True)
+    rejection = _phase36_candidate01_rejection(contract)
+    if rejection is not None:
+        raise LedgerPourError(
+            "Phase36 Candidate01 is immutable and promotion-rejected; "
+            "a separately bound Candidate02 repair is required"
+        )
     attempt_review = _phase35_attempt_review(contract)
     if attempt_review is None:
         raise LedgerPourError(
@@ -1215,6 +1268,7 @@ def write_unencoded_preview(
 
 def preflight(path: str | Path = REPO_ROOT / CONTRACT_RELATIVE_PATH) -> dict[str, Any]:
     contract = load_contract(path, require_external=True)
+    candidate01_rejection = _phase36_candidate01_rejection(contract)
     attempt_review = _phase35_attempt_review(contract)
     output = _output_path(contract, None)
 
@@ -1268,7 +1322,9 @@ def preflight(path: str | Path = REPO_ROOT / CONTRACT_RELATIVE_PATH) -> dict[str
         "phase26_stem_hash_mismatches": audio_report["phase26_stem_array_hash_mismatches"],
         "phase35_attempt_review_authorized": attempt_review is not None,
         "phase35_attempt_review": attempt_review,
-        "build_authorized": attempt_review is not None,
+        "phase36_candidate01_rejected": candidate01_rejection is not None,
+        "phase36_candidate01_rejection": candidate01_rejection,
+        "build_authorized": False,
         "output_created": state_after != state_before,
         "encode_authorized": False,
     }

@@ -92,61 +92,90 @@ class CartoonLedgerPourTests(unittest.TestCase):
             with self.assertRaisesRegex(ledger.LedgerPourError, "locked phase23_contract"):
                 ledger.load_contract()
 
-    def test_phase35_attempt_review_requires_strict_verdict_line_and_all_bound_hashes(self) -> None:
-        contract = ledger.load_contract()
+    def test_phase35_attempt_review_requires_exact_locked_receipt_and_artifact_hashes(self) -> None:
+        contract = copy.deepcopy(ledger.load_contract())
         gate = contract["phase35_attempt_review_gate"]
         with tempfile.TemporaryDirectory() as directory:
             temporary_root = Path(directory)
             reviews = temporary_root / "collab"
             reviews.mkdir()
             review = reviews / "CLAUDE_REVIEW_TEST.md"
-            review.write_text(
-                "Please provide " + gate["required_verdict"] + "\n"
-                + gate["required_video_sha256"] + "\n"
-                + gate["required_failure_receipt_sha256"] + "\n"
-                + gate["required_attempt_claim_sha256"] + "\n",
-                encoding="utf-8",
-            )
+            attempt_directory = reviews / "phase35_candidate_03_encode_attempt_01"
+            attempt_directory.mkdir()
+            artifacts = {
+                "video_filename": ("proof.mp4", b"video"),
+                "failure_receipt_filename": ("failure.json", b"failure"),
+                "attempt_claim_filename": ("claim.json", b"claim"),
+            }
+            for field, (name, payload) in artifacts.items():
+                gate[field] = name
+                (attempt_directory / name).write_bytes(payload)
+            gate["attempt_directory"] = "collab/phase35_candidate_03_encode_attempt_01"
+            gate["required_video_sha256"] = hashlib.sha256(b"video").hexdigest()
+            gate["required_failure_receipt_sha256"] = hashlib.sha256(b"failure").hexdigest()
+            gate["required_attempt_claim_sha256"] = hashlib.sha256(b"claim").hexdigest()
+            contract["locks"]["phase35_attempt_review"] = {
+                "path": "collab/CLAUDE_REVIEW_TEST.md",
+                "hash_domain": "lf_normalized_text",
+                "sha256": "",
+            }
+
+            def set_review(text: str) -> None:
+                review.write_text(text, encoding="utf-8")
+                normalized = review.read_bytes().replace(b"\r\n", b"\n")
+                contract["locks"]["phase35_attempt_review"]["sha256"] = hashlib.sha256(normalized).hexdigest()
+
+            set_review("Please provide " + gate["required_verdict"] + "\n")
             with patch.object(ledger, "REPO_ROOT", temporary_root):
                 self.assertIsNone(ledger._phase35_attempt_review(contract))
-                review.write_text(
-                    "## Verdict: " + gate["required_verdict"] + "\n"
-                    + gate["required_video_sha256"] + "\n"
-                    + gate["required_failure_receipt_sha256"] + "\n",
-                    encoding="utf-8",
-                )
+                set_review("## Verdict: " + gate["required_verdict"] + "\n")
                 self.assertIsNone(ledger._phase35_attempt_review(contract))
-                review.write_text(
+                set_review(
                     "## Verdict: " + gate["required_verdict"] + "\n"
-                    + "video " + gate["required_video_sha256"] + "\n"
-                    + "failure " + gate["required_failure_receipt_sha256"] + "\n"
-                    + "claim " + gate["required_attempt_claim_sha256"] + "\n",
-                    encoding="utf-8",
+                    + gate["required_integrity_attestations"][0] + "\n"
+                    + gate["required_integrity_attestations"][1] + "\n"
                 )
                 receipt = ledger._phase35_attempt_review(contract)
                 self.assertIsNotNone(receipt)
                 self.assertEqual(receipt["path"], "collab/CLAUDE_REVIEW_TEST.md")
-                self.assertEqual(receipt["sha256"], ledger._sha256(review))
-                duplicate = reviews / "CLAUDE_REVIEW_TEST_DUPLICATE.md"
-                duplicate.write_bytes(review.read_bytes())
-                with self.assertRaisesRegex(ledger.LedgerPourError, "ambiguous"):
+                self.assertEqual(receipt["sha256"], contract["locks"]["phase35_attempt_review"]["sha256"])
+                snapshot = review.read_bytes()
+                with patch.object(Path, "read_bytes", return_value=snapshot) as read_bytes:
+                    same_snapshot_receipt = ledger._phase35_attempt_review(contract)
+                self.assertEqual(same_snapshot_receipt, receipt)
+                self.assertEqual(read_bytes.call_count, 1)
+                review.write_text("mutated", encoding="utf-8")
+                with self.assertRaisesRegex(ledger.LedgerPourError, "receipt SHA-256"):
                     ledger._phase35_attempt_review(contract)
-                duplicate.unlink()
-                review.write_text(
+                set_review(
                     gate["required_verdict_field"] + " " + gate["forbidden_verdict"] + "\n"
-                    + gate["required_video_sha256"] + "\n"
-                    + gate["required_failure_receipt_sha256"] + "\n"
-                    + gate["required_attempt_claim_sha256"] + "\n",
-                    encoding="utf-8",
+                    + gate["required_integrity_attestations"][0] + "\n"
+                    + gate["required_integrity_attestations"][1] + "\n"
                 )
                 self.assertIsNone(ledger._phase35_attempt_review(contract))
 
     def test_builder_refuses_missing_attempt_review_before_resolving_output_or_stage(self) -> None:
         with patch("pipeline.cartoon_ledger_pour.load_contract", return_value={}), patch(
+            "pipeline.cartoon_ledger_pour._phase36_candidate01_rejection", return_value=None
+        ), patch(
             "pipeline.cartoon_ledger_pour._phase35_attempt_review", return_value=None
         ), patch("pipeline.cartoon_ledger_pour._output_path") as output_path:
             with self.assertRaisesRegex(ledger.LedgerPourError, "blocked pending Claude"):
                 ledger.write_unencoded_preview()
+        output_path.assert_not_called()
+
+    def test_builder_refuses_rejected_candidate01_before_review_or_output_resolution(self) -> None:
+        rejection = {
+            "verdict": "PHASE36_CANDIDATE01_REJECTED_AUDIO_CONTINUITY_NEW_BINDING_REQUIRED",
+        }
+        with patch("pipeline.cartoon_ledger_pour.load_contract", return_value={}), patch(
+            "pipeline.cartoon_ledger_pour._phase36_candidate01_rejection", return_value=rejection
+        ), patch("pipeline.cartoon_ledger_pour._phase35_attempt_review") as attempt_review, patch(
+            "pipeline.cartoon_ledger_pour._output_path"
+        ) as output_path:
+            with self.assertRaisesRegex(ledger.LedgerPourError, "immutable and promotion-rejected"):
+                ledger.write_unencoded_preview(development_label="candidate-02")
+        attempt_review.assert_not_called()
         output_path.assert_not_called()
 
     def test_builder_cleans_stage_when_a_production_path_step_fails(self) -> None:
@@ -167,6 +196,8 @@ class CartoonLedgerPourTests(unittest.TestCase):
             output = Path(directory) / "phase36-test"
             stage = output.parent / f".{output.name}.stage"
             with patch("pipeline.cartoon_ledger_pour.load_contract", return_value=contract), patch(
+                "pipeline.cartoon_ledger_pour._phase36_candidate01_rejection", return_value=None
+            ), patch(
                 "pipeline.cartoon_ledger_pour._phase35_attempt_review", return_value=receipt
             ), patch("pipeline.cartoon_ledger_pour._output_path", return_value=output), patch(
                 "pipeline.cartoon_ledger_pour._capture_execution_state", return_value=state
@@ -451,7 +482,7 @@ class CartoonLedgerPourTests(unittest.TestCase):
         self.assertFalse(result["build_authorized"])
         self.assertFalse(output.exists())
 
-    def test_preflight_reports_build_authorized_when_exact_receipt_is_present(self) -> None:
+    def test_preflight_reports_rejected_candidate01_despite_exact_phase35_receipt(self) -> None:
         receipt = {
             "path": "collab/CLAUDE_REVIEW_FUTURE.md",
             "sha256": "future-review-hash",
@@ -460,7 +491,12 @@ class CartoonLedgerPourTests(unittest.TestCase):
         with patch("pipeline.cartoon_ledger_pour._phase35_attempt_review", return_value=receipt):
             result = ledger.preflight()
         self.assertTrue(result["phase35_attempt_review_authorized"])
-        self.assertTrue(result["build_authorized"])
+        self.assertTrue(result["phase36_candidate01_rejected"])
+        self.assertEqual(
+            result["phase36_candidate01_rejection"]["verdict"],
+            "PHASE36_CANDIDATE01_REJECTED_AUDIO_CONTINUITY_NEW_BINDING_REQUIRED",
+        )
+        self.assertFalse(result["build_authorized"])
         self.assertEqual(result["phase35_attempt_review"], receipt)
         self.assertFalse(result["output_created"])
 

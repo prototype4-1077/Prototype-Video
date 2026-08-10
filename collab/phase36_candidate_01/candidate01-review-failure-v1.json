@@ -1,0 +1,84 @@
+{
+  "receipt_version": 1,
+  "candidate_id": "phase36_ledger_pour_candidate_01",
+  "verdict": "PHASE36_CANDIDATE01_REJECTED_AUDIO_CONTINUITY_NEW_BINDING_REQUIRED",
+  "review": {
+    "reviewed_at_utc": "2026-08-10T19:47:31Z",
+    "reviewer_role": "gpt_builder_exact_frame_and_signal_review",
+    "mode": "exact_frame_visual_plus_exact_pcm_signal_and_spectrogram",
+    "real_time_audio_review_completed": false,
+    "blocking_signal_defect_detected_before_real_time_review": true
+  },
+  "bindings": {
+    "manifest_sha256": "0c97ba94987b8fabf1e1dd0d9c7b1229cfa6edc240ec9ef1fcccf3d45405d9a2",
+    "lossless_archive_sha256": "93eb2cd752d745a6f6fd534912ff68ee24e7bf72cf7cd406d2a366adea97d404",
+    "pcm_wav_sha256": "d9450edd9a9fe7037b6565dbca31cae67ad0b7c574038c2c9fca0c399e338207",
+    "pcm_data_sha256": "5f6cd536af0691509bc53982970cdef5ccdd2a27ce5966415356dd01fa2cb689",
+    "contract_raw_sha256": "f84c24ad6517ff73bfd044908d3d11dcc9c6b08ea50ce42fa8cc9b34c5f26e9a",
+    "contract_canonical_sha256": "8ae32c46c923e593390551ebfe14e0166b4d9d6a2eac055a342a3d20d49ffe01",
+    "implementation_sha256": "0476b29599dd3dfdc0f0afbb65bc6353b03d3f77fbf469a1014fd607e976ba4c",
+    "implementation_archive_sha256": "e398e7f6b5458384f39a8af00aded6d16317eaa5d5912d561c3ce3f410c3331f"
+  },
+  "historical_machine_result": {
+    "machine_passed": true,
+    "gate_count": 30,
+    "failed_gates": [],
+    "frame_count": 303,
+    "encoded_media_files": 0,
+    "execution_state_hash_mismatches": 0
+  },
+  "visual_review": {
+    "preliminary_exact_frame_pass": true,
+    "pour_action_readable": true,
+    "cuts_readable": true,
+    "identity_stable": true,
+    "compassion_camera_safe": true,
+    "known_single_frame_full_closure_lid_hairline_carries": true,
+    "real_time_motion_review_deferred": true
+  },
+  "defect": {
+    "category": "audio_continuity",
+    "contract_intent_violated": "continuous porch perspective",
+    "cut_output_frame": 76,
+    "start_sample": 120000,
+    "end_sample_exclusive": 158400,
+    "duration_samples": 38400,
+    "duration_seconds": 0.8,
+    "affected_output_frames": [76, 99],
+    "pre_cut_100ms_rms_linear": 0.00694302,
+    "pre_cut_100ms_rms_dbfs": -43.169,
+    "post_cut_100ms_rms_dbfs_clamped": -300.0,
+    "post_cut_100ms_active_pair_ratio": 0.0,
+    "maximum_boundary_step": 0.004522681775412771,
+    "observation": "Active porch ambience and pour Foley stop at 2.500 seconds, followed by 0.800 seconds of stereo digital zero before the first direct-address audio sample.",
+    "root_cause": "Candidate01 directly spliced the Phase33 mix, whose first 38,400 sample frames are deliberate pre-roll silence, after the active Phase26 pour leader.",
+    "why_original_gate_missed_it": "The boundary-step gate measured only adjacent sample amplitude and did not measure energy continuity or exact-zero runs."
+  },
+  "post_review_failed_gates": [
+    {"name": "maximum_stereo_exact_zero_run_samples", "actual": 38400, "operator": "<=", "threshold": 48},
+    {"name": "fully_zero_output_audio_frames", "actual": 24, "operator": "==", "threshold": 0},
+    {"name": "minimum_hard_cut_post_100ms_rms_dbfs", "actual": -300.0, "operator": ">=", "threshold": -60.0},
+    {"name": "minimum_hard_cut_post_100ms_active_pair_ratio", "actual": 0.0, "operator": ">=", "threshold": 0.99},
+    {"name": "minimum_output_frame_rms_dbfs", "actual": -300.0, "operator": ">=", "threshold": -60.0},
+    {"name": "same_porch_cut_100ms_rms_difference_db", "actual": 256.831, "operator": "<=", "threshold": 12.0}
+  ],
+  "disposition": {
+    "human_accepted": false,
+    "promotion_allowed": false,
+    "encode_allowed": false,
+    "candidate_immutable": true,
+    "automatic_retry_allowed": false,
+    "repair_requires_new_candidate_binding": true,
+    "picture_may_be_reused_bit_exact": true
+  },
+  "review_artifacts": {
+    "all_303_sheet_sha256": "c241a99adf03d5e5fd337f81a1b8e16c52a5b379084ffec6df7b6e09f8489ea6",
+    "key_beats_sheet_sha256": "ec5dbdb9d57bed1495092bb68e97467be45bb3f58e248fbee1ab896bbc02e3c3",
+    "cuts_sheet_sha256": "917a64bc75b25af9c32f0d05cfce35ceadcb1b349fc0605e25339741e3e55a4c",
+    "liquid_sheet_sha256": "16b54b65db54ceaffb468be78dfdbedf8399f33e657cabe8e8f0dce750e6d76c",
+    "compassion_sheet_sha256": "979b57c14facf92649206c7934537ee3e7045c04d6b71123d88669691bb31d5c",
+    "blink_eye_sheet_sha256": "5c287dcfd96e455885a4109b9bbe35aa8570613247286b635ae0f401e204c609",
+    "waveform_sha256": "36f9ad5e3a5d5f7557ea92dd902ed896faf64ce4dc2b8268e3578431fbce08f7",
+    "spectrogram_sha256": "aa7b818ea15366cca3c4cc945c2e12e3620bc81250bcd6f752417ed96862aac4"
+  }
+}
