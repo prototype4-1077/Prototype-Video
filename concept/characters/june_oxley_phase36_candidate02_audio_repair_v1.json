@@ -81,7 +81,11 @@
   },
   "authorization": {
     "required_before_build": true,
-    "receipt": null,
+    "receipt": {
+      "path": "collab/CLAUDE_REVIEW_2026-08-10_2116Z.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "649fb80582554ec639385c4c61716dc01c7e15efb13183be141588a763155df8"
+    },
     "required_verdict_field": "## Verdict:",
     "required_verdict": "PHASE36_CANDIDATE02_AUDIO_ONLY_UNENCODED_BUILD_ALLOWED",
     "required_binding_tokens": [

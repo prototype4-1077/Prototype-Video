@@ -56,24 +56,100 @@ on:
       - "concept/style_frames/june_oxley_npr_finish_v1.json"
       - "concept/style_frames/june_oxley_npr_reward_v1.json"
       - "examples/june-golden-scene-twelve-dollar-mug.json"
+      - ".gitattributes"
+      - "concept/audio/june_phase36_candidate02_bridge_v1.wav"
+      - "concept/audio/june_phase36_candidate02_phase26_source_v1.wav"
+      - "concept/characters/june_oxley_phase36_candidate02_audio_repair_v1.json"
+      - "collab/phase36_candidate_01/**"
+      - "collab/phase36_candidate_02/**"
+      - "collab/CLAUDE_REVIEW_2026-08-10_*.md"
+      - "collab/GPT_NOTES_2026-08-10*.md"
+      - "docs/JUNE_PHASE36_*"
   push:
     branches: [main]
     paths:
       - "pipeline/**"
+      - ".gitattributes"
       - ".github/workflows/render.yml"
       - ".github/workflows/pipeline-tests.yml"
+      - "concept/audio/june_phase36_candidate02_bridge_v1.wav"
+      - "concept/audio/june_phase36_candidate02_phase26_source_v1.wav"
+      - "concept/characters/june_oxley_phase36_candidate02_audio_repair_v1.json"
       - "concept/style_frames/june_golden_scene_master_sound_v1.json"
       - "concept/audio/june_golden_scene_dialogue_norman_v1.wav"
 
 permissions:
   contents: read
+  actions: read
 
 jobs:
   test:
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    outputs:
+      render_required: ${{ steps.render_scope.outputs.required }}
     steps:
       - uses: actions/checkout@v4
+      - name: Detect legacy-render scope
+        id: render_scope
+        shell: bash
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          EVENT_ACTION: ${{ github.event.action }}
+          BEFORE_SHA: ${{ github.event.before }}
+          HEAD_SHA: ${{ github.event.after }}
+          PR_HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          set -euo pipefail
+          enable_render() {
+            echo "required=true" >> "$GITHUB_OUTPUT"
+            echo "$1"
+            exit 0
+          }
+          if [[ "$EVENT_NAME" != "pull_request" || "$EVENT_ACTION" != "synchronize" ]]; then
+            enable_render "Only pull_request synchronize events may skip legacy renders."
+          fi
+          if [[ -z "$BEFORE_SHA" || "$BEFORE_SHA" =~ ^0+$ || -z "$HEAD_SHA" || "$HEAD_SHA" != "$PR_HEAD_SHA" || -z "$BASE_SHA" ]]; then
+            enable_render "Incremental PR head SHAs are absent or inconsistent; legacy renders remain enabled."
+          fi
+          if ! git fetch --no-tags --depth=1 origin "$BEFORE_SHA" "$HEAD_SHA" "$BASE_SHA"; then
+            enable_render "Incremental SHAs were not fetchable; legacy renders remain enabled."
+          fi
+          if ! git merge-base --is-ancestor "$BASE_SHA" "$BEFORE_SHA"; then
+            enable_render "Current PR base is not contained in the previously tested head; legacy renders remain enabled."
+          fi
+          if ! changed_payload="$(git diff --name-only --no-renames "$BEFORE_SHA" "$HEAD_SHA" --)"; then
+            enable_render "Incremental changed-file evidence failed; legacy renders remain enabled."
+          fi
+          if [[ -z "$changed_payload" ]]; then
+            enable_render "No changed-file evidence; legacy renders remain enabled."
+          fi
+          mapfile -t changed <<< "$changed_payload"
+          unsafe=()
+          for path in "${changed[@]}"; do
+            case "$path" in
+              collab/phase36_candidate_01/*|collab/phase36_candidate_02/*|collab/CLAUDE_REVIEW_2026-08-10_*.md|collab/GPT_NOTES_2026-08-10*.md|docs/JUNE_PHASE36_*|concept/audio/june_phase36_candidate02_bridge_v1.wav|concept/audio/june_phase36_candidate02_phase26_source_v1.wav|concept/characters/june_oxley_phase36_candidate02_audio_repair_v1.json|pipeline/cartoon_ledger_pour_audio_repair.py|pipeline/tests/test_cartoon_ledger_pour_audio_repair.py)
+                ;;
+              *)
+                unsafe+=("$path")
+                ;;
+            esac
+          done
+          printf 'Changed files:\n%s\n' "${changed[*]}"
+          if [[ ${#unsafe[@]} -ne 0 ]]; then
+            enable_render "Legacy-render-impacting files: ${unsafe[*]}"
+          fi
+          if ! prior_success_count="$(gh api "repos/$REPOSITORY/actions/workflows/pipeline-tests.yml/runs?event=pull_request&head_sha=$BEFORE_SHA&status=success&per_page=100" --jq '.total_count')"; then
+            enable_render "Prior Pipeline tests status was not readable; legacy renders remain enabled."
+          fi
+          if [[ ! "$prior_success_count" =~ ^[1-9][0-9]*$ ]]; then
+            enable_render "No successful prior-head Pipeline tests run; legacy renders remain enabled."
+          fi
+          echo "required=false" >> "$GITHUB_OUTPUT"
+          echo "Only Candidate02 audio/evidence files changed after a successful same-base run; legacy renders are skipped."
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
@@ -86,12 +162,15 @@ jobs:
         run: python3 -m compileall -q pipeline
       - name: Regression tests
         run: python3 -m unittest discover -s pipeline/tests -v
+
       - name: Render high-fidelity 2.5D June viseme preview
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           python3 -m pipeline.cartoon_viseme_atlas \
             concept/style_frames/june_oxley_viseme_atlas_v1.json \
             --output-dir build/edit/june-2p5d-viseme-preview
       - name: Verify 2.5D preview contract
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           set -euo pipefail
           video=build/edit/june-2p5d-viseme-preview/june-2p5d-viseme-preview.mp4
@@ -104,6 +183,7 @@ jobs:
           test "$(ffprobe -v error -show_entries format=duration -of csv=p=0 "$video")" = "4.500000"
           sha256sum "$video"
       - name: Upload high-fidelity 2.5D June preview
+        if: steps.render_scope.outputs.required == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: june-2p5d-viseme-atlas-v1
@@ -115,6 +195,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Render exact-clock 2.5D June expression performance
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           python3 -m pipeline.cartoon_viseme_atlas \
             concept/style_frames/june_oxley_viseme_atlas_v1.json \
@@ -123,6 +204,7 @@ jobs:
             --expression-cues concept/style_frames/june_golden_scene_expression_cues_v1.json \
             --output-dir build/edit/june-2p5d-lipsync-performance
       - name: Verify 453-frame expression performance contract
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           set -euo pipefail
           video=build/edit/june-2p5d-lipsync-performance/june-2p5d-lipsync-performance.mp4
@@ -136,6 +218,7 @@ jobs:
           test -z "$(ffprobe -v error -select_streams a -show_entries stream=index -of csv=p=0 "$video")"
           sha256sum "$video"
       - name: Upload exact-clock 2.5D June expression performance
+        if: steps.render_scope.outputs.required == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: june-2p5d-expression-performance-v1
@@ -147,6 +230,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Render full-HD June porch gesture performance
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           python3 -m pipeline.cartoon_hero_scene \
             concept/style_frames/june_oxley_porch_hero_plate_v1.json \
@@ -159,6 +243,7 @@ jobs:
             --gesture-cues concept/style_frames/june_golden_scene_gesture_cues_v1.json \
             --output-dir build/edit/june-hero-expression-performance
       - name: Verify full-HD June porch gesture contract
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           set -euo pipefail
           video=build/edit/june-hero-expression-performance/june-hero-expression-performance.mp4
@@ -173,6 +258,7 @@ jobs:
           test "$(find build/edit/june-hero-expression-performance/review_frames -name 'frame_*.png' | wc -l)" = "9"
           sha256sum "$video"
       - name: Upload full-HD June porch gesture performance
+        if: steps.render_scope.outputs.required == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: june-hero-gesture-performance-v1
@@ -183,12 +269,14 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Render high-detail June multi-shot sequence
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           python3 -m pipeline.cartoon_shot_sequence \
             concept/style_frames/june_golden_scene_multishot_v1.json \
             build/edit/june-hero-expression-performance/june-hero-expression-performance.mp4 \
             --output-dir build/edit/june-golden-scene-multishot
       - name: Verify high-detail multi-shot contract
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           set -euo pipefail
           video=build/edit/june-golden-scene-multishot/june-golden-scene-multishot.mp4
@@ -214,6 +302,7 @@ jobs:
           PY
           sha256sum "$video" "$report"
       - name: Upload high-detail June multi-shot sequence
+        if: steps.render_scope.outputs.required == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: june-golden-scene-multishot-v1
@@ -224,11 +313,13 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Render registered GS030 layered stand
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           python3 -m pipeline.cartoon_pose_layers \
             concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json \
             --output-dir build/edit/june-gs030-layered-stand
       - name: Verify registered GS030 layered stand contract
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           set -euo pipefail
           video=build/edit/june-gs030-layered-stand/june-gs030-layered-stand.mp4
@@ -257,6 +348,7 @@ jobs:
           PY
           sha256sum "$video" "$report"
       - name: Upload registered GS030 layered stand
+        if: steps.render_scope.outputs.required == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: june-gs030-layered-stand-v1
@@ -267,11 +359,13 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Render registered GS060 layered pour
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           python3 -m pipeline.cartoon_pour_layers \
             concept/style_frames/june_golden_scene_gs060_layered_pour_v1.json \
             --output-dir build/edit/june-gs060-layered-pour
       - name: Verify registered GS060 layered pour contract
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           set -euo pipefail
           video=build/edit/june-gs060-layered-pour/june-gs060-layered-pour.mp4
@@ -310,6 +404,7 @@ jobs:
           PY
           sha256sum "$video" "$report"
       - name: Upload registered GS060 layered pour
+        if: steps.render_scope.outputs.required == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: june-gs060-layered-pour-v1
@@ -320,6 +415,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Render registered GS070 resolution performance
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           python3 -m pipeline.cartoon_resolution_scene \
             concept/style_frames/june_golden_scene_gs070_resolution_v1.json \
@@ -330,6 +426,7 @@ jobs:
             --body-motion concept/style_frames/june_golden_scene_gs070_body_motion_v1.json \
             --output-dir build/edit/june-gs070-resolution
       - name: Verify registered GS070 resolution contract
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           set -euo pipefail
           video=build/edit/june-gs070-resolution/june-gs070-resolution.mp4
@@ -363,6 +460,7 @@ jobs:
           PY
           sha256sum "$video" "$report"
       - name: Upload registered GS070 resolution performance
+        if: steps.render_scope.outputs.required == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: june-gs070-resolution-v1
@@ -373,6 +471,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Assemble exact 38.8-second Golden Scene picture master
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           python3 -m pipeline.cartoon_golden_master \
             concept/style_frames/june_golden_scene_master_v1.json \
@@ -384,6 +483,7 @@ jobs:
             --gs070-report build/edit/june-gs070-resolution/june-gs070-resolution-report.json \
             --output-dir build/edit/june-golden-scene-master
       - name: Verify exact Golden Scene picture master
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           set -euo pipefail
           video=build/edit/june-golden-scene-master/june-golden-scene-master.mp4
@@ -422,6 +522,7 @@ jobs:
           PY
           sha256sum "$video" "$report"
       - name: Upload exact Golden Scene picture master
+        if: steps.render_scope.outputs.required == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: june-golden-scene-master-v1
@@ -432,6 +533,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Build sound-finished Golden Scene master
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           python3 -m pipeline.cartoon_golden_sound mix \
             concept/style_frames/june_golden_scene_master_sound_v1.json \
@@ -439,6 +541,7 @@ jobs:
             --picture-report build/edit/june-golden-scene-master/june-golden-scene-master-report.json \
             --output-dir build/edit/june-golden-scene-sound-master
       - name: Verify sound-finished Golden Scene master
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           set -euo pipefail
           video=build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master.mp4
@@ -482,6 +585,7 @@ jobs:
           PY
           sha256sum "$video" "$report" build/edit/june-golden-scene-sound-master/june-golden-scene-master.srt
       - name: Upload sound-finished Golden Scene master
+        if: steps.render_scope.outputs.required == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: june-golden-scene-sound-master-v1
@@ -493,6 +597,7 @@ jobs:
           if-no-files-found: error
           retention-days: 14
       - name: Build reusable June performance-rig proof
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           python3 -m pipeline.cartoon_performance_rig \
             concept/characters/june_oxley_performance_rig_v1.json \
@@ -500,6 +605,7 @@ jobs:
             --sound-report build/edit/june-golden-scene-sound-master/june-golden-scene-sound-master-report.json \
             --output-dir build/edit/june-performance-rig-proof
       - name: Verify reusable June performance-rig proof
+        if: steps.render_scope.outputs.required == 'true'
         run: |
           set -euo pipefail
           video=build/edit/june-performance-rig-proof/june-performance-rig-proof.mp4
@@ -551,6 +657,7 @@ jobs:
             build/edit/june-performance-rig-proof/june-performance-rig-proof.srt \
             build/edit/june-performance-rig-proof/june-performance-rig-proof-audio.wav
       - name: Upload reusable June performance-rig proof
+        if: steps.render_scope.outputs.required == 'true'
         uses: actions/upload-artifact@v4
         with:
           name: june-performance-rig-proof-v1
@@ -564,7 +671,7 @@ jobs:
           retention-days: 14
 
   blender-v8-oral-mask-visemes:
-    if: github.event_name == 'pull_request'
+    if: ${{ github.event_name == 'pull_request' && needs.test.outputs.render_required == 'true' }}
     needs: test
     runs-on: ubuntu-latest
     timeout-minutes: 90

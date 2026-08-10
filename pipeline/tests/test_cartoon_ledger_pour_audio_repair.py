@@ -148,12 +148,18 @@ class CartoonLedgerPourAudioRepairTests(unittest.TestCase):
         self.assertTrue(np.array_equal(candidate01, self.candidate01))
         self.assertTrue(np.array_equal(candidate02, self.candidate02))
 
-    def test_authorization_is_absent_and_build_refuses_before_output_resolution(self) -> None:
-        self.assertIsNone(repair._authorization(self.contract))
-        with patch("pipeline.cartoon_ledger_pour_audio_repair._output_path") as output_path:
-            with self.assertRaisesRegex(repair.AudioRepairError, "blocked pending an exact Claude"):
-                repair.write_audio_candidate()
-        output_path.assert_not_called()
+    def test_exact_claude_authorization_is_bound_without_creating_output(self) -> None:
+        authorization = repair._authorization(self.contract)
+        self.assertEqual(
+            authorization,
+            {
+                "path": "collab/CLAUDE_REVIEW_2026-08-10_2116Z.md",
+                "hash_domain": "lf_normalized_text",
+                "sha256": "649fb80582554ec639385c4c61716dc01c7e15efb13183be141588a763155df8",
+                "verdict": "PHASE36_CANDIDATE02_AUDIO_ONLY_UNENCODED_BUILD_ALLOWED",
+            },
+        )
+        self.assertFalse(repair._output_path(self.contract).exists())
 
     def test_execution_source_state_binds_the_current_authorization_receipt(self) -> None:
         authorization = {"path": "review.md", "sha256": "review-hash", "verdict": "allowed"}

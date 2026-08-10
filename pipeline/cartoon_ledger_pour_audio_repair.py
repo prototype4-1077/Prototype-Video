@@ -18,7 +18,7 @@ import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase36_candidate02_audio_repair_v1.json"
-EXPECTED_CONTRACT_CANONICAL_SHA256 = "aa18088d8e942fa6b5aadbe9f7b1d31df2c310788a4a85766f76a1299be7853e"
+EXPECTED_CONTRACT_CANONICAL_SHA256 = "da0514789f41939e8ac7457dbf233b417c2ebd2767c55fb3daf01d24c6d1991f"
 PCM24_MAX = 8388607
 
 
