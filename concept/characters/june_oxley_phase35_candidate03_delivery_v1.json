@@ -1,0 +1,145 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase35_candidate03_delivery_v1",
+  "phase": "phase35_candidate03_authorized_av_proof",
+  "character_id": "june_oxley",
+  "classification": "One authorized A/V encode of the exact visually accepted Candidate 03 archive; machine and real-time human review required; not full-cartoon delivery.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "locks": {
+    "source_contract": {
+      "path": "concept/characters/june_oxley_phase35_source_textured_direct_address_v2.json",
+      "sha256": "68c763be79dd76447f6c33baf39ef79528fbbf1d6ea25a113c5550d63d62ba94"
+    },
+    "source_manifest": {
+      "path": "collab/phase35_candidate_03/june-phase35-source-textured-direct-address-preview-manifest-v2.json",
+      "sha256": "250b678686f87c5cdcabeaedd0f6e39833b9dcaa7d2387c76fa8fe016b2885fe"
+    },
+    "source_implementation_archive": {
+      "path": "collab/phase35_candidate_03/phase35-candidate03-implementation-source-b06981d.tar",
+      "sha256": "8467298165d1669f5d3efbdb3d2a630e8f93f67a4cf8aff062789939b056893b",
+      "renderer_member": "pipeline/cartoon_source_textured_direct_address.py",
+      "renderer_sha256": "97612673a65b92e83d9d54debaf1738508d88442813759ba9959a41dee32fe77"
+    },
+    "visual_review": {
+      "path": "collab/CLAUDE_REVIEW_2026-08-10_1712Z.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "d45bf8fada6d102caf6c0b38d9f81ff4938b9475a6407421746f72e3f8df34cc"
+    },
+    "delivery_mix": {
+      "path": "concept/audio/june_phase33_direct_address_mix_v1.wav",
+      "sha256": "e5cd5ebd9f52f4c6a1cb1682a61c42ff812069fd3eb30789bf1cca28a718ea39"
+    },
+    "opencv_h264_probe_video": {
+      "path": "collab/phase34_candidate_08_silent_encode_attempt_01/june-phase34-source-textured-visemes-proof-v1.mp4",
+      "sha256": "6c5a4e7e189400e545f5bc2d55f2f87b536100267cd9d6a20488496646f30514"
+    }
+  },
+  "source_evidence": {
+    "external_directory": "../../outputs/edit/phase35-source-textured-direct-address-preview-v2-candidate-03",
+    "manifest_filename": "june-phase35-source-textured-direct-address-preview-manifest-v2.json",
+    "archive_filename": "june-phase35-source-textured-direct-address-rgb24-xor-v2.gz",
+    "archive_sha256": "b5908bfce4ac10ad7e3ad74e58a8cf9f8e352033b14c1828315e96cd615f6e0f",
+    "archive_bytes": 242333440,
+    "archive_header": {
+      "format": "phase35_rgb24_xor_previous_gzip_v1",
+      "width": 1920,
+      "height": 1080,
+      "channels": 3,
+      "frame_count": 228,
+      "frame_bytes": 6220800,
+      "xor_seed": "all_zero_rgb24_frame"
+    }
+  },
+  "clock": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 228,
+    "duration_seconds": 7.6,
+    "audio_sample_rate": 48000,
+    "audio_sample_count": 364800,
+    "audio_channels": 2,
+    "audio_sample_width": 3
+  },
+  "authorization": {
+    "required_verdict": "PHASE35_C03_VISUAL_ACCEPTED_ENCODE_AUTHORIZED",
+    "maximum_video_encoder_processes": 1,
+    "automatic_retry_allowed": false,
+    "source_must_be_exact_archived_rgb_frames": true,
+    "audio_must_be_exact_locked_delivery_mix": true,
+    "renderer_invocation_allowed": false,
+    "one_versioned_encode_only": true
+  },
+  "preclaim_requirements": {
+    "required_video_encoder": "libx264",
+    "required_audio_encoder": "aac",
+    "required_video_decoders": ["h264"],
+    "required_audio_decoders": ["aac", "pcm_s24le"],
+    "required_input_demuxers": ["rawvideo", "wav", "mov"],
+    "required_output_muxers": ["mp4", "s24le"],
+    "required_audio_filter": "atrim",
+    "required_probe_tool": "ffprobe",
+    "required_tool_version_family_match": true,
+    "opencv_h264_probe_width": 1920,
+    "opencv_h264_probe_height": 1080,
+    "opencv_h264_probe_frame_count": 96,
+    "minimum_free_output_bytes": 2147483648
+  },
+  "delivery": {
+    "attempt_version": 1,
+    "output_directory": "../../outputs/edit/phase35-candidate03-av-proof-v1",
+    "video_filename": "june-phase35-candidate03-av-proof-v1.mp4",
+    "report_filename": "june-phase35-candidate03-av-proof-report-v1.json",
+    "decoded_contact_sheet_filename": "june-phase35-candidate03-decoded-review-v1.png",
+    "one_video_encode_without_retry": true,
+    "staged_atomic_directory_publication": true,
+    "encoding": {
+      "video_codec": "libx264",
+      "preset": "slow",
+      "tune": "animation",
+      "crf": 0,
+      "pixel_format": "yuv420p",
+      "audio_codec": "aac",
+      "audio_bitrate": "256k"
+    }
+  },
+  "decoded_gates": {
+    "face_roi_xyxy": [500, 185, 870, 620],
+    "eye_roi_xyxy": [625, 235, 850, 360],
+    "mouth_roi_xyxy": [560, 340, 880, 590],
+    "minimum_full_frame_psnr_db_all_frames": 39.0,
+    "minimum_face_psnr_db_all_frames": 38.0,
+    "minimum_face_ssim_all_frames": 0.97,
+    "minimum_eye_psnr_db_all_frames": 38.0,
+    "minimum_mouth_psnr_db_all_frames": 38.0,
+    "minimum_decoded_laplacian_variance_all_frames": 80.0,
+    "maximum_decoded_adjacent_face_8x8_mean_delta": 170.0,
+    "maximum_absolute_pairwise_codec_delta": 2.0,
+    "minimum_audio_channel_zero_lag_correlation": 0.999,
+    "minimum_audio_channel_signal_to_error_db": 30.0,
+    "minimum_audio_mid_zero_lag_correlation": 0.999,
+    "minimum_audio_side_zero_lag_correlation": 0.995,
+    "minimum_audio_side_signal_to_error_db": 25.0,
+    "required_audio_best_correlation_lag_samples": 0,
+    "required_container_audio_duration_samples": 364800,
+    "required_audited_playback_samples_per_channel": 364800,
+    "maximum_aac_decoder_padding_samples_per_channel": 1023
+  },
+  "review_frames": [1, 12, 24, 25, 46, 77, 78, 79, 80, 81, 82, 83, 84, 85, 111, 132, 162, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 180, 192, 201, 202, 228],
+  "failure_policy": {
+    "mode": "fail_closed",
+    "partial_success_allowed": false,
+    "fallback_allowed": false,
+    "automatic_reencode_allowed": false,
+    "failed_encode_attempt_is_preserved": true,
+    "attempt_claim_created_before_encoder_launch": true
+  },
+  "promotion_policy": {
+    "machine_pass_does_not_imply_artistic_acceptance": true,
+    "real_time_human_motion_and_audio_review_required": true,
+    "accepted_full_cartoon_production_delivery": false,
+    "next_slice_after_audit": "phase36_ledger_pour_303_frames"
+  }
+}
