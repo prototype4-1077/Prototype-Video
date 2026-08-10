@@ -1,0 +1,221 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase36_prores4444_review_master_v1",
+  "phase": "phase36_prores4444_review_master",
+  "character_id": "june_oxley",
+  "classification": "One separately authorized professional review/interchange encode of the accepted immutable Phase36 Candidate01 RGB24 picture archive and Candidate02 PCM24 audio master. It does not render, repair, promote, or make a distribution derivative.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "implementation_path": "pipeline/cartoon_ledger_pour_prores_master.py",
+  "locks": {
+    "picture_contract": {
+      "path": "concept/characters/june_oxley_phase36_ledger_pour_v1.json",
+      "sha256": "dde42b2175ea26daab638995acc0050b28082a7eafd09f7f1c1d38f9f8d4ef17"
+    },
+    "picture_manifest": {
+      "path": "collab/phase36_candidate_01/june-phase36-ledger-pour-manifest-v1.json",
+      "sha256": "0c97ba94987b8fabf1e1dd0d9c7b1229cfa6edc240ec9ef1fcccf3d45405d9a2"
+    },
+    "picture_rejection_receipt": {
+      "path": "collab/phase36_candidate_01/candidate01-review-failure-v1.json",
+      "sha256": "bd11323a9e416a439b70d21e99a21b41beb5fc98679590b476485f2e46a9d5c1"
+    },
+    "audio_wav": {
+      "path": "collab/phase36_candidate_02/june-phase36-ledger-pour-mix-v2.wav",
+      "sha256": "f498ba44f9443b2b025da6fe607322df7f47a7b22ce2a82e987419602ff3d781"
+    },
+    "audio_manifest": {
+      "path": "collab/phase36_candidate_02/june-phase36-ledger-pour-audio-repair-manifest-v2.json",
+      "sha256": "7393f75faafa19e3102ca4be356b4b50380a83ed89628a500797108f946cddf4"
+    },
+    "audio_build_receipt": {
+      "path": "collab/phase36_candidate_02/candidate02-build-receipt-v1.json",
+      "sha256": "58498c27d7811a5f325b0145ada84fef4b4f0fcf989d65d29c97c2cb426403b3"
+    },
+    "audio_human_ratification": {
+      "path": "collab/CLAUDE_REVIEW_2026-08-10_2210Z.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "786dd24b77c3605983645f20e71e43c6760af3003c81a7042bf9fc383def61cf"
+    }
+  },
+  "picture": {
+    "external_archive_path": "../../outputs/edit/phase36-ledger-pour-lossless-v1-candidate-01/june-phase36-ledger-pour-rgb24-xor-v1.gz",
+    "archive_sha256": "93eb2cd752d745a6f6fd534912ff68ee24e7bf72cf7cd406d2a366adea97d404",
+    "archive_bytes": 415959046,
+    "frame_inventory_canonical_sha256": "d09bcdc6a3c86e26e9ce77070f18504f3101e4b87edfc54e169e3b4b641a6451",
+    "archive_header": {
+      "format": "phase36_rgb24_xor_previous_gzip_v1",
+      "width": 1920,
+      "height": 1080,
+      "channels": 3,
+      "frame_count": 303,
+      "frame_bytes": 6220800,
+      "xor_seed": "all_zero_rgb24_frame",
+      "contract_canonical_sha256": "8ae32c46c923e593390551ebfe14e0166b4d9d6a2eac055a342a3d20d49ffe01",
+      "hard_cut_output_frames": [76, 238]
+    }
+  },
+  "audio": {
+    "wav_sha256": "f498ba44f9443b2b025da6fe607322df7f47a7b22ce2a82e987419602ff3d781",
+    "pcm_data_sha256": "24f32febdb18206956fff3ea2de7119dc43a00f9eab37780b94edc948871cb46",
+    "sample_rate": 48000,
+    "channels": 2,
+    "bits_per_sample": 24,
+    "sample_count": 484800
+  },
+  "clock": {
+    "width": 1920,
+    "height": 1080,
+    "source_pixel_format": "rgb24",
+    "fps": 30,
+    "frame_count": 303,
+    "duration_seconds": 10.1,
+    "video_track_timescale": 15360,
+    "sample_aspect_ratio": "1:1"
+  },
+  "vui_prerequisite": {
+    "required_before_master_authorization": true,
+    "source_branch": "agent/phase35-blink-vui-probe-v1",
+    "source_commit": "ec91f71779a56495ea43068ffc9ee1f4d081c1d5",
+    "probe_authorization_subject_sha256": "bfaffe5ad4cb8238d153766d677adc47fb69d1f8e0e5a2b9b2560132cd5ae594",
+    "probe_implementation_sha256": "93f94b12d9c1762183d89c6a3454c3da6ed8ade58dc5caae225444531ef067d6",
+    "probe_command_template_sha256": "adfa4428329bda59281dfa7e2aa47cd1c9c73815d0ac1be5cbbc544ce73a75ad",
+    "probe_result_receipt": null,
+    "required_machine_passed": true,
+    "required_status": "METADATA_PROBE_PASSED_NO_DELIVERY_AUTHORITY",
+    "required_encoding_process_count": 1,
+    "required_retry_allowed": false
+  },
+  "toolchain": {
+    "ffmpeg_sha256": "228d7a8556258de907fdb55f36850078ebc7680b84ec30d84ea02e99bec1d1eb",
+    "ffprobe_sha256": "0fde260f5abd35c9cafd96f594cc76365a780c1b73a90e35b6a3409ea1db1bf0",
+    "version": "8.1.1-essentials_build-www.gyan.dev",
+    "pillow_version": "12.2.0",
+    "required_video_encoder": "prores_ks",
+    "required_video_decoder": "prores",
+    "required_audio_encoder": "pcm_s24le",
+    "required_input_demuxer": "rawvideo",
+    "required_output_muxer": "mov",
+    "required_filters": ["scale", "format", "setsar", "setparams", "atrim", "asetpts"],
+    "required_muxer_flags": ["faststart", "write_colr"],
+    "minimum_free_output_bytes": 1073741824
+  },
+  "encoding": {
+    "video_codec": "prores_ks",
+    "profile": 4,
+    "profile_name": "4444",
+    "encoder_input_pixel_format": "yuv444p10le",
+    "decoded_pixel_format": "yuv444p12le",
+    "decoded_bits_per_raw_sample": 12,
+    "alpha_bits": 0,
+    "codec_tag": "ap4h",
+    "color_range": "tv",
+    "color_space": "bt709",
+    "color_transfer": "bt709",
+    "color_primaries": "bt709",
+    "scale_flags": "lanczos+accurate_rnd+full_chroma_int",
+    "audio_codec": "pcm_s24le",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "movflags": "+faststart+write_colr",
+    "fps_mode": "cfr",
+    "frame_metadata_filter": "setparams=range=limited:color_primaries=bt709:color_trc=bt709:colorspace=bt709",
+    "encoder_identity": "FFmpeg prores_ks; ProRes-compatible review/interchange media, not Apple-certified encoding",
+    "expected_container_vendor_id": "FFMP",
+    "metadata_inheritance_allowed": false,
+    "resampling_allowed": false,
+    "loudness_processing_allowed": false
+  },
+  "authorization": {
+    "required_before_encoder_launch": true,
+    "receipt": null,
+    "required_verdict_field": "## Verdict:",
+    "required_verdict": "PHASE36_PRORES4444_REVIEW_MASTER_V1_ATTEMPT01_ALLOWED",
+    "maximum_encoder_processes": 1,
+    "automatic_retry_allowed": false,
+    "authorization_consumed_on_any_postclaim_failure": true
+  },
+  "acceptance": {
+    "required_stream_count": 2,
+    "required_video_streams": 1,
+    "required_audio_streams": 1,
+    "required_other_streams": 0,
+    "required_video_codec_name": "prores",
+    "required_video_profile": "4444",
+    "required_video_codec_tag_string": "ap4h",
+    "required_video_pixel_format": "yuv444p12le",
+    "required_video_bits_per_raw_sample": 12,
+    "required_video_vendor_id": "FFMP",
+    "required_color_range": "tv",
+    "required_color_space": "bt709",
+    "required_color_transfer": "bt709",
+    "required_color_primaries": "bt709",
+    "required_mov_colr_type": "nclc",
+    "required_mov_colr_path": "moov/trak/mdia/minf/stbl/stsd/ap4h/colr",
+    "required_mov_colr_payload_bytes": 10,
+    "required_mov_colr_primaries": 1,
+    "required_mov_colr_transfer": 1,
+    "required_mov_colr_matrix": 1,
+    "required_audio_codec_name": "pcm_s24le",
+    "required_audio_sample_format": "s32",
+    "required_decoded_pcm_data_sha256": "24f32febdb18206956fff3ea2de7119dc43a00f9eab37780b94edc948871cb46",
+    "minimum_full_frame_psnr_db": 45.0,
+    "minimum_face_roi_psnr_db": 42.0,
+    "minimum_eye_roi_psnr_db": 42.0,
+    "minimum_mouth_roi_psnr_db": 42.0,
+    "minimum_face_roi_8x8_window_ssim": 0.99,
+    "minimum_sharpness_ratio": 0.9,
+    "maximum_pairwise_motion_delta": 1.0,
+    "roi_frame_span": [76, 303],
+    "base_face_roi_xyxy": [500, 185, 870, 620],
+    "base_eye_roi_xyxy": [625, 235, 850, 360],
+    "base_mouth_roi_xyxy": [560, 340, 880, 590],
+    "roi_source": "picture_manifest_source_map_with_phase35_base_rois"
+  },
+  "output": {
+    "directory": "../../outputs/edit/phase36-prores4444-review-master-v1-attempt01",
+    "video_filename": "june-phase36-ledger-pour-review-master-v1.mov",
+    "stderr_filename": "ffmpeg-stderr-v1.txt",
+    "stream_probe_filename": "ffprobe-stream-v1.json",
+    "frame_probe_filename": "ffprobe-frames-v1.json",
+    "decode_metrics_filename": "decoded-picture-metrics-v1.json",
+    "audio_audit_filename": "decoded-audio-audit-v1.json",
+    "human_review_instructions_filename": "human-review-instructions-v1.md",
+    "review_frame_numbers": [75, 76, 237, 238, 248],
+    "review_frame_prefix": "decoded-review-frame",
+    "report_filename": "review-master-report-v1.json",
+    "package_filename": "attempt-package-v1.json"
+  },
+  "human_review_receipt": {
+    "required_after_machine_pass_before_promotion": true,
+    "required_verdict_field": "## Verdict:",
+    "required_pass_verdict": "PHASE36_PRORES4444_REVIEW_MASTER_V1_HUMAN_ACCEPTED",
+    "must_bind_media_report_and_package_sha256": true,
+    "required_review_scope": [
+      "complete 10.1 seconds at native size or full screen in a Rec.709-aware player",
+      "headphone review of 2.35 through 3.45 seconds and complete mix",
+      "color and gamma stability",
+      "banding and edge softness",
+      "pour stream and mug fill",
+      "cuts F075-F076 and F237-F238",
+      "visemes, beard seam, eyelids, and F248 hairline",
+      "audio sync, click, doubled ambience, and intentional ambience swell"
+    ]
+  },
+  "failure_policy": {
+    "mode": "fail_closed",
+    "immutable_output": true,
+    "partial_success_allowed": false,
+    "fallback_allowed": false,
+    "automatic_reencode_allowed": false,
+    "failed_attempt_preserved": true,
+    "claim_created_before_encoder_launch": true,
+    "renderer_invocation_allowed": false,
+    "picture_mutation_allowed": false,
+    "audio_mutation_allowed": false,
+    "network_allowed": false,
+    "distribution_encode_allowed": false,
+    "promotion_allowed": false
+  }
+}
