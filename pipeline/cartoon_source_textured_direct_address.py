@@ -13,13 +13,13 @@ from pathlib import Path
 import platform
 import re
 import shutil
+import struct
 import tempfile
 from typing import Any
 
 import cv2
 import numpy as np
 from PIL import Image, ImageDraw, ImageOps, __version__ as PILLOW_VERSION
-import soundfile as sf
 
 from pipeline import cartoon_source_textured_face as phase34
 from pipeline import cartoon_source_textured_face_v2 as phase34_candidate09
@@ -241,12 +241,94 @@ def _execution_state_mismatches(
 
 
 def _wave_probe(path: Path) -> dict[str, int]:
-    info = sf.info(str(path))
+    """Read the locked PCM WAV clock without an optional audio dependency.
+
+    Python 3.11's :mod:`wave` rejects WAVE_FORMAT_EXTENSIBLE even when its
+    subtype is ordinary PCM.  The Phase35 sources use that standards-compliant
+    wrapper for 24-bit PCM, so validate the small RIFF/fmt/data surface needed
+    by the render contract directly.
+    """
+
+    def fail(detail: str) -> None:
+        raise SourceTexturedDirectAddressError(f"invalid PCM WAV {path.name}: {detail}")
+
+    file_size = path.stat().st_size
+    with path.open("rb") as audio:
+        header = audio.read(12)
+        if len(header) != 12:
+            fail("truncated RIFF header")
+        riff_id, riff_size, wave_id = struct.unpack("<4sI4s", header)
+        if riff_id != b"RIFF" or wave_id != b"WAVE":
+            fail("missing RIFF/WAVE signature")
+        riff_end = riff_size + 8
+        if riff_end != file_size:
+            fail("declared RIFF size does not match file length")
+
+        fmt_payload: bytes | None = None
+        data_size: int | None = None
+        while audio.tell() < riff_end:
+            if riff_end - audio.tell() < 8:
+                fail("truncated chunk header")
+            chunk_header = audio.read(8)
+            if len(chunk_header) != 8:
+                fail("truncated chunk header")
+            chunk_id, chunk_size = struct.unpack("<4sI", chunk_header)
+            chunk_end = audio.tell() + chunk_size
+            padded_chunk_end = chunk_end + (chunk_size % 2)
+            if padded_chunk_end > riff_end:
+                fail(f"{chunk_id!r} chunk exceeds the RIFF container")
+            if chunk_id == b"fmt ":
+                if fmt_payload is not None:
+                    fail("duplicate fmt chunk")
+                fmt_payload = audio.read(chunk_size)
+            else:
+                if chunk_id == b"data":
+                    if data_size is not None:
+                        fail("duplicate data chunk")
+                    data_size = chunk_size
+                audio.seek(chunk_size, os.SEEK_CUR)
+            if chunk_size % 2:
+                if audio.read(1) == b"":
+                    fail(f"{chunk_id!r} chunk is missing its pad byte")
+
+    if fmt_payload is None or len(fmt_payload) < 16:
+        fail("missing or truncated fmt chunk")
+    if data_size is None:
+        fail("missing data chunk")
+
+    format_tag, channels, sample_rate, byte_rate, block_align, bits_per_sample = (
+        struct.unpack("<HHIIHH", fmt_payload[:16])
+    )
+    if format_tag == 0xFFFE:
+        if len(fmt_payload) < 40:
+            fail("truncated WAVE_FORMAT_EXTENSIBLE fmt chunk")
+        extension_size = struct.unpack_from("<H", fmt_payload, 16)[0]
+        valid_bits = struct.unpack_from("<H", fmt_payload, 18)[0]
+        pcm_subformat = bytes.fromhex("0100000000001000800000aa00389b71")
+        if extension_size < 22 or 18 + extension_size > len(fmt_payload):
+            fail("truncated WAVE_FORMAT_EXTENSIBLE extension")
+        if fmt_payload[24:40] != pcm_subformat:
+            fail("WAVE_FORMAT_EXTENSIBLE subtype is not PCM")
+        if valid_bits != bits_per_sample:
+            fail("valid bits do not match the PCM container width")
+    elif format_tag != 1:
+        fail(f"unsupported compression format {format_tag}")
+
+    if channels <= 0 or sample_rate <= 0 or bits_per_sample <= 0 or bits_per_sample % 8:
+        fail("invalid PCM channel, sample-rate, or sample-width field")
+    sample_width = bits_per_sample // 8
+    if block_align <= 0 or block_align != channels * sample_width:
+        fail("block alignment does not match PCM geometry")
+    if byte_rate != sample_rate * block_align:
+        fail("byte rate does not match PCM geometry")
+    if data_size % block_align:
+        fail("data chunk is not aligned to a complete sample frame")
+
     return {
-        "sample_rate": int(info.samplerate),
-        "channels": int(info.channels),
-        "sample_width": 3 if info.subtype == "PCM_24" else 0,
-        "sample_count": int(info.frames),
+        "sample_rate": int(sample_rate),
+        "channels": int(channels),
+        "sample_width": int(sample_width),
+        "sample_count": int(data_size // block_align),
     }
 
 

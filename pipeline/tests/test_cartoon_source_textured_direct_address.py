@@ -5,7 +5,9 @@ import hashlib
 import inspect
 import json
 from pathlib import Path
+import struct
 import tarfile
+import tempfile
 import unittest
 
 import numpy as np
@@ -13,6 +15,70 @@ import numpy as np
 from pipeline import cartoon_source_textured_direct_address as direct
 from pipeline import cartoon_source_textured_face as phase34
 from pipeline import cartoon_source_textured_face_v2 as phase34_candidate09
+
+
+PCM_SUBFORMAT_GUID = bytes.fromhex("0100000000001000800000aa00389b71")
+
+
+def _wav_chunk(chunk_id: bytes, payload: bytes) -> bytes:
+    return chunk_id + struct.pack("<I", len(payload)) + payload + (b"\0" if len(payload) % 2 else b"")
+
+
+def _wav_bytes(fmt_payload: bytes, data_payload: bytes, *, riff_size: int | None = None) -> bytes:
+    body = b"WAVE" + _wav_chunk(b"fmt ", fmt_payload) + _wav_chunk(b"data", data_payload)
+    return b"RIFF" + struct.pack("<I", len(body) if riff_size is None else riff_size) + body
+
+
+class WaveProbeTests(unittest.TestCase):
+    def _probe(self, payload: bytes) -> dict[str, int]:
+        with tempfile.TemporaryDirectory(prefix="phase35-wave-probe-") as temporary:
+            path = Path(temporary) / "probe.wav"
+            path.write_bytes(payload)
+            return direct._wave_probe(path)
+
+    def test_accepts_standard_and_extensible_pcm(self) -> None:
+        pcm = struct.pack("<HHIIHH", 1, 1, 48000, 144000, 3, 24)
+        self.assertEqual(
+            self._probe(_wav_bytes(pcm, bytes(12))),
+            {"sample_rate": 48000, "channels": 1, "sample_width": 3, "sample_count": 4},
+        )
+
+        extensible = struct.pack(
+            "<HHIIHHHHI16s", 0xFFFE, 2, 48000, 288000, 6, 24, 22, 24, 3,
+            PCM_SUBFORMAT_GUID,
+        )
+        self.assertEqual(
+            self._probe(_wav_bytes(extensible, bytes(24))),
+            {"sample_rate": 48000, "channels": 2, "sample_width": 3, "sample_count": 4},
+        )
+
+    def test_rejects_malformed_or_non_pcm_wav(self) -> None:
+        pcm = struct.pack("<HHIIHH", 1, 1, 48000, 144000, 3, 24)
+        extensible = struct.pack(
+            "<HHIIHHHHI16s", 0xFFFE, 2, 48000, 288000, 6, 24, 22, 24, 3,
+            PCM_SUBFORMAT_GUID,
+        )
+        cases = {
+            "chunks outside declared RIFF": _wav_bytes(pcm, bytes(12), riff_size=4),
+            "truncated declared extension": _wav_bytes(
+                extensible[:16] + struct.pack("<H", 30) + extensible[18:], bytes(24),
+            ),
+            "unsupported extensible subtype": _wav_bytes(
+                extensible[:24] + bytes.fromhex("0300000000001000800000aa00389b71"), bytes(24),
+            ),
+            "misaligned sample data": _wav_bytes(pcm, bytes(5)),
+            "zero-width PCM": _wav_bytes(
+                struct.pack("<HHIIHH", 1, 1, 48000, 0, 0, 0), b"",
+            ),
+            "partial trailing chunk header": (
+                b"RIFF" + struct.pack("<I", 4 + len(_wav_chunk(b"fmt ", pcm)) + 3)
+                + b"WAVE" + _wav_chunk(b"fmt ", pcm) + b"bad"
+            ),
+        }
+        for label, payload in cases.items():
+            with self.subTest(label=label):
+                with self.assertRaises(direct.SourceTexturedDirectAddressError):
+                    self._probe(payload)
 
 
 class SourceTexturedDirectAddressTests(unittest.TestCase):
@@ -196,6 +262,9 @@ class SourceTexturedDirectAddressTests(unittest.TestCase):
             for alias in node.names
         }
         self.assertNotIn("subprocess", imported)
+        self.assertNotIn("soundfile", imported)
+        self.assertNotIn("wave", imported)
+        self.assertIn("struct", imported)
         self.assertNotIn("ffmpeg", source.lower())
         self.assertNotIn("Popen", source)
         preview_source = inspect.getsource(direct.write_unencoded_preview)
