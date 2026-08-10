@@ -1,0 +1,86 @@
+{
+  "status": "single_encode_attempt_rejected_no_retry_allowed",
+  "encoder_process_started": true,
+  "error_type": "SourceTexturedDeliveryError",
+  "error": "decoded Phase34 delivery gates failed; the attempt is preserved and cannot be retried",
+  "attempt": {
+    "source_review_commit": "2ce846c593142c0da9a8f9c49115efc12fdaa8c3",
+    "captured_hashes": {
+      "contract_raw_sha256": "87da5306148eac5e4d49bf6613c8912b58eb9c6434c9927bd0925de6f7d654de",
+      "contract_canonical_sha256": "992f5aeeb203119bd4d00373f0a5060ab1b5aa835100295db6beaf4d69a9ae20",
+      "renderer_sha256": "73cd8ab14a474019160ed88a321caaf2164cec35c370dec21c32afba1354c95e",
+      "delivery_implementation_sha256": "3a81d875eed4e5d150732a46da8a64520d465dd4a4868760411e71dde743a022",
+      "receipt_sha256": "b1456d8afafbe1250057f3badec0f5ddef9e45f697d49a38fe731c160e6dc8b8",
+      "claude_review_lf_sha256": "2ec35200da4add1fea0c5f3102497cba0895fc1f7feb555c3c652e93096e508a",
+      "manifest_raw_sha256": "4e30698c0c347e0c2862c6e8fc86d7fb2a814e2e21d894ebc9b8c8c63b0cc5fa",
+      "manifest_lf_sha256": "5fa917cd2fc8e1069a75b3696d81a80d45211e37f5c3e8626598b7efd9cb78fe",
+      "archive_sha256": "30f17179fd4fe9cd0f531b559269e187d3b8c888d90b5a5f8a770356ff6cd705",
+      "ffmpeg_sha256": "228d7a8556258de907fdb55f36850078ebc7680b84ec30d84ea02e99bec1d1eb",
+      "ffprobe_sha256": "0fde260f5abd35c9cafd96f594cc76365a780c1b73a90e35b6a3409ea1db1bf0"
+    },
+    "encoder_command": [
+      "C:\\Users\\jwats\\AppData\\Local\\Programs\\Python\\Python311\\Scripts\\ffmpeg.exe",
+      "-hide_banner",
+      "-loglevel",
+      "error",
+      "-xerror",
+      "-abort_on",
+      "empty_output+empty_output_stream",
+      "-f",
+      "rawvideo",
+      "-pixel_format",
+      "rgb24",
+      "-video_size",
+      "1920x1080",
+      "-framerate",
+      "24",
+      "-i",
+      "pipe:0",
+      "-map",
+      "0:v:0",
+      "-an",
+      "-sn",
+      "-dn",
+      "-frames:v",
+      "96",
+      "-c:v",
+      "libx264",
+      "-preset",
+      "slow",
+      "-crf",
+      "0",
+      "-pix_fmt",
+      "yuv420p",
+      "-fps_mode",
+      "cfr",
+      "-movflags",
+      "+faststart",
+      "-n",
+      "C:\\Users\\jwats\\Documents\\Codex\\2026-07-28\\d\\outputs\\edit\\.phase34-source-textured-visemes-proof-v1.partial-h11k_oka\\june-phase34-source-textured-visemes-proof-v1.partial.mp4"
+    ],
+    "encoding_process_count": 1,
+    "encoder_return_code": 0
+  },
+  "available_artifacts": [
+    {
+      "file": "ffmpeg-stderr-v1.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "file": "june-phase34-source-textured-visemes-decoded-contact-v1.png",
+      "bytes": 1611029,
+      "sha256": "030a5851997c8000fafc4d06dd7ae8f3db95b9247704a47de0c65adaa08033de"
+    },
+    {
+      "file": "june-phase34-source-textured-visemes-proof-v1.mp4",
+      "bytes": 1872888,
+      "sha256": "6c5a4e7e189400e545f5bc2d55f2f87b536100267cd9d6a20488496646f30514"
+    },
+    {
+      "file": "june-phase34-source-textured-visemes-report-v1.json",
+      "bytes": 82276,
+      "sha256": "1d0d6a0264fd15c5f8b127da2af03201269c1ea3277fb77ad86b79345a476019"
+    }
+  ]
+}

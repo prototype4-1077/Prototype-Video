@@ -3,16 +3,18 @@
 Status date: 2026-08-10  
 Branch: `agent/june-hero-unified-sculpt-phase-5`  
 Draft PR: `#8`  
-Classification: unencoded technical/artistic preview; not production delivery
+Classification: consumed/rejected one-shot silent facial proof; not production delivery
 
 ## Current result
 
-Phase 34 candidate-08 is the current exact-frame review candidate. It preserves all 96
-reviewed RGB frames, closes the remaining soft-lid and H-occlusion proof gaps, and clears
-the Candidate-07 visual blockers. It passes 46 pre-encode gates and 20 focused tests. It
-has not been encoded and has no manifest-bound Claude receipt yet.
+Phase 34 candidate-08 preserves all 96 reviewed RGB frames, closes the remaining soft-lid
+and H-occlusion proof gaps, and clears the Candidate-07 visual blockers. Claude approved
+one exact-archive silent encode. That attempt was consumed once and preserved as rejected:
+67/68 gates passed, with only the absolute decoded blink-motion ceiling failing.
 
-Review evidence is staged at `collab/phase34_candidate_08/`.
+Exact-frame review evidence is at `collab/phase34_candidate_08/`. The attempted MP4,
+decoded report, diagnostic PNG, and failure receipt are at
+`collab/phase34_candidate_08_silent_encode_attempt_01/`.
 
 - Local Windows manifest SHA-256: `4e30698c0c347e0c2862c6e8fc86d7fb2a814e2e21d894ebc9b8c8c63b0cc5fa`
 - LF-normalized Git/public manifest SHA-256: `5fa917cd2fc8e1069a75b3696d81a80d45211e37f5c3e8626598b7efd9cb78fe`
@@ -147,18 +149,39 @@ silent encode. Do not exercise that approval: subsequent independent audits prov
 candidate-04's lip/overlap gates were hard-coded and that its exact 96 reviewed frames were
 not preserved. Candidate-05 supersedes it as the evidence architecture.
 
-Candidate-08 should now receive Claude's visual verdict bound to the public LF manifest hash.
-No silent encode is allowed before that receipt is committed and validated.
+Claude's exact Candidate-08 receipt is committed. Attempt 01 consumed it and must never be
+retried. `collab/GPT_NOTES_2026-08-10i.md` requests the remaining native-24-fps motion
+verdict against the preserved attempt.
 
 ## Exact next steps
 
-1. Publish Candidate-08 without changing its contract, renderer, manifest, archive, or frames.
-2. Ask Claude to review the exact package and commit a verdict binding the public LF hash.
-3. Validate the receipt against the public manifest and archive.
-4. Only after acceptance, encode the exact reviewed archive once and fully decode-verify it.
-5. Preserve the accepted facial beat as a reusable production subsystem, then integrate it
-   into voiced timing, body acting, multi-shot staging, sound, and sequence-level direction.
+1. Ask Claude to loop attempt 01's exact MP4 at native 24 fps and judge beard shimmer,
+   F065/F066 tooth speckle, and the F006/F007 blink transition.
+2. Keep attempt 01 mechanically rejected and immutable; do not retry it.
+3. If motion is artistically acceptable, author a separately versioned successor contract
+   whose temporal codec gate compares decoded motion to the exact archive in the same ROI
+   and metric domain with a bounded codec delta.
+4. If motion is not acceptable, version the source fix, regenerate all evidence, and obtain
+   a new exact-manifest receipt before any separately versioned encode.
+5. After facial motion acceptance, integrate the subsystem into voiced timing, body acting,
+   multi-shot staging, sound, and sequence-level direction.
 
 Do not call candidate-07 a complete cartoon or production delivery. It proves a reusable,
 high-detail front-view facial pipeline. Body acting, multi-angle adaptation, voiced timing,
 editing, sound, shot continuity, and full-sequence art direction remain separate production gates.
+## Phase34 Candidate08 silent encode attempt 01 (2026-08-10)
+
+- Claude approved one silent encode of Candidate08's exact 96-frame archive.
+- The archive-only delivery implementation was committed at `aa7b382` before use.
+- The one encoder process completed, and the attempt was preserved as rejected with
+  no retry: 67/68 gates passed.
+- Sole failure: decoded adjacent face 8x8 delta `152.989578 <= 150` at the blink
+  transitions F006 to F007 and F009 to F010.
+- The exact archived source measures `152.994797` under that same output-face-ROI
+  algorithm, proving the absolute decoded gate ceiling is below the reviewed source
+  motion; encoding did not create the peak.
+- Exact MP4/report/diagnostic/failure evidence is in
+  `collab/phase34_candidate_08_silent_encode_attempt_01/`.
+- Review handoff: `collab/GPT_NOTES_2026-08-10i.md`.
+- Do not retry attempt 01. Next action is Claude's native-24-fps motion judgment,
+  followed by either a versioned gate-contract correction or a versioned source fix.
