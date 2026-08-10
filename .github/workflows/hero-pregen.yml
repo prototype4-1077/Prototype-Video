@@ -15,6 +15,7 @@ jobs:
       - name: Generate committed hero art
         run: python3 pipeline/hero_pregen.py "${{ github.event.inputs.slug }}"
       - name: Commit art
+        if: always()
         run: |
           set -euo pipefail
           git config user.name "hero-pregen-bot"
