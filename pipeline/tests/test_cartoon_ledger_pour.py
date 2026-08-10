@@ -69,6 +69,45 @@ def _phase36_archive(path: Path, frames: list[np.ndarray]) -> list[dict[str, obj
 
 
 class CartoonLedgerPourTests(unittest.TestCase):
+    def _isolated_preflight(self, attempt_review: dict[str, str] | None) -> tuple[dict[str, object], bool]:
+        contract = ledger.load_contract()
+        phase33_probe = {
+            "sample_rate": 48000,
+            "channels": 2,
+            "bits_per_sample": 24,
+            "sample_count": 364800,
+            "data_bytes": 2188800,
+            "data_sha256": contract["audio"]["direct_address_segment"]["pcm_data_sha256"],
+        }
+        phase35 = {"frame_hashes": [{} for _ in range(228)], "lossless_archive_header": {}}
+        locked_manifest = ledger._repo_path(contract["locks"]["phase35_manifest"]["path"])
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "phase36-preflight-output"
+            with patch("pipeline.cartoon_ledger_pour.load_contract", return_value=contract), patch(
+                "pipeline.cartoon_ledger_pour._phase35_attempt_review", return_value=attempt_review
+            ), patch("pipeline.cartoon_ledger_pour._output_path", return_value=output), patch(
+                "pipeline.cartoon_ledger_pour._phase35_manifest", return_value=phase35
+            ), patch(
+                "pipeline.cartoon_ledger_pour._phase23_runtime_asset_hashes",
+                return_value={f"asset_{index}": "hash" for index in range(7)},
+            ), patch(
+                "pipeline.cartoon_ledger_pour._read_pcm24_wave",
+                return_value=(np.zeros((364800, 2), dtype=np.int32), phase33_probe),
+            ), patch(
+                "pipeline.cartoon_ledger_pour._phase35_paths",
+                return_value=(locked_manifest, locked_manifest),
+            ), patch(
+                "pipeline.cartoon_ledger_pour.iter_phase35_frames", return_value=iter(range(228))
+            ), patch(
+                "pipeline.cartoon_ledger_pour._prepare_pour",
+                return_value=({"output": {"frame_count": 258}}, None, {}, {}),
+            ), patch("pipeline.cartoon_ledger_pour._close_pour_assets"), patch(
+                "pipeline.cartoon_ledger_pour.build_exact_audio",
+                return_value={"probe": {"sample_count": 484800}, "phase26_stem_array_hash_mismatches": 0},
+            ):
+                result = ledger.preflight()
+            return result, output.exists()
+
     def test_contract_locks_exact_three_shot_picture_and_audio_clock(self) -> None:
         contract = ledger.load_contract()
         self.assertEqual(contract["clock"]["frame_count"], 303)
@@ -467,12 +506,8 @@ class CartoonLedgerPourTests(unittest.TestCase):
             self.assertTrue(np.array_equal(decoded, values))
             self.assertEqual(probe["data_sha256"], hashlib.sha256(payload).hexdigest())
 
-    def test_preflight_validates_exact_archive_without_creating_output(self) -> None:
-        contract = ledger.load_contract()
-        output = ledger._output_path(contract, None)
-        self.assertFalse(output.exists())
-        with patch("pipeline.cartoon_ledger_pour._phase35_attempt_review", return_value=None):
-            result = ledger.preflight()
+    def test_preflight_reports_bound_source_counts_without_creating_output(self) -> None:
+        result, output_exists = self._isolated_preflight(None)
         self.assertFalse(result["output_created"])
         self.assertFalse(result["encode_authorized"])
         self.assertEqual(result["phase35_decoded_frames"], 228)
@@ -480,7 +515,7 @@ class CartoonLedgerPourTests(unittest.TestCase):
         self.assertEqual(result["phase26_stem_hash_mismatches"], 0)
         self.assertFalse(result["phase35_attempt_review_authorized"])
         self.assertFalse(result["build_authorized"])
-        self.assertFalse(output.exists())
+        self.assertFalse(output_exists)
 
     def test_preflight_reports_rejected_candidate01_despite_exact_phase35_receipt(self) -> None:
         receipt = {
@@ -488,8 +523,7 @@ class CartoonLedgerPourTests(unittest.TestCase):
             "sha256": "future-review-hash",
             "verdict": "PHASE35_C03_ATTEMPT01_REJECTION_RATIFIED_REFERENCE_ONLY_PHASE36_UNENCODED_ALLOWED",
         }
-        with patch("pipeline.cartoon_ledger_pour._phase35_attempt_review", return_value=receipt):
-            result = ledger.preflight()
+        result, output_exists = self._isolated_preflight(receipt)
         self.assertTrue(result["phase35_attempt_review_authorized"])
         self.assertTrue(result["phase36_candidate01_rejected"])
         self.assertEqual(
@@ -499,6 +533,7 @@ class CartoonLedgerPourTests(unittest.TestCase):
         self.assertFalse(result["build_authorized"])
         self.assertEqual(result["phase35_attempt_review"], receipt)
         self.assertFalse(result["output_created"])
+        self.assertFalse(output_exists)
 
     def test_builder_has_no_encoder_or_subprocess_dependency(self) -> None:
         source = (REPO_ROOT / "pipeline/cartoon_ledger_pour.py").read_text(encoding="utf-8")
