@@ -1,0 +1,252 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase36_ledger_pour_v1",
+  "phase": "phase36_lossless_multishot_ledger_pour",
+  "character_id": "june_oxley",
+  "classification": "Unencoded lossless three-shot production slice with physical prop action, direct address, an editorial compassion punch-in, and exact PCM24 sound; the opening medium insert is not a support-foot proof; human visual and audio review required before any encode.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "locks": {
+    "phase23_contract": {
+      "path": "concept/style_frames/june_golden_scene_gs060_layered_pour_v1.json",
+      "sha256": "ee15b51a42334b6abe9e01cb2d15a65dcbb9876b69444d6087fbe2241e1b386a"
+    },
+    "phase23_renderer": {
+      "path": "pipeline/cartoon_pour_layers.py",
+      "sha256": "3e92ff5e328b2c259fea61e7317e90b6e6f5f4774ca8ac3c58c3121df22ab208"
+    },
+    "phase23_checkpoint": {
+      "path": "docs/JUNE_PHASE23_LAYERED_POUR_CHECKPOINT.md",
+      "sha256": "1a00daa2703f9bd5eb8752ecac8b48210548f1fb5c314a5057ec0da81b689196"
+    },
+    "phase35_manifest": {
+      "path": "collab/phase35_candidate_03/june-phase35-source-textured-direct-address-preview-manifest-v2.json",
+      "sha256": "250b678686f87c5cdcabeaedd0f6e39833b9dcaa7d2387c76fa8fe016b2885fe"
+    },
+    "phase35_source_contract": {
+      "path": "concept/characters/june_oxley_phase35_source_textured_direct_address_v2.json",
+      "sha256": "68c763be79dd76447f6c33baf39ef79528fbbf1d6ea25a113c5550d63d62ba94"
+    },
+    "phase35_implementation_archive": {
+      "path": "collab/phase35_candidate_03/phase35-candidate03-implementation-source-b06981d.tar",
+      "sha256": "8467298165d1669f5d3efbdb3d2a630e8f93f67a4cf8aff062789939b056893b"
+    },
+    "phase35_visual_acceptance": {
+      "path": "collab/CLAUDE_REVIEW_2026-08-10_1712Z.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "d45bf8fada6d102caf6c0b38d9f81ff4938b9475a6407421746f72e3f8df34cc"
+    },
+    "phase26_sound_contract": {
+      "path": "concept/style_frames/june_golden_scene_master_sound_v1.json",
+      "sha256": "7fedd04d2c77804180a51bdebdc8779eb3ff0a4cf35c3c776c7a7104611db7ab"
+    },
+    "phase26_sound_renderer": {
+      "path": "pipeline/cartoon_golden_sound.py",
+      "sha256": "0c6ef404d2eec32d786a666c9ed3b340e4cd0aadaab748ef6c6d5f039e84bfac"
+    },
+    "phase33_delivery_mix": {
+      "path": "concept/audio/june_phase33_direct_address_mix_v1.wav",
+      "sha256": "e5cd5ebd9f52f4c6a1cb1682a61c42ff812069fd3eb30789bf1cca28a718ea39"
+    },
+    "phase21_multishot_contract": {
+      "path": "concept/style_frames/june_golden_scene_multishot_v1.json",
+      "sha256": "fecaa35202524ed6764a66b373adf9a8aff43adb84ce4a2384d402787ca46827"
+    },
+    "phase21_camera_renderer": {
+      "path": "pipeline/cartoon_shot_sequence.py",
+      "sha256": "3ec2de2539816dc2d3aa2521afb6df139d65b422cb75d4e93630b0c185c6e500"
+    },
+    "phase25_master_contract": {
+      "path": "concept/style_frames/june_golden_scene_master_v1.json",
+      "sha256": "7c461a3aa4867ea80c091c4919bc806607ed0acc97c0b4da26f0d8d30da8cf6f"
+    }
+  },
+  "source_evidence": {
+    "phase35_external_directory": "../../outputs/edit/phase35-source-textured-direct-address-preview-v2-candidate-03",
+    "phase35_manifest_filename": "june-phase35-source-textured-direct-address-preview-manifest-v2.json",
+    "phase35_archive_filename": "june-phase35-source-textured-direct-address-rgb24-xor-v2.gz",
+    "phase35_archive_sha256": "b5908bfce4ac10ad7e3ad74e58a8cf9f8e352033b14c1828315e96cd615f6e0f",
+    "phase35_archive_bytes": 242333440,
+    "phase35_frame_count": 228,
+    "phase35_manifest_contract_canonical_sha256": "5069774dfb92511a5adc291f7d09c755f0b51c1ea2ed1bae5356bcaab597d25f",
+    "phase35_manifest_implementation_path": "pipeline/cartoon_source_textured_direct_address.py",
+    "phase35_manifest_implementation_sha256": "97612673a65b92e83d9d54debaf1738508d88442813759ba9959a41dee32fe77",
+    "rejected_phase35_mp4_allowed_as_pixel_source": false,
+    "phase23_historical_encode_allowed_as_pixel_source": false
+  },
+  "phase35_attempt_review_gate": {
+    "required_before_build": true,
+    "review_directory": "collab",
+    "review_filename_glob": "CLAUDE_REVIEW_*.md",
+    "required_verdict_field": "## Verdict:",
+    "required_verdict": "PHASE35_C03_ATTEMPT01_REJECTION_RATIFIED_REFERENCE_ONLY_PHASE36_UNENCODED_ALLOWED",
+    "forbidden_verdict": "PHASE35_C03_ATTEMPT01_VISUAL_OR_AUDIO_DEFECT_FOUND_PHASE36_BLOCKED",
+    "required_video_sha256": "34d601605407d354dfbf77d545d444e9d884b0ec744a1e0d6712ca49b32fec39",
+    "required_failure_receipt_sha256": "94ff0ad2f99ac44f8160c0ff944733f3b097e4d4fc572d293a8ae20bf3b3cadc",
+    "required_attempt_claim_sha256": "3fa711c0daa371275290a26d22835e7c45a0b62e79471c64d5c111ab70f224fd"
+  },
+  "clock": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 303,
+    "duration_seconds": 10.1,
+    "audio_sample_rate": 48000,
+    "audio_samples_per_frame": 1600,
+    "audio_sample_count": 484800,
+    "audio_channels": 2,
+    "audio_sample_width": 3
+  },
+  "shots": [
+    {
+      "id": "LP010_POUR",
+      "output_frames": [1, 75],
+      "source": "phase23_gs060_deterministic_lossless_rerender",
+      "source_frames": [112, 186],
+      "transform": "phase23_camera_exact",
+      "purpose": "Readable pre-pour, liquid onset, sustained stream, taper, and tilt recovery; the pot remains lifted across the editorial ellipsis."
+    },
+    {
+      "id": "LP020_DIRECT_ADDRESS",
+      "output_frames": [76, 237],
+      "source": "phase35_candidate03_exact_lossless_archive",
+      "source_frames": [1, 162],
+      "transform": "identity",
+      "purpose": "June delivers the complete setup and first direct-address beat with exact accepted source pixels."
+    },
+    {
+      "id": "LP030_COMPASSION_PUNCH",
+      "output_frames": [238, 303],
+      "source": "phase35_candidate03_exact_lossless_archive",
+      "source_frames": [163, 228],
+      "transform": "phase21_endpoint_and_easing_adaptation_39f_then_lock_to_lossless_rgb",
+      "camera": {
+        "start_zoom": 1.5,
+        "end_zoom": 1.58,
+        "focus_start": [0.44, 0.335],
+        "focus_end": [0.44, 0.32],
+        "easing": "ease_in_out_cubic",
+        "motion_source_frames": [163, 201],
+        "locked_source_frames": [202, 228],
+        "crop_coordinates": "left_top_inclusive_right_bottom_exclusive",
+        "resampler": "Pillow.Image.Resampling.LANCZOS",
+        "pillow_version": "12.2.0"
+      },
+      "purpose": "A hard editorial punch-in gives the silent post-question compassion, nod, blink, and settle their own shot without redrawing June."
+    }
+  ],
+  "edit": {
+    "hard_cut_output_frames": [76, 238],
+    "cross_dissolve_allowed": false,
+    "optical_flow_allowed": false,
+    "implicit_retiming_allowed": false,
+    "duplicated_source_frames_allowed": false,
+    "encoded_source_frames_allowed": false
+  },
+  "audio": {
+    "mode": "exact_pcm24_scene_bridge_v1",
+    "pour_segment": {
+      "source": "phase26_deterministic_procedural_stems",
+      "global_source_frames": [790, 864],
+      "sample_count": 120000,
+      "included_stems": ["FOLEY_PROP_MONO", "FOLEY_BODY_STEREO", "AMB_PORCH_STEREO"],
+      "dialogue_included": false,
+      "music_included": false,
+      "prop_gain_db": -1.0,
+      "body_gain_db": -1.5,
+      "ambience_gain_db": 0.0,
+      "peak_ceiling_dbfs": -3.0,
+      "expected_float32_stem_slice_sha256": {
+        "AMB_PORCH_STEREO": "a4de1cb9edf74c3735e2aaaf4ab753160e4ea7f0788d9bb7bfed790e27018d46",
+        "FOLEY_PROP_MONO": "e5011a2834a299ecb84984a1791af336598656776de3758a07fc95b3e40eb716",
+        "FOLEY_BODY_STEREO": "b9163d03c43083a18e6101539b555cb5e363eed61fa4b3a3b54f50ae60eb5b52"
+      }
+    },
+    "direct_address_segment": {
+      "source": "phase33_delivery_mix_exact_samples",
+      "source_frames": [1, 228],
+      "sample_count": 364800,
+      "pcm_data_sha256": "7466b6fc580d26cad3cf70dfee9e55ffff9636ce9271394a7c4ad2073b4e5c01",
+      "bit_exact_pcm_samples_required": true
+    },
+    "boundary_policy": "picture hard cut with continuous porch perspective; no audio overlap, repetition, time stretch, or lossy encoding"
+  },
+  "review": {
+    "all_frames_sheet_filename": "june-phase36-ledger-pour-all-303-v1.png",
+    "key_beats_sheet_filename": "june-phase36-ledger-pour-key-beats-v1.png",
+    "cut_sheet_filename": "june-phase36-ledger-pour-cuts-v1.png",
+    "liquid_sheet_filename": "june-phase36-ledger-pour-liquid-v1.png",
+    "compassion_sheet_filename": "june-phase36-ledger-pour-compassion-v1.png",
+    "blink_eye_stress_sheet_filename": "june-phase36-ledger-pour-blink-eyes-2x-v1.png",
+    "full_resolution_directory": "full_resolution_review",
+    "full_resolution_review_frames": [75, 76, 237, 238, 248],
+    "manifest_filename": "june-phase36-ledger-pour-manifest-v1.json",
+    "lossless_frame_archive_filename": "june-phase36-ledger-pour-rgb24-xor-v1.gz",
+    "pcm_mix_filename": "june-phase36-ledger-pour-mix-v1.wav",
+    "key_frames": [1, 15, 16, 17, 24, 25, 45, 65, 66, 73, 74, 75, 76, 87, 99, 100, 121, 152, 155, 160, 187, 207, 237, 238, 243, 245, 247, 250, 252, 255, 267, 276, 277, 303],
+    "cut_review_frames": [69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 232, 233, 234, 235, 236, 237, 238, 239, 240, 241, 242, 243, 244, 245],
+    "liquid_review_frames": [1, 15, 16, 17, 24, 25, 45, 65, 66, 73, 74, 75],
+    "compassion_review_frames": [238, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 255, 267, 276, 277, 303]
+  },
+  "preencode_gates": {
+    "required_input_hash_mismatches": 0,
+    "required_frame_count": 303,
+    "required_source_mapping_count": 303,
+    "required_hard_cut_count": 2,
+    "required_phase35_exact_reused_frames": 162,
+    "required_phase35_transformed_frames": 66,
+    "required_phase23_rendered_frames": 75,
+    "required_phase35_source_hash_mismatches": 0,
+    "required_phase35_external_archive_verified_frames": 228,
+    "required_lossless_output_archive_verified_frames": 303,
+    "required_complete_output_hash_inventory": true,
+    "required_liquid_spill_pixels": 0,
+    "required_spout_start_error_px_source": 0.0,
+    "minimum_visible_cut_mean_abs_delta": 0.5,
+    "maximum_direct_address_face_adjacent_8x8_mean_delta": 170.0,
+    "maximum_compassion_face_adjacent_8x8_mean_delta": 170.0,
+    "required_audio_sample_count": 484800,
+    "required_phase36_bit_exact_audio_channel_values": 969600,
+    "required_phase33_bit_exact_audio_channel_values": 729600,
+    "required_phase26_stem_array_hash_mismatches": 0,
+    "maximum_audio_boundary_step": 0.01,
+    "required_close_crop_locked_frames": 27,
+    "maximum_close_crop_zoom": 1.58,
+    "minimum_close_face_edge_margin_px": 90,
+    "required_full_resolution_review_frames": 5,
+    "required_blink_eye_stress_frames": 9,
+    "required_pcm_clipped_samples": 0,
+    "maximum_audio_peak_dbfs": -1.0,
+    "required_encoded_media_files": 0,
+    "required_end_state_hash_mismatches": 0
+  },
+  "preview": {
+    "directory": "../../outputs/edit/phase36-ledger-pour-lossless-v1"
+  },
+  "failure_policy": {
+    "mode": "fail_closed",
+    "immutable_output": true,
+    "partial_success_allowed": false,
+    "fallback_allowed": false,
+    "automatic_threshold_change_allowed": false,
+    "encode_allowed": false
+  },
+  "promotion_policy": {
+    "machine_pass_does_not_imply_artistic_acceptance": true,
+    "exact_frame_human_review_required": true,
+    "real_time_audio_review_required": true,
+    "real_time_picture_audio_review_deferred_until_new_delivery_binding": true,
+    "voice_casting_human_approval_required": true,
+    "accepted_full_cartoon_production_delivery": false,
+    "future_encode_requires_new_binding": true,
+    "future_review_master_pixel_format": "yuv444p",
+    "future_distribution_derivative_pixel_format": "yuv420p"
+  },
+  "declared_limitations": {
+    "opening_medium_insert_proves_support_foot": false,
+    "opening_medium_insert_required_wide_context_in_final_master": true,
+    "cut_one_is_editorial_ellipsis_with_prop_state_change": true,
+    "known_closeup_watch_item": "The accepted one-frame full-closure lid hairline is magnified by the compassion camera and requires exact-frame plus real-time review."
+  }
+}
