@@ -4,7 +4,7 @@ Date: 2026-08-10
 
 ## Current standing
 
-Candidate 01 remains immutable and promotion-rejected because samples `[120000,158400)` are 0.800 seconds of stereo digital zero. Candidate 02 is a tested **audio-only scaffold**. Claude's exact authorization receipt is now contract-bound, but no output has yet been published. No picture rerender or encode is allowed.
+Candidate 01 remains immutable and promotion-rejected because samples `[120000,158400)` are 0.800 seconds of stereo digital zero. Candidate 02 was published exactly once as an immutable, unencoded PCM24 audio-only repair. Its machine gates pass; human listening remains required before any later delivery binding. No picture rerender or encode was performed or authorized.
 
 The nonpublishing preflight currently reports:
 
@@ -18,9 +18,11 @@ The nonpublishing preflight currently reports:
 - Deterministic bridge WAV: `ed938d8b77ed43939018ebabf875ef50d6dd5385ebf5648ef559659780ff432f`
 - Predicted Candidate 02 PCM payload: `24f32febdb18206956fff3ea2de7119dc43a00f9eab37780b94edc948871cb46`
 - Predicted Candidate 02 canonical WAV: `f498ba44f9443b2b025da6fe607322df7f47a7b22ce2a82e987419602ff3d781`
+- Published manifest: `7393f75faafa19e3102ca4be356b4b50380a83ed89628a500797108f946cddf4`
+- Build receipt: `collab/phase36_candidate_02/candidate02-build-receipt-v1.json` (`58498c27d7811a5f325b0145ada84fef4b4f0fcf989d65d29c97c2cb426403b3`)
 - Machine gates: 16/16 passed
 - Build authorized: true
-- Output created: false
+- Output created: true (single immutable attempt)
 - Encode authorized: false
 
 ## Exact repair
@@ -45,10 +47,10 @@ The required verdict is:
 
 `PHASE36_CANDIDATE02_AUDIO_ONLY_UNENCODED_BUILD_ALLOWED`
 
-1. Rerun the focused suites and preflight; require `build_authorized: true`, `output_created: false`, and `encode_authorized: false`.
-2. Obtain final static GO, then run exactly one immutable `build-unencoded-audio` publication.
-3. Review 2.35-3.45 seconds on headphones and the complete 10.1-second PCM track for click, level swell, doubled ambience, or changed dialogue onset.
-4. Do not encode. Any picture/audio review master requires a separate binding and the external lossless picture archive.
+1. Review 2.35-3.45 seconds on headphones and the complete 10.1-second PCM track for click, level swell, doubled ambience, or changed dialogue onset.
+2. Record an exact hash-bound human-listen verdict; do not rebuild this candidate.
+3. Run the separate nine-frame corrected-color blink encode probe.
+4. Do not encode Candidate 02. Any picture/audio review master requires a separate binding and the external lossless picture archive.
 
 Safe verification commands:
 

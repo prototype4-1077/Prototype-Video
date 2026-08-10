@@ -148,7 +148,7 @@ class CartoonLedgerPourAudioRepairTests(unittest.TestCase):
         self.assertTrue(np.array_equal(candidate01, self.candidate01))
         self.assertTrue(np.array_equal(candidate02, self.candidate02))
 
-    def test_exact_claude_authorization_is_bound_without_creating_output(self) -> None:
+    def test_exact_claude_authorization_is_bound(self) -> None:
         authorization = repair._authorization(self.contract)
         self.assertEqual(
             authorization,
@@ -159,7 +159,27 @@ class CartoonLedgerPourAudioRepairTests(unittest.TestCase):
                 "verdict": "PHASE36_CANDIDATE02_AUDIO_ONLY_UNENCODED_BUILD_ALLOWED",
             },
         )
-        self.assertFalse(repair._output_path(self.contract).exists())
+
+    def test_published_candidate02_evidence_is_exact_and_nonpromotable(self) -> None:
+        root = REPO_ROOT / "collab/phase36_candidate_02"
+        wav = root / "june-phase36-ledger-pour-mix-v2.wav"
+        manifest_path = root / "june-phase36-ledger-pour-audio-repair-manifest-v2.json"
+        receipt_path = root / "candidate02-build-receipt-v1.json"
+        receipt = json.loads(receipt_path.read_text(encoding="utf-8"))
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        self.assertEqual(receipt["build_attempt"], 1)
+        self.assertEqual(receipt["source_commit"], "82f03c451de22c781b5279473a30ec0b7ec8b952")
+        self.assertEqual(repair._sha256(wav), "f498ba44f9443b2b025da6fe607322df7f47a7b22ce2a82e987419602ff3d781")
+        self.assertEqual(repair._sha256(manifest_path), "7393f75faafa19e3102ca4be356b4b50380a83ed89628a500797108f946cddf4")
+        self.assertEqual(receipt["artifacts"][wav.name]["sha256"], repair._sha256(wav))
+        self.assertEqual(receipt["artifacts"][manifest_path.name]["sha256"], repair._sha256(manifest_path))
+        self.assertTrue(manifest["machine_passed"])
+        self.assertFalse(manifest["promotion_allowed"])
+        self.assertFalse(manifest["encode_authorized"])
+        self.assertEqual(manifest["failed_gates"], [])
+        self.assertTrue(all(gate["passed"] for gate in manifest["gates"]))
+        self.assertEqual(receipt["disposition"]["further_build_attempt_allowed"], False)
+        self.assertEqual(receipt["disposition"]["human_audio_review_required"], True)
 
     def test_execution_source_state_binds_the_current_authorization_receipt(self) -> None:
         authorization = {"path": "review.md", "sha256": "review-hash", "verdict": "allowed"}

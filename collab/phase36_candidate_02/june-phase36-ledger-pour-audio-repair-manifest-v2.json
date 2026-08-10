@@ -1,0 +1,197 @@
+{
+  "manifest_version": 1,
+  "candidate_id": "phase36_ledger_pour_candidate_02_audio_only",
+  "status": "unencoded_audio_only_machine_passed_human_audio_review_required",
+  "machine_passed": true,
+  "promotion_allowed": false,
+  "encode_authorized": false,
+  "contract": {
+    "path": "concept/characters/june_oxley_phase36_candidate02_audio_repair_v1.json",
+    "raw_sha256": "815da88bcc31ef32c68f45d8b86c88495a1fa8438af02bf337c15e003ba9f76b",
+    "canonical_sha256": "da0514789f41939e8ac7457dbf233b417c2ebd2767c55fb3daf01d24c6d1991f"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_ledger_pour_audio_repair.py",
+    "sha256": "e2130649dde270f28013fa91196186d4749f32985158ed33bfd4b28505f2c096"
+  },
+  "authorization": {
+    "path": "collab/CLAUDE_REVIEW_2026-08-10_2116Z.md",
+    "hash_domain": "lf_normalized_text",
+    "sha256": "649fb80582554ec639385c4c61716dc01c7e15efb13183be141588a763155df8",
+    "verdict": "PHASE36_CANDIDATE02_AUDIO_ONLY_UNENCODED_BUILD_ALLOWED"
+  },
+  "candidate01": {
+    "manifest_sha256": "0c97ba94987b8fabf1e1dd0d9c7b1229cfa6edc240ec9ef1fcccf3d45405d9a2",
+    "failure_receipt_sha256": "bd11323a9e416a439b70d21e99a21b41beb5fc98679590b476485f2e46a9d5c1",
+    "picture_archive_sha256": "93eb2cd752d745a6f6fd534912ff68ee24e7bf72cf7cd406d2a366adea97d404",
+    "frame_hash_inventory_canonical_sha256": "d09bcdc6a3c86e26e9ce77070f18504f3101e4b87edfc54e169e3b4b641a6451",
+    "frame_count": 303,
+    "picture_reused_by_reference_bit_exact": true,
+    "picture_files_written": 0
+  },
+  "audio": {
+    "wav_sha256": "f498ba44f9443b2b025da6fe607322df7f47a7b22ce2a82e987419602ff3d781",
+    "probe": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "bits_per_sample": 24,
+      "sample_count": 484800,
+      "data_bytes": 2908800,
+      "data_sha256": "24f32febdb18206956fff3ea2de7119dc43a00f9eab37780b94edc948871cb46"
+    },
+    "metrics": {
+      "sample_count": 484800,
+      "pcm_data_sha256": "24f32febdb18206956fff3ea2de7119dc43a00f9eab37780b94edc948871cb46",
+      "unchanged_prefix_channel_values": 237120,
+      "unchanged_dialogue_suffix_channel_values": 652800,
+      "changed_sample_frames": 39839,
+      "maximum_stereo_exact_zero_run_samples": 0,
+      "fully_zero_picture_frames": 0,
+      "hard_cuts": {
+        "76": {
+          "post_100ms_rms_dbfs": -37.090491970171975,
+          "post_100ms_active_pair_ratio": 1.0
+        },
+        "238": {
+          "post_100ms_rms_dbfs": -36.517545943807384,
+          "post_100ms_active_pair_ratio": 1.0
+        }
+      },
+      "minimum_hard_cut_post_100ms_rms_dbfs": -37.090491970171975,
+      "minimum_hard_cut_post_100ms_active_pair_ratio": 1.0,
+      "minimum_output_frame_rms_dbfs": -44.21362982224146,
+      "minimum_output_frame_rms_frame": 16,
+      "same_porch_cut_pre_100ms_rms_dbfs": -41.42226048829271,
+      "same_porch_cut_post_100ms_rms_dbfs": -37.090491970171975,
+      "same_porch_cut_100ms_rms_difference_db": 4.331768518120732,
+      "clipped_channel_values": 0,
+      "peak_dbfs": -1.2935266236292526,
+      "picture_archive_reference_hash_unchanged": true,
+      "picture_frame_hash_inventory_unchanged": true,
+      "pcm24_readback_channel_values": 969600,
+      "output_files": 2,
+      "encoded_media_files": 0
+    }
+  },
+  "gates": [
+    {
+      "name": "picture_archive_reference_hash_unchanged",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "picture_frame_hash_inventory_unchanged",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "pcm24_readback_channel_values",
+      "actual": 969600,
+      "operator": "==",
+      "threshold": 969600,
+      "passed": true
+    },
+    {
+      "name": "unchanged_prefix_channel_values",
+      "actual": 237120,
+      "operator": "==",
+      "threshold": 237120,
+      "passed": true
+    },
+    {
+      "name": "unchanged_dialogue_suffix_channel_values",
+      "actual": 652800,
+      "operator": "==",
+      "threshold": 652800,
+      "passed": true
+    },
+    {
+      "name": "changed_sample_frames",
+      "actual": 39839,
+      "operator": "==",
+      "threshold": 39839,
+      "passed": true
+    },
+    {
+      "name": "maximum_stereo_exact_zero_run_samples",
+      "actual": 0,
+      "operator": "<=",
+      "threshold": 48,
+      "passed": true
+    },
+    {
+      "name": "fully_zero_picture_frames",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "minimum_hard_cut_post_100ms_rms_dbfs",
+      "actual": -37.090491970171975,
+      "operator": ">=",
+      "threshold": -60.0,
+      "passed": true
+    },
+    {
+      "name": "minimum_hard_cut_post_100ms_active_pair_ratio",
+      "actual": 1.0,
+      "operator": ">=",
+      "threshold": 0.99,
+      "passed": true
+    },
+    {
+      "name": "minimum_output_frame_rms_dbfs",
+      "actual": -44.21362982224146,
+      "operator": ">=",
+      "threshold": -60.0,
+      "passed": true
+    },
+    {
+      "name": "same_porch_cut_100ms_rms_difference_db",
+      "actual": 4.331768518120732,
+      "operator": "<=",
+      "threshold": 12.0,
+      "passed": true
+    },
+    {
+      "name": "clipped_channel_values",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "peak_dbfs",
+      "actual": -1.2935266236292526,
+      "operator": "<=",
+      "threshold": -1.0,
+      "passed": true
+    },
+    {
+      "name": "output_files",
+      "actual": 2,
+      "operator": "==",
+      "threshold": 2,
+      "passed": true
+    },
+    {
+      "name": "encoded_media_files",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    }
+  ],
+  "failed_gates": [],
+  "artifacts": {
+    "june-phase36-ledger-pour-mix-v2.wav": {
+      "sha256": "f498ba44f9443b2b025da6fe607322df7f47a7b22ce2a82e987419602ff3d781",
+      "bytes": 2908844
+    }
+  }
+}

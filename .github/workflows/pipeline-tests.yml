@@ -90,6 +90,8 @@ jobs:
       render_required: ${{ steps.render_scope.outputs.required }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Detect legacy-render scope
         id: render_scope
         shell: bash
@@ -115,7 +117,7 @@ jobs:
           if [[ -z "$BEFORE_SHA" || "$BEFORE_SHA" =~ ^0+$ || -z "$HEAD_SHA" || "$HEAD_SHA" != "$PR_HEAD_SHA" || -z "$BASE_SHA" ]]; then
             enable_render "Incremental PR head SHAs are absent or inconsistent; legacy renders remain enabled."
           fi
-          if ! git fetch --no-tags --depth=1 origin "$BEFORE_SHA" "$HEAD_SHA" "$BASE_SHA"; then
+          if ! git fetch --no-tags origin "$BEFORE_SHA" "$HEAD_SHA" "$BASE_SHA"; then
             enable_render "Incremental SHAs were not fetchable; legacy renders remain enabled."
           fi
           if ! git merge-base --is-ancestor "$BASE_SHA" "$BEFORE_SHA"; then
