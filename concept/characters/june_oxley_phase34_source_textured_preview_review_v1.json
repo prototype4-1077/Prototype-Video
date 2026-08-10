@@ -1,0 +1,37 @@
+{
+  "review_version": 1,
+  "character_id": "june_oxley",
+  "phase": "phase34_source_textured_viseme_deformation",
+  "attempt_version": 1,
+  "status": "all_96_archived_frames_reviewed_encode_once_allowed",
+  "reviewed_at": "2026-08-10",
+  "review_commit": "2ce846c593142c0da9a8f9c49115efc12fdaa8c3",
+  "claude_review": {
+    "path": "collab/CLAUDE_REVIEW_2026-08-10_0430Z.md",
+    "lf_normalized_sha256": "2ec35200da4add1fea0c5f3102497cba0895fc1f7feb555c3c652e93096e508a"
+  },
+  "reviewed_evidence_directory": "collab/phase34_candidate_08",
+  "manifest_lf_normalized_sha256": "5fa917cd2fc8e1069a75b3696d81a80d45211e37f5c3e8626598b7efd9cb78fe",
+  "archive_sha256": "30f17179fd4fe9cd0f531b559269e187d3b8c888d90b5a5f8a770356ff6cd705",
+  "contract_raw_sha256": "87da5306148eac5e4d49bf6613c8912b58eb9c6434c9927bd0925de6f7d654de",
+  "contract_canonical_sha256": "992f5aeeb203119bd4d00373f0a5060ab1b5aa835100295db6beaf4d69a9ae20",
+  "renderer_sha256": "73cd8ab14a474019160ed88a321caaf2164cec35c370dec21c32afba1354c95e",
+  "raw_frame_count_reviewed": 96,
+  "review_scope": "Silent Phase34 facial-motion proof only; authorization covers exactly one H.264 encode of the archived Candidate08 RGB frames and does not grant voiced, artistic, or production promotion.",
+  "motion_questions": [
+    "Whether bounded beard and jaw source warps read as strand shimmer at 24fps.",
+    "Whether the lower-tooth-edge speckle in frames 65 and 66 reads as a temporal flicker."
+  ],
+  "encode_authorization": {
+    "allowed": true,
+    "maximum_video_encoder_processes": 1,
+    "source_must_be_exact_archived_rgb_frames": true,
+    "output_directory_must_match_contract": true,
+    "automatic_retry_allowed": false,
+    "audio_allowed": false
+  },
+  "promotion_granted": false,
+  "human_decoded_review_required": true,
+  "cash_cost": 0,
+  "paid_runtime_dependency": false
+}
