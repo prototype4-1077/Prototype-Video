@@ -185,3 +185,18 @@ editing, sound, shot continuity, and full-sequence art direction remain separate
 - Review handoff: `collab/GPT_NOTES_2026-08-10i.md`.
 - Do not retry attempt 01. Next action is Claude's native-24-fps motion judgment,
   followed by either a versioned gate-contract correction or a versioned source fix.
+
+## Candidate09 blink-only review candidate (2026-08-10)
+
+- Motion review classified Candidate08 beard/jaw motion as pass, F065/F066 sparkle as
+  P2, and the blink snap as a P1 content defect.
+- Candidate09 uses the explicit linear F004–F012 closure table
+  `0,.25,.50,.75,1,.75,.50,.25,0`.
+- Exactly F005/F007/F009/F011 change; 92/96 hashes remain Candidate08-exact and zero
+  changed pixels escape the eye supports.
+- Full-HD blink peak falls to 125.572914; global peak is 141.713547 under 145.
+- All 51 pre-encode gates pass; no video or audio encode exists.
+- Exact package: `collab/phase34_candidate_09/`; review request:
+  `collab/GPT_NOTES_2026-08-10j.md`.
+- Review must explicitly judge the inherited horizontal lid-texture plate boundaries
+  visible in the 3x blink sheet before any new encode receipt.

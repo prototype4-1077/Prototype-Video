@@ -1,0 +1,41 @@
+{
+  "review_addendum_version": 1,
+  "development_label": "candidate-09",
+  "source_manifest": {
+    "file": "june-phase34-source-textured-visemes-preview-manifest-v2.json",
+    "raw_sha256_on_render_host": "21f37c78b5cc2f6e853f8424e3a945249014f912906c5294f96d4380f0f00ccb",
+    "lf_normalized_sha256": "e28b9e5291db8563c6f88f8ee9273582fb133fdd09f95def8738460d7ec183cb"
+  },
+  "source_archive": {
+    "file": "june-phase34-source-textured-visemes-rgb24-xor-v2.gz",
+    "sha256": "151fb4344ff2c820a6b4dcf54ddd929b3adb0df5ab99a1c3d83d6307bcb0a451"
+  },
+  "blink_review_sheet": {
+    "file": "june-phase34-source-textured-visemes-blink-review-v2.png",
+    "sha256": "bf01e993104116de7ae3b6cfc2c605ccf38eabe1a61c4673bb5304bbd9af158c",
+    "eye_roi_xyxy": [625, 235, 850, 360],
+    "frames": [4, 5, 6, 7, 8, 9, 10, 11, 12],
+    "display_scale": 3,
+    "resampling": "nearest_neighbor",
+    "comparison_frames": [5, 7, 9, 11],
+    "comparison_order": ["candidate08", "candidate09", "amplified_absolute_difference"],
+    "difference_amplification": 8
+  },
+  "candidate09_blink_closure_by_frame": {
+    "4": 0.0,
+    "5": 0.25,
+    "6": 0.5,
+    "7": 0.75,
+    "8": 1.0,
+    "9": 0.75,
+    "10": 0.5,
+    "11": 0.25,
+    "12": 0.0
+  },
+  "candidate08_preserved_frame_hashes": 92,
+  "candidate08_changed_frames": [5, 7, 9, 11],
+  "maximum_changed_pixels_outside_eye_support": 0,
+  "video_encode_used": false,
+  "audio_used": false,
+  "paid_service_or_api_used": false
+}
