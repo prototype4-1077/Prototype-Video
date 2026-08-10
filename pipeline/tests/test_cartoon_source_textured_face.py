@@ -160,6 +160,7 @@ class SourceTexturedFaceTests(unittest.TestCase):
                 self.assertEqual(int(((alpha > 8) & (cell.excluded_outer_ring > 8)).sum()), 0)
                 if name != "X":
                     self.assertGreater(int((cell.upper_dentition_rgba[:, :, 3] >= 16).sum()), 0)
+                    self.assertEqual(cell.upper_dentition_forbidden_source_pixels, 0)
                     dental_alpha = cell.upper_dentition_rgba[:, :, 3].astype(np.float64)
                     yy, xx = np.indices(dental_alpha.shape, dtype=np.float64)
                     self.assertLessEqual(
@@ -180,6 +181,7 @@ class SourceTexturedFaceTests(unittest.TestCase):
             rgba=cell,
             excluded_outer_ring=np.zeros(cell.shape[:2], dtype=np.uint8),
             upper_dentition_rgba=np.zeros((1, 1, 4), dtype=np.uint8),
+            upper_dentition_forbidden_source_pixels=0,
         )
         premultiplied, alpha, excluded = phase34._warp_oral_cell(
             oral_cell, (96, 96), (48.0, 48.0), 42.0, 28.0, 5.0,
@@ -204,11 +206,28 @@ class SourceTexturedFaceTests(unittest.TestCase):
             for expected, actual in zip(frames, restored, strict=True):
                 np.testing.assert_array_equal(np.asarray(expected), actual)
 
-    def test_unexpected_layer_overlap_gate_is_measured(self) -> None:
+    def test_depth_order_gate_checks_containment_and_final_owner(self) -> None:
         coverage = np.zeros((4, 4), dtype=np.uint16)
+        owner = np.zeros((4, 4), dtype=np.uint8)
         coverage[0, 0] = phase34.LAYER_BITS["source_warp"] | phase34.LAYER_BITS["cavity"]
+        owner[0, 0] = 2
         coverage[1, 1] = phase34.LAYER_BITS["cavity"] | phase34.LAYER_BITS["eyelids"]
-        self.assertEqual(phase34._unexpected_layer_overlap_pixels(coverage), 1)
+        owner[1, 1] = 10
+        coverage[2, 2] = phase34.LAYER_BITS["oral_interior"]
+        owner[2, 2] = 3
+        self.assertEqual(phase34._depth_order_violation_pixels(owner, coverage), 2)
+
+    def test_oral_activation_is_semantic_and_smooth_at_neutral_boundaries(self) -> None:
+        activations = []
+        for frame in (16, 17, 18, 19, 80, 81, 82, 83):
+            pose, weights = phase34.mouth_controls(self.contract, frame)
+            activations.append(phase34._oral_activation(pose, weights))
+        self.assertEqual(activations[0], 0.0)
+        self.assertEqual(activations[3], 1.0)
+        self.assertEqual(activations[4], 1.0)
+        self.assertEqual(activations[-1], 0.0)
+        self.assertLessEqual(max(abs(b - a) for a, b in zip(activations, activations[1:])), 0.5)
+        self.assertLessEqual(activations[-2], 0.27)
 
     def test_blink_is_native_24fps_and_returns_to_exact_neutral(self) -> None:
         expected = {4: 0.0, 5: 0.15625, 6: 0.5, 7: 0.84375, 8: 1.0, 9: 0.84375, 10: 0.5, 11: 0.15625, 12: 0.0, 13: 0.0}

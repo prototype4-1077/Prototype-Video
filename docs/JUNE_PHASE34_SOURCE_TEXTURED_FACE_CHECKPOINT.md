@@ -76,6 +76,32 @@ Integrity P1s found after the candidate was rendered:
 These findings do not alter the immutable candidate-05 evidence. They are mandatory
 candidate-06 fixes.
 
+## Candidate-06 intermediate milestone
+
+Candidate-06 is preserved at `collab/phase34_candidate_06/` as the first smooth semantic
+anatomy/dental experiment. It is not an encode candidate.
+
+- Local manifest SHA-256: `fe3d5f4255a269d699d737ca6f22316b449b42249b184165852d6e757c528223`
+- LF-normalized Git/public manifest SHA-256: `1051a967411c4f363cea4fe24d5ef4cc61f6fc20d0acbcc2bb5483aa7ea66022`
+- Exact-frame archive SHA-256: `478fd2fc301c70295ea8a7de44163e7980d5e9030ee9fdd7e8588d7029155ced`
+- Contract canonical SHA-256: `894f453758ad3b685487140702d90846068b8907803d90fc7e96c5a11d850b1d`
+- Renderer SHA-256: `a2a0783f207b9132e4691520690088d2e283dddbecb15f2d4afaf72c64030bff`
+
+It introduces symmetric semantic activation at X boundaries, one canonical upper dental arc,
+linear non-dental anatomy blending, source-textured cavity feathering, strict dental source
+filtering, and final-owner depth validation. C/E separation rises from 4.384 to 14.332.
+Transitions and dental identity are materially smoother than candidate-05.
+
+Candidate-06 blockers:
+
+- F contact is too close to neutral at frames 58/59/62/64.
+- H tongue reads as a generic pink strip.
+- F-to-G still opens too quickly at frames 65-66.
+- Maroon cavity patches remain in the widest shapes.
+- The depth gate records hard/thresholded coverage rather than every significant alpha write,
+  omitting 167-594 softly blended lower-face pixels in sampled frames. Candidate-07 must
+  record actual alpha support and final writers at the same declared threshold.
+
 ## Collaboration state
 
 At every session start, read `collab/PROTOCOL.md` and all new `collab/CLAUDE_*` notes.
@@ -90,16 +116,15 @@ issued for an encode unless a later candidate clears the visual and integrity bl
 
 ## Exact next steps
 
-1. Preserve and publish candidate-05 evidence and the collaboration note.
-2. Candidate-06: carry the forbidden-material mask through independent dentition extraction.
-3. Replace the broad overlap allowlist with exact permitted depth-stack combinations.
-4. Replace the hard oral cutoff with a smooth semantic coverage ramp while retaining exact X bypass.
-5. Use one persistent canonical dental arc and deform semantic cavity/tongue/lower-mouth layers separately.
-6. Feather and locally grade the cavity perimeter with June's source texture.
-7. Strengthen F lower-lip contact and separate C/E silhouettes.
-8. Render a new immutable 96-frame archive, run independent code/visual audits, and ask Claude
+1. Candidate-07: record actual cavity/oral/dental/feather/ribbon/hair alpha-write support
+   and final owners at one explicit significance threshold.
+2. Add a dedicated F labiodental layer plus contact/cavity/separation gates.
+3. Add a shaped H tongue tip with groove/highlight and teeth/lower-lip occlusion gates.
+4. Pre-open the F-to-G cavity while retaining F contact through frame 65.
+5. Replace the remaining maroon corners with source-matched edge color/feather.
+6. Render a new immutable 96-frame archive, run independent code/visual audits, and ask Claude
    for a manifest-bound verdict.
-9. Only after an accepted receipt, encode the exact reviewed archive once and fully decode-verify it.
+7. Only after an accepted receipt, encode the exact reviewed archive once and fully decode-verify it.
 
 Do not call candidate-05 a complete cartoon or production delivery. It proves a reusable,
 high-detail front-view facial pipeline. Body acting, multi-angle adaptation, voiced timing,
