@@ -1,4 +1,4 @@
-"""Unencoded Phase35 dialogue/body/camera integration for the accepted Phase34 face."""
+"""Unencoded Phase35 dialogue/body/camera integration with Candidate09 blink timing."""
 from __future__ import annotations
 
 import argparse
@@ -22,6 +22,7 @@ from PIL import Image, ImageDraw, ImageOps, __version__ as PILLOW_VERSION
 import soundfile as sf
 
 from pipeline import cartoon_source_textured_face as phase34
+from pipeline import cartoon_source_textured_face_v2 as phase34_candidate09
 from pipeline.cartoon_expression_atlas import expression_performance_plan
 from pipeline.cartoon_hero_scene import (
     _camera_frame,
@@ -34,10 +35,11 @@ from pipeline.cartoon_viseme_atlas import performance_viseme_plan
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase35_source_textured_direct_address_v1.json"
+CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase35_source_textured_direct_address_v2.json"
 IMPLEMENTATION_RELATIVE_PATH = "pipeline/cartoon_source_textured_direct_address.py"
-EXPECTED_CONTRACT_CANONICAL_SHA256 = "19700915060604dc71f8666c5ee5fd6512519e9039ce595b1d1397a9eb6b5c29"
+EXPECTED_CONTRACT_CANONICAL_SHA256 = "5069774dfb92511a5adc291f7d09c755f0b51c1ea2ed1bae5356bcaab597d25f"
 VISEME_NAMES = tuple("ABCDEFGHX")
+CANDIDATE09_BLINK_CURVE = (0.0, 0.25, 0.5, 0.75, 1.0, 0.75, 0.5, 0.25, 0.0)
 
 
 class SourceTexturedDirectAddressError(RuntimeError):
@@ -48,7 +50,9 @@ class SourceTexturedDirectAddressError(RuntimeError):
 class PreparedDirectAddress:
     contract: dict[str, Any]
     contract_path: Path
-    face: phase34.PreparedSourceTexturedFace
+    face: phase34_candidate09.PreparedSourceTexturedFace
+    candidate08_face: phase34.PreparedSourceTexturedFace
+    candidate01_contract: dict[str, Any]
     scene_contract: dict[str, Any]
     visemes: list[dict[str, Any]]
     expressions: list[dict[str, Any]]
@@ -58,8 +62,10 @@ class PreparedDirectAddress:
     motion_metadata: dict[str, Any]
     dialogue_path: Path
     mix_path: Path
-    adapter_cache: dict[tuple[Any, ...], tuple[phase34.PreparedSourceTexturedFace, int]]
-    native_cache: dict[tuple[Any, ...], tuple[np.ndarray, phase34.FrameEvidence]]
+    adapter_cache: dict[tuple[Any, ...], tuple[phase34_candidate09.PreparedSourceTexturedFace, int]]
+    native_cache: dict[tuple[Any, ...], tuple[np.ndarray, phase34_candidate09.FrameEvidence]]
+    candidate08_adapter_cache: dict[tuple[Any, ...], tuple[phase34.PreparedSourceTexturedFace, int]]
+    candidate08_native_cache: dict[tuple[Any, ...], tuple[np.ndarray, phase34.FrameEvidence]]
 
 
 def _sha256(path: str | Path) -> str:
@@ -107,10 +113,10 @@ def _require_equal(actual: Any, expected: Any, label: str) -> None:
 
 
 def _validate_contract(contract: dict[str, Any]) -> None:
-    _require_equal(contract["contract_version"], 1, "contract version")
+    _require_equal(contract["contract_version"], 2, "contract version")
     _require_equal(
         contract["contract_id"],
-        "june_oxley_phase35_source_textured_direct_address_v1",
+        "june_oxley_phase35_source_textured_direct_address_v2",
         "contract id",
     )
     _require_equal(contract["cash_cost"], 0, "cash cost")
@@ -141,14 +147,14 @@ def _validate_contract(contract: dict[str, Any]) -> None:
     required = list(contract["performance"]["required_review_frames"])
     if required != sorted(set(required)) or required[0] != 1 or required[-1] != 228:
         raise SourceTexturedDirectAddressError("review frames must be unique, sorted, and cover endpoints")
-    expected_curve = [0.0, 0.15625, 0.5, 0.84375, 1.0, 0.84375, 0.5, 0.15625, 0.0]
+    expected_curve = list(CANDIDATE09_BLINK_CURVE)
     occupied: set[int] = set()
     curves = contract["performance"]["blink_curves"]
     _require_equal(len(curves), 2, "semantic blink curve count")
     for curve in curves:
         frames = [int(value) for value in curve["frames"]]
         closures = [float(value) for value in curve["closures"]]
-        _require_equal(closures, expected_curve, f"{curve['id']} Candidate08-native closure curve")
+        _require_equal(closures, expected_curve, f"{curve['id']} Candidate09-approved linear closure curve")
         if len(frames) != len(closures) or frames != list(range(frames[0], frames[-1] + 1)):
             raise SourceTexturedDirectAddressError(f"{curve['id']} frames must be one contiguous curve")
         if occupied.intersection(frames):
@@ -165,7 +171,73 @@ def load_contract(
     _require_equal(_canonical_hash(contract), EXPECTED_CONTRACT_CANONICAL_SHA256, "canonical contract SHA-256")
     for name, reference in contract["locks"].items():
         _require_equal(_locked_hash(reference), reference["sha256"], f"locked {name} SHA-256")
+    blink_policy = json.loads(
+        _repo_path(contract["locks"]["phase34_default_blink_policy"]["path"]).read_text(encoding="utf-8")
+    )
+    _require_equal(
+        blink_policy["status"],
+        "approved_default_for_future_source_textured_facial_subsystem_reuse",
+        "Candidate09 blink policy status",
+    )
+    _require_equal(
+        blink_policy["closure_table"], list(CANDIDATE09_BLINK_CURVE),
+        "Candidate09 blink policy closure table",
+    )
+    policy_review = blink_policy["review_receipt"]
+    _require_equal(
+        _lf_hash(_repo_path(policy_review["path"])),
+        policy_review["lf_normalized_sha256"],
+        "Candidate09 policy Claude review LF SHA-256",
+    )
+    policy_addendum = blink_policy["review_addendum"]
+    _require_equal(
+        _sha256(_repo_path(policy_addendum["path"])),
+        policy_addendum["sha256"],
+        "Candidate09 policy review addendum SHA-256",
+    )
     return contract, source
+
+
+def _capture_execution_state(
+    contract: dict[str, Any], contract_path: Path,
+) -> dict[str, Any]:
+    on_disk = json.loads(contract_path.read_text(encoding="utf-8"))
+    state = {
+        "contract_raw_sha256": _sha256(contract_path),
+        "contract_canonical_sha256": _canonical_hash(on_disk),
+        "implementation_sha256": _sha256(REPO_ROOT / IMPLEMENTATION_RELATIVE_PATH),
+        "lock_sha256": {
+            name: _locked_hash(reference)
+            for name, reference in contract["locks"].items()
+        },
+    }
+    _require_equal(
+        state["contract_canonical_sha256"], EXPECTED_CONTRACT_CANONICAL_SHA256,
+        "captured canonical contract SHA-256",
+    )
+    for name, reference in contract["locks"].items():
+        _require_equal(
+            state["lock_sha256"][name], reference["sha256"],
+            f"captured locked {name} SHA-256",
+        )
+    return state
+
+
+def _execution_state_mismatches(
+    captured: dict[str, Any], contract: dict[str, Any], contract_path: Path,
+) -> list[str]:
+    try:
+        current = _capture_execution_state(contract, contract_path)
+    except BaseException as exc:
+        return [f"execution_state_unreadable:{type(exc).__name__}"]
+    mismatches: list[str] = []
+    for name in ("contract_raw_sha256", "contract_canonical_sha256", "implementation_sha256"):
+        if current[name] != captured[name]:
+            mismatches.append(name)
+    for name, expected in captured["lock_sha256"].items():
+        if current["lock_sha256"].get(name) != expected:
+            mismatches.append(f"lock:{name}")
+    return mismatches
 
 
 def _wave_probe(path: Path) -> dict[str, int]:
@@ -201,14 +273,11 @@ def production_blink_closure(contract: dict[str, Any], frame_number: int) -> flo
     return 0.0
 
 
-def _synthetic_blink_schedule(closure: float) -> tuple[int, list[int], list[int]]:
-    if math.isclose(closure, 0.0, abs_tol=1e-9):
-        return 2, [10, 11], [10, 10]
-    if math.isclose(closure, 1.0, abs_tol=1e-9):
-        return 2, [1, 3], [2, 2]
-    numerator, denominator = _fraction_for_eased_value(closure)
-    render_frame = numerator + 1
-    return render_frame, [1, denominator + 1], [denominator + 1, denominator + 1]
+def _synthetic_blink_schedule(closure: float) -> tuple[int, dict[str, float]]:
+    if not 0.0 <= closure <= 1.0:
+        raise SourceTexturedDirectAddressError(f"blink closure is outside [0, 1]: {closure}")
+    render_frame = 2
+    return render_frame, {str(render_frame): float(closure)}
 
 
 def _synthetic_viseme_schedule(
@@ -245,24 +314,23 @@ def controlled_native_frame(
     prepared: PreparedDirectAddress,
     viseme: dict[str, Any],
     closure: float,
-) -> tuple[np.ndarray, phase34.FrameEvidence]:
+) -> tuple[np.ndarray, phase34_candidate09.FrameEvidence]:
     key = _adapter_key(viseme, closure)
     rendered = prepared.native_cache.get(key)
     if rendered is not None:
         return rendered
     cached = prepared.adapter_cache.get(key)
     if cached is None:
-        render_frame, blink_frames, blink_max_frames = _synthetic_blink_schedule(closure)
+        render_frame, blink_table = _synthetic_blink_schedule(closure)
         contract = deepcopy(prepared.face.contract)
         contract["performance"]["viseme_keyframes"] = _synthetic_viseme_schedule(
             viseme, render_frame,
         )
-        contract["performance"]["blink_frames"] = blink_frames
-        contract["performance"]["blink_max_frames"] = blink_max_frames
+        contract["performance"]["blink_closure_by_frame"] = blink_table
         adapted = replace(prepared.face, contract=contract)
         cached = (adapted, render_frame)
         prepared.adapter_cache[key] = cached
-    native, evidence = phase34._native_frame(cached[0], cached[1])
+    native, evidence = phase34_candidate09._native_frame(cached[0], cached[1])
     if not math.isclose(evidence.blink_closure, closure, abs_tol=1e-9):
         raise SourceTexturedDirectAddressError(
             f"semantic blink adapter mismatch: {evidence.blink_closure} != {closure}"
@@ -270,6 +338,50 @@ def controlled_native_frame(
     if len(prepared.native_cache) >= 12:
         prepared.native_cache.pop(next(iter(prepared.native_cache)))
     prepared.native_cache[key] = (native, evidence)
+    return native, evidence
+
+
+def _candidate08_synthetic_blink_schedule(
+    closure: float,
+) -> tuple[int, list[int], list[int]]:
+    if math.isclose(closure, 0.0, abs_tol=1e-9):
+        return 2, [10, 11], [10, 10]
+    if math.isclose(closure, 1.0, abs_tol=1e-9):
+        return 2, [1, 3], [2, 2]
+    numerator, denominator = _fraction_for_eased_value(closure)
+    return numerator + 1, [1, denominator + 1], [denominator + 1, denominator + 1]
+
+
+def controlled_candidate08_native_frame(
+    prepared: PreparedDirectAddress,
+    viseme: dict[str, Any],
+    closure: float,
+) -> tuple[np.ndarray, phase34.FrameEvidence]:
+    """Reconstruct Candidate01 exactly for the eight blink-only differential frames."""
+    key = _adapter_key(viseme, closure)
+    rendered = prepared.candidate08_native_cache.get(key)
+    if rendered is not None:
+        return rendered
+    cached = prepared.candidate08_adapter_cache.get(key)
+    if cached is None:
+        render_frame, blink_frames, blink_max_frames = _candidate08_synthetic_blink_schedule(closure)
+        contract = deepcopy(prepared.candidate08_face.contract)
+        contract["performance"]["viseme_keyframes"] = _synthetic_viseme_schedule(
+            viseme, render_frame,
+        )
+        contract["performance"]["blink_frames"] = blink_frames
+        contract["performance"]["blink_max_frames"] = blink_max_frames
+        adapted = replace(prepared.candidate08_face, contract=contract)
+        cached = (adapted, render_frame)
+        prepared.candidate08_adapter_cache[key] = cached
+    native, evidence = phase34._native_frame(cached[0], cached[1])
+    if not math.isclose(evidence.blink_closure, closure, abs_tol=1e-9):
+        raise SourceTexturedDirectAddressError(
+            f"Candidate01 blink adapter mismatch: {evidence.blink_closure} != {closure}"
+        )
+    if len(prepared.candidate08_native_cache) >= 12:
+        prepared.candidate08_native_cache.pop(next(iter(prepared.candidate08_native_cache)))
+    prepared.candidate08_native_cache[key] = (native, evidence)
     return native, evidence
 
 
@@ -285,15 +397,15 @@ def _load_scene_contract(contract: dict[str, Any]) -> dict[str, Any]:
     return scene
 
 
-def _prepare_accepted_phase34_face(contract_path: Path) -> phase34.PreparedSourceTexturedFace:
-    """Load Candidate08 mechanics without rerunning its immutable 96-frame audition."""
-    contract = phase34.load_contract(contract_path)
-    phase33_contract = phase34._resolve_repo_path(contract["locks"]["phase33_v3_contract"]["path"])
-    base = phase34.phase33.prepare_semantic_face(phase33_contract)
+def _prepare_phase34_face(contract_path: Path, renderer: Any, provenance: str) -> Any:
+    """Load one hash-locked Phase34 face implementation without rerunning its audition."""
+    contract = renderer.load_contract(contract_path)
+    phase33_contract = renderer._resolve_repo_path(contract["locks"]["phase33_v3_contract"]["path"])
+    base = renderer.phase33.prepare_semantic_face(phase33_contract)
     clock = contract["clock"]
     if base.plate.shape != (clock["source_height"], clock["source_width"], 3):
         raise SourceTexturedDirectAddressError(f"Phase34 plate dimensions changed: {base.plate.shape}")
-    source_points, triangles = phase34._cage(contract)
+    source_points, triangles = renderer._cage(contract)
     support = np.zeros(base.plate.shape[:2], dtype=np.uint8)
     x1, y1, x2, y2 = contract["semantic_geometry_native_xy"]["feature_support_box"]
     support[y1:y2, x1:x2] = 255
@@ -301,18 +413,18 @@ def _prepare_accepted_phase34_face(contract_path: Path) -> phase34.PreparedSourc
         eye = contract["semantic_geometry_native_xy"][eye_name]
         support = cv2.bitwise_or(
             support,
-            phase34.phase33._ellipse_mask(
+            renderer.phase33._ellipse_mask(
                 base.plate.shape[:2],
                 tuple(eye["center"]),
                 (eye["radius"][0] + 7, eye["radius"][1] + 7),
             ),
         )
-    oral_cells = phase34._load_oral_cells(
-        phase34._resolve_repo_path(contract["locks"]["oral_interior_atlas"]["path"])
+    oral_cells = renderer._load_oral_cells(
+        renderer._resolve_repo_path(contract["locks"]["oral_interior_atlas"]["path"])
     )
     moustache_alpha = cv2.GaussianBlur(base.moustache_mask, (0, 0), sigmaX=0.75, sigmaY=0.75)
     beard_alpha = cv2.GaussianBlur(base.beard_mask, (0, 0), sigmaX=0.75, sigmaY=0.75)
-    return phase34.PreparedSourceTexturedFace(
+    return renderer.PreparedSourceTexturedFace(
         contract,
         contract_path,
         base,
@@ -322,7 +434,7 @@ def _prepare_accepted_phase34_face(contract_path: Path) -> phase34.PreparedSourc
         oral_cells,
         moustache_alpha,
         beard_alpha,
-        {"inherited_from_locked_candidate08_successor_acceptance": True},
+        {provenance: True},
         {},
     )
 
@@ -332,8 +444,15 @@ def prepare_direct_address(
 ) -> PreparedDirectAddress:
     contract, contract_path = load_contract(path)
     scene = _load_scene_contract(contract)
-    face = _prepare_accepted_phase34_face(
-        _repo_path(contract["locks"]["phase34_contract"]["path"])
+    face = _prepare_phase34_face(
+        _repo_path(contract["locks"]["phase34_contract"]["path"]),
+        phase34_candidate09,
+        "inherited_from_locked_candidate08_acceptance_and_candidate09_blink_review",
+    )
+    candidate08_face = _prepare_phase34_face(
+        _repo_path(contract["locks"]["phase34_candidate08_contract"]["path"]),
+        phase34,
+        "inherited_from_locked_candidate08_acceptance",
     )
     if phase34._raw_frame_hash(face.plate) != phase34._raw_frame_hash(
         np.asarray(Image.open(_repo_path(contract["locks"]["gs070_plate"]["path"])).convert("RGB"))
@@ -381,6 +500,10 @@ def prepare_direct_address(
         contract=contract,
         contract_path=contract_path,
         face=face,
+        candidate08_face=candidate08_face,
+        candidate01_contract=json.loads(
+            _repo_path(contract["locks"]["phase35_candidate01_contract"]["path"]).read_text(encoding="utf-8")
+        ),
         scene_contract=scene,
         visemes=visemes,
         expressions=expressions,
@@ -392,21 +515,33 @@ def prepare_direct_address(
         mix_path=mix,
         adapter_cache={},
         native_cache={},
+        candidate08_adapter_cache={},
+        candidate08_native_cache={},
     )
 
 
 def compose_direct_address_frame(
     prepared: PreparedDirectAddress,
     frame_number: int,
-) -> tuple[Image.Image, np.ndarray, phase34.FrameEvidence]:
+    *,
+    candidate01: bool = False,
+) -> tuple[Image.Image, np.ndarray, Any]:
     frame_count = int(prepared.contract["clock"]["frame_count"])
     if not 1 <= frame_number <= frame_count:
         raise SourceTexturedDirectAddressError(f"frame number out of range: {frame_number}")
     index = frame_number - 1
-    closure = production_blink_closure(prepared.contract, frame_number)
-    native, evidence = controlled_native_frame(prepared, prepared.visemes[index], closure)
+    if candidate01:
+        closure = production_blink_closure(prepared.candidate01_contract, frame_number)
+        native, evidence = controlled_candidate08_native_frame(
+            prepared, prepared.visemes[index], closure,
+        )
+        face = prepared.candidate08_face
+    else:
+        closure = production_blink_closure(prepared.contract, frame_number)
+        native, evidence = controlled_native_frame(prepared, prepared.visemes[index], closure)
+        face = prepared.face
     face_frame = Image.fromarray(native, "RGB")
-    frame = Image.fromarray(prepared.face.plate, "RGB")
+    frame = Image.fromarray(face.plate, "RGB")
     motion = prepared.motion[index]
     regions = prepared.scene_contract["rig_regions"]
     _warp_region(
@@ -417,7 +552,7 @@ def compose_direct_address_frame(
         scale_y=1.0 + float(motion["breath_y_px"]) / 900.0,
     )
     feature_mask = Image.fromarray(
-        prepared.face.feature_support.astype(np.uint8) * 255,
+        face.feature_support.astype(np.uint8) * 255,
         "L",
     )
     frame.paste(face_frame, (0, 0), feature_mask)
@@ -446,6 +581,49 @@ def compose_direct_address_frame(
     _secondary_overlay(frame, frame_number, 30, regions, secondary)
     composed = _camera_frame(frame, float(motion["camera_push"]), prepared.scene_contract)
     return composed.convert("RGB"), native, evidence
+
+
+def _native_eye_support_mask(prepared: PreparedDirectAddress) -> np.ndarray:
+    shape = prepared.face.plate.shape[:2]
+    support = np.zeros(shape, dtype=np.uint8)
+    geometry = prepared.face.contract["semantic_geometry_native_xy"]
+    for eye_name in ("viewer_left_eye", "viewer_right_eye"):
+        eye = geometry[eye_name]
+        support = cv2.bitwise_or(
+            support,
+            phase34_candidate09.phase33._ellipse_mask(
+                shape,
+                tuple(eye["center"]),
+                (eye["radius"][0] + 7, eye["radius"][1] + 7),
+            ),
+        )
+    return support > 0
+
+
+def _final_eye_support_mask(
+    prepared: PreparedDirectAddress,
+    frame_number: int,
+) -> np.ndarray:
+    """Transform Candidate09's complete eye support through the same head and camera path."""
+    support = _native_eye_support_mask(prepared).astype(np.uint8) * 255
+    mask = Image.fromarray(np.repeat(support[:, :, None], 3, axis=2), "RGB")
+    motion = prepared.motion[frame_number - 1]
+    _warp_region(
+        mask,
+        prepared.scene_contract["rig_regions"]["head"],
+        dx=float(motion["head_x_px"]),
+        dy=float(motion["head_y_px"]),
+        rotation_deg=float(motion["head_tilt_deg"]),
+    )
+    transformed = _camera_frame(
+        mask, float(motion["camera_push"]), prepared.scene_contract,
+    ).convert("RGB")
+    allowed = np.any(np.asarray(transformed, dtype=np.uint8) > 0, axis=2).astype(np.uint8)
+    dilation = int(prepared.contract["representation"]["transformed_eye_support_dilation_px"])
+    if dilation > 0:
+        kernel = np.ones((2 * dilation + 1, 2 * dilation + 1), dtype=np.uint8)
+        allowed = cv2.dilate(allowed, kernel, iterations=1)
+    return allowed > 0
 
 
 def _max_8x8_delta(
@@ -537,6 +715,23 @@ def _blink_intervals(contract: dict[str, Any]) -> list[list[int]]:
     ]
 
 
+def _blink_pairs(contract: dict[str, Any]) -> set[tuple[int, int]]:
+    """Return every adjacent pair in each full nine-frame blink table, endpoints included."""
+    return {
+        (int(first), int(second))
+        for curve in contract["performance"]["blink_curves"]
+        for first, second in zip(curve["frames"], curve["frames"][1:])
+    }
+
+
+def _blink_review_frames(contract: dict[str, Any]) -> list[int]:
+    return [
+        int(frame)
+        for curve in contract["performance"]["blink_curves"]
+        for frame in curve["frames"]
+    ]
+
+
 def _stream_archive_header(contract: dict[str, Any]) -> dict[str, Any]:
     clock = contract["clock"]
     return {
@@ -586,43 +781,82 @@ def write_unencoded_preview(
     *,
     development_label: str | None = None,
 ) -> dict[str, Any]:
-    prepared = prepare_direct_address(path)
+    startup_contract, startup_contract_path = load_contract(path)
+    execution_state = _capture_execution_state(startup_contract, startup_contract_path)
+    prepared = prepare_direct_address(startup_contract_path)
     contract = prepared.contract
+    preparation_mismatches = _execution_state_mismatches(
+        execution_state, startup_contract, startup_contract_path,
+    )
+    if preparation_mismatches:
+        raise SourceTexturedDirectAddressError(
+            "Phase35 execution state changed during preparation: "
+            + json.dumps(preparation_mismatches)
+        )
+    candidate01_manifest = json.loads(
+        _repo_path(contract["locks"]["phase35_candidate01_manifest"]["path"]).read_text(encoding="utf-8")
+    )
+    candidate01_hashes = candidate01_manifest.get("frame_hashes", [])
+    _require_equal(
+        [entry.get("frame") for entry in candidate01_hashes],
+        list(range(1, int(contract["clock"]["frame_count"]) + 1)),
+        "Candidate01 ordered frame-hash inventory",
+    )
+    _require_equal(
+        _canonical_hash(prepared.candidate01_contract),
+        candidate01_manifest["contract"]["canonical_sha256"],
+        "Candidate01 canonical contract SHA-256",
+    )
     output = _output_path(contract, development_label)
     if output.exists():
         raise SourceTexturedDirectAddressError(f"immutable preview already exists: {output}")
     output.parent.mkdir(parents=True, exist_ok=True)
-    stage = Path(tempfile.mkdtemp(prefix=f".{output.name}-", dir=output.parent))
-    preview = contract["preview"]
-    archive_path = stage / preview["lossless_frame_archive_filename"]
-    header = _stream_archive_header(contract)
-    frame_count = int(contract["clock"]["frame_count"])
-    all_sheet = Image.new("RGB", (1920, 1710), (10, 10, 10))
-    required_review = list(contract["performance"]["required_review_frames"])
-    face_timeline = sorted(set([1, 12, 24, 25, 30, 40, 50, 60, 70, 79, 82, 90, 100, 111, 120, 132, 145, 162, 168, 180, 192, 202, 215, 228]))
-    blink_frames = [frame for interval in _blink_intervals(contract) for frame in interval]
-    retained_numbers = set(required_review) | set(face_timeline) | set(blink_frames)
-    selected_dir = stage / ".selected_frames"
-    selected_dir.mkdir()
-    retained: dict[int, Path] = {}
-    frame_hashes: list[dict[str, Any]] = []
-    native_previous: np.ndarray | None = None
-    final_previous: np.ndarray | None = None
-    maximum_native_delta = 0.0
-    maximum_native_pair = [1, 2]
-    maximum_final_delta = 0.0
-    maximum_final_pair = [1, 2]
-    maximum_changed_outside = 0
-    maximum_depth_violation = 0
-    maximum_folded = 0
-    minimum_full_blink_occlusion = 1.0
-    full_blink_frames = 0
-    maximum_activation_delta = 0.0
-    previous_activation: float | None = None
-    non_x_frames = 0
-    final_exact_x_frames = 0
-    face_roi = (500, 185, 870, 620)
-    previous_archive = np.zeros((1080, 1920, 3), dtype=np.uint8)
+    stage: Path | None = None
+    try:
+        stage = Path(tempfile.mkdtemp(prefix=f".{output.name}-", dir=output.parent))
+        preview = contract["preview"]
+        archive_path = stage / preview["lossless_frame_archive_filename"]
+        header = _stream_archive_header(contract)
+        frame_count = int(contract["clock"]["frame_count"])
+        all_sheet = Image.new("RGB", (1920, 1710), (10, 10, 10))
+        required_review = list(contract["performance"]["required_review_frames"])
+        face_timeline = sorted(set([1, 12, 24, 25, 30, 40, 50, 60, 70, 79, 82, 90, 100, 111, 120, 132, 145, 162, 168, 180, 192, 202, 215, 228]))
+        blink_frames = _blink_review_frames(contract)
+        blink_pairs = _blink_pairs(contract)
+        retained_numbers = set(required_review) | set(face_timeline) | set(blink_frames)
+        selected_dir = stage / ".selected_frames"
+        selected_dir.mkdir()
+        retained: dict[int, Path] = {}
+        frame_hashes: list[dict[str, Any]] = []
+        native_previous: np.ndarray | None = None
+        final_previous: np.ndarray | None = None
+        maximum_native_delta = 0.0
+        maximum_native_pair = [1, 2]
+        maximum_native_blink_delta = 0.0
+        maximum_native_blink_pair = [77, 78]
+        maximum_final_delta = 0.0
+        maximum_final_pair = [1, 2]
+        maximum_changed_outside = 0
+        maximum_depth_violation = 0
+        maximum_folded = 0
+        minimum_full_blink_occlusion = 1.0
+        full_blink_frames = 0
+        maximum_activation_delta = 0.0
+        previous_activation: float | None = None
+        non_x_frames = 0
+        final_exact_x_frames = 0
+        face_roi = (500, 185, 870, 620)
+        previous_archive = np.zeros((1080, 1920, 3), dtype=np.uint8)
+        expected_changed_frames = set(contract["preencode_gates"]["required_candidate01_changed_frames"])
+        candidate01_baseline_hash_mismatches = 0
+        maximum_candidate01_native_outside_eye = 0
+        maximum_candidate01_final_outside_eye = 0
+        candidate01_delta_frames_evaluated = 0
+        native_eye_support = _native_eye_support_mask(prepared)
+    except BaseException:
+        if stage is not None:
+            shutil.rmtree(stage, ignore_errors=True)
+        raise
     try:
         with archive_path.open("wb") as raw_handle:
             with gzip.GzipFile(filename="", mode="wb", compresslevel=6, fileobj=raw_handle, mtime=0) as archive:
@@ -638,6 +872,25 @@ def write_unencoded_preview(
                     previous_archive = final
                     digest = phase34._raw_frame_hash(final)
                     frame_hashes.append({"frame": frame_number, "rgb_sha256": digest})
+                    if frame_number in expected_changed_frames:
+                        baseline_image, baseline_native, _ = compose_direct_address_frame(
+                            prepared, frame_number, candidate01=True,
+                        )
+                        baseline_final = np.asarray(baseline_image, dtype=np.uint8)
+                        if phase34._raw_frame_hash(baseline_final) != candidate01_hashes[frame_number - 1]["rgb_sha256"]:
+                            candidate01_baseline_hash_mismatches += 1
+                        native_changed = np.any(native != baseline_native, axis=2)
+                        maximum_candidate01_native_outside_eye = max(
+                            maximum_candidate01_native_outside_eye,
+                            int((native_changed & ~native_eye_support).sum()),
+                        )
+                        final_changed = np.any(final != baseline_final, axis=2)
+                        final_eye_support = _final_eye_support_mask(prepared, frame_number)
+                        maximum_candidate01_final_outside_eye = max(
+                            maximum_candidate01_final_outside_eye,
+                            int((final_changed & ~final_eye_support).sum()),
+                        )
+                        candidate01_delta_frames_evaluated += 1
                     row, column = divmod(frame_number - 1, 12)
                     _paste_labelled(all_sheet, image, (column * 160, row * 90), (160, 90), f"F{frame_number:03d}")
                     if frame_number in retained_numbers:
@@ -666,6 +919,9 @@ def write_unencoded_preview(
                         if value > maximum_native_delta:
                             maximum_native_delta = value
                             maximum_native_pair = [frame_number - 1, frame_number]
+                        if (frame_number - 1, frame_number) in blink_pairs and value > maximum_native_blink_delta:
+                            maximum_native_blink_delta = value
+                            maximum_native_blink_pair = [frame_number - 1, frame_number]
                     if final_previous is not None:
                         value = _max_8x8_delta(final_previous, final, face_roi)
                         if value > maximum_final_delta:
@@ -676,6 +932,15 @@ def write_unencoded_preview(
                     previous_activation = evidence.oral_activation
 
         verified_archive_frames = verify_lossless_archive(archive_path, frame_hashes)
+        candidate01_preserved = sum(
+            current["rgb_sha256"] == previous["rgb_sha256"]
+            for current, previous in zip(frame_hashes, candidate01_hashes)
+        )
+        candidate01_changed_frames = [
+            current["frame"]
+            for current, previous in zip(frame_hashes, candidate01_hashes)
+            if current["rgb_sha256"] != previous["rgb_sha256"]
+        ]
         all_path = stage / preview["contact_sheet_filename"]
         all_sheet.save(all_path, compress_level=2)
         key_path = stage / preview["key_sheet_filename"]
@@ -694,6 +959,9 @@ def write_unencoded_preview(
             all(abs(float(entry[name])) <= 1e-9 for name in final_controls)
             for entry in prepared.motion[settle_index:]
         )
+        end_state_mismatches = _execution_state_mismatches(
+            execution_state, contract, prepared.contract_path,
+        )
         thresholds = contract["preencode_gates"]
         measurements = {
             "measurement_domains": {
@@ -701,7 +969,8 @@ def write_unencoded_preview(
                 "final_face_temporal": "final_composed_1920x1080_rgb_before_encode",
                 "audio_clock": "locked_pcm24_source_files",
             },
-            "input_hash_mismatches": 0,
+            "input_hash_mismatches": len(end_state_mismatches),
+            "end_state_hash_mismatch_names": end_state_mismatches,
             "frame_count": len(frame_hashes),
             "audio_sample_count": _wave_probe(prepared.dialogue_path)["sample_count"],
             "audio_samples_per_frame": _wave_probe(prepared.dialogue_path)["sample_count"] // frame_count,
@@ -715,6 +984,8 @@ def write_unencoded_preview(
             "final_exact_x_frame_count": final_exact_x_frames,
             "maximum_native_face_adjacent_8x8_mean_delta": maximum_native_delta,
             "maximum_native_face_adjacent_8x8_mean_delta_frame_pair": maximum_native_pair,
+            "maximum_native_blink_adjacent_8x8_mean_delta": maximum_native_blink_delta,
+            "maximum_native_blink_adjacent_8x8_mean_delta_frame_pair": maximum_native_blink_pair,
             "accepted_candidate08_same_domain_maximum_source_pop": thresholds["accepted_candidate08_same_domain_maximum_source_pop"],
             "native_face_temporal_excess_over_accepted_candidate08": maximum_native_delta - float(thresholds["accepted_candidate08_same_domain_maximum_source_pop"]),
             "maximum_final_composed_face_adjacent_8x8_mean_delta": maximum_final_delta,
@@ -723,6 +994,12 @@ def write_unencoded_preview(
             "final_hold_body_controls_zero": final_hold_zero,
             "complete_rgb_hash_inventory": len(frame_hashes) == frame_count,
             "lossless_rgb_archive_verified_frames": verified_archive_frames,
+            "candidate01_preserved_frame_hashes": candidate01_preserved,
+            "candidate01_changed_frames": candidate01_changed_frames,
+            "candidate01_baseline_rerender_hash_mismatches": candidate01_baseline_hash_mismatches,
+            "maximum_candidate01_native_changed_pixels_outside_eye_support": maximum_candidate01_native_outside_eye,
+            "maximum_candidate01_final_changed_pixels_outside_transformed_eye_support": maximum_candidate01_final_outside_eye,
+            "candidate01_delta_frames_evaluated": candidate01_delta_frames_evaluated,
         }
         gates = [
             _gate("input_hashes", measurements["input_hash_mismatches"], "==", thresholds["required_input_hash_mismatches"]),
@@ -738,11 +1015,20 @@ def write_unencoded_preview(
             _gate("speaking_frames", measurements["non_x_frame_count"], ">=", thresholds["minimum_non_x_frame_count"]),
             _gate("final_exact_face_settle", measurements["final_exact_x_frame_count"], ">=", thresholds["minimum_final_exact_x_frame_count"]),
             _gate("native_face_temporal_noninferiority", measurements["native_face_temporal_excess_over_accepted_candidate08"], "<=", thresholds["maximum_native_face_temporal_excess_over_accepted_candidate08"]),
+            _gate("candidate09_native_face_temporal", measurements["maximum_native_face_adjacent_8x8_mean_delta"], "<=", thresholds["maximum_native_face_adjacent_8x8_mean_delta"]),
+            _gate("candidate09_native_blink_temporal", measurements["maximum_native_blink_adjacent_8x8_mean_delta"], "<=", thresholds["maximum_native_blink_adjacent_8x8_mean_delta"]),
             _gate("final_face_temporal", measurements["maximum_final_composed_face_adjacent_8x8_mean_delta"], "<=", thresholds["maximum_final_composed_face_adjacent_8x8_mean_delta"]),
             _gate("oral_activation", measurements["maximum_adjacent_oral_activation_delta"], "<=", thresholds["maximum_adjacent_oral_activation_delta"]),
             _gate("final_hold_body", measurements["final_hold_body_controls_zero"], "==", thresholds["required_final_hold_body_controls_zero"]),
             _gate("frame_hash_inventory", measurements["complete_rgb_hash_inventory"], "==", thresholds["required_complete_rgb_hash_inventory"]),
             _gate("lossless_archive", measurements["lossless_rgb_archive_verified_frames"], "==", thresholds["required_lossless_rgb_archive_verified_frames"]),
+            _gate("candidate01_preserved_hashes", measurements["candidate01_preserved_frame_hashes"], "==", thresholds["required_candidate01_preserved_frame_hashes"]),
+            _gate("candidate01_changed_frames", measurements["candidate01_changed_frames"], "==", thresholds["required_candidate01_changed_frames"]),
+            _gate("candidate01_baseline_rerender", measurements["candidate01_baseline_rerender_hash_mismatches"], "==", thresholds["required_candidate01_baseline_rerender_hash_mismatches"]),
+            _gate("candidate01_native_eye_only", measurements["maximum_candidate01_native_changed_pixels_outside_eye_support"], "==", thresholds["required_candidate01_native_changed_pixels_outside_eye_support"]),
+            _gate("candidate01_final_eye_only", measurements["maximum_candidate01_final_changed_pixels_outside_transformed_eye_support"], "==", thresholds["required_candidate01_final_changed_pixels_outside_transformed_eye_support"]),
+            _gate("candidate01_delta_frame_count", measurements["candidate01_delta_frames_evaluated"], "==", thresholds["required_candidate01_delta_frames_evaluated"]),
+            _gate("end_state_hashes", len(measurements["end_state_hash_mismatch_names"]), "==", thresholds["required_end_state_hash_mismatches"]),
         ]
         failed = [gate["name"] for gate in gates if not gate["passed"]]
         if failed:
@@ -765,32 +1051,44 @@ def write_unencoded_preview(
                 "bytes": artifact_path.stat().st_size,
             }
         manifest = {
-            "manifest_version": 1,
+            "manifest_version": 2,
+            "development_label": development_label,
             "status": "preencode_machine_passed_exact_frame_review_required" if not failed else "preencode_machine_rejected",
             "machine_passed": not failed,
             "accepted_full_cartoon_production_delivery": False,
             "encode_authorized": False,
             "contract": {
                 "path": str(prepared.contract_path.relative_to(REPO_ROOT)).replace("\\", "/"),
-                "raw_sha256": _sha256(prepared.contract_path),
-                "canonical_sha256": _canonical_hash(contract),
+                "raw_sha256": execution_state["contract_raw_sha256"],
+                "canonical_sha256": execution_state["contract_canonical_sha256"],
             },
             "implementation": {
                 "path": IMPLEMENTATION_RELATIVE_PATH,
-                "sha256": _sha256(REPO_ROOT / IMPLEMENTATION_RELATIVE_PATH),
+                "sha256": execution_state["implementation_sha256"],
             },
             "candidate08_reuse": {
                 "successor_audit_sha256": contract["locks"]["phase34_successor_audit"]["sha256"],
-                "phase34_renderer_unchanged_sha256": contract["locks"]["phase34_renderer"]["sha256"],
-                "candidate09_used": False,
+                "candidate08_renderer_unchanged_sha256": contract["locks"]["phase34_candidate08_renderer"]["sha256"],
+                "candidate09_used": True,
+                "candidate09_renderer_sha256": contract["locks"]["phase34_renderer"]["sha256"],
+                "candidate09_manifest_sha256": contract["locks"]["phase34_candidate09_manifest"]["sha256"],
+                "candidate09_archive_sha256": contract["locks"]["phase34_candidate09_archive"]["sha256"],
+                "candidate09_blink_review_sha256": contract["locks"]["phase34_candidate09_blink_review"]["sha256"],
+                "default_blink_policy_sha256": contract["locks"]["phase34_default_blink_policy"]["sha256"],
+            },
+            "candidate01_supersession": {
+                "manifest_sha256": contract["locks"]["phase35_candidate01_manifest"]["sha256"],
+                "implementation_archive_sha256": contract["locks"]["phase35_candidate01_implementation_archive"]["sha256"],
+                "reason": "Candidate09 approved linear blink replaces Candidate08 smoothstep timing",
+                "expected_changed_frames": contract["preencode_gates"]["required_candidate01_changed_frames"],
             },
             "clock": contract["clock"],
             "timing": {
-                "viseme_cues_sha256": _sha256(_repo_path(contract["locks"]["viseme_cues"]["path"])),
-                "expression_cues_sha256": _sha256(_repo_path(contract["locks"]["expression_cues"]["path"])),
-                "body_motion_sha256": _sha256(_repo_path(contract["locks"]["body_motion"]["path"])),
-                "dialogue_audio_sha256": _sha256(prepared.dialogue_path),
-                "delivery_mix_sha256": _sha256(prepared.mix_path),
+                "viseme_cues_sha256": execution_state["lock_sha256"]["viseme_cues"],
+                "expression_cues_sha256": execution_state["lock_sha256"]["expression_cues"],
+                "body_motion_sha256": execution_state["lock_sha256"]["body_motion"],
+                "dialogue_audio_sha256": execution_state["lock_sha256"]["dialogue_audio"],
+                "delivery_mix_sha256": execution_state["lock_sha256"]["delivery_mix"],
             },
             "measurements": measurements,
             "gates": gates,
@@ -818,9 +1116,18 @@ def write_unencoded_preview(
         }
         manifest_path = stage / preview["manifest_filename"]
         manifest_path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+        post_manifest_mismatches = _execution_state_mismatches(
+            execution_state, contract, prepared.contract_path,
+        )
+        if post_manifest_mismatches:
+            raise SourceTexturedDirectAddressError(
+                "Phase35 execution state changed before promotion: "
+                + json.dumps(post_manifest_mismatches)
+            )
         stage.replace(output)
     except BaseException:
-        shutil.rmtree(stage, ignore_errors=True)
+        if stage is not None:
+            shutil.rmtree(stage, ignore_errors=True)
         raise
     return {
         "preview_directory": str(output),
