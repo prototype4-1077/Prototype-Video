@@ -3,18 +3,23 @@
 Status date: 2026-08-10  
 Branch: `agent/june-hero-unified-sculpt-phase-5`  
 Draft PR: `#8`  
-Classification: consumed/rejected one-shot silent facial proof; not production delivery
+Classification: accepted reusable silent facial subsystem; not production delivery
 
 ## Current result
 
 Phase 34 candidate-08 preserves all 96 reviewed RGB frames, closes the remaining soft-lid
 and H-occlusion proof gaps, and clears the Candidate-07 visual blockers. Claude approved
-one exact-archive silent encode. That attempt was consumed once and preserved as rejected:
-67/68 gates passed, with only the absolute decoded blink-motion ceiling failing.
+one exact-archive silent encode. That attempt was consumed once and remains preserved as
+mechanically rejected: 67/68 gates passed, with only the absolute decoded blink-motion
+ceiling failing. Claude's native-24-fps review accepted the motion and identified a gate
+contract domain defect, not a content defect. The separately versioned successor audit now
+passes 13/13 gates and accepts Candidate-08 as the reusable silent facial-motion subsystem.
 
 Exact-frame review evidence is at `collab/phase34_candidate_08/`. The attempted MP4,
 decoded report, diagnostic PNG, and failure receipt are at
 `collab/phase34_candidate_08_silent_encode_attempt_01/`.
+The immutable successor report is at
+`collab/phase34_candidate_08_successor_audit_v2/`.
 
 - Local Windows manifest SHA-256: `4e30698c0c347e0c2862c6e8fc86d7fb2a814e2e21d894ebc9b8c8c63b0cc5fa`
 - LF-normalized Git/public manifest SHA-256: `5fa917cd2fc8e1069a75b3696d81a80d45211e37f5c3e8626598b7efd9cb78fe`
@@ -39,6 +44,8 @@ Local immutable preview:
 - The atlas builder verifies inputs and exact output hashes and refuses destructive overwrite.
 - A deterministic RGB24 XOR+gzip archive reconstructs every reviewed output frame exactly.
 - Runtime network access, generation, audio, encoding, and RL are forbidden in this preview stage.
+- A hash-locked successor audit compares source and decoded motion in the same ROI and metric
+  domain for all 95 adjacent frame pairs without rendering or encoding.
 
 ## Candidate-05 evidence highlights
 
@@ -150,23 +157,24 @@ candidate-04's lip/overlap gates were hard-coded and that its exact 96 reviewed 
 not preserved. Candidate-05 supersedes it as the evidence architecture.
 
 Claude's exact Candidate-08 receipt is committed. Attempt 01 consumed it and must never be
-retried. `collab/GPT_NOTES_2026-08-10i.md` requests the remaining native-24-fps motion
-verdict against the preserved attempt.
+retried. Claude's authoritative `CLAUDE_REVIEW_2026-08-10_1240Z.md` verdict is
+`MOTION_ACCEPTED_GATE_CONTRACT_DEFECT`: identity, viseme legibility, upper-face stillness,
+and jaw/beard behavior pass. The successor audit implements Claude's recommended
+same-domain bounded-codec-delta contract without changing or retrying the original attempt.
 
 ## Exact next steps
 
-1. Ask Claude to loop attempt 01's exact MP4 at native 24 fps and judge beard shimmer,
-   F065/F066 tooth speckle, and the F006/F007 blink transition.
-2. Keep attempt 01 mechanically rejected and immutable; do not retry it.
-3. If motion is artistically acceptable, author a separately versioned successor contract
-   whose temporal codec gate compares decoded motion to the exact archive in the same ROI
-   and metric domain with a bounded codec delta.
-4. If motion is not acceptable, version the source fix, regenerate all evidence, and obtain
-   a new exact-manifest receipt before any separately versioned encode.
-5. After facial motion acceptance, integrate the subsystem into voiced timing, body acting,
-   multi-shot staging, sound, and sequence-level direction.
+1. Keep attempt 01 mechanically rejected and immutable; do not retry or replace it.
+2. Treat Candidate-08 as the accepted reusable silent facial-motion subsystem under the
+   separately versioned successor audit; do not call it a complete cartoon.
+3. Defer Candidate-09 as optional blink-polish research unless a later shot-specific review
+   demonstrates that its source change is needed.
+4. Begin the next production slice: bind real dialogue timing to Candidate-08 visemes, add
+   body acting and camera blocking, then stage the result in one short multi-shot scene.
+5. Add sound design, editorial rhythm, continuity checks, and a full-sequence acceptance
+   contract before calling any result production delivery.
 
-Do not call candidate-07 a complete cartoon or production delivery. It proves a reusable,
+Do not call Candidate-08 a complete cartoon or production delivery. It proves a reusable,
 high-detail front-view facial pipeline. Body acting, multi-angle adaptation, voiced timing,
 editing, sound, shot continuity, and full-sequence art direction remain separate production gates.
 ## Phase34 Candidate08 silent encode attempt 01 (2026-08-10)
@@ -188,8 +196,10 @@ editing, sound, shot continuity, and full-sequence art direction remain separate
 
 ## Candidate09 blink-only review candidate (2026-08-10)
 
-- Motion review classified Candidate08 beard/jaw motion as pass, F065/F066 sparkle as
-  P2, and the blink snap as a P1 content defect.
+- An independent local experimental review classified Candidate08 beard/jaw motion as pass,
+  F065/F066 sparkle as P2, and the blink snap as a P1 content defect. Claude's later
+  authoritative native-24-fps review accepted Candidate08 motion, so Candidate09 is deferred
+  optional research and is not the production path.
 - Candidate09 uses the explicit linear F004–F012 closure table
   `0,.25,.50,.75,1,.75,.50,.25,0`.
 - Exactly F005/F007/F009/F011 change; 92/96 hashes remain Candidate08-exact and zero
@@ -200,3 +210,21 @@ editing, sound, shot continuity, and full-sequence art direction remain separate
   `collab/GPT_NOTES_2026-08-10j.md`.
 - Review must explicitly judge the inherited horizontal lid-texture plate boundaries
   visible in the 3x blink sheet before any new encode receipt.
+
+## Candidate08 successor acceptance audit v2 (2026-08-10)
+
+- Contract: `concept/characters/june_oxley_phase34_successor_audit_v2.json`.
+- Implementation commit: `febd291`; independent targeted review: GO, no P0 blocker.
+- The audit independently reconstructed and hash-verified all 96 exact source frames and
+  decoded and hash-verified all 96 frames from attempt 01.
+- All 95 adjacent face-ROI pairs were compared in the same 8x8 box-filtered mean-absolute
+  RGB-delta domain.
+- Maximum source pop: `152.9947967529297` at F006/F007.
+- Maximum decoded pop: `152.9895782470703` at F006/F007.
+- Maximum absolute pairwise codec delta: `0.6197891235351562` at F065/F066, passing the
+  `<= 2.0` successor gate.
+- Result: 13/13 gates passed; machine audit and Claude's human motion verdict both pass.
+- Original attempt 01 remains 67/68 rejected with only `decoded_local_temporal_pop` failed.
+- Accepted scope: reusable silent facial-motion subsystem. Full-cartoon acceptance: false.
+- No render, encode, network call, paid service, or RL was used by the successor audit.
+- Exact raw report SHA-256: `fde411b4fd7a9604f726a3a29bb28ec6512839fc1585f75da18dc5c957672184`.
