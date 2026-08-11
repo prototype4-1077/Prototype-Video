@@ -1,0 +1,88 @@
+{
+  "finished_at": "2026-08-11T09:24:46+00:00",
+  "github_run_id": "31477460244",
+  "incidents": [
+    {
+      "count": 3,
+      "failure_class": "unknown",
+      "fingerprint": "275ae01e0ee9090a",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script governor stage=tts state=start soft=269s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=732fb7fe993c620b error: tts failed: d as api key - only valid api keys can be used. api keys start with 'sk_' and are shown when the key is created or rotated.\",\"status\":\"api_key_id_used_as_api_key\",\"request_id\":",
+      "stage": "build_pass"
+    },
+    {
+      "count": 3,
+      "failure_class": "transient",
+      "fingerprint": "732fb7fe993c620b",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "^^^^^^ file \"<path> line <n>, in _synthesize_chunked response = _call_elevenlabs(voice_id, part_payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"authentication_error\",\"code\":\"invalid_api_key\",\"message\":\"api key id used as api key - only valid api keys can be used. api keys start with '",
+      "stage": "tts"
+    }
+  ],
+  "last_message": "tts failed (transient); retry budget 2 exhausted. fingerprint=732fb7fe993c620b. ERROR: tts failed: d as API key - only valid API keys can be used. API keys start with 'sk_' and are shown when the key is created or rotated.\",\"status\":\"api_key_id_used_as_api_key\",\"request_id\":\"14e9e74a7c45171861249f4680701629\",\"param\":\"api_key\",\"docs_url\":\"https://elevenlabs.io/docs/api-reference/authentication\"}}",
+  "mode": "recover",
+  "passes": 3,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 79.56,
+      "idle_timeout_s": 180.0,
+      "sample_count": 47,
+      "soft_timeout_s": 268.67,
+      "source": "history"
+    }
+  },
+  "quality": {},
+  "recommendations": [
+    {
+      "action": "Keep bounded retry enabled and monitor whether the same fingerprint recovers on the next pass.",
+      "fingerprint": "732fb7fe993c620b",
+      "priority": "high",
+      "reason": "3 occurrence(s): ^^^^^^ file \"<path> line <n>, in _synthesize_chunked response = _call_elevenlabs(voice_id, part_payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"authentication_error\",\"code\":\"invalid_api_key\",\"message\":\"api key id used as api key - only valid api keys can be used. api keys start with '",
+      "stage": "tts"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "275ae01e0ee9090a",
+      "priority": "high",
+      "reason": "3 occurrence(s): note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script governor stage=tts state=start soft=269s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=732fb7fe993c620b error: tts failed: d as api key - only valid api keys can be used. api keys start with 'sk_' and are shown when the key is created or rotated.\",\"status\":\"api_key_id_used_as_api_key\",\"request_id\":",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "633c5f2a75e04457b36a88a69fbbc6b7",
+  "schema_version": 1,
+  "slug": "the-smoke-detector",
+  "stages": {
+    "build_pass": {
+      "attempts": 3,
+      "failures": 3,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 6.006
+    },
+    "tts": {
+      "attempts": 3,
+      "failures": 3,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 3.006
+    }
+  },
+  "status": "failed"
+}
