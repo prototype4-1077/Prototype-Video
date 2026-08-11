@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import hashlib
 import json
 import math
@@ -24,7 +25,8 @@ from pipeline import cartoon_ledger_pour_audio_repair as candidate02_builder
 
 
 CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase36_candidate03_audio_repair_v1.json"
-EXPECTED_CONTRACT_CANONICAL_SHA256 = "595a0949d2129aa636fb089bb0d38021ba72f2f0c89a83bb152767e9fcb0da2c"
+EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256 = "bdec01e7d2f897ea06add2f4e1bb61aa74e47fc127b120ad3af6354105f61cd2"
+REVIEWED_NULL_CONTRACT_RAW_LF_SHA256 = "64d5326f9b1a93a73ae05ca790b503076ad90ea6835636527a79e9cb22ad5a0f"
 PCM24_MAX = 8_388_607
 
 
@@ -95,11 +97,29 @@ def _contract_raw_lf_hash() -> str:
     return _path_hash(REPO_ROOT / CONTRACT_RELATIVE_PATH, "lf_normalized_text")
 
 
+def _contract_canonical_hash(contract: dict[str, Any]) -> str:
+    return _canonical_hash(contract)
+
+
+def _authorization_subject(contract: dict[str, Any]) -> dict[str, Any]:
+    subject = copy.deepcopy(contract)
+    subject["authorization"]["receipt"] = None
+    return subject
+
+
+def _authorization_subject_hash(contract: dict[str, Any]) -> str:
+    return _canonical_hash(_authorization_subject(contract))
+
+
 def load_contract(path: str | Path = REPO_ROOT / CONTRACT_RELATIVE_PATH) -> dict[str, Any]:
     resolved = Path(path).resolve()
     _require_equal(resolved, (REPO_ROOT / CONTRACT_RELATIVE_PATH).resolve(), "pinned Candidate03 contract path")
     contract = _strict_json_loads(resolved.read_bytes(), "Candidate03 contract")
-    _require_equal(_canonical_hash(contract), EXPECTED_CONTRACT_CANONICAL_SHA256, "Candidate03 canonical contract SHA-256")
+    _require_equal(
+        _authorization_subject_hash(contract),
+        EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256,
+        "Candidate03 authorization-subject canonical SHA-256",
+    )
     _require_equal(contract["contract_version"], 1, "Candidate03 contract version")
     _require_equal(contract["contract_id"], "june_oxley_phase36_candidate03_audio_repair_v1", "Candidate03 contract id")
     _require_equal(contract["character_id"], "june_oxley", "Candidate03 character")
@@ -118,6 +138,9 @@ def load_contract(path: str | Path = REPO_ROOT / CONTRACT_RELATIVE_PATH) -> dict
     receipt = contract["authorization"]["receipt"]
     if receipt is not None and not isinstance(receipt, dict):
         raise Candidate03AudioError("Candidate03 authorization receipt must be null or an exact path/hash lock")
+    if receipt is None:
+        _require_equal(_contract_canonical_hash(contract), EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256, "null-receipt contract canonical SHA-256")
+        _require_equal(_contract_raw_lf_hash(), REVIEWED_NULL_CONTRACT_RAW_LF_SHA256, "reviewed null-receipt contract raw LF SHA-256")
     return contract
 
 
@@ -160,8 +183,8 @@ def _authorization(contract: dict[str, Any]) -> dict[str, str] | None:
     _require_equal(verdict_lines, [verdict_line], "Candidate03 authorization verdict lines")
     dynamic_tokens = (
         *[str(token) for token in gate["required_binding_tokens"]],
-        EXPECTED_CONTRACT_CANONICAL_SHA256,
-        _contract_raw_lf_hash(),
+        EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256,
+        REVIEWED_NULL_CONTRACT_RAW_LF_SHA256,
         _implementation_hash(),
         contract["locks"]["audible_noise_proxy"]["sha256"],
         contract["locks"]["repair_tests"]["sha256"],
@@ -180,8 +203,10 @@ def _authorization(contract: dict[str, Any]) -> dict[str, str] | None:
 
 def _source_state(contract: dict[str, Any]) -> dict[str, Any]:
     return {
-        "contract_raw_lf_sha256": _contract_raw_lf_hash(),
-        "contract_canonical_sha256": EXPECTED_CONTRACT_CANONICAL_SHA256,
+        "bound_contract_raw_lf_sha256": _contract_raw_lf_hash(),
+        "bound_contract_canonical_sha256": _contract_canonical_hash(contract),
+        "authorization_subject_canonical_sha256": EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256,
+        "reviewed_null_contract_raw_lf_sha256": REVIEWED_NULL_CONTRACT_RAW_LF_SHA256,
         "implementation_lf_sha256": _implementation_hash(),
         "locked": {
             name: _path_hash(_repo_path(reference["path"]), str(reference.get("hash_domain", "raw_bytes")))
@@ -441,8 +466,10 @@ def preflight(path: str | Path = REPO_ROOT / CONTRACT_RELATIVE_PATH) -> dict[str
     authorization = _authorization(contract)
     return {
         "contract_id": contract["contract_id"],
-        "contract_raw_lf_sha256": _contract_raw_lf_hash(),
-        "contract_canonical_sha256": EXPECTED_CONTRACT_CANONICAL_SHA256,
+        "bound_contract_raw_lf_sha256": _contract_raw_lf_hash(),
+        "bound_contract_canonical_sha256": _contract_canonical_hash(contract),
+        "authorization_subject_canonical_sha256": EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256,
+        "reviewed_null_contract_raw_lf_sha256": REVIEWED_NULL_CONTRACT_RAW_LF_SHA256,
         "implementation_lf_sha256": _implementation_hash(),
         "audible_noise_proxy_lf_sha256": contract["locks"]["audible_noise_proxy"]["sha256"],
         "repair_tests_lf_sha256": contract["locks"]["repair_tests"]["sha256"],
@@ -498,8 +525,10 @@ def write_audio_candidate(path: str | Path = REPO_ROOT / CONTRACT_RELATIVE_PATH)
         "candidate_id": "phase36_ledger_pour_candidate_03_audio_only",
         "build_attempt": 1,
         "authorization": authorization,
-        "contract_canonical_sha256": EXPECTED_CONTRACT_CANONICAL_SHA256,
-        "contract_raw_lf_sha256": _contract_raw_lf_hash(),
+        "bound_contract_canonical_sha256": _contract_canonical_hash(contract),
+        "bound_contract_raw_lf_sha256": _contract_raw_lf_hash(),
+        "authorization_subject_canonical_sha256": EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256,
+        "reviewed_null_contract_raw_lf_sha256": REVIEWED_NULL_CONTRACT_RAW_LF_SHA256,
         "implementation_lf_sha256": _implementation_hash(),
         "candidate02_wav_sha256": contract["locks"]["candidate02_wav"]["sha256"],
         "candidate03_predicted_wav_sha256": contract["audio"]["expected_candidate03_wav_sha256"],
@@ -547,7 +576,9 @@ def write_audio_candidate(path: str | Path = REPO_ROOT / CONTRACT_RELATIVE_PATH)
             "contract": {
                 "path": CONTRACT_RELATIVE_PATH,
                 "raw_lf_sha256": _contract_raw_lf_hash(),
-                "canonical_sha256": EXPECTED_CONTRACT_CANONICAL_SHA256,
+                "canonical_sha256": _contract_canonical_hash(contract),
+                "authorization_subject_canonical_sha256": EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256,
+                "reviewed_null_raw_lf_sha256": REVIEWED_NULL_CONTRACT_RAW_LF_SHA256,
             },
             "implementation": {"path": contract["implementation_path"], "lf_sha256": _implementation_hash()},
             "authorization": authorization,

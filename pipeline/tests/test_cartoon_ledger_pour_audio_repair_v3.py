@@ -92,8 +92,8 @@ class Candidate03AudioRepairTests(unittest.TestCase):
         contract = copy.deepcopy(self.contract)
         tokens = [
             *contract["authorization"]["required_binding_tokens"],
-            repair.EXPECTED_CONTRACT_CANONICAL_SHA256,
-            repair._contract_raw_lf_hash(),
+            repair.EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256,
+            repair.REVIEWED_NULL_CONTRACT_RAW_LF_SHA256,
             repair._implementation_hash(),
             contract["locks"]["audible_noise_proxy"]["sha256"],
             contract["locks"]["repair_tests"]["sha256"],
@@ -109,6 +109,10 @@ class Candidate03AudioRepairTests(unittest.TestCase):
                 "hash_domain": "raw_bytes",
                 "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
             }
+            self.assertEqual(
+                repair._authorization_subject_hash(contract),
+                repair.EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256,
+            )
             accepted = repair._authorization(contract)
             self.assertEqual(accepted["verdict"], verdict)
             path.write_text(payload + f"## Verdict: {verdict}\n", encoding="utf-8", newline="\n")

@@ -66,11 +66,11 @@ human taste or audibility; James must still listen.
 
 ## Locked preflight surface
 
-- Contract raw LF SHA-256: `d56fa0a2f0ca70b9537a3f6a977383210a5414a3d24f8b3ebf80750a7363a516`
-- Contract canonical SHA-256: `595a0949d2129aa636fb089bb0d38021ba72f2f0c89a83bb152767e9fcb0da2c`
-- Implementation LF SHA-256: `194038e9b90cf568045c1d513ef678313c7713a803a6923fa0dad6200153a168`
+- Reviewed null-receipt contract raw LF SHA-256: `64d5326f9b1a93a73ae05ca790b503076ad90ea6835636527a79e9cb22ad5a0f`
+- Stable authorization-subject canonical SHA-256: `bdec01e7d2f897ea06add2f4e1bb61aa74e47fc127b120ad3af6354105f61cd2`
+- Implementation LF SHA-256: `950cfe1370d6d9d80c18e805ff7d545c1633b41ef58c8202da9c9776ed886161`
 - Noise proxy LF SHA-256: `6af4ed82ea96ed5ce87f46aa4bd945ea4275d3fe609a09930c01827d86ace560`
-- Repair tests LF SHA-256: `7c95b3e8b242a04656786147456c27cb49b289f9f58846e2e66c2759ded1b7b7`
+- Repair tests LF SHA-256: `fbc776852c94917e26b0c2ccec24a49c4ffd00e89050cbaf6100722668db4a8f`
 - Proxy tests LF SHA-256: `3ea8d03eeba8b4e79f042cc67f89df0e0f72114b753d3c63f2005e62a1219d85`
 - Tests: 17 passed, including both direct-script and `python -m` preflight invocation
 - Machine gates: 24 passed
