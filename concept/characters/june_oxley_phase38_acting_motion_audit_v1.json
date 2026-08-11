@@ -1,0 +1,137 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase38_acting_motion_audit_v1",
+  "status": "STILL_ONLY_DIAGNOSTIC_NOT_A_REBUILD_OR_ENCODE_AUTHORIZATION",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "purpose": "Measure camera-normalized acting motion in the immutable Phase36 direct-address shot and separate intentional facial performance from camera resampling, atmosphere, and a largely static body plate before authoring a close-shot acting rig.",
+  "locks": {
+    "phase35_direct_address_contract": {
+      "path": "concept/characters/june_oxley_phase35_source_textured_direct_address_v2.json",
+      "sha256": "68c763be79dd76447f6c33baf39ef79528fbbf1d6ea25a113c5550d63d62ba94"
+    },
+    "phase33_body_motion": {
+      "path": "concept/style_frames/june_phase33_direct_address_body_motion_v1.json",
+      "sha256": "47f29b99ce8c2db42f3e2c5e79bc174ded2b9849a626eafbed2b06ef9a73b8c9"
+    },
+    "gs070_scene": {
+      "path": "concept/style_frames/june_golden_scene_gs070_resolution_v1.json",
+      "sha256": "ff5ae15bf49e4ab19c654948d4217b3202d3ddcffb3d1b9d617694c46d78b194"
+    },
+    "phase36_candidate01_manifest": {
+      "path": "collab/phase36_candidate_01/june-phase36-ledger-pour-manifest-v1.json",
+      "sha256": "0c97ba94987b8fabf1e1dd0d9c7b1229cfa6edc240ec9ef1fcccf3d45405d9a2"
+    }
+  },
+  "immutable_picture": {
+    "external_archive_path": "../../outputs/edit/phase36-ledger-pour-lossless-v1-candidate-01/june-phase36-ledger-pour-rgb24-xor-v1.gz",
+    "archive_sha256": "93eb2cd752d745a6f6fd534912ff68ee24e7bf72cf7cd406d2a366adea97d404",
+    "archive_bytes": 415959046,
+    "frame_inventory_canonical_sha256": "d09bcdc6a3c86e26e9ce77070f18504f3101e4b87edfc54e169e3b4b641a6451",
+    "combined_rgb24_sha256": "8a8fdc2a572ec1037e29a475b00e49454a059a73a751444458de95531bfa6501",
+    "frame_count": 303,
+    "width": 1920,
+    "height": 1080,
+    "channels": 3,
+    "fps": 30
+  },
+  "diagnostic": {
+    "phase36_direct_address_output_frames_inclusive": [76, 237],
+    "phase35_local_frames_inclusive": [1, 162],
+    "silent_attention_output_frames_inclusive": [76, 99],
+    "spoken_output_frames_inclusive": [100, 237],
+    "hard_cut_output_frames": [76, 238],
+    "camera_alignment": {
+      "method": "exact_inverse_of_declared_uniform_LANCZOS_camera_push_geometry",
+      "interpolation": "opencv_INTER_LANCZOS4",
+      "border_mode": "constant_black_excluded_by_validity_mask"
+    },
+    "regions_base_plate_xyxy": {
+      "face_head": [430, 80, 960, 630],
+      "torso": [170, 610, 760, 1010],
+      "viewer_left_arm": [60, 620, 430, 1060],
+      "table_hand": [760, 800, 1120, 1070],
+      "mug_static_control": [1170, 780, 1570, 1070],
+      "background_atmosphere_control": [1230, 20, 1890, 700]
+    },
+    "pair_metrics": {
+      "pixel_delta_thresholds_u8": [2.0, 5.0],
+      "optical_flow_downscale": 0.25,
+      "farneback": {
+        "pyr_scale": 0.5,
+        "levels": 3,
+        "winsize": 15,
+        "iterations": 3,
+        "poly_n": 5,
+        "poly_sigma": 1.2,
+        "flags": 0
+      }
+    },
+    "structural_claims_to_test": {
+      "required_independent_hand_control_count": 0,
+      "required_independent_arm_control_count": 0,
+      "required_authored_gesture_event_count": 0,
+      "maximum_absolute_shoulder_x_px": 0.4,
+      "maximum_absolute_breath_y_px": 1.3,
+      "required_final_static_hold_local_frames_inclusive": [202, 228]
+    },
+    "source_mutation_allowed": false,
+    "picture_rebuild_allowed": false,
+    "video_encode_allowed": false,
+    "promotion_allowed": false,
+    "human_acting_acceptance_claim_allowed": false
+  },
+  "proposed_next_acting_slice": {
+    "classification": "PLAN_ONLY_NOT_APPLIED",
+    "required_new_close_view_controls": [
+      "torso_translate_rotate",
+      "viewer_left_clavicle_upper_arm_forearm",
+      "table_hand_wrist_palm_finger_group",
+      "head_to_torso_overlap",
+      "breath_independent_of_camera"
+    ],
+    "performance_events": [
+      {
+        "local_frames": [18, 34],
+        "intent": "notice_then_speak",
+        "action": "small inhale and clavicle anticipation led by gaze; settle as the first word lands"
+      },
+      {
+        "local_frames": [45, 82],
+        "intent": "wry_observation",
+        "action": "table hand opens a few pixels through the wrist and fingers while torso counters; no mug contact"
+      },
+      {
+        "local_frames": [91, 126],
+        "intent": "account_vs_debt_contrast",
+        "action": "compact palm compression and asymmetric shoulder response with one overshoot and settle"
+      },
+      {
+        "local_frames": [127, 162],
+        "intent": "turn_question_toward_viewer",
+        "action": "hand returns before the question finishes; torso and breath reduce into the compassion cut"
+      }
+    ],
+    "hard_safety_rules": [
+      "preserve accepted face pixels outside declared transformed body supports",
+      "preserve mug and table contact",
+      "one body source pixel receives at most one final resample",
+      "hands remain five-finger readable at native and delivery scale",
+      "no cyclic idle bobbing",
+      "final stillness is intentional and atmosphere remains alive"
+    ]
+  },
+  "output": {
+    "directory": "collab/phase38_acting_motion_audit_v1",
+    "allowlist": [
+      "phase38-acting-motion-machine-report-v1.json",
+      "phase38-camera-normalized-motion-timeline-v1.png",
+      "phase38-direct-address-region-map-v1.png",
+      "phase38-acting-gap-contact-v1.png"
+    ],
+    "report_newline": "LF",
+    "atomic_publish_required": true,
+    "overwrite_allowed": false
+  }
+}
