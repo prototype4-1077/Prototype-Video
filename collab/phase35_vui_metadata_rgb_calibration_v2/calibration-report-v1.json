@@ -1,0 +1,88 @@
+{
+  "report_version": 1,
+  "report_id": "phase35_vui_metadata_rgb_calibration_v2",
+  "classification": "Disposable 64x64 one-frame raw-RGB stdin control/treatment calibration of the exact Candidate03 front-end metadata boundary. No Candidate03 pixels or candidate authorization were used.",
+  "cash_cost": 0,
+  "candidate_media_used": false,
+  "candidate_authorization_consumed": false,
+  "toolchain": {
+    "ffmpeg_sha256": "228d7a8556258de907fdb55f36850078ebc7680b84ec30d84ea02e99bec1d1eb",
+    "ffprobe_sha256": "0fde260f5abd35c9cafd96f594cc76365a780c1b73a90e35b6a3409ea1db1bf0",
+    "version": "8.1.1-essentials_build-www.gyan.dev"
+  },
+  "source": {
+    "generator": "deterministic RGB pattern: R=(4*x+2*y)%256, G=(4*y+x)%256, B=4*(x xor y)%256",
+    "pixel_format": "rgb24",
+    "width": 64,
+    "height": 64,
+    "frame_count": 1,
+    "payload_bytes": 12288,
+    "payload_sha256": "dd7bc322851b5c24e184cc6eade8f7e8adb0f9bff2c08a345cca671039fb8fe9",
+    "input_boundary": ["-f", "rawvideo", "-pixel_format", "rgb24", "-video_size", "64x64", "-framerate", "30", "-i", "pipe:0"]
+  },
+  "controlled_variable": {
+    "control_filter_argv": [],
+    "treatment_filter_argv": ["-vf", "setparams=range=limited:color_primaries=bt709:color_trc=bt709:colorspace=bt709"],
+    "remaining_encoder_argv_byte_identical": true
+  },
+  "common_encoder_prefix": [
+    "$FFMPEG", "-hide_banner", "-loglevel", "error", "-xerror", "-abort_on",
+    "empty_output+empty_output_stream", "-f", "rawvideo", "-pixel_format", "rgb24",
+    "-video_size", "64x64", "-framerate", "30", "-i", "pipe:0", "-map", "0:v:0",
+    "-map_metadata", "-1", "-map_chapters", "-1", "-sn", "-dn", "-an", "-frames:v", "1"
+  ],
+  "common_encoder_suffix": [
+    "-c:v", "libx264", "-preset", "slow", "-tune", "animation", "-crf", "0",
+    "-pix_fmt", "yuv420p", "-fps_mode", "cfr", "-color_range", "tv", "-colorspace",
+    "bt709", "-color_primaries", "bt709", "-color_trc", "bt709", "-x264-params",
+    "fullrange=off:colorprim=bt709:transfer=bt709:colormatrix=bt709", "-tag:v", "avc1",
+    "-movflags", "+faststart+write_colr", "-n", "$OUTPUT"
+  ],
+  "diagnostic_commands": {
+    "stream_probe": ["$FFPROBE", "-v", "error", "-count_frames", "-show_streams", "-show_format", "-of", "json", "$OUTPUT"],
+    "frame_probe": ["$FFPROBE", "-v", "error", "-show_frames", "-of", "json", "$OUTPUT"],
+    "sps_trace": ["$FFMPEG", "-hide_banner", "-loglevel", "info", "-i", "$OUTPUT", "-map", "0:v:0", "-c", "copy", "-bsf:v", "trace_headers", "-f", "null", "-"],
+    "decode_rgb24": ["$FFMPEG", "-hide_banner", "-loglevel", "error", "-xerror", "-i", "$OUTPUT", "-map", "0:v:0", "-an", "-f", "rawvideo", "-pix_fmt", "rgb24", "pipe:1"],
+    "decode_yuv420p": ["$FFMPEG", "-hide_banner", "-loglevel", "error", "-xerror", "-i", "$OUTPUT", "-map", "0:v:0", "-an", "-f", "rawvideo", "-pix_fmt", "yuv420p", "pipe:1"]
+  },
+  "control": {
+    "media": {"file": "h264-rgb-control.mp4", "bytes": 4460, "sha256": "3c5c0cad1ae9d6c923ba3c2be478025ec8777ffe45be103117b807b4ab1ed1ce"},
+    "stream_probe": {"file": "control-ffprobe-stream.json", "sha256": "22690bfc620e4357fb16d55fe661121a3d97fc79a35b9b1785e639a096308dc6"},
+    "frame_probe": {"file": "control-ffprobe-frames.json", "sha256": "86014dbbcfa3780f2fcf12802c9140a9243e60d356602cef45dd53faa833a24a"},
+    "sps_trace": {"file": "control-sps-trace.txt", "sha256": "230dc28142c9ec70cecd7c8c96c43a9065160d0794de6189c950a57635a1ca3e"},
+    "stream_color": {"range": "tv", "space": "bt709", "transfer": null, "primaries": null},
+    "frame_color": {"range": "tv", "space": "bt709", "transfer": "bt709", "primaries": "bt709"},
+    "sps_vui": {"video_signal_type_present": 1, "full_range": 0, "color_description_present": 1, "primaries": 1, "transfer": 1, "matrix": 1},
+    "container_nclx": {"path": "moov/trak/mdia/minf/stbl/stsd/avc1/colr", "type": "nclx", "payload_bytes": 11, "primaries": 2, "transfer": 2, "matrix": 1, "full_range_flag": 0, "reserved_bits": 0},
+    "decoded_yuv420p_bytes": 6144,
+    "decoded_yuv420p_sha256": "f2c38e399e5986e92dfd5f08d8785dde532d7c7c86d0c1152be2e75f7d2a3f63",
+    "decoded_rgb24_bytes": 12288,
+    "decoded_rgb24_sha256": "49b7103cc2da01278b2c65a3f59b428d41449071f841fda4a25ea43a76442ba6"
+  },
+  "treatment": {
+    "media": {"file": "h264-rgb-setparams.mp4", "bytes": 4460, "sha256": "f5b68f8bceaacab42722dff5aa28819f0968c809ba33e11dd8b2ae75964130b2"},
+    "stream_probe": {"file": "setparams-ffprobe-stream.json", "sha256": "7476d1dea431da3a81bf13175c1bc342429518c39ea1e326670f951d3a6a04b0"},
+    "frame_probe": {"file": "setparams-ffprobe-frames.json", "sha256": "86014dbbcfa3780f2fcf12802c9140a9243e60d356602cef45dd53faa833a24a"},
+    "sps_trace": {"file": "setparams-sps-trace.txt", "sha256": "bffdcb2950d4243af6c62ac25c7d97aa2e1a73778fac38d14050b207f259e8cb"},
+    "stream_color": {"range": "tv", "space": "bt709", "transfer": "bt709", "primaries": "bt709"},
+    "frame_color": {"range": "tv", "space": "bt709", "transfer": "bt709", "primaries": "bt709"},
+    "sps_vui": {"video_signal_type_present": 1, "full_range": 0, "color_description_present": 1, "primaries": 1, "transfer": 1, "matrix": 1},
+    "container_nclx": {"path": "moov/trak/mdia/minf/stbl/stsd/avc1/colr", "type": "nclx", "payload_bytes": 11, "primaries": 1, "transfer": 1, "matrix": 1, "full_range_flag": 0, "reserved_bits": 0},
+    "decoded_yuv420p_bytes": 6144,
+    "decoded_yuv420p_sha256": "f2c38e399e5986e92dfd5f08d8785dde532d7c7c86d0c1152be2e75f7d2a3f63",
+    "decoded_rgb24_bytes": 12288,
+    "decoded_rgb24_sha256": "49b7103cc2da01278b2c65a3f59b428d41449071f841fda4a25ea43a76442ba6"
+  },
+  "gates": {
+    "exact_raw_rgb_front_end_reproduced": true,
+    "only_setparams_argv_differs": true,
+    "decoded_control_treatment_yuv420p_byte_identical": true,
+    "decoded_control_treatment_rgb24_byte_identical": true,
+    "frame_metadata_unchanged_and_correct": true,
+    "sps_vui_unchanged_and_correct": true,
+    "control_reproduces_stream_and_nclx_defect": true,
+    "treatment_clears_stream_and_nclx_defect": true
+  },
+  "machine_passed": true,
+  "conclusion": "At the exact raw-RGB stdin boundary, setparams changes only the stream/container metadata outcome: decoded native YUV420P and converted RGB24 remain byte-identical while stream primaries/transfer and nclx change from unspecified 2/2 to BT.709 1/1."
+}
