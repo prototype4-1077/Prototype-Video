@@ -1,27 +1,11 @@
 {
-  "generated_at": "2026-08-11T09:24:46+00:00",
+  "generated_at": "2026-08-11T10:17:34+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "long_black_interval": 2,
     "low_bitrate": 8
   },
   "recommendations": [
-    {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "3 occurrence(s) across 1 build(s)",
-      "fingerprint": "275ae01e0ee9090a",
-      "priority": "medium",
-      "stage": "build_pass"
-    },
-    {
-      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
-      "category": "recurring_incident",
-      "evidence": "3 occurrence(s) across 1 build(s)",
-      "fingerprint": "732fb7fe993c620b",
-      "priority": "medium",
-      "stage": "tts"
-    },
     {
       "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
       "category": "recurring_incident",
@@ -49,34 +33,12 @@
     {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=74.5s, p95=1069.2s",
+      "evidence": "p50=75.1s, p95=1082.9s",
       "priority": "medium",
       "stage": "build_pass"
     }
   ],
   "recurring_incidents": [
-    {
-      "count": 3,
-      "failure_class": "unknown",
-      "fingerprint": "275ae01e0ee9090a",
-      "kind": "failure",
-      "normalized_error": "note: script is <n> words (aim for <n>-<n> words total) - allowed, supplied<path> script governor stage=tts state=start soft=269s hard=480s governor stage=tts state=failure duration=<n>.0s rc=<n> fingerprint=732fb7fe993c620b error: tts failed: d as api key - only valid api keys can be used. api keys start with 'sk_' and are shown when the key is created or rotated.\",\"status\":\"api_key_id_used_as_api_key\",\"request_id\":",
-      "slugs": [
-        "the-smoke-detector"
-      ],
-      "stage": "build_pass"
-    },
-    {
-      "count": 3,
-      "failure_class": "transient",
-      "fingerprint": "732fb7fe993c620b",
-      "kind": "failure",
-      "normalized_error": "^^^^^^ file \"<path> line <n>, in _synthesize_chunked response = _call_elevenlabs(voice_id, part_payload) ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _call_elevenlabs raise runtimeerror( runtimeerror: elevenlabs tts failed with http <n>: {\"detail\":{\"type\":\"authentication_error\",\"code\":\"invalid_api_key\",\"message\":\"api key id used as api key - only valid api keys can be used. api keys start with '",
-      "slugs": [
-        "the-smoke-detector"
-      ],
-      "stage": "tts"
-    },
     {
       "count": 2,
       "failure_class": "transient",
@@ -162,164 +124,163 @@
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 47,
+      "attempts": 48,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.002,
       "p95_success_s": 1.003,
-      "sample_count": 47,
-      "successes": 47,
+      "sample_count": 48,
+      "successes": 48,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 47.095
+      "total_duration_s": 48.097
     },
     "altsheet": {
-      "attempts": 39,
+      "attempts": 40,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.008,
       "p95_success_s": 6.04,
-      "sample_count": 39,
-      "successes": 39,
+      "sample_count": 40,
+      "successes": 40,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 79.541
+      "total_duration_s": 80.55
     },
     "assemble": {
-      "attempts": 1278,
+      "attempts": 1299,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 37.199,
-      "p95_success_s": 86.395,
-      "sample_count": 1278,
-      "successes": 1278,
+      "p50_success_s": 37.276,
+      "p95_success_s": 85.94,
+      "sample_count": 1299,
+      "successes": 1299,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 55242.459
+      "total_duration_s": 56322.61
     },
     "build_pass": {
-      "attempts": 257,
-      "failure_rate": 0.0506,
-      "failures": 13,
-      "p50_success_s": 74.546,
-      "p95_success_s": 1069.207,
-      "sample_count": 244,
-      "successes": 244,
-      "timeout_rate": 0.0389,
+      "attempts": 259,
+      "failure_rate": 0.0386,
+      "failures": 10,
+      "p50_success_s": 75.059,
+      "p95_success_s": 1082.898,
+      "sample_count": 249,
+      "successes": 249,
+      "timeout_rate": 0.0386,
       "timeouts": 10,
-      "total_duration_s": 77522.143
+      "total_duration_s": 79112.134
     },
     "credits": {
-      "attempts": 104,
+      "attempts": 106,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.006,
       "p95_success_s": 1.027,
-      "sample_count": 104,
-      "successes": 104,
+      "sample_count": 106,
+      "successes": 106,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 104.886
+      "total_duration_s": 106.9
     },
     "ffmpeg": {
-      "attempts": 220,
+      "attempts": 224,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 6.016,
-      "p95_success_s": 30.262,
-      "sample_count": 220,
-      "successes": 220,
+      "p95_success_s": 30.203,
+      "sample_count": 224,
+      "successes": 224,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2080.816
+      "total_duration_s": 2125.033
     },
     "footage": {
-      "attempts": 42,
+      "attempts": 43,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 134.204,
-      "p95_success_s": 238.091,
-      "sample_count": 42,
-      "successes": 42,
+      "p50_success_s": 134.185,
+      "p95_success_s": 237.946,
+      "sample_count": 43,
+      "successes": 43,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 5914.745
+      "total_duration_s": 5982.814
     },
     "hero": {
-      "attempts": 216,
+      "attempts": 227,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 34.566,
-      "p95_success_s": 50.092,
-      "sample_count": 216,
-      "successes": 216,
+      "p50_success_s": 31.073,
+      "p95_success_s": 50.089,
+      "sample_count": 227,
+      "successes": 227,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 6910.651
+      "total_duration_s": 7120.075
     },
     "prep": {
-      "attempts": 47,
+      "attempts": 48,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 13.028,
-      "p95_success_s": 18.159,
-      "sample_count": 47,
-      "successes": 47,
+      "p50_success_s": 13.03,
+      "p95_success_s": 19.703,
+      "sample_count": 48,
+      "successes": 48,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 608.628
+      "total_duration_s": 628.674
     },
     "probe": {
-      "attempts": 1343,
+      "attempts": 1365,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.008,
-      "p95_success_s": 1.015,
-      "sample_count": 1343,
-      "successes": 1343,
+      "p95_success_s": 1.014,
+      "sample_count": 1365,
+      "successes": 1365,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1355.456
+      "total_duration_s": 1377.652
     },
     "quality": {
-      "attempts": 47,
+      "attempts": 48,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 24.191,
-      "p95_success_s": 68.113,
-      "sample_count": 47,
-      "successes": 47,
+      "p50_success_s": 25.166,
+      "p95_success_s": 68.072,
+      "sample_count": 48,
+      "successes": 48,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1474.154
+      "total_duration_s": 1501.292
     },
     "transcribe": {
-      "attempts": 47,
+      "attempts": 48,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 17.011,
-      "p95_success_s": 24.021,
-      "sample_count": 47,
-      "successes": 47,
+      "p95_success_s": 24.672,
+      "sample_count": 48,
+      "successes": 48,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 849.745
+      "total_duration_s": 874.767
     },
     "tts": {
-      "attempts": 50,
-      "failure_rate": 0.06,
-      "failures": 3,
-      "p50_success_s": 58.036,
-      "p95_success_s": 79.556,
-      "sample_count": 47,
-      "successes": 47,
+      "attempts": 48,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 58.041,
+      "p95_success_s": 94.709,
+      "sample_count": 48,
+      "successes": 48,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2989.733
+      "total_duration_s": 3088.786
     }
   },
   "statuses": {
-    "done": 47,
-    "failed": 1
+    "done": 48
   }
 }

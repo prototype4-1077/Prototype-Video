@@ -1,0 +1,2105 @@
+{
+  "schema_version": 1,
+  "policy": {
+    "narrative_fidelity_first": true,
+    "strict_first_fraction": 0.72,
+    "minimum_anchor_coverage": 0.18,
+    "minimum_human_anchor_coverage": 0.1,
+    "fallback_when_no_direct_stock_match": "literal_storyboard",
+    "mood_never_overrides_story": true
+  },
+  "scenes": [
+    {
+      "scene_index": 0,
+      "text": "Look at you. Three in the morning again, wide awake, chest tight, scanning for what's wrong. Can we talk about that alarm going off in you? Because I don't think it means what you think it means.",
+      "query": "bathroom mirror at night, reflection leaning on sink, single bulb",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 8626778,
+      "candidate_decisions": [
+        {
+          "stock_id": 8626778,
+          "base_score": 78.55,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 83.55
+        },
+        {
+          "stock_id": 32834268,
+          "base_score": 76.85,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 81.85
+        },
+        {
+          "stock_id": 7172114,
+          "base_score": 76.63,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 76.63
+        },
+        {
+          "stock_id": 6620874,
+          "base_score": 75.03,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 80.03
+        },
+        {
+          "stock_id": 7171005,
+          "base_score": 71.92,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 71.92
+        },
+        {
+          "stock_id": 7271361,
+          "base_score": 68.65,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 68.65
+        },
+        {
+          "stock_id": 10374998,
+          "base_score": 67.55,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 72.55
+        },
+        {
+          "stock_id": 8403602,
+          "base_score": 63.7,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 68.7
+        },
+        {
+          "stock_id": 7490796,
+          "base_score": 60.69,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 60.69
+        },
+        {
+          "stock_id": 10251375,
+          "base_score": 57.63,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 62.63
+        },
+        {
+          "stock_id": 6770643,
+          "base_score": 55.34,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 55.34
+        },
+        {
+          "stock_id": 4189951,
+          "base_score": 49.81,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 49.81
+        },
+        {
+          "stock_id": 7086242,
+          "base_score": 49.51,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 54.51
+        },
+        {
+          "stock_id": 36778198,
+          "base_score": 42.03,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 47.03
+        },
+        {
+          "stock_id": 16834999,
+          "base_score": 41.18,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 41.18
+        },
+        {
+          "stock_id": "coverr:coverr-woman-looking-at-boots-in-the-mirror-9178",
+          "base_score": 31.1,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 36.1
+        },
+        {
+          "stock_id": "coverr:coverr-asian-man-using-his-a-smartphone-as-a-mirror-5260",
+          "base_score": 31.1,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 36.1
+        },
+        {
+          "stock_id": "coverr:coverr-brushing-teeth-in-front-of-the-mirror-2851",
+          "base_score": 31.1,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 36.1
+        },
+        {
+          "stock_id": "coverr:coverr-looking-in-the-mirror-2261",
+          "base_score": 31.1,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 36.1
+        },
+        {
+          "stock_id": "coverr:coverr-colorful-sunglasses-collection-at-market",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-woman-tries-on-a-hat-at-a-street-market",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-taking-pictures-of-her-boots-8219",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-trying-on-reptile-print-ankle-boots-4246",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-happy-father-preparing-a-baby-room-6033",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-husband-hugging-his-pregnant-wife-3221",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-husband-kisses-his-pregnant-wife-588",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-pregnant-woman-and-her-husband-in-baby-room-172",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-baby-s-room-7225",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-newborn-baby-s-bedroom-6646",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-decorated-wall-5670",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-man-yawning-whilst-driving-2960",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 2,
+      "text": "Your alarm system was installed a long time ago. And here's what nobody told you: it was never built to be accurate. It was built to be early.",
+      "query": "old house hallway at night, warm lamp, long shadows",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 34322690,
+      "candidate_decisions": [
+        {
+          "stock_id": 34322690,
+          "base_score": 78.43,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 78.43
+        },
+        {
+          "stock_id": 8049623,
+          "base_score": 69.85,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 69.85
+        },
+        {
+          "stock_id": 6279430,
+          "base_score": 68.72,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 73.72
+        },
+        {
+          "stock_id": 35130880,
+          "base_score": 62.42,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 62.42
+        },
+        {
+          "stock_id": 15201618,
+          "base_score": 55.7,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 55.7
+        },
+        {
+          "stock_id": 6144365,
+          "base_score": 49.15,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 49.15
+        },
+        {
+          "stock_id": 8321084,
+          "base_score": 47.27,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 47.27
+        },
+        {
+          "stock_id": 30009984,
+          "base_score": 34.89,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 34.89
+        },
+        {
+          "stock_id": 10166521,
+          "base_score": 33.48,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 33.48
+        },
+        {
+          "stock_id": 35140407,
+          "base_score": 32.64,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 32.64
+        },
+        {
+          "stock_id": "coverr:coverr-old-man-drawing-in-a-notebook-7324",
+          "base_score": 31.1,
+          "anchor_coverage": 0.167,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 36.1
+        },
+        {
+          "stock_id": "coverr:coverr-posing-with-christmas-bags-8768",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-businesswoman-checking-the-time-on-her-watch-2682",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-man-stands-by-the-sea-at-sunset",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-serene-beach-escape",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-rubs-his-face-near-the-sea",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-puts-on-wetsuit",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-sunset-fetch-playtime-with-dog",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-waves-to-photographer",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-sunbathes-and-checks-the-phone",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-cheerful-guy-takes-selfie-indoors",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-casual-outdoor-sneaker-tying",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-city-viewpoint-contemplation",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-tourist-taking-selfie-with-hollywood-sign",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 4,
+      "text": "Watch yourself today. The email that made your stomach drop. The pause before you opened it. That wasn't danger. That was the siren doing what sirens do.",
+      "query": "hand hesitating over glowing phone screen in dark room",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 6611950,
+      "candidate_decisions": [
+        {
+          "stock_id": 6611950,
+          "base_score": 82.3,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 82.3
+        },
+        {
+          "stock_id": 6611941,
+          "base_score": 80.55,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 80.55
+        },
+        {
+          "stock_id": 6611948,
+          "base_score": 79.69,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 79.69
+        },
+        {
+          "stock_id": 6943542,
+          "base_score": 79.58,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 79.58
+        },
+        {
+          "stock_id": 5617952,
+          "base_score": 76.61,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 76.61
+        },
+        {
+          "stock_id": 32246883,
+          "base_score": 73.96,
+          "anchor_coverage": 0.125,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 77.71
+        },
+        {
+          "stock_id": 10238038,
+          "base_score": 65.62,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 65.62
+        },
+        {
+          "stock_id": 6414098,
+          "base_score": 65.36,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 65.36
+        },
+        {
+          "stock_id": 30285721,
+          "base_score": 61.39,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 61.39
+        },
+        {
+          "stock_id": 6279142,
+          "base_score": 61.01,
+          "anchor_coverage": 0.125,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 64.76
+        },
+        {
+          "stock_id": 17643375,
+          "base_score": 55.7,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 55.7
+        },
+        {
+          "stock_id": "coverr:coverr-woman-sunbathes-and-checks-the-phone",
+          "base_score": 31.1,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 31.1
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-takes-the-phone-out-of-pocket-and-answers-the-call",
+          "base_score": 31.1,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 31.1
+        },
+        {
+          "stock_id": "coverr:coverr-posing-with-christmas-bags-8768",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-man-using-iphone-15",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-bottom-shot-of-a-man-using-iphone-15",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-man-uses-iphone-15",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-man-types-on-iphone-15",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-iphone-15",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-cheerful-guy-takes-selfie-indoors",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-makes-a-videocall-on-iphone-15",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-young-man-takes-a-selfie-with-iphone",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-man-taking-a-selfie-on-iphone-15",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-takes-airpods-out-of-the-case",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-unboxing-iphone-15",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-unboxes-iphone-15",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-shot-of-iphone-15-ports",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 6,
+      "text": "So you check the locks again. Reread the text again. Rehearse the conversation again. Not because there's fire. Because checking is what the alarm asks for. And every check tells it the alarm was right.",
+      "query": "door lock being tested at night, kitchen kettle steam, restless pacing shadow",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 35674426,
+      "candidate_decisions": [
+        {
+          "stock_id": 35674426,
+          "base_score": 83.94,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 83.94
+        },
+        {
+          "stock_id": 35217402,
+          "base_score": 83.82,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 83.82
+        },
+        {
+          "stock_id": 35674425,
+          "base_score": 83.55,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 83.55
+        },
+        {
+          "stock_id": 36492921,
+          "base_score": 70.52,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 70.52
+        },
+        {
+          "stock_id": 5835663,
+          "base_score": 70.45,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 70.45
+        },
+        {
+          "stock_id": 32001622,
+          "base_score": 69.7,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 69.7
+        },
+        {
+          "stock_id": 32001621,
+          "base_score": 68.33,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 68.33
+        },
+        {
+          "stock_id": 3752414,
+          "base_score": 67.32,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 67.32
+        },
+        {
+          "stock_id": 35674401,
+          "base_score": 66.87,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 66.87
+        },
+        {
+          "stock_id": 4107188,
+          "base_score": 65.68,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 65.68
+        },
+        {
+          "stock_id": 10974794,
+          "base_score": 62.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 62.54
+        },
+        {
+          "stock_id": 35674402,
+          "base_score": 62.19,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 62.19
+        },
+        {
+          "stock_id": 35674403,
+          "base_score": 61.7,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 61.7
+        },
+        {
+          "stock_id": 6369878,
+          "base_score": 49.97,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 49.97
+        },
+        {
+          "stock_id": "coverr:coverr-through-a-cave-1474",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 9,
+      "text": "Some of your alarms were calibrated by a childhood that needed them. Back then, reading a room fast mattered. Hearing footsteps mattered. Your sensitivity was intelligence. It kept a smaller you safe.",
+      "query": "staircase at night from low angle, warm light under a door",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 6010700,
+      "candidate_decisions": [
+        {
+          "stock_id": 6010700,
+          "base_score": 82.37,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 82.37
+        },
+        {
+          "stock_id": 30117919,
+          "base_score": 66.67,
+          "anchor_coverage": 0.25,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 74.17
+        },
+        {
+          "stock_id": 15778522,
+          "base_score": 64.46,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 64.46
+        },
+        {
+          "stock_id": 31802189,
+          "base_score": 59.17,
+          "anchor_coverage": 0.25,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 66.67
+        },
+        {
+          "stock_id": 11124661,
+          "base_score": 57.91,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 57.91
+        },
+        {
+          "stock_id": 8103658,
+          "base_score": 57.69,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 57.69
+        },
+        {
+          "stock_id": 7269168,
+          "base_score": 54.99,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 54.99
+        },
+        {
+          "stock_id": 35222296,
+          "base_score": 51.73,
+          "anchor_coverage": 0.25,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 59.23
+        },
+        {
+          "stock_id": 36219113,
+          "base_score": 50.88,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 50.88
+        },
+        {
+          "stock_id": 8103660,
+          "base_score": 50.43,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 50.43
+        },
+        {
+          "stock_id": 13352754,
+          "base_score": 44.58,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 44.58
+        },
+        {
+          "stock_id": 10577436,
+          "base_score": 44.29,
+          "anchor_coverage": 0.25,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 51.79
+        },
+        {
+          "stock_id": 4352633,
+          "base_score": 42.25,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 42.25
+        },
+        {
+          "stock_id": "coverr:coverr-through-a-cave-1474",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 10,
+      "text": "But look around. You're not there anymore. The alarm is still guarding a house you moved out of years ago. It never got the memo. That's not damage. That's devotion with an old map.",
+      "query": "calm sunlit apartment morning, curtains moving, coffee steam",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 852222,
+      "candidate_decisions": [
+        {
+          "stock_id": 4290129,
+          "base_score": 82.35,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 82.35
+        },
+        {
+          "stock_id": 35674401,
+          "base_score": 77.66,
+          "anchor_coverage": 0.25,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 85.16
+        },
+        {
+          "stock_id": 33972357,
+          "base_score": 77.21,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 77.21
+        },
+        {
+          "stock_id": 852222,
+          "base_score": 76.61,
+          "anchor_coverage": 0.125,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 80.36
+        },
+        {
+          "stock_id": 5495831,
+          "base_score": 76.58,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 76.58
+        },
+        {
+          "stock_id": 7255749,
+          "base_score": 74.26,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 74.26
+        },
+        {
+          "stock_id": 5214749,
+          "base_score": 73.42,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 73.42
+        },
+        {
+          "stock_id": 6938726,
+          "base_score": 70.43,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 70.43
+        },
+        {
+          "stock_id": 4105413,
+          "base_score": 68.12,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 68.12
+        },
+        {
+          "stock_id": 1216594,
+          "base_score": 68.09,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 68.09
+        },
+        {
+          "stock_id": 29395551,
+          "base_score": 65.63,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 65.63
+        },
+        {
+          "stock_id": 6938926,
+          "base_score": 57.5,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 57.5
+        },
+        {
+          "stock_id": 6938924,
+          "base_score": 57.13,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 57.13
+        },
+        {
+          "stock_id": 6062966,
+          "base_score": 55.1,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 55.1
+        },
+        {
+          "stock_id": "coverr:coverr-posing-with-christmas-bags-8768",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-businesswoman-checking-the-time-on-her-watch-2682",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-old-man-drawing-in-a-notebook-7324",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-man-stands-by-the-sea-at-sunset",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-serene-beach-escape",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-rubs-his-face-near-the-sea",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-puts-on-wetsuit",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-sunset-fetch-playtime-with-dog",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-waves-to-photographer",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-sunbathes-and-checks-the-phone",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-cheerful-guy-takes-selfie-indoors",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-casual-outdoor-sneaker-tying",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-city-viewpoint-contemplation",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-tourist-taking-selfie-with-hollywood-sign",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 12,
+      "text": "Next time it fires, try this. Don't ask, what if it's right. Ask, what would I see if I actually looked? Then look. Slowly. Like someone checking a kitchen, not fleeing a fire.",
+      "query": "slow breath by a window, hand flat on chest, morning light",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 26620438,
+      "candidate_decisions": [
+        {
+          "stock_id": 26620438,
+          "base_score": 81.49,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 81.49
+        },
+        {
+          "stock_id": 6152610,
+          "base_score": 80.2,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 80.2
+        },
+        {
+          "stock_id": 6152664,
+          "base_score": 79.92,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 79.92
+        },
+        {
+          "stock_id": 37311012,
+          "base_score": 76.76,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 76.76
+        },
+        {
+          "stock_id": 8934029,
+          "base_score": 71.28,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 71.28
+        },
+        {
+          "stock_id": 8347423,
+          "base_score": 65.39,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 65.39
+        },
+        {
+          "stock_id": 8795151,
+          "base_score": 65.18,
+          "anchor_coverage": 0.25,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 72.68
+        },
+        {
+          "stock_id": 6639948,
+          "base_score": 64.56,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 64.56
+        },
+        {
+          "stock_id": 5835697,
+          "base_score": 63.98,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 63.98
+        },
+        {
+          "stock_id": 8516975,
+          "base_score": 63.52,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 63.52
+        },
+        {
+          "stock_id": 6151326,
+          "base_score": 61.32,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 61.32
+        },
+        {
+          "stock_id": 31794200,
+          "base_score": 59.43,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 59.43
+        },
+        {
+          "stock_id": 7273913,
+          "base_score": 52.06,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 52.06
+        },
+        {
+          "stock_id": 7685818,
+          "base_score": 48.45,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 48.45
+        },
+        {
+          "stock_id": "coverr:coverr-posing-with-christmas-bags-8768",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-businesswoman-checking-the-time-on-her-watch-2682",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-old-man-drawing-in-a-notebook-7324",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-man-stands-by-the-sea-at-sunset",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-serene-beach-escape",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-rubs-his-face-near-the-sea",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-puts-on-wetsuit",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-sunset-fetch-playtime-with-dog",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-waves-to-photographer",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-sunbathes-and-checks-the-phone",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-cheerful-guy-takes-selfie-indoors",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-casual-outdoor-sneaker-tying",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-city-viewpoint-contemplation",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-tourist-taking-selfie-with-hollywood-sign",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 14,
+      "text": "And when it's toast, and it will mostly be toast, you don't punish the detector. You thank it. It's not broken. It's early. There's a difference, and the difference is the whole thing.",
+      "query": "two friends laughing quietly at a kitchen table, easy body language",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 7128780,
+      "candidate_decisions": [
+        {
+          "stock_id": 7128780,
+          "base_score": 73.28,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 73.28
+        },
+        {
+          "stock_id": 10159659,
+          "base_score": 73.13,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 73.13
+        },
+        {
+          "stock_id": 4781506,
+          "base_score": 72.93,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 72.93
+        },
+        {
+          "stock_id": 8557605,
+          "base_score": 67.68,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 67.68
+        },
+        {
+          "stock_id": 7418658,
+          "base_score": 65.04,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 65.04
+        },
+        {
+          "stock_id": 7559287,
+          "base_score": 64.75,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 64.75
+        },
+        {
+          "stock_id": 5697818,
+          "base_score": 62.31,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 62.31
+        },
+        {
+          "stock_id": 6967715,
+          "base_score": 61.47,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 61.47
+        },
+        {
+          "stock_id": 7683543,
+          "base_score": 60.84,
+          "anchor_coverage": 0.125,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 64.59
+        },
+        {
+          "stock_id": 7732820,
+          "base_score": 59.73,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 59.73
+        },
+        {
+          "stock_id": 10374303,
+          "base_score": 59.49,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 59.49
+        },
+        {
+          "stock_id": 5381658,
+          "base_score": 58.44,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 58.44
+        },
+        {
+          "stock_id": 10373844,
+          "base_score": 52.42,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 52.42
+        },
+        {
+          "stock_id": 13324067,
+          "base_score": 52.09,
+          "anchor_coverage": 0.125,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 55.84
+        },
+        {
+          "stock_id": "coverr:coverr-posing-with-christmas-bags-8768",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-businesswoman-checking-the-time-on-her-watch-2682",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-old-man-drawing-in-a-notebook-7324",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-man-stands-by-the-sea-at-sunset",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-serene-beach-escape",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-rubs-his-face-near-the-sea",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-puts-on-wetsuit",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-sunset-fetch-playtime-with-dog",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-waves-to-photographer",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-woman-sunbathes-and-checks-the-phone",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-cheerful-guy-takes-selfie-indoors",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-casual-outdoor-sneaker-tying",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-city-viewpoint-contemplation",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-tourist-taking-selfie-with-hollywood-sign",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 17,
+      "text": "So. Back to three in the morning. The tightness comes. And this time you say: I hear you. I'm checking. And you look, and the room is just a room, and the night is just a night.",
+      "query": "bedroom at night, person sitting up calmly, soft dark blue light",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 6944075,
+      "candidate_decisions": [
+        {
+          "stock_id": 7280521,
+          "base_score": 83.78,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 83.78
+        },
+        {
+          "stock_id": 6944065,
+          "base_score": 82.69,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 82.69
+        },
+        {
+          "stock_id": 11956328,
+          "base_score": 78.97,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 78.97
+        },
+        {
+          "stock_id": 6944075,
+          "base_score": 78.0,
+          "anchor_coverage": 0.25,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 85.5
+        },
+        {
+          "stock_id": 5473921,
+          "base_score": 75.95,
+          "anchor_coverage": 0.25,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 83.45
+        },
+        {
+          "stock_id": 6944081,
+          "base_score": 71.55,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 71.55
+        },
+        {
+          "stock_id": 6944084,
+          "base_score": 68.27,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 68.27
+        },
+        {
+          "stock_id": 7986739,
+          "base_score": 67.29,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 67.29
+        },
+        {
+          "stock_id": 10387628,
+          "base_score": 62.97,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 62.97
+        },
+        {
+          "stock_id": 7569777,
+          "base_score": 61.45,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 61.45
+        },
+        {
+          "stock_id": 6754007,
+          "base_score": 58.79,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 58.79
+        },
+        {
+          "stock_id": 3712750,
+          "base_score": 53.83,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 53.83
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-hay-christmas-bear-and-decorations-9081",
+          "base_score": 31.1,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 31.1
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-box-with-christmas-decorations-3013",
+          "base_score": 31.1,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 31.1
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-a-man-putting-a-candle-in-the-ceramic-gnome-candle-holder-6615",
+          "base_score": 31.1,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 31.1
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-christmas-decorations-2038",
+          "base_score": 31.1,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 31.1
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-woman-taping-a-present-sign-on-a-box-7898",
+          "base_score": 31.1,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 31.1
+        },
+        {
+          "stock_id": "coverr:coverr-woman-searching-cupboard-with-flashlight",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-sweeping-hair-and-fur-with-broom-and-dustpan-1687",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-sweeping-the-house-with-a-broom-and-dustpan-4106",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-woman-shakes-a-rug-on-the-balcony-5896",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-woman-turns-on-a-fan-4983",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-purifying-of-broom-from-fur-and-hair-4836",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-woman-sweeps-pet-fur-on-the-floor-at-home-2031",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-puts-a-candle-in-the-ceramic-gnome-candle-holder-8471",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-woman-lights-a-candle-5282",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-woman-takes-photo-of-christmas-decorations-9501",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-shows-a-bow-to-a-woman-5861",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    },
+    {
+      "scene_index": 19,
+      "text": "Which alarms in your house are set too sensitive? And who set them? Don't answer fast. Walk your rooms this week. Listen for which sirens are guarding fires that went out years ago.",
+      "query": "person opening curtains to full daylight, rooms brightening",
+      "narrative_mode_before": "stock_ok",
+      "result": "stock",
+      "stock_id": 8045182,
+      "candidate_decisions": [
+        {
+          "stock_id": 8045182,
+          "base_score": 81.63,
+          "anchor_coverage": 0.5,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 96.63
+        },
+        {
+          "stock_id": 5615050,
+          "base_score": 76.87,
+          "anchor_coverage": 0.5,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 91.87
+        },
+        {
+          "stock_id": 6944065,
+          "base_score": 74.98,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 74.98
+        },
+        {
+          "stock_id": 6446152,
+          "base_score": 72.94,
+          "anchor_coverage": 0.5,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 87.94
+        },
+        {
+          "stock_id": 6446151,
+          "base_score": 68.5,
+          "anchor_coverage": 0.5,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 83.5
+        },
+        {
+          "stock_id": 854116,
+          "base_score": 64.77,
+          "anchor_coverage": 0.25,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 72.27
+        },
+        {
+          "stock_id": 6781559,
+          "base_score": 59.31,
+          "anchor_coverage": 0.5,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 74.31
+        },
+        {
+          "stock_id": 5854065,
+          "base_score": 58.32,
+          "anchor_coverage": 0.25,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 65.82
+        },
+        {
+          "stock_id": 5854066,
+          "base_score": 56.88,
+          "anchor_coverage": 0.25,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 64.38
+        },
+        {
+          "stock_id": 5854057,
+          "base_score": 50.48,
+          "anchor_coverage": 0.5,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 65.48
+        },
+        {
+          "stock_id": "coverr:coverr-woman-searching-cupboard-with-flashlight",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-sweeping-hair-and-fur-with-broom-and-dustpan-1687",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-sweeping-the-house-with-a-broom-and-dustpan-4106",
+          "base_score": 29.54,
+          "anchor_coverage": 0.5,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 44.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-woman-shakes-a-rug-on-the-balcony-5896",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-woman-turns-on-a-fan-4983",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-purifying-of-broom-from-fur-and-hair-4836",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-woman-sweeps-pet-fur-on-the-floor-at-home-2031",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-puts-a-candle-in-the-ceramic-gnome-candle-holder-8471",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-woman-lights-a-candle-5282",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-hay-christmas-bear-and-decorations-9081",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-woman-takes-photo-of-christmas-decorations-9501",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-box-with-christmas-decorations-3013",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-a-man-putting-a-candle-in-the-ceramic-gnome-candle-holder-6615",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-christmas-decorations-2038",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-close-up-of-a-woman-taping-a-present-sign-on-a-box-7898",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        },
+        {
+          "stock_id": "coverr:coverr-a-man-shows-a-bow-to-a-woman-5861",
+          "base_score": 29.54,
+          "anchor_coverage": 0.0,
+          "accepted": true,
+          "reason": "advisory",
+          "final_score": 29.54
+        }
+      ]
+    }
+  ]
+}
