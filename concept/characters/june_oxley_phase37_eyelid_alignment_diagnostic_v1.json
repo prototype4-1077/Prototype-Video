@@ -1,0 +1,83 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase37_eyelid_alignment_diagnostic_v1",
+  "phase": "phase37_eyelid_alignment_root_cause_diagnostic",
+  "character_id": "june_oxley",
+  "classification": "Still-only causal diagnostic and corrected-source proposal for the binding Phase36 F248 eyelid defect. It cannot mutate, replace, promote, encode, or authorize the rejected immutable Candidate01 picture archive.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "locks": {
+    "controlling_james_verdict": {
+      "path": "collab/JAMES_VERDICT_2026-08-10.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "9f3974ddcfc4715ea40501bcc46f60594da7021b342047eeed6d44992c729bb3"
+    },
+    "phase36_picture_contract": {
+      "path": "concept/characters/june_oxley_phase36_ledger_pour_v1.json",
+      "sha256": "dde42b2175ea26daab638995acc0050b28082a7eafd09f7f1c1d38f9f8d4ef17"
+    },
+    "phase36_candidate01_manifest": {
+      "path": "collab/phase36_candidate_01/june-phase36-ledger-pour-manifest-v1.json",
+      "sha256": "0c97ba94987b8fabf1e1dd0d9c7b1229cfa6edc240ec9ef1fcccf3d45405d9a2"
+    },
+    "phase36_candidate01_rejection_receipt": {
+      "path": "collab/phase36_candidate_01/candidate01-review-failure-v1.json",
+      "sha256": "bd11323a9e416a439b70d21e99a21b41beb5fc98679590b476485f2e46a9d5c1"
+    },
+    "phase35_source_contract": {
+      "path": "concept/characters/june_oxley_phase35_source_textured_direct_address_v2.json",
+      "sha256": "68c763be79dd76447f6c33baf39ef79528fbbf1d6ea25a113c5550d63d62ba94"
+    },
+    "phase35_candidate03_manifest": {
+      "path": "collab/phase35_candidate_03/june-phase35-source-textured-direct-address-preview-manifest-v2.json",
+      "sha256": "250b678686f87c5cdcabeaedd0f6e39833b9dcaa7d2387c76fa8fe016b2885fe"
+    },
+    "phase35_candidate03_implementation_archive": {
+      "path": "collab/phase35_candidate_03/phase35-candidate03-implementation-source-b06981d.tar",
+      "sha256": "8467298165d1669f5d3efbdb3d2a630e8f93f67a4cf8aff062789939b056893b"
+    },
+    "phase34_source_renderer": {
+      "path": "pipeline/cartoon_source_textured_face_v2.py",
+      "sha256": "eb79dc97d4bad38b3c83d2a34dd98846cba9cec667c051b766a0e4388d52ca41"
+    },
+    "phase33_lid_renderer": {
+      "path": "pipeline/cartoon_semantic_face.py",
+      "sha256": "a93adf1e4d0ac13921c83e7a55f1ed5fc2654e1dc81e94438c570bf6f877ebaf"
+    }
+  },
+  "immutable_picture": {
+    "external_archive_path": "../../outputs/edit/phase36-ledger-pour-lossless-v1-candidate-01/june-phase36-ledger-pour-rgb24-xor-v1.gz",
+    "archive_sha256": "93eb2cd752d745a6f6fd534912ff68ee24e7bf72cf7cd406d2a366adea97d404",
+    "archive_bytes": 415959046,
+    "frame_inventory_canonical_sha256": "d09bcdc6a3c86e26e9ce77070f18504f3101e4b87edfc54e169e3b4b641a6451",
+    "combined_rgb24_sha256": "8a8fdc2a572ec1037e29a475b00e49454a059a73a751444458de95531bfa6501",
+    "frame_count": 303
+  },
+  "diagnostic": {
+    "source_frames": [165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181],
+    "phase36_frames": [240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256],
+    "source_focus_frame": 173,
+    "phase36_focus_frame": 248,
+    "expected_phase35_f173_rgb_sha256": "742ebca28200ce6c290380fad33db5b63bbe78c77614ee712dca920d7146582a",
+    "proposal": "At closure >= 0.999, suppress only the fixed-color explicit lid_crease blend. Preserve the registered blink texture, upper/lower lid alpha geometry, iris occlusion, head motion, and both camera transforms.",
+    "human_review_required": true,
+    "accepted_source_mutation_allowed": false,
+    "video_encode_allowed": false
+  },
+  "output": {
+    "directory": "collab/phase37_eyelid_crease_ab_v1",
+    "report_filename": "phase37-eyelid-alignment-machine-report-v1.json",
+    "native_comparison_stem": "phase35-f173-native-before-after",
+    "phase36_sequence_filename": "phase36-f240-f256-neighbor-sweep-v1.png",
+    "phase36_comparison_stem": "phase36-f248-before-after",
+    "layer_decomposition_filename": "phase35-f173-lid-layer-decomposition-v1.png"
+  },
+  "disposition": {
+    "candidate01_archive_remains_immutable": true,
+    "corrected_source_requires_new_picture_rebuild": true,
+    "corrected_source_requires_new_human_acceptance": true,
+    "phase36_encode_authorized": false,
+    "promotion_allowed": false
+  }
+}
