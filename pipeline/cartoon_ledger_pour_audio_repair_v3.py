@@ -25,13 +25,21 @@ from pipeline import cartoon_ledger_pour_audio_repair as candidate02_builder
 
 
 CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase36_candidate03_audio_repair_v1.json"
-EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256 = "bdec01e7d2f897ea06add2f4e1bb61aa74e47fc127b120ad3af6354105f61cd2"
-REVIEWED_NULL_CONTRACT_RAW_LF_SHA256 = "64d5326f9b1a93a73ae05ca790b503076ad90ea6835636527a79e9cb22ad5a0f"
+EXPECTED_AUTHORIZATION_SUBJECT_CANONICAL_SHA256 = "691ababbf8ede25e01ed3fea54c35b891da825e49ce5884e8e50d1262160061f"
+REVIEWED_NULL_CONTRACT_RAW_LF_SHA256 = "441b74b8d14edf935674e1714d176b5f6e78a2fcef8c302f2dd68df56bba65d0"
 PCM24_MAX = 8_388_607
 
 
 class Candidate03AudioError(RuntimeError):
     """Raised when a Candidate03 audio-only invariant is violated."""
+
+
+class ClaimWriteError(Candidate03AudioError):
+    """The one-shot claim exists, but its durable write did not complete."""
+
+    def __init__(self, claim: Path, cause: BaseException) -> None:
+        super().__init__(f"attempt claim was created but could not be durably written: {cause}")
+        self.claim = claim
 
 
 def _require_equal(actual: Any, expected: Any, label: str) -> None:
@@ -132,6 +140,12 @@ def load_contract(path: str | Path = REPO_ROOT / CONTRACT_RELATIVE_PATH) -> dict
     _require_equal(contract["rejected_predecessor"]["immutable"], True, "Candidate02 immutability")
     _require_equal(contract["rejected_predecessor"]["overwrite_allowed"], False, "Candidate02 overwrite policy")
     _require_equal(contract["rejected_predecessor"]["prior_ratification_revoked"], True, "Candidate02 revoked-ratification state")
+    _require_equal(
+        contract["noise_proxy"]["classification"],
+        "deterministic_artifact_regression_gate_not_general_perceptual_safety",
+        "Candidate03 noise-proxy classification",
+    )
+    _require_equal(contract["noise_proxy"]["human_listening_required"], True, "Candidate03 noise-proxy human-listen policy")
     for name, reference in contract["locks"].items():
         _locked_path(reference, f"locked {name}")
     _validate_binding_documents(contract)
@@ -495,17 +509,18 @@ def _write_json(path: Path, payload: Any) -> None:
 
 
 def _claim_attempt(path: Path, payload: dict[str, Any]) -> None:
-    flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL
-    descriptor = os.open(path, flags, 0o644)
+    encoded = (json.dumps(payload, indent=2, ensure_ascii=False, allow_nan=False) + "\n").encode("utf-8")
+    descriptor = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
     try:
-        with os.fdopen(descriptor, "w", encoding="utf-8", newline="\n") as destination:
-            destination.write(json.dumps(payload, indent=2, ensure_ascii=False) + "\n")
-    except BaseException:
-        try:
-            os.close(descriptor)
-        except OSError:
-            pass
-        raise
+        with os.fdopen(descriptor, "wb") as destination:
+            destination.write(encoded)
+            destination.flush()
+            os.fsync(destination.fileno())
+    except BaseException as exc:
+        # Once O_EXCL creates the final-path claim, any write, flush, fsync, or
+        # close failure consumes the only authorized attempt. Preserve even a
+        # partial claim so later calls fail closed instead of retrying.
+        raise ClaimWriteError(path, exc) from exc
 
 
 def write_audio_candidate(path: str | Path = REPO_ROOT / CONTRACT_RELATIVE_PATH) -> dict[str, Any]:

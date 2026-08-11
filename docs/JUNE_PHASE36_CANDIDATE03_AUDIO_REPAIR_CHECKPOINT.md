@@ -61,18 +61,26 @@ Candidate03 repair-span RMS is `-42.1791 dBFS`; whole-mix peak remains
 The proxy covers every source sample with overlapping 2,048-sample Hann windows
 at a 512-sample hop. Tests inject broadband static at 6.0-6.8 seconds, outside the
 known defect, and inject a separate impulsive click. This proves the detector is
-not hard-coded to the historical focus interval. A machine proxy cannot certify
-human taste or audibility; James must still listen.
+not hard-coded to the historical focus interval. Its fixed thresholds are
+deterministic artifact-regression gates for this locked mix, not general
+perceptual-safety limits. They cannot certify human taste, audibility, or
+acceptance; James must still listen.
+
+The one-shot claim uses deterministic UTF-8 JSON bytes, final-path `O_EXCL`, and
+write + flush + `os.fsync` before close. Once the claim path is created, a write,
+flush, fsync, or close failure raises typed `ClaimWriteError`, preserves even a
+partial claim, consumes authorization, leaves output/stage absent, and blocks a
+second build. Fault-injection tests cover fsync, partial-write, and close failure.
 
 ## Locked preflight surface
 
-- Reviewed null-receipt contract raw LF SHA-256: `64d5326f9b1a93a73ae05ca790b503076ad90ea6835636527a79e9cb22ad5a0f`
-- Stable authorization-subject canonical SHA-256: `bdec01e7d2f897ea06add2f4e1bb61aa74e47fc127b120ad3af6354105f61cd2`
-- Implementation LF SHA-256: `950cfe1370d6d9d80c18e805ff7d545c1633b41ef58c8202da9c9776ed886161`
-- Noise proxy LF SHA-256: `6af4ed82ea96ed5ce87f46aa4bd945ea4275d3fe609a09930c01827d86ace560`
-- Repair tests LF SHA-256: `fbc776852c94917e26b0c2ccec24a49c4ffd00e89050cbaf6100722668db4a8f`
+- Reviewed null-receipt contract raw LF SHA-256: `441b74b8d14edf935674e1714d176b5f6e78a2fcef8c302f2dd68df56bba65d0`
+- Stable authorization-subject canonical SHA-256: `691ababbf8ede25e01ed3fea54c35b891da825e49ce5884e8e50d1262160061f`
+- Implementation LF SHA-256: `3a60e4557d060cae50bcb3ae2e70e3c643bea8df1e594fe763f8ed089f441808`
+- Noise proxy LF SHA-256: `07e241f96f1702add749189e1bc8956ce6414789285d34b0b45106e58c789a18`
+- Repair tests LF SHA-256: `22b6c11be79c4dd11ddf1a7b5879fd28998500d3e93ec8d8e99df2d914dc0817`
 - Proxy tests LF SHA-256: `3ea8d03eeba8b4e79f042cc67f89df0e0f72114b753d3c63f2005e62a1219d85`
-- Tests: 17 passed, including both direct-script and `python -m` preflight invocation
+- Tests: 19 passed, including durable-claim fault injection and both direct-script and `python -m` preflight invocation
 - Machine gates: 24 passed
 
 ## Next action

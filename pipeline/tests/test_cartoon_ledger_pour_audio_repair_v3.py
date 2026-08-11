@@ -7,6 +7,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 import numpy as np
 
@@ -26,6 +27,11 @@ class Candidate03AudioRepairTests(unittest.TestCase):
         self.assertTrue(rejected["immutable"])
         self.assertIsNone(self.contract["authorization"]["receipt"])
         self.assertTrue(self.contract["authorization"]["required_before_build"])
+        self.assertEqual(
+            self.contract["noise_proxy"]["classification"],
+            "deterministic_artifact_regression_gate_not_general_perceptual_safety",
+        )
+        self.assertTrue(self.contract["noise_proxy"]["human_listening_required"])
 
     def test_candidate03_is_exact_and_changes_only_repair_span(self) -> None:
         audio = self.contract["audio"]
@@ -123,11 +129,92 @@ class Candidate03AudioRepairTests(unittest.TestCase):
     def test_attempt_claim_is_exclusive_and_preserved(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / "claim.json"
-            repair._claim_attempt(path, {"attempt": 1})
-            original = path.read_bytes()
+            payload = {"attempt": 1, "label": "deterministic"}
+            repair._claim_attempt(path, payload)
+            original = (json.dumps(payload, indent=2, ensure_ascii=False, allow_nan=False) + "\n").encode("utf-8")
+            self.assertEqual(path.read_bytes(), original)
             with self.assertRaises(FileExistsError):
                 repair._claim_attempt(path, {"attempt": 2})
             self.assertEqual(path.read_bytes(), original)
+
+    def test_claim_fsync_failure_preserves_claim_consumes_attempt_and_blocks_retry(self) -> None:
+        authorization = {
+            "path": "collab/test-authorization.md",
+            "hash_domain": "raw_bytes",
+            "sha256": "test-authorization-hash",
+            "verdict": self.contract["authorization"]["required_verdict"],
+        }
+        with tempfile.TemporaryDirectory() as directory:
+            output = Path(directory) / "candidate03"
+            stage = output.with_name("." + output.name + ".stage")
+            claim = output.with_name(output.name + ".attempt-v1.claim.json")
+            common = (
+                patch.object(repair, "load_contract", return_value=self.contract),
+                patch.object(repair, "_authorization", return_value=authorization),
+                patch.object(repair, "_output_path", return_value=output),
+                patch.object(repair, "_source_state", return_value={"stable": True}),
+            )
+            with common[0], common[1], common[2], common[3], patch.object(
+                repair.os, "fsync", side_effect=OSError("injected claim fsync failure")
+            ):
+                with self.assertRaisesRegex(repair.ClaimWriteError, "could not be durably written") as caught:
+                    repair.write_audio_candidate()
+            self.assertEqual(caught.exception.claim, claim)
+            self.assertTrue(claim.is_file())
+            self.assertFalse(output.exists())
+            self.assertFalse(stage.exists())
+            with patch.object(repair, "load_contract", return_value=self.contract), patch.object(
+                repair, "_authorization", return_value=authorization
+            ), patch.object(repair, "_output_path", return_value=output), patch.object(
+                repair, "_source_state", return_value={"stable": True}
+            ):
+                with self.assertRaisesRegex(repair.Candidate03AudioError, "attempt claim already exists"):
+                    repair.write_audio_candidate()
+
+    def test_claim_partial_write_and_close_failures_preserve_claim(self) -> None:
+        real_fdopen = repair.os.fdopen
+
+        class FaultingHandle:
+            def __init__(self, descriptor: int, failure: str) -> None:
+                self.handle = real_fdopen(descriptor, "wb")
+                self.failure = failure
+
+            def __enter__(self):
+                return self
+
+            def __exit__(self, exc_type, exc, traceback):
+                self.handle.close()
+                if exc_type is None and self.failure == "close":
+                    raise OSError("injected claim close failure")
+                return False
+
+            def write(self, payload: bytes) -> int:
+                if self.failure == "write":
+                    self.handle.write(payload[: max(1, len(payload) // 2)])
+                    raise OSError("injected partial claim write failure")
+                return self.handle.write(payload)
+
+            def flush(self) -> None:
+                self.handle.flush()
+
+            def fileno(self) -> int:
+                return self.handle.fileno()
+
+        for failure in ("write", "close"):
+            with self.subTest(failure=failure), tempfile.TemporaryDirectory() as directory:
+                path = Path(directory) / "claim.json"
+
+                def faulting_fdopen(descriptor: int, mode: str) -> FaultingHandle:
+                    self.assertEqual(mode, "wb")
+                    return FaultingHandle(descriptor, failure)
+
+                with patch.object(repair.os, "fdopen", side_effect=faulting_fdopen):
+                    with self.assertRaisesRegex(repair.ClaimWriteError, f"{failure} failure") as caught:
+                        repair._claim_attempt(path, {"attempt": 1})
+                self.assertEqual(caught.exception.claim, path)
+                self.assertTrue(path.is_file())
+                with self.assertRaises(FileExistsError):
+                    repair._claim_attempt(path, {"attempt": 2})
 
     def test_static_implementation_has_no_subprocess_or_video_write_route(self) -> None:
         source = inspect.getsource(repair)

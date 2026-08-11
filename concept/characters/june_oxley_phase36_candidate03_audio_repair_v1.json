@@ -57,12 +57,12 @@
     "audible_noise_proxy": {
       "path": "pipeline/cartoon_audio_noise_proxy.py",
       "hash_domain": "lf_normalized_text",
-      "sha256": "6af4ed82ea96ed5ce87f46aa4bd945ea4275d3fe609a09930c01827d86ace560"
+      "sha256": "07e241f96f1702add749189e1bc8956ce6414789285d34b0b45106e58c789a18"
     },
     "repair_tests": {
       "path": "pipeline/tests/test_cartoon_ledger_pour_audio_repair_v3.py",
       "hash_domain": "lf_normalized_text",
-      "sha256": "fbc776852c94917e26b0c2ccec24a49c4ffd00e89050cbaf6100722668db4a8f"
+      "sha256": "22b6c11be79c4dd11ddf1a7b5879fd28998500d3e93ec8d8e99df2d914dc0817"
     },
     "proxy_tests": {
       "path": "pipeline/tests/test_cartoon_audio_noise_proxy.py",
@@ -137,6 +137,8 @@
     "lossy_encoding_allowed": false
   },
   "noise_proxy": {
+    "classification": "deterministic_artifact_regression_gate_not_general_perceptual_safety",
+    "human_listening_required": true,
     "full_mix_required": true,
     "focus_interval_secondary_only": [118560, 158400],
     "method": "stft_2048_hann_hop512_exposed_flatness_highband_v1",

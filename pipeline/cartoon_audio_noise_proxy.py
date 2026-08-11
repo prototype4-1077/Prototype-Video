@@ -1,9 +1,11 @@
-"""Deterministic, full-mix proxies for audible broadband static and crackle.
+"""Deterministic artifact-regression proxies for broadband static and crackle.
 
-The proxy deliberately reports measurements rather than claiming to replace a
-human listen.  It is useful as a regression gate for exposed broadband noise:
-low-level frames with both noise-like spectral flatness and a large high-band
-power share.  A separate time-domain detector reports short impulsive crackle.
+The fixed thresholds are regression gates for this locked audio artifact, not
+general perceptual-safety limits and not evidence that a human will find a mix
+clean or acceptable.  The proxy measures low-level frames with both noise-like
+spectral flatness and a large high-band power share over the full mix.  A
+separate time-domain detector reports short impulsive crackle.  Human listening
+remains mandatory.
 """
 from __future__ import annotations
 
@@ -56,7 +58,7 @@ def audible_noise_proxy(
     static_high_band_ratio_floor: float = 0.35,
     crackle_delta_floor_fs: float = 0.08,
 ) -> dict[str, Any]:
-    """Measure the whole PCM mix and return JSON-safe audible-noise proxies.
+    """Measure the whole PCM mix and return JSON-safe artifact-regression data.
 
     ``samples`` must be signed integer PCM with shape ``(sample_frames,
     channels)``.  Every source sample is covered: a final overlapping FFT frame

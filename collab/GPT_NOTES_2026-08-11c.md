@@ -24,9 +24,26 @@ and PCM data
 The rejected focus was classified static-like for 100% / 0.832 seconds; the
 Candidate03 prediction measures 0% / 0 seconds. Across the complete 10.1-second
 mix, the static-like ratio falls from 0.365466 to 0.283898 and maximum run from
-0.938667 to 0.736 seconds. Seventeen tests and all 24 machine gates pass,
+0.938667 to 0.736 seconds. Nineteen tests and all 24 machine gates pass,
 including direct-script and module invocation regression checks, static
-injection at 6.0-6.8 seconds, and a separate crackle injection.
+injection at 6.0-6.8 seconds, a separate crackle injection, and one-shot claim
+fault injection for fsync, partial-write, and close failures. The claim is
+deterministic UTF-8 JSON created with final-path `O_EXCL`; post-create failures
+preserve its path, consume authorization, leave output/stage absent, and prevent
+a retry.
+
+The proxy thresholds are deterministic artifact-regression gates for this
+locked mix. They are not general perceptual-safety limits and do not establish
+human acceptability.
+
+Final pre-authorization binding surface:
+
+- Contract raw LF SHA-256: `441b74b8d14edf935674e1714d176b5f6e78a2fcef8c302f2dd68df56bba65d0`
+- Authorization-subject canonical SHA-256: `691ababbf8ede25e01ed3fea54c35b891da825e49ce5884e8e50d1262160061f`
+- Implementation LF SHA-256: `3a60e4557d060cae50bcb3ae2e70e3c643bea8df1e594fe763f8ed089f441808`
+- Noise-proxy LF SHA-256: `07e241f96f1702add749189e1bc8956ce6414789285d34b0b45106e58c789a18`
+- Repair-tests LF SHA-256: `22b6c11be79c4dd11ddf1a7b5879fd28998500d3e93ec8d8e99df2d914dc0817`
+- Proxy-tests LF SHA-256: `3ea8d03eeba8b4e79f042cc67f89df0e0f72114b753d3c63f2005e62a1219d85`
 
 No Candidate03 output or attempt claim exists. Authorization is null and the
 build command fails closed. A new separate authorization receipt must bind the
