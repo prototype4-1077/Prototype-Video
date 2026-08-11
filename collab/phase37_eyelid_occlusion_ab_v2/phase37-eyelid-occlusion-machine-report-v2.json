@@ -1,0 +1,1298 @@
+{
+  "report_version": 2,
+  "diagnostic_id": "phase37_eyelid_occlusion_diagnostic_v2",
+  "status": "MACHINE_FOUR_STATE_OCCLUSION_DIAGNOSTIC_PASSED_HUMAN_ALIGNMENT_REVIEW_REQUIRED",
+  "machine_passed": true,
+  "human_visual_acceptance_required": true,
+  "scope": "still-only F173/F248 baseline, crease-only, mask-only, and combined root-cause isolation with actual Phase36 F240-F256 neighbor sweep",
+  "cash_cost": 0,
+  "paid_service_calls": 0,
+  "network_calls": 0,
+  "encoding_process_count": 0,
+  "video_encoder_invoked": false,
+  "contract": {
+    "path": "concept/characters/june_oxley_phase37_eyelid_occlusion_diagnostic_v2.json",
+    "raw_sha256": "da1c36fabad987ed41c1047c1d9bfe646acf451dc18b7f78dd79126fd164f06e"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_eyelid_alignment_diagnostic.py",
+    "sha256": "e91063c2de6f5d4adf8d8935e4eb6c651c0d1572a3aea6da61670fa0b3685415"
+  },
+  "tests": {
+    "path": "pipeline/tests/test_cartoon_eyelid_alignment_diagnostic.py",
+    "sha256": "2b04d9098efa5b847f2e5c501c37f08ea11c6569b2a0dc7da2937307d60c4e8e"
+  },
+  "toolchain": {
+    "python_opencv": "5.0.0",
+    "numpy": "2.4.4",
+    "pillow": "12.2.0"
+  },
+  "bindings": {
+    "controlling_james_verdict_lf_sha256": "9f3974ddcfc4715ea40501bcc46f60594da7021b342047eeed6d44992c729bb3",
+    "predecessor_commit_sha": "f1eeac9c72acba676b51a95b51f5efe8428a06b4",
+    "phase37_v1_contract_sha256": "1b8f971177c2d51bef7a1419f3afd4b5c64d89c312c27a61cac51842080803c8",
+    "phase37_v1_machine_report_sha256": "a4819ab1c1f52a5854bfd22c52248ce1bb172c32633a237d91bbccbd63cba1d3",
+    "phase36_candidate01_manifest_sha256": "0c97ba94987b8fabf1e1dd0d9c7b1229cfa6edc240ec9ef1fcccf3d45405d9a2",
+    "phase36_candidate01_rejection_receipt_sha256": "bd11323a9e416a439b70d21e99a21b41beb5fc98679590b476485f2e46a9d5c1",
+    "phase36_archive": {
+      "path": "C:\\Users\\jwats\\Documents\\Codex\\2026-07-28\\d\\outputs\\edit\\phase36-ledger-pour-lossless-v1-candidate-01\\june-phase36-ledger-pour-rgb24-xor-v1.gz",
+      "bytes": 415959046,
+      "sha256": "93eb2cd752d745a6f6fd534912ff68ee24e7bf72cf7cd406d2a366adea97d404",
+      "header": {
+        "format": "phase36_rgb24_xor_previous_gzip_v1",
+        "width": 1920,
+        "height": 1080,
+        "channels": 3,
+        "frame_count": 303,
+        "frame_bytes": 6220800,
+        "xor_seed": "all_zero_rgb24_frame",
+        "contract_canonical_sha256": "8ae32c46c923e593390551ebfe14e0166b4d9d6a2eac055a342a3d20d49ffe01",
+        "hard_cut_output_frames": [
+          76,
+          238
+        ]
+      },
+      "frame_inventory_canonical_sha256": "d09bcdc6a3c86e26e9ce77070f18504f3101e4b87edfc54e169e3b4b641a6451",
+      "combined_rgb24_sha256": "8a8fdc2a572ec1037e29a475b00e49454a059a73a751444458de95531bfa6501",
+      "verified_frames": 303
+    }
+  },
+  "baseline": {
+    "phase35_f173_rgb_sha256": "742ebca28200ce6c290380fad33db5b63bbe78c77614ee712dca920d7146582a",
+    "phase35_f173_native_rgb_sha256": "273f53ac7f88c0ab800d85dac70b114b2615028ce7da9b79a68d52a308094ae4",
+    "phase35_f173_evidence": {
+      "blink_closure": 1.0,
+      "iris_occlusion_ratios": [
+        1.0,
+        1.0
+      ],
+      "lid_areas": [
+        2335,
+        2421
+      ],
+      "lid_write_areas": [
+        2683,
+        2773
+      ]
+    },
+    "phase35_source_frame_hashes": [
+      {
+        "frame": 165,
+        "rgb_sha256": "21d3b53b63538516f0116e3b79c436799b8fcc5aa08034b5c725c558086e5948"
+      },
+      {
+        "frame": 166,
+        "rgb_sha256": "24147275896384708b362caab7ef2d2903401dd93fe7c27d59175b4043c9a70b"
+      },
+      {
+        "frame": 167,
+        "rgb_sha256": "c9d1715367e91ec244cb58b577c4120f39f4d467504b80c635330ae9a3605d3c"
+      },
+      {
+        "frame": 168,
+        "rgb_sha256": "f5b7b0f1c0b0e58bfdabf412e4faed7178a5819bd7e4044013df5009f865fb6e"
+      },
+      {
+        "frame": 169,
+        "rgb_sha256": "24c5afe8a4b3d280ede9a494808f5fa576f0b31d98d732a9487f53c8d408b5ce"
+      },
+      {
+        "frame": 170,
+        "rgb_sha256": "42b44a50336ef4bde43030a556e9cfad3185616e7b00a2e0c04fe48e4e0fd9ca"
+      },
+      {
+        "frame": 171,
+        "rgb_sha256": "f2af23fe5c264be52081dab608a6a6f428b2e69e3bde2c2bea7a19fdffc2d306"
+      },
+      {
+        "frame": 172,
+        "rgb_sha256": "b7c508c3db28b2e0fd888bee0b3f4af73416a1c3ab49b33450a6417e1cb064f3"
+      },
+      {
+        "frame": 173,
+        "rgb_sha256": "742ebca28200ce6c290380fad33db5b63bbe78c77614ee712dca920d7146582a"
+      },
+      {
+        "frame": 174,
+        "rgb_sha256": "eeac96015112d7d604c6b31a8a7241537c44738b33bba2f12c745cc164528b15"
+      },
+      {
+        "frame": 175,
+        "rgb_sha256": "a2bc88ba8e72908ae8cf8f52479de2d88f0aee40b96a9c2e4052b9268adcce1a"
+      },
+      {
+        "frame": 176,
+        "rgb_sha256": "bfe936cc631fc4efc852c436ef0d3d392cbaf1ea8c0638485adf9fd0fdd8e61a"
+      },
+      {
+        "frame": 177,
+        "rgb_sha256": "d58eacc56f96fe5d5dbd639d607fdf0de2fb2e53a8904f4c39c9bbc25cbaf11a"
+      },
+      {
+        "frame": 178,
+        "rgb_sha256": "3f93dc4b184651859df999e9cf1594050702d70684f2cc2f31d9be68592ff5e5"
+      },
+      {
+        "frame": 179,
+        "rgb_sha256": "efefa2a2cbc2d5df7bd15ffeca902f873010d3e0d42807690f1396f3d9a2ee3c"
+      },
+      {
+        "frame": 180,
+        "rgb_sha256": "b9e31163afc94337ee0b69bbafc83dc268adcc2a9180504863157de57ef228d7"
+      },
+      {
+        "frame": 181,
+        "rgb_sha256": "1ed300b43e8ad54f18c5a600aaab7c6661b8dac7a843578e4428d95421273ed1"
+      }
+    ],
+    "phase36_frame_hashes": [
+      {
+        "frame": 240,
+        "rgb_sha256": "d996a08249735162c26c090ef8f258acaed6d606132b879704edb5e1a87e6ce0"
+      },
+      {
+        "frame": 241,
+        "rgb_sha256": "9a1e0473306f039724ecaa98698b9928ea0a98d52400cd730ee97bafbe7f9fc9"
+      },
+      {
+        "frame": 242,
+        "rgb_sha256": "4ec69acf3f018a36f0b3222cefdd2cfa13b4ae48a1523f90ca1daa814fed6131"
+      },
+      {
+        "frame": 243,
+        "rgb_sha256": "320c090592ee74aacfa11e7ef53e4bbe31b83c3baf0b5b3b222ec78e0d5aa62f"
+      },
+      {
+        "frame": 244,
+        "rgb_sha256": "5f1c27eb889b32862e339b21f5c97631ecc73b65d1d50e196f946ecb83fc3736"
+      },
+      {
+        "frame": 245,
+        "rgb_sha256": "89c8e5b592b6d5f6e8ea46f74c11a0a8826bfb9726fbb4841df204322fa11fba"
+      },
+      {
+        "frame": 246,
+        "rgb_sha256": "109f2996decfa63f0002edbdb9b72ac01bdcab43f13593142d74cc5cabd12429"
+      },
+      {
+        "frame": 247,
+        "rgb_sha256": "a658f61350df696a1e34225af3ad05acfa07e403f0e31a9106b580d94c46580c"
+      },
+      {
+        "frame": 248,
+        "rgb_sha256": "f82e1cfb3f3798ce3ca4233ad1a12c92acefebd21235e3cab1b9fc9e3edaedb4"
+      },
+      {
+        "frame": 249,
+        "rgb_sha256": "7a9cf7d9e0b683307fbb84ae7ffdff41db696256bb3b44503b6f7553a78ec3fc"
+      },
+      {
+        "frame": 250,
+        "rgb_sha256": "f9ed32ee2780642a1dde16fc5b188d2567350651f7e39bfe70a77748d1737e19"
+      },
+      {
+        "frame": 251,
+        "rgb_sha256": "358ebe378efef52d0cd4e45079d9185849556b9b1f59dc8c89396447e598928f"
+      },
+      {
+        "frame": 252,
+        "rgb_sha256": "706aa67d667b328b0f549adf2c94870d1cca87fbbc63d74cdac7a88c25eee56d"
+      },
+      {
+        "frame": 253,
+        "rgb_sha256": "cd0ed37bf006211bbd52dc37e767d140144f8cb35c08c3a55e4cdeae06b52f60"
+      },
+      {
+        "frame": 254,
+        "rgb_sha256": "8d991810afd414d46e7edfde75030a3ca6bb28bf22162b59ac40b9669035ca1b"
+      },
+      {
+        "frame": 255,
+        "rgb_sha256": "866239a0ca8e032f262288eafaf4058c1b24b0de6a45199303436e154b4fb370"
+      },
+      {
+        "frame": 256,
+        "rgb_sha256": "78de60b2462099a2304d86e03e7265753ddddc974746c24874287bd1f452c6a6"
+      }
+    ]
+  },
+  "four_state_variants": {
+    "baseline": {
+      "configuration": {
+        "suppress_fixed_crease": false,
+        "expand_reviewed_sclera": false
+      },
+      "phase35_f173_rgb_sha256": "742ebca28200ce6c290380fad33db5b63bbe78c77614ee712dca920d7146582a",
+      "phase35_f173_native_rgb_sha256": "273f53ac7f88c0ab800d85dac70b114b2615028ce7da9b79a68d52a308094ae4",
+      "phase36_f248_rgb_sha256": "f82e1cfb3f3798ce3ca4233ad1a12c92acefebd21235e3cab1b9fc9e3edaedb4",
+      "phase35_f173_evidence": {
+        "blink_closure": 1.0,
+        "iris_occlusion_ratios": [
+          1.0,
+          1.0
+        ],
+        "lid_areas": [
+          2335,
+          2421
+        ],
+        "lid_write_areas": [
+          2683,
+          2773
+        ]
+      },
+      "changed_frames_vs_baseline": {
+        "source": [],
+        "phase36": []
+      },
+      "write_audit": {
+        "crease_suppressions": [],
+        "sclera_expansions": []
+      },
+      "difference_vs_baseline": null
+    },
+    "crease_only": {
+      "configuration": {
+        "suppress_fixed_crease": true,
+        "expand_reviewed_sclera": false
+      },
+      "phase35_f173_rgb_sha256": "1398506a87b37ea3dce13d19d23a2b75db8e75b499187739c770a2227ce0fce7",
+      "phase35_f173_native_rgb_sha256": "972270ad74924ec1557734244c437b1c8649c314b2b6aea798e2fb6fe6494672",
+      "phase36_f248_rgb_sha256": "a009ab4bc430d1a8903fdb3f7e2617bd1a97af96c22a54de73695d2cde2910ac",
+      "phase35_f173_evidence": {
+        "blink_closure": 1.0,
+        "iris_occlusion_ratios": [
+          1.0,
+          1.0
+        ],
+        "lid_areas": [
+          2335,
+          2421
+        ],
+        "lid_write_areas": [
+          2683,
+          2773
+        ]
+      },
+      "changed_frames_vs_baseline": {
+        "source": [
+          173
+        ],
+        "phase36": [
+          248
+        ]
+      },
+      "write_audit": {
+        "crease_suppressions": [
+          {
+            "center": [
+              598,
+              236
+            ],
+            "radius": [
+              31,
+              24
+            ],
+            "closure": 1.0,
+            "nonzero_alpha_pixels": 166,
+            "maximum_alpha": 170
+          },
+          {
+            "center": [
+              696,
+              252
+            ],
+            "radius": [
+              31,
+              25
+            ],
+            "closure": 1.0,
+            "nonzero_alpha_pixels": 166,
+            "maximum_alpha": 170
+          }
+        ],
+        "sclera_expansions": []
+      },
+      "difference_vs_baseline": {
+        "changed_pixels_native": 332,
+        "changed_pixels_phase35_final": 944,
+        "changed_pixels_phase36_f248": 2440,
+        "native_changed_outside_allowed_support": 0,
+        "phase35_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after exact native support transform",
+          "radius_px": 3,
+          "added_support_pixels": 1405
+        },
+        "phase36_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after Phase36 transform of guarded Phase35 support",
+          "radius_px": 1,
+          "added_support_pixels": 1448
+        },
+        "phase35_changed_outside_transformed_allowed_support": 0,
+        "phase36_changed_outside_twice_transformed_allowed_support": 0
+      }
+    },
+    "mask_only": {
+      "configuration": {
+        "suppress_fixed_crease": false,
+        "expand_reviewed_sclera": true
+      },
+      "phase35_f173_rgb_sha256": "3532cbf78fbd380b9231ce0ec7edca695418b214091784f912527a54ee498e67",
+      "phase35_f173_native_rgb_sha256": "b49fae31599fad1ce720452c04e11878e2c0053231a3f41fbcfed9de59e21fe5",
+      "phase36_f248_rgb_sha256": "fef77fc3327d48602ecf1cfdf446aefb5ca397041a773ca96d7406d0be512883",
+      "phase35_f173_evidence": {
+        "blink_closure": 1.0,
+        "iris_occlusion_ratios": [
+          1.0,
+          1.0
+        ],
+        "lid_areas": [
+          2338,
+          2457
+        ],
+        "lid_write_areas": [
+          2684,
+          2778
+        ]
+      },
+      "changed_frames_vs_baseline": {
+        "source": [
+          173
+        ],
+        "phase36": [
+          248
+        ]
+      },
+      "write_audit": {
+        "crease_suppressions": [],
+        "sclera_expansions": [
+          {
+            "center": [
+              598,
+              236
+            ],
+            "radius": [
+              31,
+              24
+            ],
+            "closure": 1.0,
+            "under_occluded_core_pixels": 5,
+            "new_hard_owner_pixels": 3,
+            "existing_hard_owner_alpha_strengthened_pixels": 2,
+            "minimum_prior_alpha": 0,
+            "registered_patch_provenance_pixels": 5
+          },
+          {
+            "center": [
+              696,
+              252
+            ],
+            "radius": [
+              31,
+              25
+            ],
+            "closure": 1.0,
+            "under_occluded_core_pixels": 82,
+            "new_hard_owner_pixels": 36,
+            "existing_hard_owner_alpha_strengthened_pixels": 46,
+            "minimum_prior_alpha": 0,
+            "registered_patch_provenance_pixels": 82
+          }
+        ]
+      },
+      "difference_vs_baseline": {
+        "changed_pixels_native": 69,
+        "changed_pixels_phase35_final": 270,
+        "changed_pixels_phase36_f248": 741,
+        "native_changed_outside_allowed_support": 0,
+        "phase35_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after exact native support transform",
+          "radius_px": 2,
+          "added_support_pixels": 512
+        },
+        "phase36_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after Phase36 transform of guarded Phase35 support",
+          "radius_px": 0,
+          "added_support_pixels": 0
+        },
+        "phase35_changed_outside_transformed_allowed_support": 0,
+        "phase36_changed_outside_twice_transformed_allowed_support": 0
+      }
+    },
+    "combined": {
+      "configuration": {
+        "suppress_fixed_crease": true,
+        "expand_reviewed_sclera": true
+      },
+      "phase35_f173_rgb_sha256": "f273af4d463bfb18618b94749aa7591f773837b2a9d66d92675f8064000a553b",
+      "phase35_f173_native_rgb_sha256": "9ecd66aad567a4cbcfb9247ea001554e1a650133f6b37e3e2f4322b17e4460e3",
+      "phase36_f248_rgb_sha256": "4b73fb96f7d986fc87ae945f0afa16dbcc389baf4df63940a13a56ed0200ebc9",
+      "phase35_f173_evidence": {
+        "blink_closure": 1.0,
+        "iris_occlusion_ratios": [
+          1.0,
+          1.0
+        ],
+        "lid_areas": [
+          2338,
+          2457
+        ],
+        "lid_write_areas": [
+          2684,
+          2778
+        ]
+      },
+      "changed_frames_vs_baseline": {
+        "source": [
+          173
+        ],
+        "phase36": [
+          248
+        ]
+      },
+      "write_audit": {
+        "crease_suppressions": [
+          {
+            "center": [
+              598,
+              236
+            ],
+            "radius": [
+              31,
+              24
+            ],
+            "closure": 1.0,
+            "nonzero_alpha_pixels": 166,
+            "maximum_alpha": 170
+          },
+          {
+            "center": [
+              696,
+              252
+            ],
+            "radius": [
+              31,
+              25
+            ],
+            "closure": 1.0,
+            "nonzero_alpha_pixels": 166,
+            "maximum_alpha": 170
+          }
+        ],
+        "sclera_expansions": [
+          {
+            "center": [
+              598,
+              236
+            ],
+            "radius": [
+              31,
+              24
+            ],
+            "closure": 1.0,
+            "under_occluded_core_pixels": 5,
+            "new_hard_owner_pixels": 3,
+            "existing_hard_owner_alpha_strengthened_pixels": 2,
+            "minimum_prior_alpha": 0,
+            "registered_patch_provenance_pixels": 5
+          },
+          {
+            "center": [
+              696,
+              252
+            ],
+            "radius": [
+              31,
+              25
+            ],
+            "closure": 1.0,
+            "under_occluded_core_pixels": 82,
+            "new_hard_owner_pixels": 36,
+            "existing_hard_owner_alpha_strengthened_pixels": 46,
+            "minimum_prior_alpha": 0,
+            "registered_patch_provenance_pixels": 82
+          }
+        ]
+      },
+      "difference_vs_baseline": {
+        "changed_pixels_native": 401,
+        "changed_pixels_phase35_final": 1214,
+        "changed_pixels_phase36_f248": 3181,
+        "native_changed_outside_allowed_support": 0,
+        "phase35_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after exact native support transform",
+          "radius_px": 3,
+          "added_support_pixels": 2142
+        },
+        "phase36_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after Phase36 transform of guarded Phase35 support",
+          "radius_px": 1,
+          "added_support_pixels": 2218
+        },
+        "phase35_changed_outside_transformed_allowed_support": 0,
+        "phase36_changed_outside_twice_transformed_allowed_support": 0
+      }
+    }
+  },
+  "combined_proposal": {
+    "description": "At closure >= 0.999, expand hard lower-lid ownership only over reviewed source-sclera core pixels whose baseline combined lid alpha is below 255, write the already registered blink texture at alpha 255 before the explicit crease stage, and independently allow the explicit fixed-color crease to be suppressed. Preserve all other source pixels, partial closures, head motion, cage deformation, and both camera transforms.",
+    "phase35_f173_rgb_sha256": "f273af4d463bfb18618b94749aa7591f773837b2a9d66d92675f8064000a553b",
+    "phase35_f173_native_rgb_sha256": "9ecd66aad567a4cbcfb9247ea001554e1a650133f6b37e3e2f4322b17e4460e3",
+    "phase36_f248_rgb_sha256": "4b73fb96f7d986fc87ae945f0afa16dbcc389baf4df63940a13a56ed0200ebc9",
+    "phase35_changed_frames": [
+      173
+    ],
+    "phase36_changed_frames": [
+      248
+    ]
+  },
+  "sclera_owner_audit": {
+    "classification_color_space": "OpenCV HSV on the locked neutral RGB plate",
+    "reviewed_under_occluded_sclera_pixels": 87,
+    "new_hard_owner_pixels": 39,
+    "existing_hard_owner_alpha_strengthened_pixels": 48,
+    "owner_accounting_sum": 87,
+    "residual_under_occluded_sclera_after": 0,
+    "diagnostic_fringe_write_pixels": 0,
+    "per_eye": {
+      "viewer_left_eye": {
+        "classification": {
+          "aperture_polygon_xy": [
+            [
+              568,
+              236
+            ],
+            [
+              575,
+              225
+            ],
+            [
+              588,
+              219
+            ],
+            [
+              605,
+              218
+            ],
+            [
+              619,
+              226
+            ],
+            [
+              625,
+              238
+            ],
+            [
+              624,
+              255
+            ],
+            [
+              612,
+              259
+            ],
+            [
+              591,
+              258
+            ],
+            [
+              576,
+              252
+            ],
+            [
+              569,
+              245
+            ]
+          ],
+          "reviewed_sclera_seeds_xy": [
+            [
+              612,
+              240
+            ],
+            [
+              578,
+              246
+            ],
+            [
+              621,
+              254
+            ]
+          ],
+          "seed_component_labels": [
+            2,
+            5,
+            6
+          ],
+          "threshold_component_count": 6,
+          "core": {
+            "area": 170,
+            "bbox_xyxy": [
+              577,
+              233,
+              623,
+              259
+            ],
+            "centroid_xy": [
+              606.9823529411765,
+              246.2
+            ],
+            "components_8_connected": 3,
+            "sha256": "19450cd6069ebfda767be095ce48929b136a8c2c022a71ee20ee009a9174990f"
+          },
+          "under_occluded_core": {
+            "area": 5,
+            "bbox_xyxy": [
+              598,
+              253,
+              623,
+              259
+            ],
+            "centroid_xy": [
+              612.2,
+              255.4
+            ],
+            "components_8_connected": 2,
+            "sha256": "98c841d3cc32d64d13f6915c3987b165d3a8a3fa459d668d34b8b0a91eb91689"
+          },
+          "one_px_diagnostic_fringe": {
+            "area": 18,
+            "bbox_xyxy": [
+              597,
+              252,
+              624,
+              259
+            ],
+            "centroid_xy": [
+              613.7777777777778,
+              254.83333333333334
+            ],
+            "components_8_connected": 2,
+            "sha256": "a3ac6d9e6666bdaf64203d9d4d3c9602aa6393f6998729c0645a15af0e5694a6"
+          },
+          "protected_non_sclera": {
+            "area": 2917,
+            "bbox_xyxy": [
+              567,
+              212,
+              630,
+              261
+            ],
+            "centroid_xy": [
+              597.4765169694892,
+              235.4055536510113
+            ],
+            "components_8_connected": 1,
+            "sha256": "95f89311e8251f3009b9d5b0713bfa98636d4057e24f2c1632eefa96745230ad"
+          }
+        },
+        "provenance": {
+          "under_occluded_pixels_inside_registered_patch": 5,
+          "neutral_plate_fallback_pixels": 0,
+          "registered_texture_delta_mean_on_leak": 79.73333333333333
+        },
+        "alpha_and_owner": {
+          "minimum_baseline_alpha_on_reviewed_core": 0,
+          "minimum_baseline_alpha_on_under_occluded_core": 0,
+          "minimum_proposed_alpha_on_reviewed_core": 255,
+          "residual_under_occluded_core_before": 5,
+          "residual_under_occluded_core_after": 0,
+          "new_hard_owner_pixels": 3,
+          "existing_hard_owner_alpha_strengthened_pixels": 2,
+          "proposed_hard_owner_area": 2338
+        },
+        "topology_and_authored_geometry": {
+          "components_8_connected": 1,
+          "holes": 0,
+          "contours": 1,
+          "center_xy": [
+            598,
+            236
+          ],
+          "radius_xy": [
+            31,
+            24
+          ],
+          "centroid_offset_in_eye_radii": [
+            0.0009658103148533501,
+            0.0009445394924441075
+          ],
+          "note": "Descriptive only; authored perspective and weathered facial asymmetry are preserved, not forced into mirror symmetry."
+        }
+      },
+      "viewer_right_eye": {
+        "classification": {
+          "aperture_polygon_xy": [
+            [
+              665,
+              247
+            ],
+            [
+              671,
+              235
+            ],
+            [
+              685,
+              229
+            ],
+            [
+              704,
+              231
+            ],
+            [
+              716,
+              241
+            ],
+            [
+              724,
+              255
+            ],
+            [
+              722,
+              268
+            ],
+            [
+              711,
+              277
+            ],
+            [
+              690,
+              276
+            ],
+            [
+              674,
+              267
+            ],
+            [
+              666,
+              258
+            ]
+          ],
+          "reviewed_sclera_seeds_xy": [
+            [
+              710,
+              258
+            ],
+            [
+              679,
+              258
+            ]
+          ],
+          "seed_component_labels": [
+            2,
+            3
+          ],
+          "threshold_component_count": 5,
+          "core": {
+            "area": 261,
+            "bbox_xyxy": [
+              679,
+              253,
+              722,
+              277
+            ],
+            "centroid_xy": [
+              711.1111111111111,
+              266.5632183908046
+            ],
+            "components_8_connected": 2,
+            "sha256": "17b0e326edb7b4105efa75564ab6273e5ebb60b1fa666ab71dd9ea9f3c3de52d"
+          },
+          "under_occluded_core": {
+            "area": 82,
+            "bbox_xyxy": [
+              697,
+              264,
+              722,
+              277
+            ],
+            "centroid_xy": [
+              713.0365853658536,
+              271.8780487804878
+            ],
+            "components_8_connected": 2,
+            "sha256": "109a122bb344596eae715bb4e8cf1d173d6683b79ec98d1627d4217e1c5d0dce"
+          },
+          "one_px_diagnostic_fringe": {
+            "area": 63,
+            "bbox_xyxy": [
+              696,
+              263,
+              723,
+              278
+            ],
+            "centroid_xy": [
+              709.015873015873,
+              271.6031746031746
+            ],
+            "components_8_connected": 1,
+            "sha256": "0e0c341d9649440d884f289144880bcf6110bb68189f890cd9983c19401ff126"
+          },
+          "protected_non_sclera": {
+            "area": 2952,
+            "bbox_xyxy": [
+              665,
+              227,
+              728,
+              278
+            ],
+            "centroid_xy": [
+              694.6639566395664,
+              250.71239837398375
+            ],
+            "components_8_connected": 1,
+            "sha256": "a815e5f3ec8c27a72e12a4d3e1193fd480fb6ab62c0efb9409b0ed4156c14c77"
+          }
+        },
+        "provenance": {
+          "under_occluded_pixels_inside_registered_patch": 82,
+          "neutral_plate_fallback_pixels": 0,
+          "registered_texture_delta_mean_on_leak": 56.800813008130085
+        },
+        "alpha_and_owner": {
+          "minimum_baseline_alpha_on_reviewed_core": 0,
+          "minimum_baseline_alpha_on_under_occluded_core": 0,
+          "minimum_proposed_alpha_on_reviewed_core": 255,
+          "residual_under_occluded_core_before": 82,
+          "residual_under_occluded_core_after": 0,
+          "new_hard_owner_pixels": 36,
+          "existing_hard_owner_alpha_strengthened_pixels": 46,
+          "proposed_hard_owner_area": 2457
+        },
+        "topology_and_authored_geometry": {
+          "components_8_connected": 1,
+          "holes": 0,
+          "contours": 1,
+          "center_xy": [
+            696,
+            252
+          ],
+          "radius_xy": [
+            31,
+            25
+          ],
+          "centroid_offset_in_eye_radii": [
+            0.00867829900087805,
+            0.012210012210011882
+          ],
+          "note": "Descriptive only; authored perspective and weathered facial asymmetry are preserved, not forced into mirror symmetry."
+        }
+      }
+    }
+  },
+  "difference_audit": {
+    "explicit_crease_support_pixels_native": 332,
+    "reviewed_sclera_core_pixels_native": 431,
+    "under_occluded_sclera_support_pixels_native": 87,
+    "one_px_diagnostic_fringe_pixels_native": 81,
+    "protected_non_sclera_pixels_native": 5869,
+    "crease_sclera_overlap_pixels": 0,
+    "per_variant": {
+      "crease_only": {
+        "changed_pixels_native": 332,
+        "changed_pixels_phase35_final": 944,
+        "changed_pixels_phase36_f248": 2440,
+        "native_changed_outside_allowed_support": 0,
+        "phase35_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after exact native support transform",
+          "radius_px": 3,
+          "added_support_pixels": 1405
+        },
+        "phase36_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after Phase36 transform of guarded Phase35 support",
+          "radius_px": 1,
+          "added_support_pixels": 1448
+        },
+        "phase35_changed_outside_transformed_allowed_support": 0,
+        "phase36_changed_outside_twice_transformed_allowed_support": 0
+      },
+      "mask_only": {
+        "changed_pixels_native": 69,
+        "changed_pixels_phase35_final": 270,
+        "changed_pixels_phase36_f248": 741,
+        "native_changed_outside_allowed_support": 0,
+        "phase35_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after exact native support transform",
+          "radius_px": 2,
+          "added_support_pixels": 512
+        },
+        "phase36_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after Phase36 transform of guarded Phase35 support",
+          "radius_px": 0,
+          "added_support_pixels": 0
+        },
+        "phase35_changed_outside_transformed_allowed_support": 0,
+        "phase36_changed_outside_twice_transformed_allowed_support": 0
+      },
+      "combined": {
+        "changed_pixels_native": 401,
+        "changed_pixels_phase35_final": 1214,
+        "changed_pixels_phase36_f248": 3181,
+        "native_changed_outside_allowed_support": 0,
+        "phase35_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after exact native support transform",
+          "radius_px": 3,
+          "added_support_pixels": 2142
+        },
+        "phase36_transform_support_guard": {
+          "metric": "minimum integer Chebyshev dilation after Phase36 transform of guarded Phase35 support",
+          "radius_px": 1,
+          "added_support_pixels": 2218
+        },
+        "phase35_changed_outside_transformed_allowed_support": 0,
+        "phase36_changed_outside_twice_transformed_allowed_support": 0
+      }
+    },
+    "native_review_box_xyxy": [
+      543,
+      188,
+      752,
+      302
+    ],
+    "phase36_review_box_xyxy": [
+      607,
+      334,
+      984,
+      564
+    ]
+  },
+  "root_cause": {
+    "cage_write_precedes_lid_write": true,
+    "complete_face_paste_precedes_head_warp": true,
+    "native_eye_support_cage_overlap_pixels": 0,
+    "native_eye_support_to_cage_vertical_gap_px": 44,
+    "determination": "F248 contains two separable source defects: a fixed-color synthetic crease over registered natural fold texture, and incomplete full-closure alpha/ownership over reviewed source sclera. The mouth/cheek cage is spatially disjoint and written before lids; the complete face then shares one head warp and camera path."
+  },
+  "gates": [
+    {
+      "name": "phase35_f173_exact_baseline",
+      "actual": "742ebca28200ce6c290380fad33db5b63bbe78c77614ee712dca920d7146582a",
+      "operator": "==",
+      "threshold": "742ebca28200ce6c290380fad33db5b63bbe78c77614ee712dca920d7146582a",
+      "passed": true
+    },
+    {
+      "name": "phase36_archive_verified_frames",
+      "actual": 303,
+      "operator": "==",
+      "threshold": 303,
+      "passed": true
+    },
+    {
+      "name": "phase36_neighbor_frames_reproduced",
+      "actual": 17,
+      "operator": "==",
+      "threshold": 17,
+      "passed": true
+    },
+    {
+      "name": "all_variant_source_changed_frames",
+      "actual": [
+        [
+          173
+        ],
+        [
+          173
+        ],
+        [
+          173
+        ]
+      ],
+      "operator": "==",
+      "threshold": [
+        [
+          173
+        ],
+        [
+          173
+        ],
+        [
+          173
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "name": "all_variant_phase36_changed_frames",
+      "actual": [
+        [
+          248
+        ],
+        [
+          248
+        ],
+        [
+          248
+        ]
+      ],
+      "operator": "==",
+      "threshold": [
+        [
+          248
+        ],
+        [
+          248
+        ],
+        [
+          248
+        ]
+      ],
+      "passed": true
+    },
+    {
+      "name": "crease_mask_disjoint_from_sclera_expansion",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "crease_only_native_diff_outside_crease",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "mask_only_native_diff_outside_reviewed_sclera",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "combined_native_diff_outside_crease_plus_sclera",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "all_phase35_diffs_inside_transformed_support",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "all_phase36_diffs_inside_twice_transformed_support",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "mask_effect_separable_from_crease_toggle",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "reviewed_under_occluded_sclera_pixels",
+      "actual": 87,
+      "operator": "==",
+      "threshold": 87,
+      "passed": true
+    },
+    {
+      "name": "new_hard_owner_pixels",
+      "actual": 39,
+      "operator": "==",
+      "threshold": 39,
+      "passed": true
+    },
+    {
+      "name": "existing_owner_alpha_strengthened_pixels",
+      "actual": 48,
+      "operator": "==",
+      "threshold": 48,
+      "passed": true
+    },
+    {
+      "name": "owner_accounting_no_double_count",
+      "actual": 87,
+      "operator": "==",
+      "threshold": 87,
+      "passed": true
+    },
+    {
+      "name": "residual_source_sclera_after_combined",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "combined_minimum_sclera_alpha",
+      "actual": 255,
+      "operator": "==",
+      "threshold": 255,
+      "passed": true
+    },
+    {
+      "name": "neutral_plate_fallback_pixels",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "mask_only_protected_non_sclera_rgb_delta",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "combined_vs_crease_protected_non_sclera_rgb_delta",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "diagnostic_fringe_write_pixels",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "combined_lid_area_counts_new_owners_once",
+      "actual": [
+        2338,
+        2457
+      ],
+      "operator": "==",
+      "threshold": [
+        2338,
+        2457
+      ],
+      "passed": true
+    },
+    {
+      "name": "combined_iris_occlusion_left",
+      "actual": 1.0,
+      "operator": "==",
+      "threshold": 1.0,
+      "passed": true
+    },
+    {
+      "name": "combined_iris_occlusion_right",
+      "actual": 1.0,
+      "operator": "==",
+      "threshold": 1.0,
+      "passed": true
+    },
+    {
+      "name": "proposed_owner_components",
+      "actual": [
+        1,
+        1
+      ],
+      "operator": "==",
+      "threshold": [
+        1,
+        1
+      ],
+      "passed": true
+    },
+    {
+      "name": "proposed_owner_holes",
+      "actual": [
+        0,
+        0
+      ],
+      "operator": "==",
+      "threshold": [
+        0,
+        0
+      ],
+      "passed": true
+    },
+    {
+      "name": "native_eye_support_cage_overlap",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "cage_write_precedes_lid_write",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "complete_face_paste_precedes_head_warp",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "encoding_process_count",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "paid_service_calls",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    }
+  ],
+  "gate_count": 32,
+  "failed_gates": [],
+  "artifacts": [
+    {
+      "file": "phase35-f173-four-state-native-1x.png",
+      "bytes": 102275,
+      "sha256": "bf38d9eb02c7946f829e639fba42eb824b947e64aefb9575a04f63231b9181c8"
+    },
+    {
+      "file": "phase35-f173-four-state-native-2x.png",
+      "bytes": 137142,
+      "sha256": "72c3927d3340d58c259a2771cffc37047ae46127f8743ba27376972b01a75a43"
+    },
+    {
+      "file": "phase35-f173-four-state-native-3x.png",
+      "bytes": 151578,
+      "sha256": "d3a41c5b1938e6bcb88b7e3f9eb9ef689b85a9ab2ebf4e7ffbc32415e21bd645"
+    },
+    {
+      "file": "phase35-f173-sclera-provenance-decomposition-v2.png",
+      "bytes": 297755,
+      "sha256": "6861690b68d937f7db13d23d692291a33ff2c048b2c28befda526e640fb4de72"
+    },
+    {
+      "file": "phase36-f240-f256-combined-neighbor-sweep-v2.png",
+      "bytes": 771652,
+      "sha256": "2cf19386a93604b40054aa25c2a8686768e745fc27ae625aabc5e60303ee9f19"
+    },
+    {
+      "file": "phase36-f248-four-state-1x.png",
+      "bytes": 285263,
+      "sha256": "db160d6f9c64d10231bfa5e8b74288e5f85b9cc1a4d50fcd69197c7080a501bd"
+    },
+    {
+      "file": "phase36-f248-four-state-2x.png",
+      "bytes": 391845,
+      "sha256": "3291853712d4133ea183c806f6f613401b3ba98d132ef5d27520212a76c8b7f5"
+    },
+    {
+      "file": "phase36-f248-four-state-3x.png",
+      "bytes": 434681,
+      "sha256": "4ecc2cf3bf89159a7481eb40bcdb7a505f650610df277ff01dd211a5507889c6"
+    }
+  ],
+  "disposition": {
+    "candidate01_archive_remains_immutable": true,
+    "corrected_source_requires_new_picture_rebuild": true,
+    "corrected_source_requires_new_human_acceptance": true,
+    "phase36_encode_authorized": false,
+    "promotion_allowed": false
+  }
+}
