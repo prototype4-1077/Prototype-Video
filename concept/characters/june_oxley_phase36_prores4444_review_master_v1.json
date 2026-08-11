@@ -37,6 +37,51 @@
       "path": "collab/CLAUDE_REVIEW_2026-08-10_2210Z.md",
       "hash_domain": "lf_normalized_text",
       "sha256": "786dd24b77c3605983645f20e71e43c6760af3003c81a7042bf9fc383def61cf"
+    },
+    "vui_probe_v2_contract": {
+      "path": "concept/characters/june_oxley_phase35_candidate03_blink_vui_probe_v2.json",
+      "sha256": "d6af2de38e4d843bf41b601d122e5f8c1d31445af37612d740bdb4c3737c119b"
+    },
+    "vui_probe_v2_implementation": {
+      "path": "pipeline/cartoon_source_textured_vui_probe_v2.py",
+      "sha256": "fcf8301bfb6d3e40f7373d4d1c1a31f080b3f1f7c54fee15e39ca987762e4ca1"
+    },
+    "vui_probe_v2_tests": {
+      "path": "pipeline/tests/test_cartoon_source_textured_vui_probe_v2.py",
+      "sha256": "ba4f992bca3884446afdfefb11d04b32d039eaf081e10b3459c145dfbcab119f"
+    },
+    "vui_probe_v2_authorization_receipt": {
+      "path": "collab/CLAUDE_REVIEW_2026-08-11_0119Z.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "9e9e1f74f1c52fe679622ec5f56cae9a1358a2ae02081621ec940ef6d08ea618"
+    },
+    "vui_probe_v2_report": {
+      "path": "collab/phase35_candidate_03_blink_vui_probe_attempt_02/probe-report-v1.json",
+      "sha256": "047d4bd8d1231d2ba43cc1d3dd92a0379ecaa8ea9126ad2d6bff7464a5f3a122"
+    },
+    "vui_probe_v2_package": {
+      "path": "collab/phase35_candidate_03_blink_vui_probe_attempt_02/attempt-package-v1.json",
+      "sha256": "c01cdbb901b7c00807cf6a705ecb199c238a89e080f28bd6d339b3e6d281146b"
+    },
+    "vui_probe_v2_video": {
+      "path": "collab/phase35_candidate_03_blink_vui_probe_attempt_02/june-phase35-c03-blink-vui-probe-v2.mp4",
+      "sha256": "04140edd79b2847ca479b81b2e2b08ad44bc6744ed2b14df1ee7426e2b06c225"
+    },
+    "vui_probe_v2_claim": {
+      "path": "collab/phase35_candidate_03_blink_vui_probe_attempt_02/attempt-claim-v1.json",
+      "sha256": "41534b417fabe92ed2711412c71437f06d7f739f4ec373d61bf574d4133c0692"
+    },
+    "vui_probe_v2_sps_trace": {
+      "path": "collab/phase35_candidate_03_blink_vui_probe_attempt_02/h264-sps-trace-v1.txt",
+      "sha256": "85c23341c9cf289cb7e0cc6bae410496d24cd551d9071a8c1b5234462f8ae80d"
+    },
+    "vui_probe_v2_stream_probe": {
+      "path": "collab/phase35_candidate_03_blink_vui_probe_attempt_02/ffprobe-stream-v1.json",
+      "sha256": "86d2349301f8f34c1022d0edf9b81fa494fffe864a7af5acac3ed0da35791d20"
+    },
+    "vui_probe_v2_frame_probe": {
+      "path": "collab/phase35_candidate_03_blink_vui_probe_attempt_02/ffprobe-frames-v1.json",
+      "sha256": "128f9b67ef50f55341c9ea59f451a4d107fcd34ec791ab994a34e62bbf1fdf97"
     }
   },
   "picture": {
@@ -76,16 +121,40 @@
   },
   "vui_prerequisite": {
     "required_before_master_authorization": true,
-    "source_branch": "agent/phase35-blink-vui-probe-v1",
-    "source_commit": "ec91f71779a56495ea43068ffc9ee1f4d081c1d5",
-    "probe_authorization_subject_sha256": "bfaffe5ad4cb8238d153766d677adc47fb69d1f8e0e5a2b9b2560132cd5ae594",
-    "probe_implementation_sha256": "93f94b12d9c1762183d89c6a3454c3da6ed8ade58dc5caae225444531ef067d6",
-    "probe_command_template_sha256": "adfa4428329bda59281dfa7e2aa47cd1c9c73815d0ac1be5cbbc544ce73a75ad",
-    "probe_result_receipt": null,
+    "source_branch": "agent/phase35-blink-vui-probe-v2-attempt02",
+    "source_commit": "d61fd1e52d700771ef9ec659c6c86a7a17d27d79",
+    "probe_authorization_subject_sha256": "5fb952bf048b200b20e85c3287e8f600c2b6b4088b7a9f9e965974afdb9b93c3",
+    "probe_implementation_sha256": "fcf8301bfb6d3e40f7373d4d1c1a31f080b3f1f7c54fee15e39ca987762e4ca1",
+    "probe_command_template_sha256": "1b8ec1b0552f738446a1dfebf8c221ac6be7a1c6ae442230a24c2c108c16bf2b",
+    "probe_result_receipt": {
+      "path": "collab/phase35_candidate_03_blink_vui_probe_attempt_02/probe-report-v1.json",
+      "sha256": "047d4bd8d1231d2ba43cc1d3dd92a0379ecaa8ea9126ad2d6bff7464a5f3a122"
+    },
     "required_machine_passed": true,
     "required_status": "METADATA_PROBE_PASSED_NO_DELIVERY_AUTHORITY",
     "required_encoding_process_count": 1,
-    "required_retry_allowed": false
+    "required_retry_allowed": false,
+    "required_gate_count": 33,
+    "required_gates_failed": 0,
+    "required_decoded_frame_count": 9,
+    "required_decoded_rgb24_sha256": "a0f093e08ae1e24b5e2d343877023995142632b5b5f5d5201309649617f06e5b",
+    "required_video_sha256": "04140edd79b2847ca479b81b2e2b08ad44bc6744ed2b14df1ee7426e2b06c225",
+    "required_stream_color": {
+      "color_range": "tv",
+      "color_space": "bt709",
+      "color_transfer": "bt709",
+      "color_primaries": "bt709"
+    },
+    "required_mp4_colr": {
+      "path": "moov/trak/mdia/minf/stbl/stsd/avc1/colr",
+      "type": "nclx",
+      "payload_bytes": 11,
+      "primaries": 1,
+      "transfer": 1,
+      "matrix": 1,
+      "full_range_flag": 0,
+      "reserved_bits": 0
+    }
   },
   "toolchain": {
     "ffmpeg_sha256": "228d7a8556258de907fdb55f36850078ebc7680b84ec30d84ea02e99bec1d1eb",

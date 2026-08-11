@@ -25,7 +25,7 @@ CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase36_prores4444_revie
 IMPLEMENTATION_RELATIVE_PATH = "pipeline/cartoon_ledger_pour_prores_master.py"
 # Only authorization.receipt is normalized away. The VUI result remains part of the
 # reviewed subject, so it must be bound before master authorization is requested.
-EXPECTED_AUTHORIZATION_SUBJECT_SHA256 = "603d66999150540dd7f6b4ffeb532ad7937c95af914f3a0f5a89dbae47aeaa79"
+EXPECTED_AUTHORIZATION_SUBJECT_SHA256 = "6362252d62d02a950461f200468665472d0da71bb70f7d81651eed4630afdba7"
 
 
 class ProResMasterError(RuntimeError):
@@ -201,25 +201,98 @@ def _vui_result(contract: dict[str, Any]) -> dict[str, Any] | None:
         return None
     if not isinstance(reference, dict):
         raise ProResMasterError("VUI result receipt must be null or an exact path/hash lock")
+    _require_equal(reference, contract["locks"]["vui_probe_v2_report"], "VUI report lock identity")
     path = _repo_path(str(reference["path"]))
     payload = path.read_bytes()
     digest = hashlib.sha256(payload).hexdigest()
     _require_equal(digest, reference["sha256"], "VUI result receipt SHA-256")
     result = _strict_json_loads(payload, "VUI result receipt")
+    evidence_root = path.parent
+    package_path = _repo_path(str(contract["locks"]["vui_probe_v2_package"]["path"]))
+    video_path = _repo_path(str(contract["locks"]["vui_probe_v2_video"]["path"]))
+    claim_path = _repo_path(str(contract["locks"]["vui_probe_v2_claim"]["path"]))
+    _require_equal(package_path.parent, evidence_root, "VUI package evidence directory")
+    _require_equal(video_path.parent, evidence_root, "VUI video evidence directory")
+    _require_equal(claim_path.parent, evidence_root, "VUI claim evidence directory")
+    package = _strict_json_loads(package_path.read_bytes(), "VUI result package")
+    expected_artifacts = {
+        "attempt-claim-v1.json", "decode-stderr-v1.txt", "ffmpeg-stderr-v1.txt",
+        "ffprobe-frames-stderr-v1.txt", "ffprobe-frames-v1.json",
+        "ffprobe-stream-stderr-v1.txt", "ffprobe-stream-v1.json",
+        "h264-sps-trace-v1.txt", "june-phase35-c03-blink-vui-probe-v2.mp4",
+        "probe-report-v1.json",
+    }
+    _require_equal(package["package_version"], 1, "VUI package version")
+    _require_equal(package["attempt_id"], "phase35_c03_blink_vui_probe_v2_attempt02", "VUI package attempt id")
+    _require_equal(package["machine_passed"], True, "VUI package machine result")
+    _require_equal(package["authorization_consumed"], True, "VUI package authorization consumption")
+    artifacts = package["artifacts"]
+    _require_equal([item["file"] for item in artifacts], sorted(expected_artifacts), "VUI package artifact order")
+    _require_equal(
+        {item.name for item in evidence_root.iterdir() if item.is_file()},
+        expected_artifacts | {package_path.name},
+        "VUI evidence directory inventory",
+    )
+    for artifact in artifacts:
+        artifact_path = evidence_root / artifact["file"]
+        _require_equal(artifact_path.stat().st_size, artifact["bytes"], f"VUI artifact bytes {artifact_path.name}")
+        _require_equal(_sha256(artifact_path), artifact["sha256"], f"VUI artifact hash {artifact_path.name}")
     _require_equal(result["machine_passed"], gate["required_machine_passed"], "VUI machine result")
     _require_equal(result["status"], gate["required_status"], "VUI report status")
     _require_equal(
         result["encoder"]["process_count"], gate["required_encoding_process_count"], "VUI encoder count",
     )
     _require_equal(result["disposition"]["retry_allowed"], gate["required_retry_allowed"], "VUI retry disposition")
+    _require_equal(result["gate_count"], gate["required_gate_count"], "VUI gate count")
+    _require_equal(result["gates_passed"], gate["required_gate_count"], "VUI gates passed")
+    _require_equal(result["gates_failed"], gate["required_gates_failed"], "VUI gates failed")
+    _require_equal(result["failed_gates"], [], "VUI failed gate names")
+    _require_equal(all(item["passed"] for item in result["gates"]), True, "VUI individual gates")
+    _require_equal(result["decoded"]["decoded_frame_count"], gate["required_decoded_frame_count"], "VUI decoded frame count")
+    _require_equal(result["decoded"]["decoded_rgb24_sha256"], gate["required_decoded_rgb24_sha256"], "VUI decoded RGB24 hash")
+    _require_equal(result["video"]["sha256"], gate["required_video_sha256"], "VUI report video hash")
+    _require_equal(result["video"]["sha256"], _sha256(video_path), "VUI video bytes")
+    _require_equal(result["attempt_claim"]["sha256"], _sha256(claim_path), "VUI claim bytes")
+    stream = result["stream_probe"]["streams"][0]
+    _require_equal(isinstance(stream, dict), True, "VUI stream JSON object")
+    _require_equal(
+        {field: stream.get(field) for field in gate["required_stream_color"]},
+        gate["required_stream_color"],
+        "VUI stream color metadata",
+    )
+    for index, frame in enumerate(result["frame_probe"]["frames"], start=1):
+        _require_equal(
+            {field: frame.get(field) for field in gate["required_stream_color"]},
+            gate["required_stream_color"],
+            f"VUI frame {index} color metadata",
+        )
+    _require_equal(result["mp4_colr"], [gate["required_mp4_colr"]], "VUI MP4 colr")
+    _require_equal(package["disposition"], result["disposition"], "VUI package disposition")
     captured = result["captured_state"]
+    _require_equal(captured["contract_raw_sha256"], contract["locks"]["vui_probe_v2_contract"]["sha256"], "VUI captured contract hash")
     for field, expected in {
         "authorization_subject_sha256": gate["probe_authorization_subject_sha256"],
         "implementation_sha256": gate["probe_implementation_sha256"],
         "command_template_sha256": gate["probe_command_template_sha256"],
     }.items():
         _require_equal(captured[field], expected, f"VUI captured {field}")
-    return {"path": str(reference["path"]), "sha256": digest, "report": result}
+    probe_contract_path = _repo_path(str(contract["locks"]["vui_probe_v2_contract"]["path"]))
+    probe_contract = _strict_json_loads(probe_contract_path.read_bytes(), "VUI probe contract")
+    _require_equal(
+        captured["locks"],
+        {name: item["sha256"] for name, item in sorted(probe_contract["locks"].items())},
+        "VUI captured repository locks",
+    )
+    _require_equal(
+        captured["authorization"]["sha256"],
+        contract["locks"]["vui_probe_v2_authorization_receipt"]["sha256"],
+        "VUI captured authorization receipt",
+    )
+    return {
+        "path": str(reference["path"]), "sha256": digest, "report": result,
+        "package_sha256": _sha256(package_path), "video_sha256": _sha256(video_path),
+        "claim_sha256": _sha256(claim_path),
+    }
 
 
 def _authorization(contract: dict[str, Any], vui: dict[str, Any] | None) -> dict[str, str] | None:
@@ -244,7 +317,11 @@ def _authorization(contract: dict[str, Any], vui: dict[str, Any] | None) -> dict
         EXPECTED_AUTHORIZATION_SUBJECT_SHA256,
         _sha256(REPO_ROOT / IMPLEMENTATION_RELATIVE_PATH),
         _command_template_hash(contract),
+        contract["vui_prerequisite"]["source_commit"],
         vui["sha256"],
+        vui["package_sha256"],
+        vui["video_sha256"],
+        vui["claim_sha256"],
         contract["picture"]["archive_sha256"],
         contract["picture"]["frame_inventory_canonical_sha256"],
         contract["audio"]["wav_sha256"],
@@ -252,6 +329,7 @@ def _authorization(contract: dict[str, Any], vui: dict[str, Any] | None) -> dict
         contract["toolchain"]["ffmpeg_sha256"],
         contract["toolchain"]["ffprobe_sha256"],
     ]
+    tokens.extend(reference["sha256"] for _, reference in sorted(contract["locks"].items()))
     for token in tokens:
         if token not in text:
             raise ProResMasterError(f"master authorization receipt omits binding token: {token}")

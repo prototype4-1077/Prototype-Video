@@ -45,17 +45,19 @@ class CartoonLedgerPourProResMasterTests(unittest.TestCase):
         ):
             self.assertFalse(failure[key])
 
-    def test_master_and_vui_gates_are_deliberately_unbound(self) -> None:
-        self.assertIsNone(self.contract["vui_prerequisite"]["probe_result_receipt"])
+    def test_vui_result_is_bound_while_master_authorization_remains_unbound(self) -> None:
+        self.assertIsNotNone(self.contract["vui_prerequisite"]["probe_result_receipt"])
         self.assertIsNone(self.contract["authorization"]["receipt"])
-        self.assertIsNone(master._vui_result(self.contract))
-        self.assertIsNone(master._authorization(self.contract, None))
+        vui = master._vui_result(self.contract)
+        self.assertIsNotNone(vui)
+        self.assertEqual(vui["sha256"], self.contract["locks"]["vui_probe_v2_report"]["sha256"])
+        self.assertIsNone(master._authorization(self.contract, vui))
 
     def test_unbound_run_refuses_before_tools_outputs_or_subprocesses(self) -> None:
         with patch.object(master, "_resolved_tool") as tool, patch.object(master, "_outputs_path") as output, patch(
             "pipeline.cartoon_ledger_pour_prores_master.subprocess.Popen"
         ) as popen:
-            with self.assertRaisesRegex(master.ProResMasterError, "VUI probe result is not bound"):
+            with self.assertRaisesRegex(master.ProResMasterError, "master authorization receipt is not bound"):
                 master.run_authorized_master()
         tool.assert_not_called()
         output.assert_not_called()
@@ -72,7 +74,7 @@ class CartoonLedgerPourProResMasterTests(unittest.TestCase):
         ):
             result = master.preflight()
         self.assertEqual(result["status"], "BLOCKED_NO_MEDIA_PROCESS_STARTED")
-        self.assertFalse(result["vui_prerequisite_bound"])
+        self.assertTrue(result["vui_prerequisite_bound"])
         self.assertFalse(result["master_authorization_bound"])
         self.assertEqual(result["encoder_processes_started"], 0)
         self.assertFalse(result["output_resolved"])
@@ -114,52 +116,46 @@ class CartoonLedgerPourProResMasterTests(unittest.TestCase):
         )
 
     def test_authorization_subject_retains_the_vui_result_binding(self) -> None:
-        bound = copy.deepcopy(self.contract)
-        bound["vui_prerequisite"]["probe_result_receipt"] = {"path": "proof.json", "sha256": "a" * 64}
-        subject = master._authorization_subject(bound)
-        self.assertEqual(subject["vui_prerequisite"]["probe_result_receipt"], bound["vui_prerequisite"]["probe_result_receipt"])
+        subject = master._authorization_subject(self.contract)
+        self.assertEqual(subject["vui_prerequisite"]["probe_result_receipt"], self.contract["vui_prerequisite"]["probe_result_receipt"])
         self.assertIsNone(subject["authorization"]["receipt"])
-        self.assertNotEqual(master._canonical_hash(subject), master.EXPECTED_AUTHORIZATION_SUBJECT_SHA256)
+        self.assertEqual(master._canonical_hash(subject), master.EXPECTED_AUTHORIZATION_SUBJECT_SHA256)
+        unbound = copy.deepcopy(self.contract)
+        unbound["vui_prerequisite"]["probe_result_receipt"] = None
+        self.assertNotEqual(
+            master._canonical_hash(master._authorization_subject(unbound)),
+            master.EXPECTED_AUTHORIZATION_SUBJECT_SHA256,
+        )
 
     def test_vui_result_requires_exact_machine_report_and_captured_state(self) -> None:
-        contract = copy.deepcopy(self.contract)
-        gate = contract["vui_prerequisite"]
-        result = {
-            "machine_passed": True,
-            "status": gate["required_status"],
-            "encoder": {"process_count": 1},
-            "disposition": {"retry_allowed": False},
-            "captured_state": {
-                "authorization_subject_sha256": gate["probe_authorization_subject_sha256"],
-                "implementation_sha256": gate["probe_implementation_sha256"],
-                "command_template_sha256": gate["probe_command_template_sha256"],
-            },
-        }
-        with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            path = root / "proof.json"
-            path.write_text(json.dumps(result), encoding="utf-8")
-            gate["probe_result_receipt"] = {"path": "proof.json", "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
-            with patch.object(master, "REPO_ROOT", root):
-                verified = master._vui_result(contract)
-            self.assertEqual(verified["sha256"], gate["probe_result_receipt"]["sha256"])
-            result["machine_passed"] = False
-            path.write_text(json.dumps(result), encoding="utf-8")
-            gate["probe_result_receipt"]["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
-            with patch.object(master, "REPO_ROOT", root), self.assertRaisesRegex(master.ProResMasterError, "VUI machine result"):
-                master._vui_result(contract)
+        verified = master._vui_result(self.contract)
+        self.assertEqual(verified["sha256"], self.contract["locks"]["vui_probe_v2_report"]["sha256"])
+        self.assertEqual(verified["package_sha256"], self.contract["locks"]["vui_probe_v2_package"]["sha256"])
+        self.assertEqual(verified["video_sha256"], self.contract["locks"]["vui_probe_v2_video"]["sha256"])
+        self.assertEqual(verified["claim_sha256"], self.contract["locks"]["vui_probe_v2_claim"]["sha256"])
+        corrupted = copy.deepcopy(self.contract)
+        corrupted["vui_prerequisite"]["required_video_sha256"] = "0" * 64
+        with self.assertRaisesRegex(master.ProResMasterError, "VUI report video hash"):
+            master._vui_result(corrupted)
 
     def test_master_authorization_requires_unique_verdict_and_every_binding_token(self) -> None:
         contract = copy.deepcopy(self.contract)
         gate = contract["authorization"]
-        vui = {"path": "proof.json", "sha256": "vui-result-hash"}
+        vui = {
+            "path": "proof.json", "sha256": "vui-result-hash",
+            "package_sha256": "vui-package-hash", "video_sha256": "vui-video-hash",
+            "claim_sha256": "vui-claim-hash",
+        }
         tokens = [
             master.EXPECTED_AUTHORIZATION_SUBJECT_SHA256,
             "implementation-hash", master._command_template_hash(contract), vui["sha256"],
+            contract["vui_prerequisite"]["source_commit"],
+            vui["package_sha256"], vui["video_sha256"], vui["claim_sha256"],
             contract["picture"]["archive_sha256"], contract["picture"]["frame_inventory_canonical_sha256"],
             contract["audio"]["wav_sha256"], contract["audio"]["pcm_data_sha256"],
             contract["toolchain"]["ffmpeg_sha256"], contract["toolchain"]["ffprobe_sha256"],
         ]
+        tokens.extend(reference["sha256"] for _, reference in sorted(contract["locks"].items()))
         verdict = f'{gate["required_verdict_field"]} {gate["required_verdict"]}'
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
