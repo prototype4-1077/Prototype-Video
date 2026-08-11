@@ -1,0 +1,101 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase39_close_body_acting_rig_v1",
+  "phase": "phase39_close_body_acting_rig_silent_prototype",
+  "status": "DRAFT_LOCAL_SILENT_ACTING_PROOF_NOT_A_MASTER_REBUILD",
+  "purpose": "Replace the close-view rectangular shoulder drift with a source-textured torso, viewer-left arm, and table-hand performance rig that produces intentional story beats without idle bobbing, holes, or multi-resample seams.",
+  "cash_cost": 0,
+  "paid_service_calls_allowed": 0,
+  "network_calls_allowed": 0,
+  "video_encode_allowed": false,
+  "picture_master_mutation_allowed": false,
+  "promotion_allowed": false,
+  "human_acting_acceptance_required": true,
+  "locks": {
+    "phase38_machine_report": {"path": "collab/phase38_acting_motion_audit_v1/phase38-acting-motion-machine-report-v1.json", "sha256": "0c3c8b0fa4d5773e20be2257e9dab4d67632c83bb2986682e09bf8f19784ade8"},
+    "phase35_direct_address_contract": {"path": "concept/characters/june_oxley_phase35_source_textured_direct_address_v2.json", "sha256": "68c763be79dd76447f6c33baf39ef79528fbbf1d6ea25a113c5550d63d62ba94"},
+    "gs070_plate": {"path": "concept/style_frames/june-golden-scene-gs070-resolution-plate-v1.png", "sha256": "c54f82ef387121267829ec0a85c8fbf56830af2fd18c400ef777cfbb9044d029"},
+    "phase33_body_motion": {"path": "concept/style_frames/june_phase33_direct_address_body_motion_v1.json", "sha256": "47f29b99ce8c2db42f3e2c5e79bc174ded2b9849a626eafbed2b06ef9a73b8c9"}
+  },
+  "clock": {"fps": 30, "source_width": 1672, "source_height": 941, "frame_count": 162, "duration_seconds": 5.4, "final_hold_frames_inclusive": [149, 162]},
+  "deformation": {
+    "method": "single_source_resolution_compact_rbf_inverse_remap",
+    "interpolation": "opencv_inter_lanczos4",
+    "moving_source_resample_count": 1,
+    "stable_pixels_copied_exactly": true,
+    "prospective_kernel_guard_px": 5,
+    "region_priority_back_to_front": ["torso", "viewer_left_arm", "table_hand"],
+    "mask_feather_sigma_px": 9.0,
+    "maximum_source_displacement_px": 8.0
+  },
+  "protected_source_regions": {
+    "face_head_rect_xyxy": [330, 20, 875, 610],
+    "mug_rect_xyxy": [1010, 675, 1385, 941]
+  },
+  "rig_regions": {
+    "torso": {
+      "polygon_xy": [[245, 941], [230, 735], [300, 545], [390, 435], [535, 405], [745, 425], [905, 525], [980, 735], [905, 941]],
+      "control_radius_px": 155.0,
+      "controls": {"left_clavicle": [390, 505], "sternum": [560, 620], "right_chest": [770, 615], "waist": [575, 855], "left_chest": [345, 670]},
+      "pivot_xy": [575, 720]
+    },
+    "viewer_left_arm": {
+      "polygon_xy": [[0, 941], [0, 735], [65, 600], [180, 475], [330, 420], [455, 515], [405, 690], [300, 865], [270, 941]],
+      "control_radius_px": 120.0,
+      "controls": {"shoulder": [345, 480], "upper_arm": [265, 570], "elbow": [170, 700], "forearm": [130, 825], "cuff": [150, 925]}
+    },
+    "table_hand": {
+      "polygon_xy": [[650, 941], [650, 875], [690, 805], [760, 770], [845, 760], [920, 735], [995, 710], [1040, 740], [1035, 800], [980, 850], [930, 875], [905, 941]],
+      "control_radius_px": 82.0,
+      "controls": {
+        "wrist": [930, 790], "palm": [825, 840], "thumb_tip": [690, 885], "index_tip": [731, 920], "middle_tip": [780, 930], "ring_tip": [830, 925], "pinky_tip": [878, 907],
+        "index_knuckle": [746, 798], "middle_knuckle": [792, 790], "ring_knuckle": [840, 800], "pinky_knuckle": [880, 820]
+      }
+    }
+  },
+  "motion_channels": ["torso_x_px", "torso_y_px", "torso_rotation_deg", "left_elbow_x_px", "left_elbow_y_px", "left_forearm_x_px", "left_forearm_y_px", "palm_x_px", "palm_y_px", "wrist_rotation_deg", "finger_spread", "finger_compress"],
+  "motion_keyframes": [
+    {"frame": 1, "torso_x_px": 0.0, "torso_y_px": 0.0, "torso_rotation_deg": 0.0, "left_elbow_x_px": 0.0, "left_elbow_y_px": 0.0, "left_forearm_x_px": 0.0, "left_forearm_y_px": 0.0, "palm_x_px": 0.0, "palm_y_px": 0.0, "wrist_rotation_deg": 0.0, "finger_spread": 0.0, "finger_compress": 0.0},
+    {"frame": 17, "torso_x_px": 0.0, "torso_y_px": 0.0, "torso_rotation_deg": 0.0, "left_elbow_x_px": 0.0, "left_elbow_y_px": 0.0, "left_forearm_x_px": 0.0, "left_forearm_y_px": 0.0, "palm_x_px": 0.0, "palm_y_px": 0.0, "wrist_rotation_deg": 0.0, "finger_spread": 0.0, "finger_compress": 0.0},
+    {"frame": 24, "torso_x_px": -0.4, "torso_y_px": -1.2, "torso_rotation_deg": 0.12, "left_elbow_x_px": -0.5, "left_elbow_y_px": 0.4, "left_forearm_x_px": -0.3, "left_forearm_y_px": 0.6, "palm_x_px": 0.2, "palm_y_px": -0.2, "wrist_rotation_deg": 0.08, "finger_spread": 0.05, "finger_compress": 0.0},
+    {"frame": 34, "torso_x_px": -0.2, "torso_y_px": -0.4, "torso_rotation_deg": 0.04, "left_elbow_x_px": -0.2, "left_elbow_y_px": 0.1, "left_forearm_x_px": -0.1, "left_forearm_y_px": 0.2, "palm_x_px": 0.0, "palm_y_px": 0.0, "wrist_rotation_deg": 0.0, "finger_spread": 0.0, "finger_compress": 0.0},
+    {"frame": 44, "torso_x_px": 0.0, "torso_y_px": 0.0, "torso_rotation_deg": 0.0, "left_elbow_x_px": 0.0, "left_elbow_y_px": 0.0, "left_forearm_x_px": 0.0, "left_forearm_y_px": 0.0, "palm_x_px": 0.0, "palm_y_px": 0.0, "wrist_rotation_deg": 0.0, "finger_spread": 0.0, "finger_compress": 0.0},
+    {"frame": 50, "torso_x_px": 0.35, "torso_y_px": 0.15, "torso_rotation_deg": 0.05, "left_elbow_x_px": -0.3, "left_elbow_y_px": 0.1, "left_forearm_x_px": -0.2, "left_forearm_y_px": 0.1, "palm_x_px": 0.7, "palm_y_px": 0.2, "wrist_rotation_deg": 0.18, "finger_spread": -0.18, "finger_compress": 0.12},
+    {"frame": 66, "torso_x_px": -1.4, "torso_y_px": -0.3, "torso_rotation_deg": -0.18, "left_elbow_x_px": 1.6, "left_elbow_y_px": -0.7, "left_forearm_x_px": 1.0, "left_forearm_y_px": -0.4, "palm_x_px": -1.5, "palm_y_px": -0.7, "wrist_rotation_deg": -0.62, "finger_spread": 1.0, "finger_compress": 0.0},
+    {"frame": 72, "torso_x_px": -1.6, "torso_y_px": -0.4, "torso_rotation_deg": -0.21, "left_elbow_x_px": 1.9, "left_elbow_y_px": -0.8, "left_forearm_x_px": 1.2, "left_forearm_y_px": -0.5, "palm_x_px": -1.8, "palm_y_px": -0.9, "wrist_rotation_deg": -0.72, "finger_spread": 1.14, "finger_compress": 0.0},
+    {"frame": 82, "torso_x_px": -1.0, "torso_y_px": -0.2, "torso_rotation_deg": -0.12, "left_elbow_x_px": 1.1, "left_elbow_y_px": -0.4, "left_forearm_x_px": 0.7, "left_forearm_y_px": -0.2, "palm_x_px": -1.0, "palm_y_px": -0.4, "wrist_rotation_deg": -0.38, "finger_spread": 0.76, "finger_compress": 0.0},
+    {"frame": 90, "torso_x_px": -0.7, "torso_y_px": -0.1, "torso_rotation_deg": -0.08, "left_elbow_x_px": 0.7, "left_elbow_y_px": -0.2, "left_forearm_x_px": 0.4, "left_forearm_y_px": -0.1, "palm_x_px": -0.7, "palm_y_px": -0.2, "wrist_rotation_deg": -0.24, "finger_spread": 0.58, "finger_compress": 0.0},
+    {"frame": 98, "torso_x_px": -0.25, "torso_y_px": 0.15, "torso_rotation_deg": 0.03, "left_elbow_x_px": 0.2, "left_elbow_y_px": 0.1, "left_forearm_x_px": 0.1, "left_forearm_y_px": 0.1, "palm_x_px": 0.35, "palm_y_px": 0.25, "wrist_rotation_deg": 0.12, "finger_spread": 0.72, "finger_compress": -0.18},
+    {"frame": 110, "torso_x_px": 1.2, "torso_y_px": 0.35, "torso_rotation_deg": 0.16, "left_elbow_x_px": -1.0, "left_elbow_y_px": 0.6, "left_forearm_x_px": -0.7, "left_forearm_y_px": 0.4, "palm_x_px": -1.2, "palm_y_px": 0.35, "wrist_rotation_deg": 0.46, "finger_spread": 0.12, "finger_compress": 1.0},
+    {"frame": 115, "torso_x_px": 1.35, "torso_y_px": 0.4, "torso_rotation_deg": 0.18, "left_elbow_x_px": -1.2, "left_elbow_y_px": 0.7, "left_forearm_x_px": -0.8, "left_forearm_y_px": 0.5, "palm_x_px": -1.4, "palm_y_px": 0.45, "wrist_rotation_deg": 0.53, "finger_spread": 0.02, "finger_compress": 1.12},
+    {"frame": 126, "torso_x_px": 0.75, "torso_y_px": 0.2, "torso_rotation_deg": 0.09, "left_elbow_x_px": -0.6, "left_elbow_y_px": 0.3, "left_forearm_x_px": -0.4, "left_forearm_y_px": 0.2, "palm_x_px": -0.75, "palm_y_px": 0.2, "wrist_rotation_deg": 0.28, "finger_spread": 0.24, "finger_compress": 0.72},
+    {"frame": 138, "torso_x_px": 0.22, "torso_y_px": 0.05, "torso_rotation_deg": 0.03, "left_elbow_x_px": -0.2, "left_elbow_y_px": 0.1, "left_forearm_x_px": -0.1, "left_forearm_y_px": 0.1, "palm_x_px": -0.2, "palm_y_px": 0.05, "wrist_rotation_deg": 0.08, "finger_spread": 0.08, "finger_compress": 0.22},
+    {"frame": 148, "torso_x_px": 0.0, "torso_y_px": 0.0, "torso_rotation_deg": 0.0, "left_elbow_x_px": 0.0, "left_elbow_y_px": 0.0, "left_forearm_x_px": 0.0, "left_forearm_y_px": 0.0, "palm_x_px": 0.0, "palm_y_px": 0.0, "wrist_rotation_deg": 0.0, "finger_spread": 0.0, "finger_compress": 0.0},
+    {"frame": 162, "torso_x_px": 0.0, "torso_y_px": 0.0, "torso_rotation_deg": 0.0, "left_elbow_x_px": 0.0, "left_elbow_y_px": 0.0, "left_forearm_x_px": 0.0, "left_forearm_y_px": 0.0, "palm_x_px": 0.0, "palm_y_px": 0.0, "wrist_rotation_deg": 0.0, "finger_spread": 0.0, "finger_compress": 0.0}
+  ],
+  "authored_beats": [
+    {"id": "NOTICE_INHALE_SETTLE", "frames_inclusive": [18, 34], "intent": "small torso intake and release into speech"},
+    {"id": "OPEN_WITH_COUNTERMOTION", "frames_inclusive": [45, 82], "intent": "table hand opens through readable finger spacing while torso and opposite arm counter"},
+    {"id": "ACCOUNT_DEBT_COMPRESSION", "frames_inclusive": [91, 126], "intent": "compact palm compression with one overshoot and settle"},
+    {"id": "RETURN_BEFORE_QUESTION", "frames_inclusive": [127, 162], "intent": "return hand and torso before the question finishes, ending in stillness"}
+  ],
+  "quality_gates": {
+    "required_frame_count": 162,
+    "maximum_source_displacement_px": 8.0,
+    "maximum_adjacent_landmark_step_px": 1.25,
+    "maximum_changed_pixels_in_face_head": 0,
+    "maximum_changed_pixels_in_mug": 0,
+    "maximum_changed_pixels_outside_prospective_support": 0,
+    "minimum_opening_finger_span_gain_px": 4.0,
+    "minimum_compression_span_recovery_px": 2.0,
+    "maximum_fingertip_vertical_excursion_px": 2.5,
+    "required_final_identical_frame_count": 14,
+    "required_overshoot_channels": ["finger_spread", "finger_compress"],
+    "required_zero_encoder_processes": 0
+  },
+  "evidence": {
+    "directory": "collab/phase39_close_body_acting_rig_v1",
+    "allowlist": ["phase39-rig-support-overlay-v1.png", "phase39-silent-acting-keyframes-v1.png", "phase39-silent-acting-difference-v1.png", "phase39-motion-arcs-v1.png", "phase39-close-body-acting-machine-report-v1.json"]
+  },
+  "recommended_next_if_machine_and_human_pass": "Integrate the accepted body deformation before existing head, facial-feature, atmosphere, and camera stages, then rebuild only after Candidate03 audio and Phase37 V4 eyelid human gates close."
+}
