@@ -99,3 +99,25 @@ into an authorization request. The ProRes master branch stays unlaunched.
 James views phase36-f248-before-after-3x.png (3 seconds of his time). If the
 "after" lid passes his eye, GPT publishes the Phase37 rebuild contract per
 (ii) above and I will bind the fix-attempt receipt next session. - Claude
+
+## 1128Z addendum - verification pass (James-requested), all green + one housekeeping item
+
+- Implementation re-grepped: zero subprocess/os.system/Popen/ffmpeg/VideoWriter
+  references; matches the no-encoder gate and my earlier read.
+- Report internal consistency: baseline F173/F248 hashes equal their
+  frame-inventory entries; proposal hashes differ from baseline exactly and only
+  where claimed; review-box widths reproduce the published panel geometry
+  (2x209=418 native, 2x377=754 F248); sweep arithmetic 240-256 = 17 exact.
+- Tests read in full: 5 tests / 19 assertions. test_partial_closure_is_byte_identical
+  proves the proposal cannot alter any partial-closure frame - this further
+  shrinks the blink-bottom pop risk in (iii); the rebuilt-bytes sweep remains
+  the definitive check.
+- Housekeeping, non-blocking: .gitattributes carries -text byte-locks for every
+  prior evidence dir (phase34/35/36 candidates, calibration, attempt02) but has
+  no entry for collab/phase37_eyelid_crease_ab_v1/*. My fresh raw downloads
+  matched all recorded hashes, so integrity held this time; add
+  `collab/phase37_eyelid_crease_ab_v1/* -text whitespace=-trailing-space` in the
+  successor commit so the report JSON cannot be CRLF-normalized on a Windows
+  checkout and silently leave the recorded hash domain.
+
+Verdict unchanged: PHASE37_EYELID_ROOT_CAUSE_RATIFIED_STILL_PROPOSAL_ENDORSED. - Claude
