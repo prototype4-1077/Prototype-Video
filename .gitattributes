@@ -1,3 +1,4 @@
+.gitattributes text eol=lf
 # Rhubarb output is a byte-locked generated artifact; do not normalize its mixed line endings.
 concept/style_frames/june_phase33_direct_address_rhubarb_v1.json -text whitespace=cr-at-eol
 concept/characters/june_oxley_phase33_semantic_face_v3.json text eol=lf
@@ -126,5 +127,7 @@ pipeline/cartoon_eyelid_alignment_diagnostic.py text eol=lf
 pipeline/tests/test_cartoon_eyelid_alignment_diagnostic.py text eol=lf
 concept/characters/june_oxley_phase37_eyelid_alignment_diagnostic_v1.json text eol=lf
 concept/characters/june_oxley_phase37_eyelid_occlusion_diagnostic_v2.json text eol=lf
+concept/characters/june_oxley_phase37_eyelid_occlusion_diagnostic_v3.json text eol=lf
 collab/phase37_eyelid_crease_ab_v1/* -text whitespace=-trailing-space
 collab/phase37_eyelid_occlusion_ab_v2/* -text whitespace=-trailing-space
+collab/phase37_eyelid_occlusion_ab_v3/* -text whitespace=-trailing-space

@@ -21,7 +21,7 @@ from pipeline import cartoon_source_textured_direct_address as phase35
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
-CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase37_eyelid_occlusion_diagnostic_v2.json"
+CONTRACT_RELATIVE_PATH = "concept/characters/june_oxley_phase37_eyelid_occlusion_diagnostic_v3.json"
 IMPLEMENTATION_RELATIVE_PATH = "pipeline/cartoon_eyelid_alignment_diagnostic.py"
 TEST_RELATIVE_PATH = "pipeline/tests/test_cartoon_eyelid_alignment_diagnostic.py"
 FIXED_CREASE_RGB = np.asarray([111, 67, 47], dtype=np.uint8)
@@ -107,9 +107,9 @@ def load_contract(path: str | Path = REPO_ROOT / CONTRACT_RELATIVE_PATH) -> dict
     resolved = Path(path).resolve()
     _require_equal(resolved, (REPO_ROOT / CONTRACT_RELATIVE_PATH).resolve(), "pinned contract path")
     contract = _strict_json(resolved, "Phase37 eyelid contract")
-    _require_equal(contract["contract_version"], 2, "contract version")
+    _require_equal(contract["contract_version"], 3, "contract version")
     _require_equal(
-        contract["contract_id"], "june_oxley_phase37_eyelid_occlusion_diagnostic_v2", "contract id",
+        contract["contract_id"], "june_oxley_phase37_eyelid_occlusion_diagnostic_v3", "contract id",
     )
     _require_equal(contract["cash_cost"], 0, "cash cost")
     _require_equal(contract["paid_runtime_dependency"], False, "paid dependency")
@@ -238,20 +238,31 @@ def _classified_sclera_masks(prepared: Any, contract: dict[str, Any]) -> dict[st
             candidate.astype(np.uint8), connectivity=int(classifier["connectivity"]),
         )
         seed_labels: set[int] = set()
-        for seed_x, seed_y in spec["reviewed_sclera_seeds_xy"]:
+        for seed_x, seed_y in spec["machine_sclera_candidate_seeds_xy"]:
             label = int(labels[int(seed_y), int(seed_x)])
             if label <= 0:
-                raise EyelidDiagnosticError(f"{eye_name} reviewed sclera seed misses the threshold mask")
+                raise EyelidDiagnosticError(
+                    f"{eye_name} machine-classified sclera candidate seed misses the threshold mask"
+                )
             seed_labels.add(label)
         core = np.isin(labels, list(seed_labels)) & (labels > 0)
         core_metrics = _mask_metrics(core)
-        _require_equal(core_metrics["area"], spec["expected_core_area"], f"{eye_name} sclera core area")
-        _require_equal(core_metrics["bbox_xyxy"], spec["expected_core_bbox_xyxy"], f"{eye_name} sclera core bbox")
         _require_equal(
-            core_metrics["components_8_connected"], spec["expected_core_components"],
-            f"{eye_name} sclera core components",
+            core_metrics["area"], spec["expected_candidate_area"],
+            f"{eye_name} machine-classified sclera candidate area",
         )
-        _require_equal(core_metrics["sha256"], spec["expected_core_mask_sha256"], f"{eye_name} sclera core hash")
+        _require_equal(
+            core_metrics["bbox_xyxy"], spec["expected_candidate_bbox_xyxy"],
+            f"{eye_name} machine-classified sclera candidate bbox",
+        )
+        _require_equal(
+            core_metrics["components_8_connected"], spec["expected_candidate_components"],
+            f"{eye_name} machine-classified sclera candidate components",
+        )
+        _require_equal(
+            core_metrics["sha256"], spec["expected_candidate_mask_sha256"],
+            f"{eye_name} machine-classified sclera candidate hash",
+        )
 
         eye = geometry[eye_name]
         center = tuple(int(item) for item in eye["center"])
@@ -259,12 +270,12 @@ def _classified_sclera_masks(prepared: Any, contract: dict[str, Any]) -> dict[st
         upper, lower, _ = phase35.phase34_candidate09._semantic_lid_alpha_masks(
             plate.shape[:2], center, radius, 1.0,
         )
-        baseline_alpha = _combined_lid_alpha(upper, lower)
-        leak = core & (baseline_alpha < 255)
+        planning_alpha = _combined_lid_alpha(upper, lower)
+        leak = core & (planning_alpha < 255)
         cx, cy = center
         rx, ry = radius
         yy, xx = np.indices(plate.shape[:2], dtype=np.float32)
-        baseline_hard_owner = (
+        planning_hard_owner = (
             ((xx - cx) / float(rx)) ** 2 + ((yy - cy) / float(ry)) ** 2
         ) <= 1.0
         registered_patch = np.zeros(plate.shape[:2], dtype=bool)
@@ -276,8 +287,46 @@ def _classified_sclera_masks(prepared: Any, contract: dict[str, Any]) -> dict[st
         fringe = (
             cv2.dilate(leak.astype(np.uint8), np.ones((3, 3), dtype=np.uint8), iterations=1) > 0
         ) & (aperture > 0) & registered_patch & ~leak
-        protected_non_sclera = registered_patch & ~core
+        protected_non_candidate = registered_patch & ~core
+        disputed_canthus = np.zeros(plate.shape[:2], dtype=bool)
+        if "disputed_medial_canthus" in spec:
+            disputed_spec = spec["disputed_medial_canthus"]
+            seed_x, seed_y = disputed_spec["seed_xy"]
+            full_candidate = (hsv[:, :, 1] <= saturation) & (hsv[:, :, 2] >= value)
+            old_aperture = np.zeros(plate.shape[:2], dtype=np.uint8)
+            cv2.fillPoly(
+                old_aperture,
+                [np.asarray(disputed_spec["classification_aperture_polygon_xy"], dtype=np.int32)],
+                255,
+            )
+            _, disputed_labels = cv2.connectedComponents(
+                (full_candidate & (old_aperture > 0)).astype(np.uint8),
+                connectivity=int(classifier["connectivity"]),
+            )
+            disputed_label = int(disputed_labels[int(seed_y), int(seed_x)])
+            if disputed_label <= 0:
+                raise EyelidDiagnosticError("disputed medial-canthus seed misses its threshold component")
+            disputed_canthus = disputed_labels == disputed_label
+            disputed_metrics = _mask_metrics(disputed_canthus)
+            _require_equal(
+                disputed_metrics["area"], disputed_spec["expected_component_area"],
+                "disputed medial-canthus component area",
+            )
+            _require_equal(
+                disputed_metrics["bbox_xyxy"], disputed_spec["expected_component_bbox_xyxy"],
+                "disputed medial-canthus component bbox",
+            )
+            _require_equal(
+                disputed_metrics["sha256"], disputed_spec["expected_component_mask_sha256"],
+                "disputed medial-canthus component hash",
+            )
+            if np.any(disputed_canthus & core):
+                raise EyelidDiagnosticError("disputed medial canthus entered the recommended candidate mask")
+            protected_non_candidate |= disputed_canthus
+        else:
+            disputed_metrics = _mask_metrics(disputed_canthus)
         result[eye_name] = {
+            "eye_name": eye_name,
             "center": center,
             "radius": radius,
             "aperture": aperture > 0,
@@ -285,20 +334,22 @@ def _classified_sclera_masks(prepared: Any, contract: dict[str, Any]) -> dict[st
             "core": core,
             "leak": leak,
             "registered_patch": registered_patch,
-            "baseline_alpha": baseline_alpha,
-            "baseline_hard_owner": baseline_hard_owner,
+            "planning_alpha": planning_alpha,
+            "planning_hard_owner": planning_hard_owner,
             "fringe": fringe,
-            "protected_non_sclera": protected_non_sclera,
+            "protected_non_candidate": protected_non_candidate,
+            "disputed_canthus": disputed_canthus,
             "seed_component_labels": sorted(seed_labels),
             "threshold_component_count": int(component_total - 1),
             "core_metrics": core_metrics,
             "leak_metrics": _mask_metrics(leak),
-            "hard_owner_addition_metrics": _mask_metrics(leak & ~baseline_hard_owner),
-            "alpha_strengthening_metrics": _mask_metrics(leak & baseline_hard_owner),
+            "planning_hard_owner_addition_metrics": _mask_metrics(leak & ~planning_hard_owner),
+            "planning_alpha_strengthening_metrics": _mask_metrics(leak & planning_hard_owner),
             "fringe_metrics": _mask_metrics(fringe),
-            "protected_non_sclera_metrics": _mask_metrics(protected_non_sclera),
-            "minimum_baseline_alpha_on_core": int(baseline_alpha[core].min()),
-            "minimum_baseline_alpha_on_leak": int(baseline_alpha[leak].min()),
+            "protected_non_candidate_metrics": _mask_metrics(protected_non_candidate),
+            "disputed_canthus_metrics": disputed_metrics,
+            "minimum_planning_alpha_on_candidate": int(planning_alpha[core].min()),
+            "minimum_planning_alpha_on_leak": int(planning_alpha[leak].min()),
             "registered_texture_delta_mean_on_leak": float(
                 np.abs(lid_texture[leak].astype(np.int16) - plate[leak].astype(np.int16)).mean()
             ),
@@ -312,12 +363,16 @@ def _full_closure_variant(
     *,
     suppress_crease: bool,
     expand_sclera: bool,
-) -> Iterator[dict[str, list[dict[str, Any]]]]:
+) -> Iterator[dict[str, Any]]:
     phase33 = phase35.phase34_candidate09.phase33
     original_compose = phase33._compose_eye_lids
     phase34 = phase35.phase34_candidate09
     original_masks = phase34._semantic_lid_alpha_masks
-    audit: dict[str, list[dict[str, Any]]] = {"crease_suppressions": [], "sclera_expansions": []}
+    audit: dict[str, Any] = {
+        "crease_suppressions": [],
+        "sclera_expansions": [],
+        "eye_calls": [],
+    }
     by_center = {tuple(data["center"]): data for data in sclera.values()}
 
     def semantic_masks_with_variant(
@@ -356,6 +411,8 @@ def _full_closure_variant(
         original_blend = phase33._blend_color
         original_blend_source = phase33._blend_source
         source_calls = 0
+        call_records: list[dict[str, Any]] = []
+        owner_before_suppressed_crease: np.ndarray | None = None
         cx, cy = center
         rx, ry = radius
         x1, y1 = cx - rx - 5, cy - ry - 12
@@ -368,6 +425,7 @@ def _full_closure_variant(
         ]
 
         def blend_except_fixed_crease(target: np.ndarray, color: np.ndarray, alpha: np.ndarray) -> None:
+            nonlocal owner_before_suppressed_crease
             if (
                 suppress_crease
                 and
@@ -376,6 +434,7 @@ def _full_closure_variant(
                 and np.array_equal(color[0, 0], FIXED_CREASE_RGB)
                 and bool(np.all(color == FIXED_CREASE_RGB))
             ):
+                owner_before_suppressed_crease = owner.copy()
                 audit["crease_suppressions"].append({
                     "center": list(center),
                     "radius": list(radius),
@@ -391,26 +450,28 @@ def _full_closure_variant(
             source_calls += 1
             if source_calls > 2 or not np.array_equal(alpha, expected_source_alphas[source_calls - 1]):
                 raise EyelidDiagnosticError("unexpected Phase33 lid _blend_source call structure")
+            if not np.shares_memory(target, canvas):
+                raise EyelidDiagnosticError("Phase33 lid target is not a view of the actual F173 canvas")
+            if not np.shares_memory(source, lid_texture):
+                raise EyelidDiagnosticError("Phase33 lid source is not a view of the registered lid texture")
+            if source.shape != lid_texture[y1:y2, x1:x2].shape or not np.array_equal(
+                source, lid_texture[y1:y2, x1:x2],
+            ):
+                raise EyelidDiagnosticError("Phase33 lid source ROI/register mapping changed")
+            input_alpha = alpha.copy()
             if expand_sclera and source_calls == 2:
                 local_leak = data["leak"][y1:y2, x1:x2]
                 if local_leak.shape != alpha.shape:
                     raise EyelidDiagnosticError("sclera expansion/alpha shape mismatch")
                 alpha = alpha.copy()
                 alpha[local_leak] = 255
-                audit["sclera_expansions"].append({
-                    "center": list(center),
-                    "radius": list(radius),
-                    "closure": float(closure),
-                    "under_occluded_core_pixels": int(local_leak.sum()),
-                    "new_hard_owner_pixels": int(
-                        (data["leak"] & ~data["baseline_hard_owner"]).sum()
-                    ),
-                    "existing_hard_owner_alpha_strengthened_pixels": int(
-                        (data["leak"] & data["baseline_hard_owner"]).sum()
-                    ),
-                    "minimum_prior_alpha": int(data["baseline_alpha"][data["leak"]].min()),
-                    "registered_patch_provenance_pixels": int((data["leak"] & data["registered_patch"]).sum()),
-                })
+            call_records.append({
+                "index": source_calls,
+                "input_alpha": input_alpha,
+                "applied_alpha": alpha.copy(),
+                "source": source.copy(),
+                "source_shares_registered_texture_memory": True,
+            })
             original_blend_source(target, source, alpha)
 
         phase33._blend_color = blend_except_fixed_crease
@@ -421,9 +482,85 @@ def _full_closure_variant(
                 raise EyelidDiagnosticError(
                     f"expected exactly two Phase33 lid _blend_source calls, observed {source_calls}"
                 )
+            raw_final_owner = owner.copy()
+            restored_crease_owner_pixels = 0
+            if suppress_crease:
+                if owner_before_suppressed_crease is None:
+                    raise EyelidDiagnosticError("suppressed crease did not capture its pre-write owner map")
+                stale_crease_owner = owner == 9
+                restored_crease_owner_pixels = int(stale_crease_owner.sum())
+                owner[stale_crease_owner] = owner_before_suppressed_crease[stale_crease_owner]
+            owner_before_expansion = owner.copy()
             if expand_sclera:
                 owner[data["leak"]] = 8
-                area += int((data["leak"] & ~data["baseline_hard_owner"]).sum())
+                actual_prior_lid_owner = np.isin(owner_before_expansion, (7, 8, 9))
+                new_owner = data["leak"] & ~actual_prior_lid_owner
+                strengthened = data["leak"] & actual_prior_lid_owner
+                area += int(new_owner.sum())
+                audit["sclera_expansions"].append({
+                    "eye_name": data["eye_name"],
+                    "center": list(center),
+                    "radius": list(radius),
+                    "closure": float(closure),
+                    "under_occluded_machine_candidate_pixels": int(data["leak"].sum()),
+                    "new_hard_owner_pixels": int(new_owner.sum()),
+                    "existing_hard_owner_alpha_strengthened_pixels": int(strengthened.sum()),
+                })
+            upper_map = np.zeros(plate.shape[:2], dtype=np.uint8)
+            lower_map = np.zeros(plate.shape[:2], dtype=np.uint8)
+            upper_map[y1:y2, x1:x2] = call_records[0]["applied_alpha"]
+            lower_map[y1:y2, x1:x2] = call_records[1]["applied_alpha"]
+            provenance_rows = []
+            for global_y, global_x in zip(*np.where(data["leak"])):
+                local_x, local_y = int(global_x - x1), int(global_y - y1)
+                source_rgb = call_records[1]["source"][local_y, local_x]
+                registered_rgb = lid_texture[global_y, global_x]
+                plate_rgb = plate[global_y, global_x]
+                inside_authored_registered_patch = (
+                    cx - rx <= global_x < cx + rx + 1
+                    and cy - ry <= global_y < cy + ry + 1
+                )
+                provenance_rows.append({
+                    "global_xy": [int(global_x), int(global_y)],
+                    "local_source_xy": [local_x, local_y],
+                    "source_rgb": source_rgb.tolist(),
+                    "registered_texture_rgb": registered_rgb.tolist(),
+                    "neutral_plate_rgb": plate_rgb.tolist(),
+                    "source_matches_registered_texture": bool(np.array_equal(source_rgb, registered_rgb)),
+                    "inside_authored_registered_patch": bool(inside_authored_registered_patch),
+                    "neutral_plate_fallback": bool(np.array_equal(source_rgb, plate_rgb)),
+                })
+            audit["eye_calls"].append({
+                "eye_name": data["eye_name"],
+                "center": list(center),
+                "radius": list(radius),
+                "closure": float(closure),
+                "roi_xyxy": [x1, y1, x2, y2],
+                "source_call_count": source_calls,
+                "source_call_order": ["upper_lid_registered_texture", "lower_lid_registered_texture"],
+                "upper_alpha_map": upper_map,
+                "lower_alpha_map": lower_map,
+                "raw_upstream_final_owner_map": raw_final_owner,
+                "final_owner_map": owner.copy(),
+                "suppressed_crease_owner_pixels_restored": restored_crease_owner_pixels,
+                "source_coordinate_rows": provenance_rows,
+                "source_call_metrics": [
+                    {
+                        "index": int(record["index"]),
+                        "input_alpha_sha256": _mask_sha256(record["input_alpha"]),
+                        "applied_alpha_sha256": _mask_sha256(record["applied_alpha"]),
+                        "input_alpha_nonzero_pixels": int((record["input_alpha"] > 0).sum()),
+                        "applied_alpha_nonzero_pixels": int((record["applied_alpha"] > 0).sum()),
+                        "source_rgb_sha256": hashlib.sha256(
+                            np.ascontiguousarray(record["source"]).tobytes()
+                        ).hexdigest(),
+                        "source_shares_registered_texture_memory": bool(
+                            record["source_shares_registered_texture_memory"]
+                        ),
+                    }
+                    for record in call_records
+                ],
+            })
             return ratio, area
         finally:
             phase33._blend_source = original_blend_source
@@ -532,10 +669,18 @@ def _overlay(frame: np.ndarray, mask: np.ndarray, color: tuple[int, int, int]) -
     return result
 
 
-def _support_to_phase35(
-    prepared: Any, frame_number: int, support: np.ndarray,
-) -> np.ndarray:
-    mask = Image.fromarray(np.repeat(support.astype(np.uint8)[:, :, None] * 255, 3, axis=2), "RGB")
+def _prospective_support_to_phase35(
+    prepared: Any,
+    frame_number: int,
+    support: np.ndarray,
+    kernel_contract: dict[str, Any],
+) -> tuple[np.ndarray, dict[str, Any]]:
+    cubic_radius = int(kernel_contract["phase35_head_warp"]["input_support_radius_px"])
+    camera_radius = int(kernel_contract["phase35_camera_resize"]["input_support_radius_px"])
+    head_input = _dilate_chebyshev(support, cubic_radius)
+    mask = Image.fromarray(
+        np.repeat(head_input.astype(np.uint8)[:, :, None] * 255, 3, axis=2), "RGB",
+    )
     motion = prepared.motion[frame_number - 1]
     phase35._warp_region(
         mask,
@@ -544,10 +689,47 @@ def _support_to_phase35(
         dy=float(motion["head_y_px"]),
         rotation_deg=float(motion["head_tilt_deg"]),
     )
+    head_output = np.any(np.asarray(mask, dtype=np.uint8) > 0, axis=2)
+    camera_input = _dilate_chebyshev(head_output, camera_radius)
+    camera_mask = Image.fromarray(
+        np.repeat(camera_input.astype(np.uint8)[:, :, None] * 255, 3, axis=2), "RGB",
+    )
     transformed = phase35._camera_frame(
-        mask, float(motion["camera_push"]), prepared.scene_contract,
+        camera_mask, float(motion["camera_push"]), prepared.scene_contract,
     ).convert("RGB")
-    return np.any(np.asarray(transformed, dtype=np.uint8) > 0, axis=2)
+    final = np.any(np.asarray(transformed, dtype=np.uint8) > 0, axis=2)
+    return final, {
+        "selection_policy": kernel_contract["selection_policy"],
+        "native_exact_support_pixels": int(support.sum()),
+        "head_input_kernel_radius_px": cubic_radius,
+        "head_input_support_pixels": int(head_input.sum()),
+        "head_output_support_pixels": int(head_output.sum()),
+        "camera_input_kernel_radius_px": camera_radius,
+        "camera_input_support_pixels": int(camera_input.sum()),
+        "phase35_final_support_pixels": int(final.sum()),
+    }
+
+
+def _prospective_support_to_phase36(
+    phase35_support: np.ndarray,
+    camera: dict[str, Any],
+    source_frame: int,
+    kernel_contract: dict[str, Any],
+) -> tuple[np.ndarray, dict[str, Any]]:
+    camera_radius = int(kernel_contract["phase36_camera_resize"]["input_support_radius_px"])
+    camera_input = _dilate_chebyshev(phase35_support, camera_radius)
+    transformed_rgb, _ = phase36.compassion_camera(
+        np.repeat(camera_input.astype(np.uint8)[:, :, None] * 255, 3, axis=2),
+        camera,
+        source_frame,
+    )
+    final = np.any(transformed_rgb > 0, axis=2)
+    return final, {
+        "phase35_input_support_pixels": int(phase35_support.sum()),
+        "camera_input_kernel_radius_px": camera_radius,
+        "camera_input_support_pixels": int(camera_input.sum()),
+        "phase36_final_support_pixels": int(final.sum()),
+    }
 
 
 def _dilate_chebyshev(mask: np.ndarray, radius: int) -> np.ndarray:
@@ -559,11 +741,20 @@ def _dilate_chebyshev(mask: np.ndarray, radius: int) -> np.ndarray:
     return cv2.dilate(mask.astype(np.uint8), kernel, iterations=1) > 0
 
 
-def _minimum_chebyshev_guard(support: np.ndarray, difference: np.ndarray, maximum: int = 12) -> int:
-    for radius in range(maximum + 1):
-        if not np.any(difference & ~_dilate_chebyshev(support, radius)):
-            return radius
-    raise EyelidDiagnosticError(f"transformed difference needs more than {maximum}px support guard")
+def _outside_support_count(difference: np.ndarray, prospective_support: np.ndarray) -> int:
+    if difference.shape != prospective_support.shape:
+        raise EyelidDiagnosticError("difference/support shape mismatch")
+    return int((difference & ~prospective_support).sum())
+
+
+def _require_prospective_containment(
+    difference: np.ndarray, prospective_support: np.ndarray, label: str,
+) -> None:
+    outside = _outside_support_count(difference, prospective_support)
+    if outside:
+        raise EyelidDiagnosticError(
+            f"{label} has {outside} changed pixel(s) outside the predeclared kernel support"
+        )
 
 
 def _sclera_decomposition(
@@ -578,24 +769,27 @@ def _sclera_decomposition(
     leak = np.zeros_like(core)
     fringe = np.zeros_like(core)
     protected = np.zeros_like(core)
+    disputed = np.zeros_like(core)
     aperture = np.zeros_like(core)
     candidate = np.zeros_like(core)
     for data in sclera.values():
         core |= data["core"]
         leak |= data["leak"]
         fringe |= data["fringe"]
-        protected |= data["protected_non_sclera"]
+        protected |= data["protected_non_candidate"]
+        disputed |= data["disputed_canthus"]
         aperture |= data["aperture"]
         candidate |= data["candidate"]
     classification = _overlay(plate, aperture, (35, 80, 255))
     classification = _overlay(classification, candidate, (255, 215, 30))
     classification = _overlay(classification, core, (30, 235, 255))
+    classification = _overlay(classification, disputed, (255, 35, 210))
     ownership = _overlay(plate, protected, (30, 150, 60))
     ownership = _overlay(ownership, fringe, (255, 215, 30))
     ownership = _overlay(ownership, leak, (255, 35, 35))
     panels = [
         (plate, "LOCKED OPEN-EYE SOURCE PLATE"),
-        (classification, "BLUE APERTURE / YELLOW HSV / CYAN REVIEWED SCLERA"),
+        (classification, "CYAN MACHINE CANDIDATE / MAGENTA DISPUTED CANTHUS"),
         (ownership, "GREEN PROTECTED / YELLOW FRINGE / RED UNDER-OCCLUDED"),
         (lid_texture, "REGISTERED BLINK TEXTURE PROVENANCE"),
         (states["baseline"], "BASELINE"),
@@ -613,6 +807,64 @@ def _sclera_decomposition(
     width = max(panel.width for panel in rendered)
     height = max(panel.height for panel in rendered)
     sheet = Image.new("RGB", (width * 2, height * 4), (0, 0, 0))
+    for index, panel in enumerate(rendered):
+        sheet.paste(panel, ((index % 2) * width, (index // 2) * height))
+    return sheet
+
+
+def _actual_map_decomposition(
+    plate: np.ndarray,
+    lid_texture: np.ndarray,
+    baseline_calls: list[dict[str, Any]],
+    combined_calls: list[dict[str, Any]],
+    sclera: dict[str, dict[str, Any]],
+    combined_frame: np.ndarray,
+    box: tuple[int, int, int, int],
+) -> Image.Image:
+    baseline_alpha = np.zeros(plate.shape[:2], dtype=np.uint8)
+    combined_alpha = np.zeros_like(baseline_alpha)
+    combined_owner = np.zeros_like(baseline_alpha)
+    for call in baseline_calls:
+        baseline_alpha = np.maximum(
+            baseline_alpha, _combined_lid_alpha(call["upper_alpha_map"], call["lower_alpha_map"]),
+        )
+    for call in combined_calls:
+        combined_alpha = np.maximum(
+            combined_alpha, _combined_lid_alpha(call["upper_alpha_map"], call["lower_alpha_map"]),
+        )
+        combined_owner = np.maximum(combined_owner, call["final_owner_map"])
+    candidate = np.zeros(plate.shape[:2], dtype=bool)
+    disputed = np.zeros_like(candidate)
+    for data in sclera.values():
+        candidate |= data["core"]
+        disputed |= data["disputed_canthus"]
+    classification = _overlay(plate, candidate, (30, 235, 255))
+    classification = _overlay(classification, disputed, (255, 35, 210))
+    owner_palette = np.zeros_like(plate)
+    owner_palette[combined_owner == 7] = (40, 145, 255)
+    owner_palette[combined_owner == 8] = (255, 165, 35)
+    owner_palette[combined_owner == 9] = (210, 55, 230)
+    baseline_alpha_rgb = np.repeat(baseline_alpha[:, :, None], 3, axis=2)
+    combined_alpha_rgb = np.repeat(combined_alpha[:, :, None], 3, axis=2)
+    panels = [
+        (classification, "MACHINE CANDIDATE + PRESERVED CANTHUS"),
+        (lid_texture, "ACTUAL REGISTERED LID SOURCE"),
+        (baseline_alpha_rgb, "ACTUAL BASELINE UPPER+LOWER ALPHA"),
+        (combined_alpha_rgb, "ACTUAL COMBINED UPPER+LOWER ALPHA"),
+        (owner_palette, "ACTUAL FINAL OWNER 7 UPPER / 8 LOWER / 9 CREASE"),
+        (combined_frame, "RECOMMENDED STILL (HUMAN REVIEW REQUIRED)"),
+    ]
+    x1, y1, x2, y2 = box
+    rendered = [
+        _label(
+            _crop(image, box).resize(((x2 - x1) * 2, (y2 - y1) * 2), Image.Resampling.NEAREST),
+            label,
+        )
+        for image, label in panels
+    ]
+    width = max(panel.width for panel in rendered)
+    height = max(panel.height for panel in rendered)
+    sheet = Image.new("RGB", (width * 2, height * 3), (0, 0, 0))
     for index, panel in enumerate(rendered):
         sheet.paste(panel, ((index % 2) * width, (index // 2) * height))
     return sheet
@@ -694,6 +946,49 @@ def _gate(name: str, actual: Any, operator: str, threshold: Any) -> dict[str, An
     return {"name": name, "actual": actual, "operator": operator, "threshold": threshold, "passed": bool(passed)}
 
 
+def _eye_calls_by_name(audit: dict[str, Any]) -> dict[str, dict[str, Any]]:
+    calls = audit.get("eye_calls", [])
+    result = {str(call["eye_name"]): call for call in calls}
+    _require_equal(len(calls), 2, "captured full-closure eye call count")
+    _require_equal(
+        set(result), {"viewer_left_eye", "viewer_right_eye"},
+        "captured full-closure eye call identities",
+    )
+    return result
+
+
+def _public_write_audit(audit: dict[str, Any]) -> dict[str, Any]:
+    public = {
+        "crease_suppressions": audit["crease_suppressions"],
+        "sclera_expansions": audit["sclera_expansions"],
+        "eye_calls": [],
+    }
+    for call in audit["eye_calls"]:
+        public["eye_calls"].append({
+            "eye_name": call["eye_name"],
+            "center": call["center"],
+            "radius": call["radius"],
+            "closure": call["closure"],
+            "roi_xyxy": call["roi_xyxy"],
+            "source_call_count": call["source_call_count"],
+            "source_call_order": call["source_call_order"],
+            "upper_alpha_map_sha256": _mask_sha256(call["upper_alpha_map"]),
+            "upper_alpha_nonzero_pixels": int((call["upper_alpha_map"] > 0).sum()),
+            "lower_alpha_map_sha256": _mask_sha256(call["lower_alpha_map"]),
+            "lower_alpha_nonzero_pixels": int((call["lower_alpha_map"] > 0).sum()),
+            "raw_upstream_final_owner_map_sha256": _mask_sha256(call["raw_upstream_final_owner_map"]),
+            "final_owner_map_sha256": _mask_sha256(call["final_owner_map"]),
+            "suppressed_crease_owner_pixels_restored": call["suppressed_crease_owner_pixels_restored"],
+            "final_owner_counts": {
+                str(value): int((call["final_owner_map"] == value).sum())
+                for value in (7, 8, 9)
+            },
+            "source_call_metrics": call["source_call_metrics"],
+            "source_coordinate_rows": call["source_coordinate_rows"],
+        })
+    return public
+
+
 def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]:
     contract = load_contract()
     output = Path(output_directory).resolve() if output_directory else (
@@ -716,6 +1011,9 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
     phase36_contract = _strict_json(
         _repo_path(contract["locks"]["phase36_picture_contract"]["path"]), "Phase36 picture contract",
     )
+    phase37_v2_report = _strict_json(
+        _repo_path(contract["locks"]["phase37_v2_machine_report"]["path"]), "Phase37 V2 report",
+    )
     phase36_frames = [int(value) for value in contract["diagnostic"]["phase36_frames"]]
     source_frames = [int(value) for value in contract["diagnostic"]["source_frames"]]
     archived, archive_audit = _read_picture_archive(contract, phase36_manifest, set(phase36_frames))
@@ -735,21 +1033,16 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
     native_states: dict[str, dict[int, np.ndarray]] = {}
     source_states: dict[str, dict[int, np.ndarray]] = {}
     evidence_states: dict[str, dict[int, dict[str, Any]]] = {}
-    variant_audits: dict[str, dict[str, list[dict[str, Any]]]] = {
-        "baseline": {"crease_suppressions": [], "sclera_expansions": []},
-    }
+    variant_audits: dict[str, dict[str, Any]] = {}
     for variant, (suppress_crease, expand_sclera) in variant_config.items():
         prepared.native_cache.clear()
         native_states[variant] = {}
         source_states[variant] = {}
         evidence_states[variant] = {}
-        context = (
-            _full_closure_variant(
-                sclera, suppress_crease=suppress_crease, expand_sclera=expand_sclera,
-            )
-            if variant != "baseline" else None
+        context = _full_closure_variant(
+            sclera, suppress_crease=suppress_crease, expand_sclera=expand_sclera,
         )
-        audit = context.__enter__() if context is not None else variant_audits["baseline"]
+        audit = context.__enter__()
         try:
             for frame_number in source_frames:
                 image, native, evidence = phase35.compose_direct_address_frame(prepared, frame_number)
@@ -763,16 +1056,43 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
                 native_states[variant][frame_number] = native.copy()
                 evidence_states[variant][frame_number] = _evidence(evidence)
         finally:
-            if context is not None:
-                context.__exit__(None, None, None)
-                variant_audits[variant] = audit
+            context.__exit__(None, None, None)
+            variant_audits[variant] = audit
     _require_equal(
         _raw_frame_hash(source_states["baseline"][focus_source]),
         contract["diagnostic"]["expected_phase35_f173_rgb_sha256"],
         "frozen Phase35 F173 baseline",
     )
 
+    # Render the predecessor's disputed three-pixel fill only as a labelled visual comparator.
+    # It is never the recommended proposal and never enters the four-state gates.
+    filled_sclera = {name: dict(data) for name, data in sclera.items()}
+    filled_sclera["viewer_left_eye"]["leak"] = (
+        sclera["viewer_left_eye"]["leak"] | sclera["viewer_left_eye"]["disputed_canthus"]
+    )
+    prepared.native_cache.clear()
+    with _full_closure_variant(
+        filled_sclera, suppress_crease=True, expand_sclera=True,
+    ) as canthus_filled_audit:
+        canthus_filled_image, canthus_filled_native, _ = phase35.compose_direct_address_frame(
+            prepared, focus_source,
+        )
+    canthus_filled_source = np.asarray(canthus_filled_image.convert("RGB"), dtype=np.uint8).copy()
+    _require_equal(
+        _raw_frame_hash(canthus_filled_source),
+        phase37_v2_report["four_state_variants"]["combined"]["phase35_f173_rgb_sha256"],
+        "V2 disputed-canthus-filled F173 comparator",
+    )
+
     camera = next(row["camera"] for row in phase36_contract["shots"] if row["id"] == "LP030_COMPASSION_PUNCH")
+    canthus_filled_phase36, canthus_filled_transform = phase36.compassion_camera(
+        canthus_filled_source, camera, focus_source,
+    )
+    _require_equal(
+        _raw_frame_hash(canthus_filled_phase36),
+        phase37_v2_report["four_state_variants"]["combined"]["phase36_f248_rgb_sha256"],
+        "V2 disputed-canthus-filled F248 comparator",
+    )
     phase36_states: dict[str, dict[int, np.ndarray]] = {name: {} for name in variant_config}
     transform_evidence: dict[int, dict[str, Any]] = {}
     for source_frame, output_frame in zip(source_frames, phase36_frames):
@@ -816,6 +1136,7 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
     core_mask = np.zeros_like(crease_mask)
     fringe_mask = np.zeros_like(crease_mask)
     protected_mask = np.zeros_like(crease_mask)
+    disputed_canthus_mask = np.zeros_like(crease_mask)
     for eye_name in ("viewer_left_eye", "viewer_right_eye"):
         eye = geometry[eye_name]
         _, _, crease_alpha = phase35.phase34_candidate09._semantic_lid_alpha_masks(
@@ -825,20 +1146,25 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
         leak_mask |= sclera[eye_name]["leak"]
         core_mask |= sclera[eye_name]["core"]
         fringe_mask |= sclera[eye_name]["fringe"]
-        protected_mask |= sclera[eye_name]["protected_non_sclera"]
+        protected_mask |= sclera[eye_name]["protected_non_candidate"]
+        disputed_canthus_mask |= sclera[eye_name]["disputed_canthus"]
     _require_equal(int((crease_mask & leak_mask).sum()), 0, "crease/sclera support overlap")
     allowed_native = {
         "crease_only": crease_mask,
         "mask_only": leak_mask,
         "combined": crease_mask | leak_mask,
     }
-    allowed_phase35_base = {
-        name: _support_to_phase35(prepared, focus_source, mask) for name, mask in allowed_native.items()
-    }
+    kernel_support = contract["diagnostic"]["prospective_transform_support"]
+    allowed_phase35: dict[str, np.ndarray] = {}
+    prospective_audit: dict[str, dict[str, Any]] = {}
+    for name, mask in allowed_native.items():
+        allowed_phase35[name], phase35_support_audit = _prospective_support_to_phase35(
+            prepared, focus_source, mask, kernel_support,
+        )
+        prospective_audit[name] = {"phase35": phase35_support_audit}
 
     difference_audit: dict[str, dict[str, Any]] = {}
     native_diffs: dict[str, np.ndarray] = {}
-    expected_guards = contract["diagnostic"]["expected_transform_support_guards"]
     for variant in ("crease_only", "mask_only", "combined"):
         native_diff = np.any(
             native_states["baseline"][focus_source] != native_states[variant][focus_source], axis=2,
@@ -849,40 +1175,27 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
         output_diff = np.any(
             phase36_states["baseline"][focus_output] != phase36_states[variant][focus_output], axis=2,
         )
-        phase35_guard = _minimum_chebyshev_guard(allowed_phase35_base[variant], final_diff)
-        allowed_phase35 = _dilate_chebyshev(allowed_phase35_base[variant], phase35_guard)
-        phase35_added = int(allowed_phase35.sum() - allowed_phase35_base[variant].sum())
-        phase36_base_rgb, _ = phase36.compassion_camera(
-            np.repeat(allowed_phase35.astype(np.uint8)[:, :, None] * 255, 3, axis=2),
-            camera,
-            focus_source,
+        allowed_phase36, phase36_support_audit = _prospective_support_to_phase36(
+            allowed_phase35[variant], camera, focus_source, kernel_support,
         )
-        allowed_phase36_base = np.any(phase36_base_rgb > 0, axis=2)
-        phase36_guard = _minimum_chebyshev_guard(allowed_phase36_base, output_diff)
-        allowed_phase36 = _dilate_chebyshev(allowed_phase36_base, phase36_guard)
-        phase36_added = int(allowed_phase36.sum() - allowed_phase36_base.sum())
-        locked_guard = expected_guards[variant]
-        _require_equal(phase35_guard, locked_guard["phase35_radius_px"], f"{variant} Phase35 support guard")
-        _require_equal(phase35_added, locked_guard["phase35_added_support_pixels"], f"{variant} Phase35 added support")
-        _require_equal(phase36_guard, locked_guard["phase36_radius_px"], f"{variant} Phase36 support guard")
-        _require_equal(phase36_added, locked_guard["phase36_added_support_pixels"], f"{variant} Phase36 added support")
+        prospective_audit[variant]["phase36"] = phase36_support_audit
+        expected_counts = contract["diagnostic"]["expected_prospective_support_counts"][variant]
+        for stage_name in ("phase35", "phase36"):
+            for metric_name, expected_value in expected_counts[stage_name].items():
+                _require_equal(
+                    prospective_audit[variant][stage_name][metric_name], expected_value,
+                    f"{variant} prospective {stage_name} {metric_name}",
+                )
         native_diffs[variant] = native_diff
         difference_audit[variant] = {
             "changed_pixels_native": int(native_diff.sum()),
             "changed_pixels_phase35_final": int(final_diff.sum()),
             "changed_pixels_phase36_f248": int(output_diff.sum()),
             "native_changed_outside_allowed_support": int((native_diff & ~allowed_native[variant]).sum()),
-            "phase35_transform_support_guard": {
-                "metric": "minimum integer Chebyshev dilation after exact native support transform",
-                "radius_px": phase35_guard,
-                "added_support_pixels": phase35_added,
-            },
-            "phase36_transform_support_guard": {
-                "metric": "minimum integer Chebyshev dilation after Phase36 transform of guarded Phase35 support",
-                "radius_px": phase36_guard,
-                "added_support_pixels": phase36_added,
-            },
-            "phase35_changed_outside_transformed_allowed_support": int((final_diff & ~allowed_phase35).sum()),
+            "prospective_transform_support": prospective_audit[variant],
+            "phase35_changed_outside_transformed_allowed_support": _outside_support_count(
+                final_diff, allowed_phase35[variant],
+            ),
             "phase36_changed_outside_twice_transformed_allowed_support": int((output_diff & ~allowed_phase36).sum()),
         }
 
@@ -894,46 +1207,78 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
     alpha_strengthened = 0
     residual_before = 0
     residual_after = 0
+    actual_planning_mask_mismatch = 0
+    baseline_eye_calls = _eye_calls_by_name(variant_audits["baseline"])
+    combined_eye_calls = _eye_calls_by_name(variant_audits["combined"])
     for eye_name in ("viewer_left_eye", "viewer_right_eye"):
         data = sclera[eye_name]
-        proposed_alpha = data["baseline_alpha"].copy()
-        proposed_alpha[data["leak"]] = 255
-        proposed_owner = data["baseline_hard_owner"] | data["leak"]
+        baseline_call = baseline_eye_calls[eye_name]
+        combined_call = combined_eye_calls[eye_name]
+        baseline_alpha = _combined_lid_alpha(
+            baseline_call["upper_alpha_map"], baseline_call["lower_alpha_map"],
+        )
+        proposed_alpha = _combined_lid_alpha(
+            combined_call["upper_alpha_map"], combined_call["lower_alpha_map"],
+        )
+        baseline_owner = np.isin(baseline_call["final_owner_map"], (7, 8, 9))
+        proposed_owner = np.isin(combined_call["final_owner_map"], (7, 8, 9))
+        actual_under_occluded = data["core"] & (baseline_alpha < 255)
+        actual_planning_mask_mismatch += int(np.logical_xor(actual_under_occluded, data["leak"]).sum())
+        new_owner_mask = data["leak"] & ~baseline_owner
+        strengthened_mask = data["leak"] & baseline_owner
         ys, xs = np.where(proposed_owner)
         cx, cy = data["center"]
         rx, ry = data["radius"]
         topology = _topology(proposed_owner)
-        hard = int((data["leak"] & ~data["baseline_hard_owner"]).sum())
-        strengthened = int((data["leak"] & data["baseline_hard_owner"]).sum())
+        hard = int(new_owner_mask.sum())
+        strengthened = int(strengthened_mask.sum())
         hard_owner_additions += hard
         alpha_strengthened += strengthened
-        residual_before += int((data["core"] & (data["baseline_alpha"] < 255)).sum())
+        residual_before += int(actual_under_occluded.sum())
         residual_after += int((data["core"] & (proposed_alpha < 255)).sum())
+        provenance_rows = combined_call["source_coordinate_rows"]
         owner_audit[eye_name] = {
             "classification": {
                 "aperture_polygon_xy": contract["diagnostic"]["sclera_classification"][eye_name]["aperture_polygon_xy"],
-                "reviewed_sclera_seeds_xy": contract["diagnostic"]["sclera_classification"][eye_name]["reviewed_sclera_seeds_xy"],
+                "machine_sclera_candidate_seeds_xy": contract["diagnostic"]["sclera_classification"][eye_name]["machine_sclera_candidate_seeds_xy"],
+                "status": contract["diagnostic"]["sclera_classification"]["status"],
                 "seed_component_labels": data["seed_component_labels"],
                 "threshold_component_count": data["threshold_component_count"],
-                "core": data["core_metrics"],
-                "under_occluded_core": data["leak_metrics"],
+                "machine_candidate": data["core_metrics"],
+                "actual_under_occluded_candidate": data["leak_metrics"],
                 "one_px_diagnostic_fringe": data["fringe_metrics"],
-                "protected_non_sclera": data["protected_non_sclera_metrics"],
+                "protected_non_candidate": data["protected_non_candidate_metrics"],
+                "disputed_medial_canthus": data["disputed_canthus_metrics"],
             },
             "provenance": {
-                "under_occluded_pixels_inside_registered_patch": int((data["leak"] & data["registered_patch"]).sum()),
-                "neutral_plate_fallback_pixels": int(np.all(
-                    prepared.face.phase33_base.lid_texture[data["leak"]]
-                    == prepared.face.plate[data["leak"]], axis=1,
-                ).sum()),
+                "captured_from_actual_lower_lid_source_call": True,
+                "local_to_global_source_coordinate_rows": provenance_rows,
+                "source_matches_registered_texture_pixels": sum(
+                    int(row["source_matches_registered_texture"]) for row in provenance_rows
+                ),
+                "inside_authored_registered_patch_pixels": sum(
+                    int(row["inside_authored_registered_patch"]) for row in provenance_rows
+                ),
+                "neutral_plate_fallback_pixels": sum(
+                    int(row["neutral_plate_fallback"]) for row in provenance_rows
+                ),
                 "registered_texture_delta_mean_on_leak": data["registered_texture_delta_mean_on_leak"],
             },
-            "alpha_and_owner": {
-                "minimum_baseline_alpha_on_reviewed_core": data["minimum_baseline_alpha_on_core"],
-                "minimum_baseline_alpha_on_under_occluded_core": data["minimum_baseline_alpha_on_leak"],
-                "minimum_proposed_alpha_on_reviewed_core": int(proposed_alpha[data["core"]].min()),
-                "residual_under_occluded_core_before": int((data["core"] & (data["baseline_alpha"] < 255)).sum()),
-                "residual_under_occluded_core_after": int((data["core"] & (proposed_alpha < 255)).sum()),
+            "actual_compositor_alpha_and_owner": {
+                "source_call_count": combined_call["source_call_count"],
+                "source_call_order": combined_call["source_call_order"],
+                "source_call_metrics": combined_call["source_call_metrics"],
+                "upper_alpha_map_sha256": _mask_sha256(combined_call["upper_alpha_map"]),
+                "lower_alpha_map_sha256": _mask_sha256(combined_call["lower_alpha_map"]),
+                "final_owner_map_sha256": _mask_sha256(combined_call["final_owner_map"]),
+                "minimum_baseline_alpha_on_machine_candidate": int(baseline_alpha[data["core"]].min()),
+                "minimum_baseline_alpha_on_under_occluded_candidate": int(baseline_alpha[data["leak"]].min()),
+                "minimum_proposed_alpha_on_machine_candidate": int(proposed_alpha[data["core"]].min()),
+                "residual_under_occluded_candidate_before": int(actual_under_occluded.sum()),
+                "residual_under_occluded_candidate_after": int((data["core"] & (proposed_alpha < 255)).sum()),
+                "candidate_pixels_with_non_lid_final_owner": int(
+                    (data["core"] & ~np.isin(combined_call["final_owner_map"], (7, 8))).sum()
+                ),
                 "new_hard_owner_pixels": hard,
                 "existing_hard_owner_alpha_strengthened_pixels": strengthened,
                 "proposed_hard_owner_area": int(proposed_owner.sum()),
@@ -953,7 +1298,7 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
     combined_lid_areas = evidence_states["combined"][focus_source]["lid_areas"]
     expected_combined_lid_areas = [
         baseline_lid_areas[index]
-        + owner_audit[eye_name]["alpha_and_owner"]["new_hard_owner_pixels"]
+        + owner_audit[eye_name]["actual_compositor_alpha_and_owner"]["new_hard_owner_pixels"]
         for index, eye_name in enumerate(("viewer_left_eye", "viewer_right_eye"))
     ]
     deformation = geometry["deformation_roi"]
@@ -969,8 +1314,13 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
         "native_eye_support_to_cage_vertical_gap_px": int(deformation[1]) - int(eye_y.max()) - 1,
         "determination": (
             "F248 contains two separable source defects: a fixed-color synthetic crease over registered natural fold "
-            "texture, and incomplete full-closure alpha/ownership over reviewed source sclera. The mouth/cheek cage "
+            "texture, and incomplete full-closure alpha/ownership over a machine-classified sclera candidate. The "
+            "three-pixel viewer-left medial-canthus highlight is disputed and preserved. The mouth/cheek cage "
             "is spatially disjoint and written before lids; the complete face then shares one head warp and camera path."
+        ),
+        "remaining_upper_pale_band_classification": (
+            "Registered blink-texture anatomy captured from the actual lid source call, not residual neutral-plate "
+            "sclera or fallback. Its artistic acceptability remains a human picture-review decision."
         ),
     }
 
@@ -982,20 +1332,32 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
         _gate("all_variant_phase36_changed_frames", [changed_frames[name]["phase36"] for name in ("crease_only", "mask_only", "combined")], "==", [[focus_output], [focus_output], [focus_output]]),
         _gate("crease_mask_disjoint_from_sclera_expansion", int((crease_mask & leak_mask).sum()), "==", 0),
         _gate("crease_only_native_diff_outside_crease", difference_audit["crease_only"]["native_changed_outside_allowed_support"], "==", 0),
-        _gate("mask_only_native_diff_outside_reviewed_sclera", difference_audit["mask_only"]["native_changed_outside_allowed_support"], "==", 0),
+        _gate("mask_only_native_diff_outside_machine_candidate", difference_audit["mask_only"]["native_changed_outside_allowed_support"], "==", 0),
         _gate("combined_native_diff_outside_crease_plus_sclera", difference_audit["combined"]["native_changed_outside_allowed_support"], "==", 0),
         _gate("all_phase35_diffs_inside_transformed_support", sum(value["phase35_changed_outside_transformed_allowed_support"] for value in difference_audit.values()), "==", 0),
         _gate("all_phase36_diffs_inside_twice_transformed_support", sum(value["phase36_changed_outside_twice_transformed_allowed_support"] for value in difference_audit.values()), "==", 0),
         _gate("mask_effect_separable_from_crease_toggle", int(np.logical_xor(native_diffs["mask_only"], mask_delta_from_crease).sum()), "==", 0),
-        _gate("reviewed_under_occluded_sclera_pixels", residual_before, "==", contract["diagnostic"]["expected_under_occluded_sclera_pixels"]),
+        _gate("actual_vs_planning_under_occluded_candidate_mask", actual_planning_mask_mismatch, "==", 0),
+        _gate("machine_candidate_under_occluded_pixels", residual_before, "==", contract["diagnostic"]["expected_under_occluded_machine_candidate_pixels"]),
         _gate("new_hard_owner_pixels", hard_owner_additions, "==", contract["diagnostic"]["expected_new_hard_owner_pixels"]),
         _gate("existing_owner_alpha_strengthened_pixels", alpha_strengthened, "==", contract["diagnostic"]["expected_existing_owner_alpha_strengthened_pixels"]),
         _gate("owner_accounting_no_double_count", hard_owner_additions + alpha_strengthened, "==", residual_before),
-        _gate("residual_source_sclera_after_combined", residual_after, "==", 0),
-        _gate("combined_minimum_sclera_alpha", min(item["alpha_and_owner"]["minimum_proposed_alpha_on_reviewed_core"] for item in owner_audit.values()), "==", 255),
+        _gate("residual_machine_candidate_after_combined", residual_after, "==", 0),
+        _gate("combined_minimum_machine_candidate_alpha", min(item["actual_compositor_alpha_and_owner"]["minimum_proposed_alpha_on_machine_candidate"] for item in owner_audit.values()), "==", 255),
+        _gate("machine_candidate_final_owner_upper_or_lower", sum(item["actual_compositor_alpha_and_owner"]["candidate_pixels_with_non_lid_final_owner"] for item in owner_audit.values()), "==", 0),
         _gate("neutral_plate_fallback_pixels", sum(item["provenance"]["neutral_plate_fallback_pixels"] for item in owner_audit.values()), "==", 0),
-        _gate("mask_only_protected_non_sclera_rgb_delta", int((native_diffs["mask_only"] & protected_mask).sum()), "==", 0),
-        _gate("combined_vs_crease_protected_non_sclera_rgb_delta", int((mask_delta_from_crease & protected_mask).sum()), "==", 0),
+        _gate("actual_registered_source_match_pixels", sum(item["provenance"]["source_matches_registered_texture_pixels"] for item in owner_audit.values()), "==", residual_before),
+        _gate("actual_registered_patch_coordinate_pixels", sum(item["provenance"]["inside_authored_registered_patch_pixels"] for item in owner_audit.values()), "==", residual_before),
+        _gate("actual_lid_source_call_count", [item["actual_compositor_alpha_and_owner"]["source_call_count"] for item in owner_audit.values()], "==", [2, 2]),
+        _gate("mask_only_protected_non_candidate_rgb_delta", int((native_diffs["mask_only"] & protected_mask).sum()), "==", 0),
+        _gate("combined_vs_crease_protected_non_candidate_rgb_delta", int((mask_delta_from_crease & protected_mask).sum()), "==", 0),
+        _gate("disputed_canthus_preserved_native", int((native_diffs["combined"] & disputed_canthus_mask).sum()), "==", 0),
+        _gate("v2_filled_comparator_diff_is_only_disputed_canthus", int(np.logical_xor(
+            np.any(canthus_filled_native != native_states["combined"][focus_source], axis=2),
+            disputed_canthus_mask,
+        ).sum()), "==", 0),
+        _gate("v2_filled_comparator_phase36_hash", _raw_frame_hash(canthus_filled_phase36), "==", phase37_v2_report["four_state_variants"]["combined"]["phase36_f248_rgb_sha256"]),
+        _gate("v2_filled_comparator_camera_unchanged", canthus_filled_transform, "==", transform_evidence[focus_output]),
         _gate("diagnostic_fringe_write_pixels", int((native_diffs["mask_only"] & fringe_mask).sum()), "==", 0),
         _gate("combined_lid_area_counts_new_owners_once", combined_lid_areas, "==", expected_combined_lid_areas),
         _gate("combined_iris_occlusion_left", evidence_states["combined"][focus_source]["iris_occlusion_ratios"][0], "==", 1.0),
@@ -1043,14 +1405,24 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
         ).save(
             stage / str(contract["output"]["phase36_sequence_filename"])
         )
-        _sclera_decomposition(
+        _actual_map_decomposition(
             prepared.face.plate,
             prepared.face.phase33_base.lid_texture,
-            native_focus_states,
+            list(baseline_eye_calls.values()),
+            list(combined_eye_calls.values()),
             sclera,
+            native_focus_states["combined"],
             native_box,
         ).save(stage / str(contract["output"]["layer_decomposition_filename"])
         )
+        _comparison(
+            canthus_filled_phase36,
+            phase36_focus_states["combined"],
+            phase36_box,
+            3,
+            "V2 DISPUTED CANTHUS FILLED (NO-GO)",
+            "V3 DISPUTED CANTHUS PRESERVED (RECOMMENDED FOR REVIEW)",
+        ).save(stage / str(contract["output"]["canthus_comparison_filename"]))
 
         artifacts = _artifact_inventory(stage)
         variants_report: dict[str, Any] = {}
@@ -1058,23 +1430,23 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
             variants_report[variant] = {
                 "configuration": {
                     "suppress_fixed_crease": variant_config[variant][0],
-                    "expand_reviewed_sclera": variant_config[variant][1],
+                    "expand_machine_classified_sclera_candidate": variant_config[variant][1],
                 },
                 "phase35_f173_rgb_sha256": _raw_frame_hash(source_states[variant][focus_source]),
                 "phase35_f173_native_rgb_sha256": _raw_frame_hash(native_states[variant][focus_source]),
                 "phase36_f248_rgb_sha256": _raw_frame_hash(phase36_states[variant][focus_output]),
                 "phase35_f173_evidence": evidence_states[variant][focus_source],
                 "changed_frames_vs_baseline": changed_frames.get(variant, {"source": [], "phase36": []}),
-                "write_audit": variant_audits[variant],
+                "write_audit": _public_write_audit(variant_audits[variant]),
                 "difference_vs_baseline": difference_audit.get(variant),
             }
         report = {
-            "report_version": 2,
-            "diagnostic_id": "phase37_eyelid_occlusion_diagnostic_v2",
-            "status": "MACHINE_FOUR_STATE_OCCLUSION_DIAGNOSTIC_PASSED_HUMAN_ALIGNMENT_REVIEW_REQUIRED",
+            "report_version": 3,
+            "diagnostic_id": "phase37_eyelid_occlusion_diagnostic_v3",
+            "status": "MACHINE_CANTHUS_PRESERVING_DIAGNOSTIC_PASSED_HUMAN_ALIGNMENT_REVIEW_REQUIRED",
             "machine_passed": True,
             "human_visual_acceptance_required": True,
-            "scope": "still-only F173/F248 baseline, crease-only, mask-only, and combined root-cause isolation with actual Phase36 F240-F256 neighbor sweep",
+            "scope": "still-only F173/F248 baseline, crease-only, mask-only, and canthus-preserving combined isolation with captured compositor maps and actual Phase36 F240-F256 neighbor sweep",
             "cash_cost": 0,
             "paid_service_calls": 0,
             "network_calls": 0,
@@ -1087,8 +1459,10 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
             "bindings": {
                 "controlling_james_verdict_lf_sha256": _lf_hash(_repo_path(contract["locks"]["controlling_james_verdict"]["path"])),
                 "predecessor_commit_sha": contract["predecessor"]["commit_sha"],
-                "phase37_v1_contract_sha256": _sha256(_repo_path(contract["locks"]["phase37_v1_contract"]["path"])),
                 "phase37_v1_machine_report_sha256": _sha256(_repo_path(contract["locks"]["phase37_v1_machine_report"]["path"])),
+                "phase37_v2_contract_sha256": _sha256(_repo_path(contract["locks"]["phase37_v2_contract"]["path"])),
+                "phase37_v2_machine_report_sha256": _sha256(_repo_path(contract["locks"]["phase37_v2_machine_report"]["path"])),
+                "predecessor_byte_snapshot_policy": contract["diagnostic"]["byte_snapshot"],
                 "phase36_candidate01_manifest_sha256": _sha256(_repo_path(contract["locks"]["phase36_candidate01_manifest"]["path"])),
                 "phase36_candidate01_rejection_receipt_sha256": _sha256(_repo_path(contract["locks"]["phase36_candidate01_rejection_receipt"]["path"])),
                 "phase36_archive": archive_audit,
@@ -1114,24 +1488,35 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
                 "phase36_f248_rgb_sha256": _raw_frame_hash(phase36_states["combined"][focus_output]),
                 "phase35_changed_frames": changed_frames["combined"]["source"],
                 "phase36_changed_frames": changed_frames["combined"]["phase36"],
+                "disputed_medial_canthus_policy": "PRESERVED; V2 fill remains NO-GO without James ratification",
             },
-            "sclera_owner_audit": {
+            "v2_filled_visual_comparator": {
+                "disposition": "DIAGNOSTIC_NO_GO_FOR_REBUILD_AUTHORIZATION_NOT_INVALIDATED_EVIDENCE",
+                "phase35_f173_rgb_sha256": _raw_frame_hash(canthus_filled_source),
+                "phase36_f248_rgb_sha256": _raw_frame_hash(canthus_filled_phase36),
+                "filled_disputed_canthus_pixels_native": int(disputed_canthus_mask.sum()),
+                "write_audit": _public_write_audit(canthus_filled_audit),
+            },
+            "machine_candidate_owner_audit": {
                 "classification_color_space": contract["diagnostic"]["sclera_classification"]["color_space"],
-                "reviewed_under_occluded_sclera_pixels": residual_before,
+                "classification_status": contract["diagnostic"]["sclera_classification"]["status"],
+                "under_occluded_machine_candidate_pixels": residual_before,
                 "new_hard_owner_pixels": hard_owner_additions,
                 "existing_hard_owner_alpha_strengthened_pixels": alpha_strengthened,
                 "owner_accounting_sum": hard_owner_additions + alpha_strengthened,
-                "residual_under_occluded_sclera_after": residual_after,
+                "residual_under_occluded_candidate_after": residual_after,
                 "diagnostic_fringe_write_pixels": int((native_diffs["mask_only"] & fringe_mask).sum()),
+                "disputed_canthus_pixels_preserved": int(disputed_canthus_mask.sum()),
                 "per_eye": owner_audit,
             },
             "difference_audit": {
                 "explicit_crease_support_pixels_native": int(crease_mask.sum()),
-                "reviewed_sclera_core_pixels_native": int(core_mask.sum()),
-                "under_occluded_sclera_support_pixels_native": int(leak_mask.sum()),
+                "machine_candidate_pixels_native": int(core_mask.sum()),
+                "under_occluded_machine_candidate_support_pixels_native": int(leak_mask.sum()),
                 "one_px_diagnostic_fringe_pixels_native": int(fringe_mask.sum()),
-                "protected_non_sclera_pixels_native": int(protected_mask.sum()),
-                "crease_sclera_overlap_pixels": int((crease_mask & leak_mask).sum()),
+                "protected_non_candidate_pixels_native": int(protected_mask.sum()),
+                "disputed_canthus_pixels_native": int(disputed_canthus_mask.sum()),
+                "crease_candidate_overlap_pixels": int((crease_mask & leak_mask).sum()),
                 "per_variant": difference_audit,
                 "native_review_box_xyxy": list(native_box),
                 "phase36_review_box_xyxy": list(phase36_box),
@@ -1144,7 +1529,9 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
             "disposition": contract["disposition"],
         }
         report_path = stage / str(contract["output"]["report_filename"])
-        report_path.write_text(json.dumps(report, indent=2, allow_nan=False) + "\n", encoding="utf-8")
+        report_bytes = (json.dumps(report, indent=2, allow_nan=False) + "\n").encode("utf-8")
+        _require_equal(b"\r\n" in report_bytes, False, "V3 report explicit LF byte domain")
+        report_path.write_bytes(report_bytes)
         allowed_suffixes = {".png", ".json"}
         _require_equal(
             {path.suffix.lower() for path in stage.iterdir() if path.is_file()} <= allowed_suffixes,
@@ -1160,7 +1547,7 @@ def run_diagnostic(output_directory: str | Path | None = None) -> dict[str, Any]
         "human_visual_acceptance_required": True,
         "phase35_f173_baseline_sha256": _raw_frame_hash(source_states["baseline"][focus_source]),
         "phase36_f248_combined_sha256": _raw_frame_hash(phase36_states["combined"][focus_output]),
-        "reviewed_under_occluded_sclera_pixels": residual_before,
+        "under_occluded_machine_candidate_pixels": residual_before,
         "new_hard_owner_pixels": hard_owner_additions,
         "existing_owner_alpha_strengthened_pixels": alpha_strengthened,
         "encoding_process_count": 0,
