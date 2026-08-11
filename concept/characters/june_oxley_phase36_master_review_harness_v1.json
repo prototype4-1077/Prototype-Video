@@ -1,0 +1,157 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase36_master_review_harness_v1",
+  "classification": "Artifact-agnostic read-only post-encode inspection of a future reauthorized Phase36 review master. The Candidate02/f91 master lineage is revoked and cannot satisfy this harness. It decodes still RGB frames and PCM audio only, performs no render or compressed-media encode, never modifies the MOV, and grants no promotion or distribution authority.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "source_mutation_allowed": false,
+  "video_encoder_allowed": false,
+  "binding_policy": {
+    "template_path": "collab/phase36-future-master-review-binding-template-v1.json",
+    "binding_version": 1,
+    "required_binding_status": "FUTURE_REAUTHORIZED_MASTER_COMPLETED",
+    "candidate02_or_f91_lineage_allowed": false,
+    "required_supersedes_revoked_candidate02_master": true,
+    "binding_sha256_required_on_command_line": true,
+    "required_hash_fields": [
+      "report_sha256",
+      "package_sha256",
+      "media_sha256",
+      "claim_sha256",
+      "authorization_receipt_sha256",
+      "authorization_subject_sha256",
+      "implementation_sha256",
+      "command_template_sha256",
+      "picture_archive_sha256",
+      "audio_wav_sha256",
+      "audio_pcm_sha256",
+      "vui_report_sha256",
+      "ffmpeg_sha256",
+      "ffprobe_sha256"
+    ]
+  },
+  "revoked_inputs": {
+    "candidate02_audio_wav_sha256": "f498ba44f9443b2b025da6fe607322df7f47a7b22ce2a82e987419602ff3d781",
+    "candidate02_audio_pcm_sha256": "24f32febdb18206956fff3ea2de7119dc43a00f9eab37780b94edc948871cb46"
+  },
+  "master_requirements": {
+    "media_filename": "june-phase36-ledger-pour-review-master-v1.mov",
+    "report_filename": "review-master-report-v1.json",
+    "package_filename": "attempt-package-v1.json",
+    "required_status": "MACHINE_PASSED_HUMAN_REVIEW_REQUIRED",
+    "required_encoder_processes": 1,
+    "required_video_codec": "prores",
+    "required_video_tag": "ap4h",
+    "required_decoded_pixel_format": "yuv444p12le",
+    "required_audio_codec": "pcm_s24le"
+  },
+  "clock": {
+    "width": 1920,
+    "height": 1080,
+    "fps": 30,
+    "frame_count": 303,
+    "duration_seconds": 10.1,
+    "video_time_base": "1/15360",
+    "video_pts_step": 512,
+    "audio_time_base": "1/48000",
+    "audio_sample_rate": 48000,
+    "audio_channels": 2,
+    "audio_bits_per_sample": 24,
+    "audio_sample_count": 484800
+  },
+  "required_color": {
+    "range": "tv",
+    "space": "bt709",
+    "transfer": "bt709",
+    "primaries": "bt709",
+    "mov_colr_type": "nclc",
+    "mov_colr_primaries": 1,
+    "mov_colr_transfer": 1,
+    "mov_colr_matrix": 1,
+    "moov_before_mdat": true
+  },
+  "review_frames": {
+    "cuts": [
+      {"frame": 75, "label": "pre-cut pour"},
+      {"frame": 76, "label": "direct-address cut"},
+      {"frame": 237, "label": "pre-punch-in"},
+      {"frame": 238, "label": "compassion punch-in"}
+    ],
+    "f240_f256": [
+      {"frame": 240, "label": "post-cut context"},
+      {"frame": 241, "label": "post-cut context"},
+      {"frame": 242, "label": "post-cut context"},
+      {"frame": 243, "label": "blink lead-in"},
+      {"frame": 244, "label": "blink open"},
+      {"frame": 245, "label": "blink 25%"},
+      {"frame": 246, "label": "blink 50%"},
+      {"frame": 247, "label": "blink 75%"},
+      {"frame": 248, "label": "full closure / blocking frame"},
+      {"frame": 249, "label": "blink reopen 75%"},
+      {"frame": 250, "label": "blink reopen 50%"},
+      {"frame": 251, "label": "blink reopen 25%"},
+      {"frame": 252, "label": "blink open"},
+      {"frame": 253, "label": "blink settle"},
+      {"frame": 254, "label": "blink settle"},
+      {"frame": 255, "label": "compassion hold"},
+      {"frame": 256, "label": "compassion hold"}
+    ],
+    "blink": [
+      {"frame": 244, "closure": 0.0},
+      {"frame": 245, "closure": 0.25},
+      {"frame": 246, "closure": 0.5},
+      {"frame": 247, "closure": 0.75},
+      {"frame": 248, "closure": 1.0},
+      {"frame": 249, "closure": 0.75},
+      {"frame": 250, "closure": 0.5},
+      {"frame": 251, "closure": 0.25},
+      {"frame": 252, "closure": 0.0}
+    ],
+    "viseme": [
+      {"frame": 101, "viseme": "G"},
+      {"frame": 112, "viseme": "B"},
+      {"frame": 126, "viseme": "C"},
+      {"frame": 136, "viseme": "H"},
+      {"frame": 142, "viseme": "A"},
+      {"frame": 150, "viseme": "E"},
+      {"frame": 173, "viseme": "F"},
+      {"frame": 201, "viseme": "X"}
+    ]
+  },
+  "audio_segment": {
+    "start_seconds": 2.35,
+    "end_seconds": 3.45,
+    "start_sample": 112800,
+    "end_sample": 165600,
+    "sample_frames": 52800,
+    "pcm_bytes": 316800,
+    "filename": "audio-segment-2p35-3p45-v1.wav"
+  },
+  "output": {
+    "directory_prefix": "phase36-master-review-harness-v1-",
+    "contact_sheet_filename": "phase36-master-contact-sheet-v1.png",
+    "audio_audit_filename": "audio-segment-audit-v1.json",
+    "pts_audit_filename": "av-pts-audit-v1.json",
+    "color_audit_filename": "color-metadata-v1.json",
+    "ffprobe_filename": "ffprobe-full-v1.json",
+    "ffprobe_stderr_filename": "ffprobe-stderr-v1.txt",
+    "video_decode_stderr_filename": "decode-video-stderr-v1.txt",
+    "audio_decode_stderr_filename": "decode-audio-stderr-v1.txt",
+    "checklist_filename": "human-review-checklist-v1.md",
+    "report_filename": "review-harness-report-v1.json",
+    "package_filename": "review-harness-package-v1.json"
+  },
+  "human_checklist": [
+    "Confirm the reviewed binding explicitly supersedes the revoked Candidate02/f91 master lineage; do not review or ratify that revoked output.",
+    "Review F075-F076 and F237-F238 at native size: cuts are intentional, clean, and free of flash frames or one-frame geometry pops.",
+    "Review every frame F240-F256 in order and at native size; F248 is a blocking frame and must be visibly repaired before any PASS.",
+    "Review F244-F252 as a grouped blink: it closes symmetrically, reaches a convincing full closure at F248, and reopens without iris, eyelid, hairline, or beard-seam artifacts.",
+    "Review G/B/C/H/A/E/F/X viseme tiles: mouth silhouettes remain distinct and readable without upper-face motion, floating teeth, beard gaps, or texture swimming.",
+    "Review F248 specifically at native size for the hairline, eyelids, cheek texture, and beard seam.",
+    "Listen on headphones to 2.35-3.45 seconds: no click, discontinuity, clipping, doubled voice, missing consonant, or abrupt ambience change.",
+    "Watch the complete 10.1-second MOV with sound in real time: lip motion and audible syllables stay perceptually synchronized through both editorial cuts.",
+    "Confirm the picture is not washed out, crushed, gamma-shifted, or hue-shifted in a color-managed BT.709 viewer; compare the displayed metadata panel before judging.",
+    "Record PASS only after every item is addressed; this harness never grants promotion or distribution authority."
+  ]
+}
