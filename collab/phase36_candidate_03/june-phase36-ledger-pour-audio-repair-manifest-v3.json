@@ -1,0 +1,263 @@
+{
+  "manifest_version": 1,
+  "candidate_id": "phase36_ledger_pour_candidate_03_audio_only",
+  "status": "unencoded_audio_only_machine_passed_human_audio_review_required",
+  "machine_passed": true,
+  "human_audio_accepted": false,
+  "promotion_allowed": false,
+  "encode_authorized": false,
+  "contract": {
+    "path": "concept/characters/june_oxley_phase36_candidate03_audio_repair_v1.json",
+    "raw_lf_sha256": "80efeac55b21aef1b955ee10c7663cecf9dfd8dd00e2d64cf653b8c3c761fb36",
+    "canonical_sha256": "8767bb505f15e2a1676d07e2bfae81787bd99ec0a57d584ce3f094b4c5d207cb",
+    "authorization_subject_canonical_sha256": "691ababbf8ede25e01ed3fea54c35b891da825e49ce5884e8e50d1262160061f",
+    "reviewed_null_raw_lf_sha256": "441b74b8d14edf935674e1714d176b5f6e78a2fcef8c302f2dd68df56bba65d0"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_ledger_pour_audio_repair_v3.py",
+    "lf_sha256": "3a60e4557d060cae50bcb3ae2e70e3c643bea8df1e594fe763f8ed089f441808"
+  },
+  "authorization": {
+    "path": "collab/CLAUDE_REVIEW_2026-08-11_1959Z.md",
+    "hash_domain": "lf_normalized_text",
+    "sha256": "fd8af6985fba239f04634e05cc19619fe6b187856b0dc9d5002d68202fab68aa",
+    "verdict": "PHASE36_CANDIDATE03_AUDIO_ONLY_UNENCODED_BUILD_ALLOWED"
+  },
+  "candidate02": {
+    "wav_sha256": "f498ba44f9443b2b025da6fe607322df7f47a7b22ce2a82e987419602ff3d781",
+    "disposition": "immutable_rejected_predecessor",
+    "overwritten": false
+  },
+  "picture": {
+    "rerendered": false,
+    "decoded": false,
+    "files_written": 0,
+    "archive_sha256": "93eb2cd752d745a6f6fd534912ff68ee24e7bf72cf7cd406d2a366adea97d404",
+    "frame_hash_inventory_canonical_sha256": "d09bcdc6a3c86e26e9ce77070f18504f3101e4b87edfc54e169e3b4b641a6451"
+  },
+  "audio": {
+    "wav_sha256": "a75b39fbae9d0be8b5853a78b1201f0498b188587e0a3366fa5f6338a19c0c0c",
+    "probe": {
+      "sample_rate": 48000,
+      "channels": 2,
+      "bits_per_sample": 24,
+      "sample_count": 484800,
+      "data_bytes": 2908800,
+      "data_sha256": "5cc890db17a2f38aac67fe26c6381b0eab43dd6ae1c4200097e3e98f06fd19f3"
+    },
+    "metrics": {
+      "sample_count": 484800,
+      "pcm_data_sha256": "5cc890db17a2f38aac67fe26c6381b0eab43dd6ae1c4200097e3e98f06fd19f3",
+      "candidate02_wav_hash_unchanged": true,
+      "picture_reference_hash_unchanged": true,
+      "picture_frame_hash_inventory_unchanged": true,
+      "unchanged_prefix_channel_values": 237120,
+      "unchanged_suffix_channel_values": 652800,
+      "changed_sample_frames_vs_candidate02": 39838,
+      "changed_channel_values_vs_candidate02": 79676,
+      "full_mix_proxy_coverage_complete": true,
+      "full_mix_static_like_window_ratio": 0.2838983050847458,
+      "full_mix_static_like_run_seconds": 0.736,
+      "full_mix_static_score_p95_exposed": 0.2575520165955337,
+      "focus_static_like_window_ratio": 0.0,
+      "focus_static_like_run_seconds": 0.0,
+      "focus_static_score_p95_exposed": 0.0008595197021220627,
+      "full_mix_impulsive_crackle_event_count": 0,
+      "focus_adjacent_sample_delta_fs": 0.054033762697429974,
+      "repair_span_rms_dbfs": -42.17909397561436,
+      "clipped_channel_values": 0,
+      "peak_dbfs": -1.2935266236292526,
+      "entry_boundary_adjacent_sample_delta_fs": 0.016542317455091174,
+      "exit_boundary_adjacent_sample_delta_fs": 0.033682111940635674,
+      "maximum_boundary_adjacent_sample_delta_fs": 0.033682111940635674,
+      "rejected_candidate02_full_mix_static_like_window_ratio": 0.3654661016949153,
+      "rejected_candidate02_full_mix_static_like_run_seconds": 0.9386666666666666,
+      "rejected_candidate02_focus_static_like_window_ratio": 1.0,
+      "rejected_candidate02_focus_static_score_p95_exposed": 0.2960818191139552,
+      "pcm24_readback_channel_values": 969600,
+      "output_files": 4,
+      "encoded_media_files": 0
+    }
+  },
+  "gates": [
+    {
+      "name": "candidate02_wav_hash_unchanged",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "picture_reference_hash_unchanged",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "picture_frame_hash_inventory_unchanged",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "pcm24_readback_channel_values",
+      "actual": 969600,
+      "operator": "==",
+      "threshold": 969600,
+      "passed": true
+    },
+    {
+      "name": "unchanged_prefix_channel_values",
+      "actual": 237120,
+      "operator": "==",
+      "threshold": 237120,
+      "passed": true
+    },
+    {
+      "name": "unchanged_suffix_channel_values",
+      "actual": 652800,
+      "operator": "==",
+      "threshold": 652800,
+      "passed": true
+    },
+    {
+      "name": "changed_sample_frames_vs_candidate02",
+      "actual": 39838,
+      "operator": "==",
+      "threshold": 39838,
+      "passed": true
+    },
+    {
+      "name": "changed_channel_values_vs_candidate02",
+      "actual": 79676,
+      "operator": "==",
+      "threshold": 79676,
+      "passed": true
+    },
+    {
+      "name": "full_mix_proxy_coverage_complete",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "full_mix_static_like_window_ratio",
+      "actual": 0.2838983050847458,
+      "operator": "<=",
+      "threshold": 0.3,
+      "passed": true
+    },
+    {
+      "name": "full_mix_static_like_run_seconds",
+      "actual": 0.736,
+      "operator": "<=",
+      "threshold": 0.75,
+      "passed": true
+    },
+    {
+      "name": "full_mix_static_score_p95_exposed",
+      "actual": 0.2575520165955337,
+      "operator": "<=",
+      "threshold": 0.26,
+      "passed": true
+    },
+    {
+      "name": "focus_static_like_window_ratio",
+      "actual": 0.0,
+      "operator": "<=",
+      "threshold": 0.05,
+      "passed": true
+    },
+    {
+      "name": "focus_static_like_run_seconds",
+      "actual": 0.0,
+      "operator": "<=",
+      "threshold": 0.064,
+      "passed": true
+    },
+    {
+      "name": "focus_static_score_p95_exposed",
+      "actual": 0.0008595197021220627,
+      "operator": "<=",
+      "threshold": 0.01,
+      "passed": true
+    },
+    {
+      "name": "full_mix_impulsive_crackle_event_count",
+      "actual": 0,
+      "operator": "<=",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "focus_adjacent_sample_delta_fs",
+      "actual": 0.054033762697429974,
+      "operator": "<=",
+      "threshold": 0.06,
+      "passed": true
+    },
+    {
+      "name": "repair_span_rms_dbfs_max",
+      "actual": -42.17909397561436,
+      "operator": "<=",
+      "threshold": -39.0,
+      "passed": true
+    },
+    {
+      "name": "repair_span_rms_dbfs_min",
+      "actual": -42.17909397561436,
+      "operator": ">=",
+      "threshold": -46.0,
+      "passed": true
+    },
+    {
+      "name": "clipped_channel_values",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "peak_dbfs",
+      "actual": -1.2935266236292526,
+      "operator": "<=",
+      "threshold": -1.0,
+      "passed": true
+    },
+    {
+      "name": "maximum_boundary_adjacent_sample_delta_fs",
+      "actual": 0.033682111940635674,
+      "operator": "<=",
+      "threshold": 0.08,
+      "passed": true
+    },
+    {
+      "name": "output_files",
+      "actual": 4,
+      "operator": "==",
+      "threshold": 4,
+      "passed": true
+    },
+    {
+      "name": "encoded_media_files",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    }
+  ],
+  "failed_gates": [],
+  "artifacts": {
+    "june-phase36-ledger-pour-mix-v3.wav": {
+      "sha256": "a75b39fbae9d0be8b5853a78b1201f0498b188587e0a3366fa5f6338a19c0c0c",
+      "bytes": 2908844
+    },
+    "candidate03-audible-noise-evidence-v1.json": {
+      "sha256": "9cdfb3277b81434542b72a3b9347f0f9289a155208cb5f9c2686d1f0b773fa80",
+      "bytes": 14480
+    }
+  }
+}

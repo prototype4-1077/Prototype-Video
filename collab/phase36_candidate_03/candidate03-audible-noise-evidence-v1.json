@@ -1,0 +1,415 @@
+{
+  "evidence_version": 1,
+  "candidate_id": "phase36_ledger_pour_candidate_03_audio_only",
+  "status": "machine_proxy_passed_human_listen_required",
+  "human_audio_accepted": false,
+  "controlling_verdict": {
+    "path": "collab/JAMES_VERDICT_2026-08-10.md",
+    "lf_sha256": "9f3974ddcfc4715ea40501bcc46f60594da7021b342047eeed6d44992c729bb3",
+    "candidate02_disposition": "rejected_audible_static_prior_ratification_revoked"
+  },
+  "diagnosis": {
+    "kind": "source_provenance_and_signal_measurement",
+    "flagged_interval_seconds": [
+      2.47,
+      3.3
+    ],
+    "finding": "Candidate02's full flagged interval is the locked Phase26 mastered bridge. Its porch generator explicitly adds high-passed Gaussian leaves/cicada components; the exposed bridge is both high-band-heavy and noise-flat. Candidate03 reconstructs the same interval from locked raw Phase26 stems, low-passes only the ambience stem, preserves prop/body detail, and matches level with a +6 dB filtered-bed gain.",
+    "human_sufficiency_not_claimed": true
+  },
+  "proxy": {
+    "rejected_candidate02_full_mix": {
+      "method": "stft_2048_hann_hop512_exposed_flatness_highband_v1",
+      "sample_rate": 48000,
+      "sample_count": 484800,
+      "duration_seconds": 10.1,
+      "channels": 2,
+      "frame_samples": 2048,
+      "hop_samples": 512,
+      "analyzed_frame_count": 944,
+      "coverage_start_sample": 0,
+      "coverage_end_sample_exclusive": 484800,
+      "coverage_complete": true,
+      "thresholds": {
+        "exposed_rms_ceiling_dbfs": -28.0,
+        "exposed_rms_floor_dbfs": -80.0,
+        "static_flatness_floor": 0.4,
+        "static_high_band_ratio_floor": 0.35,
+        "crackle_delta_floor_fs": 0.08,
+        "adaptive_crackle_delta_floor_fs": 0.2502396405028867
+      },
+      "noise_floor": {
+        "rms_dbfs_p10_all_frames": -41.54078448798995,
+        "rms_dbfs_p20_all_frames": -39.174850466420615,
+        "rms_dbfs_median_all_frames": -36.06703195955953
+      },
+      "broadband_static": {
+        "exposed_frame_count": 658,
+        "static_like_frame_count": 345,
+        "static_like_window_ratio_all_frames": 0.3654661016949153,
+        "maximum_static_like_run_seconds": 0.9386666666666666,
+        "first_static_like_start_seconds": 0.0,
+        "last_static_like_end_seconds": 10.1,
+        "spectral_flatness_median_exposed": 0.4233628604779499,
+        "spectral_flatness_p95_exposed": 0.5274076148822044,
+        "high_band_power_ratio_median_exposed": 0.3807888860239297,
+        "high_band_power_ratio_p95_exposed": 0.518822863852465,
+        "static_score_median_exposed": 0.16046048213140235,
+        "static_score_p95_exposed": 0.2715287150277912
+      },
+      "crackle": {
+        "maximum_adjacent_sample_delta_fs": 0.24005296707784737,
+        "median_adjacent_sample_delta_fs": 0.00970387574480483,
+        "mad_adjacent_sample_delta_fs": 0.006013394118952048,
+        "impulsive_delta_sample_count": 0,
+        "impulsive_crackle_event_count": 0
+      }
+    },
+    "rejected_candidate02_flagged_interval": {
+      "method": "stft_2048_hann_hop512_exposed_flatness_highband_v1",
+      "sample_rate": 48000,
+      "sample_count": 39840,
+      "duration_seconds": 0.83,
+      "channels": 2,
+      "frame_samples": 2048,
+      "hop_samples": 512,
+      "analyzed_frame_count": 75,
+      "coverage_start_sample": 0,
+      "coverage_end_sample_exclusive": 39840,
+      "coverage_complete": true,
+      "thresholds": {
+        "exposed_rms_ceiling_dbfs": -28.0,
+        "exposed_rms_floor_dbfs": -80.0,
+        "static_flatness_floor": 0.4,
+        "static_high_band_ratio_floor": 0.35,
+        "crackle_delta_floor_fs": 0.08,
+        "adaptive_crackle_delta_floor_fs": 0.26670935949198715
+      },
+      "noise_floor": {
+        "rms_dbfs_p10_all_frames": -37.7892637453013,
+        "rms_dbfs_p20_all_frames": -37.685555569582874,
+        "rms_dbfs_median_all_frames": -37.50386998949798
+      },
+      "broadband_static": {
+        "exposed_frame_count": 75,
+        "static_like_frame_count": 75,
+        "static_like_window_ratio_all_frames": 1.0,
+        "maximum_static_like_run_seconds": 0.832,
+        "first_static_like_start_seconds": 0.0,
+        "last_static_like_end_seconds": 0.83,
+        "spectral_flatness_median_exposed": 0.5025257911057642,
+        "spectral_flatness_p95_exposed": 0.5464751788831462,
+        "high_band_power_ratio_median_exposed": 0.48915392437217764,
+        "high_band_power_ratio_p95_exposed": 0.5498577472513836,
+        "static_score_median_exposed": 0.24473764080543065,
+        "static_score_p95_exposed": 0.2960818191139552
+      },
+      "crackle": {
+        "maximum_adjacent_sample_delta_fs": 0.07360459251458555,
+        "median_adjacent_sample_delta_fs": 0.010709763849945528,
+        "mad_adjacent_sample_delta_fs": 0.00639998989105104,
+        "impulsive_delta_sample_count": 0,
+        "impulsive_crackle_event_count": 0
+      }
+    },
+    "candidate03_full_mix": {
+      "method": "stft_2048_hann_hop512_exposed_flatness_highband_v1",
+      "sample_rate": 48000,
+      "sample_count": 484800,
+      "duration_seconds": 10.1,
+      "channels": 2,
+      "frame_samples": 2048,
+      "hop_samples": 512,
+      "analyzed_frame_count": 944,
+      "coverage_start_sample": 0,
+      "coverage_end_sample_exclusive": 484800,
+      "coverage_complete": true,
+      "thresholds": {
+        "exposed_rms_ceiling_dbfs": -28.0,
+        "exposed_rms_floor_dbfs": -80.0,
+        "static_flatness_floor": 0.4,
+        "static_high_band_ratio_floor": 0.35,
+        "crackle_delta_floor_fs": 0.08,
+        "adaptive_crackle_delta_floor_fs": 0.2506944239967375
+      },
+      "noise_floor": {
+        "rms_dbfs_p10_all_frames": -43.0446986121104,
+        "rms_dbfs_p20_all_frames": -40.374715875931784,
+        "rms_dbfs_median_all_frames": -36.06703195955953
+      },
+      "broadband_static": {
+        "exposed_frame_count": 658,
+        "static_like_frame_count": 268,
+        "static_like_window_ratio_all_frames": 0.2838983050847458,
+        "maximum_static_like_run_seconds": 0.736,
+        "first_static_like_start_seconds": 0.0,
+        "last_static_like_end_seconds": 10.1,
+        "spectral_flatness_median_exposed": 0.4022118920186659,
+        "spectral_flatness_p95_exposed": 0.5170347779679454,
+        "high_band_power_ratio_median_exposed": 0.3119908952659995,
+        "high_band_power_ratio_p95_exposed": 0.5005179744565713,
+        "static_score_median_exposed": 0.12350398024076034,
+        "static_score_p95_exposed": 0.2575520165955337
+      },
+      "crackle": {
+        "maximum_adjacent_sample_delta_fs": 0.24005296707784737,
+        "median_adjacent_sample_delta_fs": 0.008632780150506513,
+        "mad_adjacent_sample_delta_fs": 0.006051541096155775,
+        "impulsive_delta_sample_count": 0,
+        "impulsive_crackle_event_count": 0
+      }
+    },
+    "candidate03_flagged_interval": {
+      "method": "stft_2048_hann_hop512_exposed_flatness_highband_v1",
+      "sample_rate": 48000,
+      "sample_count": 39840,
+      "duration_seconds": 0.83,
+      "channels": 2,
+      "frame_samples": 2048,
+      "hop_samples": 512,
+      "analyzed_frame_count": 75,
+      "coverage_start_sample": 0,
+      "coverage_end_sample_exclusive": 39840,
+      "coverage_complete": true,
+      "thresholds": {
+        "exposed_rms_ceiling_dbfs": -28.0,
+        "exposed_rms_floor_dbfs": -80.0,
+        "static_flatness_floor": 0.4,
+        "static_high_band_ratio_floor": 0.35,
+        "crackle_delta_floor_fs": 0.08,
+        "adaptive_crackle_delta_floor_fs": 0.08
+      },
+      "noise_floor": {
+        "rms_dbfs_p10_all_frames": -43.4429583877568,
+        "rms_dbfs_p20_all_frames": -43.31268922011256,
+        "rms_dbfs_median_all_frames": -42.80116205690778
+      },
+      "broadband_static": {
+        "exposed_frame_count": 75,
+        "static_like_frame_count": 0,
+        "static_like_window_ratio_all_frames": 0.0,
+        "maximum_static_like_run_seconds": 0.0,
+        "first_static_like_start_seconds": null,
+        "last_static_like_end_seconds": null,
+        "spectral_flatness_median_exposed": 5.327176610881097e-09,
+        "spectral_flatness_p95_exposed": 0.02720935897349215,
+        "high_band_power_ratio_median_exposed": 1.3775646795553716e-11,
+        "high_band_power_ratio_p95_exposed": 0.011212191661306038,
+        "static_score_median_exposed": 7.076382340689029e-20,
+        "static_score_p95_exposed": 0.0008595197021220627
+      },
+      "crackle": {
+        "maximum_adjacent_sample_delta_fs": 0.054033762697429974,
+        "median_adjacent_sample_delta_fs": 0.0010647775011989472,
+        "mad_adjacent_sample_delta_fs": 0.0006388426588586158,
+        "impulsive_delta_sample_count": 0,
+        "impulsive_crackle_event_count": 0
+      }
+    }
+  },
+  "summary_metrics": {
+    "sample_count": 484800,
+    "pcm_data_sha256": "5cc890db17a2f38aac67fe26c6381b0eab43dd6ae1c4200097e3e98f06fd19f3",
+    "candidate02_wav_hash_unchanged": true,
+    "picture_reference_hash_unchanged": true,
+    "picture_frame_hash_inventory_unchanged": true,
+    "unchanged_prefix_channel_values": 237120,
+    "unchanged_suffix_channel_values": 652800,
+    "changed_sample_frames_vs_candidate02": 39838,
+    "changed_channel_values_vs_candidate02": 79676,
+    "full_mix_proxy_coverage_complete": true,
+    "full_mix_static_like_window_ratio": 0.2838983050847458,
+    "full_mix_static_like_run_seconds": 0.736,
+    "full_mix_static_score_p95_exposed": 0.2575520165955337,
+    "focus_static_like_window_ratio": 0.0,
+    "focus_static_like_run_seconds": 0.0,
+    "focus_static_score_p95_exposed": 0.0008595197021220627,
+    "full_mix_impulsive_crackle_event_count": 0,
+    "focus_adjacent_sample_delta_fs": 0.054033762697429974,
+    "repair_span_rms_dbfs": -42.17909397561436,
+    "clipped_channel_values": 0,
+    "peak_dbfs": -1.2935266236292526,
+    "entry_boundary_adjacent_sample_delta_fs": 0.016542317455091174,
+    "exit_boundary_adjacent_sample_delta_fs": 0.033682111940635674,
+    "maximum_boundary_adjacent_sample_delta_fs": 0.033682111940635674,
+    "rejected_candidate02_full_mix_static_like_window_ratio": 0.3654661016949153,
+    "rejected_candidate02_full_mix_static_like_run_seconds": 0.9386666666666666,
+    "rejected_candidate02_focus_static_like_window_ratio": 1.0,
+    "rejected_candidate02_focus_static_score_p95_exposed": 0.2960818191139552,
+    "pcm24_readback_channel_values": 969600,
+    "output_files": 4,
+    "encoded_media_files": 0
+  },
+  "gates": [
+    {
+      "name": "candidate02_wav_hash_unchanged",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "picture_reference_hash_unchanged",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "picture_frame_hash_inventory_unchanged",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "pcm24_readback_channel_values",
+      "actual": 969600,
+      "operator": "==",
+      "threshold": 969600,
+      "passed": true
+    },
+    {
+      "name": "unchanged_prefix_channel_values",
+      "actual": 237120,
+      "operator": "==",
+      "threshold": 237120,
+      "passed": true
+    },
+    {
+      "name": "unchanged_suffix_channel_values",
+      "actual": 652800,
+      "operator": "==",
+      "threshold": 652800,
+      "passed": true
+    },
+    {
+      "name": "changed_sample_frames_vs_candidate02",
+      "actual": 39838,
+      "operator": "==",
+      "threshold": 39838,
+      "passed": true
+    },
+    {
+      "name": "changed_channel_values_vs_candidate02",
+      "actual": 79676,
+      "operator": "==",
+      "threshold": 79676,
+      "passed": true
+    },
+    {
+      "name": "full_mix_proxy_coverage_complete",
+      "actual": true,
+      "operator": "==",
+      "threshold": true,
+      "passed": true
+    },
+    {
+      "name": "full_mix_static_like_window_ratio",
+      "actual": 0.2838983050847458,
+      "operator": "<=",
+      "threshold": 0.3,
+      "passed": true
+    },
+    {
+      "name": "full_mix_static_like_run_seconds",
+      "actual": 0.736,
+      "operator": "<=",
+      "threshold": 0.75,
+      "passed": true
+    },
+    {
+      "name": "full_mix_static_score_p95_exposed",
+      "actual": 0.2575520165955337,
+      "operator": "<=",
+      "threshold": 0.26,
+      "passed": true
+    },
+    {
+      "name": "focus_static_like_window_ratio",
+      "actual": 0.0,
+      "operator": "<=",
+      "threshold": 0.05,
+      "passed": true
+    },
+    {
+      "name": "focus_static_like_run_seconds",
+      "actual": 0.0,
+      "operator": "<=",
+      "threshold": 0.064,
+      "passed": true
+    },
+    {
+      "name": "focus_static_score_p95_exposed",
+      "actual": 0.0008595197021220627,
+      "operator": "<=",
+      "threshold": 0.01,
+      "passed": true
+    },
+    {
+      "name": "full_mix_impulsive_crackle_event_count",
+      "actual": 0,
+      "operator": "<=",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "focus_adjacent_sample_delta_fs",
+      "actual": 0.054033762697429974,
+      "operator": "<=",
+      "threshold": 0.06,
+      "passed": true
+    },
+    {
+      "name": "repair_span_rms_dbfs_max",
+      "actual": -42.17909397561436,
+      "operator": "<=",
+      "threshold": -39.0,
+      "passed": true
+    },
+    {
+      "name": "repair_span_rms_dbfs_min",
+      "actual": -42.17909397561436,
+      "operator": ">=",
+      "threshold": -46.0,
+      "passed": true
+    },
+    {
+      "name": "clipped_channel_values",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    },
+    {
+      "name": "peak_dbfs",
+      "actual": -1.2935266236292526,
+      "operator": "<=",
+      "threshold": -1.0,
+      "passed": true
+    },
+    {
+      "name": "maximum_boundary_adjacent_sample_delta_fs",
+      "actual": 0.033682111940635674,
+      "operator": "<=",
+      "threshold": 0.08,
+      "passed": true
+    },
+    {
+      "name": "output_files",
+      "actual": 4,
+      "operator": "==",
+      "threshold": 4,
+      "passed": true
+    },
+    {
+      "name": "encoded_media_files",
+      "actual": 0,
+      "operator": "==",
+      "threshold": 0,
+      "passed": true
+    }
+  ],
+  "failed_gates": [],
+  "listening_instruction": "James must listen to the full 10.1 seconds, then replay 2.35-3.45 seconds for residual hiss/static, an ambience hole, entry/exit clicks, or an unnatural wind swell. Machine pass is not acceptance."
+}
