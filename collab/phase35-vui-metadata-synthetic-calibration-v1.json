@@ -1,0 +1,113 @@
+{
+  "report_version": 1,
+  "report_id": "phase35_vui_metadata_synthetic_calibration_v1",
+  "classification": "Disposable one-frame 64x64 synthetic color-bars calibration. It contains no June pixels, does not retry the consumed Candidate03 attempt, and grants no build authority.",
+  "cash_cost": 0,
+  "candidate_media_used": false,
+  "candidate_authorization_consumed": false,
+  "external_directory": "../../outputs/diagnostics/metadata-calibration-20260810-v1",
+  "toolchain": {
+    "ffmpeg_sha256": "228d7a8556258de907fdb55f36850078ebc7680b84ec30d84ea02e99bec1d1eb",
+    "ffprobe_sha256": "0fde260f5abd35c9cafd96f594cc76365a780c1b73a90e35b6a3409ea1db1bf0",
+    "version": "8.1.1-essentials_build-www.gyan.dev"
+  },
+  "input": {
+    "generator": "lavfi testsrc/color",
+    "width": 64,
+    "height": 64,
+    "frames_per_variant": 1,
+    "candidate_identity_or_art": false
+  },
+  "controlled_variable": {
+    "baseline": "direct encoder/output color flags only",
+    "treatment": "append setparams=range=limited:color_primaries=bt709:color_trc=bt709:colorspace=bt709 to the video-filter chain",
+    "all_other_metadata_flags_unchanged": true
+  },
+  "command_templates": {
+    "h264_baseline": [
+      "$FFMPEG", "-hide_banner", "-loglevel", "error", "-xerror", "-f", "lavfi", "-i",
+      "color=c=gray:s=64x64:r=30", "-frames:v", "1", "-c:v", "libx264", "-crf", "0",
+      "-pix_fmt", "yuv420p", "-color_range", "tv", "-colorspace", "bt709",
+      "-color_primaries", "bt709", "-color_trc", "bt709", "-x264-params",
+      "fullrange=off:colorprim=bt709:transfer=bt709:colormatrix=bt709", "-tag:v", "avc1",
+      "-movflags", "+faststart+write_colr", "-n", "$OUTPUT"
+    ],
+    "h264_setparams": [
+      "$FFMPEG", "-hide_banner", "-loglevel", "error", "-xerror", "-f", "lavfi", "-i",
+      "color=c=gray:s=64x64:r=30", "-frames:v", "1", "-vf",
+      "setparams=range=limited:color_primaries=bt709:color_trc=bt709:colorspace=bt709",
+      "-c:v", "libx264", "-crf", "0", "-pix_fmt", "yuv420p", "-color_range", "tv",
+      "-colorspace", "bt709", "-color_primaries", "bt709", "-color_trc", "bt709",
+      "-x264-params", "fullrange=off:colorprim=bt709:transfer=bt709:colormatrix=bt709",
+      "-tag:v", "avc1", "-movflags", "+faststart+write_colr", "-n", "$OUTPUT"
+    ],
+    "prores_baseline_filter": "scale=in_range=full:out_range=limited:out_color_matrix=bt709:flags=lanczos+accurate_rnd+full_chroma_int,format=yuv444p10le,setsar=1",
+    "prores_setparams_filter": "scale=in_range=full:out_range=limited:out_color_matrix=bt709:flags=lanczos+accurate_rnd+full_chroma_int,format=yuv444p10le,setsar=1,setparams=range=limited:color_primaries=bt709:color_trc=bt709:colorspace=bt709",
+    "stream_probe": ["$FFPROBE", "-v", "error", "-show_streams", "-of", "json", "$OUTPUT"]
+  },
+  "h264_mp4": {
+    "baseline": {
+      "file": "h264-direct.mp4",
+      "bytes": 1455,
+      "sha256": "3a445ebe6b12a27deb29812c108524b4a88f04857c8c0f25255cfcc82662961a",
+      "stream": {
+        "pixel_format": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": null,
+        "color_primaries": null
+      },
+      "container_colr": {
+        "path": "moov/trak/mdia/minf/stbl/stsd/avc1/colr",
+        "type": "nclx",
+        "primaries": 2,
+        "transfer": 2,
+        "matrix": 1,
+        "full_range_flag": 0
+      }
+    },
+    "setparams": {
+      "file": "h264-setparams.mp4",
+      "bytes": 1432,
+      "sha256": "1412bebe059f8f160b2f4022fdd1370c7df7a8f8a64f698ab1c969bf864eb4e9",
+      "stream": {
+        "pixel_format": "yuv420p",
+        "color_range": "tv",
+        "color_space": "bt709",
+        "color_transfer": "bt709",
+        "color_primaries": "bt709"
+      },
+      "container_colr": {
+        "path": "moov/trak/mdia/minf/stbl/stsd/avc1/colr",
+        "type": "nclx",
+        "primaries": 1,
+        "transfer": 1,
+        "matrix": 1,
+        "full_range_flag": 0
+      }
+    }
+  },
+  "prores_mov": {
+    "baseline": {
+      "file": "prores-direct.mov",
+      "bytes": 4238,
+      "sha256": "c006d324475cef34e9167c0c8938aa2c48f3547a80c60408af19d7a13d00dede",
+      "decoded_pixel_format": "yuv444p12le",
+      "bits_per_raw_sample": 12,
+      "stream_color_transfer": null,
+      "stream_color_primaries": null,
+      "nclc": [2, 2, 1]
+    },
+    "setparams": {
+      "file": "prores-setparams.mov",
+      "bytes": 4238,
+      "sha256": "08c2b24e577933181dc0540b1715c5b7014be71d94fa86b1cd513ba69a8f1d2e",
+      "decoded_pixel_format": "yuv444p12le",
+      "bits_per_raw_sample": 12,
+      "stream_color_transfer": "bt709",
+      "stream_color_primaries": "bt709",
+      "nclc": [1, 1, 1]
+    }
+  },
+  "conclusion": "In the pinned FFmpeg build, output-level color flags and codec-specific VUI flags are insufficient to populate primaries/transfer in MOV/MP4 codec parameters. The explicit setparams frame-property filter is necessary and sufficient in both synthetic H.264/MP4 and ProRes/MOV controls."
+}
