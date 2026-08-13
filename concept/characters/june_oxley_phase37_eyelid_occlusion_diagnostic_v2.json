@@ -1,0 +1,125 @@
+{
+  "contract_version": 2,
+  "contract_id": "june_oxley_phase37_eyelid_occlusion_diagnostic_v2",
+  "phase": "phase37_eyelid_sclera_occlusion_diagnostic",
+  "character_id": "june_oxley",
+  "classification": "Still-only four-state causal diagnostic for the binding Phase36 F248 eyelid defect. It cannot mutate, replace, promote, encode, or authorize the rejected immutable Candidate01 picture archive.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "predecessor": {
+    "commit_sha": "f1eeac9c72acba676b51a95b51f5efe8428a06b4",
+    "finding": "Crease suppression is cleaner but insufficient alone because full sclera ownership was not audited."
+  },
+  "locks": {
+    "controlling_james_verdict": {
+      "path": "collab/JAMES_VERDICT_2026-08-10.md",
+      "hash_domain": "lf_normalized_text",
+      "sha256": "9f3974ddcfc4715ea40501bcc46f60594da7021b342047eeed6d44992c729bb3"
+    },
+    "phase37_v1_contract": {
+      "path": "concept/characters/june_oxley_phase37_eyelid_alignment_diagnostic_v1.json",
+      "sha256": "1b8f971177c2d51bef7a1419f3afd4b5c64d89c312c27a61cac51842080803c8"
+    },
+    "phase37_v1_machine_report": {
+      "path": "collab/phase37_eyelid_crease_ab_v1/phase37-eyelid-alignment-machine-report-v1.json",
+      "sha256": "a4819ab1c1f52a5854bfd22c52248ce1bb172c32633a237d91bbccbd63cba1d3"
+    },
+    "phase36_picture_contract": {
+      "path": "concept/characters/june_oxley_phase36_ledger_pour_v1.json",
+      "sha256": "dde42b2175ea26daab638995acc0050b28082a7eafd09f7f1c1d38f9f8d4ef17"
+    },
+    "phase36_candidate01_manifest": {
+      "path": "collab/phase36_candidate_01/june-phase36-ledger-pour-manifest-v1.json",
+      "sha256": "0c97ba94987b8fabf1e1dd0d9c7b1229cfa6edc240ec9ef1fcccf3d45405d9a2"
+    },
+    "phase36_candidate01_rejection_receipt": {
+      "path": "collab/phase36_candidate_01/candidate01-review-failure-v1.json",
+      "sha256": "bd11323a9e416a439b70d21e99a21b41beb5fc98679590b476485f2e46a9d5c1"
+    },
+    "phase35_source_contract": {
+      "path": "concept/characters/june_oxley_phase35_source_textured_direct_address_v2.json",
+      "sha256": "68c763be79dd76447f6c33baf39ef79528fbbf1d6ea25a113c5550d63d62ba94"
+    },
+    "phase35_candidate03_manifest": {
+      "path": "collab/phase35_candidate_03/june-phase35-source-textured-direct-address-preview-manifest-v2.json",
+      "sha256": "250b678686f87c5cdcabeaedd0f6e39833b9dcaa7d2387c76fa8fe016b2885fe"
+    },
+    "phase34_source_renderer": {
+      "path": "pipeline/cartoon_source_textured_face_v2.py",
+      "sha256": "eb79dc97d4bad38b3c83d2a34dd98846cba9cec667c051b766a0e4388d52ca41"
+    },
+    "phase33_lid_renderer": {
+      "path": "pipeline/cartoon_semantic_face.py",
+      "sha256": "a93adf1e4d0ac13921c83e7a55f1ed5fc2654e1dc81e94438c570bf6f877ebaf"
+    }
+  },
+  "immutable_picture": {
+    "external_archive_path": "../../outputs/edit/phase36-ledger-pour-lossless-v1-candidate-01/june-phase36-ledger-pour-rgb24-xor-v1.gz",
+    "archive_sha256": "93eb2cd752d745a6f6fd534912ff68ee24e7bf72cf7cd406d2a366adea97d404",
+    "archive_bytes": 415959046,
+    "frame_inventory_canonical_sha256": "d09bcdc6a3c86e26e9ce77070f18504f3101e4b87edfc54e169e3b4b641a6451",
+    "combined_rgb24_sha256": "8a8fdc2a572ec1037e29a475b00e49454a059a73a751444458de95531bfa6501",
+    "frame_count": 303
+  },
+  "diagnostic": {
+    "source_frames": [165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181],
+    "phase36_frames": [240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256],
+    "source_focus_frame": 173,
+    "phase36_focus_frame": 248,
+    "expected_phase35_f173_rgb_sha256": "742ebca28200ce6c290380fad33db5b63bbe78c77614ee712dca920d7146582a",
+    "full_closure_threshold": 0.999,
+    "variants": ["baseline", "crease_only", "mask_only", "combined"],
+    "expected_under_occluded_sclera_pixels": 87,
+    "expected_new_hard_owner_pixels": 39,
+    "expected_existing_owner_alpha_strengthened_pixels": 48,
+    "expected_transform_support_guards": {
+      "crease_only": {"phase35_radius_px": 3, "phase35_added_support_pixels": 1405, "phase36_radius_px": 1, "phase36_added_support_pixels": 1448},
+      "mask_only": {"phase35_radius_px": 2, "phase35_added_support_pixels": 512, "phase36_radius_px": 0, "phase36_added_support_pixels": 0},
+      "combined": {"phase35_radius_px": 3, "phase35_added_support_pixels": 2142, "phase36_radius_px": 1, "phase36_added_support_pixels": 2218}
+    },
+    "sclera_classification": {
+      "color_space": "OpenCV HSV on the locked neutral RGB plate",
+      "hue_range": [0, 179],
+      "maximum_saturation_u8": 110,
+      "minimum_value_u8": 120,
+      "connectivity": 8,
+      "mask_hash_domain": "sha256 of full-frame contiguous uint8 0/1 bytes",
+      "viewer_left_eye": {
+        "aperture_polygon_xy": [[568, 236], [575, 225], [588, 219], [605, 218], [619, 226], [625, 238], [624, 255], [612, 259], [591, 258], [576, 252], [569, 245]],
+        "reviewed_sclera_seeds_xy": [[612, 240], [578, 246], [621, 254]],
+        "expected_core_area": 170,
+        "expected_core_bbox_xyxy": [577, 233, 623, 259],
+        "expected_core_components": 3,
+        "expected_core_mask_sha256": "19450cd6069ebfda767be095ce48929b136a8c2c022a71ee20ee009a9174990f"
+      },
+      "viewer_right_eye": {
+        "aperture_polygon_xy": [[665, 247], [671, 235], [685, 229], [704, 231], [716, 241], [724, 255], [722, 268], [711, 277], [690, 276], [674, 267], [666, 258]],
+        "reviewed_sclera_seeds_xy": [[710, 258], [679, 258]],
+        "expected_core_area": 261,
+        "expected_core_bbox_xyxy": [679, 253, 722, 277],
+        "expected_core_components": 2,
+        "expected_core_mask_sha256": "17b0e326edb7b4105efa75564ab6273e5ebb60b1fa666ab71dd9ea9f3c3de52d"
+      }
+    },
+    "proposal": "At closure >= 0.999, expand hard lower-lid ownership only over reviewed source-sclera core pixels whose baseline combined lid alpha is below 255, write the already registered blink texture at alpha 255 before the explicit crease stage, and independently allow the explicit fixed-color crease to be suppressed. Preserve all other source pixels, partial closures, head motion, cage deformation, and both camera transforms.",
+    "human_review_required": true,
+    "accepted_source_mutation_allowed": false,
+    "video_encode_allowed": false
+  },
+  "output": {
+    "directory": "collab/phase37_eyelid_occlusion_ab_v2",
+    "report_filename": "phase37-eyelid-occlusion-machine-report-v2.json",
+    "native_comparison_stem": "phase35-f173-four-state-native",
+    "phase36_comparison_stem": "phase36-f248-four-state",
+    "phase36_sequence_filename": "phase36-f240-f256-combined-neighbor-sweep-v2.png",
+    "layer_decomposition_filename": "phase35-f173-sclera-provenance-decomposition-v2.png"
+  },
+  "disposition": {
+    "candidate01_archive_remains_immutable": true,
+    "corrected_source_requires_new_picture_rebuild": true,
+    "corrected_source_requires_new_human_acceptance": true,
+    "phase36_encode_authorized": false,
+    "promotion_allowed": false
+  }
+}
