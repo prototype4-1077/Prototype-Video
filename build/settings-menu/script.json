@@ -10,15 +10,26 @@
  "end_card_question": "When did the world last come off like a skin?",
  "optimization_target": "belief_analysis",
  "target_duration_seconds": 165,
- "render_outputs": ["youtube"],
+ "render_outputs": [
+  "youtube"
+ ],
  "elevenlabs_model": "eleven_v3",
  "elevenlabs_voice_id": "TX3LPaxmHKxFdv7VOQHJ",
  "elevenlabs_voice_name": "Liam - Energetic, Social Media Creator",
  "elevenlabs_stability_mode": "creative",
  "auto_audio_tags": false,
- "voice_settings": {"similarity_boost": 0.75, "speed": 0.97},
+ "voice_settings": {
+  "similarity_boost": 0.75,
+  "speed": 0.97
+ },
  "voice_standard": "Speak like a warm, sly friend leveling with someone at midnight. Begin plain and slightly conspiratorial, become precise and careful through the science, stay completely unhurried through the honest caveat, and drop close and quiet for the final third. Never sell it.",
- "visual_policy": {"mode": "diverse_symbols", "max_human_ratio": 0.7, "max_family_run": 6, "max_generic_human_run": 1, "min_families": 4},
+ "visual_policy": {
+  "mode": "diverse_symbols",
+  "max_human_ratio": 0.7,
+  "max_family_run": 6,
+  "max_generic_human_run": 1,
+  "min_families": 4
+ },
  "max_still_source_ratio": 0.5,
  "still_image_policy": "closest_stock_frame_full_enhancement",
  "caption_policy": "minimal_keywords_only",
@@ -26,29 +37,405 @@
  "music_choice": 3,
  "music_variant_count": 1,
  "scenes": [
-  {"text": "Everyone describes it as a door. Something opening. Something arriving from outside you.","keywords":["door","opening","arriving"],"semantic_anchor":"the received story of the trip","visual_function":"literal_anchor","symbol_family":"architecture","audio_tags":["candid"],"query":"A heavy door swings slowly open into a bright empty hallway."},
-  {"text": "The leading model says the opposite. Nothing arrives. Something gets turned down.","keywords":["opposite","arrives","turned"],"semantic_anchor":"subtraction, not addition","visual_function":"mechanism","symbol_family":"object_tool","human_role":"unspecified","audio_tags":["deliberate"],"query":"A hand turns a physical dimmer dial downward and the room darkens evenly."},
-  {"text": "Right now your brain is not receiving this room. It is predicting it.","keywords":["receiving","predicting"],"semantic_anchor":"perception as prediction","visual_function":"mechanism","symbol_family":"perception","audio_tags":["clear"],"query":"A camera lens racks focus across an ordinary room until every detail resolves."},
-  {"text": "Prediction is cheaper than perception. So your brain guesses, then checks the guess against the signal.","keywords":["guesses","checks","signal"],"semantic_anchor":"predict then compare","visual_function":"mechanism","symbol_family":"geometry","audio_tags":["matter-of-fact"],"query":"A wireframe outline of a chair fills in with color and texture until it looks real."},
-  {"text": "And it trusts its own guesses enormously. It has to. That trust is what holds the room still.","keywords":["trusts","trust","still"],"semantic_anchor":"confidence in priors as stability","visual_function":"boundary","symbol_family":"architecture","audio_tags":["steady"],"query":"A completely still room held in a locked camera frame while dust drifts in the light."},
-  {"text": "Carhart-Harris and Friston named this REBUS. Psychedelics, they propose, relax that trust.","keywords":["named","propose","relax"],"semantic_anchor":"the model, attributed","visual_function":"literal_anchor","symbol_family":"language","audio_tags":["precise"],"query":"A scientific paper page turns under a desk lamp and one passage is underlined in pencil."},
-  {"text": "The high-level predictions stop outvoting the raw signal coming up from below.","keywords":["predictions","outvoting","below"],"semantic_anchor":"bottom-up signal wins influence","visual_function":"mechanism","symbol_family":"pathway","audio_tags":["clear"],"query":"Bubbles rise steadily upward through a tall glass of dark liquid toward the surface."},
-  {"text": "Call it a filter easing off. But hear the word filter as metaphor, not anatomy.","keywords":["filter","metaphor","anatomy"],"semantic_anchor":"the metaphor labeled as metaphor","visual_function":"contrast","symbol_family":"language","audio_tags":["careful"],"query":"A hand writes the word FILTER on paper and then draws quotation marks around it."},
-  {"text": "There is no valve in your head. There is only confidence, weighted, and then loosened.","keywords":["valve","confidence","loosened"],"semantic_anchor":"no mechanical part exists","visual_function":"mechanism","symbol_family":"identity","hero":true,"hero_style":"effects","image_prompt":"cinematic photoreal, an anatomical head model opened along a seam to reveal only smooth empty space inside, no machinery, resting on a plain wooden table, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain","motion_recipe":"object_tool","audio_tags":["level"]},
-  {"text": "What floods in was never far away. It was being subtracted, quietly, every second of your life.","keywords":["floods","subtracted","quietly"],"semantic_anchor":"it was always present","visual_function":"transformation","symbol_family":"light_atmosphere","audio_tags":["warm"],"query":"Daylight floods into a dim room as heavy curtains are drawn fully open."},
-  {"text": "Which reframes the whole experience. You did not travel anywhere. Subtraction paused.","keywords":["reframes","travel","paused"],"semantic_anchor":"no journey occurred","visual_function":"perspective_shift","symbol_family":"pathway","human_role":"explorer","audio_tags":["thoughtful"],"query":"A person stands perfectly still on a moving walkway as the corridor slides past them."},
-  {"text": "And if it is a dial rather than a door, chemistry is not the only hand on it.","keywords":["dial","door","hand"],"semantic_anchor":"the turn: shared control","visual_function":"choice","symbol_family":"object_tool","human_role":"chooser","audio_tags":["opening up"],"query":"Several different hands reach in one after another and adjust the same control knob."},
-  {"text": "Grief moves it. Standing in front of something enormous moves it.","keywords":["grief","enormous"],"semantic_anchor":"non-drug routes","visual_function":"scale_shift","symbol_family":"world_scale","human_role":"explorer","audio_tags":["tender"],"query":"A small figure stands at the base of an enormous cliff face and looks upward."},
-  {"text": "Forty uncomfortable minutes of sitting still moves it.","keywords":["uncomfortable","sitting","still"],"semantic_anchor":"meditation as the same dial","visual_function":"literal_anchor","symbol_family":"human","human_role":"observer","audio_tags":["dry"],"query":"A person sits cross-legged on a bare floor, completely still, as afternoon light shifts across them."},
-  {"text": "Being genuinely surprised, which is rarer than you think, moves it.","keywords":["surprised","rarer"],"semantic_anchor":"surprise as prediction failure","visual_function":"contrast","symbol_family":"transformation","audio_tags":["light"],"query":"A still pond surface is broken suddenly by a single unexpected falling drop."},
-  {"text": "Here is the honest part. We can measure a noisier brain under these compounds.","keywords":["honest","measure","noisier"],"semantic_anchor":"what the data actually shows","visual_function":"literal_anchor","symbol_family":"object_tool","audio_tags":["candid"],"query":"An oscilloscope screen fills with dense irregular waveform activity in a dark lab."},
-  {"text": "Whether noisier means truer is still an open fight among the people who study it.","keywords":["truer","open","fight"],"semantic_anchor":"the unsettled claim, named","visual_function":"contrast","symbol_family":"collective","human_role":"collective","audio_tags":["even"],"query":"Two researchers at a whiteboard disagree, erasing and rewriting the same diagram."},
-  {"text": "Signal diversity is not the same as seeing more clearly. Hold that loosely.","keywords":["diversity","clearly","loosely"],"semantic_anchor":"epistemic humility","visual_function":"boundary","symbol_family":"language","audio_tags":["gentle"],"query":"Two nearly identical printed charts are laid side by side and carefully compared."},
-  {"text": "So come back to the room you are actually sitting in.","keywords":["back","room","sitting"],"semantic_anchor":"the grounding turn","visual_function":"perspective_shift","symbol_family":"architecture","audio_tags":["close"],"query":"A slow push through a doorway into an ordinary lived-in living room at dusk."},
-  {"text": "Your hands. The light on the wall. The sound underneath the sound.","keywords":["hands","light","sound"],"semantic_anchor":"return to the body and room","visual_function":"literal_anchor","symbol_family":"object_tool","audio_tags":["quiet"],"query":"Close details of an ordinary room: a mug, a cable, light moving slowly on a plain wall."},
-  {"text": "All of it already ran the same filter, at a setting you never chose.","keywords":["filter","setting","chose"],"semantic_anchor":"callback to the dial","visual_function":"mechanism","symbol_family":"light_atmosphere","human_role":"unspecified","audio_tags":["measured"],"query":"A dimmer dial is raised again and warm light returns evenly across a plain wall."},
-  {"text": "This ordinary version is not the lesser one. It is the rendered one.","keywords":["ordinary","lesser","rendered"],"semantic_anchor":"the ordinary is the construction","visual_function":"contrast","symbol_family":"identity","hero":true,"hero_style":"effects","image_prompt":"cinematic photoreal, a completely ordinary kitchen at dusk rendered with impossible clarity, every surface exact and quietly luminous, nothing surreal or fantastical, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain","motion_recipe":"light","audio_tags":["warm"]},
-  {"text": "You have been inside the machine the entire time, calling it the world.","keywords":["inside","machine","world"],"semantic_anchor":"the recursion lands","visual_function":"recursion","symbol_family":"geometry","hero":true,"hero_style":"effects","image_prompt":"cinematic photoreal, a single person standing inside a vast machine whose interior walls are built from ordinary rooms repeating into the distance, restrained and architectural rather than psychedelic, shallow depth of field, practical lighting, muted filmic grade, subtle grain","human_role":"observer","motion_recipe":"screen","audio_tags":["profound"]},
-  {"text": "So when did the world last come off like a skin, and what were you doing right before?","keywords":["world","skin","before"],"semantic_anchor":"the invitation handed over","visual_function":"choice","symbol_family":"perception","human_role":"chooser","audio_tags":["warm"],"query":"A person looks at their own open hand in daylight as if seeing it for the first time."}
+  {
+   "text": "Everyone describes it as a door. Something opening. Something arriving from outside you.",
+   "keywords": [
+    "door",
+    "opening",
+    "arriving"
+   ],
+   "semantic_anchor": "the received story of the trip",
+   "visual_function": "literal_anchor",
+   "symbol_family": "architecture",
+   "audio_tags": [
+    "candid"
+   ],
+   "query": "A heavy door swings slowly open into a bright empty hallway.",
+   "primary_symbol": "door"
+  },
+  {
+   "text": "The leading model says the opposite. Nothing arrives. Something gets turned down.",
+   "keywords": [
+    "opposite",
+    "arrives",
+    "turned"
+   ],
+   "semantic_anchor": "subtraction, not addition",
+   "visual_function": "mechanism",
+   "symbol_family": "object_tool",
+   "human_role": "unspecified",
+   "audio_tags": [
+    "deliberate"
+   ],
+   "query": "A hand turns a physical dimmer dial downward and the room darkens evenly.",
+   "primary_symbol": "hand"
+  },
+  {
+   "text": "Right now your brain is not receiving this room. It is predicting it.",
+   "keywords": [
+    "receiving",
+    "predicting"
+   ],
+   "semantic_anchor": "perception as prediction",
+   "visual_function": "mechanism",
+   "symbol_family": "perception",
+   "audio_tags": [
+    "clear"
+   ],
+   "query": "A camera lens racks focus across an ordinary room until every detail resolves.",
+   "primary_symbol": "lens"
+  },
+  {
+   "text": "Prediction is cheaper than perception. So your brain guesses, then checks the guess against the signal.",
+   "keywords": [
+    "guesses",
+    "checks",
+    "signal"
+   ],
+   "semantic_anchor": "predict then compare",
+   "visual_function": "mechanism",
+   "symbol_family": "geometry",
+   "audio_tags": [
+    "matter-of-fact"
+   ],
+   "query": "A wireframe outline of a chair fills in with color and texture until it looks real.",
+   "primary_symbol": "geometry"
+  },
+  {
+   "text": "And it trusts its own guesses enormously. It has to. That trust is what holds the room still.",
+   "keywords": [
+    "trusts",
+    "trust",
+    "still"
+   ],
+   "semantic_anchor": "confidence in priors as stability",
+   "visual_function": "boundary",
+   "symbol_family": "architecture",
+   "audio_tags": [
+    "steady"
+   ],
+   "query": "A completely still room held in a locked camera frame while dust drifts in the light.",
+   "primary_symbol": "architecture"
+  },
+  {
+   "text": "Carhart-Harris and Friston named this REBUS. Psychedelics, they propose, relax that trust.",
+   "keywords": [
+    "named",
+    "propose",
+    "relax"
+   ],
+   "semantic_anchor": "the model, attributed",
+   "visual_function": "literal_anchor",
+   "symbol_family": "language",
+   "audio_tags": [
+    "precise"
+   ],
+   "query": "A scientific paper page turns under a desk lamp and one passage is underlined in pencil.",
+   "primary_symbol": "language"
+  },
+  {
+   "text": "The high-level predictions stop outvoting the raw signal coming up from below.",
+   "keywords": [
+    "predictions",
+    "outvoting",
+    "below"
+   ],
+   "semantic_anchor": "bottom-up signal wins influence",
+   "visual_function": "mechanism",
+   "symbol_family": "pathway",
+   "audio_tags": [
+    "clear"
+   ],
+   "query": "Bubbles rise steadily upward through a tall glass of dark liquid toward the surface.",
+   "primary_symbol": "pathway"
+  },
+  {
+   "text": "Call it a filter easing off. But hear the word filter as metaphor, not anatomy.",
+   "keywords": [
+    "filter",
+    "metaphor",
+    "anatomy"
+   ],
+   "semantic_anchor": "the metaphor labeled as metaphor",
+   "visual_function": "contrast",
+   "symbol_family": "language",
+   "audio_tags": [
+    "careful"
+   ],
+   "query": "A hand writes the word FILTER on paper and then draws quotation marks around it.",
+   "primary_symbol": "word",
+   "human_role": "unspecified"
+  },
+  {
+   "text": "There is no valve in your head. There is only confidence, weighted, and then loosened.",
+   "keywords": [
+    "valve",
+    "confidence",
+    "loosened"
+   ],
+   "semantic_anchor": "no mechanical part exists",
+   "visual_function": "mechanism",
+   "symbol_family": "identity",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "cinematic photoreal, an anatomical head model opened along a seam to reveal only smooth empty space inside, no machinery, resting on a plain wooden table, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "motion_recipe": "object_tool",
+   "audio_tags": [
+    "level"
+   ],
+   "primary_symbol": "identity"
+  },
+  {
+   "text": "What floods in was never far away. It was being subtracted, quietly, every second of your life.",
+   "keywords": [
+    "floods",
+    "subtracted",
+    "quietly"
+   ],
+   "semantic_anchor": "it was always present",
+   "visual_function": "transformation",
+   "symbol_family": "light_atmosphere",
+   "audio_tags": [
+    "warm"
+   ],
+   "query": "Daylight floods into a dim room as heavy curtains are drawn fully open.",
+   "primary_symbol": "light_atmosphere"
+  },
+  {
+   "text": "Which reframes the whole experience. You did not travel anywhere. Subtraction paused.",
+   "keywords": [
+    "reframes",
+    "travel",
+    "paused"
+   ],
+   "semantic_anchor": "no journey occurred",
+   "visual_function": "perspective_shift",
+   "symbol_family": "pathway",
+   "human_role": "explorer",
+   "audio_tags": [
+    "thoughtful"
+   ],
+   "query": "A person stands perfectly still on a moving walkway as the corridor slides past them.",
+   "primary_symbol": "pathway"
+  },
+  {
+   "text": "And if it is a dial rather than a door, chemistry is not the only hand on it.",
+   "keywords": [
+    "dial",
+    "door",
+    "hand"
+   ],
+   "semantic_anchor": "the turn: shared control",
+   "visual_function": "choice",
+   "symbol_family": "object_tool",
+   "human_role": "chooser",
+   "audio_tags": [
+    "opening up"
+   ],
+   "query": "Several different hands reach in one after another and adjust the same control knob.",
+   "primary_symbol": "object_tool"
+  },
+  {
+   "text": "Grief moves it. Standing in front of something enormous moves it.",
+   "keywords": [
+    "grief",
+    "enormous"
+   ],
+   "semantic_anchor": "non-drug routes",
+   "visual_function": "scale_shift",
+   "symbol_family": "world_scale",
+   "human_role": "explorer",
+   "audio_tags": [
+    "tender"
+   ],
+   "query": "A small figure stands at the base of an enormous cliff face and looks upward.",
+   "primary_symbol": "face"
+  },
+  {
+   "text": "Forty uncomfortable minutes of sitting still moves it.",
+   "keywords": [
+    "uncomfortable",
+    "sitting",
+    "still"
+   ],
+   "semantic_anchor": "meditation as the same dial",
+   "visual_function": "literal_anchor",
+   "symbol_family": "human",
+   "human_role": "observer",
+   "audio_tags": [
+    "dry"
+   ],
+   "query": "A person sits cross-legged on a bare floor, completely still, as afternoon light shifts across them.",
+   "primary_symbol": "human"
+  },
+  {
+   "text": "Being genuinely surprised, which is rarer than you think, moves it.",
+   "keywords": [
+    "surprised",
+    "rarer"
+   ],
+   "semantic_anchor": "surprise as prediction failure",
+   "visual_function": "contrast",
+   "symbol_family": "transformation",
+   "audio_tags": [
+    "light"
+   ],
+   "query": "A still pond surface is broken suddenly by a single unexpected falling drop.",
+   "primary_symbol": "transformation"
+  },
+  {
+   "text": "Here is the honest part. We can measure a noisier brain under these compounds.",
+   "keywords": [
+    "honest",
+    "measure",
+    "noisier"
+   ],
+   "semantic_anchor": "what the data actually shows",
+   "visual_function": "literal_anchor",
+   "symbol_family": "object_tool",
+   "audio_tags": [
+    "candid"
+   ],
+   "query": "An oscilloscope screen fills with dense irregular waveform activity in a dark lab.",
+   "primary_symbol": "object_tool"
+  },
+  {
+   "text": "Whether noisier means truer is still an open fight among the people who study it.",
+   "keywords": [
+    "truer",
+    "open",
+    "fight"
+   ],
+   "semantic_anchor": "the unsettled claim, named",
+   "visual_function": "contrast",
+   "symbol_family": "collective",
+   "human_role": "collective",
+   "audio_tags": [
+    "even"
+   ],
+   "query": "Two researchers at a whiteboard disagree, erasing and rewriting the same diagram.",
+   "primary_symbol": "collective"
+  },
+  {
+   "text": "Signal diversity is not the same as seeing more clearly. Hold that loosely.",
+   "keywords": [
+    "diversity",
+    "clearly",
+    "loosely"
+   ],
+   "semantic_anchor": "epistemic humility",
+   "visual_function": "boundary",
+   "symbol_family": "language",
+   "audio_tags": [
+    "gentle"
+   ],
+   "query": "Two nearly identical printed charts are laid side by side and carefully compared.",
+   "primary_symbol": "language"
+  },
+  {
+   "text": "So come back to the room you are actually sitting in.",
+   "keywords": [
+    "back",
+    "room",
+    "sitting"
+   ],
+   "semantic_anchor": "the grounding turn",
+   "visual_function": "perspective_shift",
+   "symbol_family": "architecture",
+   "audio_tags": [
+    "close"
+   ],
+   "query": "A slow push through a doorway into an ordinary lived-in living room at dusk.",
+   "primary_symbol": "architecture"
+  },
+  {
+   "text": "Your hands. The light on the wall. The sound underneath the sound.",
+   "keywords": [
+    "hands",
+    "light",
+    "sound"
+   ],
+   "semantic_anchor": "return to the body and room",
+   "visual_function": "literal_anchor",
+   "symbol_family": "object_tool",
+   "audio_tags": [
+    "quiet"
+   ],
+   "query": "Close details of an ordinary room: a mug, a cable, light moving slowly on a plain wall.",
+   "primary_symbol": "wall"
+  },
+  {
+   "text": "All of it already ran the same filter, at a setting you never chose.",
+   "keywords": [
+    "filter",
+    "setting",
+    "chose"
+   ],
+   "semantic_anchor": "callback to the dial",
+   "visual_function": "mechanism",
+   "symbol_family": "light_atmosphere",
+   "human_role": "unspecified",
+   "audio_tags": [
+    "measured"
+   ],
+   "query": "A dimmer dial is raised again and warm light returns evenly across a plain wall.",
+   "primary_symbol": "wall"
+  },
+  {
+   "text": "This ordinary version is not the lesser one. It is the rendered one.",
+   "keywords": [
+    "ordinary",
+    "lesser",
+    "rendered"
+   ],
+   "semantic_anchor": "the ordinary is the construction",
+   "visual_function": "contrast",
+   "symbol_family": "identity",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "cinematic photoreal, a completely ordinary kitchen at dusk rendered with impossible clarity, every surface exact and quietly luminous, nothing surreal or fantastical, shallow depth of field, restrained practical lighting, muted filmic grade, subtle grain",
+   "motion_recipe": "light",
+   "audio_tags": [
+    "warm"
+   ],
+   "primary_symbol": "identity"
+  },
+  {
+   "text": "You have been inside the machine the entire time, calling it the world.",
+   "keywords": [
+    "inside",
+    "machine",
+    "world"
+   ],
+   "semantic_anchor": "the recursion lands",
+   "visual_function": "recursion",
+   "symbol_family": "geometry",
+   "hero": true,
+   "hero_style": "effects",
+   "image_prompt": "cinematic photoreal, a single person standing inside a vast machine whose interior walls are built from ordinary rooms repeating into the distance, restrained and architectural rather than psychedelic, shallow depth of field, practical lighting, muted filmic grade, subtle grain",
+   "human_role": "observer",
+   "motion_recipe": "screen",
+   "audio_tags": [
+    "profound"
+   ],
+   "primary_symbol": "geometry"
+  },
+  {
+   "text": "So when did the world last come off like a skin, and what were you doing right before?",
+   "keywords": [
+    "world",
+    "skin",
+    "before"
+   ],
+   "semantic_anchor": "the invitation handed over",
+   "visual_function": "choice",
+   "symbol_family": "perception",
+   "human_role": "chooser",
+   "audio_tags": [
+    "warm"
+   ],
+   "query": "A person looks at their own open hand in daylight as if seeing it for the first time.",
+   "primary_symbol": "hand"
+  }
  ]
 }
