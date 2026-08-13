@@ -1,0 +1,78 @@
+{
+  "contract_version": 1,
+  "contract_id": "june_oxley_phase40_synchronized_acting_integration_v1",
+  "phase": "phase40_synchronized_body_face_atmosphere_camera_integration",
+  "status": "DRAFT_LOCAL_UNENCODED_SYNCHRONIZED_A_B",
+  "purpose": "Integrate the reproducible Phase39 close-body performance with the accepted Phase35 face, head, atmosphere, and camera clock; compare it against the exact existing compositor without mutating or encoding the accepted picture.",
+  "cash_cost": 0,
+  "paid_service_calls_allowed": 0,
+  "network_calls_allowed": 0,
+  "video_encode_allowed": false,
+  "picture_master_mutation_allowed": false,
+  "promotion_allowed": false,
+  "human_acting_acceptance_required": true,
+  "locks": {
+    "phase39_report": {"path": "collab/phase39_close_body_acting_rig_v1/phase39-close-body-acting-machine-report-v1.json", "sha256": "22e5875b5e11c72de5b1f5ca1fb3a706e13158d0f7af1f7498b62010f380fe3d"},
+    "phase39_contract": {"path": "concept/characters/june_oxley_phase39_close_body_acting_rig_v1.json", "sha256": "fbf86552d6e45727441a4341c256c71e5d9bf315dbfa14a66a46153ec42fac04"},
+    "phase39_implementation": {"path": "pipeline/cartoon_close_body_acting_rig.py", "sha256": "e48bf364a927fb79cf872b5a17bcf732caea2e08772bd38cdeed641a13f4f0d8"},
+    "phase35_contract": {"path": "concept/characters/june_oxley_phase35_source_textured_direct_address_v2.json", "sha256": "68c763be79dd76447f6c33baf39ef79528fbbf1d6ea25a113c5550d63d62ba94"},
+    "phase35_implementation": {"path": "pipeline/cartoon_source_textured_direct_address.py", "sha256": "72aaff4bc71331821e1aa0938f570a39da9bc0b4c3aaa58232b44452e4b8f249"},
+    "scene_contract": {"path": "concept/style_frames/june_golden_scene_gs070_resolution_v1.json", "sha256": "ff5ae15bf49e4ab19c654948d4217b3202d3ddcffb3d1b9d617694c46d78b194"},
+    "body_motion": {"path": "concept/style_frames/june_phase33_direct_address_body_motion_v1.json", "sha256": "47f29b99ce8c2db42f3e2c5e79bc174ded2b9849a626eafbed2b06ef9a73b8c9"}
+  },
+  "clock": {
+    "fps": 30,
+    "frame_count": 228,
+    "duration_seconds": 7.6,
+    "phase39_active_frames_inclusive": [1, 162],
+    "phase39_hold_frames_inclusive": [149, 162],
+    "unchanged_tail_frames_inclusive": [148, 228],
+    "dialogue_end_seconds": 5.4
+  },
+  "integration": {
+    "stage_order": [
+      "locked_gs070_plate",
+      "phase39_body_inverse_remap",
+      "accepted_source_textured_face_features",
+      "existing_wind_chime_warp",
+      "existing_head_warp",
+      "existing_lantern_and_atmosphere",
+      "existing_camera_push"
+    ],
+    "phase39_replaces_existing_rectangular_shoulders_warp": true,
+    "head_and_face_follow_existing_motion_clock": true,
+    "atmosphere_and_camera_follow_existing_motion_clock": true,
+    "phase39_zero_after_frame_162": true,
+    "baseline_is_returned_exactly_when_phase39_additive_state_is_zero": true,
+    "video_encoder_processes": 0
+  },
+  "review_frames": [1, 24, 50, 66, 72, 82, 98, 110, 115, 126, 148, 149, 162, 163, 180, 228],
+  "quality_gates": {
+    "required_frame_count": 228,
+    "maximum_changed_pixels_outside_transformed_phase39_support": 0,
+    "maximum_changed_pixels_in_transformed_head_support": 0,
+    "maximum_changed_pixels_in_transformed_face_feature_support": 0,
+    "maximum_changed_pixels_in_transformed_mug_support": 0,
+    "required_tail_identical_frame_count": 81,
+    "required_changed_frame_count_minimum": 125,
+    "required_changed_frame_count_maximum": 135,
+    "maximum_adjacent_delivery_landmark_step_px": 1.75,
+    "required_handoff_frame_148_rgb_delta": 0.0,
+    "required_existing_viseme_clock_frames": 228,
+    "required_existing_expression_clock_frames": 228,
+    "required_existing_motion_clock_frames": 228,
+    "required_zero_encoder_processes": 0
+  },
+  "evidence": {
+    "directory": "collab/phase40_synchronized_acting_integration_v1",
+    "allowlist": [
+      "phase40-synchronized-keyframes-v1.png",
+      "phase40-synchronized-hand-native-v1.png",
+      "phase40-transformed-support-v1.png",
+      "phase40-temporal-neighbors-v1.png",
+      "phase40-motion-timeline-v1.png",
+      "phase40-synchronized-acting-machine-report-v1.json"
+    ]
+  },
+  "recommendation_if_machine_passes": "Review synchronized motion at native and delivery scale. If acting passes human taste, bind Phase39 into a corrected-source rebuild contract only after Candidate03 audio and Phase37 V4 eyelid gates close."
+}
