@@ -1,0 +1,234 @@
+{
+  "contract_version": 4,
+  "contract_id": "june_oxley_phase37_eyelid_edge_diagnostic_v4",
+  "phase": "phase37_eyelid_registered_edge_treatment_diagnostic",
+  "character_id": "june_oxley",
+  "classification": "Still-only residual-band classification and registered-lid edge-treatment experiment. Machine classifications are not human anatomy truth. This contract cannot mutate, rebuild, encode, promote, or authorize Candidate01.",
+  "cash_cost": 0,
+  "paid_runtime_dependency": false,
+  "network_runtime_required": false,
+  "predecessor": {
+    "public_head": "a3d48ad2d1576202cac0adcf7345156570bbd0da",
+    "v3_commit": "c4ca1b9e9477e5e06d6fa97dc2cc2c2e966d5218",
+    "disposition": "V3_PRESERVED_AS_RATIFIED_DIAGNOSTIC_EDGE_TREATMENT_STILL_OPEN"
+  },
+  "locks": {
+    "phase37_v3_contract": {"path": "concept/characters/june_oxley_phase37_eyelid_occlusion_diagnostic_v3.json", "sha256": "cd47ca7ae9a3f4b00880c876e8b04386412e1d4c9377d77223fba83aae312344"},
+    "phase37_v3_report": {"path": "collab/phase37_eyelid_occlusion_ab_v3/phase37-eyelid-occlusion-machine-report-v3.json", "sha256": "2b5c2627d3ef56fda16d3776f8982373e591c15c70ac1ae644eb0fcddba559d4"},
+    "phase37_v3_implementation": {"path": "pipeline/cartoon_eyelid_alignment_diagnostic.py", "sha256": "2a4a05fa512acb67a2eb91c40aa9d046702eb91456e9c919c064029fafbbd284"},
+    "phase37_v3_tests": {"path": "pipeline/tests/test_cartoon_eyelid_alignment_diagnostic.py", "sha256": "f23496ae94a63e1f45bda3720b0095b8b18e6e47d6f4ce9936eb0455fa2983be"},
+    "claude_edge_review": {"path": "collab/CLAUDE_REVIEW_2026-08-11_1212Z.md", "hash_domain": "lf_normalized_text", "sha256": "60b53854f86535fdcb86bf3be997e7b70755c31b8d54a88eca30cb3a5b350991"},
+    "controlling_james_verdict": {"path": "collab/JAMES_VERDICT_2026-08-10.md", "hash_domain": "lf_normalized_text", "sha256": "9f3974ddcfc4715ea40501bcc46f60594da7021b342047eeed6d44992c729bb3"},
+    "phase36_picture_contract": {"path": "concept/characters/june_oxley_phase36_ledger_pour_v1.json", "sha256": "dde42b2175ea26daab638995acc0050b28082a7eafd09f7f1c1d38f9f8d4ef17"},
+    "phase36_candidate01_manifest": {"path": "collab/phase36_candidate_01/june-phase36-ledger-pour-manifest-v1.json", "sha256": "0c97ba94987b8fabf1e1dd0d9c7b1229cfa6edc240ec9ef1fcccf3d45405d9a2"},
+    "phase36_candidate01_rejection_receipt": {"path": "collab/phase36_candidate_01/candidate01-review-failure-v1.json", "sha256": "bd11323a9e416a439b70d21e99a21b41beb5fc98679590b476485f2e46a9d5c1"},
+    "phase35_candidate03_manifest": {"path": "collab/phase35_candidate_03/june-phase35-source-textured-direct-address-preview-manifest-v2.json", "sha256": "250b678686f87c5cdcabeaedd0f6e39833b9dcaa7d2387c76fa8fe016b2885fe"}
+  },
+  "immutable_picture": {
+    "external_archive_path": "../../outputs/edit/phase36-ledger-pour-lossless-v1-candidate-01/june-phase36-ledger-pour-rgb24-xor-v1.gz",
+    "archive_sha256": "93eb2cd752d745a6f6fd534912ff68ee24e7bf72cf7cd406d2a366adea97d404",
+    "archive_bytes": 415959046,
+    "frame_inventory_canonical_sha256": "d09bcdc6a3c86e26e9ce77070f18504f3101e4b87edfc54e169e3b4b641a6451",
+    "combined_rgb24_sha256": "8a8fdc2a572ec1037e29a475b00e49454a059a73a751444458de95531bfa6501",
+    "frame_count": 303
+  },
+  "diagnostic": {
+    "source_frames": [165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181],
+    "phase36_frames": [240, 241, 242, 243, 244, 245, 246, 247, 248, 249, 250, 251, 252, 253, 254, 255, 256],
+    "source_focus_frame": 173,
+    "phase36_focus_frame": 248,
+    "expected_phase35_f173_baseline_sha256": "742ebca28200ce6c290380fad33db5b63bbe78c77614ee712dca920d7146582a",
+    "expected_v3_f248_sha256": "8b24d35395c671420ac5de7ce83e03b028fb3594d1e4d8233db0e555f86236a8",
+    "full_closure_threshold": 0.999,
+    "variants": ["baseline", "v3_hard", "extended_hard", "feather_1px", "feather_2px"],
+    "recommended_variant": "FEATHER_2PX_FOR_HUMAN_REVIEW_ONLY",
+    "visual_recommendation_basis": "At native and Phase36 playback-scale/3x still review, V3 hard retains the pale endpoint, extended hard terminates abruptly, and 1px retains a small seam. The 2px registered-source profile is smoothest, with locked 85/85 maximum alpha steps. The registered tan bump [722,275] and adjacent x=719..724 endpoint remain explicitly human-adjudicated; this is not rebuild authorization.",
+    "residual_band_probe": {
+      "status": "MACHINE_CLASSIFIED_CANDIDATE_NOT_HUMAN_RATIFIED",
+      "seed_xy": [719, 273],
+      "source_rgb": [206, 161, 118],
+      "source_hsv": [15, 109, 206],
+      "maximum_saturation_u8": 110,
+      "minimum_value_u8": 120,
+      "threshold_probe_support_radius_px": 2,
+      "expected_delta_area": 21,
+      "expected_delta_bbox_xyxy": [713, 269, 723, 277],
+      "expected_delta_components": 1,
+      "expected_delta_mask_sha256": "e106b7207470126395188de6e7a409f2dd9191caea58802f9af8050866cbeeb4",
+      "expected_joined_component_area": 272,
+      "expected_joined_component_bbox_xyxy": [697, 253, 723, 277],
+      "expected_joined_component_mask_sha256": "94379f4487c730e1adac6a63d91ccdfbed39709e7552d698ca91047874962496",
+      "classification": "JOINS_EXISTING_VIEWER_RIGHT_MACHINE_SCLERA_CANDIDATE_COMPONENT_UNDER_DECLARED_2PX_CHEBYSHEV_PROBE_SUPPORT",
+      "exact_formula_order": [
+        "threshold := OpenCV RGB-to-HSV plate pixels with S<=110 and V>=120",
+        "probe_support := Chebyshev-dilate the locked V3 viewer-right machine-candidate core by radius 2, then intersect the locked V3 registered lower-lid patch",
+        "delta := threshold intersect probe_support minus the locked V3 viewer-right machine-candidate core",
+        "joined_component := the 8-connected component of (locked V3 core union delta) containing seed [719,273]"
+      ],
+      "required_relations": {
+        "seed_is_in_delta": true,
+        "delta_is_subset_of_threshold": true,
+        "delta_is_subset_of_probe_support": true,
+        "delta_is_disjoint_from_v3_core": true,
+        "delta_is_one_8_connected_component": true
+      }
+    },
+    "edge_corridor": {
+      "bbox_xyxy": [694, 263, 725, 279],
+      "construction": "Fill the half-open rectangle x=[694,725), y=[263,279), then intersect the locked V3 viewer-right registered lower-lid patch.",
+      "policy": "Only explicitly enumerated experimental predecessor-protection overrides inside this corridor may change. The exterior bands are geometry-derived Chebyshev rings, not threshold-constrained geodesic growth and not a human anatomy classification.",
+      "expected_area": 465,
+      "expected_bbox_xyxy": [694, 263, 725, 278],
+      "expected_components": 1,
+      "expected_mask_sha256": "7b227cfa6c7682b789ec8ae79160e34992f7d2c9f487fd713f01b0fd45bfd04d",
+      "extended_hard_write": {"expected_area": 103, "expected_bbox_xyxy": [697, 264, 723, 277], "expected_mask_sha256": "5c5ad16bcf6aba1965eb893f0461c410d08f9617354905b73cb6e1dbad967772"},
+      "seed_connected_hard_subject": {"expected_area": 98, "expected_bbox_xyxy": [704, 264, 723, 277], "expected_mask_sha256": "37f242745b0569692b9d76f7abd35d6a6161af78de85d2ff716b3a8b8fc35f15"},
+      "exact_formula_order": [
+        "extended_core := locked V3 viewer-right core union 21px delta",
+        "extended_hard_write := locked V3 viewer-right leak union 21px delta",
+        "seed_connected_hard_subject := 8-connected component of extended_hard_write containing [719,273]",
+        "exterior_ring1_geometric := Chebyshev-dilate seed_connected_hard_subject by 1 minus extended_hard_write minus extended_core, then intersect corridor",
+        "exterior_ring2_geometric := Chebyshev-dilate seed_connected_hard_subject by 2 minus extended_hard_write minus extended_core, then intersect corridor",
+        "feather_1px := exterior_ring1_geometric intersect (locked original viewer-right lower-lid alpha < 128)",
+        "feather_2px_inner := exterior_ring1_geometric intersect (locked original viewer-right lower-lid alpha < 170)",
+        "feather_2px_outer := (exterior_ring2_geometric minus exterior_ring1_geometric) intersect (locked original viewer-right lower-lid alpha < 85)",
+        "hard write semantics := copy alpha then overwrite extended_hard_write pixels with 255",
+        "feather write semantics := elementwise max of hard-written alpha and the sparse requested-alpha field; never decrease authored alpha"
+      ],
+      "exterior_ring1_geometric": {"expected_area": 39, "expected_bbox_xyxy": [703, 263, 724, 278], "expected_components": 1, "expected_mask_sha256": "e3f546bd4bb2d8dd856cd2ae55615115e4a57780cadd6b2d56bc1c49afe857cc"},
+      "exterior_ring2_geometric": {"expected_area": 70, "expected_bbox_xyxy": [702, 263, 725, 278], "expected_components": 2, "expected_mask_sha256": "8c448d78852e338ccebb5406ec7ad267fe93ac20ca96f67793f7e7efe37a383e"},
+      "exterior_ring2_only": {"expected_area": 31, "expected_bbox_xyxy": [702, 263, 725, 278], "expected_components": 3, "expected_mask_sha256": "675d97a37afa0eaac9fae38b688d694ff0a6575c73859c020a155cd82e8c0839"},
+      "feather_1px": {"alpha_u8": 128, "comparison": "original_lower_alpha_u8 < alpha_u8", "expected_area": 32, "expected_bbox_xyxy": [705, 266, 724, 278], "expected_mask_sha256": "629e0f878c3fcabf577a1b6dabec1180068bbdc2b2445d32f941280a46d1f854"},
+      "feather_2px_inner": {"alpha_u8": 170, "comparison": "original_lower_alpha_u8 < alpha_u8", "expected_area": 33, "expected_bbox_xyxy": [704, 266, 724, 278], "expected_mask_sha256": "d2ee3bd6bfd2ae89838d33e7f9b675eaaf71609dde56178213dbd3f07188d4a0"},
+      "feather_2px_outer": {"alpha_u8": 85, "comparison": "original_lower_alpha_u8 < alpha_u8", "expected_area": 25, "expected_bbox_xyxy": [702, 265, 725, 278], "expected_mask_sha256": "cf72aaf9fad511e3e3672fd11e020e27a0933f5e2bbd6555eff3c8bc55fa6d11"},
+      "required_relations": {
+        "all_exterior_bands_disjoint_from_extended_core": true,
+        "all_exterior_bands_disjoint_from_extended_hard_write": true,
+        "feather_2px_inner_outer_disjoint": true,
+        "all_writes_subset_of_corridor_or_locked_v3_leak": true
+      },
+      "union_locks": {
+        "extended_hard_plus_feather_1px": {"expected_area": 135, "expected_mask_sha256": "2ae1bc4ffd199b486dff30c9a659a97a9ae812c32890be52ec28ca3f4a056c1b"},
+        "feather_2px_inner_plus_outer": {"expected_area": 58, "expected_mask_sha256": "34c97695a4cc14aa3c4053812e870cb0a5353e68ec305f93a039b3ffbb20de64"},
+        "extended_hard_plus_feather_2px": {"expected_area": 161, "expected_mask_sha256": "4b5ddf55f5557cf633b326c0684e1ffac411be65d6104e219104e8e9fda0baa6"}
+      }
+    },
+    "experimental_predecessor_protection_overrides": {
+      "status": "EXPERIMENTAL_MACHINE_ONLY_NOT_HUMAN_RATIFIED",
+      "policy": "These pixels deliberately override V3 protected_non_candidate. V4 must report them as experimental overrides and must never claim the full V3 protected mask is unchanged.",
+      "delta": {"expected_override_area": 21, "expected_override_mask_sha256": "e106b7207470126395188de6e7a409f2dd9191caea58802f9af8050866cbeeb4"},
+      "feather_1px": {"expected_override_area": 32, "expected_override_mask_sha256": "629e0f878c3fcabf577a1b6dabec1180068bbdc2b2445d32f941280a46d1f854"},
+      "feather_2px_inner": {"expected_override_area": 33, "expected_override_mask_sha256": "d2ee3bd6bfd2ae89838d33e7f9b675eaaf71609dde56178213dbd3f07188d4a0"},
+      "feather_2px_outer": {"expected_override_area": 25, "expected_override_mask_sha256": "cf72aaf9fad511e3e3672fd11e020e27a0933f5e2bbd6555eff3c8bc55fa6d11"}
+    },
+    "declared_viewer_right_geometric_no_write_guard": {
+      "status": "DECLARED_GEOMETRIC_NO_WRITE_GUARD_BEFORE_CORRECTED_PREVIEW",
+      "classification": "GEOMETRIC_GUARD_ONLY_NOT_ANATOMY_OR_CANTHUS_TRUTH",
+      "selection_disclosure": "This polygon was introduced after the initial V4 mask design. Its x=725 boundary is deliberately adjacent to the half-open corridor x=[694,725), so zero overlap is a construction property, not independent validation.",
+      "human_adjudication_required": "The adjacent x=719..724 endpoint region, including the tan bump, remains human-adjudicated and is not protected by this geometric guard.",
+      "polygon_xy": [[725, 246], [744, 246], [744, 283], [733, 283], [725, 276]],
+      "expected_area": 728,
+      "expected_bbox_xyxy": [725, 246, 745, 284],
+      "expected_components": 1,
+      "expected_mask_sha256": "b8aa32877160d37cc4c34501b37c2efce0224d29f6b242716c763111e1ed63ad",
+      "required_overlap_with_delta_hard_and_all_exterior_bands": 0,
+      "required_rgb_delta_vs_v3_hard": 0,
+      "required_owner_delta_vs_v3_hard": 0
+    },
+    "registered_lid_tan_bump_probe": {
+      "status": "REGISTERED_SOURCE_PROVENANCE_MARKER_NOT_ANATOMY_TRUTH",
+      "global_xy": [722, 275],
+      "neutral_plate_rgb": [220, 146, 102],
+      "neutral_plate_hsv": [11, 137, 220],
+      "registered_lower_lid_source_rgb": [214, 143, 96],
+      "registered_lower_lid_source_hsv": [12, 141, 214],
+      "expected_membership": "feather_2px_outer",
+      "policy": "Label this tan source-texture bump in 1x/3x evidence so it is not silently reclassified as residual sclera or authored waterline. Human review decides its anatomy."
+    },
+    "actual_compositor_alpha_locks": {
+      "viewer_right_lower_alpha_sha256": {
+        "baseline": "4546e9182ec91909ffece27cde7dcb9201f1aa213f917dab8c75bd71cb762913",
+        "v3_hard": "ebba2e5d410d30845456bd23d15307838e3dcaa3962f2d4c93350c7261cd5807",
+        "extended_hard": "6a79e32beefccf30f6e68b5d0c503a7ffb6379ac45d9e3f2cd96cd573a4b58fb",
+        "feather_1px": "0e261f5aa5f18522ac52b3b3c7c493b61a3f405d30ae66b9647729ec367f9487",
+        "feather_2px": "e20037ce316f1d338b10bf71ad9d15a3473beebd8226e8225e993bfa848a2456"
+      },
+      "viewer_right_combined_lid_alpha_sha256": {
+        "baseline": "002a43d111c5e97dd70b5c9c80b0a9c233df6ef269bd38e988d34e8c22374cab",
+        "v3_hard": "36500c3c00c7a59c618af33eafe2f1dcff8c106eff855c1b7f701921b83f606d",
+        "extended_hard": "0b47e18a0b2e15396e12789535042edb885df94fbd88f1b12ffffbed40ce994d",
+        "feather_1px": "8814cdb45609fde3e75d4149f4baafe8eefadd4badbd7452670766ff9ae64562",
+        "feather_2px": "afbe87bd88b06eac0a650f755e2a7694c8c1c74b394aed44ef449df5573f4e77"
+      },
+      "requirements": {
+        "minimum_combined_alpha_on_extended_core_for_extended_variants": 255,
+        "maximum_alpha_decrease_count": 0,
+        "maximum_8_neighbor_combined_alpha_jump_hard_to_first_exterior_for_feather_1px": 127,
+        "maximum_8_neighbor_combined_alpha_jump_hard_to_first_exterior_for_feather_2px": 85,
+        "maximum_8_neighbor_combined_alpha_jump_first_to_second_exterior_for_feather_2px": 85,
+        "requested_alpha_profile_must_be_monotone_outward": true
+      }
+    },
+    "prospective_transform_support": {
+      "selection_policy": "Kernel supports are declared from implementation semantics before observing proposal RGB differences; no radius is fitted to output artifacts.",
+      "comparison_basis": "Each variant is compared with baseline at the locked full-closure focus frame. Native RGB support is suppressed-crease alpha>0 union hard writes union nonzero feather writes. Native owner support is suppressed-crease owner support union hard writes only; feather pixels never receive manual owners.",
+      "phase35_head_warp": {"implementation": "cv2.remap", "interpolation": "INTER_CUBIC", "input_support_radius_px": 2},
+      "phase35_camera_resize": {"implementation": "Pillow Image.resize", "interpolation": "LANCZOS", "input_support_radius_px": 3},
+      "phase36_camera_resize": {"implementation": "Pillow Image.resize", "interpolation": "LANCZOS", "input_support_radius_px": 3}
+    },
+    "expected_prospective_supports": {
+      "baseline": {
+        "native_rgb": {"area": 0, "sha256": "4056172f4c80f93bb2a04c2534c97635b199d3f9905347bbaefaef99ab8eef50"},
+        "native_owner": {"area": 0, "sha256": "4056172f4c80f93bb2a04c2534c97635b199d3f9905347bbaefaef99ab8eef50"},
+        "phase35_rgb": {"head_input_support_pixels": 0, "head_output_support_pixels": 0, "camera_input_support_pixels": 0, "phase35_final_support_pixels": 0, "sha256": "11283ef755895422e6f28b93f3d78cad7539891cf2893c9fdccefb923c5bf70b"},
+        "phase36_rgb": {"camera_input_support_pixels": 0, "phase36_final_support_pixels": 0, "sha256": "11283ef755895422e6f28b93f3d78cad7539891cf2893c9fdccefb923c5bf70b"}
+      },
+      "v3_hard": {
+        "native_rgb": {"area": 416, "sha256": "76f19e8cc7c2eff011e72a8c344c5067707cbbb0ef88ec5d8fdc72ca383d9d00"},
+        "native_owner": {"area": 416, "sha256": "76f19e8cc7c2eff011e72a8c344c5067707cbbb0ef88ec5d8fdc72ca383d9d00"},
+        "phase35_rgb": {"head_input_support_pixels": 1166, "head_output_support_pixels": 1344, "camera_input_support_pixels": 2729, "phase35_final_support_pixels": 4577, "sha256": "9b37e41a4218d2ae3e12804657342d0b61147d203cbcefb11676a9c30d7b9734"},
+        "phase36_rgb": {"camera_input_support_pixels": 7166, "phase36_final_support_pixels": 17889, "sha256": "73d7433b4275f243004568b4873e1b48a969ac01e4b2d780ebdffd1f980d2476"}
+      },
+      "extended_hard": {
+        "native_rgb": {"area": 437, "sha256": "ba11bb68e87cb00bb73729ce9a4a1ee8a0038176a798c211088c93519d3d8839"},
+        "native_owner": {"area": 437, "sha256": "ba11bb68e87cb00bb73729ce9a4a1ee8a0038176a798c211088c93519d3d8839"},
+        "phase35_rgb": {"head_input_support_pixels": 1191, "head_output_support_pixels": 1370, "camera_input_support_pixels": 2761, "phase35_final_support_pixels": 4624, "sha256": "2410113bb6f76337604b3d453a2ff35748bfa7aef8fbdb70b82acbb3055bae0f"},
+        "phase36_rgb": {"camera_input_support_pixels": 7216, "phase36_final_support_pixels": 18020, "sha256": "8e01e1c233aacfbd32b86777f28122247f2548b8de65206bc59317380467823d"}
+      },
+      "feather_1px": {
+        "native_rgb": {"area": 469, "sha256": "cff934ce92f250815cb312ef520378be0cbd3d4602b83d3d8a57fcf9a7cd9d70"},
+        "native_owner": {"area": 437, "sha256": "ba11bb68e87cb00bb73729ce9a4a1ee8a0038176a798c211088c93519d3d8839"},
+        "phase35_rgb": {"head_input_support_pixels": 1231, "head_output_support_pixels": 1411, "camera_input_support_pixels": 2814, "phase35_final_support_pixels": 4692, "sha256": "91617b5321f9c026329b770d2c99cc0aba38352ec64ff785affef0fe7a5f6b92"},
+        "phase36_rgb": {"camera_input_support_pixels": 7324, "phase36_final_support_pixels": 18249, "sha256": "038f986c91387e3ca6b3f04589979487a92c6784b852f77d952af28052df4dcd"}
+      },
+      "feather_2px": {
+        "native_rgb": {"area": 495, "sha256": "aee8cfb2afa324e3638eb3f1c69fe28c7944b6ddc81c01365b42a305d7751e9a"},
+        "native_owner": {"area": 437, "sha256": "ba11bb68e87cb00bb73729ce9a4a1ee8a0038176a798c211088c93519d3d8839"},
+        "phase35_rgb": {"head_input_support_pixels": 1264, "head_output_support_pixels": 1445, "camera_input_support_pixels": 2852, "phase35_final_support_pixels": 4739, "sha256": "8f6cfcb45fefb734822dc4eb2ce3d1da1b722b7b4df61fe5c27ce36e172ef240"},
+        "phase36_rgb": {"camera_input_support_pixels": 7379, "phase36_final_support_pixels": 18381, "sha256": "1993ab074d404f5cc56e045649a7b96d0ea346be301f181312eb2ef62f0c2263"}
+      }
+    },
+    "human_review_required": true,
+    "accepted_source_mutation_allowed": false,
+    "video_encode_allowed": false
+  },
+  "output": {
+    "directory": "collab/phase37_eyelid_edge_ab_v4",
+    "report_filename": "phase37-eyelid-edge-machine-report-v4.json",
+    "native_grid_1x": "phase35-f173-edge-treatment-grid-1x-v4.png",
+    "native_grid_3x": "phase35-f173-edge-treatment-grid-3x-v4.png",
+    "phase36_grid_1x": "phase36-f248-edge-treatment-grid-1x-v4.png",
+    "phase36_grid_3x": "phase36-f248-edge-treatment-grid-3x-v4.png",
+    "phase36_recommendation_ab": "phase36-f248-v3-hard-vs-recommended-3x-v4.png",
+    "classification_overlay": "phase35-f173-cream-band-classification-provenance-v4.png",
+    "neighbor_sweep": "phase36-f240-f256-recommended-neighbor-sweep-v4.png"
+  },
+  "disposition": {
+    "candidate01_archive_remains_immutable": true,
+    "v3_evidence_remains_immutable": true,
+    "corrected_source_requires_new_picture_rebuild": true,
+    "corrected_source_requires_new_human_acceptance": true,
+    "phase36_encode_authorized": false,
+    "promotion_allowed": false
+  }
+}
