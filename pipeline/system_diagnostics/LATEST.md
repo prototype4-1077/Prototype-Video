@@ -1,6 +1,6 @@
 # System Diagnostic
 
-Generated: 2026-08-10T22:15:22+00:00
+Generated: 2026-08-13T07:44:27+00:00
 
 Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 
@@ -15,7 +15,7 @@ Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 ### [HIGH] Evidence Coverage
 - Area: `visual_memory`
 - Code: `visual:evidence_coverage:general`
-- Evidence: "Only 93 of 3158 scene records have a human decision (2.9%)."
+- Evidence: "Only 93 of 3295 scene records have a human decision (2.8%)."
 - Action: Do not convert automated risk frequency into house rules. Review the highest-risk asset-backed queue first.
 
 ### [MEDIUM] The evolution queue is flooded with taxonomy gaps
@@ -27,13 +27,13 @@ Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 ### [MEDIUM] Stored feedback has been organized into provisional rule candidates
 - Area: `learning`
 - Code: `feedback_rule_candidates_ready`
-- Evidence: {"candidate_count": 14, "top_candidates": [{"evidence_count": 13, "id": "effects_still_preference", "title": "Use a strong still with effects when stock cannot explain the beat"}, {"evidence_count": 8, "id": "caption_restraint", "title": "Do not print performance tags or dense paragraph captions"}, {"evidence_count": 5, "id": "character_lip_sync", "title": "Visible speaking character requires mouth movement"}, {"evidence_count": 5, "id": "dmt_motion_language", "title": "DMT videos benefit from psychedelic moving graphics in moderation"}, {"evidence_count": 5, "id": "stock_first_preference", "title": "Prefer genuine moving stock when a direct match exists"}, {"evidence_count": 5, "id": "visual_semantic_match", "title": "Visual must clearly represent the spoken concept"}, {"evidence_count": 3, "id": "deep_parallax", "title": "Concept backgrounds should use strong layered depth"}, {"evidence_count": 3, "id": "title_safe_zone", "title": "Titles must remain readable inside platform crop zones"}, {"evidence_count": 2, "id": "literal_action_accuracy", "title": "Literal actions must visibly perform the stated action"}, {"evidence_count": 1, "id": "cartoon_animation_definition", "title": "Animated requests mean coherent cartoon animation"}], "unique_commented_evidence": 154}
+- Evidence: {"candidate_count": 14, "top_candidates": [{"evidence_count": 13, "id": "effects_still_preference", "title": "Use a strong still with effects when stock cannot explain the beat"}, {"evidence_count": 8, "id": "caption_restraint", "title": "Do not print performance tags or dense paragraph captions"}, {"evidence_count": 5, "id": "character_lip_sync", "title": "Visible speaking character requires mouth movement"}, {"evidence_count": 5, "id": "dmt_motion_language", "title": "DMT videos benefit from psychedelic moving graphics in moderation"}, {"evidence_count": 5, "id": "stock_first_preference", "title": "Prefer genuine moving stock when a direct match exists"}, {"evidence_count": 5, "id": "visual_semantic_match", "title": "Visual must clearly represent the spoken concept"}, {"evidence_count": 3, "id": "deep_parallax", "title": "Concept backgrounds should use strong layered depth"}, {"evidence_count": 3, "id": "title_safe_zone", "title": "Titles must remain readable inside platform crop zones"}, {"evidence_count": 2, "id": "literal_action_accuracy", "title": "Literal actions must visibly perform the stated action"}, {"evidence_count": 1, "id": "cartoon_animation_definition", "title": "Animated requests mean coherent cartoon animation"}], "unique_commented_evidence": 155}
 - Action: Review candidate scope and counterexamples. Promote only candidates with a human decision and a regression test.
 
 ### [MEDIUM] Too few reviewable videos have exported human feedback
 - Area: `learning`
 - Code: `human_feedback_coverage_low`
-- Evidence: {"coverage": 0.0851, "feedback_count": 4, "feedback_slugs": ["belief-is-gravity", "no-disagreement-here", "the-edge-of-you-is-negotiable", "the-person-isnt-here"], "reviewable_count": 47, "reviewable_slugs": ["a-chair-not-a-throne", "belief-is-gravity", "beliefs-are-software-updates", "black-wall-street-ep1-the-elevator", "black-wall-street-ep2-one-shot", "dispatch-path-selftest", "emotions-are-a-dashboard", "heaven-is-when-nothing-is-outside-me", "i-became-the-eye-behind-every-eye", "i-left-myself-at-the-party", "i-remembered-the-future", "i-was-gone-eleven-minutes", "june-oxley-folks-aint-roadblocks-tier1", "june-oxley-left-the-vehicle", "low-battery-thoughts", "my-thumb-has-a-gambling-problem", "no-disagreement-here", "the-adjacent-mind", "the-alphabet-beneath-things", "the-argument-between-ink-and-paper", "the-blueprint-recognizes-the-building", "the-dog-you-stopped-walking", "the-edge-of-you-is-negotiable", "the-emotion-scam-tier1", "the-future-is-built-in-the-next-ten-seconds", "the-future-is-rewriting-the-map-behind-you", "the-infinite-library", "the-mercy-of-the-filter", "the-person-isnt-here", "the-present-has-side-doors", "the-reality-machine-dmt-v3", "the-roads-that-keep-walking", "the-room-has-more-than-one-window", "the-rooms-inside-this-moment", "the-shift-has-no-date", "the-symbols-are-dreaming-you", "the-tabs-still-open", "the-universe-behind-every-no", "the-universe-keeps-its-options-open", "the-witness-without-a-face", "tomorrow-uses-old-footage", "two-earths-one-grocery-store", "who-wrote-the-menu", "wonder-is-a-glitch", "you-see-what-matters", "your-emergency-contact", "your-inner-bodyguard"]}
+- Evidence: {"coverage": 0.08, "feedback_count": 4, "feedback_slugs": ["belief-is-gravity", "no-disagreement-here", "the-edge-of-you-is-negotiable", "the-person-isnt-here"], "reviewable_count": 50, "reviewable_slugs": ["a-chair-not-a-throne", "belief-is-gravity", "beliefs-are-software-updates", "black-wall-street-ep1-the-elevator", "black-wall-street-ep2-one-shot", "dispatch-path-selftest", "emotions-are-a-dashboard", "good-vibes-dont-pay", "good-vibes-dont-pay-150", "heaven-is-when-nothing-is-outside-me", "i-became-the-eye-behind-every-eye", "i-left-myself-at-the-party", "i-remembered-the-future", "i-was-gone-eleven-minutes", "june-oxley-folks-aint-roadblocks-tier1", "june-oxley-left-the-vehicle", "low-battery-thoughts", "my-thumb-has-a-gambling-problem", "no-disagreement-here", "the-adjacent-mind", "the-alphabet-beneath-things", "the-argument-between-ink-and-paper", "the-blueprint-recognizes-the-building", "the-dog-you-stopped-walking", "the-edge-of-you-is-negotiable", "the-emotion-scam-tier1", "the-future-is-built-in-the-next-ten-seconds", "the-future-is-rewriting-the-map-behind-you", "the-infinite-library", "the-mercy-of-the-filter", "the-person-isnt-here", "the-present-has-side-doors", "the-reality-machine-dmt-v3", "the-roads-that-keep-walking", "the-room-has-more-than-one-window", "the-rooms-inside-this-moment", "the-shift-has-no-date", "the-smoke-detector", "the-symbols-are-dreaming-you", "the-tabs-still-open", "the-universe-behind-every-no", "the-universe-keeps-its-options-open", "the-witness-without-a-face", "tomorrow-uses-old-footage", "two-earths-one-grocery-store", "who-wrote-the-menu", "wonder-is-a-glitch", "you-see-what-matters", "your-emergency-contact", "your-inner-bodyguard"]}
 - Action: Review the highest-value completed videos first. Keep automated risk tags as screening evidence until James supplies a decision.
 
 ### [MEDIUM] Some operational solutions still need verification
@@ -63,7 +63,7 @@ Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 ### [MEDIUM] Asset Coverage
 - Area: `visual_memory`
 - Code: `visual:asset_coverage:general`
-- Evidence: "Only 162 of 3158 records retain a reviewable asset (5.1%)."
+- Evidence: "Only 173 of 3295 records retain a reviewable asset (5.3%)."
 - Action: Persist representative frames or durable release references for completed scenes so historical feedback remains inspectable.
 
 ### [MEDIUM] Low Approval Cohort
@@ -117,7 +117,7 @@ Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 ### [LOW] Permanent stock exclusion now has a measured supply signal
 - Area: `asset_selection`
 - Code: `stock_supply:no_current_starvation_signal`
-- Evidence: {"exclusions": {"banned_ids": 122, "used_ids": 1046}, "fallback_rate": 0.0587, "low_supply_rate": 0.0537, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 40, "scenes_analyzed": 801, "state": "no_current_starvation_signal"}
+- Evidence: {"exclusions": {"banned_ids": 122, "used_ids": 1046}, "fallback_rate": 0.057, "low_supply_rate": 0.0524, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 43, "scenes_analyzed": 859, "state": "no_current_starvation_signal"}
 - Action: Keep permanent exclusion unchanged; continue monitoring candidate supply and fallback rate.
 
 ## Authority boundary
