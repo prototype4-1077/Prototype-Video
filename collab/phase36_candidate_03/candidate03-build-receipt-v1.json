@@ -1,0 +1,56 @@
+{
+  "receipt_version": 1,
+  "candidate_id": "phase36_ledger_pour_candidate_03_audio_only",
+  "build_attempt": 1,
+  "verdict": "PHASE36_CANDIDATE03_UNENCODED_AUDIO_ONLY_MACHINE_PASS_HUMAN_LISTEN_REQUIRED",
+  "human_audio_accepted": false,
+  "authorization": {
+    "path": "collab/CLAUDE_REVIEW_2026-08-11_1959Z.md",
+    "hash_domain": "lf_normalized_text",
+    "sha256": "fd8af6985fba239f04634e05cc19619fe6b187856b0dc9d5002d68202fab68aa",
+    "verdict": "PHASE36_CANDIDATE03_AUDIO_ONLY_UNENCODED_BUILD_ALLOWED"
+  },
+  "attempt_claim": {
+    "path": "collab/phase36_candidate_03.attempt-v1.claim.json",
+    "sha256": "df798c3e547325ec9a5431bb3818be2472ea8bc640dfbedcac6e023fc20fb4e4"
+  },
+  "contract": {
+    "path": "concept/characters/june_oxley_phase36_candidate03_audio_repair_v1.json",
+    "raw_lf_sha256": "80efeac55b21aef1b955ee10c7663cecf9dfd8dd00e2d64cf653b8c3c761fb36",
+    "canonical_sha256": "8767bb505f15e2a1676d07e2bfae81787bd99ec0a57d584ce3f094b4c5d207cb",
+    "authorization_subject_canonical_sha256": "691ababbf8ede25e01ed3fea54c35b891da825e49ce5884e8e50d1262160061f",
+    "reviewed_null_raw_lf_sha256": "441b74b8d14edf935674e1714d176b5f6e78a2fcef8c302f2dd68df56bba65d0"
+  },
+  "implementation": {
+    "path": "pipeline/cartoon_ledger_pour_audio_repair_v3.py",
+    "lf_sha256": "3a60e4557d060cae50bcb3ae2e70e3c643bea8df1e594fe763f8ed089f441808"
+  },
+  "artifacts": {
+    "june-phase36-ledger-pour-mix-v3.wav": {
+      "bytes": 2908844,
+      "sha256": "a75b39fbae9d0be8b5853a78b1201f0498b188587e0a3366fa5f6338a19c0c0c",
+      "pcm_data_sha256": "5cc890db17a2f38aac67fe26c6381b0eab43dd6ae1c4200097e3e98f06fd19f3"
+    },
+    "june-phase36-ledger-pour-audio-repair-manifest-v3.json": {
+      "bytes": 7971,
+      "sha256": "b8948afa4a7eb0019bdc0e5202b694af645424c8b2fc0dc30dc38e3877500873"
+    },
+    "candidate03-audible-noise-evidence-v1.json": {
+      "bytes": 14480,
+      "sha256": "9cdfb3277b81434542b72a3b9347f0f9289a155208cb5f9c2686d1f0b773fa80"
+    }
+  },
+  "machine_result": {
+    "passed": true,
+    "gates_passed": 24,
+    "gates_failed": 0
+  },
+  "disposition": {
+    "candidate_immutable": true,
+    "further_build_attempt_allowed": false,
+    "human_audio_review_required": true,
+    "promotion_allowed": false,
+    "encode_allowed": false,
+    "picture_mutation_allowed": false
+  }
+}
