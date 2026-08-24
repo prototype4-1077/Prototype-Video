@@ -1,6 +1,6 @@
 # Perpetual Frontier Brief
 
-_Cycle: 2026-08-17 · Records: 125 · External signals: 0_
+_Cycle: 2026-08-24 · Records: 125 · External signals: 0_
 
 ## Constitutional status
 The evolution laboratory generated observations and proposals only. It did not alter scripts, frontier truth, render requests, or permanent ethos rules.
@@ -23,12 +23,12 @@ The evolution laboratory generated observations and proposals only. It did not a
   Control: Keep the current champion value for pillars. Treatment: Change only pillars using the challenger condition.
 
 ## Wild frontier proposals
-- **Noise: self × attention** — What if noise is already happening inside the way you experience self & identity as constructed?
-  Fidelity: metaphor. Invitation: Where might noise be shaping what you call 'self' or 'attention' right now?
-- **Symbiosis: grounding × prediction** — What if symbiosis is already happening inside the way you experience the ordinary / return to the body?
-  Fidelity: metaphor. Invitation: Where might symbiosis be shaping what you call 'grounding' or 'prediction' right now?
-- **Stability Margins: memory × threshold** — What if stability margins is already happening inside the way you experience memory as construction, not recording?
-  Fidelity: metaphor. Invitation: Where might stability margins be shaping what you call 'memory' or 'threshold' right now?
+- **Role Adoption: grounding × recursion** — What if role adoption is already happening inside the way you experience the ordinary / return to the body?
+  Fidelity: metaphor. Invitation: Where might role adoption be shaping what you call 'grounding' or 'recursion' right now?
+- **Symbiosis: emotion × recursion** — What if symbiosis is already happening inside the way you experience emotion, love, and the turn?
+  Fidelity: metaphor. Invitation: Where might symbiosis be shaping what you call 'emotion' or 'recursion' right now?
+- **Overshoot: grounding × threshold** — What if overshoot is already happening inside the way you experience the ordinary / return to the body?
+  Fidelity: metaphor. Invitation: Where might overshoot be shaping what you call 'grounding' or 'threshold' right now?
 
 ## Unknown unknowns
 - Which unmodeled feature explains why this video performed far from the current category expectation?
@@ -38,7 +38,7 @@ The evolution laboratory generated observations and proposals only. It did not a
 - Which unmodeled feature explains why this video performed far from the current category expectation?
 
 ## Rule review
-- `hook_immediate_plunge` → **retest** (effective confidence 0.412)
+- `hook_immediate_plunge` → **retest** (effective confidence 0.38)
 
 ## Human gate
 Nothing in this brief is a command. The next act is a choice: which uncertainty is worth spending a real video to examine?
