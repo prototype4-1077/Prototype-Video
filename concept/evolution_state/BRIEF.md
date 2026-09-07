@@ -1,6 +1,6 @@
 # Perpetual Frontier Brief
 
-_Cycle: 2026-08-31 · Records: 125 · External signals: 0_
+_Cycle: 2026-09-07 · Records: 125 · External signals: 0_
 
 ## Constitutional status
 The evolution laboratory generated observations and proposals only. It did not alter scripts, frontier truth, render requests, or permanent ethos rules.
@@ -23,12 +23,12 @@ The evolution laboratory generated observations and proposals only. It did not a
   Control: Keep the current champion value for pillars. Treatment: Change only pillars using the challenger condition.
 
 ## Wild frontier proposals
-- **Modulation: attention × machine** — What if modulation is already happening inside the way you experience attention as the instrument?
-  Fidelity: metaphor. Invitation: Where might modulation be shaping what you call 'attention' or 'machine' right now?
-- **Reveal: self × emotion** — What if reveal is already happening inside the way you experience self & identity as constructed?
-  Fidelity: metaphor. Invitation: Where might reveal be shaping what you call 'self' or 'emotion' right now?
-- **Context Loss: emotion × recursion** — What if context loss is already happening inside the way you experience emotion, love, and the turn?
-  Fidelity: metaphor. Invitation: Where might context loss be shaping what you call 'emotion' or 'recursion' right now?
+- **Immune Memory: grounding × memory** — What if immune memory is already happening inside the way you experience the ordinary / return to the body?
+  Fidelity: metaphor. Invitation: Where might immune memory be shaping what you call 'grounding' or 'memory' right now?
+- **Exaptation: memory × machine** — What if exaptation is already happening inside the way you experience memory as construction, not recording?
+  Fidelity: metaphor. Invitation: Where might exaptation be shaping what you call 'memory' or 'machine' right now?
+- **Queues: attention × emotion** — What if queues is already happening inside the way you experience attention as the instrument?
+  Fidelity: metaphor. Invitation: Where might queues be shaping what you call 'attention' or 'emotion' right now?
 
 ## Unknown unknowns
 - Which unmodeled feature explains why this video performed far from the current category expectation?
@@ -38,7 +38,8 @@ The evolution laboratory generated observations and proposals only. It did not a
 - Which unmodeled feature explains why this video performed far from the current category expectation?
 
 ## Rule review
-- `hook_immediate_plunge` → **retest** (effective confidence 0.3505)
+- `hook_immediate_plunge` → **retest** (effective confidence 0.3233)
+- `generated_human_ratio` → **retest** (effective confidence 0.5367)
 
 ## Human gate
 Nothing in this brief is a command. The next act is a choice: which uncertainty is worth spending a real video to examine?
