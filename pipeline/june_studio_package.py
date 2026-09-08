@@ -19,7 +19,8 @@ def package(render_dir, asset, voice_dir, destination, blender='blender'):
     render=Path(render_dir).resolve();asset=Path(asset).resolve();out=Path(destination).resolve()
     voice=Path(voice_dir).resolve();check_voice(voice)
     report=json.loads((render/'studio-render-report.json').read_text())
-    video=render/'June_Oxley_Studio_Development.mp4'
+    study=report.get('study',False)
+    video=render/('June_Oxley_Likeness_Study.mp4' if study else 'June_Oxley_Studio_Development.mp4')
     if not report.get('decoded') or report['video_sha256']!=sha256(video):
         raise ValueError('a completed, decoded studio video is required')
     if report['asset_sha256']!=sha256(asset):raise ValueError('package asset differs from rendered character')
@@ -38,6 +39,11 @@ def package(render_dir, asset, voice_dir, destination, blender='blender'):
          'query':'June settles into a front-facing reaction and slight smile.',
          'rationale':'Check that the same face holds its identity, the reaction feels motivated, and the mouth returns to rest.'},
     ]}
+    if study:
+        script.update(title='June Oxley — Likeness Study',slug='june-studio-likeness-study')
+        script['scenes']=[{'start':0,'duration':report['duration_seconds'],'text':dialogue,
+            'query':'June speaks the complete preserved Spuds line in the refined, reusable 3D character.',
+            'rationale':'Check likeness, hair silhouette, eye closure, speech and beard deformation, and garment detail in motion.'}]
     atomic_json(out/'script.json',script)
     payload={'schema_version':review.SCHEMA_VERSION,'generated_at':review._now(),
              'slug':script['slug'],'title':script['title'],'genre':'3D development review',
@@ -62,26 +68,28 @@ def package(render_dir, asset, voice_dir, destination, blender='blender'):
     for source,dest in copies.items():
         if source!=dest:shutil.copy2(source,dest)
     audio_job={'scene':str(out/'june-speaking-scene.blend'),'audio':str(voice/'vo.mp3'),
-               'voice_sha256':report['voice_sha256'],'frame_start':121}
+               'voice_sha256':report['voice_sha256'],'frame_start':121,
+               'preview_start':report['shots'][0]['start'],'preview_end':report['shots'][-1]['end']}
     atomic_json(out/'scene-audio-job.json',audio_job)
     result=subprocess.run([blender,'-b','-t','2','--python-exit-code','1','--python',str(Path(__file__).resolve()),
                            '--','--scene-audio-job',str(out/'scene-audio-job.json')],
                           stdout=subprocess.PIPE,stderr=subprocess.STDOUT,text=True)
     if result.returncode:raise RuntimeError('editable scene audio packaging failed: '+result.stdout[-3000:])
-    for name in ('close.png','front.png','wide.png'):
+    for name in ('close.png','front.png','wide.png','smile.png','blink.png','speech-d.png'):
         source=asset.parent/name
         if source.is_file():shutil.copy2(source,out/name)
     (out/'README.txt').write_text(
         'JUNE OXLEY — REUSABLE STUDIO DEVELOPMENT\n\n'
-        'Open scene-review.html to review the three numbered shots and export comments.\n'
+        'Open scene-review.html to review the numbered shots and export comments.\n'
         f'This is a {report["duration_seconds"]:g}-second {report["width"]}x{report["height"]}, {report["fps"]} fps development preview, not an approved episode.\n'
-        'The original Spuds voice begins at 4 seconds; there is no score in this test.\n\n'
+        f'The original Spuds voice begins at {report["audio_start_seconds"]:g} seconds; there is no score in this test.\n\n'
         'june-studio.blend contains the packed character, porch, three cameras, eight\n'
         'body clips, and fifteen facial pose assets. june-speaking-scene.blend contains\n'
         'the editable performance timeline and packed Spuds recording; its active\n'
-        'camera is the address shot. The voice plays from timeline frame 121.\n'
-        'The final movie combines Wide (frames 1–120), Close (121–330), and Front\n'
-        f'(331–{report["frame_count"]}) camera renders. Use Blender 4.2.0 for this version.\n\n'
+        'camera is the address/study shot. The voice plays from timeline frame 121.\n'
+        'The saved preview range matches the rendered study; the full performance\n'
+        'remains on the timeline. studio-render-report.json records exact camera\n'
+        'and frame ranges. Use Blender 4.2.0 for this version.\n\n'
         'Next art priorities: approved likeness, eyelids and eye scale, wardrobe\n'
         'construction, expression appeal, and a hand-polished acting pass. The\n'
         'mechanical report is not a visual-quality or character-approval certificate.\n\n'
@@ -90,10 +98,11 @@ def package(render_dir, asset, voice_dir, destination, blender='blender'):
         'Voice take: https://github.com/prototype4-1077/Prototype-Video/releases/tag/june-studio-voice-benchmark-v1\n'
         'Packed wood and sky: Poly Haven, CC0 — https://polyhaven.com/license\n'
         'Facial source targets: MakeHuman/MPFB core data, CC0.\n')
-    archive=out.parent/'June_Oxley_Studio_Review_Package.zip'
+    archive=out.parent/('June_Oxley_Likeness_Study_Package.zip' if study else 'June_Oxley_Studio_Review_Package.zip')
     names=['README.txt','script.json','scene-review.html','scene-review.json',video.name,
            'june-studio.blend','june-studio.json','june-speaking-scene.blend',
-           'studio-render-report.json','studio-mechanics-report.json','close.png','front.png','wide.png']
+           'studio-render-report.json','studio-mechanics-report.json','close.png','front.png','wide.png',
+           'smile.png','blink.png','speech-d.png']
     with zipfile.ZipFile(archive,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as bundle:
         for name in names:
             if (out/name).is_file():bundle.write(out/name,name)
@@ -108,6 +117,10 @@ def pack_scene_audio(job_path):
     scene=bpy.context.scene;editor=scene.sequence_editor_create()
     strip=editor.sequences.new_sound('Preserved Spuds voice',job['audio'],channel=1,frame_start=job['frame_start'])
     strip.sound.pack();scene.render.use_sequencer=False
+    if job.get('preview_start') is not None:
+        scene.use_preview_range=True
+        scene.frame_preview_start=job['preview_start'];scene.frame_preview_end=job['preview_end']
+        scene.frame_set(job['preview_start'])
     scene['ce_embedded_voice_sha256']=job['voice_sha256']
     bpy.ops.wm.save_as_mainfile(filepath=job['scene'],compress=True)
 

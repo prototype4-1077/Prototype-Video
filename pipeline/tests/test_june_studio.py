@@ -4,7 +4,7 @@ import tempfile
 import unittest
 
 from pipeline.june_studio import input_identity, complete_cache, cache_valid, sha256
-from pipeline.june_studio_render import cue_weights, check_voice, VOICE_ID
+from pipeline.june_studio_render import cue_weights, check_voice, study_shot, VOICE_ID
 from pipeline.blender.june_studio_character import load_targets, EXPRESSIONS
 
 
@@ -47,6 +47,17 @@ class StudioCacheTests(unittest.TestCase):
 
 
 class StudioSpeechTests(unittest.TestCase):
+    def test_short_study_keeps_complete_voice_and_original_animation_clock(self):
+        shot=study_shot(('Close','109','288'),450,4.32)
+        self.assertEqual(shot['end']-shot['start']+1,180)
+        # The first spoken sample still lands on animation frame 121.
+        self.assertAlmostEqual((121-shot['start'])/30,.4)
+        for request in (('Close','122','288'),('Close','109','249'),
+                        ('Close','0','288'),('Close','109','451'),
+                        ('Unknown','109','288')):
+            with self.subTest(request=request), self.assertRaises(ValueError):
+                study_shot(request,450,4.32)
+
     def test_replacing_cues_without_realignment_is_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)

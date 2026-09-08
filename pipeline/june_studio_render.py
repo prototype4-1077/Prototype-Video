@@ -21,6 +21,18 @@ FPS = 30
 INTRO_FRAMES = 120
 
 
+def study_shot(request, total_frames, voice_duration):
+    """Select a bounded art study while retaining the complete original take."""
+    camera, first, last = request
+    first, last = int(first), int(last)
+    if camera not in {'Close', 'Front', 'Wide'}:
+        raise ValueError('study camera must be Close, Front, or Wide')
+    voice_end = INTRO_FRAMES + math.ceil(voice_duration * FPS)
+    if not (1 <= first <= INTRO_FRAMES+1 and voice_end <= last <= total_frames):
+        raise ValueError('study range must be inside the animation and include the entire voice take')
+    return {'name': '01_likeness_study', 'camera': camera, 'start': first, 'end': last}
+
+
 def cue_weights(cues, seconds, transition=2/FPS):
     """Blend adjacent speech shapes, with a bounded neutral return at silence."""
     result={name:0.0 for name in 'ABCDEFGHX'}
@@ -156,6 +168,9 @@ def run(args):
     shots=[{'name':'01_entry','camera':'Wide','start':1,'end':120},
            {'name':'02_address','camera':'Close','start':121,'end':330},
            {'name':'03_reaction','camera':'Front','start':331,'end':total}]
+    study=getattr(args,'study',None)
+    if study:
+        shots=[study_shot(study,total,cues['metadata']['duration'])]
     caches=[];summary=[]
     status(out,'preparing',frame_count=total,voice_id=VOICE_ID)
     for shot in shots:
@@ -171,11 +186,11 @@ def run(args):
         job={**settings,'asset':str(asset),'cues':str(voice/'mouth-cues.json'),
              'voice_sha256':sha256(voice/'vo.mp3'),'cache_directory':str(cache),'identity':identity,'inputs':inputs,
              'progress_directory':str(out)}
-        if shot['name']=='01_entry':job['audit_output']=str(out/'studio-mechanics-report.json')
+        if shot is shots[0]:job['audit_output']=str(out/'studio-mechanics-report.json')
         if args.inspect:
             job['inspect_frames']=[(shot['start']+shot['end'])//2]
             hit=False
-        if shot['name']=='02_address':job['save_scene']=str(out/'june-speaking-scene.blend')
+        if shot['name']=='02_address' or study:job['save_scene']=str(out/'june-speaking-scene.blend')
         atomic_json(out/(shot['name']+'.json'),job)
         if not hit:
             status(out,'rendering',shot=shot['name'],cache_hit=False)
@@ -200,21 +215,24 @@ def run(args):
             try:os.link(cache/f'frame_{local:04d}.png',destination)
             except OSError:shutil.copy2(cache/f'frame_{local:04d}.png',destination)
     status(out,'assembling',frame_count=frame_number)
-    video=out/'June_Oxley_Studio_Development.mp4'
+    video=out/('June_Oxley_Likeness_Study.mp4' if study else 'June_Oxley_Studio_Development.mp4')
+    audio_offset=(INTRO_FRAMES-shots[0]['start']+1)/FPS
+    duration=frame_number/FPS
     subprocess.run(['ffmpeg','-v','error','-y','-framerate',str(FPS),'-i',str(sequence/'frame_%04d.png'),'-i',str(voice/'vo.mp3'),
-                    '-filter_complex',f'[1:a]adelay=4000:all=1,apad=whole_dur={total/FPS}[voice]',
+                    '-filter_complex',f'[1:a]adelay={round(audio_offset*1000)}:all=1,apad=whole_dur={duration}[voice]',
                     '-map','0:v','-map','[voice]','-c:v','libx264','-preset','medium','-crf','18','-pix_fmt','yuv420p',
-                    '-c:a','aac','-b:a','192k','-ac','2','-t',str(total/FPS),'-movflags','+faststart',str(video)],check=True)
+                    '-c:a','aac','-b:a','192k','-ac','2','-t',str(duration),'-movflags','+faststart',str(video)],check=True)
     subprocess.run(['ffmpeg','-v','error','-i',str(video),'-f','null','-'],check=True)
     probe=json.loads(subprocess.check_output(['ffprobe','-v','error','-count_frames','-show_streams','-show_format','-of','json',str(video)],text=True))
     stream=next(s for s in probe['streams'] if s['codec_type']=='video')
-    if int(stream['nb_read_frames'])!=total or stream['width']!=args.width or stream['height']!=args.width*9//16:
+    if int(stream['nb_read_frames'])!=frame_number or stream['width']!=args.width or stream['height']!=args.width*9//16:
         raise ValueError('decoded development video does not match its frame clock or dimensions')
     atomic_json(out/'studio-render-report.json',{'status':'development_review','production_approved':False,'voice_id':VOICE_ID,
-                 'voice_sha256':sha256(voice/'vo.mp3'),'audio_start_seconds':4,'voice_duration_seconds':cues['metadata']['duration'],
-                 'video_sha256':sha256(video),'frame_count':total,'fps':FPS,'duration_seconds':total/FPS,
+                 'voice_sha256':sha256(voice/'vo.mp3'),'audio_start_seconds':audio_offset,'voice_duration_seconds':cues['metadata']['duration'],
+                 'video_sha256':sha256(video),'frame_count':frame_number,'fps':FPS,'duration_seconds':duration,
+                 'study':bool(study),'animation_frame_count':total,
                  'width':args.width,'height':args.width*9//16,'shots':summary,'asset_sha256':sha256(asset),'decoded':True})
-    status(out,'completed',video=str(video),frame_count=total)
+    status(out,'completed',video=str(video),frame_count=frame_number)
 
 
 def main():
@@ -224,6 +242,8 @@ def main():
     parser.add_argument('--samples',type=int,default=8);parser.add_argument('--threads',type=int,default=4)
     parser.add_argument('--engine',choices=['CYCLES','BLENDER_EEVEE_NEXT'],default='CYCLES')
     parser.add_argument('--inspect',action='store_true')
+    parser.add_argument('--study',nargs=3,metavar=('CAMERA','FIRST','LAST'),
+                        help='Render one bounded development study, preserving the full voice take')
     argv=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else None
     args=parser.parse_args(argv)
     if args.blender_job:blender_job(args.blender_job)
