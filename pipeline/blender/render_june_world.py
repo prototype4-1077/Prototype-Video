@@ -5,7 +5,7 @@ The inherited procedural v8 mesh is explicitly a development asset. The proof
 reports evaluated bone/mesh evidence separately from unverified human quality.
 """
 from pathlib import Path
-import argparse, json, math, sys
+import argparse, hashlib, json, math, sys, time
 sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
 from pipeline.june_world_motion import sample, audit_evaluated, FRAMES, FPS, BEATS
 from pipeline.blender import render_vertical_slice as studio
@@ -20,6 +20,7 @@ def main():
     p.add_argument('--engine',choices=['CYCLES','BLENDER_WORKBENCH'],default='CYCLES')
     p.add_argument('--width',type=int,default=960)
     p.add_argument('--samples',type=int,default=16)
+    p.add_argument('--asset',choices=['v8','v9'],default='v8')
     p.add_argument('--animate',action='store_true')
     args=p.parse_args(sys.argv[sys.argv.index('--')+1:])
     out=Path(args.output_dir).resolve()
@@ -28,10 +29,21 @@ def main():
     if args.samples < 1:raise ValueError('samples must be positive')
     if any(not 1 <= int(v) <= FRAMES for v in args.frames.split(',') if v.strip()):raise ValueError('review frame outside 1..720')
     out.mkdir(parents=True,exist_ok=True)
+    started=time.monotonic()
+    print(f'Building {args.asset} movement audition',flush=True)
+    repo=Path(__file__).resolve().parents[2]
+    inputs=['pipeline/blender/render_june_world.py','pipeline/june_world_motion.py','pipeline/blender/render_vertical_slice.py']
+    if args.asset=='v9':inputs+=['pipeline/blender/june_hero_v9.py','pipeline/blender/june_anatomy_source.py',
+                               'concept/characters/assets/june_anatomy_cc0.json.gz']
+    source_hashes={name:hashlib.sha256((repo/name).read_bytes()).hexdigest() for name in inputs}
     studio._clear(bpy)
     mats=studio._make_materials(bpy,asset_major=8)
     studio._make_porch(bpy,mathutils,mats,FRAMES)
-    rig,mouth,face=studio._make_june(bpy,mathutils,mats,asset_major=8)
+    if args.asset=='v9':
+        from pipeline.blender import june_hero_v9
+        rig,mouth,face=june_hero_v9.build(bpy,mathutils,mats)
+    else:
+        rig,mouth,face=studio._make_june(bpy,mathutils,mats,asset_major=8)
     # Remove legacy staged duplicate props; this shot owns ONE mug throughout.
     for obj in list(bpy.data.objects):
         if obj.get('ce_prop_role') or obj.name.startswith('Performance_Table'):
@@ -122,6 +134,16 @@ def main():
                 if k.name!='Basis':k.value=0
     if mouth.data.shape_keys and mouth.data.shape_keys.key_blocks.get('X'):
         mouth.data.shape_keys.key_blocks['X'].value=1
+    # Control measurements have no dependency on skin, hair or cloth surfaces.
+    # Suspend only those display meshes while evaluating IK, real soles and prop
+    # transforms; restore every object's display state before visual inspection.
+    hidden=[]
+    for obj in bpy.data.objects:
+        measured=obj.name.startswith(('June_Boot_','World_Table_Leg_','World_Mug'))
+        if obj.type in {'MESH','CURVE'} and not measured and not obj.hide_viewport:
+            hidden.append(obj);obj.hide_viewport=True
+    bpy.context.view_layer.update()
+    print(f'Control audit: {FRAMES} frames; detailed art is restored for rendering',flush=True)
     report=[];grip_bind=None
     for f in range(1,FRAMES+1):
         scene.frame_set(f);s=sample(f)
@@ -155,6 +177,17 @@ def main():
         cam.location=(-4.7+.7*min(f/510,1),-9.6-.7*min(f/510,1),4.0)
         studio._look_at(cam,(0,-.65-.65*min(f/390,1),1.65),mathutils)
         cam.keyframe_insert('location',frame=f);cam.keyframe_insert('rotation_euler',frame=f)
+        if args.asset=='v9':
+            # The inherited gaze marker is fixed near the seated face. It cannot
+            # remain there when June walks forward and addresses this camera.
+            gaze=rig.pose.bones['gaze']
+            head_origin=(rig.matrix_world @ head.matrix).translation+Vector((0,0,.33))
+            forward=Matrix.Rotation(s['head_yaw']*1.45,3,'Z') @ Vector((0,-4,0))
+            t=max(0.,min(1.,(f-490)/60));t=t*t*(3-2*t)
+            aim=(head_origin+forward).lerp(cam.location,t)
+            gaze.location=gaze.bone.matrix_local.to_3x3().inverted() @ (aim-gaze.bone.head_local)
+            gaze.keyframe_insert('location',frame=f)
+            bpy.context.view_layer.update()
         row={'frame':f,'beat':s['beat'],'feet':{},'hand_target_error':{}}
         for side in ('L','R'):
             ankle=rig.matrix_world @ rig.pose.bones['shin.'+side].tail
@@ -174,13 +207,18 @@ def main():
         row['sole_min_z']={o.name:min(p.z for p in mesh_points(o)) for o in soles}
         row['mug_bind_error']=((hand_matrix @ grip_bind).translation-mug.matrix_world.translation).length if grip_bind else None
         report.append(row)
+        if f%60==0:print(f'Evaluated frame {f}/{FRAMES}; elapsed {time.monotonic()-started:.1f}s',flush=True)
+    for obj in hidden:obj.hide_viewport=False
+    bpy.context.view_layer.update()
     for action in bpy.data.actions:
         for fc in action.fcurves:
             for k in fc.keyframe_points:k.interpolation='LINEAR'
     audit=audit_evaluated(report,ground)
     evidence={'status':'DEVELOPMENT_MECHANICS_NOT_ART_APPROVED','fps':FPS,'frame_count':FRAMES,
-       'duration_seconds':FRAMES/FPS,'asset':'inherited_v8_2_procedural_3d',
+       'duration_seconds':FRAMES/FPS,'asset':'june_v9_development' if args.asset=='v9' else 'inherited_v8_2_procedural_3d',
        'audio':'silent_no_voice_substitution',**audit,'ground_height':ground,
+       'source_sha256':source_hashes,
+       'measurement_scope':'evaluated control rig, boot/sole meshes, table legs and mug; hair/cloth/skin visibility restored before renders',
        'human_art_approved':False,'human_motion_approved':False,
        'unverified':['chair hand contact','finger handle contact','identity match to approved artwork',
                      'limb deformation quality','performance at normal playback speed'],
