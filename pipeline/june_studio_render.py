@@ -33,6 +33,14 @@ def study_shot(request, total_frames, voice_duration):
     return {'name': '01_likeness_study', 'camera': camera, 'start': first, 'end': last}
 
 
+def study_chunks(shot, size):
+    if size < 1:
+        raise ValueError('chunk size must be positive')
+    return [{**shot,'name':shot['name']+f'_part_{index:02d}',
+             'start':start,'end':min(shot['end'],start+size-1)}
+            for index,start in enumerate(range(shot['start'],shot['end']+1,size),1)]
+
+
 def cue_weights(cues, seconds, transition=2/FPS):
     """Blend adjacent speech shapes, with a bounded neutral return at silence."""
     result={name:0.0 for name in 'ABCDEFGHX'}
@@ -169,9 +177,16 @@ def run(args):
            {'name':'02_address','camera':'Close','start':121,'end':330},
            {'name':'03_reaction','camera':'Front','start':331,'end':total}]
     study=getattr(args,'study',None)
+    chunk_frames=getattr(args,'chunk_frames',0)
+    max_new_chunks=getattr(args,'max_new_chunks',0)
+    if chunk_frames<0 or max_new_chunks<0:
+        raise ValueError('chunk limits cannot be negative')
+    if (chunk_frames and not study) or (max_new_chunks and (not chunk_frames or args.inspect)):
+        raise ValueError('bounded chunks require a speech study; max-new-chunks cannot be used with inspection')
     if study:
         shots=[study_shot(study,total,cues['metadata']['duration'])]
-    caches=[];summary=[]
+        if chunk_frames:shots=study_chunks(shots[0],chunk_frames)
+    caches=[];summary=[];new_chunks=0
     status(out,'preparing',frame_count=total,voice_id=VOICE_ID)
     for shot in shots:
         settings={**shot,'width':args.width,'height':args.width*9//16,'samples':args.samples,
@@ -193,6 +208,10 @@ def run(args):
         if shot['name']=='02_address' or study:job['save_scene']=str(out/'june-speaking-scene.blend')
         atomic_json(out/(shot['name']+'.json'),job)
         if not hit:
+            if max_new_chunks and new_chunks>=max_new_chunks:
+                status(out,'paused',completed_chunks=len(summary),total_chunks=len(shots),
+                       next_chunk=shot['name'],message='Rerun the identical command to continue verified chunks.')
+                return
             status(out,'rendering',shot=shot['name'],cache_hit=False)
             log=out/(shot['name']+'.log')
             command=[args.blender,'-b','-t',str(args.threads),'--python-exit-code','1','--python',str(Path(__file__).resolve()),'--','--blender-job',str(out/(shot['name']+'.json'))]
@@ -201,6 +220,7 @@ def run(args):
             except subprocess.CalledProcessError as error:
                 tail='\n'.join(log.read_text(errors='replace').splitlines()[-8:])
                 raise RuntimeError(f'{shot["name"]} failed with return code {error.returncode}; log: {log}\n{tail}') from error
+            new_chunks+=1
         summary.append({**shot,'identity':identity,'cache_hit':hit,'cache_directory':str(cache)})
         caches.append(cache)
     if args.inspect:
@@ -231,6 +251,7 @@ def run(args):
                  'voice_sha256':sha256(voice/'vo.mp3'),'audio_start_seconds':audio_offset,'voice_duration_seconds':cues['metadata']['duration'],
                  'video_sha256':sha256(video),'frame_count':frame_number,'fps':FPS,'duration_seconds':duration,
                  'study':bool(study),'animation_frame_count':total,
+                 'chunk_frames':chunk_frames,
                  'width':args.width,'height':args.width*9//16,'shots':summary,'asset_sha256':sha256(asset),'decoded':True})
     status(out,'completed',video=str(video),frame_count=frame_number)
 
@@ -244,6 +265,10 @@ def main():
     parser.add_argument('--inspect',action='store_true')
     parser.add_argument('--study',nargs=3,metavar=('CAMERA','FIRST','LAST'),
                         help='Render one bounded development study, preserving the full voice take')
+    parser.add_argument('--chunk-frames',type=int,default=0,
+                        help='Split a speech study into independently verified render chunks')
+    parser.add_argument('--max-new-chunks',type=int,default=0,
+                        help='Pause cleanly after this many new chunks; zero renders all pending chunks')
     argv=sys.argv[sys.argv.index('--')+1:] if '--' in sys.argv else None
     args=parser.parse_args(argv)
     if args.blender_job:blender_job(args.blender_job)

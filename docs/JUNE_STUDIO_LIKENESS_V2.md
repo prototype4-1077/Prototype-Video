@@ -77,6 +77,15 @@ reduction in wall time. The six-second study includes the unchanged 4.32-second
 Spuds recording beginning at 0.4 seconds. It does not truncate, stretch or change
 the pitch of the take. Omitting `--study` retains the original three-shot render.
 
+For a local worker that cannot reliably stay attached through a long render,
+add `--chunk-frames 40 --max-new-chunks 1` and repeat the identical command until
+`status.json` says `completed`. This study becomes five chunks of 40, 40, 40, 40
+and 20 frames. Each invocation writes a completed checksum receipt for its new
+chunk before pausing cleanly. Earlier verified chunks are reused, while a lost
+partial chunk is rebuilt. Assembly runs only after every chunk verifies.
+The scene survey still presents this as one continuous shot. Default rendering
+and the rule rejecting partial or corrupt caches are unchanged.
+
 Packaging creates a numbered HTML/JSON survey with unreviewed decisions. The
 editable scene includes the packed original audio and opens at the study's
 preview range, retaining the full performance timeline. The study is unscored
