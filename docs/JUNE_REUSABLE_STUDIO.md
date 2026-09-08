@@ -103,6 +103,26 @@ working graphics/EGL context. Software Eevee was grainier and slower here;
 there is no blanket promise that Eevee is faster on every machine. Use camera
 inspection (`--inspect`) before committing a whole sequence to higher quality.
 
+## Package the development review
+
+After rendering succeeds, create the required numbered scene survey and a
+portable review archive:
+
+```bash
+python3 -m pipeline.june_studio_package \
+  --render-dir build/june-studio-preview \
+  --asset build/june-studio-assets/june-studio.blend \
+  --voice-dir build/june-studio-voice \
+  --destination build/june-studio-review --blender blender
+```
+
+The package contains the movie, the three-scene HTML/JSON survey, inspection
+stills, asset and mechanics reports, and the editable Blender files. The
+speaking scene includes the packed original recording at timeline frame 121.
+Its active camera is the address view; the movie uses the three separately
+rendered camera shots. Survey decisions start unreviewed and never approve the
+character automatically.
+
 ## Bring in an external motion
 
 Download only a motion you have rights to use, using your own Adobe account if
