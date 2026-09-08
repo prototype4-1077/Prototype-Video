@@ -13,11 +13,13 @@ from pathlib import Path
 import subprocess
 import time
 import urllib.request
+import wave
 import zipfile
 
 REPO = Path(__file__).resolve().parents[1]
 MANIFEST = REPO / "concept/characters/june_studio_sources_v1.json"
 USER_AGENT = "JuneOxleyStudio/1.0 (Prototype-Video; https://github.com/prototype4-1077/Prototype-Video)"
+VOICE_ID = "NOpBlnGInO9m6vDvFkFC"
 
 
 def sha256(path):
@@ -129,15 +131,57 @@ def status(directory, stage, **details):
     print(json.dumps(value), flush=True)
 
 
+def preserved_voice(directory):
+    directory = Path(directory)
+    manifest = json.loads((directory / 'voiceover-manifest.json').read_text())
+    if manifest.get('voice_id') != VOICE_ID:
+        raise ValueError('June studio requires the established Spuds voice; no substitution is allowed')
+    checksums = dict((parts[1].lstrip('*'), parts[0]) for line in
+                     (directory / 'SHA256SUMS').read_text().splitlines()
+                     if len(parts := line.split()) == 2)
+    if sha256(directory / 'vo.mp3') != checksums.get('vo.mp3'):
+        raise ValueError('voice take does not match its preserved checksum')
+
+
+def prepare_voice(directory, rhubarb):
+    """Bind validated mouth cues to the exact preserved take and decoded WAV."""
+    from pipeline.cartoon_lipsync import run_rhubarb
+    directory = Path(directory).resolve()
+    preserved_voice(directory)
+    script = json.loads((directory / 'script.json').read_text())
+    dialogue = ' '.join(scene['text'] for scene in script['scenes'])
+    if not dialogue.strip():
+        raise ValueError('speech alignment requires the actual dialogue text')
+    wav = directory / 'dialogue.wav'
+    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(directory / 'vo.mp3'),
+                    '-ar', '48000', '-ac', '1', str(wav)], check=True)
+    cues = run_rhubarb(wav, directory / 'mouth-cues.json', dialogue=dialogue, rhubarb_bin=rhubarb)
+    with wave.open(str(wav)) as stream:
+        duration = stream.getnframes() / stream.getframerate()
+    if abs(duration - cues['metadata']['duration']) > .03:
+        raise ValueError('speech cue clock differs from decoded audio duration')
+    receipt = {'schema_version': 1, 'voice_id': VOICE_ID, 'duration_seconds': duration,
+               'rhubarb_sha256': sha256(rhubarb),
+               'files': {name: sha256(directory / name) for name in
+                         ('vo.mp3', 'dialogue.wav', 'mouth-cues.json', 'script.json')}}
+    atomic_json(directory / 'cue-source.json', receipt)
+    return receipt
+
+
 def main():
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command", required=True)
     install = sub.add_parser("bootstrap")
     install.add_argument("directory")
     install.add_argument("--assets-only", action="store_true")
+    voice = sub.add_parser("prepare-voice")
+    voice.add_argument("directory")
+    voice.add_argument("--rhubarb", required=True)
     args = parser.parse_args()
     if args.command == "bootstrap":
         bootstrap(args.directory, include_rhubarb=not args.assets_only)
+    elif args.command == "prepare-voice":
+        prepare_voice(args.directory, args.rhubarb)
 
 
 if __name__ == "__main__":
