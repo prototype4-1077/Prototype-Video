@@ -75,7 +75,7 @@ def sample(frame):
     return {'frame':frame,'beat':next(n for a,b,n in BEATS if a<=frame<=b),
             'pelvis_offset':body,'feet':feet,'hand.L':hand_l,'hand.R':hand_r,
             'grip':ease((frame-435)/25), 'mug_attached':frame>=465,
-            'head_yaw':math.radians(18)*ease((frame-500)/45),
+            'head_yaw':math.radians(-18)*ease((frame-500)/45),
             'chuckle':(.008*math.sin((frame-600)*math.pi/9)*math.sin(math.pi*(frame-600)/45)**2
                        if 600<frame<645 else 0.)}
 

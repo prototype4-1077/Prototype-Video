@@ -30,6 +30,9 @@ class WorldMotionTests(unittest.TestCase):
         self.assertEqual(sample(450)['hand.R'],sample(465)['hand.R'])
         self.assertGreater(sample(510)['hand.R'][2],sample(465)['hand.R'][2])
 
+    def test_address_turns_toward_viewer_left_camera(self):
+        self.assertLess(sample(555)['head_yaw'],0)
+
     def test_final_hold(self):
         a,b=sample(690),sample(720)
         for key in ('pelvis_offset','feet','hand.R','hand.L','chuckle','head_yaw'):

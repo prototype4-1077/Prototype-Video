@@ -28,7 +28,7 @@ The earlier v8.2 procedural mesh is reused to expose movement/asset problems.
 
 ## Mechanical evidence
 
-13 focused tests pass, including injected slide, penetration, missing evidence,
+14 focused tests pass, including injected slide, penetration, missing evidence,
 nonfinite measurements, furniture collision and pickup teleport failures.
 
 
