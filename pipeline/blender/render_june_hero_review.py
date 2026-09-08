@@ -82,8 +82,17 @@ def main():
     for name in views:
         location,target,scale=positions[name]
         camera.location=location;camera.data.ortho_scale=scale;studio._look_at(camera,target,mathutils)
+        backdrop=bpy.data.objects['Review_Backdrop']
+        backdrop.hide_render=name=='back';backdrop.hide_viewport=name=='back'
+        bpy.context.view_layer.update()
+        direction=(Vector(target)-camera.location).normalized()
+        hit,point,normal,index,visible_object,matrix=scene.ray_cast(bpy.context.evaluated_depsgraph_get(),camera.location,direction)
+        if not hit or not visible_object.name.startswith('June_'):
+            raise RuntimeError(f'{name} view is not centered on the character; refusing an occluded review')
         scene.render.filepath=str(out/(name+'.png'))
         bpy.ops.render.render(write_still=True)
+    bpy.data.objects['Review_Backdrop'].hide_render=False
+    bpy.data.objects['Review_Backdrop'].hide_viewport=False
     camera.location=positions['three_quarter'][0];camera.data.ortho_scale=1.42
     studio._look_at(camera,positions['three_quarter'][1],mathutils)
     bpy.ops.wm.save_as_mainfile(filepath=str(out/'june-character-v9.blend'))
