@@ -1,0 +1,36 @@
+name: June studio voice benchmark
+on:
+  push:
+    branches: [agent/june-reusable-studio-v1]
+    paths: [examples/june-studio-voice-benchmark.json]
+  workflow_dispatch:
+permissions:
+  contents: write
+concurrency:
+  group: june-studio-voice-benchmark-v1
+  cancel-in-progress: false
+jobs:
+  voice:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - name: Preserve or generate the exact Spuds take
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p build/june-studio-voice-benchmark-v1
+          if gh release view june-studio-voice-benchmark-v1 >/dev/null 2>&1; then
+            gh release download june-studio-voice-benchmark-v1 --dir build/june-studio-voice-benchmark-v1
+          else
+            cp examples/june-studio-voice-benchmark.json build/june-studio-voice-benchmark-v1/script.json
+            python -m pipeline.tts build/june-studio-voice-benchmark-v1
+            cd build/june-studio-voice-benchmark-v1
+            sha256sum vo.mp3 > SHA256SUMS
+            gh release create june-studio-voice-benchmark-v1 vo.mp3 script.json voiceover-manifest.json SHA256SUMS --prerelease --title 'June studio Spuds voice benchmark v1' --notes 'Development voice take for the reusable 3D studio. This is not an approved episode or an approved casting update.'
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: june-studio-spuds-voice-v1
+          path: build/june-studio-voice-benchmark-v1/
