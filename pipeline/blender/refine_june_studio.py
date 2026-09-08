@@ -281,8 +281,8 @@ def wardrobe_details(bpy, rig):
     neck=bpy.data.objects['June_Studio_Neck_Interior']
     transform_geometry(neck,lambda p:Vector((p.x*1.22,.014+(p.y-.014)*1.22,p.z)))
     stand=hero.loft(bpy,'June_V2_Shirt_Collar_Stand',
-        ((2.16,.205,.141,.014),(2.22,.154,.122,.014),(2.29,.117,.115,.014)),
-        bpy.data.materials['June v9 plaid'],segments=48,rows=20,thickness=.004)
+        ((2.16,.205,.141,.014),(2.197,.154,.122,.014),(2.24,.117,.115,.014)),
+        bpy.data.materials['June v9 plaid'],arc=(.40,math.tau-.40),segments=48,rows=20,thickness=.004)
     base._parent_to_bone(stand,rig,'torso')
     # Gentle compression folds, confined to elbow and lower jacket regions.
     for v in coat.data.vertices:
@@ -363,6 +363,16 @@ def main():
     rig.pose.bones['head'].location=rig.data.bones['head'].matrix_local.to_3x3().inverted() @ mathutils.Vector((0,0,-.072))
     rig['ce_asset_version']='studio-v2-development';rig['ce_dialogue_ready']=False
     scene=bpy.context.scene;scene['ce_production_approved']=False
+    # Newly authored parts must travel with the character when its collection
+    # is appended into another shot, rather than remaining in the root scene.
+    character_collection=bpy.data.collections['June_Character_Studio_v1']
+    character_collection.name='June_Character_Studio_v2'
+    set_collection=bpy.data.collections['June_Porch_Studio_v1']
+    for obj in list(scene.objects):
+        collection=character_collection if obj.name.startswith('June_') and obj.type not in {'CAMERA','LIGHT'} else set_collection
+        if collection not in obj.users_collection:
+            for previous in list(obj.users_collection):previous.objects.unlink(obj)
+            collection.objects.link(obj)
     scene.camera=bpy.data.objects['June_Camera_Close'];studio.aim_control(rig,'gaze',scene.camera.location)
     scene.frame_set(1);scene.render.resolution_x=args.width;scene.render.resolution_y=args.width*9//16
     scene.cycles.samples=args.samples;scene.render.image_settings.file_format='PNG'
@@ -370,7 +380,8 @@ def main():
     bpy.ops.wm.save_as_mainfile(filepath=str(output),compress=True)
     result={**receipt,'asset_version':'studio-v2','asset_sha256':sha256(output),
             'source_asset_sha256':sha256(source),'production_approved':False,'dialogue_quality_approved':False,
-            'refinement_sha256':executed_refinement_sha,'blender_version':bpy.app.version_string}
+            'refinement_sha256':executed_refinement_sha,'blender_version':bpy.app.version_string,
+            'character_collection':character_collection.name,'set_collection':set_collection.name}
     atomic_json(output.with_suffix('.json'),result)
     if args.review:
         for label,camera,values in (

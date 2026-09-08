@@ -14,6 +14,8 @@ and is not a production-approved character or episode.
   face together throughout the inherited actions.
 - Swept crown strands, lifted scalp strands, fuller brows and fine eye crinkles
   add actual geometry. The new facial curves follow the stored shape keys.
+- All added character parts belong to `June_Character_Studio_v2`, so they travel
+  together when that collection is appended into a new Blender scene.
 - Skin has a more varied complexion, cheek/nose warmth, fine surface detail,
   and restrained subsurface scattering. Rest-coordinate attributes keep the
   texture attached to the deforming mesh.
