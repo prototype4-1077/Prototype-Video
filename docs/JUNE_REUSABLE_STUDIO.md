@@ -16,7 +16,7 @@ likeness and finish targets. Passing a mechanical check does not approve the art
 | Rhubarb 1.14.0 | Derive speech timing from the final voice recording | Timing is an animator's starting pass, not a replacement for phoneme and acting review |
 | Poly Haven materials and lighting | Reuse a weathered wood surface and daylight environment, packed inside the scene | Two pinned CC0 assets; no recurring live asset search is required |
 | Local Mixamo-style FBX intake | Preserve a licensed source motion as a separate Blender action library | No Adobe login, download, or automatic retargeting to June; contact cleanup remains necessary |
-| Per-shot frame cache | A camera or performance change invalidates the affected cache; unchanged completed shots can be reused | Incomplete or corrupt frame sequences are never accepted as completed shots |
+| Per-shot frame cache | Reuse completed shots when all of their recorded inputs are identical | The packed asset and shared renderer are whole-file inputs: editing either invalidates every dependent shot. Incomplete or corrupt sequences are rejected |
 | Real progress and failure reports | See actual rendered frames and the failing shot/log | A stage without a completed frame is not reported as a successful render |
 
 No new subscription is required for these tools. The benchmark uses the existing
@@ -143,6 +143,10 @@ it, or add it to June's show library automatically. Retarget body scale, pin
 contacts, clean hands, and review acting before publishing a reusable June action.
 
 ## Next improvements, in order
+
+The first opt-in refinement and the shorter speech-study workflow are documented
+in [JUNE_STUDIO_LIKENESS_V2.md](JUNE_STUDIO_LIKENESS_V2.md). The approved artwork
+remains the target; the new study does not establish final likeness or acting approval.
 
 1. Refine the saved master face against the approved turnaround: eye size and
    lids, cheek and nose planes, silhouette, smile, hairline, beard shape, and

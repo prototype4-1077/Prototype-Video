@@ -4,7 +4,7 @@ import tempfile
 import unittest
 
 from pipeline.june_studio import input_identity, complete_cache, cache_valid, sha256
-from pipeline.june_studio_render import cue_weights, check_voice, VOICE_ID
+from pipeline.june_studio_render import cue_weights, check_voice, study_shot, study_chunks, VOICE_ID
 from pipeline.blender.june_studio_character import load_targets, EXPRESSIONS
 
 
@@ -47,6 +47,27 @@ class StudioCacheTests(unittest.TestCase):
 
 
 class StudioSpeechTests(unittest.TestCase):
+    def test_worker_chunks_cover_the_study_once_without_changing_global_frames(self):
+        shot=study_shot(('Close','109','288'),450,4.32)
+        chunks=study_chunks(shot,40)
+        emitted=[frame for c in chunks for frame in range(c['start'],c['end']+1)]
+        self.assertEqual(emitted,list(range(109,289)))
+        self.assertEqual([c['end']-c['start']+1 for c in chunks],[40,40,40,40,20])
+        self.assertEqual(len({c['name'] for c in chunks}),5)
+        self.assertTrue(all(c['camera']=='Close' for c in chunks))
+        with self.assertRaises(ValueError):study_chunks(shot,0)
+
+    def test_short_study_keeps_complete_voice_and_original_animation_clock(self):
+        shot=study_shot(('Close','109','288'),450,4.32)
+        self.assertEqual(shot['end']-shot['start']+1,180)
+        # The first spoken sample still lands on animation frame 121.
+        self.assertAlmostEqual((121-shot['start'])/30,.4)
+        for request in (('Close','122','288'),('Close','109','249'),
+                        ('Close','0','288'),('Close','109','451'),
+                        ('Unknown','109','288')):
+            with self.subTest(request=request), self.assertRaises(ValueError):
+                study_shot(request,450,4.32)
+
     def test_replacing_cues_without_realignment_is_rejected(self):
         with tempfile.TemporaryDirectory() as tmp:
             root=Path(tmp)
