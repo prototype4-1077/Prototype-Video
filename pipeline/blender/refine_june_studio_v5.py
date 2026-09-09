@@ -354,6 +354,7 @@ def main():
     output.parent.mkdir(parents=True,exist_ok=True)
     bpy.ops.wm.save_as_mainfile(filepath=str(output),compress=True)
     result={**receipt,'asset_version':'studio-v5','asset_sha256':sha256(output),
+            'cameras':[*receipt['cameras'],'Body'],
             'source_asset_sha256':sha256(source),'refinement_sha256':sha256(__file__),
             'body_pose_sha256':sha256(studio.__file__),'character_collection':collection.name,
             'fabric_report':fabric,'hand_report':hands,'new_boot_support_height':.1675,
