@@ -21,6 +21,14 @@ FPS = 30
 INTRO_FRAMES = 120
 
 
+def walk_study_shots(last, total_frames, voice_duration):
+    """Keep the complete entrance and take, with one continuous acting clock."""
+    last = int(last)
+    study_shot(('Close', 1, last), total_frames, voice_duration)
+    return [{'name': '01_entry', 'camera': 'Wide', 'start': 1, 'end': INTRO_FRAMES},
+            {'name': '02_address', 'camera': 'Close', 'start': INTRO_FRAMES+1, 'end': last}]
+
+
 def study_shot(request, total_frames, voice_duration):
     """Select a bounded art study while retaining the complete original take."""
     camera, first, last = request
@@ -91,6 +99,7 @@ def animate_scene(bpy,job):
     keys.animation_data.action=bpy.data.actions.new('June_Spuds_Facial_Performance')
     cues=json.loads(Path(job['cues']).read_text())['mouthCues']
     camera=bpy.data.objects['June_Camera_'+job['camera']]
+    attention_camera=bpy.data.objects['June_Camera_'+job.get('performance_camera',job['camera'])]
     # Keyframe construction does not evaluate the expensive display meshes.
     for frame in range(1,frames+1):
         seconds=(frame-1-INTRO_FRAMES)/FPS
@@ -109,17 +118,22 @@ def animate_scene(bpy,job):
         attention=max(0.,min(1.,(frame-112)/25));attention=attention*attention*(3-2*attention)
         # Body stays planted while head and eyes lead the thought and settle.
         head_bone=rig.pose.bones['head']
-        yaw=math.atan2(camera.location.x-.035,-(camera.location.y+1.06))
+        yaw=math.atan2(attention_camera.location.x-.035,-(attention_camera.location.y+1.06))
         head_bone.rotation_euler.y=yaw*.52*attention
         head_bone.rotation_euler.x=.017*math.sin((frame-125)*.04)*math.exp(-((frame-185)/110)**2)
         head_bone.rotation_euler.z=.012*math.exp(-((frame-205)/45)**2)
         head_bone.keyframe_insert('rotation_euler',frame=frame)
-        aim_control(rig,'gaze',camera.location)
+        aim_control(rig,'gaze',attention_camera.location)
         rig.pose.bones['gaze'].keyframe_insert('location',frame=frame)
     for action in (acting,keys.animation_data.action):
         for curve in action.fcurves:
             for key in curve.keyframe_points:key.interpolation='LINEAR'
     scene.camera=camera;scene.frame_start=1;scene.frame_end=frames;scene.render.fps=FPS
+    if job.get('review_shots'):
+        scene.timeline_markers.clear()
+        for shot in job['review_shots']:
+            marker=scene.timeline_markers.new(shot['name'],frame=shot['start'])
+            marker.camera=bpy.data.objects['June_Camera_'+shot['camera']]
     scene.render.resolution_x=job['width'];scene.render.resolution_y=job['height'];scene.render.resolution_percentage=100
     scene.render.engine=job['engine'];scene.cycles.samples=job['samples'];scene.cycles.use_denoising=True
     if job['engine']=='BLENDER_EEVEE_NEXT':scene.eevee.taa_render_samples=job['samples']
@@ -177,21 +191,31 @@ def run(args):
            {'name':'02_address','camera':'Close','start':121,'end':330},
            {'name':'03_reaction','camera':'Front','start':331,'end':total}]
     study=getattr(args,'study',None)
+    walk_study=getattr(args,'walk_study',None)
+    if study and walk_study:
+        raise ValueError('choose either a single-camera study or a walking study')
     chunk_frames=getattr(args,'chunk_frames',0)
     max_new_chunks=getattr(args,'max_new_chunks',0)
     if chunk_frames<0 or max_new_chunks<0:
         raise ValueError('chunk limits cannot be negative')
-    if (chunk_frames and not study) or (max_new_chunks and (not chunk_frames or args.inspect)):
+    if (chunk_frames and not (study or walk_study)) or (max_new_chunks and (not chunk_frames or args.inspect)):
         raise ValueError('bounded chunks require a speech study; max-new-chunks cannot be used with inspection')
     if study:
         shots=[study_shot(study,total,cues['metadata']['duration'])]
-        if chunk_frames:shots=study_chunks(shots[0],chunk_frames)
+    if walk_study:
+        shots=walk_study_shots(walk_study,total,cues['metadata']['duration'])
+    review_shots=[dict(shot) for shot in shots]
+    study=bool(study or walk_study)
+    if chunk_frames:
+        shots=[part for shot in shots for part in study_chunks(shot,chunk_frames)]
     caches=[];summary=[];new_chunks=0
     status(out,'preparing',frame_count=total,voice_id=VOICE_ID)
     for shot in shots:
         settings={**shot,'width':args.width,'height':args.width*9//16,'samples':args.samples,
                   'fps':FPS,'total_frames':total,'engine':args.engine,'blender_version':receipt['blender_version'],
                   'blender_runtime':runtime}
+        if walk_study:
+            settings.update(performance_camera='Close',review_shots=review_shots)
         files={'asset':asset,'renderer':Path(__file__),'body_pose_code':REPO/'pipeline/blender/june_studio_assets.py',
                'speech_clock':REPO/'pipeline/cartoon_lipsync.py','audio':voice/'vo.mp3','cues':voice/'mouth-cues.json',
                'utilities':REPO/'pipeline/june_studio.py','audit':REPO/'pipeline/blender/audit_june_studio.py'}
@@ -250,7 +274,7 @@ def run(args):
     atomic_json(out/'studio-render-report.json',{'status':'development_review','production_approved':False,'voice_id':VOICE_ID,
                  'voice_sha256':sha256(voice/'vo.mp3'),'audio_start_seconds':audio_offset,'voice_duration_seconds':cues['metadata']['duration'],
                  'video_sha256':sha256(video),'frame_count':frame_number,'fps':FPS,'duration_seconds':duration,
-                 'study':bool(study),'animation_frame_count':total,
+                 'study':bool(study),'walk_study':bool(walk_study),'review_shots':review_shots,'animation_frame_count':total,
                  'chunk_frames':chunk_frames,
                  'width':args.width,'height':args.width*9//16,'shots':summary,'asset_sha256':sha256(asset),'decoded':True})
     status(out,'completed',video=str(video),frame_count=frame_number)
@@ -265,6 +289,8 @@ def main():
     parser.add_argument('--inspect',action='store_true')
     parser.add_argument('--study',nargs=3,metavar=('CAMERA','FIRST','LAST'),
                         help='Render one bounded development study, preserving the full voice take')
+    parser.add_argument('--walk-study',type=int,metavar='LAST',
+                        help='Render the full entrance and a close speaking shot through LAST')
     parser.add_argument('--chunk-frames',type=int,default=0,
                         help='Split a speech study into independently verified render chunks')
     parser.add_argument('--max-new-chunks',type=int,default=0,
