@@ -33,8 +33,8 @@ def study_shot(request, total_frames, voice_duration):
     """Select a bounded art study while retaining the complete original take."""
     camera, first, last = request
     first, last = int(first), int(last)
-    if camera not in {'Close', 'Front', 'Wide'}:
-        raise ValueError('study camera must be Close, Front, or Wide')
+    if camera not in {'Close', 'Front', 'Wide', 'Body'}:
+        raise ValueError('study camera must be Close, Front, Wide, or Body')
     voice_end = INTRO_FRAMES + math.ceil(voice_duration * FPS)
     if not (1 <= first <= INTRO_FRAMES+1 and voice_end <= last <= total_frames):
         raise ValueError('study range must be inside the animation and include the entire voice take')

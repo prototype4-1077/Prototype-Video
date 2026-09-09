@@ -57,8 +57,10 @@ def body_pose(rig, source_frame=270, gesture='listen', amount=0):
         aim_control(rig,'hand_ik.'+side,hand)
         for digit in range(5):
             names=(f'finger.{digit}.{side}',f'finger_tip.{digit}.{side}') if digit<4 else ('thumb.'+side,'thumb_tip.'+side)
-            for name in names:
-                rig.pose.bones[name].rotation_euler.x=math.radians(8 if digit<4 else 12)
+            relaxed=rig.get('ce_finger_relax_degrees', (8,8,8,8,12))[digit]
+            distal=rig.get('ce_finger_distal_fraction', 1.)
+            for index,name in enumerate(names):
+                rig.pose.bones[name].rotation_euler.x=math.radians(relaxed*(distal if index else 1.))
     head=rig.pose.bones['head'];head.rotation_euler=(0,0,0)
     torso=rig.pose.bones['torso'];torso.rotation_euler=(0,0,0)
     if gesture=='skeptical':head.rotation_euler.z=.045*amount;head.rotation_euler.y=.08*amount

@@ -82,6 +82,8 @@ class StudioSpeechTests(unittest.TestCase):
         self.assertEqual(shot['end']-shot['start']+1,180)
         # The first spoken sample still lands on animation frame 121.
         self.assertAlmostEqual((121-shot['start'])/30,.4)
+        body=study_shot(('Body','109','288'),450,4.32)
+        self.assertEqual((body['camera'],body['start'],body['end']),('Body',109,288))
         for request in (('Close','122','288'),('Close','109','249'),
                         ('Close','0','288'),('Close','109','451'),
                         ('Unknown','109','288')):
