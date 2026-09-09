@@ -2,6 +2,7 @@
 import argparse
 import copy
 import html
+import hashlib
 import json
 from pathlib import Path
 import shutil
@@ -13,6 +14,14 @@ sys.path.insert(0,str(Path(__file__).resolve().parents[1]))
 from pipeline import review
 from pipeline.june_studio import atomic_json, sha256
 from pipeline.june_studio_render import check_voice
+
+
+def review_identity(receipt, report):
+    """Scope saved audience choices to the exact model, movie and voice take."""
+    identity={name: report[name] for name in ('asset_sha256','video_sha256','voice_sha256')}
+    digest=hashlib.sha256(json.dumps(identity,sort_keys=True).encode()).hexdigest()[:16]
+    version=receipt.get('asset_version','studio-development')
+    return f'june-{version}-{digest}',identity
 
 
 def package(render_dir, asset, voice_dir, destination, blender='blender'):
@@ -44,12 +53,25 @@ def package(render_dir, asset, voice_dir, destination, blender='blender'):
         script['scenes']=[{'start':0,'duration':report['duration_seconds'],'text':dialogue,
             'query':'June speaks the complete preserved Spuds line in the refined, reusable 3D character.',
             'rationale':'Check likeness, hair silhouette, eye closure, speech and beard deformation, and garment detail in motion.'}]
+    if report.get('walk_study'):
+        script['scenes']=[
+            {'start':0,'duration':4,'text':'',
+             'query':'June takes two steps across the porch and turns his attention toward the audience.',
+             'rationale':'Check actual walking, sole contact, weight transfer and silhouette.'},
+            {'start':4,'duration':report['duration_seconds']-4,'text':dialogue,
+             'query':'The same June addresses the audience, speaks the preserved Spuds line and settles.',
+             'rationale':'Check continuity across the camera cut, gaze-dependent blinks, mouth and beard motion.'}]
+    receipt=json.loads(asset.with_suffix('.json').read_text())
+    script['slug'],identity=review_identity(receipt,report)
+    script['title']='June Oxley — '+receipt.get('asset_version','Studio')+' Development Review'
+    script.update(identity)
     atomic_json(out/'script.json',script)
     payload={'schema_version':review.SCHEMA_VERSION,'generated_at':review._now(),
              'slug':script['slug'],'title':script['title'],'genre':'3D development review',
              'script_fingerprint':review._fingerprint(script),'video_file':video.name,
              'development_only':True,'production_approved':False,'scenes':[],
              'overall':{'decision':'unreviewed','comments':''}}
+    payload.update(identity)
     for index,scene in enumerate(script['scenes']):
         preview=review._preview_data_uri(str(video),scene)
         if not preview:raise ValueError('missing rendered preview for scene '+str(index+1))

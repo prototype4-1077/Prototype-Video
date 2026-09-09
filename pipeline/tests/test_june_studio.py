@@ -4,7 +4,8 @@ import tempfile
 import unittest
 
 from pipeline.june_studio import input_identity, complete_cache, cache_valid, sha256
-from pipeline.june_studio_render import cue_weights, check_voice, study_shot, study_chunks, VOICE_ID
+from pipeline.june_studio_render import cue_weights, check_voice, study_shot, study_chunks, walk_study_shots, VOICE_ID
+from pipeline.june_studio_package import review_identity
 from pipeline.blender.june_studio_character import load_targets, EXPRESSIONS
 
 
@@ -47,6 +48,25 @@ class StudioCacheTests(unittest.TestCase):
 
 
 class StudioSpeechTests(unittest.TestCase):
+    def test_walking_study_preserves_entry_cut_and_entire_take(self):
+        shots=walk_study_shots(300,450,4.32)
+        chunks=[part for shot in shots for part in study_chunks(shot,40)]
+        self.assertEqual([f for c in chunks for f in range(c['start'],c['end']+1)],list(range(1,301)))
+        self.assertEqual([(s['camera'],s['start'],s['end']) for s in shots],
+                         [('Wide',1,120),('Close',121,300)])
+        self.assertEqual(len({c['name'] for c in chunks}),len(chunks))
+        for end in (120,249,451):
+            with self.assertRaises(ValueError):walk_study_shots(end,450,4.32)
+
+    def test_review_decisions_cannot_carry_across_different_model_movie_or_take(self):
+        report={'asset_sha256':'asset A','video_sha256':'movie A','voice_sha256':'take A'}
+        receipt={'asset_version':'studio-v4'}
+        original,_=review_identity(receipt,report)
+        self.assertEqual(review_identity(receipt,dict(report))[0],original)
+        for name in report:
+            changed={**report,name:'different bytes'}
+            self.assertNotEqual(review_identity(receipt,changed)[0],original)
+
     def test_worker_chunks_cover_the_study_once_without_changing_global_frames(self):
         shot=study_shot(('Close','109','288'),450,4.32)
         chunks=study_chunks(shot,40)
