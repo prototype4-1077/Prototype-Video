@@ -82,6 +82,12 @@ def package(render_dir, asset, voice_dir, destination, blender='blender'):
     atomic_json(out/'scene-review.json',metadata)
     embedded=json.dumps(payload,ensure_ascii=True).replace('</','<\\/')
     page=review.HTML_TEMPLATE.replace('__TITLE__',html.escape(payload['title'])).replace('__REVIEW_JSON__',embedded)
+    # The studio is landscape. Keep its whole frame legible in the review form.
+    page=page.replace('</style>', '''
+.scene {grid-template-columns:minmax(300px,.9fr) minmax(0,1fr);}
+.preview {min-height:0;aspect-ratio:16/9;align-self:start;}
+@media(max-width:760px){.scene{grid-template-columns:1fr;}}
+</style>''')
     (out/'scene-review.html').write_text(page)
     copies={video:out/video.name,asset:out/'june-studio.blend',asset.with_suffix('.json'):out/'june-studio.json',
             render/'june-speaking-scene.blend':out/'june-speaking-scene.blend',
