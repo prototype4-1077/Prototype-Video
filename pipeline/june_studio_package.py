@@ -111,7 +111,7 @@ def package(render_dir, asset, voice_dir, destination, blender='blender'):
         'Open scene-review.html to review the numbered shots and export comments.\n'
         f'This is a {report["duration_seconds"]:g}-second {report["width"]}x{report["height"]}, {report["fps"]} fps development preview, not an approved episode.\n'
         f'The original Spuds voice begins at {report["audio_start_seconds"]:g} seconds; there is no score in this test.\n\n'
-        'june-studio.blend contains the packed character, porch, three cameras, eight\n'
+        'june-studio.blend contains the packed character, porch, study cameras, eight\n'
         'body clips, and fifteen facial pose assets. june-speaking-scene.blend contains\n'
         'the editable performance timeline and packed Spuds recording; its active\n'
         'camera is the address/study shot. The voice plays from timeline frame 121.\n'
