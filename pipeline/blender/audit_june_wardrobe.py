@@ -30,6 +30,30 @@ def facial_signature(bpy):
     return digest.hexdigest()
 
 
+def projected_mesh_bounds(bpy,scene,objects):
+    """Project evaluated vertices; curve boxes include unused shape-key extents."""
+    import numpy as np
+    depsgraph=bpy.context.evaluated_depsgraph_get()
+    camera=scene.camera
+    projection=camera.calc_matrix_camera(depsgraph,x=scene.render.resolution_x,
+        y=scene.render.resolution_y,scale_x=scene.render.pixel_aspect_x,scale_y=scene.render.pixel_aspect_y)
+    view=projection@camera.matrix_world.inverted()
+    bounds=[1.,0.,1.,0.]
+    for obj in objects:
+        ev=obj.evaluated_get(depsgraph);mesh=ev.to_mesh()
+        points=np.empty((len(mesh.vertices),3),dtype=np.float32)
+        mesh.vertices.foreach_get('co',points.ravel())
+        matrix=np.array(view@ev.matrix_world,dtype=np.float64)
+        clip=points@matrix[:,:3].T+matrix[:,3]
+        ev.to_mesh_clear()
+        if not np.isfinite(clip).all() or (clip[:,3]<=0).any():
+            raise ValueError('character framing includes invalid or behind-camera geometry')
+        xy=.5+.5*clip[:,:2]/clip[:,3,None]
+        bounds=[min(bounds[0],float(xy[:,0].min())),max(bounds[1],float(xy[:,0].max())),
+                min(bounds[2],float(xy[:,1].min())),max(bounds[3],float(xy[:,1].max()))]
+    return bounds
+
+
 def audit(bpy,asset,voice,output,source):
     from pipeline.june_studio_render import animate_scene
     from pipeline.blender.audit_june_studio import audit as mechanics
@@ -82,8 +106,6 @@ def audit(bpy,asset,voice,output,source):
     geometry=[];poses=(1,35,60,98,136,191,218,253,300,450)
     relevant=[bpy.data.objects['June_Hand_'+s] for s in ('L','R')]
     relevant += [o for o in bpy.data.objects if o.name.startswith('June_V5_') or o.name.startswith('June_Boot_')]
-    from mathutils import Vector
-    from bpy_extras.object_utils import world_to_camera_view
     framing=[bpy.data.objects[n] for n in ('June_Head','June_Studio_Scalp',
              'June_V3_Swept_Clumps_0','June_V3_Swept_Clumps_1','June_V3_Swept_Clumps_2',
              'June_Boot_Sole_L','June_Boot_Sole_R','June_Continuous_Coat')]
@@ -98,11 +120,7 @@ def audit(bpy,asset,voice,output,source):
         # The body and NLA actions must keep the fitted hand size and rest pose.
         fingers=[math.degrees(rig.pose.bones[f'finger.{n}.L'].rotation_euler.x) for n in range(4)]
         scales=list(rig.pose.bones['hand.L'].scale)
-        points=[]
-        for obj in framing:
-            ev=obj.evaluated_get(bpy.context.evaluated_depsgraph_get())
-            points.extend(world_to_camera_view(scene,scene.camera,ev.matrix_world@Vector(p)) for p in ev.bound_box)
-        bounds=[min(p.x for p in points),max(p.x for p in points),min(p.y for p in points),max(p.y for p in points)]
+        bounds=projected_mesh_bounds(bpy,scene,framing)
         geometry.append({'frame':frame,'nonfinite_vertices':nonfinite,'left_hand_scale':scales,
                          'left_proximal_curl_degrees':fingers,'body_camera_bounds':bounds})
     motion=mechanics(bpy,output.with_name('studio-mechanics-report.json'))
@@ -115,6 +133,7 @@ def audit(bpy,asset,voice,output,source):
         'object_count':len(objects),'driver_targets':driver_targets,'missing_dependencies':missing,'images':images,
         'append_pass':append_pass,'detail_weights':detail_weights,'sampled_poses':geometry,
         'body_camera_framing_pass':framing_pass,
+        'framing_measurement':'evaluated head, groom, coat and sole vertices; 2 percent margin at ten declared poses',
         'v4_facial_geometry_preserved':face_preserved,'facial_geometry_sha256':original_face,
         'mechanics_pass':motion['mechanics_pass'],'production_approved':False,'dialogue_quality_approved':False,
         'wardrobe_checks_pass':append_pass and pose_pass and framing_pass and face_preserved and motion['mechanics_pass'] and bool(detail_weights) and all(r['maximum_weight_sum_error']<1e-5 for r in detail_weights)}

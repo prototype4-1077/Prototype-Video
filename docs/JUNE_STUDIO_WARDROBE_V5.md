@@ -54,6 +54,15 @@ scale/curl, and all 450 frames of rig/sole contact. It does not prove absence of
 all cloth intersections or approve the artwork. Inspect the rendered walk,
 gesture and close detail views as well.
 
+The saved v5 asset passes: 127 character objects, 245 internal driver targets,
+eight normalized weighted trim meshes, unchanged stored v4 facial geometry,
+and all 450 rig/contact frames. The largest planted-sole height error is below
+0.000001 scene units. At the ten sampled poses, the head, groom, coat and sole
+vertices stay within a 2% camera margin. Hair-curve bounding boxes include unused
+shape extents; the framing audit therefore projects actual evaluated vertices.
+A regression test retains the oversized-box case. The focused suite passes 23
+tests. These are technical results, not an art-quality rating.
+
 ## Short full-body motion study
 
 The study covers animation frames 109–270: 5.4 seconds at 30 fps. It shows the
