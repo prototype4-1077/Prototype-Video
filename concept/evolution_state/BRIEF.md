@@ -1,6 +1,6 @@
 # Perpetual Frontier Brief
 
-_Cycle: 2026-09-07 · Records: 125 · External signals: 0_
+_Cycle: 2026-09-14 · Records: 125 · External signals: 0_
 
 ## Constitutional status
 The evolution laboratory generated observations and proposals only. It did not alter scripts, frontier truth, render requests, or permanent ethos rules.
@@ -23,12 +23,12 @@ The evolution laboratory generated observations and proposals only. It did not a
   Control: Keep the current champion value for pillars. Treatment: Change only pillars using the challenger condition.
 
 ## Wild frontier proposals
-- **Immune Memory: grounding × memory** — What if immune memory is already happening inside the way you experience the ordinary / return to the body?
-  Fidelity: metaphor. Invitation: Where might immune memory be shaping what you call 'grounding' or 'memory' right now?
-- **Exaptation: memory × machine** — What if exaptation is already happening inside the way you experience memory as construction, not recording?
-  Fidelity: metaphor. Invitation: Where might exaptation be shaping what you call 'memory' or 'machine' right now?
-- **Queues: attention × emotion** — What if queues is already happening inside the way you experience attention as the instrument?
-  Fidelity: metaphor. Invitation: Where might queues be shaping what you call 'attention' or 'emotion' right now?
+- **Inference From Fragments: attention × memory** — What if inference from fragments is already happening inside the way you experience attention as the instrument?
+  Fidelity: metaphor. Invitation: Where might inference from fragments be shaping what you call 'attention' or 'memory' right now?
+- **Staging: belief × recursion** — What if staging is already happening inside the way you experience belief analysis / how you know?
+  Fidelity: metaphor. Invitation: Where might staging be shaping what you call 'belief' or 'recursion' right now?
+- **Adaptive Control: belief × machine** — What if adaptive control is already happening inside the way you experience belief analysis / how you know?
+  Fidelity: metaphor. Invitation: Where might adaptive control be shaping what you call 'belief' or 'machine' right now?
 
 ## Unknown unknowns
 - Which unmodeled feature explains why this video performed far from the current category expectation?
@@ -38,8 +38,8 @@ The evolution laboratory generated observations and proposals only. It did not a
 - Which unmodeled feature explains why this video performed far from the current category expectation?
 
 ## Rule review
-- `hook_immediate_plunge` → **retest** (effective confidence 0.3233)
-- `generated_human_ratio` → **retest** (effective confidence 0.5367)
+- `hook_immediate_plunge` → **retest** (effective confidence 0.2982)
+- `generated_human_ratio` → **retest** (effective confidence 0.5154)
 
 ## Human gate
 Nothing in this brief is a command. The next act is a choice: which uncertainty is worth spending a real video to examine?
