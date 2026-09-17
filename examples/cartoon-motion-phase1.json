@@ -1,0 +1,31 @@
+{
+  "title": "Phase 1 Motion Test",
+  "cartoon_motion_backend": "blender_2_5d",
+  "scenes": [
+    {
+      "text": "The room was normal until the wallpaper started remembering.",
+      "duration": 5.0,
+      "human_role": "none",
+      "motion_plan": {
+        "strategy": "layered_parallax",
+        "primary_action": "the focus object turns while the camera slowly approaches",
+        "camera": {
+          "move": "push_in",
+          "intensity": 0.35
+        },
+        "atmosphere": {
+          "dust": true,
+          "steam": true
+        },
+        "secondary_motion": [
+          "dust rises",
+          "steam drifts"
+        ],
+        "locked_elements": [
+          "vertical composition",
+          "focus silhouette"
+        ]
+      }
+    }
+  ]
+}
