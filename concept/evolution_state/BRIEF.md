@@ -1,6 +1,6 @@
 # Perpetual Frontier Brief
 
-_Cycle: 2026-09-21 · Records: 125 · External signals: 0_
+_Cycle: 2026-09-28 · Records: 125 · External signals: 0_
 
 ## Constitutional status
 The evolution laboratory generated observations and proposals only. It did not alter scripts, frontier truth, render requests, or permanent ethos rules.
@@ -23,12 +23,12 @@ The evolution laboratory generated observations and proposals only. It did not a
   Control: Keep the current champion value for pillars. Treatment: Change only pillars using the challenger condition.
 
 ## Wild frontier proposals
-- **Negative Space: mediation × recursion** — What if negative space is already happening inside the way you experience the lens / you never see reality raw?
-  Fidelity: metaphor. Invitation: Where might negative space be shaping what you call 'mediation' or 'recursion' right now?
-- **Stability Margins: attention × prediction** — What if stability margins is already happening inside the way you experience attention as the instrument?
-  Fidelity: metaphor. Invitation: Where might stability margins be shaping what you call 'attention' or 'prediction' right now?
-- **Misdirection: prediction × recursion** — What if misdirection is already happening inside the way you experience prediction & the constructed 'now'?
-  Fidelity: metaphor. Invitation: Where might misdirection be shaping what you call 'prediction' or 'recursion' right now?
+- **Unresolved Cadence: mediation × machine** — What if unresolved cadence is already happening inside the way you experience the lens / you never see reality raw?
+  Fidelity: metaphor. Invitation: Where might unresolved cadence be shaping what you call 'mediation' or 'machine' right now?
+- **Burden Of Proof: emotion × threshold** — What if burden of proof is already happening inside the way you experience emotion, love, and the turn?
+  Fidelity: metaphor. Invitation: Where might burden of proof be shaping what you call 'emotion' or 'threshold' right now?
+- **Immune Memory: self × prediction** — What if immune memory is already happening inside the way you experience self & identity as constructed?
+  Fidelity: metaphor. Invitation: Where might immune memory be shaping what you call 'self' or 'prediction' right now?
 
 ## Unknown unknowns
 - Which unmodeled feature explains why this video performed far from the current category expectation?
@@ -38,8 +38,8 @@ The evolution laboratory generated observations and proposals only. It did not a
 - Which unmodeled feature explains why this video performed far from the current category expectation?
 
 ## Rule review
-- `hook_immediate_plunge` → **retest** (effective confidence 0.275)
-- `generated_human_ratio` → **retest** (effective confidence 0.495)
+- `hook_immediate_plunge` → **retest** (effective confidence 0.2536)
+- `generated_human_ratio` → **retest** (effective confidence 0.4754)
 
 ## Human gate
 Nothing in this brief is a command. The next act is a choice: which uncertainty is worth spending a real video to examine?
