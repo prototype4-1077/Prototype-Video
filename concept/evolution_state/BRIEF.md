@@ -1,6 +1,6 @@
 # Perpetual Frontier Brief
 
-_Cycle: 2026-10-05 · Records: 125 · External signals: 0_
+_Cycle: 2026-10-12 · Records: 125 · External signals: 0_
 
 ## Constitutional status
 The evolution laboratory generated observations and proposals only. It did not alter scripts, frontier truth, render requests, or permanent ethos rules.
@@ -23,12 +23,12 @@ The evolution laboratory generated observations and proposals only. It did not a
   Control: Keep the current champion value for pillars. Treatment: Change only pillars using the challenger condition.
 
 ## Wild frontier proposals
-- **Self-Reference: grounding × mediation** — What if self-reference is already happening inside the way you experience the ordinary / return to the body?
-  Fidelity: metaphor. Invitation: Where might self-reference be shaping what you call 'grounding' or 'mediation' right now?
-- **Chain Of Custody: attention × recursion** — What if chain of custody is already happening inside the way you experience attention as the instrument?
-  Fidelity: metaphor. Invitation: Where might chain of custody be shaping what you call 'attention' or 'recursion' right now?
-- **Load Paths: recursion × threshold** — What if load paths is already happening inside the way you experience recursion & self-reference?
-  Fidelity: metaphor. Invitation: Where might load paths be shaping what you call 'recursion' or 'threshold' right now?
+- **Noise: grounding × emotion** — What if noise is already happening inside the way you experience the ordinary / return to the body?
+  Fidelity: metaphor. Invitation: Where might noise be shaping what you call 'grounding' or 'emotion' right now?
+- **Inventory Buffers: belief × memory** — What if inventory buffers is already happening inside the way you experience belief analysis / how you know?
+  Fidelity: metaphor. Invitation: Where might inventory buffers be shaping what you call 'belief' or 'memory' right now?
+- **Self-Reference: belief × machine** — What if self-reference is already happening inside the way you experience belief analysis / how you know?
+  Fidelity: metaphor. Invitation: Where might self-reference be shaping what you call 'belief' or 'machine' right now?
 
 ## Unknown unknowns
 - Which unmodeled feature explains why this video performed far from the current category expectation?
@@ -38,8 +38,8 @@ The evolution laboratory generated observations and proposals only. It did not a
 - Which unmodeled feature explains why this video performed far from the current category expectation?
 
 ## Rule review
-- `hook_immediate_plunge` → **retire_candidate** (effective confidence 0.2339)
-- `generated_human_ratio` → **retest** (effective confidence 0.4565)
+- `hook_immediate_plunge` → **retire_candidate** (effective confidence 0.2158)
+- `generated_human_ratio` → **retest** (effective confidence 0.4384)
 
 ## Human gate
 Nothing in this brief is a command. The next act is a choice: which uncertainty is worth spending a real video to examine?
