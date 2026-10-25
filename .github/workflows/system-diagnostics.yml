@@ -135,32 +135,4 @@ jobs:
           set -euo pipefail
           git config user.name "system-diagnostic-bot"
           git config user.email "system-diagnostic@users.noreply.github.com"
-          git add \
-            pipeline/provider_health.json \
-            concept/INTELLIGENCE_REPORT.json concept/INTELLIGENCE_REPORT.md \
-            pipeline/system_diagnostics/LATEST.json \
-            pipeline/system_diagnostics/LATEST.md \
-            pipeline/feedback_rule_candidates.json \
-            pipeline/stock_supply_report.json \
-            build/*/telemetry-summary.json
-          git commit -m "diagnostic: refresh calibrated evidence and actions" || exit 0
-          for i in 1 2 3 4 5; do
-            git push && exit 0
-            git pull --rebase origin main || { git rebase --abort || true; }
-            python3 pipeline/backfill_observability.py
-            python3 pipeline/feedback_rule_candidates.py
-            python3 pipeline/stock_supply_analysis.py
-            python3 pipeline/system_diagnostic_policy.py
-            git add \
-              pipeline/provider_health.json \
-              concept/INTELLIGENCE_REPORT.json concept/INTELLIGENCE_REPORT.md \
-              pipeline/system_diagnostics/LATEST.json \
-              pipeline/system_diagnostics/LATEST.md \
-              pipeline/feedback_rule_candidates.json \
-              pipeline/stock_supply_report.json \
-              build/*/telemetry-summary.json
-            git commit -m "diagnostic: refresh calibrated evidence and actions" || true
-            sleep $((i * 2))
-          done
-          echo "unable to persist system diagnostic" >&2
-          exit 1
+          python3 pipeline/persist_reports.py
