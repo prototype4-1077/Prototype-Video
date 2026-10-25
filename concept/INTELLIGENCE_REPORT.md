@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-10-25T21:19:19.651939+00:00
+Generated: 2026-10-25T21:23:13.766677+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -39,7 +39,7 @@ James selects the concept and approves the script. Recommendations never start a
 ## Collection health
 
 - public_statistics: permission_or_network_error
-- retention: not recorded
+- retention: authorization_failed
 - external_signals: success
 
 ## Research signals awaiting review

@@ -1,6 +1,6 @@
 {
   "schema_version": 2,
-  "generated_at": "2026-10-25T21:19:19.651939+00:00",
+  "generated_at": "2026-10-25T21:23:13.766677+00:00",
   "stats_file_count": 36,
   "joined_video_count": 23,
   "eligible_video_count": 0,
@@ -530,7 +530,22 @@
       "updated": [],
       "video_id_count": 40
     },
-    "retention": {},
+    "retention": {
+      "errors": [
+        {
+          "error_type": "HTTPError",
+          "http_status": 401,
+          "stage": "authorization"
+        }
+      ],
+      "generated_at": "2026-10-25T21:19:13.153260+00:00",
+      "no_data": [],
+      "required_action": "Repair the YouTube OAuth client/grant and authorize yt-analytics.readonly.",
+      "schema_version": 1,
+      "status": "authorization_failed",
+      "updated": [],
+      "updated_count": 0
+    },
     "external_signals": {
       "freshness": "fresh",
       "status": "success",
