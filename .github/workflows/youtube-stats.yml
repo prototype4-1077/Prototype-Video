@@ -67,7 +67,7 @@ jobs:
           git config user.name "youtube-stats-bot"
           git config user.email "youtube-stats@users.noreply.github.com"
           git add pipeline/youtube_stats_status.json 2>/dev/null || true
-          git add build/*/yt_stats.json build/*/retention_stats.json 2>/dev/null || true
+          git add build/*/yt_stats.json build/*/legacy_retention_stats.json 2>/dev/null || true
           git commit -m "analytics: refresh YouTube public statistics" || exit 0
           for i in 1 2 3 4 5; do
             git push && exit 0

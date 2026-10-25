@@ -36,7 +36,7 @@ class PublicCollectionTests(unittest.TestCase):
             (build / 'yt_stats.json').write_text(json.dumps({'views': 10, 'avg_view_pct': 77}))
             self.run_refresh(root, [{'id': 'a', 'statistics': {'viewCount': '100'}}])
             public = json.loads((build / 'yt_stats.json').read_text())
-            retention = json.loads((build / 'retention_stats.json').read_text())
+            retention = json.loads((build / 'legacy_retention_stats.json').read_text())
             self.assertNotIn('avg_view_pct', public)
             self.assertEqual(retention['avg_view_pct'], 77)
             self.assertIsNone(retention['retention_snapshot_at'])

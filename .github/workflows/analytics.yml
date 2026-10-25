@@ -65,13 +65,13 @@ jobs:
           git config user.email "analytics@users.noreply.github.com"
           for f in pipeline/memory.json pipeline/taste.npz pipeline/WHATS_WORKING.md pipeline/analytics_status.json \
                    build/*/retention.json build/*/retention_stats.json build/*/yt_stats.json \
-                   concept/audience_signal.json concept/INTELLIGENCE_REPORT.json concept/INTELLIGENCE_REPORT.md concept/craft_ledger.json; do
+                   concept/audience_signal.json concept/craft_ledger.json; do
             git add "$f" 2>/dev/null || true
           done
           git commit -m "analytics: audience retention learning" || echo "nothing to commit"
           for i in 1 2 3 4 5; do
             git push && exit 0
-            git pull --rebase origin main || true
+            git pull --rebase origin main || { git rebase --abort || true; }
             sleep $((i * 2))
           done
           echo "unable to push analytics outcome" >&2

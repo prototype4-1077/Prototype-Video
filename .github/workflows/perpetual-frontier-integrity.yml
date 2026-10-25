@@ -64,11 +64,17 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          python3 - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          baseline = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in Path('build').glob('*/render.request')}
+          Path('/tmp/frontier-render-markers.json').write_text(json.dumps(baseline))
+          PY
           python3 concept/perpetual_frontier.py --root . --date 2026-07-23 > /tmp/frontier-brief.txt
           test -s concept/evolution_state/LATEST.json
           test -s concept/evolution_state/BRIEF.md
           python3 - <<'PY'
-          import json
+          import hashlib, json
           from pathlib import Path
           state = json.load(open('concept/evolution_state/LATEST.json', encoding='utf-8'))
           assert state['production_files_modified'] is False
@@ -76,8 +82,9 @@ jobs:
           assert state['surprise_portfolio']['allocation']['wild'] > 0
           assert all(dream['fidelity'] == 'metaphor' for dream in state['dreams'])
           assert all(dream['invitation'].endswith('?') for dream in state['dreams'])
-          forbidden = list(Path('build').glob('*/render.request')) if Path('build').exists() else []
-          assert not forbidden, forbidden
+          before = json.loads(Path('/tmp/frontier-render-markers.json').read_text())
+          after = {str(p): hashlib.sha256(p.read_bytes()).hexdigest() for p in Path('build').glob('*/render.request')}
+          assert after == before, 'observation-only cycle created, removed, or modified a render request'
           PY
           find concept -type d -name __pycache__ -prune -exec rm -rf {} +
           changed="$(git status --porcelain | awk '{print $2}' | grep -v '^concept/evolution_state/' || true)"

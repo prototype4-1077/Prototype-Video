@@ -77,8 +77,7 @@ jobs:
           git config user.email "signal-radar@users.noreply.github.com"
           git add \
             concept/external_signals/LATEST.json \
-            concept/external_signals/DAILY_SIGNAL_BRIEF.md \
-            concept/INTELLIGENCE_REPORT.json concept/INTELLIGENCE_REPORT.md
+            concept/external_signals/DAILY_SIGNAL_BRIEF.md
           git commit -m "signals: refresh external radar" || exit 0
           for i in 1 2 3 4 5; do
             git push && exit 0

@@ -121,6 +121,17 @@ class PerpetualFrontierTests(unittest.TestCase):
             self.assertFalse((root / "build" / "alpha" / "render.request").exists())
             self.assertTrue((root / "concept" / "evolution_state" / "BRIEF.md").exists())
 
+    def test_existing_render_markers_are_preserved_without_creating_new_work(self):
+        with tempfile.TemporaryDirectory() as temp:
+            root = self._root(temp)
+            marker = root / "build/alpha/render.request"
+            marker.write_text("historical request marker\n")
+            before = {str(p): p.read_bytes() for p in (root / "build").glob("*/render.request")}
+            state = perpetual_frontier.run_cycle(root, perpetual_frontier.dt.date(2026, 7, 23))
+            after = {str(p): p.read_bytes() for p in (root / "build").glob("*/render.request")}
+            self.assertEqual(before, after)
+            self.assertFalse(state["production_files_modified"])
+
     def test_dreams_are_metaphor_labeled_and_questions(self):
         with tempfile.TemporaryDirectory() as temp:
             root = self._root(temp)

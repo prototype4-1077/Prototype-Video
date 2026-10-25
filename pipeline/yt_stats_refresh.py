@@ -219,7 +219,7 @@ def refresh(repo_root: Path = ROOT) -> dict[str, Any]:
             continue
         # Preserve previously measured retention before refreshing public counts.
         previous = load(target, {})
-        retention_path = target.with_name("retention_stats.json")
+        retention_path = target.with_name("legacy_retention_stats.json")
         if "avg_view_pct" in previous and not retention_path.exists():
             migrated = {key: previous.get(key) for key in (
                 "views", "minutes_watched", "avg_view_s", "avg_view_pct") if key in previous}

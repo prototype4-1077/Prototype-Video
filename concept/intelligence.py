@@ -38,7 +38,7 @@ def video_stats(root=None):
     output = {}
     for build in sorted((Path(root or ROOT) / "build").glob("*")):
         public = read(build / "yt_stats.json")
-        retention = read(build / "retention_stats.json")
+        retention = read(build / "retention_stats.json") or read(build / "legacy_retention_stats.json")
         if public or retention:
             # Public-count refreshes cannot erase authenticated retention.
             output[build.name] = {**public, **retention}
