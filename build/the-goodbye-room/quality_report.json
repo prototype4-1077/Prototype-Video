@@ -1,0 +1,70 @@
+{
+  "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-goodbye-room",
+  "checked_at": "2026-10-25T22:24:42+00:00",
+  "deep_decode": true,
+  "expected_duration_s": 133.884,
+  "failures": [],
+  "mode": "delivery",
+  "outputs": {
+    "youtube": {
+      "avg_kbps": 8920,
+      "deep_scan": {
+        "black_intervals": 1,
+        "black_longest_s": 2.567,
+        "black_total_s": 2.567,
+        "error": null,
+        "freeze_intervals": 0,
+        "freeze_longest_s": 0.0,
+        "freeze_total_s": 0,
+        "ok": true,
+        "returncode": 0,
+        "silence_intervals": 0,
+        "silence_longest_s": 0.0,
+        "silence_total_s": 0
+      },
+      "duration_difference_s": 0.002,
+      "exists": true,
+      "expected_duration_s": 133.884,
+      "failures": [],
+      "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-goodbye-room/final_youtube.mp4",
+      "probe": {
+        "audio_codec": "aac",
+        "audio_duration_s": 133.886009,
+        "bit_rate": 8920264.0,
+        "duration_s": 133.886009,
+        "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+        "fps": 30.0,
+        "has_audio": true,
+        "has_video": true,
+        "height": 1080,
+        "video_codec": "h264",
+        "video_duration_s": 133.866667,
+        "width": 1920
+      },
+      "size_bytes": 149287321,
+      "warnings": [
+        {
+          "code": "long_black_interval",
+          "message": "Detected a 2.57s near-black interval; review intentionally dark scenes",
+          "target": "youtube"
+        }
+      ]
+    }
+  },
+  "passed": true,
+  "quality_floor": {
+    "audio_stream_required": true,
+    "full_decode_required": true,
+    "minimum_dimension": 1080,
+    "minimum_file_bytes": 100000,
+    "video_stream_required": true
+  },
+  "schema_version": 1,
+  "warnings": [
+    {
+      "code": "long_black_interval",
+      "message": "Detected a 2.57s near-black interval; review intentionally dark scenes",
+      "target": "youtube"
+    }
+  ]
+}
