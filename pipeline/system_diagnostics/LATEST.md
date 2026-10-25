@@ -1,8 +1,8 @@
 # System Diagnostic
 
-Generated: 2026-10-25T21:19:19+00:00
+Generated: 2026-10-25T21:19:24+00:00
 
-Findings: 23 — priorities {"high": 4, "low": 2, "medium": 17}
+Findings: 22 — priorities {"high": 4, "low": 2, "medium": 16}
 
 ## Action queue
 
@@ -15,8 +15,8 @@ Findings: 23 — priorities {"high": 4, "low": 2, "medium": 17}
 ### [HIGH] Retention is unavailable or incomplete
 - Area: `intelligence`
 - Code: `collection_unhealthy:retention`
-- Evidence: {"source_health": null, "status": "not_recorded", "updated_count": null}
-- Action: Inspect the source health report; preserve unknowns and exclude missing measurements from creative scoring.
+- Evidence: {"source_health": null, "status": "authorization_failed", "updated_count": 0}
+- Action: Repair the YouTube OAuth client/grant and authorize yt-analytics.readonly.
 
 ### [HIGH] Open Incident
 - Area: `operations`
@@ -35,12 +35,6 @@ Findings: 23 — priorities {"high": 4, "low": 2, "medium": 17}
 - Code: `evolution_taxonomy_gap_flood`
 - Evidence: {"count": 102, "examples": ["a-chair-not-a-throne", "awake-inside-the-dream", "belief-is-gravity", "beliefs-are-software-updates", "black-wall-street-ep1-the-elevator", "black-wall-street-ep2-one-shot", "can-you-fly", "can-you-fly-v3", "deepest-sleep", "different-screens", "dispatch-path-selftest", "dmt-customs", "dmt-loading-screen", "dmt-other-side-of-the-door", "dmt-the-understudy"]}
 - Action: Separate legacy packages missing metadata from genuinely novel concepts before treating every uncataloged slug as a map failure.
-
-### [MEDIUM] Retention has no recent health observation
-- Area: `intelligence`
-- Code: `collection_stale:retention`
-- Evidence: {"generated_at": null, "maximum_age_days": 2}
-- Action: Refresh the collector and persist its status even if the request fails. Historical file coverage cannot establish freshness.
 
 ### [MEDIUM] No fresh audience-retention sample supports current winning-lane recommendations
 - Area: `intelligence`

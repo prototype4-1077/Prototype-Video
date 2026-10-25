@@ -10,8 +10,8 @@
       "status": "permission_or_network_error"
     },
     "retention": {
-      "generated_at": null,
-      "status": "not_recorded"
+      "generated_at": "2026-10-25T21:19:13.153260+00:00",
+      "status": "authorization_failed"
     }
   },
   "coverage": {
@@ -445,14 +445,14 @@
       "title": "Public Statistics is unavailable or incomplete"
     },
     {
-      "action": "Inspect the source health report; preserve unknowns and exclude missing measurements from creative scoring.",
+      "action": "Repair the YouTube OAuth client/grant and authorize yt-analytics.readonly.",
       "area": "intelligence",
       "automatic_patch": false,
       "code": "collection_unhealthy:retention",
       "evidence": {
         "source_health": null,
-        "status": "not_recorded",
-        "updated_count": null
+        "status": "authorization_failed",
+        "updated_count": 0
       },
       "priority": "high",
       "status": "open",
@@ -506,19 +506,6 @@
       "priority": "medium",
       "status": "open",
       "title": "The evolution queue is flooded with taxonomy gaps"
-    },
-    {
-      "action": "Refresh the collector and persist its status even if the request fails. Historical file coverage cannot establish freshness.",
-      "area": "intelligence",
-      "automatic_patch": false,
-      "code": "collection_stale:retention",
-      "evidence": {
-        "generated_at": null,
-        "maximum_age_days": 2
-      },
-      "priority": "medium",
-      "status": "open",
-      "title": "Retention has no recent health observation"
     },
     {
       "action": "Use James's editorial judgment and frontier exploration while repairing collection. Never turn missing retention into a zero-quality score.",
@@ -855,7 +842,7 @@
       "title": "Permanent stock exclusion now has a measured supply signal"
     }
   ],
-  "generated_at": "2026-10-25T21:19:19+00:00",
+  "generated_at": "2026-10-25T21:19:24+00:00",
   "operational_memory": {
     "advisory_counts": {},
     "occurrence_count": 47,
@@ -923,7 +910,7 @@
     "evidence_strength": "sufficient",
     "fallback_count": 56,
     "fallback_rate": 0.0619,
-    "generated_at": "2026-10-25T21:19:18+00:00",
+    "generated_at": "2026-10-25T21:19:24+00:00",
     "low_candidate_scenes": 1,
     "low_supply_rate": 0.0531,
     "mean_candidate_count_when_recorded": 27.377,
@@ -951,12 +938,12 @@
   },
   "summary": {
     "automatic_patch_candidates": 1,
-    "finding_count": 23,
-    "open_count": 23,
+    "finding_count": 22,
+    "open_count": 22,
     "priorities": {
       "high": 4,
       "low": 2,
-      "medium": 17
+      "medium": 16
     }
   },
   "visual_memory": {
