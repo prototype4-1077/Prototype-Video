@@ -1,0 +1,328 @@
+{
+  "generated_at": "2026-10-25T22:03:41+00:00",
+  "quality_failure_codes": {},
+  "quality_warning_codes": {
+    "long_black_interval": 2,
+    "low_bitrate": 8
+  },
+  "recommendations": [
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "ae42b8afcdf01801",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "7f0ae4a56577d65a",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 2 build(s)",
+      "fingerprint": "2c243482baacee93",
+      "priority": "medium",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "2 occurrence(s) across 1 build(s)",
+      "fingerprint": "f4c7ac5403f2d8eb",
+      "priority": "medium",
+      "stage": "footage"
+    },
+    {
+      "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
+      "category": "tail_latency",
+      "evidence": "p50=71.0s, p95=1065.5s",
+      "priority": "medium",
+      "stage": "build_pass"
+    }
+  ],
+  "recurring_incidents": [
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "ae42b8afcdf01801",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.7s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "tomorrow-uses-old-footage",
+        "black-wall-street-ep2-one-shot"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "7f0ae4a56577d65a",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.6s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-witness-without-a-face",
+        "black-wall-street-ep1-the-elevator"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "transient",
+      "fingerprint": "2c243482baacee93",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.0s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-mercy-of-the-filter",
+        "beliefs-are-software-updates"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "f4c7ac5403f2d8eb",
+      "kind": "failure",
+      "normalized_error": "t call last): file \"<path> line <n>, in <module> raise systemexit(cli()) ^^^^^ file \"<path> line <n>, in cli main(build_dir, args[<n>] if len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal asset instead of sub",
+      "slugs": [
+        "the-goodbye-room"
+      ],
+      "stage": "footage"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "202d5c12e928b2a2",
+      "kind": "failure",
+      "normalized_error": "tate=running elapsed=150s idle=0s governor stage=footage state=running elapsed=165s idle=3s governor stage=footage state=running elapsed=180s idle=0s governor stage=footage state=running elapsed=195s idle=3s governor stage=footage state=running elapsed=210s idle=2s governor stage=footage state=failure duration=<n>.2s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>",
+      "slugs": [
+        "the-goodbye-room"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "9eacc6619892f65f",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>]: ^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal asset instead of substituting a plain 2d graphic | fix: edit the failing scen",
+      "slugs": [
+        "the-goodbye-room"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "aec2fd8c5f9c13d5",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.1s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-universe-keeps-its-options-open"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "7e1d511cec319c51",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.5s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "the-blueprint-recognizes-the-building"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "019e3c600e4624c4",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.8s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "no-disagreement-here"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "transient",
+      "fingerprint": "dd39869b090c1b69",
+      "kind": "timeout",
+      "normalized_error": "governortimeout: build_pass hard_timeout after <n>.2s; last useful progress <n>.0s ago.",
+      "slugs": [
+        "i-was-gone-eleven-minutes"
+      ],
+      "stage": "build_pass"
+    }
+  ],
+  "runs_analyzed": 53,
+  "schema_version": 1,
+  "stages": {
+    "align": {
+      "attempts": 53,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.003,
+      "sample_count": 53,
+      "successes": 53,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 53.104
+    },
+    "altsheet": {
+      "attempts": 43,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.008,
+      "p95_success_s": 6.039,
+      "sample_count": 43,
+      "successes": 43,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 83.579
+    },
+    "assemble": {
+      "attempts": 1395,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 36.229,
+      "p95_success_s": 85.338,
+      "sample_count": 1395,
+      "successes": 1395,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 59028.175
+    },
+    "build_pass": {
+      "attempts": 283,
+      "failure_rate": 0.0424,
+      "failures": 12,
+      "p50_success_s": 71.034,
+      "p95_success_s": 1065.486,
+      "sample_count": 271,
+      "successes": 271,
+      "timeout_rate": 0.0353,
+      "timeouts": 10,
+      "total_duration_s": 83378.604
+    },
+    "credits": {
+      "attempts": 114,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.006,
+      "p95_success_s": 1.025,
+      "sample_count": 114,
+      "successes": 114,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 114.954
+    },
+    "ffmpeg": {
+      "attempts": 240,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 6.016,
+      "p95_success_s": 30.124,
+      "sample_count": 240,
+      "successes": 240,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 2232.617
+    },
+    "footage": {
+      "attempts": 49,
+      "failure_rate": 0.0408,
+      "failures": 2,
+      "p50_success_s": 134.185,
+      "p95_success_s": 237.363,
+      "sample_count": 47,
+      "successes": 47,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 6726.705
+    },
+    "hero": {
+      "attempts": 230,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 31.558,
+      "p95_success_s": 50.088,
+      "sample_count": 230,
+      "successes": 230,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 7224.255
+    },
+    "prep": {
+      "attempts": 52,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 13.034,
+      "p95_success_s": 19.506,
+      "sample_count": 52,
+      "successes": 52,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 686.821
+    },
+    "probe": {
+      "attempts": 1465,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 1.008,
+      "p95_success_s": 1.014,
+      "sample_count": 1465,
+      "successes": 1465,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1478.564
+    },
+    "quality": {
+      "attempts": 52,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 24.108,
+      "p95_success_s": 67.905,
+      "sample_count": 52,
+      "successes": 52,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 1568.662
+    },
+    "transcribe": {
+      "attempts": 53,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 17.011,
+      "p95_success_s": 24.423,
+      "sample_count": 53,
+      "successes": 53,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 944.817
+    },
+    "tts": {
+      "attempts": 53,
+      "failure_rate": 0.0,
+      "failures": 0,
+      "p50_success_s": 58.045,
+      "p95_success_s": 89.46,
+      "sample_count": 53,
+      "successes": 53,
+      "timeout_rate": 0.0,
+      "timeouts": 0,
+      "total_duration_s": 3375.911
+    }
+  },
+  "statuses": {
+    "done": 52,
+    "failed": 1
+  }
+}
