@@ -1,0 +1,375 @@
+{
+  "finished_at": "2026-10-25T22:48:18+00:00",
+  "github_run_id": "40240618622",
+  "incidents": [],
+  "last_message": "DONE -> /home/runner/work/Prototype-Video/Prototype-Video/build/the-goodbye-room/final_youtube.mp4",
+  "mode": "recover",
+  "passes": 5,
+  "policy": {
+    "align": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.0,
+      "idle_timeout_s": 33.01,
+      "sample_count": 53,
+      "soft_timeout_s": 33.01,
+      "source": "history"
+    },
+    "assemble": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 99.77,
+      "idle_timeout_s": 240.0,
+      "sample_count": 200,
+      "soft_timeout_s": 329.32,
+      "source": "history"
+    },
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "credits": {
+      "hard_timeout_s": 300.0,
+      "historical_p95_s": 1.02,
+      "idle_timeout_s": 33.08,
+      "sample_count": 116,
+      "soft_timeout_s": 33.08,
+      "source": "history"
+    },
+    "ffmpeg": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 29.16,
+      "idle_timeout_s": 117.48,
+      "sample_count": 200,
+      "soft_timeout_s": 117.48,
+      "source": "history"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 237.22,
+      "idle_timeout_s": 255.0,
+      "sample_count": 48,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    },
+    "prep": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 19.46,
+      "idle_timeout_s": 120.0,
+      "sample_count": 53,
+      "soft_timeout_s": 120.0,
+      "source": "history"
+    },
+    "probe": {
+      "hard_timeout_s": 60.0,
+      "historical_p95_s": 1.01,
+      "idle_timeout_s": 20.0,
+      "sample_count": 200,
+      "soft_timeout_s": 33.04,
+      "source": "history"
+    },
+    "quality": {
+      "hard_timeout_s": 1500.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1500.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1500.0,
+      "source": "explicit"
+    },
+    "transcribe": {
+      "hard_timeout_s": 900.0,
+      "historical_p95_s": 24.42,
+      "idle_timeout_s": 180.0,
+      "sample_count": 53,
+      "soft_timeout_s": 180.0,
+      "source": "history"
+    },
+    "tts": {
+      "hard_timeout_s": 480.0,
+      "historical_p95_s": 89.46,
+      "idle_timeout_s": 180.0,
+      "sample_count": 53,
+      "soft_timeout_s": 298.38,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-goodbye-room",
+    "checked_at": "2026-10-25T22:48:18+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 136.601,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "youtube": {
+        "avg_kbps": 9235,
+        "deep_scan": {
+          "black_intervals": 1,
+          "black_longest_s": 2.567,
+          "black_total_s": 2.567,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.002,
+        "exists": true,
+        "expected_duration_s": 136.601,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-goodbye-room/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 136.602993,
+          "bit_rate": 9235223.0,
+          "duration_s": 136.602993,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 136.5,
+          "width": 1920
+        },
+        "size_bytes": 157694898,
+        "warnings": [
+          {
+            "code": "long_black_interval",
+            "message": "Detected a 2.57s near-black interval; review intentionally dark scenes",
+            "target": "youtube"
+          }
+        ]
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": [
+      {
+        "code": "long_black_interval",
+        "message": "Detected a 2.57s near-black interval; review intentionally dark scenes",
+        "target": "youtube"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
+      "priority": "medium",
+      "reason": "Largest measured latency contribution in this run (873.7s).",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Review warnings before allowing any speed-oriented policy to become the champion.",
+      "priority": "medium",
+      "reason": "Quality gate emitted 1 warning(s).",
+      "stage": "quality"
+    }
+  ],
+  "run_id": "1c165a8565634ae6bcc4d7f264c4a15d",
+  "schema_version": 1,
+  "slug": "the-goodbye-room",
+  "stages": {
+    "align": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 1.002,
+      "p95_success_s": 1.002,
+      "success_durations_s": [
+        1.002
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 1.002
+    },
+    "assemble": {
+      "attempts": 24,
+      "failures": 0,
+      "p50_success_s": 28.132,
+      "p95_success_s": 36.726,
+      "success_durations_s": [
+        28.108,
+        33.148,
+        25.129,
+        37.175,
+        17.082,
+        22.106,
+        23.104,
+        30.153,
+        25.122,
+        34.18,
+        32.173,
+        19.096,
+        27.152,
+        29.137,
+        18.084,
+        30.161,
+        28.155,
+        26.16,
+        34.179,
+        25.141,
+        42.248,
+        34.178,
+        24.136,
+        29.184
+      ],
+      "successes": 24,
+      "timeouts": 0,
+      "total_duration_s": 674.491
+    },
+    "build_pass": {
+      "attempts": 5,
+      "failures": 0,
+      "p50_success_s": 33.019,
+      "p95_success_s": 606.272,
+      "success_durations_s": [
+        33.019,
+        16.015,
+        69.071,
+        15.027,
+        740.572
+      ],
+      "successes": 5,
+      "timeouts": 0,
+      "total_duration_s": 873.704
+    },
+    "credits": {
+      "attempts": 2,
+      "failures": 0,
+      "p50_success_s": 1.004,
+      "p95_success_s": 1.006,
+      "success_durations_s": [
+        1.003,
+        1.006
+      ],
+      "successes": 2,
+      "timeouts": 0,
+      "total_duration_s": 2.009
+    },
+    "ffmpeg": {
+      "attempts": 4,
+      "failures": 0,
+      "p50_success_s": 5.514,
+      "p95_success_s": 14.562,
+      "success_durations_s": [
+        1.007,
+        5.014,
+        16.07,
+        6.015
+      ],
+      "successes": 4,
+      "timeouts": 0,
+      "total_duration_s": 28.106
+    },
+    "footage": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 68.065,
+      "p95_success_s": 68.065,
+      "success_durations_s": [
+        68.065
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 68.065
+    },
+    "prep": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 13.027,
+      "p95_success_s": 13.027,
+      "success_durations_s": [
+        13.027
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 13.027
+    },
+    "probe": {
+      "attempts": 25,
+      "failures": 0,
+      "p50_success_s": 1.007,
+      "p95_success_s": 1.008,
+      "success_durations_s": [
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.008,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.01,
+        1.007,
+        1.007,
+        1.007,
+        1.007,
+        1.007
+      ],
+      "successes": 25,
+      "timeouts": 0,
+      "total_duration_s": 25.179
+    },
+    "quality": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 18.079,
+      "p95_success_s": 18.079,
+      "success_durations_s": [
+        18.079
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 18.079
+    },
+    "transcribe": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 14.011,
+      "p95_success_s": 14.011,
+      "success_durations_s": [
+        14.011
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 14.011
+    },
+    "tts": {
+      "attempts": 1,
+      "failures": 0,
+      "p50_success_s": 32.017,
+      "p95_success_s": 32.017,
+      "success_durations_s": [
+        32.017
+      ],
+      "successes": 1,
+      "timeouts": 0,
+      "total_duration_s": 32.017
+    }
+  },
+  "status": "done"
+}

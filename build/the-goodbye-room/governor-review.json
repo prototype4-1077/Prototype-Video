@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-10-25T22:24:42+00:00",
+  "generated_at": "2026-10-25T22:48:19+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
-    "long_black_interval": 3,
+    "long_black_interval": 4,
     "low_bitrate": 8
   },
   "recommendations": [
@@ -41,7 +41,7 @@
     {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=71.0s, p95=1062.8s",
+      "evidence": "p50=70.0s, p95=1060.2s",
       "priority": "medium",
       "stage": "build_pass"
     }
@@ -161,20 +161,20 @@
       "stage": "build_pass"
     }
   ],
-  "runs_analyzed": 54,
+  "runs_analyzed": 55,
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 54,
+      "attempts": 55,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.002,
       "p95_success_s": 1.003,
-      "sample_count": 54,
-      "successes": 54,
+      "sample_count": 55,
+      "successes": 55,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 54.106
+      "total_duration_s": 55.108
     },
     "altsheet": {
       "attempts": 44,
@@ -189,64 +189,64 @@
       "total_duration_s": 84.586
     },
     "assemble": {
-      "attempts": 1419,
+      "attempts": 1443,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 36.185,
-      "p95_success_s": 84.792,
-      "sample_count": 1419,
-      "successes": 1419,
+      "p50_success_s": 35.366,
+      "p95_success_s": 84.686,
+      "sample_count": 1443,
+      "successes": 1443,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 59696.752
+      "total_duration_s": 60371.243
     },
     "build_pass": {
-      "attempts": 288,
-      "failure_rate": 0.0417,
+      "attempts": 293,
+      "failure_rate": 0.041,
       "failures": 12,
-      "p50_success_s": 71.031,
-      "p95_success_s": 1062.828,
-      "sample_count": 276,
-      "successes": 276,
-      "timeout_rate": 0.0347,
+      "p50_success_s": 70.032,
+      "p95_success_s": 1060.17,
+      "sample_count": 281,
+      "successes": 281,
+      "timeout_rate": 0.0341,
       "timeouts": 10,
-      "total_duration_s": 84282.5
+      "total_duration_s": 85156.204
     },
     "credits": {
-      "attempts": 116,
+      "attempts": 118,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.006,
       "p95_success_s": 1.025,
-      "sample_count": 116,
-      "successes": 116,
+      "sample_count": 118,
+      "successes": 118,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 116.963
+      "total_duration_s": 118.972
     },
     "ffmpeg": {
-      "attempts": 244,
+      "attempts": 248,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 6.016,
-      "p95_success_s": 29.976,
-      "sample_count": 244,
-      "successes": 244,
+      "p50_success_s": 6.015,
+      "p95_success_s": 29.784,
+      "sample_count": 248,
+      "successes": 248,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 2260.729
+      "total_duration_s": 2288.835
     },
     "footage": {
-      "attempts": 50,
-      "failure_rate": 0.04,
+      "attempts": 51,
+      "failure_rate": 0.0392,
       "failures": 2,
-      "p50_success_s": 134.159,
-      "p95_success_s": 237.218,
-      "sample_count": 48,
-      "successes": 48,
+      "p50_success_s": 134.132,
+      "p95_success_s": 237.072,
+      "sample_count": 49,
+      "successes": 49,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 6827.807
+      "total_duration_s": 6895.872
     },
     "hero": {
       "attempts": 230,
@@ -261,68 +261,68 @@
       "total_duration_s": 7224.255
     },
     "prep": {
-      "attempts": 53,
+      "attempts": 54,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 13.036,
-      "p95_success_s": 19.457,
-      "sample_count": 53,
-      "successes": 53,
+      "p50_success_s": 13.034,
+      "p95_success_s": 19.408,
+      "sample_count": 54,
+      "successes": 54,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 700.848
+      "total_duration_s": 713.875
     },
     "probe": {
-      "attempts": 1490,
+      "attempts": 1515,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.008,
       "p95_success_s": 1.014,
-      "sample_count": 1490,
-      "successes": 1490,
+      "sample_count": 1515,
+      "successes": 1515,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1503.741
+      "total_duration_s": 1528.92
     },
     "quality": {
-      "attempts": 53,
+      "attempts": 54,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 24.098,
-      "p95_success_s": 67.864,
-      "sample_count": 53,
-      "successes": 53,
+      "p50_success_s": 23.604,
+      "p95_success_s": 67.822,
+      "sample_count": 54,
+      "successes": 54,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 1585.733
+      "total_duration_s": 1603.812
     },
     "transcribe": {
-      "attempts": 54,
+      "attempts": 55,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 17.011,
-      "p95_success_s": 24.373,
-      "sample_count": 54,
-      "successes": 54,
+      "p95_success_s": 24.323,
+      "sample_count": 55,
+      "successes": 55,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 958.827
+      "total_duration_s": 972.838
     },
     "tts": {
-      "attempts": 54,
+      "attempts": 55,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 58.041,
-      "p95_success_s": 88.41,
-      "sample_count": 54,
-      "successes": 54,
+      "p50_success_s": 58.036,
+      "p95_success_s": 87.36,
+      "sample_count": 55,
+      "successes": 55,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 3408.929
+      "total_duration_s": 3440.946
     }
   },
   "statuses": {
-    "done": 53,
+    "done": 54,
     "failed": 1
   }
 }
