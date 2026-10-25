@@ -1,6 +1,6 @@
 # System Diagnostic
 
-Generated: 2026-10-25T21:09:31+00:00
+Generated: 2026-10-25T21:14:26+00:00
 
 Findings: 23 — priorities {"high": 4, "low": 2, "medium": 17}
 
@@ -10,7 +10,7 @@ Findings: 23 — priorities {"high": 4, "low": 2, "medium": 17}
 - Area: `intelligence`
 - Code: `collection_unhealthy:public_statistics`
 - Evidence: {"source_health": null, "status": "permission_or_network_error", "updated_count": null}
-- Action: Provide YT_API_KEY or refresh the OAuth grant with a YouTube read-capable scope. No statistics were fabricated.
+- Action: Re-enable or replace the disabled OAuth client and reauthorize YouTube read access. A token refresh alone cannot repair a disabled client. No statistics were fabricated.
 
 ### [HIGH] Retention is unavailable or incomplete
 - Area: `intelligence`
