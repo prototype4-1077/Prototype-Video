@@ -4,6 +4,13 @@ on:
   schedule:
     - cron: "17 6 * * *"
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "pipeline/analytics_sync.py"
+      - "concept/intelligence.py"
+      - "concept/evidence.py"
+      - ".github/workflows/analytics.yml"
 
 permissions:
   contents: write
@@ -17,9 +24,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.11"
           cache: pip
@@ -28,29 +35,37 @@ jobs:
         run: pip install -q numpy
 
       - name: Pull retention curves and apply audience learning
+        id: analytics
+        continue-on-error: true
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: python3 pipeline/analytics_sync.py
 
-      - name: Mine audience comments + refresh intelligence
+      - name: Mine audience comments
+        if: steps.analytics.outcome == 'success'
         env:
           YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
           YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
           YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
         run: |
           python3 concept/comment_mining.py || echo "comment mining skipped"
-          python3 concept/intelligence.py > concept/INTELLIGENCE_REPORT.md || true
+
+      - name: Refresh evidence-aware intelligence even when analytics is unavailable
+        if: always()
+        run: python3 concept/intelligence.py --json-out concept/INTELLIGENCE_REPORT.json --markdown-out concept/INTELLIGENCE_REPORT.md
+
 
       - name: Commit learned state
+        if: always()
         shell: bash
         run: |
           git config user.name "analytics-bot"
           git config user.email "analytics@users.noreply.github.com"
-          for f in pipeline/memory.json pipeline/taste.npz pipeline/WHATS_WORKING.md \
-                   build/*/retention.json build/*/yt_stats.json \
-                   concept/audience_signal.json concept/INTELLIGENCE_REPORT.md concept/craft_ledger.json; do
+          for f in pipeline/memory.json pipeline/taste.npz pipeline/WHATS_WORKING.md pipeline/analytics_status.json \
+                   build/*/retention.json build/*/retention_stats.json build/*/yt_stats.json \
+                   concept/audience_signal.json concept/INTELLIGENCE_REPORT.json concept/INTELLIGENCE_REPORT.md concept/craft_ledger.json; do
             git add "$f" 2>/dev/null || true
           done
           git commit -m "analytics: audience retention learning" || echo "nothing to commit"
@@ -61,3 +76,15 @@ jobs:
           done
           echo "unable to push analytics outcome" >&2
           exit 1
+
+      - name: Enforce analytics health after preserving evidence
+        if: always()
+        env:
+          COLLECTOR_OUTCOME: ${{ steps.analytics.outcome }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          status = json.load(open('pipeline/analytics_status.json', encoding='utf-8'))
+          assert os.environ['COLLECTOR_OUTCOME'] == 'success', status
+          assert status.get('status') in {'success', 'no_data'}, status
+          PY

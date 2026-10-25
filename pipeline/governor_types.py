@@ -36,6 +36,9 @@ DETERMINISTIC_PATTERNS = (
     "missing elevenlabs_api_key", "missing pexels_api_key", "no script.json",
     "not valid json", "missing title/slug", "unsupported", "invalid argument",
     "permission denied", "no such file", "insufficient credits", "quota exceeded",
+    "api_key_id_used_as_api_key", "invalid_api_key", "invalid api key",
+    "unauthorized", "authentication failed", "disabled_client", "invalid_grant",
+    "http error 401", "http error 403",
 )
 
 

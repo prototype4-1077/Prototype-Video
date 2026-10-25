@@ -1,44 +1,68 @@
-# Concept Engine — Intelligence Report
+# Concept Engine — Evidence-aware Intelligence
 
-_Joined 23 videos with performance data (36 stat files present; grows nightly)._
+Generated: 2026-10-25T21:09:31.163123+00:00
 
-## Realized performance (blended reach x retention)
-- i-became-everything: 53 views @ 78%  → score 135.6  (threshold+emotion, testimony_1st, confession)
-- you-are-a-flame-wearing-a-name-tag: 36 views @ 84%  → score 131.2  (self+machine, guided_2nd, demonstration)
-- the-museum-that-repaints-itself: 82 views @ 63%  → score 121.7  (memory+machine, guided_2nd, plunge)
-- the-lag: 89 views @ 60%  → score 116.5  (prediction+machine, guided_2nd, plunge)
-- collapse-of-gravity: 61 views @ 62%  → score 110.4  (self+grounding, teaching, question)
-- the-save-file: 23 views @ 60%  → score 82.8  (memory+machine, guided_2nd, plunge)
-- jester-who-knew-my-name: 15 views @ 55%  → score 66.4  (self+threshold, testimony_1st, confession)
-- the-unopened-mail: 19 views @ 49%  → score 63.8  (prediction+grounding, guided_2nd, question)
-- room-before-birth: 11 views @ 30%  → score 32.2  (threshold+emotion, testimony_1st, confession)
-- the-voice: 31 views @ 20%  → score 29.9  (self+recursion, guided_2nd, question)
-- cartographers-confession: 10 views @ 26%  → score 27.0  (belief+mediation, teaching, confession)
-- the-reality-machine-dmt-v3: 917 views @ 0%  → score 0.0  (machine+attention, guided_2nd, plunge)
-- the-loop: 3 views @ 0%  → score 0.0  (recursion+grounding, guided_2nd, question)
-- eye-cannot-see-itself: 9 views @ 0%  → score 0.0  (recursion+mediation, teaching, demonstration)
-- two-ships: 5 views @ 0%  → score 0.0  (belief+emotion, teaching, demonstration)
-- the-room-behind-you: 4 views @ 0%  → score 0.0  (grounding+self, guided_2nd, plunge)
-- where-the-years-go: 3 views @ 0%  → score 0.0  (memory+prediction, guided_2nd, question)
-- been-here-before: 5 views @ 0%  → score 0.0  (memory+prediction, guided_2nd, question)
-- before-your-words: 10 views @ 0%  → score 0.0  (self+mediation, teaching, question)
-- the-press-secretary-in-your-skull: 13 views @ 0%  → score 0.0  (self+recursion, guided_2nd, plunge)
-- the-person-you-replaced: 3 views @ 0%  → score 0.0  (self+memory, guided_2nd, confession)
-- the-forecast-in-your-chest: 4 views @ 0%  → score 0.0  (machine, teaching, plunge)
-- the-edge-of-you-is-negotiable: 2 views @ 0%  → score 0.0  (machine, teaching, plunge)
+Joined 23 videos; 0 eligible for current recommendations.
+Missing retention: 12; stale or undated retention: 11.
 
-## Winning lanes
-- by pillars: threshold (78.1), machine (64.6), emotion (55.9)
-- by narration: testimony_1st (78.1), guided_2nd (42.0), teaching (19.6)
-- by hook: confession (52.2), demonstration (43.7), plunge (40.1)
+## What to make next
+No fresh, dated retention evidence is eligible. Use editorial judgment and frontier exploration; do not infer poor performance from missing data.
+- Editorial exploration: **Not Everyone Renders the Same** [established]. Hook: Some people can't picture an apple. Some have no voice in their head. You assumed everyone was running your build. This is a frontier rotation, not a predicted audience winner.
+James selects the concept and approves the script. Recommendations never start a render or publish a video.
 
-## What to make next (data-driven)
-- Proven pillar: **threshold** (avg score 78.1 over 3 videos) — keep feeding it.
-- Proven narration style: **testimony_1st** (avg score 78.1 over 3 videos) — keep feeding it.
-- Proven hook type: **confession** (avg score 52.2 over 5 videos) — keep feeding it.
-- Highest-value NEW bet: **Belief Rewrites the Body** [established] — untouched, and it extends your proven 'threshold' lane. Hook: A sugar pill you KNOW is a sugar pill can still dull real pain. Your beliefs have hands.
+## Measurement inventory
 
-## Craft rules (from retention)
-- 10/10 tracked videos bleed viewers in their FIRST scenes — the opener is the make-or-break. Hook hard in the first 1.5s; no slow atmosphere open.
-- Retention-held scenes cluster near the END (the turn + invitation) — the payoff lands; protect it, never rush the close.
-- Highest reach came from the machine/attention pillar in guided-2nd voice with a plunge hook (the 832-view breakout) — that's the current spearhead.
+- i-became-everything: views=53.0; retention=78.3%; freshness=unknown; eligible=False
+- you-are-a-flame-wearing-a-name-tag: views=36.0; retention=83.6%; freshness=unknown; eligible=False
+- the-museum-that-repaints-itself: views=82.0; retention=63.4%; freshness=unknown; eligible=False
+- the-lag: views=89.0; retention=59.6%; freshness=unknown; eligible=False
+- collapse-of-gravity: views=61.0; retention=61.6%; freshness=unknown; eligible=False
+- the-save-file: views=23.0; retention=60.0%; freshness=unknown; eligible=False
+- jester-who-knew-my-name: views=15.0; retention=55.1%; freshness=unknown; eligible=False
+- the-unopened-mail: views=19.0; retention=49.1%; freshness=unknown; eligible=False
+- room-before-birth: views=11.0; retention=29.8%; freshness=unknown; eligible=False
+- the-voice: views=31.0; retention=19.9%; freshness=unknown; eligible=False
+- cartographers-confession: views=10.0; retention=25.9%; freshness=unknown; eligible=False
+- been-here-before: views=5.0; retention=unknown; freshness=unavailable; eligible=False
+- before-your-words: views=10.0; retention=unknown; freshness=unavailable; eligible=False
+- eye-cannot-see-itself: views=9.0; retention=unknown; freshness=unavailable; eligible=False
+- the-edge-of-you-is-negotiable: views=2.0; retention=unknown; freshness=unavailable; eligible=False
+- the-forecast-in-your-chest: views=4.0; retention=unknown; freshness=unavailable; eligible=False
+- the-loop: views=3.0; retention=unknown; freshness=unavailable; eligible=False
+- the-person-you-replaced: views=3.0; retention=unknown; freshness=unavailable; eligible=False
+- the-press-secretary-in-your-skull: views=13.0; retention=unknown; freshness=unavailable; eligible=False
+- the-reality-machine-dmt-v3: views=917.0; retention=unknown; freshness=unavailable; eligible=False
+- the-room-behind-you: views=4.0; retention=unknown; freshness=unavailable; eligible=False
+- two-ships: views=5.0; retention=unknown; freshness=unavailable; eligible=False
+- where-the-years-go: views=3.0; retention=unknown; freshness=unavailable; eligible=False
+
+## Collection health
+
+- public_statistics: permission_or_network_error
+- retention: not recorded
+- external_signals: success
+
+## Research signals awaiting review
+
+- [Comfy-Org/ComfyUI: v0.40.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.40.0) — unverified reference; verify the primary source before use.
+- [Comfy-Org/ComfyUI: v0.38.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.38.0) — unverified reference; verify the primary source before use.
+- [Comfy-Org/ComfyUI: v0.39.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.39.0) — unverified reference; verify the primary source before use.
+- [Comfy-Org/ComfyUI: v0.41.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.41.0) — unverified reference; verify the primary source before use.
+- [Comfy-Org/ComfyUI: v0.42.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.0) — unverified reference; verify the primary source before use.
+- [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
+- [Breakthrough/PySceneDetect: PySceneDetect v0.6.5](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.5-release) — unverified reference; verify the primary source before use.
+- [Breakthrough/PySceneDetect: PySceneDetect v0.6.6](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.6-release) — unverified reference; verify the primary source before use.
+
+## Learning coverage
+
+Historical whole-video approval records: 34; scene feedback records: 29; explicit approval audits: 1.
+Approval audits with no new taste embeddings: ['different-screens'].
+Whole-video approval, per-scene feedback, and learned image embeddings are separate evidence. An approved video need not have produced new embeddings; never infer per-scene judgments from a global approval.
+
+## Craft evidence
+
+- 13 historical audience-feedback records are available for review. Scene retention is observational; test a specific change before promoting it into a house rule.
+
+Read-only decision support. No narration edits, model promotion, render requests, or publication. External signals remain unverified reference material.
+
+This upgrades the pipeline's evidence and decision logic; it does not retrain a foundation model or claim an offline fixture is a live model evaluation.

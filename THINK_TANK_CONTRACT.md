@@ -2,9 +2,10 @@
 
 **Read this file first (`getFile` on `THINK_TANK_CONTRACT.md`) before submitting a video.**
 
-You have one reliable path to this repo: the **Prototype4-1077 Pipeline Action**
-(`getFile`, `putFile`, `listRenderRuns`, `getRun`, `getRelease`).
-Do **not** use the GitHub connector or the `gh` CLI — neither is available.
+Use the connected GitHub app for repository reads and writes. The older
+Prototype4-1077 Pipeline Action is an optional alternative. GitHub Actions runs
+the render; no personal access token is needed. The live repository is
+`prototype4-1077/Prototype-Video`.
 
 ---
 
@@ -127,3 +128,18 @@ not a failure. Confirm via `listRenderRuns`, not by looking for that file.
   `build/<slug>/preflight-report.json` explain why.
 - Writing a full `script.json` by hand still works, but it's ~15 KB and often
   fails to write through the Action. Prefer `submission.json`.
+
+
+## Enforced production safeguards (October 2026)
+
+- The house still-derived runtime limit is 35%. A package can request a lower
+  limit but cannot raise it. Blender keyframe composites count as still-derived.
+- `genre` and `science_fidelity` are preserved from submissions. Use `genre: dmt`
+  for a DMT video; ordinary submissions keep the concept default.
+- Target duration defaults to an estimate. For an exact user requirement, set
+  `duration_mode: exact` plus `target_duration_seconds`; final media must be within
+  0.5 seconds. Do not stretch, cut, or replace supplied narration to satisfy it.
+- Literal/mechanism footage is checked through the last scene, including pinned
+  and cached choices. Caption keywords do not override a concrete visual anchor.
+- Supplied narration is preserved regardless of length or file size. A missing
+  or changed verified attachment blocks rendering rather than invoking TTS.

@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 from typing import Any, Mapping, Sequence
+import os
+import re
 
 from governor_types import (
     SCHEMA_VERSION,
@@ -93,6 +95,13 @@ class GovernorSummaryMixin:
             "quality": quality,
             "recommendations": recommendations,
         }
+        # Preserve one outcome per workflow run + attempt + governor process.
+        # The compatibility summary below is only the latest pointer.
+        github_attempt = os.environ.get("GITHUB_RUN_ATTEMPT", "1")
+        archive_id = re.sub(r"[^A-Za-z0-9_.-]", "_", f"{self.github_run_id or 'local'}-{github_attempt}-{self.run_id}")
+        archive = self.build_dir / "governor-history" / f"{archive_id}.json"
+        if not archive.exists():
+            atomic_write_json(archive, summary)
         atomic_write_json(self.summary_path, summary)
         atomic_write_json(self.directory / "summary.json", summary)
         self.record_event("governor_finished", status=status, passes=passes, recommendations=recommendations)

@@ -12,18 +12,28 @@ from governor import atomic_write_json, load_json, percentile, utc_now
 
 def collect_summaries(repo_root: str | Path, limit: int = 250) -> list[dict[str, Any]]:
     root = Path(repo_root).resolve()
-    paths = list((root / "build").glob("*/governor-summary.json"))
+    paths = list((root / "build").glob("*/governor-history/*.json"))
+    paths.extend((root / "build").glob("*/governor-summary.json"))
     try:
         paths.sort(key=lambda path: path.stat().st_mtime, reverse=True)
     except OSError:
         pass
     summaries: list[dict[str, Any]] = []
-    for path in paths[:limit]:
+    seen: set[tuple] = set()
+    for path in paths:
         payload = load_json(path, None)
         if isinstance(payload, dict):
+            identity = (payload.get("slug") or path.parent.name,
+                        payload.get("github_run_id"), payload.get("run_id"),
+                        payload.get("finished_at"))
+            if identity in seen:
+                continue
+            seen.add(identity)
             payload = dict(payload)
             payload["_path"] = str(path)
             summaries.append(payload)
+            if len(summaries) >= limit:
+                break
     return summaries
 
 

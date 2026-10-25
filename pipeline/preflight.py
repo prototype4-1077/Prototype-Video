@@ -24,6 +24,7 @@ import visual_symbols
 from governor import failure_fingerprint
 import operational_memory
 import graphic_plan
+import source_policy
 
 SCHEMA_VERSION = 1
 
@@ -65,6 +66,11 @@ def _block(code: str, message: str, *, stage: str = "preflight", store=None) -> 
 
 
 def _planned_still(scene: dict, script: dict) -> bool:
+    if source_policy.still_derived(scene):
+        return True
+    if (scene.get("narrative_mode") in {"storyboard", "literal_graphic"}
+            and (scene.get("graphic_backend") or script.get("graphic_backend")) == "blender_3d"):
+        return True
     if scene.get("motion_kind") == "video" or scene.get("motion_mode") in {
         "stock", "video", "generated_temporal_video", "limited_2_5d", "local_i2v", "paid_i2v"
     }:
@@ -104,7 +110,7 @@ def _still_budget(script: dict) -> dict[str, Any]:
             still_indexes.append(index)
     total = sum(weights) or 1.0
     ratio = sum(still_weights) / total
-    cap = float(script.get("max_still_source_ratio") or 1.0)
+    cap = source_policy.still_source_cap(script)
     return {
         "estimated_ratio": round(ratio, 6),
         "cap": round(cap, 6),
@@ -356,7 +362,11 @@ def assess(
             store=store,
         ))
 
-    still = _still_budget(script)
+    try:
+        still = _still_budget(script)
+    except (TypeError, ValueError) as exc:
+        still = {"passed": False, "estimated_ratio": 1.0, "cap": source_policy.MAX_STILL_SOURCE_RATIO,
+                 "used_exact_durations": False, "error": str(exc)}
     checks["planned_still_budget"] = still
     if not still["passed"]:
         blockers.append(_block(

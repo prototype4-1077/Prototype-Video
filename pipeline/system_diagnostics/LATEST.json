@@ -1,5 +1,19 @@
 {
   "authority_boundary": "This diagnostic may propose or apply deterministic infrastructure safeguards. It cannot rewrite narration, change science or political meaning, alter James's approved visual intent, publish, or promote experimental systems without the relevant approval gate.",
+  "collection_health": {
+    "external_signals": {
+      "generated_at": "2026-10-25T21:00:55+00:00",
+      "status": "success"
+    },
+    "public_statistics": {
+      "generated_at": "2026-10-25T17:05:27+00:00",
+      "status": "permission_or_network_error"
+    },
+    "retention": {
+      "generated_at": null,
+      "status": "not_recorded"
+    }
+  },
   "coverage": {
     "all_package_file_coverage": {
       "build_count": 125,
@@ -417,6 +431,34 @@
   },
   "findings": [
     {
+      "action": "Provide YT_API_KEY or refresh the OAuth grant with a YouTube read-capable scope. No statistics were fabricated.",
+      "area": "intelligence",
+      "automatic_patch": false,
+      "code": "collection_unhealthy:public_statistics",
+      "evidence": {
+        "source_health": null,
+        "status": "permission_or_network_error",
+        "updated_count": null
+      },
+      "priority": "high",
+      "status": "open",
+      "title": "Public Statistics is unavailable or incomplete"
+    },
+    {
+      "action": "Inspect the source health report; preserve unknowns and exclude missing measurements from creative scoring.",
+      "area": "intelligence",
+      "automatic_patch": false,
+      "code": "collection_unhealthy:retention",
+      "evidence": {
+        "source_health": null,
+        "status": "not_recorded",
+        "updated_count": null
+      },
+      "priority": "high",
+      "status": "open",
+      "title": "Retention is unavailable or incomplete"
+    },
+    {
       "action": "Resolve the root cause and attach a later verification occurrence before promotion.",
       "area": "operations",
       "automatic_patch": false,
@@ -464,6 +506,32 @@
       "priority": "medium",
       "status": "open",
       "title": "The evolution queue is flooded with taxonomy gaps"
+    },
+    {
+      "action": "Refresh the collector and persist its status even if the request fails. Historical file coverage cannot establish freshness.",
+      "area": "intelligence",
+      "automatic_patch": false,
+      "code": "collection_stale:retention",
+      "evidence": {
+        "generated_at": null,
+        "maximum_age_days": 2
+      },
+      "priority": "medium",
+      "status": "open",
+      "title": "Retention has no recent health observation"
+    },
+    {
+      "action": "Use James's editorial judgment and frontier exploration while repairing collection. Never turn missing retention into a zero-quality score.",
+      "area": "intelligence",
+      "automatic_patch": false,
+      "code": "intelligence_no_current_retention",
+      "evidence": {
+        "eligible_video_count": 0,
+        "joined_video_count": 23
+      },
+      "priority": "medium",
+      "status": "open",
+      "title": "No fresh audience-retention sample supports current winning-lane recommendations"
     },
     {
       "action": "Review candidate scope and counterexamples. Promote only candidates with a human decision and a regression test.",
@@ -787,7 +855,7 @@
       "title": "Permanent stock exclusion now has a measured supply signal"
     }
   ],
-  "generated_at": "2026-10-19T18:48:55+00:00",
+  "generated_at": "2026-10-25T21:09:31+00:00",
   "operational_memory": {
     "advisory_counts": {},
     "occurrence_count": 47,
@@ -836,6 +904,7 @@
       "receipt_file_exists": true
     }
   },
+  "render_provider_health": {},
   "schema_version": 1,
   "stock_supply": {
     "anchor_coverage_buckets": {
@@ -875,12 +944,12 @@
   },
   "summary": {
     "automatic_patch_candidates": 1,
-    "finding_count": 19,
-    "open_count": 19,
+    "finding_count": 23,
+    "open_count": 23,
     "priorities": {
-      "high": 2,
+      "high": 4,
       "low": 2,
-      "medium": 15
+      "medium": 17
     }
   },
   "visual_memory": {

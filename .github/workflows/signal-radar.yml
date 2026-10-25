@@ -3,6 +3,11 @@ name: External signal radar
 on:
   schedule:
     - cron: "20 12 * * *"
+  push:
+    branches: [main]
+    paths:
+      - "intelligence_stack/reach/**"
+      - ".github/workflows/signal-radar.yml"
   workflow_dispatch:
     inputs:
       live:
@@ -23,21 +28,20 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 2
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.11"
 
-      - name: Install Agent Reach capability layer
-        run: |
-          python -m pip install --quiet --upgrade pip
-          python -m pip install --quiet "agent-reach==1.4.0" || \
-            python -m pip install --quiet "https://github.com/Panniantong/Agent-Reach/archive/refs/tags/v1.4.0.zip"
+      - name: Verify native sensing capability
+        run: python3 -m py_compile intelligence_stack/reach/collect.py
 
       - name: Collect public signals
+        id: collect
+        continue-on-error: true
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -48,6 +52,7 @@ jobs:
           python3 intelligence_stack/reach/collect.py $live_flag
 
       - name: Validate minimized output
+        if: always()
         run: |
           python3 - <<'PY'
           import json
@@ -60,14 +65,20 @@ jobs:
           print('validated', payload['record_count'], 'external signals')
           PY
 
+      - name: Refresh evidence-aware intelligence
+        if: always()
+        run: python3 concept/intelligence.py --json-out concept/INTELLIGENCE_REPORT.json --markdown-out concept/INTELLIGENCE_REPORT.md
+
       - name: Commit signal brief
+        if: always()
         shell: bash
         run: |
           git config user.name "signal-radar-bot"
           git config user.email "signal-radar@users.noreply.github.com"
           git add \
             concept/external_signals/LATEST.json \
-            concept/external_signals/DAILY_SIGNAL_BRIEF.md
+            concept/external_signals/DAILY_SIGNAL_BRIEF.md \
+            concept/INTELLIGENCE_REPORT.json concept/INTELLIGENCE_REPORT.md
           git commit -m "signals: refresh external radar" || exit 0
           for i in 1 2 3 4 5; do
             git push && exit 0
@@ -76,3 +87,15 @@ jobs:
           done
           echo "unable to push external signal refresh" >&2
           exit 1
+
+      - name: Enforce live collection health
+        if: always()
+        env:
+          COLLECTOR_OUTCOME: ${{ steps.collect.outcome }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          status = json.load(open('concept/external_signals/LATEST.json', encoding='utf-8'))
+          assert os.environ['COLLECTOR_OUTCOME'] == 'success', status.get('source_health')
+          assert status['status'] in {'success', 'no_data'}, status.get('source_health')
+          PY

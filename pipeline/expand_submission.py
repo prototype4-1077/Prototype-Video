@@ -215,7 +215,8 @@ def expand(slug: str, build_dir=None) -> dict:
         "title": title, "slug": slug, "series_label": series,
         "visual_style": visual_style,
         "title_mode": "standalone" if not series else "series",
-        "genre": "concept", "science_fidelity": "metaphor",
+        "genre": sub.get("genre") or "concept",
+        "science_fidelity": sub.get("science_fidelity") or "metaphor",
         "evidence_boundary": sub.get("evidence_boundary")
         or "Figurative language in this script is illustrative metaphor, not a scientific claim.",
         "desired_movement": sub.get("desired_movement") or "",
@@ -224,7 +225,8 @@ def expand(slug: str, build_dir=None) -> dict:
         "invitation": sub.get("invitation") or texts[-1],
         "end_card_question": sub.get("end_card_question") or texts[-1],
         "optimization_target": "belief_analysis",
-        "target_duration_seconds": round(len(narration.split()) / 2.1, 1),
+        "target_duration_seconds": sub.get("target_duration_seconds", round(len(narration.split()) / 2.1, 1)),
+        "duration_mode": sub.get("duration_mode") or "estimate",
         # Long-form only by default. Shorts are paused; a submission can still
         # opt in explicitly with "render_outputs": ["youtube", "portrait"].
         "render_outputs": sub.get("render_outputs") or ["youtube"],
@@ -248,7 +250,7 @@ def expand(slug: str, build_dir=None) -> dict:
         "graphic_backend_policy": sub.get("graphic_backend_policy")
         or ("prefer_3d_with_2d_fallback" if graphic_backend == "blender_3d" else "2d_only"),
         "avoid_stock_ids": list(sub.get("avoid_stock_ids") or []),
-        "max_still_source_ratio": 0.50,
+        "max_still_source_ratio": 0.35,
         "still_image_policy": "closest_stock_frame_full_enhancement",
         "music_choice": 3, "music_variant_count": 1,
         "caption_policy": "minimal_keywords_only",

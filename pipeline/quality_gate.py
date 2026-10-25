@@ -335,6 +335,20 @@ def run_quality_gate(build_dir: str | os.PathLike[str], *, deep: bool = True) ->
             deep=target_deep,
             min_dimension=CURATION_MIN_DIMENSION if curation_mode else MIN_DIMENSION,
         )
+        exact = script.get("exact_duration_seconds")
+        if exact is None and script.get("duration_mode") == "exact":
+            exact = script.get("target_duration_seconds")
+        if exact is not None and not curation_mode and name != "short":
+            target = _float(exact)
+            actual = (output.get("probe") or {}).get("duration_s")
+            if target is None or target <= 0:
+                output["failures"].append(_issue("invalid_exact_duration", name, "Exact duration must be finite and positive"))
+            elif actual is not None and abs(actual - target) > 0.5:
+                output["failures"].append(_issue(
+                    "exact_duration_mismatch", name,
+                    f"Explicit duration {target:.3f}s differs from final media {actual:.3f}s",
+                    expected=target, actual=actual, tolerance=0.5,
+                ))
         outputs[name] = output
         failures.extend(output["failures"])
         warnings.extend(output["warnings"])

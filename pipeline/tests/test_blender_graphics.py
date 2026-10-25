@@ -75,6 +75,7 @@ class BlenderGraphicsTests(unittest.TestCase):
                     "plan": {
                         "schema_version": 1,
                         "variant": 4,
+                        "render": {"strategy": "keyframe_composite"},
                     },
                 }
 
@@ -90,6 +91,7 @@ class BlenderGraphicsTests(unittest.TestCase):
             self.assertEqual(result["graphic_variant"], 4)
             self.assertEqual(script["scenes"][0]["motion_source"], "blender_3d_storyboard")
             self.assertTrue(script["scenes"][0]["motion_verified"])
+            self.assertEqual(script["scenes"][0]["motion_kind"], "animated_still")
 
     def test_unknown_kind_is_rejected_before_blender_launch(self):
         scene = self._scene("unknown")

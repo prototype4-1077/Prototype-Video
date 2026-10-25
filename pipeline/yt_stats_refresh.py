@@ -142,7 +142,7 @@ def rates(stats: dict[str, Any], published_at: Any, now: dt.datetime) -> dict[st
 
 def refresh(repo_root: Path = ROOT) -> dict[str, Any]:
     catalog = receipts()
-    ids = [item["video_id"] for item in catalog.values()]
+    ids = sorted({item["video_id"] for item in catalog.values()})
     now = dt.datetime.now(dt.timezone.utc).replace(microsecond=0)
     status: dict[str, Any] = {
         "schema_version": 1,
@@ -152,6 +152,10 @@ def refresh(repo_root: Path = ROOT) -> dict[str, Any]:
         "updated": [],
         "missing_from_api": [],
     }
+    if not catalog:
+        status.update({"status": "no_data", "updated_count": 0, "reason": "No published-video receipts"})
+        atomic_json(STATUS, status)
+        return status
     try:
         headers, params, auth_mode = authorization()
         status["auth_mode"] = auth_mode
@@ -173,6 +177,8 @@ def refresh(repo_root: Path = ROOT) -> dict[str, Any]:
                 "No statistics were fabricated."
             ),
         })
+        if '"disabled_client"' in body:
+            status["required_action"] = "Re-enable or replace the disabled OAuth client and reauthorize YouTube read access. A token refresh alone cannot repair a disabled client. No statistics were fabricated."
         atomic_json(STATUS, status)
         return status
 
@@ -208,10 +214,24 @@ def refresh(repo_root: Path = ROOT) -> dict[str, Any]:
             ),
         }
         target = repo_root / "build" / slug / "yt_stats.json"
+        if output["views"] is None:
+            status["missing_from_api"].append(slug)
+            continue
+        # Preserve previously measured retention before refreshing public counts.
+        previous = load(target, {})
+        retention_path = target.with_name("retention_stats.json")
+        if "avg_view_pct" in previous and not retention_path.exists():
+            migrated = {key: previous.get(key) for key in (
+                "views", "minutes_watched", "avg_view_s", "avg_view_pct") if key in previous}
+            migrated["retention_snapshot_at"] = previous.get("retention_snapshot_at")
+            if previous.get("source") != "youtube_data_api_v3_videos_list":
+                migrated["retention_snapshot_at"] = migrated["retention_snapshot_at"] or previous.get("snapshot_at")
+            migrated["source"] = "legacy_retention_snapshot"
+            atomic_json(retention_path, migrated)
         atomic_json(target, output)
         status["updated"].append(slug)
     status.update({
-        "status": "success",
+        "status": "success" if not status["missing_from_api"] else ("partial" if status["updated"] else "no_updates"),
         "api_item_count": len(items),
         "updated_count": len(status["updated"]),
         "missing_count": len(status["missing_from_api"]),
@@ -226,7 +246,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     report = refresh(Path(args.repo_root).resolve())
     print(json.dumps(report, indent=2, ensure_ascii=False))
-    return 0 if report.get("status") == "success" else 2
+    return 0 if report.get("status") in {"success", "no_data"} else 2
 
 
 if __name__ == "__main__":

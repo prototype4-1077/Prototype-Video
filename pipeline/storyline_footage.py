@@ -7,6 +7,7 @@ stock match survives, a deterministic literal storyboard is rendered instead.
 from __future__ import annotations
 
 import json
+import hashlib
 from pathlib import Path
 import sys
 
@@ -35,12 +36,24 @@ def _gated_rank(query, vids, need=None, genre=None, profile=None):
     accepted, decisions = narrative_fidelity.rerank(
         scene, scored, _CURRENT["index"], _CURRENT["total"]
     )
-    _CURRENT["decisions"] = decisions
-    if narrative_fidelity.direct_match_required(
-        scene, _CURRENT["index"], _CURRENT["total"]
-    ) and not accepted:
-        raise NoNarrativeMatch(decisions)
-    return accepted or scored
+    _CURRENT.setdefault("decisions", []).extend(decisions)
+    if not accepted:
+        raise NoNarrativeMatch(_CURRENT["decisions"])
+    return accepted
+
+
+def _audit_selected(scene, index, total):
+    stock_id = scene.get("stock_id") or scene.get("pexels_id")
+    if not stock_id:
+        return
+    candidate = {"id": stock_id, "url": scene.get("source_url"), "title": scene.get("source_title")}
+    ok, coverage, reason = narrative_fidelity.acceptable(scene, candidate, index, total)
+    decision = {"stock_id": stock_id, "anchor_coverage": round(coverage, 3),
+                "accepted": ok, "reason": reason, "selected_asset": True,
+                "source_url": candidate["url"], "source_title": candidate["title"]}
+    _CURRENT.setdefault("decisions", []).append(decision)
+    if not ok:
+        raise NoNarrativeMatch(_CURRENT["decisions"])
 
 
 def _write_report(build_dir: str, rows: list[dict]):
@@ -53,8 +66,12 @@ def _write_report(build_dir: str, rows: list[dict]):
     merged = {int(row.get("scene_index", -1)): row for row in existing or []}
     for row in rows:
         merged[int(row.get("scene_index", -1))] = row
+    script = json.loads((Path(build_dir) / "script.json").read_text(encoding="utf-8"))
+    narration = "\n".join(str(scene.get("text") or "") for scene in script.get("scenes") or [])
     path.write_text(json.dumps({
-        "schema_version": 1,
+        "schema_version": 2,
+        "narration_sha256": hashlib.sha256(narration.encode()).hexdigest(),
+        "measurement_boundary": "Metadata anchor coverage is a screening test, not frame-level proof; James's scene review remains required.",
         "policy": narrative_fidelity.rules(),
         "scenes": [merged[key] for key in sorted(merged) if key >= 0],
     }, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
@@ -109,8 +126,15 @@ def _try_effects_still(build_dir, script, index):
             or scene.get("query") or scene.get("text")
         )
     scene["hero_style"] = scene.get("hero_style") or EFFECTS_STILL_STYLE
+    # hero.main operates on disk; persist this scene's newly authored prompt,
+    # then reload its result so the caller cannot overwrite generated metadata.
+    script_path = Path(build_dir) / "script.json"
+    script_path.write_text(json.dumps(script, indent=1, ensure_ascii=False), encoding="utf-8")
     try:
         hero.main(build_dir, index)
+        generated = json.loads(script_path.read_text(encoding="utf-8"))["scenes"][index]
+        scene.clear()
+        scene.update(generated)
     except Exception as exc:  # provider down, etc.
         print(f"scene {index}: effects-still generation failed ({exc})")
         scene.pop("hero", None)
@@ -121,6 +145,8 @@ def _try_effects_still(build_dir, script, index):
 def _render_storyboard(build_dir: str, script: dict, index: int, reason: str,
                        decisions=None, used=None, prefer_storyboard=False):
     scene = script["scenes"][index]
+    if scene.get("stock_id") or scene.get("pexels_id"):
+        _clear_rejected_stock(build_dir, scene, index)
     # An authored/inferred mechanism uses the approved literal motion-graphics
     # grammar. Generic no-stock failures retain the effects-still fallback.
     if not prefer_storyboard and _try_effects_still(build_dir, script, index):
@@ -130,6 +156,11 @@ def _render_storyboard(build_dir: str, script: dict, index: int, reason: str,
             "result": "effects_still",
             "fallback_reason": f"{reason}; special-effects still (no stock match)",
         }
+    if not prefer_storyboard:
+        raise RuntimeError(
+            f"scene {index}: no matching stock or enhanced still is available; "
+            "supply a literal asset instead of substituting a plain 2D graphic"
+        )
     try:
         plan = storyboard.render_scene(build_dir, script, index)
     except RuntimeError as exc:
@@ -142,21 +173,10 @@ def _render_storyboard(build_dir: str, script: dict, index: int, reason: str,
                 "result": "effects_still",
                 "fallback_reason": f"{reason}; storyboard lacked motion; special-effects still",
             }
-        # Standing rule: if generation fails, use stock video. A deterministic
-        # near-static graphic will fail identically on retry, so re-route to a
-        # genuine stock search instead of burning the retry budget. This path
-        # only triggers when BOTH literal routes are impossible, so the direct-
-        # match gate is relaxed (atmosphere) rather than letting the run die.
-        scene["narrative_mode"] = "atmosphere"
-        print(f"scene {index}: generated storyboard failed motion gate; "
-              f"falling back to genuine stock as atmosphere ({exc})")
-        footage.fetch_scene(build_dir, script, index, used if used is not None else set())
-        return {
-            "scene_index": int(index),
-            "result": "stock_fallback_from_storyboard",
-            "fallback_reason": f"{reason}; storyboard lacked motion",
-            "stock_id": scene.get("stock_id") or scene.get("pexels_id"),
-        }
+        raise RuntimeError(
+            f"scene {index}: no literal visual passed; improve the stock query or supply "
+            "a matching asset. Narrative fidelity will not be relaxed after generation fails."
+        ) from exc
     plan["fallback_reason"] = reason
     if decisions is not None:
         plan["candidate_decisions"] = decisions
@@ -197,7 +217,9 @@ def main(build_dir: str, idx: str | None = None):
                 "text": scene.get("text"),
                 "query": scene.get("query"),
                 "narrative_mode_before": scene.get("narrative_mode"),
+                "result": "selection_incomplete",
             }
+            report_rows.append(row)
             current_id = scene.get("stock_id") or scene.get("pexels_id")
             current_video = {
                 "id": current_id,
@@ -214,7 +236,7 @@ def main(build_dir: str, idx: str | None = None):
             )
             if rejected_existing or (
                 current_id
-                and narrative_fidelity.direct_match_required(scene, position, span)
+                and (scene.get("source_url") or (Path(build_dir) / f"clip_{index:02d}.mp4").exists())
                 and not existing_ok
             ):
                 reason = (
@@ -236,6 +258,7 @@ def main(build_dir: str, idx: str | None = None):
                 else:
                     try:
                         footage.fetch_scene(build_dir, script, index, used)
+                        _audit_selected(scene, position, span)
                         row.update({
                             "result": "stock_replaced",
                             "stock_id": scene.get("stock_id") or scene.get("pexels_id"),
@@ -264,6 +287,7 @@ def main(build_dir: str, idx: str | None = None):
             else:
                 try:
                     footage.fetch_scene(build_dir, script, index, used)
+                    _audit_selected(scene, position, span)
                     row.update({
                         "result": "stock",
                         "stock_id": scene.get("stock_id") or scene.get("pexels_id"),
@@ -291,10 +315,14 @@ def main(build_dir: str, idx: str | None = None):
                     )
                     row.update({"result": plan.get("result", "literal_storyboard"), "plan": plan})
             script_path.write_text(json.dumps(script, indent=1, ensure_ascii=False), encoding="utf-8")
-            report_rows.append(row)
+            row.setdefault("candidate_decisions", _CURRENT.get("decisions") or [])
     finally:
+        for row in report_rows:
+            if row.get("result") == "selection_incomplete":
+                row["result"] = "blocked"
+                row["candidate_decisions"] = _CURRENT.get("decisions") or []
         footage.rank = _ORIGINAL_RANK
-    _write_report(build_dir, report_rows)
+        _write_report(build_dir, report_rows)
     visual_symbols.write_report(build_dir, script, profile)
 
 

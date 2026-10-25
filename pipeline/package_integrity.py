@@ -36,7 +36,7 @@ EXACT_EXCLUDES = {
     "music_variants.json",
     "CREDITS.txt",
 }
-EXCLUDED_DIRS = {"governor", "telemetry", "alts", "__pycache__"}
+EXCLUDED_DIRS = {"governor-history", "governor", "telemetry", "alts", "__pycache__"}
 EXCLUDED_PREFIXES = (
     "clip_", "seg_", "youtube_seg_", "final", "emb_", "cap_", "youtube_cap_",
 )

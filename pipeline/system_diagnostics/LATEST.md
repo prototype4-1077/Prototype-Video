@@ -1,10 +1,22 @@
 # System Diagnostic
 
-Generated: 2026-10-19T18:48:55+00:00
+Generated: 2026-10-25T21:09:31+00:00
 
-Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
+Findings: 23 — priorities {"high": 4, "low": 2, "medium": 17}
 
 ## Action queue
+
+### [HIGH] Public Statistics is unavailable or incomplete
+- Area: `intelligence`
+- Code: `collection_unhealthy:public_statistics`
+- Evidence: {"source_health": null, "status": "permission_or_network_error", "updated_count": null}
+- Action: Provide YT_API_KEY or refresh the OAuth grant with a YouTube read-capable scope. No statistics were fabricated.
+
+### [HIGH] Retention is unavailable or incomplete
+- Area: `intelligence`
+- Code: `collection_unhealthy:retention`
+- Evidence: {"source_health": null, "status": "not_recorded", "updated_count": null}
+- Action: Inspect the source health report; preserve unknowns and exclude missing measurements from creative scoring.
 
 ### [HIGH] Open Incident
 - Area: `operations`
@@ -23,6 +35,18 @@ Findings: 19 — priorities {"high": 2, "low": 2, "medium": 15}
 - Code: `evolution_taxonomy_gap_flood`
 - Evidence: {"count": 102, "examples": ["a-chair-not-a-throne", "awake-inside-the-dream", "belief-is-gravity", "beliefs-are-software-updates", "black-wall-street-ep1-the-elevator", "black-wall-street-ep2-one-shot", "can-you-fly", "can-you-fly-v3", "deepest-sleep", "different-screens", "dispatch-path-selftest", "dmt-customs", "dmt-loading-screen", "dmt-other-side-of-the-door", "dmt-the-understudy"]}
 - Action: Separate legacy packages missing metadata from genuinely novel concepts before treating every uncataloged slug as a map failure.
+
+### [MEDIUM] Retention has no recent health observation
+- Area: `intelligence`
+- Code: `collection_stale:retention`
+- Evidence: {"generated_at": null, "maximum_age_days": 2}
+- Action: Refresh the collector and persist its status even if the request fails. Historical file coverage cannot establish freshness.
+
+### [MEDIUM] No fresh audience-retention sample supports current winning-lane recommendations
+- Area: `intelligence`
+- Code: `intelligence_no_current_retention`
+- Evidence: {"eligible_video_count": 0, "joined_video_count": 23}
+- Action: Use James's editorial judgment and frontier exploration while repairing collection. Never turn missing retention into a zero-quality score.
 
 ### [MEDIUM] Stored feedback has been organized into provisional rule candidates
 - Area: `learning`

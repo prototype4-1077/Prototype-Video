@@ -542,6 +542,8 @@ def _synthesize_chunked(root: Path, voice_id: str, payload: dict,
 def tts(build_dir: str | os.PathLike[str]) -> None:
     root = Path(build_dir)
     script = _read_script(root)
+    if script.get("user_vo") or list(root.glob("vo.mp3.b64.part*")):
+        raise RuntimeError("supplied narration is authoritative; TTS must not replace it")
     (
         voice_id,
         model_id,

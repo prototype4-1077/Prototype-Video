@@ -9,6 +9,7 @@ then advances the build as far as it can within a ~30s budget and exits with:
     ERROR: <what> | FIX: <how>      -> fix, then run again
 Every step is resumable; running again never breaks anything."""
 import json, os, re, shutil, subprocess, sys, tempfile, time, urllib.request
+from pathlib import Path
 
 import motion
 import hero
@@ -18,6 +19,7 @@ import profiles
 import review
 import still_reference
 import visual_symbols
+import supplied_media
 
 T0 = time.time()
 BUDGET = 30
@@ -148,6 +150,7 @@ def main(bd):
     load_env()
     ensure_fonts()
     s = validate(bd)
+    supplied_media.validate(Path(bd))
     n = len(s["scenes"])
     py = sys.executable
 

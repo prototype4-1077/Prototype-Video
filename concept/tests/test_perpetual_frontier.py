@@ -84,8 +84,8 @@ class PerpetualFrontierTests(unittest.TestCase):
         }
         (root / "build" / "alpha" / "script.json").write_text(json.dumps(alpha), encoding="utf-8")
         (root / "build" / "beta" / "script.json").write_text(json.dumps(beta), encoding="utf-8")
-        (root / "build" / "alpha" / "yt_stats.json").write_text(json.dumps({"views": 10000, "avg_view_pct": 55}), encoding="utf-8")
-        (root / "build" / "beta" / "yt_stats.json").write_text(json.dumps({"views": 100, "avg_view_pct": 20}), encoding="utf-8")
+        (root / "build" / "alpha" / "yt_stats.json").write_text(json.dumps({"views": 10000, "avg_view_pct": 55, "retention_snapshot_at": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat()}), encoding="utf-8")
+        (root / "build" / "beta" / "yt_stats.json").write_text(json.dumps({"views": 100, "avg_view_pct": 20, "retention_snapshot_at": __import__("datetime").datetime.now(__import__("datetime").timezone.utc).isoformat()}), encoding="utf-8")
         feedback = {
             "overall": {"decision": "revise"},
             "scenes": [

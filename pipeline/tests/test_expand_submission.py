@@ -36,7 +36,7 @@ class ExpandSubmissionTests(unittest.TestCase):
             self.assertNotIn("symbol_family", scene)
             self.assertEqual(script["visual_policy"]["max_family_run"], 6)
             self.assertEqual(script["visual_policy"]["min_families"], 4)
-            self.assertEqual(script["max_still_source_ratio"], 0.50)
+            self.assertEqual(script["max_still_source_ratio"], 0.35)
             self.assertNotIn("[with quiet intensity]", (build / "source-script.txt").read_text())
 
     def test_motion_graphics_profile_routes_scenes_and_preserves_intent(self):

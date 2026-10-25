@@ -4,18 +4,21 @@ Reads pipeline/published_videos.json (slug -> youtube_id, mapped via
 `learn.py published <slug> <video_id>`), pulls each video's 100-point audience
 retention curve plus summary stats, writes build/<slug>/retention.json and
 yt_stats.json, then applies learn.audience() and refreshes WHATS_WORKING.md.
-Exits 0 with a notice when credentials are absent so the scheduled workflow
-stays green before setup. Setup guide: pipeline/ANALYTICS.md."""
+Persists structured collection status and fails when required access is unavailable.
+Setup guide: pipeline/ANALYTICS.md."""
 import json
 import os
 import sys
 import urllib.parse
 import urllib.request
-from datetime import date
+from datetime import date, datetime, timezone
+from pathlib import Path
+import urllib.error
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
 import learn  # noqa: E402
+from yt_stats_refresh import atomic_json
 
 TOKEN_URL = "https://oauth2.googleapis.com/token"
 API = "https://youtubeanalytics.googleapis.com/v2/reports"
@@ -47,54 +50,57 @@ def query(token, video_id, dimensions, metrics):
 
 
 def main():
-    token = access_token()
-    if not token:
-        print("analytics: YT_CLIENT_ID/YT_CLIENT_SECRET/YT_REFRESH_TOKEN not set; "
-              "see pipeline/ANALYTICS.md")
-        return 0
-    pub = os.path.join(HERE, "published_videos.json")
-    if not os.path.exists(pub):
-        print("analytics: nothing mapped yet; after each upload run "
-              "`python3 pipeline/learn.py published <slug> <video_id>`")
-        return 0
-    with open(pub) as f:
-        published = json.load(f)
+    now = datetime.now(timezone.utc).isoformat()
+    status_path = Path(HERE) / "analytics_status.json"
+    status = {"schema_version": 1, "generated_at": now, "updated": [], "no_data": [], "errors": []}
+    pub = Path(HERE) / "published_videos.json"
+    published = json.loads(pub.read_text()) if pub.exists() else {}
+    def finish(state, code):
+        status["status"] = state
+        status["updated_count"] = len(status["updated"])
+        atomic_json(status_path, status)
+        print(json.dumps(status, indent=2))
+        return code
+    if not published:
+        return finish("no_data", 0)
+    try:
+        token = access_token()
+        if not token:
+            status["required_action"] = "Configure YouTube Analytics OAuth read access; public statistics cannot supply retention."
+            return finish("not_configured", 2)
+    except (urllib.error.URLError, TimeoutError, KeyError, ValueError) as exc:
+        # Do not retain request data or credential-bearing response bodies.
+        status["errors"].append({"stage": "authorization", "error_type": type(exc).__name__, "http_status": getattr(exc, "code", None)})
+        status["required_action"] = "Repair the YouTube OAuth client/grant and authorize yt-analytics.readonly."
+        return finish("authorization_failed", 2)
     for slug, info in published.items():
         vid = info.get("youtube_id") if isinstance(info, dict) else str(info)
-        bd = os.path.normpath(os.path.join(HERE, "..", "build", slug))
-        if not os.path.isdir(bd):
-            print(f"analytics: {slug}: no build dir, skipping")
+        bd = Path(HERE).parent / "build" / slug
+        if not bd.is_dir():
+            status["errors"].append({"slug": slug, "stage": "mapping", "error_type": "missing_build"})
             continue
         try:
-            rows = query(token, vid, "elapsedVideoTimeRatio",
-                         "audienceWatchRatio,relativeRetentionPerformance").get("rows") or []
-            stats = query(token, vid, "",
-                          "views,estimatedMinutesWatched,averageViewDuration,"
-                          "averageViewPercentage").get("rows") or []
+            rows = query(token, vid, "elapsedVideoTimeRatio", "audienceWatchRatio,relativeRetentionPerformance").get("rows") or []
+            stats = query(token, vid, "", "views,estimatedMinutesWatched,averageViewDuration,averageViewPercentage").get("rows") or []
+            if not rows:
+                status["no_data"].append(slug)
+                continue
+            payload = {"video_id": vid, "snapshot_at": now,
+                       "elapsed": [r[0] for r in rows], "watch_ratio": [r[1] for r in rows],
+                       "relative_performance": [r[2] for r in rows]}
+            atomic_json(bd / "retention.json", payload)
+            if stats:
+                measured = dict(zip(["views", "minutes_watched", "avg_view_s", "avg_view_pct"], stats[0]))
+                measured.update({"video_id": vid, "retention_snapshot_at": now, "source": "youtube_analytics_api_v2"})
+                atomic_json(bd / "retention_stats.json", measured)
+            learn.audience(str(bd), str(bd / "retention.json"))
+            status["updated"].append(slug)
         except Exception as exc:
-            print(f"analytics: {slug}: API error: {exc}")
-            continue
-        if not rows:
-            print(f"analytics: {slug}: no retention rows yet")
-            continue
-        payload = {"video_id": vid,
-                   "elapsed": [r[0] for r in rows],
-                   "watch_ratio": [r[1] for r in rows],
-                   "relative_performance": [r[2] for r in rows]}
-        rpath = os.path.join(bd, "retention.json")
-        with open(rpath, "w") as f:
-            json.dump(payload, f, indent=1)
-        if stats:
-            with open(os.path.join(bd, "yt_stats.json"), "w") as f:
-                json.dump(dict(zip(
-                    ["views", "minutes_watched", "avg_view_s", "avg_view_pct"],
-                    stats[0])), f, indent=1)
-        try:
-            learn.audience(bd, rpath)
-        except Exception as exc:
-            print(f"analytics: {slug}: learning error: {exc}")
+            status["errors"].append({"slug": slug, "stage": "collection_or_learning", "error_type": type(exc).__name__, "http_status": getattr(exc, "code", None)})
     learn.digest()
-    return 0
+    if status["errors"]:
+        return finish("partial" if status["updated"] else "failed", 2)
+    return finish("success" if status["updated"] else "no_data", 0)
 
 
 if __name__ == "__main__":

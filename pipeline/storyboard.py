@@ -836,9 +836,10 @@ def render_scene(build_dir: str, script: dict, index: int) -> dict:
                 {
                     "clip": str(output),
                     "narrative_mode": "literal_graphic",
-                    "motion_kind": motion.VIDEO,
-                    "motion_mode": "generated_graphic",
+                    "motion_kind": motion.ANIMATED,
+                    "motion_mode": "keyframes",
                     "motion_source": "blender_3d_storyboard",
+                    "graphic_render_strategy": plan_3d["render"]["strategy"],
                     "motion_verified": True,
                     "motion_evidence": evidence,
                     "storyboard_generated": True,

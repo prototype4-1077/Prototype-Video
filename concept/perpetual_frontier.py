@@ -68,14 +68,16 @@ def _norm_words(text: str) -> list[str]:
     return re.findall(r"[a-z0-9']+", str(text).lower())
 
 
-def _performance_score(stats: Mapping[str, Any]) -> float:
-    views = max(_float(stats.get("views")), 0.0)
-    retention = _float(stats.get("avg_view_pct") or stats.get("average_view_percentage"))
-    completion = _float(stats.get("completion_rate"))
-    likes = _float(stats.get("likes"))
-    comments = _float(stats.get("comments"))
-    reach = math.log10(views + 1.0)
-    return round(reach * max(retention, completion, 1.0) + math.log10(likes + comments + 1.0) * 5.0, 4)
+def _performance_score(stats: Mapping[str, Any]) -> float | None:
+    try:
+        from .evidence import audience_evidence
+    except ImportError:
+        try:
+            from concept.evidence import audience_evidence
+        except ImportError:
+            from evidence import audience_evidence
+    result = audience_evidence(stats)
+    return result["score"] if result["eligible_for_recommendation"] else None
 
 
 def _overall_decision(feedback: Mapping[str, Any]) -> str | None:

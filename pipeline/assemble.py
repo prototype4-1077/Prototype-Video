@@ -13,6 +13,7 @@ import json, os, shutil, subprocess, sys
 import audio_variants
 import motion
 import profiles
+import render_policy
 from video_format import (
     BAND_HEIGHT, BAND_WIDTH, BAND_Y, FPS, HEIGHT, WIDTH,
     YOUTUBE_HEIGHT, YOUTUBE_WIDTH,
@@ -204,15 +205,11 @@ def concat(bd, output_format="portrait"):
     final_name = "final_youtube.mp4" if youtube else "final.mp4"
     if vo and variants:
         variants = audio_variants.require(s, bd)
-        for i, item in enumerate(variants, 1):
-            name = (audio_variants.youtube_video_name(i) if youtube
-                    else audio_variants.video_name(i))
+        for position, item in enumerate(variants):
+            name = render_policy.video_name(output_format, position, item)
             output = f"{bd}/{name}"
             audio_variants.mix(noaudio, f"{bd}/{vo}", f"{bd}/{item['file']}", total, output)
             print(f"{os.path.basename(output)} done: {item['label']}")
-        first = (audio_variants.youtube_video_name(1) if youtube
-                 else audio_variants.video_name(1))
-        shutil.copy(f"{bd}/{first}", f"{bd}/{final_name}")
         audio_variants.write_manifest(bd, variants)
     elif vo:
         run(["ffmpeg", "-v", "error", "-y", "-i", noaudio,

@@ -86,6 +86,7 @@ def probe_audio(path: Path) -> tuple[str, float]:
             check=True,
             capture_output=True,
             text=True,
+            timeout=30,
         )
         info = json.loads(completed.stdout)["format"]
         return str(info["format_name"]), float(info["duration"])

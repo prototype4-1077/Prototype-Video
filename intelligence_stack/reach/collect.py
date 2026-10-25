@@ -18,6 +18,7 @@ import subprocess
 import urllib.error
 import urllib.request
 import xml.etree.ElementTree as ET
+from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -51,9 +52,12 @@ def doctor_report() -> dict[str, Any]:
     executable = shutil.which("agent-reach")
     if not executable:
         return {"available": False, "status": "not_installed"}
-    result = subprocess.run(
-        [executable, "doctor"], capture_output=True, text=True, timeout=120, check=False
-    )
+    try:
+        result = subprocess.run(
+            [executable, "doctor"], capture_output=True, text=True, timeout=30, check=False
+        )
+    except (OSError, subprocess.TimeoutExpired) as exc:
+        return {"available": True, "status": "unavailable", "error_type": type(exc).__name__}
     return {
         "available": True,
         "returncode": result.returncode,
@@ -83,57 +87,68 @@ def base_record(
     }
 
 
-def collect_github(config: dict[str, Any], limit: int) -> list[dict[str, Any]]:
-    if not shutil.which("gh"):
-        return []
-    records: list[dict[str, Any]] = []
-    env = os.environ.copy()
-    if env.get("GITHUB_TOKEN") and not env.get("GH_TOKEN"):
-        env["GH_TOKEN"] = env["GITHUB_TOKEN"]
+def source_status(diagnostics, source, target, status, count=0, error=None):
+    if diagnostics is not None:
+        diagnostics.append({"source": source, "target": target, "status": status,
+                            "record_count": count, "error_type": type(error).__name__ if error else None})
+
+
+def collect_github(config: dict[str, Any], limit: int, diagnostics=None) -> list[dict[str, Any]]:
+    records = []
+    # Standard-library API access removes the optional Agent Reach / gh install dependency.
+    headers = {"Accept": "application/vnd.github+json", "User-Agent": "Prototype-Video-Signal-Radar/2.0"}
+    token = os.environ.get("GH_TOKEN") or os.environ.get("GITHUB_TOKEN")
+    if token:
+        headers["Authorization"] = "Bearer " + token
     for repo in config.get("github_repositories", []):
-        result = subprocess.run(
-            ["gh", "api", f"repos/{repo}/releases?per_page={limit}"],
-            capture_output=True, text=True, timeout=90, check=False, env=env,
-        )
-        if result.returncode != 0:
+        if not re.fullmatch(r"[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+", str(repo)):
+            source_status(diagnostics, "github_release", str(repo), "invalid_config")
             continue
         try:
-            releases = json.loads(result.stdout)
-        except json.JSONDecodeError:
+            request = urllib.request.Request(f"https://api.github.com/repos/{repo}/releases?per_page={limit}", headers=headers)
+            with urllib.request.urlopen(request, timeout=20) as response:
+                releases = json.load(response)
+            if not isinstance(releases, list):
+                raise ValueError("GitHub releases response must be a list")
+        except (OSError, ValueError) as exc:
+            source_status(diagnostics, "github_release", repo, "failed", error=exc)
             continue
-        for release in releases if isinstance(releases, list) else []:
+        source_status(diagnostics, "github_release", repo, "success", len(releases))
+        for release in releases:
+            if release.get("draft"):
+                continue
             records.append(base_record(
-                source="github_release",
-                title=f"{repo}: {release.get('name') or release.get('tag_name') or 'release'}",
-                url=release.get("html_url") or "",
-                excerpt=release.get("body") or "",
-                query=repo,
+                source="github_release", title=f"{repo}: {release.get('name') or release.get('tag_name') or 'release'}",
+                url=release.get("html_url") or "", excerpt=release.get("body") or "", query=repo,
                 published_at=release.get("published_at") or release.get("created_at"),
-                signal_type="tool_release",
-                raw={"repository": repo, "tag": release.get("tag_name")},
+                signal_type="tool_release", raw={"repository": repo, "tag": release.get("tag_name")},
             ))
     return records
 
 
-def collect_youtube(config: dict[str, Any], limit: int) -> list[dict[str, Any]]:
+def collect_youtube(config: dict[str, Any], limit: int, diagnostics=None) -> list[dict[str, Any]]:
     executable = shutil.which("yt-dlp")
     if not executable:
+        source_status(diagnostics, "youtube_search", "yt-dlp", "optional_tool_missing")
         return []
     records: list[dict[str, Any]] = []
     for query in config.get("youtube_queries", []):
         result = subprocess.run(
             [
                 executable, "--dump-single-json", "--flat-playlist", "--skip-download",
-                f"ytsearch{limit}:{query}",
+                "--socket-timeout", "15", "--retries", "1", f"ytsearch{limit}:{query}",
             ],
-            capture_output=True, text=True, timeout=180, check=False,
+            capture_output=True, text=True, timeout=60, check=False,
         )
         if result.returncode != 0:
+            source_status(diagnostics, "youtube_search", query, "failed")
             continue
         try:
             payload = json.loads(result.stdout)
-        except json.JSONDecodeError:
+        except json.JSONDecodeError as exc:
+            source_status(diagnostics, "youtube_search", query, "failed", error=exc)
             continue
+        source_status(diagnostics, "youtube_search", query, "success", len(payload.get("entries") or []))
         for entry in payload.get("entries") or []:
             video_id = entry.get("id")
             url = entry.get("url") or (
@@ -167,19 +182,21 @@ def _find_text(element: ET.Element, names: Iterable[str]) -> str:
     return ""
 
 
-def collect_rss(config: dict[str, Any], limit: int) -> list[dict[str, Any]]:
+def collect_rss(config: dict[str, Any], limit: int, diagnostics=None) -> list[dict[str, Any]]:
     records: list[dict[str, Any]] = []
     headers = {"User-Agent": "Prototype-Video-Signal-Radar/1.0"}
     for feed in config.get("rss_feeds", []):
         try:
             request = urllib.request.Request(feed["url"], headers=headers)
-            with urllib.request.urlopen(request, timeout=45) as response:
+            with urllib.request.urlopen(request, timeout=20) as response:
                 root = ET.fromstring(response.read())
-        except (OSError, KeyError, ET.ParseError, urllib.error.URLError):
+        except (OSError, KeyError, ET.ParseError, urllib.error.URLError) as exc:
+            source_status(diagnostics, "rss", feed.get("name", "feed"), "failed", error=exc)
             continue
-        items = list(root.findall(".//item"))
+        items = [node for node in root.iter() if node.tag.rsplit("}", 1)[-1] == "item"]
         if not items:
             items = [node for node in root.iter() if node.tag.rsplit("}", 1)[-1] == "entry"]
+        source_status(diagnostics, "rss", feed.get("name", "feed"), "success", min(len(items), limit))
         for item in items[:limit]:
             title = _find_text(item, ("title",))
             link = _find_text(item, ("link",))
@@ -281,7 +298,7 @@ def brief_markdown(records: list[dict[str, Any]], doctor: dict[str, Any]) -> str
             items, key=lambda value: -value.get("editorial_relevance_score", 0)
         )[:8]:
             lines.append(
-                f"- **{item.get('title') or 'Untitled'}** — {item.get('source')} "
+                f"- **[{item.get('title') or 'Untitled'}]({item.get('url') or ''})** — {item.get('source')} "
                 f"(score {item.get('editorial_relevance_score', 0)}). "
                 f"{item.get('excerpt') or 'No excerpt retained.'}"
             )
@@ -309,10 +326,19 @@ def main() -> int:
     limit = int(config.get("limits", {}).get("per_query", 6))
     records = ingest_jsonl(args.ingest)
     doctor = doctor_report()
+    diagnostics = []
     if args.live:
-        records.extend(collect_github(config, limit))
-        records.extend(collect_youtube(config, limit))
-        records.extend(collect_rss(config, limit))
+        def collect(fn):
+            health = []
+            try:
+                return fn(config, limit, diagnostics=health), health
+            except (OSError, ValueError, subprocess.SubprocessError) as exc:
+                source_status(health, fn.__name__, "collector", "failed", error=exc)
+                return [], health
+        with ThreadPoolExecutor(max_workers=3) as pool:
+            for found, health in pool.map(collect, (collect_github, collect_youtube, collect_rss)):
+                records.extend(found)
+                diagnostics.extend(health)
 
     for record in records:
         score_and_tag(record, config.get("topics", []))
@@ -323,8 +349,13 @@ def main() -> int:
 
     output_dir = Path(args.out_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    failures = [item for item in diagnostics if item["status"] in {"failed", "invalid_config"}]
+    state = ("partial" if records else "failed") if failures else ("success" if records else "no_data")
     payload = {
-        "schema_version": 1,
+        "schema_version": 2,
+        "status": state,
+        "mode": "live" if args.live else "fixture_or_ingest",
+        "source_health": diagnostics,
         "generated_at": utc_now(),
         "editorial_rule": config.get("editorial_rule"),
         "agent_reach": doctor,
@@ -338,7 +369,7 @@ def main() -> int:
         brief_markdown(records, doctor), encoding="utf-8"
     )
     print(f"external signal radar: {len(records)} records -> {output_dir}")
-    return 0
+    return 2 if args.live and state in {"failed", "partial"} else 0
 
 
 if __name__ == "__main__":

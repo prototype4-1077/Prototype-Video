@@ -53,7 +53,7 @@ jobs:
       BLENDER_VERSION: "4.2.0"
       BLENDER_SERIES: "Blender4.2"
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
 
       - name: Verify exact preflighted package
         shell: bash
@@ -86,7 +86,7 @@ jobs:
           done
 
       - if: ${{ !inputs.use_container }}
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.11"
           cache: pip
@@ -117,7 +117,7 @@ jobs:
       - name: Cache Blender
         id: cache_blender
         if: ${{ !inputs.use_container && steps.blender_graphics.outputs.required == 'true' }}
-        uses: actions/cache@v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: /opt/blender
           key: blender-${{ env.BLENDER_VERSION }}-linux-x64
@@ -133,7 +133,7 @@ jobs:
           sudo tar -xJf /tmp/blender.tar.xz -C /opt/blender --strip-components=1
 
       - name: Cache models (whisper, CLIP, depth)
-        uses: actions/cache@v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             ~/.cache/huggingface
@@ -164,7 +164,8 @@ jobs:
           python3 - <<'PY'
           import json
           import pathlib
-          import subprocess
+          import sys
+          sys.path.insert(0, "pipeline")
 
           build = pathlib.Path("build/${{ inputs.slug }}")
           script_path = build / "script.json"
@@ -176,44 +177,12 @@ jobs:
           changed = False
 
           if supplied_script:
-              duration = 0.0
-              size_bytes = voice_path.stat().st_size if voice_path.exists() else 0
-              if size_bytes > 0:
-                  try:
-                      probe = subprocess.run(
-                          [
-                              "ffprobe", "-v", "error", "-show_entries", "format=duration",
-                              "-of", "default=noprint_wrappers=1:nokey=1", str(voice_path),
-                          ],
-                          check=True,
-                          capture_output=True,
-                          text=True,
-                      )
-                      duration = float(probe.stdout.strip() or 0)
-                  except Exception:
-                      duration = 0.0
-
-              complete = duration >= 60.0 and size_bytes >= 1_000_000
+              from supplied_media import validate
+              validate(build)
               script["user_vo"] = True
-              if not complete:
-                  voice_path.unlink(missing_ok=True)
-                  settings = script.setdefault("voice_settings", {})
-                  settings.update({
-                      "stability": 0.31,
-                      "similarity_boost": 0.75,
-                      "style": 0.35,
-                      "speed": 0.91,
-                  })
-                  changed = True
-                  print(
-                      f"Voiceover incomplete ({duration:.2f}s, {size_bytes} bytes); "
-                      "preserved supplied script and recovered with matching Liam settings."
-                  )
-              else:
-                  changed = True
-                  print(f"Connector voiceover validated at {duration:.2f}s and {size_bytes} bytes.")
+              changed = True
+              print("Supplied narration validated; preserving exact bytes regardless of length or size.")
 
-          policy = script.get("visual_policy")
           if len(scenes) > 26:
               if isinstance(policy, dict):
                   policy.setdefault("mode", "diverse_symbols")
@@ -244,7 +213,7 @@ jobs:
         run: python3 -m unittest discover -s pipeline/tests -v
 
       - name: Cache previously downloaded footage for this slug
-        uses: actions/cache@v4
+        uses: actions/cache@55cc8345863c7cc4c66a329aec7e433d2d1c52a9 # v6.1.0
         with:
           path: |
             build/${{ inputs.slug }}/clip_*.mp4
@@ -304,7 +273,7 @@ jobs:
 
       - name: Upload Governor diagnostics
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ${{ inputs.slug }}-governor-${{ github.run_id }}
           if-no-files-found: ignore
@@ -321,7 +290,7 @@ jobs:
 
       - name: Upload final video
         if: success()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: ${{ inputs.slug }}
           path: |
@@ -392,6 +361,7 @@ jobs:
             "build/${{ inputs.slug }}"/emb_*.npy; do
             git add "$f" 2>/dev/null || true
           done
+          git add "build/${{ inputs.slug }}/governor-history" 2>/dev/null || true
           # capture the pre-render memory as the merge base BEFORE committing
           MEMBASE=$(mktemp)
           git show HEAD:pipeline/memory.json > "$MEMBASE" 2>/dev/null || echo '{}' > "$MEMBASE"

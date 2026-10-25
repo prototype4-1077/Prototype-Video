@@ -67,10 +67,12 @@ def rules() -> dict:
 
 
 def scene_phrases(scene: dict) -> list[str]:
-    phrases = [" ".join(str(item).split()) for item in scene.get("keywords") or []]
-    phrases = [phrase for phrase in phrases if phrase]
-    if not phrases and scene.get("semantic_anchor"):
-        phrases.append(" ".join(str(scene["semantic_anchor"]).split()))
+    # Caption keywords may be abstract ("grief"); match the authored visual anchor
+    # ("empty chair rocking on a porch") before using those display words.
+    phrases = [" ".join(str(scene["semantic_anchor"]).split())] if scene.get("semantic_anchor") else []
+    if not phrases:
+        phrases = [" ".join(str(item).split()) for item in scene.get("keywords") or []]
+        phrases = [phrase for phrase in phrases if phrase]
     if scene.get("primary_symbol"):
         symbol = " ".join(str(scene["primary_symbol"]).split())
         if symbol and symbol.lower() not in {phrase.lower() for phrase in phrases}:
@@ -135,20 +137,12 @@ def direct_match_required(
     mode = str(scene.get("narrative_mode") or "").strip().lower()
     if mode in {"literal", "literal_graphic", "direct", "storyboard"}:
         return True
-    if mode in {"atmosphere", "abstract", "stock_ok"}:
-        return False
-    fraction = (
-        float(index) / max(float(total or 1), 1.0)
-        if index is not None
-        else 0.0
-    )
-    strict_fraction = float(rules().get("strict_first_fraction", 0.72))
-    if fraction > strict_fraction:
-        return False
     function = str(scene.get("visual_function") or "").lower()
-    return function in {"literal_anchor", "mechanism", "recursion"} and bool(
-        scene_phrases(scene)
-    )
+    # Neither stock_ok nor position late in the film exempts a literal action.
+    required = function in {"literal_anchor", "mechanism", "recursion"}
+    opening = index is not None and float(index) == 0
+    return bool(scene_phrases(scene)) and (required or opening)
+
 
 
 def acceptable(
@@ -163,11 +157,12 @@ def acceptable(
         return False, coverage, str(
             rejected.get("reason") or "context rejected by approved edit"
         )
+    if scene_phrases(scene) and coverage <= 0:
+        return False, coverage, "zero narrative-anchor coverage"
     if not direct_match_required(scene, index, total):
         return True, coverage, "advisory"
-    threshold = float(rules().get("minimum_anchor_coverage", 0.18))
-    if scene.get("human_role"):
-        threshold = float(rules().get("minimum_human_anchor_coverage", 0.10))
+    configured = float(rules().get("minimum_anchor_coverage", 0.18))
+    threshold = max(0.18, configured) if math.isfinite(configured) else 0.18
     if coverage + 1e-9 < threshold:
         return False, coverage, f"anchor coverage {coverage:.2f} below {threshold:.2f}"
     return True, coverage, "direct match"

@@ -46,6 +46,7 @@ from dataclasses import dataclass
 import numpy as np
 
 import still_reference
+import source_policy
 from video_format import BAND_HEIGHT, BAND_WIDTH, FPS, ENCODE_QUALITY, COLOR_TAGS
 
 
@@ -62,7 +63,7 @@ ANIMATED_MODES = {
 VIDEO_MODES = {"video", "stock", "recorded", "i2v", "image_to_video"}
 COMPILE_MODES = STATIC_MODES | ANIMATED_MODES
 
-DEFAULT_STILL_SOURCE_CAP = 0.50
+DEFAULT_STILL_SOURCE_CAP = source_policy.MAX_STILL_SOURCE_RATIO
 # Compatibility for callers that imported the old constant.  Budget validation
 # itself uses DEFAULT_STILL_SOURCE_CAP and counts animated stills in full.
 DEFAULT_STATIC_CAP = DEFAULT_STILL_SOURCE_CAP
@@ -121,6 +122,8 @@ def motion_kind(scene):
     Explicit metadata wins.  The fallback recognizes hero animation and stock
     footage, while treating an image or an image encoded as a clip as static.
     """
+    if source_policy.still_derived(scene):
+        return STATIC if str(scene.get("motion_mode") or "").lower() in STATIC_MODES else ANIMATED
     explicit = scene.get("motion_kind")
     if explicit in KINDS:
         return explicit
@@ -159,11 +162,9 @@ def motion_kind(scene):
 def apply_motion_defaults(script):
     """Persist source metadata and route every still through full enhancement."""
     changed = False
-    if "max_still_source_ratio" not in script:
-        # Upgrade older scripts without changing a deliberately customized cap.
-        script["max_still_source_ratio"] = _float(
-            script.get("max_static_ratio"), DEFAULT_STILL_SOURCE_CAP
-        )
+    cap = source_policy.still_source_cap(script)
+    if script.get("max_still_source_ratio") != cap:
+        script["max_still_source_ratio"] = cap
         changed = True
     if script.get("still_image_policy") != still_reference.POLICY:
         script["still_image_policy"] = still_reference.POLICY
@@ -190,11 +191,7 @@ def apply_motion_defaults(script):
 
 
 def report(script):
-    cap = _float(
-        script.get("max_still_source_ratio", script.get("max_static_ratio")),
-        DEFAULT_STILL_SOURCE_CAP,
-    )
-    cap = min(max(cap, 0.0), 1.0)
+    cap = source_policy.still_source_cap(script)
     buckets = {STATIC: 0.0, ANIMATED: 0.0, VIDEO: 0.0}
     entries = []
     for i, scene in enumerate(script.get("scenes", [])):

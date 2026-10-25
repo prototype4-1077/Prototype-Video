@@ -91,6 +91,11 @@ def _terms(scene):
 
 def is_active_still(scene):
     """Whether this scene's current source is a still, not its stale author flag."""
+    # Already-rendered procedural 3D keyframes are not photographic inputs for
+    # this compiler. source_policy still counts every second toward the 35% cap.
+    # Do not fabricate a stock-frame reference or recompile them as a cinemagraph.
+    if scene.get("motion_source") == "blender_3d_storyboard":
+        return False
     if scene.get("motion_kind") == "video" or str(
             scene.get("motion_mode") or "").lower() in {
                 "video", "stock", "recorded", "i2v", "image_to_video",

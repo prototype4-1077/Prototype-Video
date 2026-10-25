@@ -109,4 +109,21 @@ clear, and which workflows repeatedly earn approval.
 - `visual-memory.yml` rebuilds the visual manifest after scene feedback changes.
 - Live Promptfoo evaluations and ComfyUI generation are manual/secret-gated.
 
-No component may merge, publish, or create a render request on its own.
+No component may merge, publish, or create a render request on its own.## October 2026 maintenance
+
+External sensing now runs with native Python GitHub/RSS collectors. Agent Reach
+is optional health information; its packaging failure cannot stop collection.
+Per-source health and explicit success/partial/failed/no-data outcomes are saved.
+Missing optional YouTube search is reported separately. Source links remain in
+the brief, and all collected claims remain unverified reference material.
+
+The Concept Engine now keeps public counts separate from authenticated retention,
+excludes missing, stale, undated, and very low-view evidence from current lane
+recommendations, regularizes small cohorts, and labels associations provisional.
+The Frontier loop uses the same evidence eligibility. Machine-readable output is
+`concept/INTELLIGENCE_REPORT.json`; the existing Markdown report remains available.
+
+These are decision-logic improvements. The Promptfoo fixture suite is an offline
+contract check, not evidence that a particular live language model has passed.
+No new paid inference, model weights, external account, or automatic publication
+is enabled by this update.

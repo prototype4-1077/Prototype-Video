@@ -9,6 +9,7 @@ verified published-video receipt catalog.
 from __future__ import annotations
 
 from collections import Counter
+import datetime as dt
 import argparse
 import json
 from pathlib import Path
@@ -221,6 +222,55 @@ def build(root: Path = ROOT) -> dict[str, Any]:
                 "measurement_boundary": stock_supply.get("measurement_boundary"),
             },
             action=str(stock_supply.get("recommended_action") or "Continue collecting selection evidence."),
+        ))
+
+    # File existence is coverage, not proof that the collectors are healthy.
+    report["collection_health"] = {}
+    sources = {
+        "public_statistics": ("pipeline/youtube_stats_status.json", 2),
+        "retention": ("pipeline/analytics_status.json", 2),
+        "external_signals": ("concept/external_signals/LATEST.json", 2),
+    }
+    for name, (filename, max_days) in sources.items():
+        source = load(root / filename, {}) or {}
+        status = source.get("status") or "not_recorded"
+        report["collection_health"][name] = {"status": status, "generated_at": source.get("generated_at")}
+        if status not in {"success", "no_data"}:
+            findings.append(_finding(
+                code=f"collection_unhealthy:{name}", priority="high", area="intelligence",
+                title=f"{name.replace('_', ' ').title()} is unavailable or incomplete",
+                evidence={"status": status, "updated_count": source.get("updated_count"), "source_health": source.get("source_health")},
+                action=source.get("required_action") or "Inspect the source health report; preserve unknowns and exclude missing measurements from creative scoring.",
+            ))
+        try:
+            timestamp = dt.datetime.fromisoformat(str(source["generated_at"]).replace("Z", "+00:00"))
+            stale = timestamp.tzinfo is None or (dt.datetime.now(dt.timezone.utc) - timestamp).total_seconds() > max_days * 86400
+        except (KeyError, ValueError, TypeError):
+            stale = True
+        if stale:
+            findings.append(_finding(
+                code=f"collection_stale:{name}", priority="medium", area="intelligence",
+                title=f"{name.replace('_', ' ').title()} has no recent health observation",
+                evidence={"generated_at": source.get("generated_at"), "maximum_age_days": max_days},
+                action="Refresh the collector and persist its status even if the request fails. Historical file coverage cannot establish freshness.",
+            ))
+    intelligence = load(root / "concept/INTELLIGENCE_REPORT.json", {}) or {}
+    if intelligence.get("eligible_video_count") == 0:
+        findings.append(_finding(
+            code="intelligence_no_current_retention", priority="medium", area="intelligence",
+            title="No fresh audience-retention sample supports current winning-lane recommendations",
+            evidence={"joined_video_count": intelligence.get("joined_video_count"), "eligible_video_count": 0},
+            action="Use James's editorial judgment and frontier exploration while repairing collection. Never turn missing retention into a zero-quality score.",
+        ))
+
+    provider = load(root / "pipeline/provider_health.json", {}) or {}
+    report["render_provider_health"] = provider
+    if provider.get("status") in {"credential_invalid", "not_configured"}:
+        findings.append(_finding(
+            code="narration_provider_credential", priority="high", area="render",
+            title="Narration provider credential requires attention",
+            evidence={"status": provider.get("status"), "http_status": provider.get("http_status")},
+            action="Repair the configured ElevenLabs credential before generating narration. Supplied audio remains authoritative.",
         ))
 
     findings.sort(key=lambda item: (priority_rank(str(item.get("priority"))), str(item.get("area")), str(item.get("code"))))

@@ -2,11 +2,17 @@ name: Full system diagnostic
 
 on:
   workflow_dispatch:
+  workflow_run:
+    workflows: ["Render video", "Audience analytics sync", "Refresh YouTube audience statistics", "External signal radar"]
+    types: [completed]
   schedule:
     - cron: "41 12 * * 1"
   push:
     branches: [main]
     paths:
+      - "pipeline/system_diagnostic_policy.py"
+      - ".github/workflows/system-diagnostics.yml"
+      - "pipeline/analytics_status.json"
       - "pipeline/operational_memory/index.json"
       - "pipeline/operational_memory/action_queue.json"
       - "concept/visual_memory/action_report.json"
@@ -36,11 +42,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 2
 
-      - uses: actions/setup-python@v5
+      - uses: actions/setup-python@6d4fd22b20465ccc0f7354476588e8df7c9ca0e0 # v7.1.0
         with:
           python-version: "3.11"
 
@@ -66,6 +72,14 @@ jobs:
 
       - name: Measure stock candidate supply
         run: python3 pipeline/stock_supply_analysis.py
+
+      - name: Probe narration provider without generating audio
+        env:
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+        run: python3 pipeline/provider_health.py
+
+      - name: Refresh intelligence from current evidence
+        run: python3 concept/intelligence.py --json-out concept/INTELLIGENCE_REPORT.json --markdown-out concept/INTELLIGENCE_REPORT.md
 
       - name: Build calibrated diagnostic and action report
         run: python3 pipeline/system_diagnostic_policy.py
@@ -100,11 +114,15 @@ jobs:
           print('stock supply', stock['state'], stock['evidence_strength'])
           PY
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
         with:
           name: system-diagnostic-${{ github.run_id }}
           retention-days: 90
           path: |
+            concept/INTELLIGENCE_REPORT.json
+            concept/INTELLIGENCE_REPORT.md
+            pipeline/analytics_status.json
+            pipeline/provider_health.json
             pipeline/system_diagnostics/**
             pipeline/feedback_rule_candidates.json
             pipeline/stock_supply_report.json
@@ -118,6 +136,8 @@ jobs:
           git config user.name "system-diagnostic-bot"
           git config user.email "system-diagnostic@users.noreply.github.com"
           git add \
+            pipeline/provider_health.json \
+            concept/INTELLIGENCE_REPORT.json concept/INTELLIGENCE_REPORT.md \
             pipeline/system_diagnostics/LATEST.json \
             pipeline/system_diagnostics/LATEST.md \
             pipeline/feedback_rule_candidates.json \
@@ -132,6 +152,8 @@ jobs:
             python3 pipeline/stock_supply_analysis.py
             python3 pipeline/system_diagnostic_policy.py
             git add \
+              pipeline/provider_health.json \
+              concept/INTELLIGENCE_REPORT.json concept/INTELLIGENCE_REPORT.md \
               pipeline/system_diagnostics/LATEST.json \
               pipeline/system_diagnostics/LATEST.md \
               pipeline/feedback_rule_candidates.json \

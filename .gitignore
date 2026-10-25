@@ -14,3 +14,7 @@ build/**/*.marker
 build/**/alts*
 build/**/still_*.jpg
 build/**/stock_reference_*.jpg
+
+# Python execution caches are never source artifacts.
+__pycache__/
+*.py[cod]

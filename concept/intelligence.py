@@ -1,118 +1,211 @@
-"""Concept Engine — intelligence layer.
+"""Evidence-aware Concept Engine intelligence; no model calls or auto-publishing.
 
-Joins concept DNA (catalog.json) with realized performance (build/<slug>/yt_stats.json,
-retention verdicts) to answer: what should we make next, and how do we make it better.
-Learns automatically as the nightly analytics sync commits more yt_stats.
-
-Usage:
-  python3 concept/intelligence.py            # full report
-  python3 concept/intelligence.py recommend  # just the next-video call
+Public reach and authenticated retention remain separate measurements. Only dated,
+fresh retention can influence recommendations. Historical evidence is retained
+and labelled; small samples are exploratory, not proof of a creative rule.
 """
-import json, os, glob, sys, collections
+from __future__ import annotations
+import argparse
+import collections
+import datetime as dt
+import hashlib
+import json
+import math
+from pathlib import Path
+import statistics
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-ROOT = os.path.dirname(HERE)
+try:
+    from .evidence import audience_evidence, freshness, number
+except ImportError:
+    from evidence import audience_evidence, freshness, number
 
-def load(p): return json.load(open(os.path.join(HERE, p)))
+HERE = Path(__file__).resolve().parent
+ROOT = HERE.parent
 
-def video_stats():
-    """slug -> {views, avg_view_pct} from committed nightly-sync analytics."""
-    out = {}
-    for f in glob.glob(os.path.join(ROOT, "build", "*", "yt_stats.json")):
-        slug = os.path.basename(os.path.dirname(f))
-        try: out[slug] = json.load(open(f))
-        except Exception: pass
-    return out
+
+def read(path: Path, default=None):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, ValueError, TypeError):
+        return {} if default is None else default
+
+
+def load(name):
+    return read(Path(HERE) / name)
+
+
+def video_stats(root=None):
+    output = {}
+    for build in sorted((Path(root or ROOT) / "build").glob("*")):
+        public = read(build / "yt_stats.json")
+        retention = read(build / "retention_stats.json")
+        if public or retention:
+            # Public-count refreshes cannot erase authenticated retention.
+            output[build.name] = {**public, **retention}
+    return output
+
 
 def score(views, pct):
-    """A blended value: reach (log-ish) x retention quality. Retention is the
-    signal the algorithm rewards; views confirm it traveled."""
-    import math
-    return round(math.log10(max(views, 1) + 1) * (pct or 0), 1)
+    v, p = number(views), number(pct)
+    return round(math.log10(v + 1) * p, 1) if v is not None and p is not None else None
 
-def analyze():
-    cat = load("catalog.json")["videos"]
-    stats = video_stats()
+
+def analyze(root=None, *, now=None):
+    root = Path(root or ROOT)
+    catalog = read(root / "concept/catalog.json").get("videos") or {}
+    stats = video_stats(root)
     rows = []
-    for slug, dna in cat.items():
-        s = stats.get(slug)
-        if not s: continue
-        rows.append({"slug": slug, "views": s.get("views", 0),
-                     "pct": s.get("avg_view_pct", 0),
-                     "score": score(s.get("views", 0), s.get("avg_view_pct", 0)),
-                     "dna": dna})
-    # aggregate expected value by each DNA dimension
-    dims = ("pillars", "narration", "hook", "series")
-    agg = {d: collections.defaultdict(lambda: [0.0, 0]) for d in dims}
-    for r in rows:
-        for d in dims:
-            vals = r["dna"].get(d)
-            vals = vals if isinstance(vals, list) else [vals]
-            for v in vals:
-                if v is None: continue
-                agg[d][v][0] += r["score"]; agg[d][v][1] += 1
-    lanes = {d: sorted(((k, round(v[0]/v[1], 1), v[1]) for k, v in agg[d].items()),
-                       key=lambda x: -x[1]) for d in dims}
+    for slug, dna in catalog.items():
+        if slug not in stats:
+            continue
+        evidence = audience_evidence(stats[slug], now=now)
+        rows.append({"slug": slug, "views": evidence["views"],
+                     "pct": evidence["avg_view_pct"], "score": evidence["score"],
+                     "dna": dna, **evidence})
+    dimensions = ("pillars", "narration", "hook", "series")
+    groups = {dimension: collections.defaultdict(list) for dimension in dimensions}
+    eligible = [row for row in rows if row["eligible_for_recommendation"]]
+    prior = statistics.mean(row["score"] for row in eligible) if eligible else 0
+    for row in eligible:
+        for dimension in dimensions:
+            values = row["dna"].get(dimension)
+            for value in values if isinstance(values, list) else [values]:
+                if value is not None:
+                    groups[dimension][str(value)].append(row["score"])
+    lanes = {dimension: sorted(
+        ((key, round((sum(values) + 3 * prior) / (len(values) + 3), 1), len(values))
+         for key, values in groups[dimension].items()), key=lambda item: (-item[1], item[0])
+    ) for dimension in dimensions}
     return rows, lanes, len(stats)
 
-def recommend():
-    rows, lanes, n = analyze()
-    frontier = load("frontier.json")["frontier"]
-    cat = load("catalog.json")["videos"]
-    used_frontier = {v.get("frontier") for v in cat.values() if v.get("frontier")}
-    out = ["## What to make next (data-driven)"]
-    if not rows:
-        out.append("No performance data joined yet (nightly sync fills build/<slug>/yt_stats.json). "
-                   "Falling back to the frontier rotation until stats accrue.")
-        return "\n".join(out)
-    # EXPLOIT: best-performing lane per dimension
-    for d, label in (("pillars","pillar"),("narration","narration style"),("hook","hook type")):
-        top = lanes[d][0]
-        out.append(f"- Proven {label}: **{top[0]}** (avg score {top[1]} over {top[2]} videos) — keep feeding it.")
-    # EXPLORE: untouched frontier concept nearest the winning pillar
-    win_pillar = lanes["pillars"][0][0]
-    fresh = [c for c in frontier if c["id"] not in used_frontier]
-    pick = fresh[0] if fresh else frontier[0]
-    out.append(f"- Highest-value NEW bet: **{pick['title']}** [{pick['fidelity']}] — untouched, and it extends your proven '{win_pillar}' lane. Hook: {pick['hook']}")
+
+def _frontier_pick(root: Path, now: dt.datetime):
+    catalog = read(root / "concept/catalog.json").get("videos") or {}
+    used = {item.get("frontier") for item in catalog.values()}
+    frontier = read(root / "concept/frontier.json").get("frontier") or []
+    options = [item for item in frontier if item.get("id") not in used] or frontier
+    if not options:
+        return None
+    seed = int(hashlib.sha256(now.date().isoformat().encode()).hexdigest()[:8], 16)
+    return options[seed % len(options)]
+
+
+def recommend(root=None, *, now=None):
+    root = Path(root or ROOT)
+    now = now or dt.datetime.now(dt.timezone.utc)
+    rows, lanes, _ = analyze(root, now=now)
+    out = ["## What to make next"]
+    eligible = [row for row in rows if row["eligible_for_recommendation"]]
+    if not eligible:
+        out.append("No fresh, dated retention evidence is eligible. Use editorial judgment and frontier exploration; do not infer poor performance from missing data.")
+    for dimension, label in (("pillars", "pillar"), ("narration", "narration style"), ("hook", "hook type")):
+        candidates = [item for item in lanes[dimension] if item[2] >= 3]
+        if candidates:
+            key, value, count = candidates[0]
+            out.append(f"- Provisional {label} association: **{key}** (regularized score {value}; {count} fresh videos). This is observational and may be confounded.")
+        elif eligible:
+            out.append(f"- {label.title()}: fewer than three eligible examples per cohort; no winning-lane claim.")
+    pick = _frontier_pick(root, now)
+    if pick:
+        out.append(f"- Editorial exploration: **{pick['title']}** [{pick.get('fidelity', 'unlabelled')}]. Hook: {pick.get('hook', '')} This is a frontier rotation, not a predicted audience winner.")
+    out.append("James selects the concept and approves the script. Recommendations never start a render or publish a video.")
     return "\n".join(out)
 
-def craft_rules():
-    """Turn retention 'held/bled' verdicts into production rules."""
-    rules = []
-    wm = os.path.join(ROOT, "pipeline", "WHATS_WORKING.md")
-    bled_early = 0; total = 0
-    if os.path.exists(wm):
-        for line in open(wm):
-            if "bled them" in line and "scenes [" in line:
-                total += 1
-                seg = line.split("bled them")[0]
-                if "[0" in seg or "[1" in seg or "[2" in seg or "[3" in seg:
-                    bled_early += 1
-    if total:
-        rules.append(f"- {bled_early}/{total} tracked videos bleed viewers in their FIRST scenes — the opener is the make-or-break. Hook hard in the first 1.5s; no slow atmosphere open.")
-    rules += [
-        "- Retention-held scenes cluster near the END (the turn + invitation) — the payoff lands; protect it, never rush the close.",
-        "- Highest reach came from the machine/attention pillar in guided-2nd voice with a plunge hook (the 832-view breakout) — that's the current spearhead.",
-    ]
-    return "\n".join(rules)
+
+def craft_rules(root=None):
+    memory = read(Path(root or ROOT) / "pipeline/memory.json")
+    feedback = memory.get("audience_feedback") or []
+    if not feedback:
+        return "- No structured retention feedback supports new craft rules. Preserve James's approved style."
+    return (f"- {len(feedback)} historical audience-feedback records are available for review. "
+            "Scene retention is observational; test a specific change before promoting it into a house rule.")
+
+
+def learning_state(root):
+    memory = read(root / "pipeline/memory.json")
+    approvals = [read(path) for path in sorted((root / "build").glob("*/approval-record.json"))]
+    recorded = [item for item in approvals if item.get("decision") == "approved"]
+    missing_vectors = [item.get("slug") for item in recorded if item.get("taste_embedding_count") == 0]
+    return {
+        "historical_video_approval_records": len(memory.get("videos") or []),
+        "scene_feedback_records": len(memory.get("scene_feedback") or []),
+        "explicit_approval_audits": len(recorded),
+        "approval_audits_without_new_taste_embeddings": missing_vectors,
+        "boundary": "Whole-video approval, per-scene feedback, and learned image embeddings are separate evidence. An approved video need not have produced new embeddings; never infer per-scene judgments from a global approval.",
+    }
+
+
+def build_report(root=None, *, now=None):
+    root = Path(root or ROOT)
+    now = now or dt.datetime.now(dt.timezone.utc)
+    rows, lanes, count = analyze(root, now=now)
+    signals = read(root / "concept/external_signals/LATEST.json")
+    signal_freshness = freshness(signals.get("generated_at"), now=now, days=7)
+    records = signals.get("records") or []
+    review_signals = [
+        {key: record.get(key) for key in ("title", "url", "source", "topic_matches", "claim_status")}
+        for record in records[:8]
+    ] if signal_freshness == "fresh" else []
+    return {
+        "schema_version": 2, "generated_at": now.isoformat(),
+        "stats_file_count": count, "joined_video_count": len(rows),
+        "eligible_video_count": sum(row["eligible_for_recommendation"] for row in rows),
+        "missing_retention_count": sum(not row["retention_available"] for row in rows),
+        "stale_or_undated_retention_count": sum(row["retention_available"] and row["retention_freshness"] != "fresh" for row in rows),
+        "videos": rows, "lanes": lanes, "learning_state": learning_state(root),
+        "collection_health": {
+            "public_statistics": read(root / "pipeline/youtube_stats_status.json"),
+            "retention": read(root / "pipeline/analytics_status.json"),
+            "external_signals": {"freshness": signal_freshness, "status": signals.get("status"), "record_count": len(records)},
+        },
+        "external_signals_for_review": review_signals,
+        "recommendation": recommend(root, now=now), "craft_rules": craft_rules(root),
+        "authority_boundary": "Read-only decision support. No narration edits, model promotion, render requests, or publication. External signals remain unverified reference material.",
+        "model_boundary": "This upgrades the pipeline's evidence and decision logic; it does not retrain a foundation model or claim an offline fixture is a live model evaluation.",
+    }
+
+
+def render_report(data):
+    lines = ["# Concept Engine — Evidence-aware Intelligence", "",
+             f"Generated: {data['generated_at']}", "",
+             f"Joined {data['joined_video_count']} videos; {data['eligible_video_count']} eligible for current recommendations.",
+             f"Missing retention: {data['missing_retention_count']}; stale or undated retention: {data['stale_or_undated_retention_count']}.", "",
+             data["recommendation"], "", "## Measurement inventory", ""]
+    for row in sorted(data["videos"], key=lambda row: (row["score"] is None, -(row["score"] or 0), row["slug"])):
+        pct = "unknown" if row["pct"] is None else f"{row['pct']:.1f}%"
+        lines.append(f"- {row['slug']}: views={row['views']}; retention={pct}; freshness={row['retention_freshness']}; eligible={row['eligible_for_recommendation']}")
+    lines.extend(["", "## Collection health", ""])
+    for name, status in data["collection_health"].items():
+        lines.append(f"- {name}: {status.get('status') or status.get('freshness') or 'not recorded'}")
+    lines.extend(["", "## Research signals awaiting review", ""])
+    for signal in data["external_signals_for_review"]:
+        lines.append(f"- [{signal.get('title')}]({signal.get('url')}) — unverified reference; verify the primary source before use.")
+    if not data["external_signals_for_review"]:
+        lines.append("- No fresh external signal ledger is available.")
+    learning = data["learning_state"]
+    lines.extend(["", "## Learning coverage", "",
+                  f"Historical whole-video approval records: {learning['historical_video_approval_records']}; scene feedback records: {learning['scene_feedback_records']}; explicit approval audits: {learning['explicit_approval_audits']}.",
+                  f"Approval audits with no new taste embeddings: {learning['approval_audits_without_new_taste_embeddings']}.", learning["boundary"]])
+    lines.extend(["", "## Craft evidence", "", data["craft_rules"], "", data["authority_boundary"], "", data["model_boundary"]])
+    return "\n".join(lines) + "\n"
+
 
 def report():
-    rows, lanes, n = analyze()
-    print("# Concept Engine — Intelligence Report\n")
-    print(f"_Joined {len(rows)} videos with performance data ({n} stat files present; grows nightly)._\n")
-    if rows:
-        print("## Realized performance (blended reach x retention)")
-        for r in sorted(rows, key=lambda x:-x["score"]):
-            print(f"- {r['slug']}: {r['views']} views @ {r['pct']:.0f}%  → score {r['score']}  ({'+'.join(r['dna'].get('pillars',[]))}, {r['dna'].get('narration')}, {r['dna'].get('hook')})")
-        print("\n## Winning lanes")
-        for d in ("pillars","narration","hook"):
-            print(f"- by {d}: " + ", ".join(f"{k} ({v})" for k,v,c in lanes[d][:3]))
-        print()
-    print(recommend()); print()
-    print("## Craft rules (from retention)"); print(craft_rules())
+    print(render_report(build_report()), end="")
+
 
 if __name__ == "__main__":
-    if len(sys.argv) > 1 and sys.argv[1] == "recommend":
-        print(recommend())
-    else:
-        report()
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("command", nargs="?", choices=["report", "recommend"], default="report")
+    parser.add_argument("--root", type=Path, default=ROOT)
+    parser.add_argument("--json-out", type=Path)
+    parser.add_argument("--markdown-out", type=Path)
+    args = parser.parse_args()
+    data = build_report(args.root)
+    if args.json_out:
+        args.json_out.parent.mkdir(parents=True, exist_ok=True)
+        args.json_out.write_text(json.dumps(data, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+    if args.markdown_out:
+        args.markdown_out.parent.mkdir(parents=True, exist_ok=True)
+        args.markdown_out.write_text(render_report(data), encoding="utf-8")
+    print(recommend(args.root) if args.command == "recommend" else render_report(data), end="\n")
