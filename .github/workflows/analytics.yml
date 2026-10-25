@@ -52,11 +52,6 @@ jobs:
         run: |
           python3 concept/comment_mining.py || echo "comment mining skipped"
 
-      - name: Refresh evidence-aware intelligence even when analytics is unavailable
-        if: always()
-        run: python3 concept/intelligence.py --json-out concept/INTELLIGENCE_REPORT.json --markdown-out concept/INTELLIGENCE_REPORT.md
-
-
       - name: Commit learned state
         if: always()
         shell: bash

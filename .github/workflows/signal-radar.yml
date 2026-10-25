@@ -65,10 +65,6 @@ jobs:
           print('validated', payload['record_count'], 'external signals')
           PY
 
-      - name: Refresh evidence-aware intelligence
-        if: always()
-        run: python3 concept/intelligence.py --json-out concept/INTELLIGENCE_REPORT.json --markdown-out concept/INTELLIGENCE_REPORT.md
-
       - name: Commit signal brief
         if: always()
         shell: bash
