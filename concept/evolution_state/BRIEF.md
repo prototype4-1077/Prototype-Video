@@ -1,6 +1,6 @@
 # Perpetual Frontier Brief
 
-_Cycle: 2026-10-25 · Records: 125 · External signals: 36_
+_Cycle: 2026-10-26 · Records: 127 · External signals: 48_
 
 ## Constitutional status
 The evolution laboratory generated observations and proposals only. It did not alter scripts, frontier truth, render requests, or permanent ethos rules.
@@ -23,12 +23,12 @@ The evolution laboratory generated observations and proposals only. It did not a
   Control: Keep the current champion value for reflection. Treatment: Change only reflection using the challenger condition.
 
 ## Wild frontier proposals
-- **Tolerance: belief × recursion** — What if tolerance is already happening inside the way you experience belief analysis / how you know?
-  Fidelity: metaphor. Invitation: Where might tolerance be shaping what you call 'belief' or 'recursion' right now?
-- **Observer Inside The System: self × threshold** — What if observer inside the system is already happening inside the way you experience self & identity as constructed?
-  Fidelity: metaphor. Invitation: Where might observer inside the system be shaping what you call 'self' or 'threshold' right now?
-- **Symbiosis: self × machine** — What if symbiosis is already happening inside the way you experience self & identity as constructed?
-  Fidelity: metaphor. Invitation: Where might symbiosis be shaping what you call 'self' or 'machine' right now?
+- **Feedback: prediction × emotion** — What if feedback is already happening inside the way you experience prediction & the constructed 'now'?
+  Fidelity: metaphor. Invitation: Where might feedback be shaping what you call 'prediction' or 'emotion' right now?
+- **Inference From Fragments: belief × mediation** — What if inference from fragments is already happening inside the way you experience belief analysis / how you know?
+  Fidelity: metaphor. Invitation: Where might inference from fragments be shaping what you call 'belief' or 'mediation' right now?
+- **Queues: grounding × belief** — What if queues is already happening inside the way you experience the ordinary / return to the body?
+  Fidelity: metaphor. Invitation: Where might queues be shaping what you call 'grounding' or 'belief' right now?
 
 ## Unknown unknowns
 - This video fits no declared pillar or frontier concept; is the map missing a dimension?
@@ -38,8 +38,8 @@ The evolution laboratory generated observations and proposals only. It did not a
 - This video fits no declared pillar or frontier concept; is the map missing a dimension?
 
 ## Rule review
-- `hook_immediate_plunge` → **retire_candidate** (effective confidence 0.1857)
-- `generated_human_ratio` → **retest** (effective confidence 0.4067)
+- `hook_immediate_plunge` → **retire_candidate** (effective confidence 0.1835)
+- `generated_human_ratio` → **retest** (effective confidence 0.4044)
 
 ## Human gate
 Nothing in this brief is a command. The next act is a choice: which uncertainty is worth spending a real video to examine?
