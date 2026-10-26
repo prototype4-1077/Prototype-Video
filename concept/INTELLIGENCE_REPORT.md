@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-10-26T13:12:05.163758+00:00
+Generated: 2026-10-26T18:42:49.137175+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -50,8 +50,8 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.41.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.41.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [Breakthrough/PySceneDetect: PySceneDetect v0.6.5](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.5-release) — unverified reference; verify the primary source before use.
-- [Breakthrough/PySceneDetect: PySceneDetect v0.6.6](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.6-release) — unverified reference; verify the primary source before use.
+- [Virtual Placebo: a scoping review of control conditions in randomized controlled trials of psychological immersive virtual reality interventions](https://arxiv.org/abs/2610.32232) — unverified reference; verify the primary source before use.
+- [Don't Forget What You Just Learned: Self-Directed Repair Turns Agent Mistakes Into Lasting Lessons](https://arxiv.org/abs/2610.31846) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
