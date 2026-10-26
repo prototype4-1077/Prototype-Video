@@ -415,6 +415,7 @@ def enhance_generated_image(build_dir, script, index, raw_image, output):
     enhance_image(raw_image, reference["path"], output)
     scene["enhanced_source_image"] = os.path.basename(output)
     scene["still_reference_signature"] = _digest([raw_image, reference["path"]])
+    scene.pop("pure_generated_still", None)
     _add_steps(scene, REFERENCE_STEPS + GENERATED_STEPS)
     return output
 
@@ -455,15 +456,17 @@ def reference_is_current(build_dir, script, index):
     )
 
 
-def validation_errors(build_dir, script):
+def validation_errors(build_dir, script, scene_index=None):
     errors = []
     for index, scene in enumerate(script.get("scenes", [])):
+        if scene_index is not None and index != int(scene_index):
+            continue
         if not is_active_still(scene):
             continue
         mode = str(scene.get("motion_mode") or "").lower()
         if mode in STATIC_MODES:
             errors.append(f"scene {index} uses unenhanced still mode {mode}")
-        if not scene.get("pure_generated_still") and not reference_is_current(build_dir, script, index):
+        if not reference_is_current(build_dir, script, index):
             errors.append(f"scene {index} lacks a current closest-stock frame reference")
         if not scene.get("still_enhanced"):
             errors.append(f"scene {index} has not completed the full still enhancement path")
@@ -500,7 +503,7 @@ def write_report(build_dir, script=None):
             "motion_mode": scene.get("motion_mode"),
             "enhancement_version": scene.get("still_enhancement_version"),
             "enhancements": scene.get("still_enhancement_steps") or [],
-            "passes": reference_is_current(build_dir, script, index),
+            "passes": not validation_errors(build_dir, script, index),
         })
     report = {
         "policy": POLICY,

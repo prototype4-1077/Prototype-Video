@@ -1,0 +1,41 @@
+{
+  "kind": "agent_visual_qa",
+  "reviewer": "Codex",
+  "human_approval": "unreviewed",
+  "source_render_run": 40245632596,
+  "narration_changed": false,
+  "changes": [
+    {
+      "scene": 1,
+      "rejected_stock_id": 33841807,
+      "replacement_stock_id": 16049995,
+      "reason": "The opening showed programming code; use a visible AI chat interface."
+    },
+    {
+      "scene": 10,
+      "rejected_stock_id": 7092055,
+      "replacement_stock_id": 6672413,
+      "reason": "A phone-assisted cheating shot contradicts unassisted exam performance."
+    },
+    {
+      "scene": 16,
+      "rejected_stock_id": 33063729,
+      "replacement_stock_id": 6120115,
+      "reason": "Replace a clip used in an earlier video with an actual eraser action."
+    },
+    {
+      "scene": 19,
+      "rejected_source": "unreferenced generated still",
+      "replacement_stock_id": 7314250,
+      "reason": "Every still must have a genuine stock-frame reference; use the physical hinge joint."
+    },
+    {
+      "scene": 24,
+      "rejected_stock_id": 27981993,
+      "replacement_stock_id": 6980534,
+      "reason": "The prior Goodbye Room video used this exact closing lens clip."
+    }
+  ],
+  "pipeline_fix": "Style overrides retain stock-frame conditioning. Still reports cannot exempt pure-generated flags or pass rows missing required enhancement steps.",
+  "validation": "242 pipeline tests passed; revised package preflight passed."
+}

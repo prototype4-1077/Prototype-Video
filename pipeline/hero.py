@@ -152,22 +152,20 @@ def main(bd, i):
     out = f"{bd}/clip_{i:02d}.mp4"
     raw = f"{bd}/hero_{i:02d}_raw.jpg"
     raw_signature = _file_signature(raw) if _valid_image(raw) else None
-    # A finished clip is reusable across resumable Governor passes. Pure heroes
-    # (hero_style) have no stock reference, so gate reuse on the clip existing
-    # rather than reference_is_current. The raw-image signature also prevents a
+    # A finished clip is reusable only with its current stock reference. A style
+    # override changes the prompt, never the reference requirement. The raw-image
+    # signature also prevents a
     # repaired or replaced source JPEG from reusing an older cached clip.
     if (os.path.exists(out) and os.path.getsize(out) > 100_000 and
             sc.get("clip_fingerprint") == motion.scene_visual_fingerprint(sc) and
             source_matches(sc, raw) and
-            (sc.get("hero_style") or still_reference.reference_is_current(bd, s, i))):
+            still_reference.reference_is_current(bd, s, i)):
         print(f"hero {i}: exists"); return
     prompt = sc.get("image_prompt") or sc["text"]
     style_override = sc.get("hero_style")
     if style_override == "effects":  # scripts opt in by name, not by pasting the style
         style_override = motion.EFFECTS_STILL_STYLE
-    pure = bool(style_override)  # purely generated, no stock-reference conditioning
-    reference = ({"url": None, "path": None, "scene_index": None}
-                 if pure else still_reference.bind_reference(bd, s, i))
+    reference = still_reference.bind_reference(bd, s, i)
     img, dep = f"{bd}/hero_{i:02d}.jpg", f"{bd}/hero_{i:02d}_depth.npy"
     # Reuse a pre-generated (committed) raw still when present so renders never
     # depend on the image provider being reachable from CI. Otherwise generate.
@@ -195,10 +193,7 @@ def main(bd, i):
         print(f"hero {i}: disabled after bounded provider failure; stock fallback queued")
         return
     raw_signature = _file_signature(raw)
-    if pure:
-        still_reference.enhance_generated_image_standalone(bd, s, i, raw, img)
-    else:
-        still_reference.enhance_generated_image(bd, s, i, raw, img)
+    still_reference.enhance_generated_image(bd, s, i, raw, img)
     d = depth_map(img, dep, force=True)
     recipe = motion.infer_recipe(sc)
     render(img, d, sc.get("duration", 8) + 0.5, out, mode=i, recipe=recipe)

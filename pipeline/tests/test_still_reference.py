@@ -1,4 +1,5 @@
 import os
+import json
 import sys
 import tempfile
 import unittest
@@ -191,6 +192,29 @@ class StillPolicyTests(unittest.TestCase):
                     still_reference.StillReferenceError, "closest-stock"):
                 still_reference.validate(td, script)
 
+    def test_pure_generated_flag_cannot_bypass_reference_or_pass_report(self):
+        with tempfile.TemporaryDirectory() as td:
+            scene = {"hero": True, "hero_style": "effects",
+                     "pure_generated_still": True,
+                     "motion_kind": "animated_still", "motion_mode": "cinemagraph"}
+            still_reference.mark_motion_complete(scene)
+            script = {"scenes": [scene]}
+            with self.assertRaisesRegex(still_reference.StillReferenceError, "closest-stock"):
+                still_reference.validate(td, script)
+            report = still_reference.write_report(td, script)
+            self.assertFalse(report["passes"])
+            self.assertFalse(report["still_scenes"][0]["passes"])
+
+    def test_report_scene_includes_motion_enhancement_failures(self):
+        with tempfile.TemporaryDirectory() as td:
+            scene = {"hero": True, "motion_kind": "animated_still",
+                     "motion_mode": "cinemagraph", "still_enhanced": True}
+            script = {"scenes": [scene]}
+            with mock.patch.object(still_reference, "reference_is_current", return_value=True):
+                report = still_reference.write_report(td, script)
+            self.assertFalse(report["passes"])
+            self.assertFalse(report["still_scenes"][0]["passes"])
+
     def test_completed_reference_and_motion_path_passes_validation(self):
         with tempfile.TemporaryDirectory() as td:
             script = {"scenes": [
@@ -228,6 +252,30 @@ class StillPolicyTests(unittest.TestCase):
 
 
 class HeroConditioningTests(unittest.TestCase):
+    def test_effects_style_uses_stock_conditioning_and_reference_enhancement(self):
+        with tempfile.TemporaryDirectory() as td:
+            script = {"scenes": [{"text": "a wood joint", "hero": True,
+                                   "hero_style": "effects", "duration": 2}]}
+            with open(os.path.join(td, "script.json"), "w") as handle:
+                json.dump(script, handle)
+            raw = os.path.join(td, "hero_00_raw.jpg")
+
+            def generate(*_args, **_kwargs):
+                Image.effect_noise((640, 360), 42).convert("RGB").save(raw, quality=95)
+                return True
+
+            reference = {"url": "https://example.test/wood.jpg", "path": "wood.jpg", "scene_index": 1}
+            with mock.patch.object(still_reference, "bind_reference", return_value=reference), \
+                 mock.patch.object(hero, "gen_image", side_effect=generate) as generated, \
+                 mock.patch.object(still_reference, "enhance_generated_image") as enhanced, \
+                 mock.patch.object(still_reference, "enhance_generated_image_standalone") as standalone, \
+                 mock.patch.object(hero, "depth_map", return_value=None), \
+                 mock.patch.object(hero, "render"):
+                hero.main(td, 0)
+            self.assertEqual(generated.call_args.kwargs["reference_url"], reference["url"])
+            enhanced.assert_called_once()
+            standalone.assert_not_called()
+
     def test_generation_url_uses_kontext_and_the_exact_reference(self):
         url = hero.generation_url(
             "a person entering a room", 77,
