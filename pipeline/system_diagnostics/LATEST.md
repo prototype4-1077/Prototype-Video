@@ -1,6 +1,6 @@
 # System Diagnostic
 
-Generated: 2026-10-26T18:50:21+00:00
+Generated: 2026-10-26T19:23:35+00:00
 
 Findings: 22 — priorities {"high": 4, "low": 2, "medium": 16}
 
@@ -33,7 +33,7 @@ Findings: 22 — priorities {"high": 4, "low": 2, "medium": 16}
 ### [MEDIUM] The evolution queue is flooded with taxonomy gaps
 - Area: `concept_engine`
 - Code: `evolution_taxonomy_gap_flood`
-- Evidence: {"count": 102, "examples": ["a-chair-not-a-throne", "awake-inside-the-dream", "belief-is-gravity", "beliefs-are-software-updates", "black-wall-street-ep1-the-elevator", "black-wall-street-ep2-one-shot", "can-you-fly", "can-you-fly-v3", "deepest-sleep", "different-screens", "dispatch-path-selftest", "dmt-customs", "dmt-loading-screen", "dmt-other-side-of-the-door", "dmt-the-understudy"]}
+- Evidence: {"count": 104, "examples": ["a-chair-not-a-throne", "awake-inside-the-dream", "belief-is-gravity", "beliefs-are-software-updates", "black-wall-street-ep1-the-elevator", "black-wall-street-ep2-one-shot", "can-you-fly", "can-you-fly-v3", "deepest-sleep", "different-screens", "dispatch-path-selftest", "dmt-customs", "dmt-loading-screen", "dmt-other-side-of-the-door", "dmt-the-understudy"]}
 - Action: Separate legacy packages missing metadata from genuinely novel concepts before treating every uncataloged slug as a map failure.
 
 ### [MEDIUM] No fresh audience-retention sample supports current winning-lane recommendations
