@@ -1,0 +1,161 @@
+{
+  "finished_at": "2026-10-26T00:03:10+00:00",
+  "github_run_id": "40247301005",
+  "incidents": [
+    {
+      "count": 2,
+      "failure_class": "unknown",
+      "fingerprint": "f4c7ac5403f2d8eb",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "nt call last): file \"<path> line <n>, in <module> raise systemexit(cli()) ^^^^^ file \"<path> line <n>, in cli main(build_dir, args[<n>] if len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal asset instead of su",
+      "stage": "footage"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "7cb9fc70b5b3cc37",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal ass",
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "7aacbab0fa36ff82",
+      "kind": "failure",
+      "last_item": null,
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal asset instead of substituting a plain 2d graphic | fix: edit",
+      "stage": "build_pass"
+    }
+  ],
+  "last_message": "footage failed (unknown); retry budget 1 exhausted. fingerprint=f4c7ac5403f2d8eb. ERROR: footage batch [0,9,15,18,23]: ^^^^^^^^^^^^^^",
+  "mode": "recover",
+  "passes": 2,
+  "policy": {
+    "build_pass": {
+      "hard_timeout_s": 1800.0,
+      "historical_p95_s": null,
+      "idle_timeout_s": 1800.0,
+      "sample_count": 0,
+      "soft_timeout_s": 1800.0,
+      "source": "explicit"
+    },
+    "footage": {
+      "hard_timeout_s": 600.0,
+      "historical_p95_s": 237.07,
+      "idle_timeout_s": 255.0,
+      "sample_count": 49,
+      "soft_timeout_s": 510.0,
+      "source": "history"
+    }
+  },
+  "quality": {
+    "build_dir": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-second-test",
+    "checked_at": "2026-10-25T23:53:39+00:00",
+    "deep_decode": true,
+    "expected_duration_s": 146.919,
+    "failures": [],
+    "mode": "delivery",
+    "outputs": {
+      "youtube": {
+        "avg_kbps": 8543,
+        "deep_scan": {
+          "black_intervals": 0,
+          "black_longest_s": 0.0,
+          "black_total_s": 0,
+          "error": null,
+          "freeze_intervals": 0,
+          "freeze_longest_s": 0.0,
+          "freeze_total_s": 0,
+          "ok": true,
+          "returncode": 0,
+          "silence_intervals": 0,
+          "silence_longest_s": 0.0,
+          "silence_total_s": 0
+        },
+        "duration_difference_s": 0.017,
+        "exists": true,
+        "expected_duration_s": 146.919,
+        "failures": [],
+        "path": "/home/runner/work/Prototype-Video/Prototype-Video/build/the-second-test/final_youtube.mp4",
+        "probe": {
+          "audio_codec": "aac",
+          "audio_duration_s": 146.936009,
+          "bit_rate": 8543081.0,
+          "duration_s": 146.936009,
+          "format_name": "mov,mp4,m4a,3gp,3g2,mj2",
+          "fps": 30.0,
+          "has_audio": true,
+          "has_video": true,
+          "height": 1080,
+          "video_codec": "h264",
+          "video_duration_s": 146.866667,
+          "width": 1920
+        },
+        "size_bytes": 156910790,
+        "warnings": []
+      }
+    },
+    "passed": true,
+    "quality_floor": {
+      "audio_stream_required": true,
+      "full_decode_required": true,
+      "minimum_dimension": 1080,
+      "minimum_file_bytes": 100000,
+      "video_stream_required": true
+    },
+    "schema_version": 1,
+    "warnings": []
+  },
+  "recommendations": [
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "f4c7ac5403f2d8eb",
+      "priority": "high",
+      "reason": "2 occurrence(s): nt call last): file \"<path> line <n>, in <module> raise systemexit(cli()) ^^^^^ file \"<path> line <n>, in cli main(build_dir, args[<n>] if len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal asset instead of su",
+      "stage": "footage"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "7cb9fc70b5b3cc37",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governor stage=footage state=start soft=510s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal ass",
+      "stage": "build_pass"
+    },
+    {
+      "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
+      "fingerprint": "7aacbab0fa36ff82",
+      "priority": "medium",
+      "reason": "1 occurrence(s): governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal asset instead of substituting a plain 2d graphic | fix: edit",
+      "stage": "build_pass"
+    }
+  ],
+  "run_id": "8a9ed5d1b11046b195138739d88ad6ee",
+  "schema_version": 1,
+  "slug": "the-second-test",
+  "stages": {
+    "build_pass": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 27.025
+    },
+    "footage": {
+      "attempts": 2,
+      "failures": 2,
+      "p50_success_s": null,
+      "p95_success_s": null,
+      "success_durations_s": [],
+      "successes": 0,
+      "timeouts": 0,
+      "total_duration_s": 25.022
+    }
+  },
+  "status": "failed"
+}

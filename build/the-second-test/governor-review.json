@@ -1,11 +1,19 @@
 {
-  "generated_at": "2026-10-25T23:53:39+00:00",
+  "generated_at": "2026-10-26T00:03:10+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "long_black_interval": 4,
     "low_bitrate": 8
   },
   "recommendations": [
+    {
+      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
+      "category": "recurring_incident",
+      "evidence": "4 occurrence(s) across 2 build(s)",
+      "fingerprint": "f4c7ac5403f2d8eb",
+      "priority": "high",
+      "stage": "footage"
+    },
     {
       "action": "Check provider health/routing and retain bounded recovery until the occurrence rate falls.",
       "category": "recurring_incident",
@@ -31,14 +39,6 @@
       "stage": "build_pass"
     },
     {
-      "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
-      "category": "recurring_incident",
-      "evidence": "2 occurrence(s) across 1 build(s)",
-      "fingerprint": "f4c7ac5403f2d8eb",
-      "priority": "medium",
-      "stage": "footage"
-    },
-    {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
       "evidence": "p50=69.6s, p95=1054.9s",
@@ -47,6 +47,18 @@
     }
   ],
   "recurring_incidents": [
+    {
+      "count": 4,
+      "failure_class": "unknown",
+      "fingerprint": "f4c7ac5403f2d8eb",
+      "kind": "failure",
+      "normalized_error": "nt call last): file \"<path> line <n>, in <module> raise systemexit(cli()) ^^^^^ file \"<path> line <n>, in cli main(build_dir, args[<n>] if len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal asset instead of su",
+      "slugs": [
+        "the-second-test",
+        "the-goodbye-room"
+      ],
+      "stage": "footage"
+    },
     {
       "count": 2,
       "failure_class": "transient",
@@ -84,15 +96,26 @@
       "stage": "build_pass"
     },
     {
-      "count": 2,
+      "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "f4c7ac5403f2d8eb",
+      "fingerprint": "7cb9fc70b5b3cc37",
       "kind": "failure",
-      "normalized_error": "t call last): file \"<path> line <n>, in <module> raise systemexit(cli()) ^^^^^ file \"<path> line <n>, in cli main(build_dir, args[<n>] if len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal asset instead of sub",
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=running elapsed=15s idle=1s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal ass",
       "slugs": [
-        "the-goodbye-room"
+        "the-second-test"
       ],
-      "stage": "footage"
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "7aacbab0fa36ff82",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal asset instead of substituting a plain 2d graphic | fix: edit",
+      "slugs": [
+        "the-second-test"
+      ],
+      "stage": "build_pass"
     },
     {
       "count": 1,
@@ -161,7 +184,7 @@
       "stage": "build_pass"
     }
   ],
-  "runs_analyzed": 56,
+  "runs_analyzed": 57,
   "schema_version": 1,
   "stages": {
     "align": {
@@ -201,16 +224,16 @@
       "total_duration_s": 60937.773
     },
     "build_pass": {
-      "attempts": 298,
-      "failure_rate": 0.0403,
-      "failures": 12,
+      "attempts": 300,
+      "failure_rate": 0.0467,
+      "failures": 14,
       "p50_success_s": 69.552,
       "p95_success_s": 1054.913,
       "sample_count": 286,
       "successes": 286,
-      "timeout_rate": 0.0336,
+      "timeout_rate": 0.0333,
       "timeouts": 10,
-      "total_duration_s": 85969.93
+      "total_duration_s": 85996.955
     },
     "credits": {
       "attempts": 120,
@@ -237,16 +260,16 @@
       "total_duration_s": 2312.9
     },
     "footage": {
-      "attempts": 52,
-      "failure_rate": 0.0385,
-      "failures": 2,
+      "attempts": 54,
+      "failure_rate": 0.0741,
+      "failures": 4,
       "p50_success_s": 133.636,
       "p95_success_s": 236.927,
       "sample_count": 50,
       "successes": 50,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 7016.972
+      "total_duration_s": 7041.994
     },
     "hero": {
       "attempts": 230,
@@ -323,6 +346,6 @@
   },
   "statuses": {
     "done": 55,
-    "failed": 1
+    "failed": 2
   }
 }
