@@ -1,0 +1,337 @@
+{
+  "cash_cost": 0,
+  "classification": "UNENCODED_LISTENING_PROTOTYPES_HUMAN_REVIEW_REQUIRED",
+  "encode_allowed": false,
+  "human_accepted": false,
+  "human_review_required": true,
+  "network_calls": 0,
+  "promotion_allowed": false,
+  "recommendation_rule": "Prefer the least-filtered variant whose full-mix static-like ratio and longest run materially beat Candidate03; human listening is final.",
+  "rejected_measurements": {
+    "active_rms_dbfs": -17.910522445373218,
+    "clipped_channel_values": 0,
+    "duration_seconds": 10.1,
+    "full_rms_dbfs": -22.28775194808231,
+    "noise_proxy": {
+      "analyzed_frame_count": 944,
+      "broadband_static": {
+        "exposed_frame_count": 658,
+        "first_static_like_start_seconds": 0.0,
+        "high_band_power_ratio_median_exposed": 0.3119908952659995,
+        "high_band_power_ratio_p95_exposed": 0.5005179744565713,
+        "last_static_like_end_seconds": 10.1,
+        "maximum_static_like_run_seconds": 0.736,
+        "spectral_flatness_median_exposed": 0.4022118920186659,
+        "spectral_flatness_p95_exposed": 0.5170347779679454,
+        "static_like_frame_count": 268,
+        "static_like_window_ratio_all_frames": 0.2838983050847458,
+        "static_score_median_exposed": 0.12350398024076034,
+        "static_score_p95_exposed": 0.2575520165955337
+      },
+      "channels": 2,
+      "coverage_complete": true,
+      "coverage_end_sample_exclusive": 484800,
+      "coverage_start_sample": 0,
+      "crackle": {
+        "impulsive_crackle_event_count": 0,
+        "impulsive_delta_sample_count": 0,
+        "mad_adjacent_sample_delta_fs": 0.006051541096155775,
+        "maximum_adjacent_sample_delta_fs": 0.24005296707784737,
+        "median_adjacent_sample_delta_fs": 0.008632780150506513
+      },
+      "duration_seconds": 10.1,
+      "frame_samples": 2048,
+      "hop_samples": 512,
+      "method": "stft_2048_hann_hop512_exposed_flatness_highband_v1",
+      "noise_floor": {
+        "rms_dbfs_median_all_frames": -36.06703195955953,
+        "rms_dbfs_p10_all_frames": -43.0446986121104,
+        "rms_dbfs_p20_all_frames": -40.374715875931784
+      },
+      "sample_count": 484800,
+      "sample_rate": 48000,
+      "thresholds": {
+        "adaptive_crackle_delta_floor_fs": 0.2506944239967375,
+        "crackle_delta_floor_fs": 0.08,
+        "exposed_rms_ceiling_dbfs": -28.0,
+        "exposed_rms_floor_dbfs": -80.0,
+        "static_flatness_floor": 0.4,
+        "static_high_band_ratio_floor": 0.35
+      }
+    },
+    "pcm_sha256": "728f45886a96f9441fc381bfe7b57b00e07e6a522e79eb9c015a82306af21b6e",
+    "peak_dbfs": -1.2935266236292526,
+    "quiet_rms_dbfs": -37.53887235963218,
+    "transient_audit": {
+      "dialogue_active_fixed_threshold_event_count": 461,
+      "dialogue_active_fixed_threshold_sample_count": 1525,
+      "edit_boundaries": {
+        "bridge_to_direct_address": {
+          "immediate_adjacent_sample_delta_fs": 0.033682111940635674,
+          "maximum_adjacent_sample_delta_within_10ms_fs": 0.054033762697429974,
+          "rms_10ms_after_dbfs": -37.440654252612624,
+          "rms_10ms_before_dbfs": -36.2826353907247,
+          "sample": 158400,
+          "seconds": 3.3
+        },
+        "pour_to_bridge": {
+          "immediate_adjacent_sample_delta_fs": 0.0010582209894920563,
+          "maximum_adjacent_sample_delta_within_10ms_fs": 0.02446115308536924,
+          "rms_10ms_after_dbfs": -43.2409581407087,
+          "rms_10ms_before_dbfs": -39.323662416489654,
+          "sample": 120000,
+          "seconds": 2.5
+        }
+      },
+      "fixed_impulse_threshold_fs": 0.08,
+      "fixed_threshold_event_count": 497,
+      "fixed_threshold_sample_count": 1572,
+      "maximum_adjacent_sample_delta_fs": 0.24005296707784737,
+      "quiet_fixed_threshold_event_count": 25,
+      "quiet_fixed_threshold_sample_count": 33,
+      "transition_fixed_threshold_event_count": 11,
+      "transition_fixed_threshold_sample_count": 14
+    }
+  },
+  "rejected_predecessor": {
+    "file": "collab/phase36_candidate_03/june-phase36-ledger-pour-mix-v3.wav",
+    "human_verdict": "REJECTED_AUDIBLE_STATIC",
+    "immutable": true,
+    "wav_sha256": "a75b39fbae9d0be8b5853a78b1201f0498b188587e0a3366fa5f6338a19c0c0c"
+  },
+  "report_version": 1,
+  "source_mapping": {
+    "bridge_global_frames": [
+      913,
+      936
+    ],
+    "direct_address_global_frames": [
+      937,
+      1140
+    ],
+    "output_samples": 484800,
+    "pour_global_frames": [
+      790,
+      864
+    ]
+  },
+  "variants": {
+    "balanced_air": {
+      "bytes": 2908844,
+      "file": "june-phase42-fullmix-balanced_air-v1.wav",
+      "filter": {
+        "ambience_cutoff_hz": 4500.0,
+        "ambience_gain_db": -3.0,
+        "ambience_high_ratio": 0.18,
+        "body_cutoff_hz": 6000.0,
+        "body_high_ratio": 0.25,
+        "prop_cutoff_hz": 8000.0,
+        "prop_high_ratio": 0.5
+      },
+      "measurements": {
+        "active_rms_dbfs": -19.45833284173259,
+        "clipped_channel_values": 0,
+        "duration_seconds": 10.1,
+        "full_rms_dbfs": -23.854543100469368,
+        "noise_proxy": {
+          "analyzed_frame_count": 944,
+          "broadband_static": {
+            "exposed_frame_count": 673,
+            "first_static_like_start_seconds": null,
+            "high_band_power_ratio_median_exposed": 0.03381329930913191,
+            "high_band_power_ratio_p95_exposed": 0.08643053845208015,
+            "last_static_like_end_seconds": null,
+            "maximum_static_like_run_seconds": 0.0,
+            "spectral_flatness_median_exposed": 0.08013205399431289,
+            "spectral_flatness_p95_exposed": 0.1477248276503393,
+            "static_like_frame_count": 0,
+            "static_like_window_ratio_all_frames": 0.0,
+            "static_score_median_exposed": 0.0029139172258856876,
+            "static_score_p95_exposed": 0.007766570372353416
+          },
+          "channels": 2,
+          "coverage_complete": true,
+          "coverage_end_sample_exclusive": 484800,
+          "coverage_start_sample": 0,
+          "crackle": {
+            "impulsive_crackle_event_count": 179,
+            "impulsive_delta_sample_count": 631,
+            "mad_adjacent_sample_delta_fs": 0.0016760828108886253,
+            "maximum_adjacent_sample_delta_fs": 0.17236663965781207,
+            "median_adjacent_sample_delta_fs": 0.0024390223549631065
+          },
+          "duration_seconds": 10.1,
+          "frame_samples": 2048,
+          "hop_samples": 512,
+          "method": "stft_2048_hann_hop512_exposed_flatness_highband_v1",
+          "noise_floor": {
+            "rms_dbfs_median_all_frames": -37.589557241145826,
+            "rms_dbfs_p10_all_frames": -46.13933474433286,
+            "rms_dbfs_p20_all_frames": -44.938108781538666
+          },
+          "sample_count": 484800,
+          "sample_rate": 48000,
+          "thresholds": {
+            "adaptive_crackle_delta_floor_fs": 0.08,
+            "crackle_delta_floor_fs": 0.08,
+            "exposed_rms_ceiling_dbfs": -28.0,
+            "exposed_rms_floor_dbfs": -80.0,
+            "static_flatness_floor": 0.4,
+            "static_high_band_ratio_floor": 0.35
+          }
+        },
+        "pcm_sha256": "8299727d9975e159074985ca539e02f4528807c1430b62e19929391c99b8707d",
+        "peak_dbfs": -1.300000260403349,
+        "quiet_rms_dbfs": -39.934083021680784,
+        "transient_audit": {
+          "dialogue_active_fixed_threshold_event_count": 179,
+          "dialogue_active_fixed_threshold_sample_count": 631,
+          "edit_boundaries": {
+            "bridge_to_direct_address": {
+              "immediate_adjacent_sample_delta_fs": 0.003539443437986784,
+              "maximum_adjacent_sample_delta_within_10ms_fs": 0.006766796918725599,
+              "rms_10ms_after_dbfs": -45.94244142915424,
+              "rms_10ms_before_dbfs": -44.82714617462814,
+              "sample": 158400,
+              "seconds": 3.3
+            },
+            "pour_to_bridge": {
+              "immediate_adjacent_sample_delta_fs": 0.0,
+              "maximum_adjacent_sample_delta_within_10ms_fs": 0.002106309188164376,
+              "rms_10ms_after_dbfs": -61.24617171090271,
+              "rms_10ms_before_dbfs": -60.611958979759336,
+              "sample": 120000,
+              "seconds": 2.5
+            }
+          },
+          "fixed_impulse_threshold_fs": 0.08,
+          "fixed_threshold_event_count": 179,
+          "fixed_threshold_sample_count": 631,
+          "maximum_adjacent_sample_delta_fs": 0.17236663965781207,
+          "quiet_fixed_threshold_event_count": 0,
+          "quiet_fixed_threshold_sample_count": 0,
+          "transition_fixed_threshold_event_count": 0,
+          "transition_fixed_threshold_sample_count": 0
+        }
+      },
+      "probe": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "data_bytes": 2908800,
+        "data_sha256": "678a30f1eda251c89e68c599a60e96fe4b7494bee8e5fbcc4485f862a5857c73",
+        "sample_count": 484800,
+        "sample_rate": 48000
+      },
+      "wav_sha256": "d25975e13d1b1fc873214b342e8abb5065ef7409a2a98b523eee846523ba4357"
+    },
+    "clean_warm": {
+      "bytes": 2908844,
+      "file": "june-phase42-fullmix-clean_warm-v1.wav",
+      "filter": {
+        "ambience_cutoff_hz": 4200.0,
+        "ambience_gain_db": -4.5,
+        "ambience_high_ratio": 0.1,
+        "body_cutoff_hz": 5500.0,
+        "body_high_ratio": 0.18,
+        "prop_cutoff_hz": 7500.0,
+        "prop_high_ratio": 0.4
+      },
+      "measurements": {
+        "active_rms_dbfs": -19.453088057486593,
+        "clipped_channel_values": 0,
+        "duration_seconds": 10.1,
+        "full_rms_dbfs": -23.859534454818018,
+        "noise_proxy": {
+          "analyzed_frame_count": 944,
+          "broadband_static": {
+            "exposed_frame_count": 673,
+            "first_static_like_start_seconds": null,
+            "high_band_power_ratio_median_exposed": 0.012262138619467578,
+            "high_band_power_ratio_p95_exposed": 0.07874634670134678,
+            "last_static_like_end_seconds": null,
+            "maximum_static_like_run_seconds": 0.0,
+            "spectral_flatness_median_exposed": 0.033391009828723915,
+            "spectral_flatness_p95_exposed": 0.1088328602330599,
+            "static_like_frame_count": 0,
+            "static_like_window_ratio_all_frames": 0.0,
+            "static_score_median_exposed": 0.00042200623411838185,
+            "static_score_p95_exposed": 0.0033695654698287737
+          },
+          "channels": 2,
+          "coverage_complete": true,
+          "coverage_end_sample_exclusive": 484800,
+          "coverage_start_sample": 0,
+          "crackle": {
+            "impulsive_crackle_event_count": 181,
+            "impulsive_delta_sample_count": 632,
+            "mad_adjacent_sample_delta_fs": 0.0012527705732310497,
+            "maximum_adjacent_sample_delta_fs": 0.17038144712226952,
+            "median_adjacent_sample_delta_fs": 0.0016815664388616603
+          },
+          "duration_seconds": 10.1,
+          "frame_samples": 2048,
+          "hop_samples": 512,
+          "method": "stft_2048_hann_hop512_exposed_flatness_highband_v1",
+          "noise_floor": {
+            "rms_dbfs_median_all_frames": -38.45587704282906,
+            "rms_dbfs_p10_all_frames": -47.848273022420166,
+            "rms_dbfs_p20_all_frames": -46.64404966195503
+          },
+          "sample_count": 484800,
+          "sample_rate": 48000,
+          "thresholds": {
+            "adaptive_crackle_delta_floor_fs": 0.08,
+            "crackle_delta_floor_fs": 0.08,
+            "exposed_rms_ceiling_dbfs": -28.0,
+            "exposed_rms_floor_dbfs": -80.0,
+            "static_flatness_floor": 0.4,
+            "static_high_band_ratio_floor": 0.35
+          }
+        },
+        "pcm_sha256": "4c4780455e453dcf1522d1b349a31bf9235b7b69c5536d937950f7b619d43839",
+        "peak_dbfs": -1.300000260403349,
+        "quiet_rms_dbfs": -40.641215633054415,
+        "transient_audit": {
+          "dialogue_active_fixed_threshold_event_count": 181,
+          "dialogue_active_fixed_threshold_sample_count": 632,
+          "edit_boundaries": {
+            "bridge_to_direct_address": {
+              "immediate_adjacent_sample_delta_fs": 0.0017910005797148443,
+              "maximum_adjacent_sample_delta_within_10ms_fs": 0.003910065163381715,
+              "rms_10ms_after_dbfs": -47.71292548486965,
+              "rms_10ms_before_dbfs": -46.541757938091706,
+              "sample": 158400,
+              "seconds": 3.3
+            },
+            "pour_to_bridge": {
+              "immediate_adjacent_sample_delta_fs": 0.0,
+              "maximum_adjacent_sample_delta_within_10ms_fs": 0.0011490584789584255,
+              "rms_10ms_after_dbfs": -63.19588476806036,
+              "rms_10ms_before_dbfs": -62.32948641876532,
+              "sample": 120000,
+              "seconds": 2.5
+            }
+          },
+          "fixed_impulse_threshold_fs": 0.08,
+          "fixed_threshold_event_count": 181,
+          "fixed_threshold_sample_count": 632,
+          "maximum_adjacent_sample_delta_fs": 0.17038144712226952,
+          "quiet_fixed_threshold_event_count": 0,
+          "quiet_fixed_threshold_sample_count": 0,
+          "transition_fixed_threshold_event_count": 0,
+          "transition_fixed_threshold_sample_count": 0
+        }
+      },
+      "probe": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "data_bytes": 2908800,
+        "data_sha256": "dd1937414f9b902b2cfa3aafd8d3ca0a928794efb5287972077e0e97b4068ab8",
+        "sample_count": 484800,
+        "sample_rate": 48000
+      },
+      "wav_sha256": "518c4f80091b24538fa06dd7679107ff488a311095f2d5327c2cec8738d22eff"
+    }
+  },
+  "video_encoder_processes": 0
+}
