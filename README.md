@@ -1,4 +1,17 @@
-# TikTok Video Render Farm
+# June Oxley cartoon prototype — current zero-cash work
+
+The active cartoon renderer is a local, experimental 2.5D animation pipeline.
+It does not require the paid-service credentials in the legacy instructions
+below. It is **not yet a production-ready full-cartoon system**.
+
+Start with [current cartoon capabilities, review files, and safe commands](docs/JUNE_CARTOON_CURRENT_STATE.md).
+The latest integration joins the existing body/hand acting to the corrected
+eyelids and original camera clock. Eye motion, audio, and acting still need
+human acceptance before a new full review render.
+
+---
+
+# TikTok Video Render Farm — legacy pipeline
 
 Cloud renderer for James's mystical-philosophical TikToks. The Cowork/Claude session
 writes the script; GitHub Actions does all the heavy lifting (TTS/alignment, CLIP-vetted
