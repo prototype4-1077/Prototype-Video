@@ -51,6 +51,9 @@ def body_pose(rig, source_frame=270, gesture='listen', amount=0):
         point=Vector(state['feet'][side][0])+Vector((0,0,dz))
         aim_control(rig,'foot_ik.'+side,point)
         hand=Vector(state['hand.'+side])+Vector((0,0,dz))
+        # Authored rest offsets belong to the asset; earlier libraries keep
+        # their existing controls and the same walk/gesture clock.
+        hand+=Vector(rig.get('ce_hand_rest_offset_'+side, (0.,0.,0.)))
         if side=='L' and gesture=='explain':hand+=Vector((-.07,-.13,.19))*amount
         if side=='R' and gesture=='point':hand+=Vector((.10,-.24,.27))*amount
         if side=='R' and gesture=='reach':hand+=Vector((.16,-.30,.06))*amount
@@ -61,6 +64,13 @@ def body_pose(rig, source_frame=270, gesture='listen', amount=0):
             distal=rig.get('ce_finger_distal_fraction', 1.)
             for index,name in enumerate(names):
                 rig.pose.bones[name].rotation_euler.x=math.radians(relaxed*(distal if index else 1.))
+        if rig.get('ce_thumb_adduction_degrees'):
+            from mathutils import Euler, Quaternion
+            thumb=rig.pose.bones['thumb.'+side]
+            axis=thumb.bone.matrix_local.to_3x3().inverted() @ Vector((0,1,0))
+            angle=math.radians(rig['ce_thumb_adduction_degrees'])*(-1 if side=='L' else 1)
+            curl=Euler((math.radians(rig['ce_finger_relax_degrees'][4]),0,0))
+            thumb.rotation_euler=(Quaternion(axis,angle) @ curl.to_quaternion()).to_euler('XYZ')
     head=rig.pose.bones['head'];head.rotation_euler=(0,0,0)
     torso=rig.pose.bones['torso'];torso.rotation_euler=(0,0,0)
     if gesture=='skeptical':head.rotation_euler.z=.045*amount;head.rotation_euler.y=.08*amount
