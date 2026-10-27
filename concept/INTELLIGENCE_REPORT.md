@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-10-27T12:19:06.567111+00:00
+Generated: 2026-10-27T18:03:54.727996+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -45,12 +45,12 @@ James selects the concept and approves the script. Recommendations never start a
 ## Research signals awaiting review
 
 - [Comfy-Org/ComfyUI: v0.40.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.40.0) — unverified reference; verify the primary source before use.
-- [Comfy-Org/ComfyUI: v0.38.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.38.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.39.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.39.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.41.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.41.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.0) — unverified reference; verify the primary source before use.
+- [Comfy-Org/ComfyUI: v0.43.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.43.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [Virtual Placebo: a scoping review of control conditions in randomized controlled trials of psychological immersive virtual reality interventions](https://arxiv.org/abs/2610.32232) — unverified reference; verify the primary source before use.
+- [The dominance of feedback mechanisms for perception in the central visual field: the flip tilt illusion by backward masking and the Feedforward-Feedback-Verify-reWeight algorithm](https://arxiv.org/abs/2610.34455) — unverified reference; verify the primary source before use.
 - [Don't Forget What You Just Learned: Self-Directed Repair Turns Agent Mistakes Into Lasting Lessons](https://arxiv.org/abs/2610.31846) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
