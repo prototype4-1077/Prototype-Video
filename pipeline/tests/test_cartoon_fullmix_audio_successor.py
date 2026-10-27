@@ -33,7 +33,7 @@ class FullMixAudioSuccessorTests(unittest.TestCase):
         )
         self.assertGreater(rejected["transient_audit"]["quiet_fixed_threshold_event_count"], 0)
 
-    def test_successors_remove_static_and_quiet_impulses(self) -> None:
+    def test_successors_clear_old_noise_proxy_without_implying_human_acceptance(self) -> None:
         expected_hashes = {
             "balanced_air": "d25975e13d1b1fc873214b342e8abb5065ef7409a2a98b523eee846523ba4357",
             "clean_warm": "518c4f80091b24538fa06dd7679107ff488a311095f2d5327c2cec8738d22eff",

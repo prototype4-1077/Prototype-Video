@@ -1,0 +1,159 @@
+{
+  "artifacts": {
+    "sparse-effects-only": {
+      "bytes": 2908844,
+      "file": "june-phase42-sparse-effects-only-v2.wav",
+      "peak_dbfs": -28.89675529484078,
+      "probe": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "data_bytes": 2908800,
+        "data_sha256": "cfb41786c85cce510edc411ec7c3b01b6ec21de9ff6b914ae758ddd55d07f293",
+        "sample_count": 484800,
+        "sample_rate": 48000
+      },
+      "sha256": "697e3f6b82a610e4e12aef9800c3a540ed8b416721b966082cb9b2ead13957a9"
+    },
+    "sparse-foley": {
+      "bytes": 2908844,
+      "file": "june-phase42-sparse-foley-v2.wav",
+      "peak_dbfs": -1.3707460484512053,
+      "probe": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "data_bytes": 2908800,
+        "data_sha256": "a5be68e2dc11fdad47561677ffc56a3185cc62ba7ec969c75391dba8710b871a",
+        "sample_count": 484800,
+        "sample_rate": 48000
+      },
+      "sha256": "a101eb565a828881a42e39ed1b706271eb6a1d4de72c7029f8612fb035e1e776"
+    }
+  },
+  "cash_cost": 0,
+  "classification": "SPARSE_FOLEY_LISTENING_CANDIDATE_NOT_ACCEPTED",
+  "events": [
+    {
+      "gain_reduction_db": -5.0,
+      "id": "AMB_CHIME_01",
+      "source_frames": [
+        92,
+        132
+      ],
+      "type": "wind_chime"
+    },
+    {
+      "gain_reduction_db": -5.0,
+      "id": "AMB_CHIME_02",
+      "source_frames": [
+        365,
+        407
+      ],
+      "type": "wind_chime"
+    },
+    {
+      "gain_reduction_db": -5.0,
+      "id": "AMB_CHIME_03",
+      "source_frames": [
+        732,
+        774
+      ],
+      "type": "wind_chime"
+    },
+    {
+      "gain_reduction_db": -5.0,
+      "id": "AMB_CHIME_04",
+      "source_frames": [
+        1084,
+        1134
+      ],
+      "type": "wind_chime"
+    },
+    {
+      "gain_reduction_db": -7.0,
+      "id": "PROP_MUG_SETTLE",
+      "source_frames": [
+        202,
+        218
+      ],
+      "type": "mug_place"
+    },
+    {
+      "gain_reduction_db": -7.0,
+      "id": "PROP_POT_GRASP",
+      "source_frames": [
+        736,
+        753
+      ],
+      "type": "coffee_pot"
+    },
+    {
+      "gain_reduction_db": -7.0,
+      "id": "PROP_POT_LIFT",
+      "source_frames": [
+        759,
+        781
+      ],
+      "type": "coffee_pot"
+    },
+    {
+      "gain_reduction_db": -8.0,
+      "id": "PROP_COFFEE_POUR",
+      "source_frames": [
+        806,
+        864
+      ],
+      "type": "coffee_pour"
+    },
+    {
+      "gain_reduction_db": -7.0,
+      "id": "PROP_POT_SET",
+      "source_frames": [
+        891,
+        913
+      ],
+      "type": "coffee_pot"
+    },
+    {
+      "gain_reduction_db": -10.0,
+      "id": "PROP_MUG_SLIDE",
+      "source_frames": [
+        945,
+        974
+      ],
+      "type": "mug_slide"
+    },
+    {
+      "gain_reduction_db": -7.0,
+      "id": "PROP_MUG_OFFER_PLACE",
+      "source_frames": [
+        969,
+        984
+      ],
+      "type": "mug_place"
+    }
+  ],
+  "human_accepted": false,
+  "implementation_sha256": "e66c87757ab57b603807874f19e86acc7a5e474141727df85a42a2d2d31ef34a",
+  "isolation_report_sha256": "2abfe387758726e4be5cb7960e6f487d0d49fa1e9b8a2864d941b5d643447f54",
+  "network_calls": 0,
+  "note": "Sparse tonal contacts, water drops, and chimes are an audition, not evidence that the original effects have been repaired or that the whole scene passes listening.",
+  "omitted_types": [
+    "boot_plant",
+    "breath",
+    "chair_creak",
+    "cloth_rustle",
+    "ledger_rustle",
+    "mug_rub",
+    "pencil_contact",
+    "porch_ambience"
+  ],
+  "promotion_allowed": false,
+  "report_version": 2,
+  "video_encoder_processes": 0,
+  "voice": {
+    "file": "collab/phase42_audio_source_isolation_v1/june-phase42-voice-only-v1.wav",
+    "human_feedback": "NO_STATIC_HEARD_IN_VOICE_ONLY",
+    "pcm_contribution_preserved_exactly": true,
+    "sha256": "b9a2f402d9255397bf8cafec9170aca6e76c028b5cbd5ede0733d2ebc699f16a"
+  }
+}

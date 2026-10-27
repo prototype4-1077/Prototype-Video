@@ -24,16 +24,27 @@ does not make its acting natural or its overall quality competitive.
 1. Eye motion at true playback speed:
    `collab/phase42_continuous_blink_review_v2/phase42-eyelid-ai-direct-30fps-v2.webp`.
    The adjacent slow loop is intentionally slower and is labeled as such.
-2. Audio: start with
-   `collab/phase42_human_rejected_gates_successors_v1/june-phase42-fullmix-balanced_air-v1.wav`.
-   Compare the `clean_warm` WAV in the same folder if needed.
+2. Audio: James still hears static throughout `balanced_air`, and removing the
+   continuous porch bed made no real change. He corrected the voice-only
+   verdict to **no static**. Preserve that voice. The new listening audition is
+   `collab/phase42_sparse_foley_v2/june-phase42-sparse-foley-v2.wav`, which
+   replaces/omits the noisy effects without changing the voice contribution.
+   Its full-mix listening verdict is still pending.
 3. Combined body/eye stills:
    `collab/phase42_repaired_acting_integration_v1/phase42-acting-eye-integration-comparison-v1.png`.
    Columns are original / body acting only / body acting plus repaired eyes.
    Six sampled frames prove compatibility, not whole-scene temporal acceptance.
 
-Current human decisions: eyes pending, audio pending, body acting pending.
-Candidate03 audio and Phase37 V4 eyes remain rejected and immutable.
+Current human decisions: eyes are near-pass but still need work; balanced-air
+audio is rejected for static throughout; body acting is pending. Candidate03,
+Phase37 V4, and all reviewed Phase42 files remain immutable. See James's exact
+2026-10-27 verdict in `collab/JAMES_VERDICT_2026-10-27.md`.
+
+The latest blink feedback asks for slightly slower, less frequent closure and
+a small shape adjustment. `collab/phase42_blink_refinement_v3/` contains a
+fixed-head eye-only audition at the 7.6-second scene clock: one slower blink,
+not a rapidly repeating half-second loop. The closed-eye source artwork is
+unchanged. This is not a full-scene motion render or an accepted timing change.
 
 ## Safe local commands
 

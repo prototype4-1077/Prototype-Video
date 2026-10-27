@@ -1,0 +1,344 @@
+{
+  "artifacts": {
+    "porch_bed_only": {
+      "band_rms_dbfs": {
+        "1_to_8khz": -50.72373467518937,
+        "above_8khz": -60.159820405220515,
+        "below_1khz": -47.33874179298469
+      },
+      "bytes": 2908844,
+      "file": "june-phase42-porch-bed-only-v1.wav",
+      "measurements": {
+        "active_rms_dbfs": -46.776637733397486,
+        "clipped_channel_values": 0,
+        "duration_seconds": 10.1,
+        "full_rms_dbfs": -45.54639309984153,
+        "noise_proxy": {
+          "analyzed_frame_count": 944,
+          "broadband_static": {
+            "exposed_frame_count": 944,
+            "first_static_like_start_seconds": null,
+            "high_band_power_ratio_median_exposed": 0.034251529629596475,
+            "high_band_power_ratio_p95_exposed": 0.05005722267753999,
+            "last_static_like_end_seconds": null,
+            "maximum_static_like_run_seconds": 0.0,
+            "spectral_flatness_median_exposed": 0.0780712867817694,
+            "spectral_flatness_p95_exposed": 0.1095549695072454,
+            "static_like_frame_count": 0,
+            "static_like_window_ratio_all_frames": 0.0,
+            "static_score_median_exposed": 0.002681837749833774,
+            "static_score_p95_exposed": 0.005455289355889078
+          },
+          "channels": 2,
+          "coverage_complete": true,
+          "coverage_end_sample_exclusive": 484800,
+          "coverage_start_sample": 0,
+          "crackle": {
+            "impulsive_crackle_event_count": 0,
+            "impulsive_delta_sample_count": 0,
+            "mad_adjacent_sample_delta_fs": 0.0007804633117274418,
+            "maximum_adjacent_sample_delta_fs": 0.010839821200349473,
+            "median_adjacent_sample_delta_fs": 0.0013053418761899325
+          },
+          "duration_seconds": 10.1,
+          "frame_samples": 2048,
+          "hop_samples": 512,
+          "method": "stft_2048_hann_hop512_exposed_flatness_highband_v1",
+          "noise_floor": {
+            "rms_dbfs_median_all_frames": -45.88262730689655,
+            "rms_dbfs_p10_all_frames": -48.04577175202134,
+            "rms_dbfs_p20_all_frames": -47.122567912524076
+          },
+          "sample_count": 484800,
+          "sample_rate": 48000,
+          "thresholds": {
+            "adaptive_crackle_delta_floor_fs": 0.08,
+            "crackle_delta_floor_fs": 0.08,
+            "exposed_rms_ceiling_dbfs": -28.0,
+            "exposed_rms_floor_dbfs": -80.0,
+            "static_flatness_floor": 0.4,
+            "static_high_band_ratio_floor": 0.35
+          }
+        },
+        "pcm_sha256": "f7fc7a32bc3aabecfdf9b47df6093ed3b42a5e6563b83d6b94bad6ba9748db81",
+        "peak_dbfs": -30.314767553339095,
+        "quiet_rms_dbfs": -44.94354272656777,
+        "transient_audit": {
+          "dialogue_active_fixed_threshold_event_count": 0,
+          "dialogue_active_fixed_threshold_sample_count": 0,
+          "edit_boundaries": {
+            "bridge_to_direct_address": {
+              "immediate_adjacent_sample_delta_fs": 0.003539443437986784,
+              "maximum_adjacent_sample_delta_within_10ms_fs": 0.006745339244048505,
+              "rms_10ms_after_dbfs": -45.94488326342851,
+              "rms_10ms_before_dbfs": -44.82714617462814,
+              "sample": 158400,
+              "seconds": 3.3
+            },
+            "pour_to_bridge": {
+              "immediate_adjacent_sample_delta_fs": 0.0,
+              "maximum_adjacent_sample_delta_within_10ms_fs": 0.002106309188164376,
+              "rms_10ms_after_dbfs": -61.2461691470908,
+              "rms_10ms_before_dbfs": -60.60791757972213,
+              "sample": 120000,
+              "seconds": 2.5
+            }
+          },
+          "fixed_impulse_threshold_fs": 0.08,
+          "fixed_threshold_event_count": 0,
+          "fixed_threshold_sample_count": 0,
+          "maximum_adjacent_sample_delta_fs": 0.010839821200349473,
+          "quiet_fixed_threshold_event_count": 0,
+          "quiet_fixed_threshold_sample_count": 0,
+          "transition_fixed_threshold_event_count": 0,
+          "transition_fixed_threshold_sample_count": 0
+        }
+      },
+      "nonzero_output_frames": 303,
+      "opening_rms_dbfs": -45.357575669070144,
+      "probe": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "data_bytes": 2908800,
+        "data_sha256": "7f4b7f5ff16318e7f60da6b8afeda42ca1fe17327acd7ea4e801fffadc2f7a07",
+        "sample_count": 484800,
+        "sample_rate": 48000
+      },
+      "sha256": "4a8f179ca00fe8b90ecd381c0439f9eac60b0ccc2dab9f54609dbc3789cf7811"
+    },
+    "porch_bed_removed": {
+      "band_rms_dbfs": {
+        "1_to_8khz": -33.00684034149931,
+        "above_8khz": -50.60946596884298,
+        "below_1khz": -24.463480486502288
+      },
+      "bytes": 2908844,
+      "file": "june-phase42-porch-bed-removed-v1.wav",
+      "measurements": {
+        "active_rms_dbfs": -19.46776303192922,
+        "clipped_channel_values": 0,
+        "duration_seconds": 10.1,
+        "full_rms_dbfs": -23.885757218076698,
+        "noise_proxy": {
+          "analyzed_frame_count": 944,
+          "broadband_static": {
+            "exposed_frame_count": 473,
+            "first_static_like_start_seconds": null,
+            "high_band_power_ratio_median_exposed": 0.03090417692976838,
+            "high_band_power_ratio_p95_exposed": 0.21619047422299495,
+            "last_static_like_end_seconds": null,
+            "maximum_static_like_run_seconds": 0.0,
+            "spectral_flatness_median_exposed": 0.021101756905114715,
+            "spectral_flatness_p95_exposed": 0.16415214031265699,
+            "static_like_frame_count": 0,
+            "static_like_window_ratio_all_frames": 0.0,
+            "static_score_median_exposed": 0.0006841886924344591,
+            "static_score_p95_exposed": 0.013252160272695596
+          },
+          "channels": 2,
+          "coverage_complete": true,
+          "coverage_end_sample_exclusive": 484800,
+          "coverage_start_sample": 0,
+          "crackle": {
+            "impulsive_crackle_event_count": 179,
+            "impulsive_delta_sample_count": 628,
+            "mad_adjacent_sample_delta_fs": 0.001084208617712093,
+            "maximum_adjacent_sample_delta_fs": 0.16783942792885637,
+            "median_adjacent_sample_delta_fs": 0.001084208617712093
+          },
+          "duration_seconds": 10.1,
+          "frame_samples": 2048,
+          "hop_samples": 512,
+          "method": "stft_2048_hann_hop512_exposed_flatness_highband_v1",
+          "noise_floor": {
+            "rms_dbfs_median_all_frames": -38.814958850614296,
+            "rms_dbfs_p10_all_frames": -300.0,
+            "rms_dbfs_p20_all_frames": -82.95330413065763
+          },
+          "sample_count": 484800,
+          "sample_rate": 48000,
+          "thresholds": {
+            "adaptive_crackle_delta_floor_fs": 0.08,
+            "crackle_delta_floor_fs": 0.08,
+            "exposed_rms_ceiling_dbfs": -28.0,
+            "exposed_rms_floor_dbfs": -80.0,
+            "static_flatness_floor": 0.4,
+            "static_high_band_ratio_floor": 0.35
+          }
+        },
+        "pcm_sha256": "81a2d279d390bc51b30ebbb68b9d81fc7b949045489493fb7d863d7616b2a0a6",
+        "peak_dbfs": -1.2890093572839267,
+        "quiet_rms_dbfs": -41.61872569440972,
+        "transient_audit": {
+          "dialogue_active_fixed_threshold_event_count": 179,
+          "dialogue_active_fixed_threshold_sample_count": 628,
+          "edit_boundaries": {
+            "bridge_to_direct_address": {
+              "immediate_adjacent_sample_delta_fs": 0.0,
+              "maximum_adjacent_sample_delta_within_10ms_fs": 8.594990801214075e-05,
+              "rms_10ms_after_dbfs": -89.70720326820656,
+              "rms_10ms_before_dbfs": -300.0,
+              "sample": 158400,
+              "seconds": 3.3
+            },
+            "pour_to_bridge": {
+              "immediate_adjacent_sample_delta_fs": 0.0,
+              "maximum_adjacent_sample_delta_within_10ms_fs": 6.437302403128434e-06,
+              "rms_10ms_after_dbfs": -300.0,
+              "rms_10ms_before_dbfs": -114.76670044353888,
+              "sample": 120000,
+              "seconds": 2.5
+            }
+          },
+          "fixed_impulse_threshold_fs": 0.08,
+          "fixed_threshold_event_count": 179,
+          "fixed_threshold_sample_count": 628,
+          "maximum_adjacent_sample_delta_fs": 0.16783942792885637,
+          "quiet_fixed_threshold_event_count": 0,
+          "quiet_fixed_threshold_sample_count": 0,
+          "transition_fixed_threshold_event_count": 0,
+          "transition_fixed_threshold_sample_count": 0
+        }
+      },
+      "nonzero_output_frames": 254,
+      "opening_rms_dbfs": -39.90425604224005,
+      "probe": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "data_bytes": 2908800,
+        "data_sha256": "1b8ccce5c967caea1e1024aba82b32b1a1d2a5b85ff503444c5fc0fb7943b7ee",
+        "sample_count": 484800,
+        "sample_rate": 48000
+      },
+      "sha256": "8ab4281813b6d42d5dba3eb5a8d863ff47725e98f345c3ebd9c545486cbe0bc7"
+    },
+    "voice_only": {
+      "band_rms_dbfs": {
+        "1_to_8khz": -33.27097533958109,
+        "above_8khz": -52.94786842755415,
+        "below_1khz": -24.48566076934764
+      },
+      "bytes": 2908844,
+      "file": "june-phase42-voice-only-v1.wav",
+      "measurements": {
+        "active_rms_dbfs": -19.47807545724403,
+        "clipped_channel_values": 0,
+        "duration_seconds": 10.1,
+        "full_rms_dbfs": -23.94069051101441,
+        "noise_proxy": {
+          "analyzed_frame_count": 944,
+          "broadband_static": {
+            "exposed_frame_count": 140,
+            "first_static_like_start_seconds": null,
+            "high_band_power_ratio_median_exposed": 0.006617309308559678,
+            "high_band_power_ratio_p95_exposed": 0.23559410238538456,
+            "last_static_like_end_seconds": null,
+            "maximum_static_like_run_seconds": 0.0,
+            "spectral_flatness_median_exposed": 0.0007916493378949611,
+            "spectral_flatness_p95_exposed": 0.03479772145332696,
+            "static_like_frame_count": 0,
+            "static_like_window_ratio_all_frames": 0.0,
+            "static_score_median_exposed": 9.488895778561753e-06,
+            "static_score_p95_exposed": 0.004782703789865037
+          },
+          "channels": 2,
+          "coverage_complete": true,
+          "coverage_end_sample_exclusive": 484800,
+          "coverage_start_sample": 0,
+          "crackle": {
+            "impulsive_crackle_event_count": 176,
+            "impulsive_delta_sample_count": 625,
+            "mad_adjacent_sample_delta_fs": 0.0,
+            "maximum_adjacent_sample_delta_fs": 0.16783942792885637,
+            "median_adjacent_sample_delta_fs": 0.0
+          },
+          "duration_seconds": 10.1,
+          "frame_samples": 2048,
+          "hop_samples": 512,
+          "method": "stft_2048_hann_hop512_exposed_flatness_highband_v1",
+          "noise_floor": {
+            "rms_dbfs_median_all_frames": -300.0,
+            "rms_dbfs_p10_all_frames": -300.0,
+            "rms_dbfs_p20_all_frames": -300.0
+          },
+          "sample_count": 484800,
+          "sample_rate": 48000,
+          "thresholds": {
+            "adaptive_crackle_delta_floor_fs": 0.08,
+            "crackle_delta_floor_fs": 0.08,
+            "exposed_rms_ceiling_dbfs": -28.0,
+            "exposed_rms_floor_dbfs": -80.0,
+            "static_flatness_floor": 0.4,
+            "static_high_band_ratio_floor": 0.35
+          }
+        },
+        "pcm_sha256": "e966059ca565cfbd9891ccd6f71fe02bd54fcbd201f13689df4896f9b2a400c4",
+        "peak_dbfs": -1.396753074252801,
+        "quiet_rms_dbfs": -63.77011893943884,
+        "transient_audit": {
+          "dialogue_active_fixed_threshold_event_count": 176,
+          "dialogue_active_fixed_threshold_sample_count": 625,
+          "edit_boundaries": {
+            "bridge_to_direct_address": {
+              "immediate_adjacent_sample_delta_fs": 0.0,
+              "maximum_adjacent_sample_delta_within_10ms_fs": 8.594990801214075e-05,
+              "rms_10ms_after_dbfs": -89.70720326820656,
+              "rms_10ms_before_dbfs": -300.0,
+              "sample": 158400,
+              "seconds": 3.3
+            },
+            "pour_to_bridge": {
+              "immediate_adjacent_sample_delta_fs": 0.0,
+              "maximum_adjacent_sample_delta_within_10ms_fs": 0.0,
+              "rms_10ms_after_dbfs": -300.0,
+              "rms_10ms_before_dbfs": -300.0,
+              "sample": 120000,
+              "seconds": 2.5
+            }
+          },
+          "fixed_impulse_threshold_fs": 0.08,
+          "fixed_threshold_event_count": 176,
+          "fixed_threshold_sample_count": 625,
+          "maximum_adjacent_sample_delta_fs": 0.16783942792885637,
+          "quiet_fixed_threshold_event_count": 0,
+          "quiet_fixed_threshold_sample_count": 0,
+          "transition_fixed_threshold_event_count": 0,
+          "transition_fixed_threshold_sample_count": 0
+        }
+      },
+      "nonzero_output_frames": 136,
+      "opening_rms_dbfs": -300.0,
+      "probe": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "data_bytes": 2908800,
+        "data_sha256": "b3a68796083b93fdb9132f5bf524a71fc0096486767b21c544c5a2ddbe814d67",
+        "sample_count": 484800,
+        "sample_rate": 48000
+      },
+      "sha256": "b9a2f402d9255397bf8cafec9170aca6e76c028b5cbd5ede0733d2ebc699f16a"
+    }
+  },
+  "cash_cost": 0,
+  "classification": "CONTROLLED_SOURCE_ISOLATION_NOT_ACCEPTED_CLEAN_MASTER",
+  "human_accepted": false,
+  "implementation_sha256": "05d42315b768199e18f6be03e5b0b598f558d194f43c0f88062923a59c2afe62",
+  "interpretation": "Removing only the continuous porch bed is a causal listening comparison. It retains the exact voice and discrete actions/chimes; those may still contain objectionable noise. Band energy and old proxy scores are descriptive, not listening acceptance.",
+  "network_calls": 0,
+  "promotion_allowed": false,
+  "report_version": 1,
+  "reviewed_reference": {
+    "file": "collab/phase42_human_rejected_gates_successors_v1/june-phase42-fullmix-balanced_air-v1.wav",
+    "human_verdict": "STATIC_REMAINS_THROUGHOUT",
+    "sha256": "d25975e13d1b1fc873214b342e8abb5065ef7409a2a98b523eee846523ba4357"
+  },
+  "source_audit": {
+    "dialogue_start_sample": 158400,
+    "maximum_reconstruction_error_pcm24_units": 0,
+    "normalization": "one shared reviewed-mix gain; no per-file or per-stem level boost",
+    "shared_reference_gain": 1.8016786408226597,
+    "sound_contract_sha256": "4d1f8592fb89eab950546b5c94de77f9bb19dfdc5d9d9edf377e5a4c590d5afe",
+    "voice_source_sha256": "2cb1fc40d7c03d726e6f7310dda957014ce2bc6c692df41b8ef5c26f0c6171ce"
+  },
+  "video_encoder_processes": 0
+}
