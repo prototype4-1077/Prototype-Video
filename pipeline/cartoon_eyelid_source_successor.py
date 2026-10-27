@@ -22,6 +22,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 from pipeline import cartoon_eyelid_edge_diagnostic as v4
+from pipeline import cartoon_continuous_blink
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -181,7 +182,7 @@ def _successor_edge_spec(prepared: Any) -> tuple[dict[str, np.ndarray], dict[str
 
 
 @contextmanager
-def _natural_blink_variant(prepared: Any) -> Iterator[dict[str, Any]]:
+def _natural_blink_variant(prepared: Any, *, continuous: bool = False) -> Iterator[dict[str, Any]]:
     """Temporarily use an upper-lid-led blink with a generated closed-eye target.
 
     The predecessor split upper/lower travel equally.  Human eyelids do not:
@@ -203,6 +204,8 @@ def _natural_blink_variant(prepared: Any) -> Iterator[dict[str, Any]]:
     def masks(
         shape: tuple[int, int], center: tuple[int, int], radius: tuple[int, int], closure: float,
     ) -> tuple[np.ndarray, np.ndarray, np.ndarray]:
+        if continuous:
+            return cartoon_continuous_blink.lid_alpha_masks(shape, center, radius, closure)
         upper = np.zeros(shape, dtype=np.uint8)
         lower = np.zeros(shape, dtype=np.uint8)
         crease = np.zeros(shape, dtype=np.uint8)
@@ -245,7 +248,7 @@ def _natural_blink_variant(prepared: Any) -> Iterator[dict[str, Any]]:
         radius: tuple[int, int],
         closure: float,
     ) -> tuple[float, int]:
-        if closure <= 0.0:
+        if closure <= 0.0 and not continuous:
             return 0.0, 0
         upper, lower, _ = masks(plate.shape[:2], center, radius, closure)
         cx, cy = center
@@ -256,9 +259,14 @@ def _natural_blink_variant(prepared: Any) -> Iterator[dict[str, Any]]:
         owner_roi = owner[y1:y2, x1:x2]
         upper_roi = upper[y1:y2, x1:x2]
         lower_roi = lower[y1:y2, x1:x2]
-        phase33._blend_source(canvas_roi, source_roi, upper_roi)
+        if continuous:
+            # A feathered pixel has one final alpha owner.  Repeated blending
+            # would amplify the socket feather where upper and lower overlap.
+            phase33._blend_source(canvas_roi, source_roi, np.maximum(upper_roi, lower_roi))
+        else:
+            phase33._blend_source(canvas_roi, source_roi, upper_roi)
+            phase33._blend_source(canvas_roi, source_roi, lower_roi)
         owner_roi[upper_roi >= 128] = 7
-        phase33._blend_source(canvas_roi, source_roi, lower_roi)
         owner_roi[lower_roi >= 128] = 8
 
         yy, xx = np.indices((y2 - y1, x2 - x1), dtype=np.float32)
@@ -293,6 +301,8 @@ def _render_focus(
     masks: dict[str, Any],
     texture: np.ndarray,
     variant_name: str,
+    *,
+    continuous: bool = False,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, dict[str, Any]]:
     specs = v4._variant_specs(sclera, masks, prepared.face.plate.shape[:2])
     if variant_name == "rejected_v4":
@@ -302,7 +312,7 @@ def _render_focus(
         context = v4._edge_variant(sclera, hard, soft, suppress_crease=True)
     else:
         _, _, edge_spec_audit = _successor_edge_spec(prepared)
-        context = _natural_blink_variant(prepared)
+        context = _natural_blink_variant(prepared, continuous=continuous)
     focus = int(contract["diagnostic"]["source_focus_frame"])
     original = prepared.face.phase33_base.lid_texture.copy()
     prepared.face.phase33_base.lid_texture[:] = texture
@@ -333,6 +343,8 @@ def _render_successor_sequence(
     contract: dict[str, Any],
     sclera: dict[str, dict[str, Any]],
     texture: np.ndarray,
+    *,
+    continuous: bool = False,
 ) -> tuple[list[np.ndarray], list[dict[str, Any]]]:
     original = prepared.face.phase33_base.lid_texture.copy()
     prepared.face.phase33_base.lid_texture[:] = texture
@@ -342,9 +354,9 @@ def _render_successor_sequence(
     source_frames = [int(value) for value in contract["diagnostic"]["source_frames"]]
     phase36_frames = [int(value) for value in contract["diagnostic"]["phase36_frames"]]
     try:
-        with _natural_blink_variant(prepared):
+        with _natural_blink_variant(prepared, continuous=continuous):
             for source_frame, phase36_frame in zip(source_frames, phase36_frames):
-                source_image, _, evidence = v4.v3.phase35.compose_direct_address_frame(prepared, source_frame)
+                source_image, native, evidence = v4.v3.phase35.compose_direct_address_frame(prepared, source_frame)
                 phase36_contract = v4.v3._strict_json(
                     v4._repo_path(contract["locks"]["phase36_picture_contract"]["path"]),
                     "Phase36 contract",
@@ -363,6 +375,10 @@ def _render_successor_sequence(
                     "phase36_frame": phase36_frame,
                     "blink_closure": float(evidence.blink_closure),
                     "rgb_sha256": _hash_array(phase36),
+                    "native_rgb_sha256": _hash_array(native),
+                    "native_changes_outside_feature_support": int(evidence.changed_outside_support),
+                    "depth_order_violation_pixels": int(evidence.depth_order_violation_pixels),
+                    "iris_occlusion_ratios": [float(value) for value in evidence.iris_occlusion_ratios],
                     "transformed_eye_roi_xyxy": transform["transformed_eye_roi_xyxy"],
                 })
     finally:
@@ -458,7 +474,37 @@ def _source_grid(textures: dict[str, np.ndarray], box: tuple[int, int, int, int]
     return _grid(states, box, 3)
 
 
-def build(output_root: Path = OUTPUT_DEFAULT) -> dict[str, Any]:
+def _control_continuity_audit(prepared: Any) -> dict[str, Any]:
+    phase34 = v4.v3.phase35.phase34_candidate09
+    pairs = ((0.0, 0.0001), (0.2499, 0.2501), (0.9989, 0.9991), (0.9999, 1.0))
+    result: dict[str, Any] = {}
+    for continuous, label in ((False, "phase42_v1"), (True, "continuous_v2")):
+        rows = []
+        with _natural_blink_variant(prepared, continuous=continuous):
+            for eye_name, eye in zip(("viewer_left_eye", "viewer_right_eye"), _eye_geometry(prepared)):
+                for first, second in pairs:
+                    combined = []
+                    for closure in (first, second):
+                        upper, lower, _ = phase34._semantic_lid_alpha_masks(
+                            prepared.face.plate.shape[:2],
+                            (eye["cx"], eye["cy"]), (eye["rx"], eye["ry"]), closure,
+                        )
+                        if continuous:
+                            value = np.maximum(upper, lower).astype(np.float64)
+                        else:
+                            value = 255.0 * (1.0 - (1.0 - upper / 255.0) * (1.0 - lower / 255.0))
+                        combined.append(value)
+                    delta = np.abs(combined[1] - combined[0])
+                    rows.append({
+                        "eye_name": eye_name, "closure_pair": [first, second],
+                        "maximum_alpha_jump_u8": float(delta.max()),
+                        "pixels_changing_more_than_20_alpha": int((delta > 20.0).sum()),
+                    })
+        result[label] = rows
+    return result
+
+
+def build(output_root: Path = OUTPUT_DEFAULT, *, continuous: bool = False) -> dict[str, Any]:
     output = output_root.resolve()
     if output.exists():
         raise EyelidSourceSuccessorError(f"refusing to overwrite existing prototype: {output}")
@@ -467,17 +513,19 @@ def build(output_root: Path = OUTPUT_DEFAULT) -> dict[str, Any]:
     prepared = v4.v3.phase35.prepare_direct_address()
     sclera, masks = v4._edge_masks(prepared, contract)
     textures, source_audit = _corrected_textures(prepared)
+    version = "v2" if continuous else "v1"
+    continuity_audit = _control_continuity_audit(prepared) if continuous else None
     native: dict[str, np.ndarray] = {}
     source: dict[str, np.ndarray] = {}
     phase36: dict[str, np.ndarray] = {}
     render_audit: dict[str, Any] = {}
     for name in VARIANTS:
         native[name], source[name], phase36[name], render_audit[name] = _render_focus(
-            prepared, contract, sclera, masks, textures[name], name
+            prepared, contract, sclera, masks, textures[name], name, continuous=continuous,
         )
 
     sequence_frames, sequence_metadata = _render_successor_sequence(
-        prepared, contract, sclera, textures["ai_direct"],
+        prepared, contract, sclera, textures["ai_direct"], continuous=continuous,
     )
 
     native_support = v4.v3.phase35._native_eye_support_mask(prepared)
@@ -488,16 +536,27 @@ def build(output_root: Path = OUTPUT_DEFAULT) -> dict[str, Any]:
     sequence_sheet, sequence_crops, sequence_audit = _sequence_review(
         sequence_frames, sequence_metadata, phase36_box,
     )
+    if continuous:
+        if any(row["maximum_alpha_jump_u8"] > 2.0 for row in continuity_audit["continuous_v2"]):
+            raise EyelidSourceSuccessorError("continuous blink failed the subpixel-control continuity gate")
+        if any(
+            row["native_changes_outside_feature_support"] != 0 or row["depth_order_violation_pixels"] != 0
+            for row in sequence_metadata
+        ):
+            raise EyelidSourceSuccessorError("continuous blink escaped feature support or violated layer depth")
+        closed = [row for row in sequence_metadata if row["blink_closure"] == 1.0]
+        if not closed or any(row["iris_occlusion_ratios"] != [1.0, 1.0] for row in closed):
+            raise EyelidSourceSuccessorError("continuous blink did not fully occlude both iris regions")
     with tempfile.TemporaryDirectory(prefix="phase42-lid-", dir=output.parent) as temporary:
         stage = Path(temporary)
-        _grid(native, native_box, 1).save(stage / "phase42-eyelid-source-native-1x-v1.png")
-        _grid(native, native_box, 3).save(stage / "phase42-eyelid-source-native-3x-v1.png")
-        _grid(phase36, phase36_box, 1).save(stage / "phase42-eyelid-source-phase36-1x-v1.png")
-        _grid(phase36, phase36_box, 3).save(stage / "phase42-eyelid-source-phase36-3x-v1.png")
-        _source_grid(textures, native_box).save(stage / "phase42-eyelid-source-textures-3x-v1.png")
-        sequence_sheet.save(stage / "phase42-eyelid-ai-direct-f240-f256-sequence-v1.png")
+        _grid(native, native_box, 1).save(stage / f"phase42-eyelid-source-native-1x-{version}.png")
+        _grid(native, native_box, 3).save(stage / f"phase42-eyelid-source-native-3x-{version}.png")
+        _grid(phase36, phase36_box, 1).save(stage / f"phase42-eyelid-source-phase36-1x-{version}.png")
+        _grid(phase36, phase36_box, 3).save(stage / f"phase42-eyelid-source-phase36-3x-{version}.png")
+        _source_grid(textures, native_box).save(stage / f"phase42-eyelid-source-textures-3x-{version}.png")
+        sequence_sheet.save(stage / f"phase42-eyelid-ai-direct-f240-f256-sequence-{version}.png")
         sequence_crops[0].save(
-            stage / "phase42-eyelid-ai-direct-f240-f256-loop-v1.webp",
+            stage / f"phase42-eyelid-ai-direct-f240-f256-loop-{version}.webp",
             save_all=True,
             append_images=sequence_crops[1:],
             duration=[140] + [67] * (len(sequence_crops) - 2) + [140],
@@ -506,12 +565,20 @@ def build(output_root: Path = OUTPUT_DEFAULT) -> dict[str, Any]:
             quality=100,
             method=3,
         )
+        if continuous:
+            boundaries_ms = [round(index * 1000 / 30) for index in range(len(sequence_crops) + 1)]
+            native_durations_ms = [end - start for start, end in zip(boundaries_ms, boundaries_ms[1:])]
+            sequence_crops[0].save(
+                stage / "phase42-eyelid-ai-direct-30fps-v2.webp",
+                save_all=True, append_images=sequence_crops[1:], duration=native_durations_ms,
+                loop=0, lossless=True, quality=100, method=3,
+            )
         artifacts = {
             path.name: {"sha256": hashlib.sha256(path.read_bytes()).hexdigest(), "bytes": path.stat().st_size}
             for path in sorted([*stage.glob("*.png"), *stage.glob("*.webp")])
         }
         report = {
-            "report_version": 1,
+            "report_version": 2 if continuous else 1,
             "classification": "STILL_ONLY_AI_ASSISTED_LID_SOURCE_SUCCESSORS_HUMAN_REVIEW_REQUIRED",
             "cash_cost": 0,
             "runtime_network_calls": 0,
@@ -520,6 +587,16 @@ def build(output_root: Path = OUTPUT_DEFAULT) -> dict[str, Any]:
             "rejected_v4_report_sha256": "fd08ee030123fc96585994825fc49942a937e9e631722478fa54bcee6bc36a7f",
             "source_audit": source_audit,
             "ai_direct_neighbor_sequence": sequence_audit,
+            "control_continuity_audit": continuity_audit,
+            "blink_control": "continuous_subpixel_single_alpha_v2" if continuous else "thresholded_socket_v1",
+            "playback": {
+                "slow_inspection_loop": "67ms frames with 140ms endpoint holds; not native playback speed",
+                "native_loop": "30fps on a millisecond clock, 567ms over 17 frames" if continuous else None,
+            },
+            "implementation_sha256": {
+                "source_successor": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+                "continuous_blink": hashlib.sha256(Path(cartoon_continuous_blink.__file__).read_bytes()).hexdigest(),
+            },
             "variants": {
                 name: {
                     "native_rgb_sha256": _hash_array(native[name]),
@@ -537,7 +614,7 @@ def build(output_root: Path = OUTPUT_DEFAULT) -> dict[str, Any]:
             "rebuild_authorized": False,
             "encode_authorized": False,
         }
-        (stage / "phase42-eyelid-source-successor-report-v1.json").write_text(
+        (stage / f"phase42-eyelid-source-successor-report-{version}.json").write_text(
             json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n"
         )
         shutil.move(str(stage), str(output))
@@ -546,9 +623,17 @@ def build(output_root: Path = OUTPUT_DEFAULT) -> dict[str, Any]:
 
 def main() -> None:
     parser = argparse.ArgumentParser()
-    parser.add_argument("--output", type=Path, default=OUTPUT_DEFAULT)
+    parser.add_argument("--output", type=Path)
+    parser.add_argument("--continuous", action="store_true")
     args = parser.parse_args()
-    print(json.dumps(build(args.output), indent=2, sort_keys=True))
+    default_output = OUTPUT_DEFAULT.parent / "phase42-eyelid-continuous-blink-v2" if args.continuous else OUTPUT_DEFAULT
+    report = build(args.output or default_output, continuous=args.continuous)
+    print(json.dumps({
+        "report_version": report["report_version"],
+        "blink_control": report["blink_control"],
+        "artifacts": report["artifacts"],
+        "human_accepted": report["human_accepted"],
+    }, indent=2, sort_keys=True))
 
 
 if __name__ == "__main__":
