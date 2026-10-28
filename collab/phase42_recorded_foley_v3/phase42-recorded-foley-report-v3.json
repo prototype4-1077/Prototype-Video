@@ -1,0 +1,145 @@
+{
+  "artifacts": {
+    "recorded-effects-only": {
+      "bytes": 2908844,
+      "edit_boundary_max_sample_delta": {
+        "120000": 0.0,
+        "158400": 0.0
+      },
+      "file": "june-phase42-recorded-effects-only-v3.wav",
+      "peak_dbfs": -28.010291626776986,
+      "probe": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "data_bytes": 2908800,
+        "data_sha256": "1af0eca2c75a60f7f9b239b3cd5999b03bda872c6922b44a0a1e6c15b70c688f",
+        "sample_count": 484800,
+        "sample_rate": 48000
+      },
+      "sha256": "e80120adaeb00d0fa156137a504c7805d458f142e7e71f9b00d18a6718ea9212"
+    },
+    "recorded-foley": {
+      "bytes": 2908844,
+      "edit_boundary_max_sample_delta": {
+        "120000": 0.0,
+        "158400": 0.0
+      },
+      "file": "june-phase42-recorded-foley-v3.wav",
+      "peak_dbfs": -1.3822864808506217,
+      "probe": {
+        "bits_per_sample": 24,
+        "channels": 2,
+        "data_bytes": 2908800,
+        "data_sha256": "35ecec24dbbbb24c66bd82871bb3f50276c3636ef944e1b3245d65774f2740b8",
+        "sample_count": 484800,
+        "sample_rate": 48000
+      },
+      "sha256": "3c6965f8030d9c7360a418cb19dd6b193396a5c1a37b8084ca247622a259c14f"
+    }
+  },
+  "attribution_sha256": "6117265570f227f86f3afb700d20650ffc9e7df9bd72d27fe8baa1e258e7afe6",
+  "audio_decoder_processes": 2,
+  "cash_cost": 0,
+  "classification": "RECORDED_FOLEY_LISTENING_CANDIDATE_NOT_ACCEPTED",
+  "events": [
+    {
+      "author": "cori / Cori Samuel",
+      "bytes": 252347,
+      "decoded_excerpt_float32_sha256": "5d73b95e139df547e963f1aad2a426e92d589b44acd8b7b994aadd830c97efd3",
+      "decoded_rate": 48000,
+      "decoded_sample_count": 94400,
+      "decoded_source_samples": 635716,
+      "decoded_start_sample": 132000,
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/6/69/Boiling_water_being_poured_into_a_mug_for_tea.ogg",
+      "event_id": "PROP_COFFEE_POUR",
+      "event_type": "coffee_pour",
+      "fade_samples_each_edge": 1440,
+      "file": "cori_samuel_mug_pour_pd.ogg",
+      "global_frames_inclusive": [
+        806,
+        864
+      ],
+      "id": "mug_pour",
+      "license": "Public domain author dedication as stated on the source page",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Boiling_water_being_poured_into_a_mug_for_tea.ogg#Licensing",
+      "mono_peak_dbfs": -25.0,
+      "output_sample_range_half_open": [
+        25600,
+        120000
+      ],
+      "output_seconds": [
+        0.5333333333333333,
+        2.5
+      ],
+      "pan": 0.0,
+      "sha1": "044ffb5452e55e888a9f2bfc9f5a5f55a00f069a",
+      "sha256": "5580d3f8f6bde68b5215a99c7a8180536eb89be3a47b49e21da73e4e17e0906f",
+      "source_description": "Kettle water poured into a mug containing a teabag. Used as a coffee-pour stand-in, not a claim that coffee was recorded.",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Boiling_water_being_poured_into_a_mug_for_tea.ogg",
+      "source_revision": "https://commons.wikimedia.org/w/index.php?title=File:Boiling_water_being_poured_into_a_mug_for_tea.ogg&oldid=828034166",
+      "title": "Boiling water being poured into a mug for tea"
+    },
+    {
+      "author": "Nicole Marie T",
+      "bytes": 264644,
+      "credit": "Sound Effect By Nicole Marie T",
+      "decoded_excerpt_float32_sha256": "62351b0a6fc9dba18c9a16988ebe7b70813ca59decafb9a1a58cf5e5213185a6",
+      "decoded_rate": 48000,
+      "decoded_sample_count": 25600,
+      "decoded_source_samples": 72000,
+      "decoded_start_sample": 17760,
+      "download_url": "https://opengameart.org/sites/default/files/Cup%20On%20Table%20Sfx.wav",
+      "event_id": "PROP_MUG_OFFER_PLACE",
+      "event_type": "mug_place",
+      "fade_samples_each_edge": 1440,
+      "file": "nicole_marie_t_cup_on_table_cc_by_4.wav",
+      "global_frames_inclusive": [
+        969,
+        984
+      ],
+      "id": "cup_contact",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "mono_peak_dbfs": -28.0,
+      "output_sample_range_half_open": [
+        209600,
+        235200
+      ],
+      "output_seconds": [
+        4.366666666666666,
+        4.9
+      ],
+      "pan": 0.0,
+      "sha256": "7b75936157366a27444df78fcc906102e053fcafea657eff2dc62766f34bf1d2",
+      "source_page": "https://opengameart.org/content/cup-on-table-sfx-sound-effect",
+      "title": "Cup On Table Sfx Sound Effect"
+    }
+  ],
+  "human_accepted": false,
+  "implementation_sha256": "abbf53e0e7dc25efa3e7d0aee0cbc5f58d74880ccfb12b7483cb49a1f313183d",
+  "network_calls_during_build": 0,
+  "note": "Waveform checks verify clock, samples, boundaries and headroom, not naturalness or absence of audible static in the new recordings. Two cues are a diagnostic sound treatment, not complete scene Foley.",
+  "omitted": [
+    "all synthetic Foley",
+    "all wind chimes",
+    "continuous porch bed",
+    "breath/cloth/scrape noise",
+    "cut-out pot-set tail"
+  ],
+  "previous_sparse_v2_verdict": "STATIC_CHECK_PASSED_EFFECT_CHARACTER_REJECTED",
+  "promotion_allowed": false,
+  "report_version": 3,
+  "runtime": {
+    "ffmpeg": "ffmpeg version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+    "numpy": "2.4.4"
+  },
+  "sound_contract_sha256": "4d1f8592fb89eab950546b5c94de77f9bb19dfdc5d9d9edf377e5a4c590d5afe",
+  "source_manifest_sha256": "42eb293da43770457956fb4a336dfaa4b713274d063ecbe9641b17b1788b5d59",
+  "video_encoder_processes": 0,
+  "voice": {
+    "file": "collab/phase42_audio_source_isolation_v1/june-phase42-voice-only-v1.wav",
+    "human_feedback": "NO_STATIC_HEARD_IN_VOICE_ONLY",
+    "pcm_contribution_preserved_exactly": true,
+    "sha256": "b9a2f402d9255397bf8cafec9170aca6e76c028b5cbd5ede0733d2ebc699f16a"
+  }
+}

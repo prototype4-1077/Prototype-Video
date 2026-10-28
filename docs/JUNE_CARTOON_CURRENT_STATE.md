@@ -1,6 +1,6 @@
 # June Oxley cartoon — current state and entry point
 
-Updated 2026-10-27. Branch: `agent/phase42-human-rejected-gates-repair-v1`.
+Updated 2026-10-28. Branch: `agent/phase42-human-rejected-gates-repair-v1`.
 
 ## What the program can do now
 
@@ -21,24 +21,30 @@ does not make its acting natural or its overall quality competitive.
 
 ## Review the current evidence
 
-1. Eye motion at true playback speed:
-   `collab/phase42_continuous_blink_review_v2/phase42-eyelid-ai-direct-30fps-v2.webp`.
-   The adjacent slow loop is intentionally slower and is labeled as such.
+1. Eye motion at true cadence:
+   `collab/phase42_blink_refinement_v3/phase42-blink-comparison-real-cadence-v3.webp`.
+   The right side has one slower blink near six seconds, not a short repeated
+   crop loop. This is an eye-only, fixed-head study, not full-scene motion.
 2. Audio: James still hears static throughout `balanced_air`, and removing the
    continuous porch bed made no real change. He corrected the voice-only
-   verdict to **no static**. Preserve that voice. The new listening audition is
-   `collab/phase42_sparse_foley_v2/june-phase42-sparse-foley-v2.wav`, which
-   replaces/omits the noisy effects without changing the voice contribution.
-   Its full-mix listening verdict is still pending.
+   verdict to **no static**. Preserve that voice. He also heard no static in
+   sparse Foley v2, but rejected its game/phone-like effects. The replacement
+   audition is `collab/phase42_recorded_foley_v3/june-phase42-recorded-foley-v3.wav`:
+   two restrained recorded cues (pour and cup contact), no chimes or constant
+   bed, and bit-exact voice contribution. This new mix has no human verdict.
+   Its `ATTRIBUTION.md` and `sources.json` must travel with derived audio/video;
+   the cup source is CC BY 4.0 and the pour page states public-domain dedication.
 3. Combined body/eye stills:
    `collab/phase42_repaired_acting_integration_v1/phase42-acting-eye-integration-comparison-v1.png`.
    Columns are original / body acting only / body acting plus repaired eyes.
    Six sampled frames prove compatibility, not whole-scene temporal acceptance.
 
 Current human decisions: eyes are near-pass but still need work; balanced-air
-audio is rejected for static throughout; body acting is pending. Candidate03,
+audio is rejected for static throughout; sparse v2 passes the static check
+but fails effect character; recorded v3 and body acting are pending. Candidate03,
 Phase37 V4, and all reviewed Phase42 files remain immutable. See James's exact
-2026-10-27 verdict in `collab/JAMES_VERDICT_2026-10-27.md`.
+verdicts in `collab/JAMES_VERDICT_2026-10-27.md` and
+`collab/JAMES_VERDICT_2026-10-28.md`.
 
 The latest blink feedback asks for slightly slower, less frequent closure and
 a small shape adjustment. `collab/phase42_blink_refinement_v3/` contains a
@@ -55,6 +61,16 @@ Focused live integration checks (re-render selected frames in memory):
 ```powershell
 python -m unittest pipeline.tests.test_cartoon_repaired_acting -v
 ```
+
+Recorded-Foley source, voice-preservation, licensing and sample-clock checks:
+
+```powershell
+python -m unittest pipeline.tests.test_cartoon_recorded_foley -v
+```
+
+The two small recorded assets are already vendored with credits. The audio
+builder uses the installed local FFmpeg decoder; it does not fetch sources,
+regenerate speech, invoke an inference service, or run a video encoder.
 
 Continuous blink controls and published playback/source checks:
 
