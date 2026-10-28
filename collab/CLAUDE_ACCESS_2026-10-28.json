@@ -1,0 +1,49 @@
+{
+  "classification": "ACTUAL_CLAUDE_READ_ONLY_REVIEW_COMPLETED",
+  "model_names": [
+    "claude-sonnet-4-6"
+  ],
+  "context_window": 200000,
+  "auth_method": "claude.ai",
+  "subscription_type": "pro",
+  "user_confirmed_extra_usage_off": true,
+  "extended_context_disabled_for_this_launch": true,
+  "global_settings_changed": false,
+  "tools_exposed": [
+    "Read",
+    "Glob",
+    "Grep"
+  ],
+  "mcp_servers": [],
+  "hooks_disabled": true,
+  "permission_denials": [],
+  "is_error": false,
+  "api_error_status": null,
+  "duration_ms": 79501,
+  "num_turns": 11,
+  "session_id": "38397200-a565-474d-b001-814cdf0b8ffb",
+  "receipt_uuid": "66847ac2-1058-4de0-a6ac-c5ac3a7a40b2",
+  "reported_token_cost_estimate_usd": 0.17284185000000002,
+  "cost_note": "CLI token-cost estimate; not a billing receipt. Existing Pro subscription authentication; James confirmed extra usage off. No API key or credits enabled.",
+  "usage": {
+    "input_tokens": 8,
+    "cache_creation_input_tokens": 25197,
+    "cache_read_input_tokens": 67447,
+    "output_tokens": 3873,
+    "server_tool_use": {
+      "web_search_requests": 0,
+      "web_fetch_requests": 0
+    },
+    "service_tier": "standard",
+    "cache_creation": {
+      "ephemeral_1h_input_tokens": 25197,
+      "ephemeral_5m_input_tokens": 0
+    },
+    "inference_geo": "",
+    "iterations": [],
+    "speed": "standard"
+  },
+  "human_acceptance": false,
+  "production_promotion_allowed": false,
+  "scope": "Actual visual still review only; no claimed movie/audio playback. Local working-tree access verified; separate Claude scheduled-task GitHub attachment unverified."
+}

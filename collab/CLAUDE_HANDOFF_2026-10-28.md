@@ -12,12 +12,20 @@ Branch: `agent/phase42-human-rejected-gates-repair-v1`.
 Starting committed checkpoint: `cccdcb5eadd50153b9173a32f1065a8c9a1fe60c`.
 New verdict and hand study may be local additions during the first review.
 
-Connection result: Claude Code 2.1.126 reports a saved subscription login,
-but the single bounded review attempt failed with HTTP 401, "OAuth access
-token is invalid." It returned zero input/output tokens and $0 cost. No
-review or visual inspection was completed by Claude. Stop retries until
-James signs in again. Do not extract/refresh credentials through private
-endpoints or change authentication to a paid API key.
+Current connection: **verified working** after James signed in. Read
+`CLAUDE_REVIEW_2026-10-28_STANDARD_CONTEXT.md` and
+`CLAUDE_ACCESS_2026-10-28.json`. One actual Claude Sonnet 4.6 review inspected
+the mouth pose sheet, native hand keyframes and full-scene contact sheet.
+No movie/WebP/audio playback was claimed and no scene acceptance granted.
+
+Historical first attempt returned HTTP 401 (invalid saved OAuth login).
+After sign-in, an extended-context attempt returned HTTP 429, requiring
+usage credits; neither used tokens. The installed supported setting
+`CLAUDE_CODE_DISABLE_1M_CONTEXT=1` let a bounded 200K-context review run using
+the existing Claude Pro login. Keep extra usage off and use that setting
+per launch, not a paid API key. Global account/model/billing settings were
+not changed. Local review works; the separate Claude scheduled-task GitHub
+attachment remains unverified.
 
 Do not change account permissions, invite a guessed GitHub identity, create
 API keys or run `.github/workflows/idea.yml` (legacy paid API path). Existing

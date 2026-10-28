@@ -10,12 +10,16 @@ older recommendations and reviews.
 - GPT builds reversible experiments on
   `agent/phase42-human-rejected-gates-repair-v1`, not `main`.
 - Claude initially reviews actual rendered pixels and proposes narrow VFX /
-  animation experiments. Local Claude Code is installed and reports a saved
-  Claude subscription login, but the first review request on 2026-10-28 was
-  rejected with HTTP 401, "OAuth access token is invalid." James must sign
-  in again before reviews can run. No Claude review has been produced by
-  this reconnection attempt. James confirmed extra usage / usage credits
-  are off. Do not enable them or use API billing.
+  animation experiments. Local Claude Code access is now verified by an
+  actual review: `CLAUDE_REVIEW_2026-10-28_STANDARD_CONTEXT.md`, with receipt
+  metadata in `CLAUDE_ACCESS_2026-10-28.json`. After James's sign-in, an
+  extended-context request stopped on HTTP 429 (usage credits required).
+  A supported per-launch `CLAUDE_CODE_DISABLE_1M_CONTEXT=1` setting allowed
+  the review through the existing Pro subscription at 200K context using
+  Claude Sonnet 4.6. Earlier failures remain recorded, not overwritten.
+  James confirmed extra usage / usage credits are off. Keep them off;
+  do not use API billing. Never treat the CLI token-cost estimate as a
+  billing receipt. No global account/model/billing settings were changed.
 - The repository remains the durable meeting room. Actual Claude-authored
   reviews use `CLAUDE_REVIEW_*.md`; GPT replies use `GPT_NOTES_*.md`. Label
   authorship accurately. An OpenAI helper is not Claude.
@@ -24,6 +28,10 @@ older recommendations and reviews.
   do not run concurrent writers over the same renderer or working tree.
 - Stop at subscription limits. Do not buy credits, add API keys, alter account
   access, install an integration, or enable a legacy paid workflow.
+- Use standard context for these bounded reviews, and invoke Claude only
+  for a new reviewable proof or James's request, not unchanged wakeups.
+  Local review access does not verify a separate Claude scheduled task's
+  GitHub attachment or give Claude shell/write/push access in this mode.
 
 ## Evidence and decision rules
 
