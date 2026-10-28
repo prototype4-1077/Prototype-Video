@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "retrieved_utc_date": "2026-10-28",
+  "cost": 0,
+  "purpose": "Two recorded Foley excerpts for a pending listening audition; not a complete sound design or an accepted mix.",
+  "sources": [
+    {
+      "id": "mug_pour",
+      "file": "cori_samuel_mug_pour_pd.ogg",
+      "sha256": "5580d3f8f6bde68b5215a99c7a8180536eb89be3a47b49e21da73e4e17e0906f",
+      "sha1": "044ffb5452e55e888a9f2bfc9f5a5f55a00f069a",
+      "bytes": 252347,
+      "title": "Boiling water being poured into a mug for tea",
+      "author": "cori / Cori Samuel",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Boiling_water_being_poured_into_a_mug_for_tea.ogg",
+      "source_revision": "https://commons.wikimedia.org/w/index.php?title=File:Boiling_water_being_poured_into_a_mug_for_tea.ogg&oldid=828034166",
+      "download_url": "https://upload.wikimedia.org/wikipedia/commons/6/69/Boiling_water_being_poured_into_a_mug_for_tea.ogg",
+      "license": "Public domain author dedication as stated on the source page",
+      "license_url": "https://commons.wikimedia.org/wiki/File:Boiling_water_being_poured_into_a_mug_for_tea.ogg#Licensing",
+      "source_description": "Kettle water poured into a mug containing a teabag. Used as a coffee-pour stand-in, not a claim that coffee was recorded.",
+      "event_id": "PROP_COFFEE_POUR",
+      "event_type": "coffee_pour",
+      "global_frames_inclusive": [806, 864],
+      "decoded_rate": 48000,
+      "decoded_start_sample": 132000,
+      "decoded_sample_count": 94400,
+      "mono_peak_dbfs": -25.0,
+      "pan": 0.0
+    },
+    {
+      "id": "cup_contact",
+      "file": "nicole_marie_t_cup_on_table_cc_by_4.wav",
+      "sha256": "7b75936157366a27444df78fcc906102e053fcafea657eff2dc62766f34bf1d2",
+      "bytes": 264644,
+      "title": "Cup On Table Sfx Sound Effect",
+      "author": "Nicole Marie T",
+      "source_page": "https://opengameart.org/content/cup-on-table-sfx-sound-effect",
+      "download_url": "https://opengameart.org/sites/default/files/Cup%20On%20Table%20Sfx.wav",
+      "license": "CC BY 4.0",
+      "license_url": "https://creativecommons.org/licenses/by/4.0/",
+      "credit": "Sound Effect By Nicole Marie T",
+      "event_id": "PROP_MUG_OFFER_PLACE",
+      "event_type": "mug_place",
+      "global_frames_inclusive": [969, 984],
+      "decoded_rate": 48000,
+      "decoded_start_sample": 17760,
+      "decoded_sample_count": 25600,
+      "mono_peak_dbfs": -28.0,
+      "pan": 0.0
+    }
+  ],
+  "modifications": [
+    "Local FFmpeg audio-only decode to 48-kHz mono float32",
+    "Fixed sample-range extraction, with no looping, stretching, pitch change, or generated tones",
+    "30-ms fades at both excerpt boundaries, effects-only peak level and equal-power stereo placement",
+    "Add to the unchanged clean voice PCM; no whole-mix normalization"
+  ],
+  "redistribution": "Keep ATTRIBUTION.md and this source manifest with derived audio. The cup recording requires attribution, a CC BY 4.0 link, and indication of changes."
+}

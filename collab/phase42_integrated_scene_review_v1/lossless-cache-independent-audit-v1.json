@@ -1,0 +1,16 @@
+{
+  "date": "2026-10-28",
+  "classification": "LOCAL_LOSSLESS_CACHE_READBACK_VERIFIED_NOT_HUMAN_PERFORMANCE_ACCEPTANCE",
+  "verified_frames": 303,
+  "method": "Independent gzip/XOR readback compared every reconstructed RGB frame to source-frame-inventory-v1.json, checked exact frame byte counts, gzip CRC/end-of-stream and absence of trailing payload.",
+  "combined_rgb_sha256": "0c4ea62e79f065c86a34ed035e1fe15390228909c6f57fe01f2910d345f15c26",
+  "source_frames_identical_before_and_after_color_metadata_fix": true,
+  "local_cache": {
+    "path_relative_to_workspace": "outputs/edit/phase42-integrated-scene-review-v1/scene-rgb24-xor-v1.gz",
+    "sha256": "dbb1370891f09583b8ad5696084c8d2ef116df301cca849df56726fa9fc65982",
+    "bytes": 484174385,
+    "published_in_git": false
+  },
+  "scene_report_sha256": "b03ea10a48a82fc4a0c39c77b5b2f1d5fff39e89c06514d9ebf37b30d4a13a99",
+  "human_performance_accepted": false
+}

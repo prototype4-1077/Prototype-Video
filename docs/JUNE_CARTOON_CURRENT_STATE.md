@@ -10,10 +10,18 @@ porch atmosphere, and a camera push. Existing scene components include a pour
 action and a 303-frame / 10.1-second three-shot edit. The full-mix audio
 successors are local 48-kHz stereo PCM24 files; no runtime AI service is needed.
 
-The latest adapter, `pipeline/cartoon_repaired_acting.py`, connects the repaired
+The earlier adapter, `pipeline/cartoon_repaired_acting.py`, connects the repaired
 eyelids to the existing body/face/head/atmosphere/camera stack. It reuses those
 renderers rather than introducing another animation engine. It also maps each
 direct-address source frame to its exact output-frame and audio-sample window.
+
+James has now explicitly accepted recorded-Foley v3 and blink-refinement v3:
+`collab/JAMES_VERDICT_2026-10-28b.md`. The exact component files and scope are
+bound in `concept/characters/june_oxley_phase42_component_acceptance_v1.json`.
+The new full-scene path is `pipeline/cartoon_scene_review.py`. It uses those
+approved components, the existing body/head/camera stack, and only the first
+75 unaffected opening frames from the verified lossless source archive. It
+does not reuse the older adapter's rejected audio as an output soundtrack.
 
 This is still a constrained, source-art-based 2.5D prototype, not a free-turning
 3D character or a general episode-production system. Passing component tests
@@ -21,40 +29,59 @@ does not make its acting natural or its overall quality competitive.
 
 ## Review the current evidence
 
-1. Eye motion at true cadence:
-   `collab/phase42_blink_refinement_v3/phase42-blink-comparison-real-cadence-v3.webp`.
-   The right side has one slower blink near six seconds, not a short repeated
-   crop loop. This is an eye-only, fixed-head study, not full-scene motion.
-2. Audio: James still hears static throughout `balanced_air`, and removing the
-   continuous porch bed made no real change. He corrected the voice-only
-   verdict to **no static**. Preserve that voice. He also heard no static in
-   sparse Foley v2, but rejected its game/phone-like effects. The replacement
-   audition is `collab/phase42_recorded_foley_v3/june-phase42-recorded-foley-v3.wav`:
-   two restrained recorded cues (pour and cup contact), no chimes or constant
-   bed, and bit-exact voice contribution. This new mix has no human verdict.
-   Its `ATTRIBUTION.md` and `sources.json` must travel with derived audio/video;
-   the cup source is CC BY 4.0 and the pour page states public-domain dedication.
-3. Combined body/eye stills:
+1. Full integrated scene, 1920x1080 / 30 fps / 303 frames / 10.1 seconds:
+   `collab/phase42_integrated_scene_review_v1/june-phase42-integrated-scene-review-v1.mp4`.
+   This is the normal-speed complete scene, not a short blink loop. The adjacent
+   MOV preserves the exact approved PCM24 audio; MP4 uses AAC for convenient
+   playback. Both use the same encoded picture without a second video encode.
+2. Accepted components, preserved for comparison rather than reopened gates:
+   `collab/phase42_blink_refinement_v3/phase42-blink-comparison-real-cadence-v3.webp`
+   and `collab/phase42_recorded_foley_v3/june-phase42-recorded-foley-v3.wav`.
+   James accepted both in his exact message, "both are good and pass. continue".
+   The original pending-review reports remain historical snapshots; the later
+   verdict and component binding record acceptance without rewriting them.
+3. Earlier combined body/eye stills:
    `collab/phase42_repaired_acting_integration_v1/phase42-acting-eye-integration-comparison-v1.png`.
    Columns are original / body acting only / body acting plus repaired eyes.
    Six sampled frames prove compatibility, not whole-scene temporal acceptance.
 
-Current human decisions: eyes are near-pass but still need work; balanced-air
-audio is rejected for static throughout; sparse v2 passes the static check
-but fails effect character; recorded v3 and body acting are pending. Candidate03,
-Phase37 V4, and all reviewed Phase42 files remain immutable. See James's exact
-verdicts in `collab/JAMES_VERDICT_2026-10-27.md` and
-`collab/JAMES_VERDICT_2026-10-28.md`.
+Current human decisions: blink v3 and recorded audio v3 pass. The newly
+integrated performance, mouth/voice sync, body/hand acting and edit continuity
+still need judgment at normal speed. Candidate03, Phase37 V4, balanced-air
+audio and sparse tonal v2 remain rejected and immutable. See James's exact
+verdicts through `collab/JAMES_VERDICT_2026-10-28b.md`.
 
-The latest blink feedback asks for slightly slower, less frequent closure and
-a small shape adjustment. `collab/phase42_blink_refinement_v3/` contains a
-fixed-head eye-only audition at the 7.6-second scene clock: one slower blink,
-not a rapidly repeating half-second loop. The closed-eye source artwork is
-unchanged. This is not a full-scene motion render or an accepted timing change.
+The accepted slower blink now occurs near 8.2 seconds in the full edit, at
+output F247-F248. Its source clock is unchanged; the full edit has a 2.5-second
+opening before the 7.6-second dialogue/camera section. Credits and modification
+notices for the recorded Foley must travel with any derivative audio/video.
 
 ## Safe local commands
 
 Run from this branch's repository root with the existing Python environment.
+
+New scene source-binding, restored-context, live-frame and published-proof checks:
+
+```powershell
+python -m unittest pipeline.tests.test_cartoon_scene_review -v
+```
+
+Build a separately named full review, never overwrite a prior candidate:
+
+```powershell
+python -m pipeline.cartoon_scene_review --output ../../outputs/edit/my-new-scene-review
+```
+
+This uses installed local FFmpeg/FFprobe and the existing preserved opening
+archive at `outputs/edit/phase36-ledger-pour-lossless-v1-candidate-01/`.
+That 415,959,046-byte lossless source is an external local data dependency,
+not fetched automatically or included in a fresh Git checkout. A fresh
+checkout needs the preserved cache; it is not yet a self-contained episode
+production package. The resulting review files are independently playable.
+
+The builder retains a new lossless full-scene RGB cache outside Git so future
+delivery tuning can avoid re-running the animation. Do not re-encode an old
+lossy movie or reuse retired one-shot delivery commands as a shortcut.
 
 Focused live integration checks (re-render selected frames in memory):
 
@@ -102,9 +129,12 @@ notice is a separate legacy path; its API-key setup is not the cartoon setup.
   episode-scale production. This fixed-view rig does not establish them.
 - A validated end-to-end full delivery using the current repaired components.
   The retired/rejected builders must not be retried as a shortcut.
+- A self-contained production-source package that does not depend on an
+  existing local opening-frame archive.
 
-The cheapest next decision is James's review of the actual eye and audio
-proofs. After acceptance, use the reusable integration adapter in a newly
-versioned full review build, then judge the entire performance—not merely its
-component scores. Keep main and all rejected artifacts untouched until the
-applicable review gates are closed.
+The cheapest next decision is James's review of the full integrated performance,
+especially the pour-to-camera transition, talking motion, hand contact and
+close-up settle. Eye/audio component acceptance is already recorded; do not
+ask James to repeat it without a new regression. Keep main and all rejected
+artifacts untouched. No tests or metadata checks establish competitive acting
+or close the overall cartoon objective.
