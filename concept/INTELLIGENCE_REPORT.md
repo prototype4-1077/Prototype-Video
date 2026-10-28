@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-10-28T13:01:34.630720+00:00
+Generated: 2026-10-28T18:22:35.051762+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -50,8 +50,8 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.42.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.43.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.43.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [The dominance of feedback mechanisms for perception in the central visual field: the flip tilt illusion by backward masking and the Feedforward-Feedback-Verify-reWeight algorithm](https://arxiv.org/abs/2610.34455) — unverified reference; verify the primary source before use.
-- [Don't Forget What You Just Learned: Self-Directed Repair Turns Agent Mistakes Into Lasting Lessons](https://arxiv.org/abs/2610.31846) — unverified reference; verify the primary source before use.
+- [Local learning is all you need: brain-aligned predictive coding networks](https://arxiv.org/abs/2610.37327) — unverified reference; verify the primary source before use.
+- [Neuronal Identity as an Organizational Basis for Analyzing Neural Population Dynamics](https://arxiv.org/abs/2610.36745) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
