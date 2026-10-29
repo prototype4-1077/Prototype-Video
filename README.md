@@ -8,9 +8,10 @@ Start with [current cartoon capabilities, review files, and safe commands](docs/
 James has accepted the blink/audio and provisionally passed the mouth/hand
 repairs for prototype progress. The next path is the source-built complete
 scene: [run the working model](docs/JUNE_WORKING_MODEL.md), or double-click
-**Run June Prototype.cmd** on the configured Windows computer. Its actual
-clean-source full-build verification is being completed; this is not a
-production-quality or general episode-generation claim.
+**Run June Prototype.cmd** on the configured Windows computer. The complete
+303-frame scene has rebuilt successfully from a clean tracked-source copy:
+[finished prototype and verification](collab/phase42_working_model_v1/README.md).
+This is not a production-quality or general episode-generation claim.
 
 ---
 

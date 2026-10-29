@@ -1,5 +1,44 @@
 # June Oxley cartoon — current state and entry point
 
+Updated 2026-10-29. Branch: `agent/phase42-human-rejected-gates-repair-v1`.
+
+James passed both mouth and hand **for now**, with their polish deferred
+until the working model exists. See `collab/JAMES_VERDICT_2026-10-29b.md`.
+Blink v3, recorded-Foley v3 and the existing cuts remain accepted. Do not
+reopen those component loops or infer final production approval.
+
+The new local entry point is **Run June Prototype.cmd**, or:
+
+```powershell
+python -m pipeline.cartoon_working_model
+```
+
+It reuses the existing renderer and media audits, regenerates the opening
+from tracked source art, and applies the frozen mouth/hand repairs to the
+complete 303-frame / 10.1-second three-shot scene. No old external render
+cache, runtime API key, GitHub connection or paid service is needed. Read
+[the complete run guide](JUNE_WORKING_MODEL.md) for prerequisites and outputs.
+
+Verification: the complete clean-source snapshot build passed, alongside
+18 source/entry tests and five published-artifact checks. All75 opening
+frames and all138 passed-comparison frames match exactly; approved blink
+and MOV audio are preserved. The finished movie and reports are in
+`collab/phase42_working_model_v1/`. This is one authored 2.5D scene, not
+arbitrary script-to-cartoon or an episode engine.
+
+Next milestone: prove a second authored scene through the same engine and
+expose the minimum reusable scene controls, instead of spending more cycles
+polishing the same mouth/hand comparison. Reuse the existing storyboard /
+shot-plan work where applicable; do not introduce another renderer or assume
+the legacy paid-service script pipeline is the cartoon path. The five-hour
+automation remains paused.
+
+## Historical October 28 checkpoint — superseded by the entry above
+
+The following preserves the earlier evidence and commands. Its cache input
+requirement and pending mouth/hand review do not apply to the new working
+model command. Do not use its old review builder as the new entry point.
+
 Updated 2026-10-28. Branch: `agent/phase42-human-rejected-gates-repair-v1`.
 
 ## What the program can do now

@@ -91,8 +91,18 @@ that a successful build or provisional component pass completes that goal.
 
 ## Verification checkpoint
 
-The source-opening adapter has rebuilt and hash-matched all 75 original
-opening frames. The new command has focused source/approval/routing tests.
-An actual full source-only build from a clean tracked-file snapshot is the
-next verification step; until its report is published, this document is a
-run guide, not evidence that that end-to-end run has already succeeded.
+The actual full303-frame run succeeded from an isolated tracked-file
+snapshot of commit `1ec1ce40f84f7fdec2bf21104013cc1dab114184`. No old external
+render cache was copied. The launcher also passed `--check` from that copy.
+See `collab/phase42_working_model_v1/clean-source-build-receipt-v1.json` and
+the adjacent completed movies/reports. All75 original opening hashes and
+all138 full-frame hashes from James's passed comparison match. The accepted
+full-close frame is unchanged; MOV audio is exact; all303 timestamps pass.
+18 source/entry tests and five no-render published-artifact regressions pass.
+
+The publication package intentionally omits intermediate shots, per-frame
+reference PNGs and the generated RGB cache. They remain in the complete
+local output directory recorded by the receipt. Root inspected the decoded
+contact sheet, including both cuts and full-close endpoint. These technical
+checks and still inspection do not claim sustained acting/audio acceptance
+or complete the full competitive-cartoon goal.

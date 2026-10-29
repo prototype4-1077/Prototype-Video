@@ -1,0 +1,298 @@
+{
+  "api_keys_required": false,
+  "cash_cost": 0,
+  "classification": "WORKING_SOURCE_BUILT_CARTOON_PROTOTYPE",
+  "component_pass": {
+    "exact_answer": "Both mouth and hand pass",
+    "eye_audio_acceptance": {
+      "path": "concept/characters/june_oxley_phase42_component_acceptance_v1.json",
+      "sha256": "52c1f98020ff143ecb2d00f670284eb3cd79697e77aeee92107a100c7fc67e66"
+    },
+    "hand_adapter": {
+      "path": "pipeline/cartoon_hand_motion_refinement.py",
+      "sha256": "3bd2cb9676a42f9f5c0c572ec13b11d0876c4c2506a1f507da7fe253de583ce7"
+    },
+    "mouth_adapter": {
+      "path": "pipeline/cartoon_mouth_semantics_refinement.py",
+      "sha256": "adf765149ce3150d0d9180ede89196e3b961001346d5cc2847d4ea2d00ceafe7"
+    },
+    "qualification": "Lets pass them for now because we have to move on. We will come back to it once we have a working model.",
+    "reviewed_comparison": {
+      "path": "collab/phase42_mouth_hand_integrated_ab_v1/june-mouth-hand-integrated-ab-v1.mp4",
+      "sha256": "28271846b609d97251caf56e5c1d3e02aac4d9d4a5b1419d5bfad2edf748e129"
+    },
+    "scope": {
+      "artistic_polish_deferred": true,
+      "full_performance_final_acceptance": false,
+      "main_branch_merge_allowed": false,
+      "passed_mouth_hand_reuse_allowed": true,
+      "production_release_allowed": false,
+      "source_built_full_prototype_allowed": true
+    },
+    "status": "provisional_pass_for_working_prototype_polish_deferred",
+    "verdict": {
+      "path": "collab/JAMES_VERDICT_2026-10-29b.md",
+      "sha256": "39f4f68c9be68b02991e85e63ae05e9d2a492d45ed39a6bba71dc5741aed3cae"
+    },
+    "version": 1
+  },
+  "component_pass_file_sha256": "36a1f16b5a3deb1a84dc4896f02b058ce6946a83c40872ab22611833c2a4c6f0",
+  "duration_seconds": 10.1,
+  "entrypoint_source_sha256": "1438ce26b62d33b13d7f5f82c44b0efecd84be09ec2d3c69a2d7aa0d8ed7e59f",
+  "exact_audio_copy": {
+    "path": "june-working-prototype-v1.mov",
+    "sha256": "58df922acbc0fc71fb29c881c43d177aa5d3740ae9e4ebf1a02cdccc706ce76e"
+  },
+  "external_prior_scene_cache_used": false,
+  "frame_count": 303,
+  "full_performance_final_acceptance": false,
+  "hard_cut_output_frames": [
+    76,
+    238
+  ],
+  "limits": [
+    "One fixed, authored 10.1-second three-shot scene; not arbitrary script-to-cartoon generation.",
+    "Source-art 2.5D acting, not a free-turning 3-D character or episode-scale production system.",
+    "Mouth/hand passed provisionally for the prototype; later polish and whole-film quality remain open.",
+    "Encoded H.264 picture; MOV preserves accepted PCM audio, not a lossless-picture master."
+  ],
+  "main_branch_merge_allowed": false,
+  "movie": {
+    "path": "june-working-prototype-v1.mp4",
+    "sha256": "e958488f8b9962c6138aa1894342483ff8d7c8f1fe5eb1bcef3e4ae7f331c61d"
+  },
+  "network_calls": 0,
+  "opening_adapter_lf_sha256": "0f41d7e3d3cd582dc96e9498ff5a0c53c3b2557cff37714c69fca9bafa558439",
+  "primary_input_check": {
+    "api_keys_required": false,
+    "cash_cost": 0,
+    "classification": "LOCAL_RUNTIME_AND_PRIMARY_INPUT_CHECK_PASSED",
+    "clock": {
+      "duration_seconds": 10.1,
+      "fps": 30,
+      "frame_count": 303,
+      "height": 1080,
+      "width": 1920
+    },
+    "external_prior_scene_cache_required": false,
+    "network_required": false,
+    "note": "Primary inputs/tools checked without rendering. The build also validates/decode-checks the deeper locked face/body graph and final media.",
+    "opening": {
+      "adapter": "pipeline/cartoon_source_opening.py",
+      "adapter_lf_sha256": "0f41d7e3d3cd582dc96e9498ff5a0c53c3b2557cff37714c69fca9bafa558439",
+      "clock": {
+        "duration_seconds": 2.5,
+        "fps": 30,
+        "frame_count": 75,
+        "height": 1080,
+        "width": 1920
+      },
+      "dependencies": [
+        {
+          "bytes": 13541,
+          "hash_domain": "canonical_json_utf8",
+          "path": "concept/characters/june_oxley_phase36_ledger_pour_v1.json",
+          "raw_sha256": "dde42b2175ea26daab638995acc0050b28082a7eafd09f7f1c1d38f9f8d4ef17",
+          "sha256": "d1900e8ee1e9584a4f4197038375119554e402f9d2664cdfcb8ba5f78fa3f8d9"
+        },
+        {
+          "bytes": 12379,
+          "hash_domain": "canonical_json_utf8",
+          "path": "concept/style_frames/june_golden_scene_gs060_layered_pour_v1.json",
+          "raw_sha256": "8328e99e89d439151ebb1a1dc826d8eb95c708dd0cdda8336d8b23cb4aeeedbb",
+          "sha256": "88282f3b8106e6f7d20fdf80b556a2f6143f921e646482201fd4f323cccd23ae"
+        },
+        {
+          "bytes": 108830,
+          "hash_domain": "canonical_json_utf8",
+          "path": "collab/phase42_integrated_scene_review_v1/source-frame-inventory-v1.json",
+          "raw_sha256": "cd8d3d59a4aaeeb8c1cb86a40ca25837785d0245af753471f33c3642cfe833c8",
+          "sha256": "9d1e0ed0c33a7f96f65d35bd1b5ad12321fca395ccc1bb8ca3e625cddc1129de"
+        },
+        {
+          "bytes": 68961,
+          "hash_domain": "lf_normalized_text",
+          "path": "pipeline/cartoon_ledger_pour.py",
+          "raw_sha256": "22965cf665ff8a3c93b2423521b661c19463d655698a2e44f24e5f84dfde13c8",
+          "sha256": "22965cf665ff8a3c93b2423521b661c19463d655698a2e44f24e5f84dfde13c8"
+        },
+        {
+          "bytes": 49626,
+          "hash_domain": "lf_normalized_text",
+          "path": "pipeline/cartoon_pour_layers.py",
+          "raw_sha256": "dca7a44a1767058b89392db390c37f9671ccdd9d6e44a734adac911d6b33336b",
+          "sha256": "3e92ff5e328b2c259fea61e7317e90b6e6f5f4774ca8ac3c58c3121df22ab208"
+        },
+        {
+          "bytes": 12379,
+          "hash_domain": "lf_normalized_text",
+          "path": "concept/style_frames/june_golden_scene_gs060_layered_pour_v1.json",
+          "raw_sha256": "8328e99e89d439151ebb1a1dc826d8eb95c708dd0cdda8336d8b23cb4aeeedbb",
+          "sha256": "ee15b51a42334b6abe9e01cb2d15a65dcbb9876b69444d6087fbe2241e1b386a"
+        },
+        {
+          "bytes": 2213942,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june-golden-scene-gs060-clean-porch-v1.png",
+          "raw_sha256": "fd9f1235e4721734c8bd1898967b4cd6596413ce6363c226c5e7f32867dcbcdc",
+          "sha256": "fd9f1235e4721734c8bd1898967b4cd6596413ce6363c226c5e7f32867dcbcdc"
+        },
+        {
+          "bytes": 2268896,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june-golden-scene-gs060-performance-active-pour-v1.png",
+          "raw_sha256": "17467e77428575768e5c91b05b0ee2ecd701c79589793358344cd840296281cb",
+          "sha256": "17467e77428575768e5c91b05b0ee2ecd701c79589793358344cd840296281cb"
+        },
+        {
+          "bytes": 2390387,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june-golden-scene-gs060-performance-full-tilt-v1.png",
+          "raw_sha256": "0b9df8a91c42e2b2b4dbdf64614c9ac8fe0b0d7ee8f2038ad8618073421ff1ca",
+          "sha256": "0b9df8a91c42e2b2b4dbdf64614c9ac8fe0b0d7ee8f2038ad8618073421ff1ca"
+        },
+        {
+          "bytes": 2250921,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june-golden-scene-gs060-performance-grasp-pot-registered-v3.png",
+          "raw_sha256": "95efbcc6f557c4e5788a3c9be2f0821536753ae65defeabcac0bd5ce68328adb",
+          "sha256": "95efbcc6f557c4e5788a3c9be2f0821536753ae65defeabcac0bd5ce68328adb"
+        },
+        {
+          "bytes": 2255879,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june-golden-scene-gs060-performance-pencil-down-v1.png",
+          "raw_sha256": "acc7d53a4c656429e67566e4803398519397da81b6ee400efff851b254630907",
+          "sha256": "acc7d53a4c656429e67566e4803398519397da81b6ee400efff851b254630907"
+        },
+        {
+          "bytes": 2293609,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june-golden-scene-gs060-performance-pencil-poised-v1.png",
+          "raw_sha256": "408b1d1f770a6bb88656d5a718848c8bc06279311ab1a7ad58176ea3967e4464",
+          "sha256": "408b1d1f770a6bb88656d5a718848c8bc06279311ab1a7ad58176ea3967e4464"
+        },
+        {
+          "bytes": 2303595,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june-golden-scene-gs060-performance-pot-lift-v1.png",
+          "raw_sha256": "fa41253a8094b0f6663ea7e057201fc0ed0dd2939f417c12d12d224543eaee24",
+          "sha256": "fa41253a8094b0f6663ea7e057201fc0ed0dd2939f417c12d12d224543eaee24"
+        },
+        {
+          "bytes": 2254439,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june-golden-scene-gs060-performance-pre-pour-v1.png",
+          "raw_sha256": "4d667d6eff013115ba09010906d4adfbe63ba9e999946097c4453cd93c618791",
+          "sha256": "4d667d6eff013115ba09010906d4adfbe63ba9e999946097c4453cd93c618791"
+        },
+        {
+          "bytes": 2349543,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june-golden-scene-gs060-style-target-v2.png",
+          "raw_sha256": "1d194061898f6dbbae69af6e11c9e8b48f10f5403bf897a41d7f483439338a44",
+          "sha256": "1d194061898f6dbbae69af6e11c9e8b48f10f5403bf897a41d7f483439338a44"
+        },
+        {
+          "bytes": 2654180,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june-oxley-canonical-turnaround-v1.png",
+          "raw_sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9",
+          "sha256": "c5c32fb5a5c3739e7e87fab8a8d228ddec0b31044fcd6a029851bb9b67b30aa9"
+        },
+        {
+          "bytes": 2648990,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june_gs060_pose_00_foreground_v1.png",
+          "raw_sha256": "d3418d45741e5d5df4eeec6e46ea773e12ce27efbba12a7e3d0c533e9016b2bd",
+          "sha256": "d3418d45741e5d5df4eeec6e46ea773e12ce27efbba12a7e3d0c533e9016b2bd"
+        },
+        {
+          "bytes": 2610702,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june_gs060_pose_15_foreground_v1.png",
+          "raw_sha256": "9e282719da0f5357fbd6e065ed3e9e05939bb9d338b799617f0e6c9b5986b0f6",
+          "sha256": "9e282719da0f5357fbd6e065ed3e9e05939bb9d338b799617f0e6c9b5986b0f6"
+        },
+        {
+          "bytes": 2612409,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june_gs060_pose_30_foreground_v2.png",
+          "raw_sha256": "87bc282b60cfbe313ebe200aeccd796eef015ea124c6cb2409e8d9758a5f31fb",
+          "sha256": "87bc282b60cfbe313ebe200aeccd796eef015ea124c6cb2409e8d9758a5f31fb"
+        },
+        {
+          "bytes": 2672269,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june_gs060_pose_45_foreground_v1.png",
+          "raw_sha256": "133eaf8736805f8f070b62a48973ccbdfb280563f32462aae91f3b9bc4fd4d77",
+          "sha256": "133eaf8736805f8f070b62a48973ccbdfb280563f32462aae91f3b9bc4fd4d77"
+        },
+        {
+          "bytes": 2615031,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june_gs060_pose_55_foreground_v1.png",
+          "raw_sha256": "c99c13556d027858e747346aff4777c12608efae57764f1d5b2a4a598907a652",
+          "sha256": "c99c13556d027858e747346aff4777c12608efae57764f1d5b2a4a598907a652"
+        },
+        {
+          "bytes": 2748699,
+          "hash_domain": "raw_bytes",
+          "path": "concept/style_frames/june_gs060_pose_70_foreground_v1.png",
+          "raw_sha256": "667bc12acc350cffaeb986322fca5a3116fc9021a2948514f4411b33f3caf0d4",
+          "sha256": "667bc12acc350cffaeb986322fca5a3116fc9021a2948514f4411b33f3caf0d4"
+        }
+      ],
+      "external_scene_cache_used": false,
+      "opening_inventory_canonical_sha256": "747abb15041099c73b3af30ed28422cbdb081140d23cfc80e7f8a9e608c23ab8",
+      "output_frames": [
+        1,
+        75
+      ],
+      "runtime_asset_hashes": {
+        "background": "fd9f1235e4721734c8bd1898967b4cd6596413ce6363c226c5e7f32867dcbcdc",
+        "pose_POSE_00_PENCIL_POISED": "d3418d45741e5d5df4eeec6e46ea773e12ce27efbba12a7e3d0c533e9016b2bd",
+        "pose_POSE_15_PENCIL_DOWN": "9e282719da0f5357fbd6e065ed3e9e05939bb9d338b799617f0e6c9b5986b0f6",
+        "pose_POSE_30_GRASP_POT": "87bc282b60cfbe313ebe200aeccd796eef015ea124c6cb2409e8d9758a5f31fb",
+        "pose_POSE_45_POT_LIFT": "133eaf8736805f8f070b62a48973ccbdfb280563f32462aae91f3b9bc4fd4d77",
+        "pose_POSE_55_PRE_POUR": "c99c13556d027858e747346aff4777c12608efae57764f1d5b2a4a598907a652",
+        "pose_POSE_70_FULL_TILT": "667bc12acc350cffaeb986322fca5a3116fc9021a2948514f4411b33f3caf0d4"
+      },
+      "scope": "existing opening RGB equivalence only; no delivery or encode authorization",
+      "source_camera_clock_frame_count": 258,
+      "source_frames": [
+        112,
+        186
+      ],
+      "toolchain": {
+        "numpy": "2.4.4",
+        "pillow": "12.2.0"
+      }
+    },
+    "runtime": {
+      "ffmpeg": "ffmpeg version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+      "ffprobe": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers",
+      "numpy": "2.4.4",
+      "opencv": "5.0.0",
+      "pillow": "12.2.0",
+      "python": "3.11.3"
+    },
+    "scope": {
+      "artistic_polish_deferred": true,
+      "full_performance_final_acceptance": false,
+      "main_branch_merge_allowed": false,
+      "passed_mouth_hand_reuse_allowed": true,
+      "production_release_allowed": false,
+      "source_built_full_prototype_allowed": true
+    }
+  },
+  "production_release_allowed": false,
+  "provisional_polish_deferred": true,
+  "reused_scene_builder_sha256": "6637e6ddd953175ba7c7bac054ccfe74513666b1d85db4f874d1cf7de12104d3",
+  "scene_audit_report": {
+    "path": "phase42-integrated-scene-review-report-v1.json",
+    "sha256": "4072ec35a26b56fca36f61a7585e6be236449887eefe17243f082a10c888af3c"
+  },
+  "technical_build_completed": true,
+  "version": 1
+}

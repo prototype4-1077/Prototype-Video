@@ -9,6 +9,11 @@ progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
 the complete source-built working model. Later human feedback takes precedence over
 older recommendations and reviews.
 
+The complete source-only prototype has now rebuilt successfully from a
+clean tracked snapshot: `phase42_working_model_v1/README.md`. All138 frames
+from the passed comparison match its repaired full-frame RGB. Read the
+current pickup before proposing more polish or rerendering unchanged work.
+
 ## Current roles and access
 
 - GPT builds reversible experiments on
