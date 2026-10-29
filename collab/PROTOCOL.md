@@ -2,7 +2,9 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`CLAUDE_HANDOFF_2026-10-28.md`. Later human feedback takes precedence over
+`GPT_NOTES_2026-10-29a.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+James resumed interactive work on October 29; the five-hour automation is
+still paused. The new mouth/hand A/B awaits human motion review. Later human feedback takes precedence over
 older recommendations and reviews.
 
 ## Current roles and access
@@ -49,3 +51,11 @@ Current transitions, blink v3 and recorded-Foley v3 are accepted. The mouth
 and hand near the end remain open. Do not reopen passed gates without new
 human feedback. Notify James for meaningful findings or reviewable proofs,
 not unchanged polling or unattended rerenders.
+
+Latest actual review: `CLAUDE_REVIEW_2026-10-29_MOUTH_HAND_AB_V1.md`. Its
+claim that F067 has no closed mouth is contradicted by the actual pixels
+and cue record (A -> X, blend 1, X weight 1, cavity area 0). Read the builder
+correction in the current pickup before proposing another closure study.
+Closure timing, lip/beard-edge continuity and hand naturalness still require
+James's normal-speed judgment; neither the corrected fact nor tests approve
+the complete performance.
