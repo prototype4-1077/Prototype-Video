@@ -1,6 +1,6 @@
 # External Signal Radar
 
-Generated: 2026-10-28T18:22:17+00:00
+Generated: 2026-10-29T18:31:15+00:00
 
 > External attention is a signal, never authority. Every item is unverified
 > until reviewed for evidence, autonomy, sequence, and channel fit.
@@ -27,19 +27,13 @@ Agent Reach health: **not_installed**
 - **[Comfy-Org/ComfyUI: v0.43.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.43.0)** — github_release (score 4). ## What's Changed * model_prefetch: syncrhonize all graph cleanups by @rattus128 in https://github.com/Comfy-Org/ComfyUI/pull/17178 * Add rope scaling support to MOSS-image by @kijai in https://github.com/Comfy-Org/ComfyUI/pull/17172 * [Partner Nodes] Renew partner-node sign-in t
 - **[Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1)** — github_release (score 2). Fix some crashing issues a few users experienced when running the MOSS image template workflow.
 
-## Self Identity
-
-- **[Local learning is all you need: brain-aligned predictive coding networks](https://arxiv.org/abs/2610.37327)** — rss (score 2). arXiv:2610.37327v1 Announce Type: new Abstract: Predictive Coding (PC) is an influential account of how brain representations emerge through hierarchical, local, self-supervised prediction-based learning, without requiring globally propagated error signals. Despite extensive evid
-- **[Neuronal Identity as an Organizational Basis for Analyzing Neural Population Dynamics](https://arxiv.org/abs/2610.36745)** — rss (score 1). arXiv:2610.36745v1 Announce Type: new Abstract: Individual neurons exhibit diverse molecular, morphological, and electrophysiological properties that shape their distinct roles in neural circuits. While these multimodal features are largely shared across individuals, they remain 
-- **[The Trinity:Capability-Driven Recursive Self-Improvement for Multimodal Agents](https://arxiv.org/abs/2610.36077)** — rss (score 1). arXiv:2610.36077v1 Announce Type: new Abstract: Multimodal intelligence can be viewed as human-guided co-evolution between worlds and agents through interaction. However, scaling this process faces two bottlenecks: constructing heterogeneous, verifiable environments is costly, an
-
 ## Memory Time
 
 - **[Comfy-Org/ComfyUI: v0.40.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.40.0)** — github_release (score 6). ## What's Changed * [Server.py] Update CSP to allow `blob:` and `data:` by @S0yKaf in https://github.com/Comfy-Org/ComfyUI/pull/15565 * Add comfy_attention and AttentionTensorContainer support to rest of models by @comfyanonymous in https://github.com/Comfy-Org/ComfyUI/pull/16806
 
-## Belief Analysis
+## Self Identity
 
-- **[Local learning is all you need: brain-aligned predictive coding networks](https://arxiv.org/abs/2610.37327)** — rss (score 2). arXiv:2610.37327v1 Announce Type: new Abstract: Predictive Coding (PC) is an influential account of how brain representations emerge through hierarchical, local, self-supervised prediction-based learning, without requiring globally propagated error signals. Despite extensive evid
+- **[The Trinity:Capability-Driven Recursive Self-Improvement for Multimodal Agents](https://arxiv.org/abs/2610.36077)** — rss (score 1). arXiv:2610.36077v1 Announce Type: new Abstract: Multimodal intelligence can be viewed as human-guided co-evolution between worlds and agents through interaction. However, scaling this process faces two bottlenecks: constructing heterogeneous, verifiable environments is costly, an
 
 ## Editorial handoff
 
