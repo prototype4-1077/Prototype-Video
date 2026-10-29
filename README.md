@@ -5,9 +5,12 @@ It does not require the paid-service credentials in the legacy instructions
 below. It is **not yet a production-ready full-cartoon system**.
 
 Start with [current cartoon capabilities, review files, and safe commands](docs/JUNE_CARTOON_CURRENT_STATE.md).
-The latest integration joins the existing body/hand acting to the corrected
-eyelids and original camera clock. Eye motion, audio, and acting still need
-human acceptance before a new full review render.
+James has accepted the blink/audio and provisionally passed the mouth/hand
+repairs for prototype progress. The next path is the source-built complete
+scene: [run the working model](docs/JUNE_WORKING_MODEL.md), or double-click
+**Run June Prototype.cmd** on the configured Windows computer. Its actual
+clean-source full-build verification is being completed; this is not a
+production-quality or general episode-generation claim.
 
 ---
 

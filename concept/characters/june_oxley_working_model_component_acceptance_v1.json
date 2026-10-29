@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "status": "provisional_pass_for_working_prototype_polish_deferred",
+  "exact_answer": "Both mouth and hand pass",
+  "qualification": "Lets pass them for now because we have to move on. We will come back to it once we have a working model.",
+  "verdict": {
+    "path": "collab/JAMES_VERDICT_2026-10-29b.md",
+    "sha256": "39f4f68c9be68b02991e85e63ae05e9d2a492d45ed39a6bba71dc5741aed3cae"
+  },
+  "reviewed_comparison": {
+    "path": "collab/phase42_mouth_hand_integrated_ab_v1/june-mouth-hand-integrated-ab-v1.mp4",
+    "sha256": "28271846b609d97251caf56e5c1d3e02aac4d9d4a5b1419d5bfad2edf748e129"
+  },
+  "mouth_adapter": {
+    "path": "pipeline/cartoon_mouth_semantics_refinement.py",
+    "sha256": "adf765149ce3150d0d9180ede89196e3b961001346d5cc2847d4ea2d00ceafe7"
+  },
+  "hand_adapter": {
+    "path": "pipeline/cartoon_hand_motion_refinement.py",
+    "sha256": "3bd2cb9676a42f9f5c0c572ec13b11d0876c4c2506a1f507da7fe253de583ce7"
+  },
+  "eye_audio_acceptance": {
+    "path": "concept/characters/june_oxley_phase42_component_acceptance_v1.json",
+    "sha256": "52c1f98020ff143ecb2d00f670284eb3cd79697e77aeee92107a100c7fc67e66"
+  },
+  "scope": {
+    "passed_mouth_hand_reuse_allowed": true,
+    "source_built_full_prototype_allowed": true,
+    "artistic_polish_deferred": true,
+    "full_performance_final_acceptance": false,
+    "production_release_allowed": false,
+    "main_branch_merge_allowed": false
+  }
+}
