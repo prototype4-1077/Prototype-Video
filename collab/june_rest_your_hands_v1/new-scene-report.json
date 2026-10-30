@@ -1,0 +1,80 @@
+{
+  "accepted_first_scene_cache_used": false,
+  "artifacts": {
+    "compiled-motion-v1.json": "288b14dc94912af3f81308f0198e3275ceee9c27a9a24da7983457b702f6c2db",
+    "decoded-contact-sheet.png": "a023b0dfce392af84942ba4ecc3a225673ca4af1792303a97eee05971cd606b0",
+    "decoded-frame-inventory.json": "9e465ff80cd670e793faad1ac66afa10919447ed1ac4843a50797ac5db08053f",
+    "mux-mp4.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scene.mov": "a1253e7cf0e3af6b4ba0eb4720f55297668a688db240999f295787006fe7e5ba",
+    "scene.mp4": "fbe7bae4c4843effac9dd22a1053b79e115c5c04fbf124074979d1a09dfdd3a3",
+    "silent.mp4": "a39a51cc9763d799e5ba64375c964e7837d24de477c99e75c9d8b544357923cd"
+  },
+  "audio": {
+    "path": "concept/audio/june_rest_your_hands_v1/dialogue.wav",
+    "sha256": "4563199f3fa926359148d02ed4e39dbca108db007897cc2fe34aa9f93b6e4010"
+  },
+  "audit": {
+    "aac_padding_samples": 576,
+    "aac_snr_db": 40.46990884332394,
+    "all_frame_timestamps_exact": true,
+    "all_frames_decoded": 207,
+    "compression_samples": [
+      {
+        "frame": 1,
+        "psnr_db": 38.74083601722034
+      },
+      {
+        "frame": 51,
+        "psnr_db": 38.674018642068475
+      },
+      {
+        "frame": 103,
+        "psnr_db": 38.644275017761856
+      },
+      {
+        "frame": 105,
+        "psnr_db": 38.60469524810647
+      },
+      {
+        "frame": 155,
+        "psnr_db": 38.73155650293691
+      },
+      {
+        "frame": 207,
+        "psnr_db": 38.450372484665955
+      }
+    ],
+    "mov_source_audio_exact_with_mono_stereo_duplication": true,
+    "mp4_picture_packets_equal_mov": true
+  },
+  "auditor_source_sha256": "388fa717b8d99e42f7d1da76de67ef0e5d68e23999d9d0211a3b9cd44df40789",
+  "cash_cost": 0,
+  "classification": "NEW_AUDIO_CLOCKED_AUTHORED_SCENE_TECHNICALLY_COMPLETE_HUMAN_REVIEW_PENDING",
+  "cues": {
+    "path": "concept/audio/june_rest_your_hands_v1/rhubarb.json",
+    "sha256": "71df07d076bef48d7b49db1f9c63a49645724abcfbe6e3d71fb0707cf0114f05"
+  },
+  "current_job_picture_reused_after_audio_only_failure": true,
+  "delivery_source_sha256": "69297b7bafa36ed9c35f473c1b3d901ae56d618b0098f37233cc78ead5df72c7",
+  "duration_seconds": 6.9,
+  "frame_count": 207,
+  "inventory_limit": "The initial renderer saved native inventory after its audio gate and exited before writing it. All207 decoded preview frame hashes and six actual raw reference PNGs are retained instead; decoded hashes are not claimed as raw source pixels. Future builds now save native inventory before export.",
+  "limits": [
+    "One porch view/resting hand pose, not full-body action or a new camera angle.",
+    "New voice/head/camera/blink performance remains human-unaccepted."
+  ],
+  "main_branch_merge_allowed": false,
+  "network_calls": 0,
+  "new_aac_bitrate": "512k",
+  "new_performance_human_accepted": false,
+  "original_render_source_sha256": "747091ade6935bfffd7340f30e90627dc79a50b268f18cb1332a6e74b0240ee5",
+  "picture_reencoded": false,
+  "pixel_renderer_ast_sha256": "2e0e5da5706409080a51ed2863100abeef83842c78e463a74557356aaceefd7f",
+  "previous_picture_sha256": "a39a51cc9763d799e5ba64375c964e7837d24de477c99e75c9d8b544357923cd",
+  "production_release_allowed": false,
+  "recipe_sha256": "5c932dd16d334f09a6962cb1c6a362c4fbf07815185f02cfa8cbd9679e7da7f6",
+  "scene_id": "june-rest-your-hands-v1",
+  "source_built": true,
+  "source_raw_all_frame_inventory_available": false,
+  "voice_status": "LOCAL_SCRATCH_NON_CANONICAL_NOT_HUMAN_ACCEPTED"
+}

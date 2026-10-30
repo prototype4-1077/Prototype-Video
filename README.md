@@ -13,6 +13,10 @@ scene: [run the working model](docs/JUNE_WORKING_MODEL.md), or double-click
 [finished prototype and verification](collab/phase42_working_model_v1/README.md).
 This is not a production-quality or general episode-generation claim.
 
+A separate [new-dialogue scene path](docs/JUNE_DIALOGUE_SCENES.md) now reuses
+the rig with new words and audio-driven timing. Its [second-scene proof](collab/june_rest_your_hands_v1/README.md)
+has an explicitly non-canonical scratch voice; the first film is untouched.
+
 ---
 
 # TikTok Video Render Farm — legacy pipeline

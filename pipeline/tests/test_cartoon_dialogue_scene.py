@@ -79,6 +79,31 @@ class DialogueSceneTests(unittest.TestCase):
                 new.build(RECIPE, Path(folder))
             compile.assert_not_called()
 
+    def test_native_inventory_survives_a_later_delivery_failure(self):
+        import io
+        import json
+        class Encoder:
+            def __init__(self):
+                self.stdin = io.BytesIO()
+            def wait(self):
+                return 0
+            def poll(self):
+                return 0
+        plan = new.compile_scene(RECIPE)
+        def pixels(*unused):
+            for number in range(1,208):
+                yield number, np.zeros((1,1,3),np.uint8), {"frame":number}
+        with tempfile.TemporaryDirectory() as folder, patch.object(new.scene.integration, "prepare_repaired_acting", return_value=object()), patch.object(
+            new, "runtime_prepared", return_value=object()), patch.object(new, "frames", side_effect=pixels), patch.object(
+            new.subprocess, "Popen", return_value=Encoder()), patch.object(new.scene, "_run"), patch.object(
+            new, "audit", side_effect=RuntimeError("simulated export failure")):
+            output = Path(folder)/"output"
+            with self.assertRaisesRegex(RuntimeError, "export failure"):
+                new.build(RECIPE, output)
+            rows = json.loads((output/"frame-inventory.json").read_text())
+            self.assertEqual([row["frame"] for row in rows], list(range(1,208)))
+            self.assertTrue((output/"failure.json").exists())
+
     def test_real_rig_can_render_beyond_old_228_frame_limit_without_mutating_bank(self):
         source = new.scene.integration.prepare_repaired_acting()
         original = (source.integration.direct.contract, source.integration.direct.visemes, source.integration.body.states)

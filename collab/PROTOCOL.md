@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-10-29b.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-10-29c.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 James resumed interactive work on October 29; the five-hour automation is
 still paused. James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -13,6 +13,13 @@ The complete source-only prototype has now rebuilt successfully from a
 clean tracked snapshot: `phase42_working_model_v1/README.md`. All138 frames
 from the passed comparison match its repaired full-frame RGB. Read the
 current pickup before proposing more polish or rerendering unchanged work.
+
+A second authored dialogue scene now exists at`june_rest_your_hands_v1/`.
+New words/clock/head-camera timings reuse the existing rig. Its scratch
+voice and new performance are NOT human-accepted. A256k AAC export failed;
+an audio-only512k repair passed without rerendering picture. Raw-versus-
+decoded inventory limits are explicit. Next capability is a contact-aware
+hand/prop action, not renewed polishing or another talk-only proof.
 
 ## Current roles and access
 

@@ -30,6 +30,7 @@ from pipeline.cartoon_hero_scene import load_body_motion_contract, MOTION_CHANNE
 ROOT = Path(__file__).resolve().parents[1]
 scene, acting, blink = bank.scene, bank.scene.acting, bank.scene.blink
 HERO = ROOT / "concept/style_frames/june_golden_scene_gs070_resolution_v1.json"
+AAC_BITRATE = "512k"
 
 
 def locked_asset(item: dict) -> Path:
@@ -179,14 +180,16 @@ def audit(output: Path, plan: dict, reference_frames: list[int]) -> dict:
     snr = float(10 * np.log10(np.mean(ref**2) / max(np.mean(delta**2), 1e-20)))
     if snr < 40 or np.abs(decoded[:len(ref)]).max() >= 1:
         raise ValueError("AAC preview quality/headroom failed")
-    capture, comparisons, retained = cv2.VideoCapture(str(mp4)), [], {}
+    capture, comparisons, retained, decoded_inventory = cv2.VideoCapture(str(mp4)), [], {}, []
     try:
         for number in range(1, count + 1):
             ok, pixels = capture.read()
             if not ok:
                 raise ValueError(f"New scene ended before frame{number}")
+            pixels = cv2.cvtColor(pixels, cv2.COLOR_BGR2RGB)
+            decoded_inventory.append({"frame": number, "rgb_sha256": acting._rgb_hash(pixels),
+                                      "hash_domain": "decoded_preview_rgb24_not_source_pixels"})
             if number in reference_frames:
-                pixels = cv2.cvtColor(pixels, cv2.COLOR_BGR2RGB)
                 with Image.open(output / "references" / f"f{number:04d}.png") as image:
                     reference = np.array(image.convert("RGB"))
                 mse = np.mean((pixels.astype(np.float64) - reference)**2)
@@ -206,6 +209,7 @@ def audit(output: Path, plan: dict, reference_frames: list[int]) -> dict:
         sheet.paste(image.resize((480,270), Image.Resampling.LANCZOS), (x,y+22))
         draw.text((x+5,y+4), f"Decoded F{number:04d} / {(number-1)/30:.2f}s", fill="white")
     sheet.save(output / "decoded-contact-sheet.png")
+    scene._json(output / "decoded-frame-inventory.json", decoded_inventory)
     return {"all_frame_timestamps_exact": True, "all_frames_decoded": count,
             "mov_source_audio_exact_with_mono_stereo_duplication": True,
             "mp4_picture_packets_equal_mov": True, "aac_snr_db": snr,
@@ -242,9 +246,11 @@ def build(recipe: Path, output: Path) -> dict:
             encoder.stdin.close()
             if encoder.wait() != 0:
                 raise ValueError("New scene encoder failed; preserved encode.log")
+        # Preserve native source-frame provenance even if a later media gate fails.
+        scene._json(output / "frame-inventory.json", inventory)
         audio_options = ["-af", "pan=stereo|c0=c0|c1=c0"] if plan["samples"].shape[1] == 1 else ["-ac", "2"]
         scene._run(["ffmpeg", "-nostdin", "-v", "error", "-n", "-i", str(output / "silent.mp4"), "-i", str(plan["audio"]), "-map", "0:v:0", "-map", "1:a:0", "-c:v", "copy", "-c:a", "pcm_s24le", *audio_options, "-movflags", "+faststart+write_colr", str(output / "scene.mov")], output / "mux-mov.log")
-        scene._run(["ffmpeg", "-nostdin", "-v", "error", "-n", "-i", str(output / "scene.mov"), "-c:v", "copy", "-c:a", "aac", "-b:a", "256k", "-movflags", "+faststart+write_colr", str(output / "scene.mp4")], output / "mux-mp4.log")
+        scene._run(["ffmpeg", "-nostdin", "-v", "error", "-n", "-i", str(output / "scene.mov"), "-c:v", "copy", "-c:a", "aac", "-b:a", AAC_BITRATE, "-movflags", "+faststart+write_colr", str(output / "scene.mp4")], output / "mux-mp4.log")
         measured = audit(output, plan, samples)
         if compile_scene(recipe)["recipe_sha256"] != plan["recipe_sha256"] or bank.approval() != approved:
             raise ValueError("Recipe or frozen components changed during render")

@@ -1,4 +1,4 @@
-# Pickup — 2026-10-29 — reusable dialogue scene implementation
+# Pickup — 2026-10-29 — second authored dialogue scene verified
 
 Previous goal turn classification: **progress**. The full303-frame first
 scene was built from clean tracked source and published atf7bb2c4. That is
@@ -40,10 +40,66 @@ that frame301 is rejected, while original228-frame source objects and bank
 approval remain unchanged. The new-recipe --check also passes.
 
 Launcher: `Run June Dialogue Scene.cmd`; guide: `docs/JUNE_DIALOGUE_SCENES.md`.
-The completed full207-frame new scene is still pending at this implementation
-checkpoint. Next run it once into a NEW directory, capture actual process
-handle, verify every timestamp/decoded frame, unity-gain PCM mono-to-stereo
-mapping, sampled picture quality and AAC. Inspect actual decoded output;
-then publish only a technically complete new performance review candidate.
-Do not call a first-film human verdict approval of the new voice/performance.
-Main, rejected artifacts and automation remain untouched/paused.
+
+## Actual completed picture and audio-only delivery repair
+
+Source commit`e92742705688c41c8da992e99fad0491a53f9327` was archived/extracted
+under `d/outputs/edit/june-dialogue-scene-source-verification-v1/checkout`.
+Archive608604160bytes, SHA256
+`e93fd8c6d6afdf1b62f9e9e1b42f52b9e0887439d90c06b3ae3352d1ca9980d9`.
+No old scene cache copied; cached new audio/cues are tracked. The launcher
+--check exited0 from that clean source copy. Actual render session48553
+completed207 picture frames but exited1 at the unchanged40dB AAC SNR gate:
+256k preview38.2672495dB. Source/MOV PCM were exact; AAC peak0.99266, not
+clipping. The failed output remains`june-rest-your-hands-scene-v1/`.
+
+James said "resume" during this job; resumed the actual handle, not a new
+render. Correct next action was audio-only delivery repair, not redoing207
+unchanged pictures. `cartoon_dialogue_delivery.py` verifies the exact prior
+picture hash, identical pixel-renderer AST, recipe/motion plan, specific
+AAC-only failure and strict inherited source loaders. Other failures cannot
+be relabelled as audio retry. It copies the exact picture/MOV to a NEW folder,
+encodes only AAC at512k, and reruns every current media gate.
+
+Actual recovery session43393 exited0 into
+`d/outputs/edit/june-rest-your-hands-delivery-v2/`. SNR40.4699088dB,
+all207 decoded frames / exact timestamps, MOV dialogue PCM exact after
+explicit unity-gain mono-to-stereo duplication, identical MOV/MP4 picture
+packets, six PSNR samples>=38.4503725dB (inherited38dB floor). No picture
+rerender/re-encode or paid service. Current new-scene default AAC is512k.
+Pixel functions themselves are unchanged frome927427.
+
+The initial renderer saved native inventory after the audio audit and lost
+its in-memory raw hashes at failure. Do not fabricate them. The publication
+honestly includes all207 **decoded** RGB hashes plus all six actual raw
+reference PNGs; report says whole native inventory unavailable. The current
+builder now writes native inventory BEFORE mux/audit. A simulated later
+export-failure regression proves it remains available without rerendering.
+
+Publication: `collab/june_rest_your_hands_v1/`, MP4 SHA256
+`fbe7bae4c4843effac9dd22a1053b79e115c5c04fbf124074979d1a09dfdd3a3`;
+MOV SHA256`a1253e7cf0e3af6b4ba0eb4720f55297668a688db240999f295787006fe7e5ba`.
+Two movies, reports/receipt, decoded contact sheet/inventory, compiled motion,
+six raw reference PNGs and credits. Root inspected the six decoded stills,
+including full-close blink and final rest. No unperformed normal-speed or
+audible review is claimed. The new scratch voice/performance is unaccepted;
+the first film's verdict does not transfer. All first-film gates stay frozen.
+
+Focused seven-suite run43/43 passed in29.918s, then the newly added native-
+inventory failure regression1/1 passed in0.166s:44 distinct focused checks.
+This includes all prior23 source-built-model checks, new dynamic scene/media,
+real frame300, audio-only-recovery guards and published-artifact checks. Not
+a claim the entire repository suite or artistic production gates have passed.
+
+## Next meaningful capability
+
+Do not render a third talk-only scene or return to mouth/hand polish. Inspect
+the existing `cartoon_contact_performance_proof.py` and `cartoon_pose_layers.py`
+mechanics for one contact-aware hand/prop action in the current porch rig.
+Those older modules use standing/shared-UV or GS030 sources, not the current
+GS070 close-view artwork; they are not automatically a compatible drop-in.
+Reuse their geometry/contact ideas before building another renderer. Target a
+visible reach/grasp/lift/settle with hand/mug contact, occlusion and normal-speed
+proof. That is the missing move toward a cartoon rather than a talking image.
+The full competitive-cartoon goal is still active/unproven. Main, rejected
+artifacts and five-hour automation remain untouched/paused.

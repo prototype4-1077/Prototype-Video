@@ -66,4 +66,30 @@ This adds reusable dialogue/head/camera timing, not a new full-body action,
 new camera angle, new set, multi-cast episode engine or final voice quality.
 The new line, acting and blink placement still need normal-speed judgment;
 the first film's provisional verdict does not transfer to this performance.
-An actual full new-scene run is pending at this implementation checkpoint.
+
+## Completed second-scene proof
+
+`collab/june_rest_your_hands_v1/` contains the completed6.9s /207-frame scene,
+its two movies, reports, decoded contact sheet and six source-reference PNGs.
+It was rendered from clean tracked-source snapshote927427, without the first
+film's cache. Its256k AAC preview failed the unchanged40dB SNR floor; an
+export-only512k retry passed40.47dB. Picture packets were copied unchanged,
+all207 frames decoded, all timestamps exact, and MOV source PCM exact.
+
+No unchanged picture rerender was needed. An export-only recovery command
+requires the exact prior-picture hash, matching pixel-renderer functions,
+matching authored motion plan, source-loader validation and the specific
+AAC-only failure. Other failures cannot be relabelled as audio recovery.
+The first film and passed components remain immutable.
+
+Evidence limitation: the initial build saved native inventory too late and
+exited before writing it. The published recovery honestly includes decoded
+hashes for every frame plus six actual raw reference PNGs, not fabricated
+raw hashes for the rest. The current builder now writes native inventory
+before any mux/audio audit; a simulated export-failure regression covers it.
+This fixes future evidence retention without rerendering unchanged artwork.
+
+The actual new voice/performance remains unaccepted. A technical quality
+check and decoded still inspection cannot establish natural sustained acting
+or audible voice quality. Next capability work should address a reusable
+contact-aware hand/prop action, not another identical talking shot.

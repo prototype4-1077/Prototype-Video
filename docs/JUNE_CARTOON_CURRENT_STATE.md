@@ -26,12 +26,19 @@ and MOV audio are preserved. The finished movie and reports are in
 `collab/phase42_working_model_v1/`. This is one authored 2.5D scene, not
 arbitrary script-to-cartoon or an episode engine.
 
-Next milestone: prove a second authored scene through the same engine and
-expose the minimum reusable scene controls, instead of spending more cycles
-polishing the same mouth/hand comparison. Reuse the existing storyboard /
-shot-plan work where applicable; do not introduce another renderer or assume
-the legacy paid-service script pipeline is the cartoon path. The five-hour
-automation remains paused.
+A second authored scene now reuses this engine with new words and its own
+207-frame /6.9-second clock: `collab/june_rest_your_hands_v1/`. The new scene
+file controls head/camera motion and blink placement. Local cached scratch
+voice/cues need no live inference to render. The first film stays untouched.
+Read [new dialogue scenes](JUNE_DIALOGUE_SCENES.md) for controls and the honest
+audio-only recovery / raw-inventory evidence limits. New acting/voice remain
+human-unaccepted;44 distinct focused technical checks pass, not final quality.
+
+Next milestone: one convincing contact-aware hand/prop action, reusing and
+adapting existing pose/contact mechanics to the current porch artwork. New
+sets, full-body poses and arbitrary camera angles are still missing. Avoid
+another talking-shot proof or renewed polish of passed components. The
+five-hour automation remains paused.
 
 ## Historical October 28 checkpoint — superseded by the entry above
 
