@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-10-31T12:40:11.385315+00:00
+Generated: 2026-10-31T17:16:16.105479+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -50,8 +50,8 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.42.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.43.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.43.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [Latent Prediction Yields Cross-Subject Alignable Representations in Sensory-Evoked fMRI](https://arxiv.org/abs/2610.40280) — unverified reference; verify the primary source before use.
-- [REVBRAIN: Real-time Probabilistic EEG Forecasting Using Residual Vector Quantization](https://arxiv.org/abs/2610.38558) — unverified reference; verify the primary source before use.
+- [LRMoE: Demand-Side Load Re-Calibration for Efficient MoE Training on Memory-Constrained Nodes](https://arxiv.org/abs/2610.37720) — unverified reference; verify the primary source before use.
+- [What Does an Ontology Catch? Curated, LLM-Generated and Data-Derived Ontologies as Checkers of LLM Agents over Knowledge Graphs](https://arxiv.org/abs/2610.37809) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
