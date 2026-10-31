@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-10-31T17:16:16.105479+00:00
+Generated: 2026-10-31T17:48:40.928584+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
