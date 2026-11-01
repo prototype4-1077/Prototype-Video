@@ -1,6 +1,6 @@
 # External Signal Radar
 
-Generated: 2026-10-31T17:15:52+00:00
+Generated: 2026-11-01T17:56:59+00:00
 
 > External attention is a signal, never authority. Every item is unverified
 > until reviewed for evidence, autonomy, sequence, and channel fit.
@@ -9,14 +9,14 @@ Agent Reach health: **not_installed**
 
 ## Unclustered
 
-- **[Amortized Localized Posterior Inference for Model Calibration with Application to an Ocean Turbulence Closure](https://arxiv.org/abs/2610.37731)** — rss (score 0). arXiv:2610.37731v1 Announce Type: new Abstract: Model discrepancy may prevent a single calibration parameter from reproducing a physical response across the context domain. In addition, uncertainties in observations and contexts affect calibration and must be accounted for and qu
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.6.5](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.5-release)** — github_release (score 0). ## Release Notes This release brings crop support, performance improvements to save-images, lots of bugfixes, and improved compatibility with MoviePy 2.0+. ## Changelog - [feature] Add ability to crop input video before processing [#302](https://github.com/Breakthrough/PySceneDet
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.6.6](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.6-release)** — github_release (score 0). ### Release Notes PySceneDetect v0.6.6 introduces new output formats, which improve compatibility with popular video editors (e.g. DaVinci Resolve). ### Changelog - [feature] New `save-otio` command supports saving scenes in OTIO format [#497](https://github.com/Breakthrough/PySc
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.6.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.7-release)** — github_release (score 0). ### Release Notes Fixes issues with importing EDL files into DaVinci Resolve and other editors, update ffmpeg. ### Changelog - [bugfix] Fix `save-edl` end timestamp being too short by 1 frame [#516](https://github.com/Breakthrough/PySceneDetect/issues/516) - [general] Updates to 
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7-release)** — github_release (score 0). ## Release Notes PySceneDetect 0.7 is a **major breaking release** which overhauls how timestamps are handled. This allows PySceneDetect to properly process variable framerate (VFR) videos. A significant amount of technical debt has been addressed, including removal of deprecated
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7.1](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.1)** — github_release (score 0). ## Release Notes PySceneDetect 0.7.1 adds support for concatenating multiple videos, along with several stability and robustness fixes for the PyAV and OpenCV backends. ## CLI Changes - [feature] `split-video` has a new `--expand` flag: when scenes are detected within a time wind
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7.2](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.2)** — github_release (score 0). ## Release Notes PySceneDetect 0.7.2 ships improved defaults for the histogram and perceptual hash detectors, adds PyAV 19 support, and fixes several timing and output bugs. **Default output of `detect-hist` and `detect-hash` will change in this release due to improved default va
-- **[OpenFrontiers: A Collection of Open Research Problems and a Benchmark for Scientific Rediscovery](https://arxiv.org/abs/2610.37739)** — rss (score 0). arXiv:2610.37739v1 Announce Type: new Abstract: Large language models (LLMs) have shown increasing promise in research-level problem solving, yet a comprehensive collection of such problems is still missing, and evaluating them on research-level problems remains challenging. We i
+- **[Panniantong/Agent-Reach: v1.4.0 — 上游大迁移：更稳定、更简单、更可靠](https://github.com/Panniantong/Agent-Reach/releases/tag/v1.4.0)** — github_release (score 0). ## 核心变更：6 大上游迁移 本版本对多个渠道的上游工具进行了大规模迁移，解决了已弃用工具、不稳定方案和部署门槛高的问题。 ### 上游迁移 | 渠道 | 旧方案 | 新方案 | 效果 | |------|--------|--------|------| | **Twitter/X** | bird CLI（repo 已 404） | twitter-cli (2,137 ⭐) | 修复完全不可用的渠道 | | **Reddit** | Exa crawling（经常超时） | rdt-cli (304 ⭐) | 搜索+全文+评论全通，无需登录 | 
+- **[Panniantong/Agent-Reach: v1.4.1 — 修复源码安装失败(wheel 重复打包)](https://github.com/Panniantong/Agent-Reach/releases/tag/v1.4.1)** — github_release (score 0). ## 修复 **修复了源码安装失败的问题。** 近期从 GitHub 安装(`pip install .../archive/main.zip`、`pipx`、`uvx`)会因 wheel 重复打包直接构建失败: ``` ValueError: A second file is being added to the wheel archive at the same path: `agent_reach/guides/setup-exa.md` ``` 原因是 `pyproject.toml` 中 `packages = ["agent_reach"]`
 
 ## Render Intelligence
 
@@ -30,11 +30,6 @@ Agent Reach health: **not_installed**
 ## Memory Time
 
 - **[Comfy-Org/ComfyUI: v0.40.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.40.0)** — github_release (score 6). ## What's Changed * [Server.py] Update CSP to allow `blob:` and `data:` by @S0yKaf in https://github.com/Comfy-Org/ComfyUI/pull/15565 * Add comfy_attention and AttentionTensorContainer support to rest of models by @comfyanonymous in https://github.com/Comfy-Org/ComfyUI/pull/16806
-- **[LRMoE: Demand-Side Load Re-Calibration for Efficient MoE Training on Memory-Constrained Nodes](https://arxiv.org/abs/2610.37720)** — rss (score 1). arXiv:2610.37720v1 Announce Type: new Abstract: Sparse Mixture-of-Experts (MoE) models offer scalable capacity for Web applications, but uneven routing creates computation and communication bottlenecks. Existing placement and replication methods redistribute this workload, yet ad
-
-## Belief Analysis
-
-- **[What Does an Ontology Catch? Curated, LLM-Generated and Data-Derived Ontologies as Checkers of LLM Agents over Knowledge Graphs](https://arxiv.org/abs/2610.37809)** — rss (score 1). arXiv:2610.37809v1 Announce Type: new Abstract: LLM agents that answer questions over Web knowledge graphs are increasingly wrapped in checks derived from the graph's ontology, on the assumption that a formal schema makes a reliable judge. Yet a checker can be wrong as well: it c
 
 ## Editorial handoff
 
