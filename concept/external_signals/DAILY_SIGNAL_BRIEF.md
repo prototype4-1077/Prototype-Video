@@ -1,6 +1,6 @@
 # External Signal Radar
 
-Generated: 2026-11-01T17:56:59+00:00
+Generated: 2026-11-02T21:45:03+00:00
 
 > External attention is a signal, never authority. Every item is unverified
 > until reviewed for evidence, autonomy, sequence, and channel fit.
@@ -15,8 +15,8 @@ Agent Reach health: **not_installed**
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7-release)** — github_release (score 0). ## Release Notes PySceneDetect 0.7 is a **major breaking release** which overhauls how timestamps are handled. This allows PySceneDetect to properly process variable framerate (VFR) videos. A significant amount of technical debt has been addressed, including removal of deprecated
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7.1](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.1)** — github_release (score 0). ## Release Notes PySceneDetect 0.7.1 adds support for concatenating multiple videos, along with several stability and robustness fixes for the PyAV and OpenCV backends. ## CLI Changes - [feature] `split-video` has a new `--expand` flag: when scenes are detected within a time wind
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7.2](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.2)** — github_release (score 0). ## Release Notes PySceneDetect 0.7.2 ships improved defaults for the histogram and perceptual hash detectors, adds PyAV 19 support, and fixes several timing and output bugs. **Default output of `detect-hist` and `detect-hash` will change in this release due to improved default va
-- **[Panniantong/Agent-Reach: v1.4.0 — 上游大迁移：更稳定、更简单、更可靠](https://github.com/Panniantong/Agent-Reach/releases/tag/v1.4.0)** — github_release (score 0). ## 核心变更：6 大上游迁移 本版本对多个渠道的上游工具进行了大规模迁移，解决了已弃用工具、不稳定方案和部署门槛高的问题。 ### 上游迁移 | 渠道 | 旧方案 | 新方案 | 效果 | |------|--------|--------|------| | **Twitter/X** | bird CLI（repo 已 404） | twitter-cli (2,137 ⭐) | 修复完全不可用的渠道 | | **Reddit** | Exa crawling（经常超时） | rdt-cli (304 ⭐) | 搜索+全文+评论全通，无需登录 | 
-- **[Panniantong/Agent-Reach: v1.4.1 — 修复源码安装失败(wheel 重复打包)](https://github.com/Panniantong/Agent-Reach/releases/tag/v1.4.1)** — github_release (score 0). ## 修复 **修复了源码安装失败的问题。** 近期从 GitHub 安装(`pip install .../archive/main.zip`、`pipx`、`uvx`)会因 wheel 重复打包直接构建失败: ``` ValueError: A second file is being added to the wheel archive at the same path: `agent_reach/guides/setup-exa.md` ``` 原因是 `pyproject.toml` 中 `packages = ["agent_reach"]`
+- **[Building functional and mechanistic models of cortical computation based on canonical cell type connectivity](https://arxiv.org/abs/2504.03031)** — rss (score 0). arXiv:2504.03031v3 Announce Type: replace Abstract: Neuronal circuits of the cerebral cortex are the structural basis of mammalian cognition. The same qualitative components and connectivity motifs are repeated across functionally specialized cortical areas and mammalian species,
+- **[ChatGPT as a Surveillance Assistant? An Exploratory Case Study of AI-Assisted Surveillance Risks](https://arxiv.org/abs/2610.40890)** — rss (score 0). arXiv:2610.40890v1 Announce Type: new Abstract: Large language models (LLMs) can generate detailed guidance, functional code, and persuasive text at scale. As one of the most widely used consumer language model products as of 2026, ChatGPT gives broad public access to these capab
 
 ## Render Intelligence
 
@@ -27,9 +27,22 @@ Agent Reach health: **not_installed**
 - **[Comfy-Org/ComfyUI: v0.43.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.43.0)** — github_release (score 4). ## What's Changed * model_prefetch: syncrhonize all graph cleanups by @rattus128 in https://github.com/Comfy-Org/ComfyUI/pull/17178 * Add rope scaling support to MOSS-image by @kijai in https://github.com/Comfy-Org/ComfyUI/pull/17172 * [Partner Nodes] Renew partner-node sign-in t
 - **[Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1)** — github_release (score 2). Fix some crashing issues a few users experienced when running the MOSS image template workflow.
 
+## Belief Analysis
+
+- **[Beyond Plausible Prediction: Safety Sufficiency in Web World Models](https://arxiv.org/abs/2610.40798)** — rss (score 1). arXiv:2610.40798v1 Announce Type: new Abstract: Web world models increasingly predict the consequences of candidate actions before agents act, yet a plausible predicted future does not necessarily support the correct safety decision. In a matched human evaluation of 3,000 predict
+- **[Does Recursive Knowledge Construction Help Agents Verify Consensus Claims in Science?](https://arxiv.org/abs/2610.40906)** — rss (score 1). arXiv:2610.40906v1 Announce Type: new Abstract: Recent scientific agents build knowledge recursively by retrieving evidence, constructing an intermediate state, and judging whether that state contains sufficient information. These agents are evaluated end-to-end, usually without 
+
 ## Memory Time
 
 - **[Comfy-Org/ComfyUI: v0.40.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.40.0)** — github_release (score 6). ## What's Changed * [Server.py] Update CSP to allow `blob:` and `data:` by @S0yKaf in https://github.com/Comfy-Org/ComfyUI/pull/15565 * Add comfy_attention and AttentionTensorContainer support to rest of models by @comfyanonymous in https://github.com/Comfy-Org/ComfyUI/pull/16806
+
+## Emotion Prediction
+
+- **[Incongruence-Aware Evaluation of Multimodal Speech Emotion Recognition in Audio Large Language Models](https://arxiv.org/abs/2610.40883)** — rss (score 2). arXiv:2610.40883v1 Announce Type: new Abstract: Voice-interactive large language models process both what a speaker says and how they say it, yet the two channels do not always agree. We ask whether that disagreement degrades speech emotion recognition. Mapping text and audio int
+
+## Self Identity
+
+- **[More Rules, Longer Lists? Benchmarking Self-Evolving Agents on a Hidden-Rule Curriculum](https://arxiv.org/abs/2610.40758)** — rss (score 2). arXiv:2610.40758v1 Announce Type: new Abstract: Self-evolving agents rewrite a persistent state from feedback, but it is largely untested whether this lets them learn a rule nobody told them. An agent can also pass by writing down each correction as an exception, and its list the
 
 ## Editorial handoff
 
