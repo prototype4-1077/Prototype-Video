@@ -1,13 +1,13 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-03T20:10:15.737763+00:00
+Generated: 2026-11-04T14:39:14.638451+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
 
 ## What to make next
 No fresh, dated retention evidence is eligible. Use editorial judgment and frontier exploration; do not infer poor performance from missing data.
-- Editorial exploration: **Belief Rewrites the Body** [established]. Hook: A sugar pill you KNOW is a sugar pill can still dull real pain. Your beliefs have hands. This is a frontier rotation, not a predicted audience winner.
+- Editorial exploration: **Doing Bends Time** [emerging]. Hook: The clock runs differently when you're the one pressing the button. This is a frontier rotation, not a predicted audience winner.
 James selects the concept and approves the script. Recommendations never start a render or publish a video.
 
 ## Measurement inventory
