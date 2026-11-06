@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-06T14:21:21.586327+00:00
+Generated: 2026-11-06T19:29:08.782450+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -50,8 +50,8 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.43.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.43.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.44.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.44.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [Uncertainty-Aware Resource Orchestration for Agentic AI Systems](https://arxiv.org/abs/2611.05392) — unverified reference; verify the primary source before use.
-- [PINR-ESI: Physics-Informed Self-Supervised Implicit Neural Representation Framework for EEG Extended-Source Imaging](https://arxiv.org/abs/2611.06700) — unverified reference; verify the primary source before use.
+- [Autonomous AI Agents Systematically Diverge From Human Preferences in Proof Formalization](https://arxiv.org/abs/2611.06995) — unverified reference; verify the primary source before use.
+- [Category differences in similarity between fixation density maps and psychological potential fields for sketches](https://arxiv.org/abs/2611.06930) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
