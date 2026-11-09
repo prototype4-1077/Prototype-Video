@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-09T16:29:15.690803+00:00
+Generated: 2026-11-09T22:28:15.219529+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -50,8 +50,8 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.43.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.43.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.44.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.44.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [Breakthrough/PySceneDetect: PySceneDetect v0.6.5](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.5-release) — unverified reference; verify the primary source before use.
-- [Breakthrough/PySceneDetect: PySceneDetect v0.6.6](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.6-release) — unverified reference; verify the primary source before use.
+- [Decision Context: Persistent Behavioral Learning for AI Agents](https://arxiv.org/abs/2611.08644) — unverified reference; verify the primary source before use.
+- [A hair-thin implant opens the entire depth of the mouse brain to revisiting the same structures at subcellular resolution](https://arxiv.org/abs/2611.09481) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
