@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-11T14:28:46.800704+00:00
+Generated: 2026-11-11T19:41:06.322107+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -44,14 +44,14 @@ James selects the concept and approves the script. Recommendations never start a
 
 ## Research signals awaiting review
 
-- [Comfy-Org/ComfyUI: v0.40.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.40.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.41.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.41.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.43.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.43.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.44.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.44.0) — unverified reference; verify the primary source before use.
-- [NeuroHorizon: Long-Horizon Forecasting of Neural Population Activity with Hierarchical Memory](https://arxiv.org/abs/2611.10617) — unverified reference; verify the primary source before use.
+- [Comfy-Org/ComfyUI: v0.45.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [AYO: A Safe and Privacy-Preserving Platform for Studying Children's Interaction with LLMs](https://arxiv.org/abs/2611.10054) — unverified reference; verify the primary source before use.
+- [LandslideFM: A Foundation Model Towards Unified Landslide Perception and Understanding](https://arxiv.org/abs/2611.12936) — unverified reference; verify the primary source before use.
+- [A probabilistic model of visual segmentation explains early visual cortical dynamics](https://arxiv.org/abs/2611.13316) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
