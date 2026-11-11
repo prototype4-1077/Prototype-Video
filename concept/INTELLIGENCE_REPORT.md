@@ -1,13 +1,13 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-10T20:29:40.981585+00:00
+Generated: 2026-11-11T14:28:46.800704+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
 
 ## What to make next
 No fresh, dated retention evidence is eligible. Use editorial judgment and frontier exploration; do not infer poor performance from missing data.
-- Editorial exploration: **Doing Bends Time** [emerging]. Hook: The clock runs differently when you're the one pressing the button. This is a frontier rotation, not a predicted audience winner.
+- Editorial exploration: **Memory Is a Time Machine Pointed Forward** [established]. Hook: The organ that remembers your childhood is the same one that dreams your next Tuesday. This is a frontier rotation, not a predicted audience winner.
 James selects the concept and approves the script. Recommendations never start a render or publish a video.
 
 ## Measurement inventory
