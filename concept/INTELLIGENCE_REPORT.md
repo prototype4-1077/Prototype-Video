@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-13T14:39:48.532698+00:00
+Generated: 2026-11-13T19:49:32.667597+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -50,8 +50,8 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.44.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.44.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.45.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [Breakthrough/PySceneDetect: PySceneDetect v0.6.6](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.6-release) — unverified reference; verify the primary source before use.
-- [Breakthrough/PySceneDetect: PySceneDetect v0.6.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.7-release) — unverified reference; verify the primary source before use.
+- [Pyramidal Columns Acting as Attention Heads](https://arxiv.org/abs/2611.16057) — unverified reference; verify the primary source before use.
+- [Mind-wandering preserves word-level coupling while disrupting comprehension](https://arxiv.org/abs/2611.14814) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
