@@ -1,6 +1,6 @@
 # External Signal Radar
 
-Generated: 2026-11-14T18:13:10+00:00
+Generated: 2026-11-15T18:55:40+00:00
 
 > External attention is a signal, never authority. Every item is unverified
 > until reviewed for evidence, autonomy, sequence, and channel fit.
