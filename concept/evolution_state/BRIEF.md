@@ -1,6 +1,6 @@
 # Perpetual Frontier Brief
 
-_Cycle: 2026-11-09 · Records: 127 · External signals: 48_
+_Cycle: 2026-11-16 · Records: 127 · External signals: 48_
 
 ## Constitutional status
 The evolution laboratory generated observations and proposals only. It did not alter scripts, frontier truth, render requests, or permanent ethos rules.
@@ -23,12 +23,12 @@ The evolution laboratory generated observations and proposals only. It did not a
   Control: Keep the current champion value for reflection. Treatment: Change only reflection using the challenger condition.
 
 ## Wild frontier proposals
-- **Self-Reference: grounding × belief** — What if self-reference is already happening inside the way you experience the ordinary / return to the body?
-  Fidelity: metaphor. Invitation: Where might self-reference be shaping what you call 'grounding' or 'belief' right now?
-- **Staging: mediation × memory** — What if staging is already happening inside the way you experience the lens / you never see reality raw?
-  Fidelity: metaphor. Invitation: Where might staging be shaping what you call 'mediation' or 'memory' right now?
-- **Threshold Design: attention × memory** — What if threshold design is already happening inside the way you experience attention as the instrument?
-  Fidelity: metaphor. Invitation: Where might threshold design be shaping what you call 'attention' or 'memory' right now?
+- **Noise: emotion × recursion** — What if noise is already happening inside the way you experience emotion, love, and the turn?
+  Fidelity: metaphor. Invitation: Where might noise be shaping what you call 'emotion' or 'recursion' right now?
+- **Feedback: grounding × memory** — What if feedback is already happening inside the way you experience the ordinary / return to the body?
+  Fidelity: metaphor. Invitation: Where might feedback be shaping what you call 'grounding' or 'memory' right now?
+- **Burden Of Proof: self × belief** — What if burden of proof is already happening inside the way you experience self & identity as constructed?
+  Fidelity: metaphor. Invitation: Where might burden of proof be shaping what you call 'self' or 'belief' right now?
 
 ## Unknown unknowns
 - This video fits no declared pillar or frontier concept; is the map missing a dimension?
@@ -38,8 +38,8 @@ The evolution laboratory generated observations and proposals only. It did not a
 - This video fits no declared pillar or frontier concept; is the map missing a dimension?
 
 ## Rule review
-- `hook_immediate_plunge` → **retire_candidate** (effective confidence 0.1561)
-- `generated_human_ratio` → **retest** (effective confidence 0.373)
+- `hook_immediate_plunge` → **retire_candidate** (effective confidence 0.144)
+- `generated_human_ratio` → **retest** (effective confidence 0.3582)
 
 ## Human gate
 Nothing in this brief is a command. The next act is a choice: which uncertainty is worth spending a real video to examine?
