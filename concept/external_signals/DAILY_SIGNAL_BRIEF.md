@@ -1,6 +1,6 @@
 # External Signal Radar
 
-Generated: 2026-11-16T22:14:40+00:00
+Generated: 2026-11-17T21:01:02+00:00
 
 > External attention is a signal, never authority. Every item is unverified
 > until reviewed for evidence, autonomy, sequence, and channel fit.
@@ -9,14 +9,14 @@ Agent Reach health: **not_installed**
 
 ## Unclustered
 
-- **[Advancing Quantization for R&R Models with Microscaling Formats](https://arxiv.org/abs/2611.17501)** — rss (score 0). arXiv:2611.17501v1 Announce Type: new Abstract: Recommendation and Ranking (R&R) models, particularly in digital advertising, require massive inference throughput but exhibit extreme sensitivity to precision loss. Unlike Large Language Models (LLMs) that frequently tolerate quant
-- **[An Operationalization of Opaque Serial Depth](https://arxiv.org/abs/2611.17495)** — rss (score 0). arXiv:2611.17495v1 Announce Type: new Abstract: Chain-of-thought (CoT) is currently a valuable tool for overseeing AI models, but some architectural shifts could significantly reduce CoT monitorability. We operationalize a measure that serves as a proxy for the amount of unverbal
+- **[Agents Cannot Hand Over What They Have Not Yet Understood](https://arxiv.org/abs/2611.18642)** — rss (score 0). arXiv:2611.18642v1 Announce Type: new Abstract: Agents that work beyond a single context window, or in teams, hand their work to a successor as a short written summary. Evaluation has focused on whether an agent can solve a task, and relatively little is known about how much of w
+- **[Analysis choices can produce apparent rich-club differences: an Alzheimer's disease EEG case study](https://arxiv.org/abs/2611.19708)** — rss (score 0). arXiv:2611.19708v1 Announce Type: cross Abstract: The weighted rich-club coefficient tests whether a network's most strongly connected nodes are preferentially interconnected. Its interpretation depends on two often-implicit choices that are easy to overlook: how the randomised c
+- **[Anchoring Motion, Refining Trajectories: Generalizable Continuous Neural Decoding](https://arxiv.org/abs/2611.21335)** — rss (score 0). arXiv:2611.21335v1 Announce Type: new Abstract: Brain activity encodes motor information across multiple temporal scales, enabling continuous neural control beyond discrete action recognition. However, existing methods are typically tailored to specific subjects and tasks, with d
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.6.6](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.6-release)** — github_release (score 0). ### Release Notes PySceneDetect v0.6.6 introduces new output formats, which improve compatibility with popular video editors (e.g. DaVinci Resolve). ### Changelog - [feature] New `save-otio` command supports saving scenes in OTIO format [#497](https://github.com/Breakthrough/PySc
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.6.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.7-release)** — github_release (score 0). ### Release Notes Fixes issues with importing EDL files into DaVinci Resolve and other editors, update ffmpeg. ### Changelog - [bugfix] Fix `save-edl` end timestamp being too short by 1 frame [#516](https://github.com/Breakthrough/PySceneDetect/issues/516) - [general] Updates to 
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7-release)** — github_release (score 0). ## Release Notes PySceneDetect 0.7 is a **major breaking release** which overhauls how timestamps are handled. This allows PySceneDetect to properly process variable framerate (VFR) videos. A significant amount of technical debt has been addressed, including removal of deprecated
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7.1](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.1)** — github_release (score 0). ## Release Notes PySceneDetect 0.7.1 adds support for concatenating multiple videos, along with several stability and robustness fixes for the PyAV and OpenCV backends. ## CLI Changes - [feature] `split-video` has a new `--expand` flag: when scenes are detected within a time wind
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7.2](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.2)** — github_release (score 0). ## Release Notes PySceneDetect 0.7.2 ships improved defaults for the histogram and perceptual hash detectors, adds PyAV 19 support, and fixes several timing and output bugs. **Default output of `detect-hist` and `detect-hash` will change in this release due to improved default va
-- **[Breakthrough/PySceneDetect: PySceneDetect v0.7.3](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.3)** — github_release (score 0). PySceneDetect 0.7.3 adds scene-length based image export to `save-images`, a `close()` method and context manager support for `VideoStream`, and fixes several timing bugs: PyAV frame timing for videos without presentation timestamps, `save-edl` timecode drift at NTSC frame rates,
 
 ## Render Intelligence
 
@@ -26,18 +26,19 @@ Agent Reach health: **not_installed**
 - **[Comfy-Org/ComfyUI: v0.44.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.44.0)** — github_release (score 4). ## What's Changed * [Partner Nodes] feat(Patina): add Patina texture nodes by @bigcat88 in https://github.com/Comfy-Org/ComfyUI/pull/17384 * [Partner Nodes] feat(VEED): add VEED Dubbing node by @bigcat88 in https://github.com/Comfy-Org/ComfyUI/pull/17388 * Update workflow templat
 - **[Comfy-Org/ComfyUI: v0.45.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0)** — github_release (score 4). ## What's Changed * Bump comfyui-frontend-package to 1.58.5 by @comfy-pr-bot in https://github.com/Comfy-Org/ComfyUI/pull/17442 * Add better error for when pixel_space VAE wrongly selected. by @comfyanonymous in https://github.com/Comfy-Org/ComfyUI/pull/17518 * Make SeedVR2 VAE s
 - **[Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1)** — github_release (score 2). Fix some crashing issues a few users experienced when running the MOSS image template workflow.
+- **[D\'ecoupage: Directorial Audio-Visual Control for Long Multi-Shot Video Generation](https://arxiv.org/abs/2611.18866)** — rss (score 1). arXiv:2611.18866v1 Announce Type: new Abstract: In cinematic storytelling, sound and visual transitions do not always coincide in lockstep: dialogue frequently bridges across cuts to reveal reactions or introduces new scenes via J- and L-cuts, while deliberate silences pace the s
+
+## Psychedelic Science
+
+- **[From antidepressants to psychedelics: revisiting the pharmacology of so-called serotoninergic treatments](https://arxiv.org/abs/2611.20834)** — rss (score 2). arXiv:2611.20834v1 Announce Type: new Abstract: Recent years have seen a resurgence of interest in serotoninergic psychedelics as potential treatment for diverse psychiatric disorders. Here, we will delve into the molecular mechanisms of drugs used to treat depression and obsessi
 
 ## Belief Analysis
 
-- **[Tabular Population Priors as Structured Retrieval for EHR Medication Set Prediction](https://arxiv.org/abs/2611.17341)** — rss (score 3). arXiv:2611.17341v1 Announce Type: new Abstract: Medication prediction from electronic health records is a fixed vocabulary structured prediction problem, yet recent clinical RAG systems often treat it like open ended case based reasoning: retrieve similar patient admissions and a
+- **[Brain AI Scientist: An Evidence-Based Multi-Agent System for Translational Neuroimaging in Precision Psychiatry](https://arxiv.org/abs/2611.18634)** — rss (score 1). arXiv:2611.18634v1 Announce Type: cross Abstract: Resting-state functional magnetic resonance imaging (rs-fMRI) has revealed widespread brain-network alterations in psychiatric disorders, yet translating these findings into individualized clinical decision support remains challen
 
 ## Memory Time
 
-- **[When Should LLM Agents Forget? Memory Filtering Under Query-Critical Resolver Errors](https://arxiv.org/abs/2611.17338)** — rss (score 2). arXiv:2611.17338v1 Announce Type: new Abstract: LLM memory systems often delete facts classified as stale. We show that this hard-filtering step can reduce downstream accuracy when resolver errors delete query-critical facts. Across three models, a controlled sensitivity interven
-
-## Self Identity
-
-- **[An In-Silico Audit of Topographic Organization in a Multimodal Brain-Response Model](https://arxiv.org/abs/2611.18105)** — rss (score 1). arXiv:2611.18105v1 Announce Type: new Abstract: TRIBE v2 (d'Ascoli et al., 2026) predicts fMRI responses across the cortical surface from video, audio and text. Its authors validated it with category-selective localizers (faces, places, bodies, words) and language contrasts, but 
+- **[How to make a moral agent: sentimentalism and rationalism as lenses on AI](https://arxiv.org/abs/2611.18714)** — rss (score 1). arXiv:2611.18714v1 Announce Type: new Abstract: Can AI systems be moral agents? That is, can they undertake actions that can be correctly assessed as morally right or wrong? There is no settled normative criterion of moral agency that applies neatly outside paradigm human cases. 
 
 ## Editorial handoff
 
