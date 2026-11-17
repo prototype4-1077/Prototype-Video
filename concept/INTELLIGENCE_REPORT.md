@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-17T16:06:51.275405+00:00
+Generated: 2026-11-17T21:01:29.330954+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -49,9 +49,9 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.43.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.43.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.44.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.44.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.45.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0) — unverified reference; verify the primary source before use.
-- [Tabular Population Priors as Structured Retrieval for EHR Medication Set Prediction](https://arxiv.org/abs/2611.17341) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [When Should LLM Agents Forget? Memory Filtering Under Query-Critical Resolver Errors](https://arxiv.org/abs/2611.17338) — unverified reference; verify the primary source before use.
+- [From antidepressants to psychedelics: revisiting the pharmacology of so-called serotoninergic treatments](https://arxiv.org/abs/2611.20834) — unverified reference; verify the primary source before use.
+- [Brain AI Scientist: An Evidence-Based Multi-Agent System for Translational Neuroimaging in Precision Psychiatry](https://arxiv.org/abs/2611.18634) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
