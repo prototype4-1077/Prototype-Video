@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18T16:45:06+00:00",
+  "generated_at": "2026-11-18T20:43:40+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "long_black_interval": 4,
@@ -9,7 +9,7 @@
     {
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
-      "evidence": "4 occurrence(s) across 2 build(s)",
+      "evidence": "6 occurrence(s) across 3 build(s)",
       "fingerprint": "f4c7ac5403f2d8eb",
       "priority": "high",
       "stage": "footage"
@@ -41,19 +41,20 @@
     {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=69.1s, p95=1051.8s",
+      "evidence": "p50=69.1s, p95=1049.7s",
       "priority": "medium",
       "stage": "build_pass"
     }
   ],
   "recurring_incidents": [
     {
-      "count": 4,
+      "count": 6,
       "failure_class": "unknown",
       "fingerprint": "f4c7ac5403f2d8eb",
       "kind": "failure",
       "normalized_error": "nt call last): file \"<path> line <n>, in <module> raise systemexit(cli()) ^^^^^ file \"<path> line <n>, in cli main(build_dir, args[<n>] if len(args) > <n> else none) file \"<path> line <n>, in main plan = _render_storyboard( ^^^^^^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a literal asset instead of su",
       "slugs": [
+        "consciousness-is-not-a-remote-control",
         "the-second-test",
         "the-goodbye-room"
       ],
@@ -92,6 +93,28 @@
       "slugs": [
         "the-mercy-of-the-filter",
         "beliefs-are-software-updates"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "6ea67b67481c110b",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=running elapsed=15s idle=0s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: s",
+      "slugs": [
+        "consciousness-is-not-a-remote-control"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "0515c5a06efdac68",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; suppl",
+      "slugs": [
+        "consciousness-is-not-a-remote-control"
       ],
       "stage": "build_pass"
     },
@@ -184,20 +207,20 @@
       "stage": "build_pass"
     }
   ],
-  "runs_analyzed": 58,
+  "runs_analyzed": 59,
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 56,
+      "attempts": 57,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.002,
       "p95_success_s": 1.003,
-      "sample_count": 56,
-      "successes": 56,
+      "sample_count": 57,
+      "successes": 57,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 56.109
+      "total_duration_s": 57.11
     },
     "altsheet": {
       "attempts": 45,
@@ -224,16 +247,16 @@
       "total_duration_s": 61640.064
     },
     "build_pass": {
-      "attempts": 303,
-      "failure_rate": 0.0462,
-      "failures": 14,
-      "p50_success_s": 69.071,
-      "p95_success_s": 1051.758,
-      "sample_count": 289,
-      "successes": 289,
-      "timeout_rate": 0.033,
+      "attempts": 307,
+      "failure_rate": 0.0521,
+      "failures": 16,
+      "p50_success_s": 69.065,
+      "p95_success_s": 1049.656,
+      "sample_count": 291,
+      "successes": 291,
+      "timeout_rate": 0.0326,
       "timeouts": 10,
-      "total_duration_s": 86794.327
+      "total_duration_s": 86880.355
     },
     "credits": {
       "attempts": 122,
@@ -260,16 +283,16 @@
       "total_duration_s": 2341.999
     },
     "footage": {
-      "attempts": 55,
-      "failure_rate": 0.0727,
-      "failures": 4,
+      "attempts": 57,
+      "failure_rate": 0.1053,
+      "failures": 6,
       "p50_success_s": 133.139,
       "p95_success_s": 236.781,
       "sample_count": 51,
       "successes": 51,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 7054.007
+      "total_duration_s": 7087.02
     },
     "hero": {
       "attempts": 230,
@@ -320,32 +343,32 @@
       "total_duration_s": 1636.938
     },
     "transcribe": {
-      "attempts": 56,
+      "attempts": 57,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 17.011,
-      "p95_success_s": 24.273,
-      "sample_count": 56,
-      "successes": 56,
+      "p50_success_s": 17.01,
+      "p95_success_s": 24.223,
+      "sample_count": 57,
+      "successes": 57,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 982.844
+      "total_duration_s": 997.85
     },
     "tts": {
-      "attempts": 56,
+      "attempts": 57,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 58.031,
-      "p95_success_s": 86.31,
-      "sample_count": 56,
-      "successes": 56,
+      "p50_success_s": 58.026,
+      "p95_success_s": 85.26,
+      "sample_count": 57,
+      "successes": 57,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 3478.96
+      "total_duration_s": 3511.969
     }
   },
   "statuses": {
     "done": 56,
-    "failed": 2
+    "failed": 3
   }
 }
