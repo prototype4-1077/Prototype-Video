@@ -1,6 +1,6 @@
 {
-  "finished_at": "2026-11-18T21:50:48+00:00",
-  "github_run_id": "44405085591",
+  "finished_at": "2026-11-18T21:59:05+00:00",
+  "github_run_id": "44406542029",
   "incidents": [
     {
       "count": 2,
@@ -14,10 +14,10 @@
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "e72c423c741d2195",
+      "fingerprint": "3e2ec4cfdb1d71c2",
       "kind": "failure",
       "last_item": null,
-      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=running elapsed=15s idle=7s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: s",
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=running elapsed=15s idle=4s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: s",
       "stage": "build_pass"
     },
     {
@@ -86,9 +86,9 @@
     },
     {
       "action": "Treat as deterministic after repeated occurrence; fix the input or implementation instead of adding retries.",
-      "fingerprint": "e72c423c741d2195",
+      "fingerprint": "3e2ec4cfdb1d71c2",
       "priority": "medium",
-      "reason": "1 occurrence(s): governor stage=footage state=start soft=510s hard=600s governor stage=footage state=running elapsed=15s idle=7s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: s",
+      "reason": "1 occurrence(s): governor stage=footage state=start soft=510s hard=600s governor stage=footage state=running elapsed=15s idle=4s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: s",
       "stage": "build_pass"
     },
     {
@@ -101,11 +101,11 @@
     {
       "action": "Optimize or parallelize this stage only after its quality outputs remain unchanged in a champion/challenger comparison.",
       "priority": "medium",
-      "reason": "Largest measured latency contribution in this run (87.1s).",
+      "reason": "Largest measured latency contribution in this run (81.1s).",
       "stage": "build_pass"
     }
   ],
-  "run_id": "0e4a51b139994841b0c70988ad781409",
+  "run_id": "64f35cd79bc549a4ab6d7507ba3f8c0c",
   "schema_version": 1,
   "slug": "consciousness-is-not-a-remote-control",
   "stages": {
@@ -124,15 +124,15 @@
     "build_pass": {
       "attempts": 4,
       "failures": 2,
-      "p50_success_s": 27.517,
-      "p95_success_s": 36.969,
+      "p50_success_s": 27.019,
+      "p95_success_s": 35.123,
       "success_durations_s": [
-        38.019,
-        17.015
+        36.023,
+        18.015
       ],
       "successes": 2,
       "timeouts": 0,
-      "total_duration_s": 87.057
+      "total_duration_s": 81.066
     },
     "footage": {
       "attempts": 2,
@@ -142,31 +142,31 @@
       "success_durations_s": [],
       "successes": 0,
       "timeouts": 0,
-      "total_duration_s": 30.023
+      "total_duration_s": 25.022
     },
     "transcribe": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 15.012,
-      "p95_success_s": 15.012,
+      "p50_success_s": 16.014,
+      "p95_success_s": 16.014,
       "success_durations_s": [
-        15.012
+        16.014
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 15.012
+      "total_duration_s": 16.014
     },
     "tts": {
       "attempts": 1,
       "failures": 0,
-      "p50_success_s": 37.02,
-      "p95_success_s": 37.02,
+      "p50_success_s": 35.022,
+      "p95_success_s": 35.022,
       "success_durations_s": [
-        37.02
+        35.022
       ],
       "successes": 1,
       "timeouts": 0,
-      "total_duration_s": 37.02
+      "total_duration_s": 35.022
     }
   },
   "status": "failed"
