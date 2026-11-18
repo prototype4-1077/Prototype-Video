@@ -6,7 +6,7 @@
       "status": "success"
     },
     "public_statistics": {
-      "generated_at": "2026-11-17T21:48:59+00:00",
+      "generated_at": "2026-11-18T21:27:52+00:00",
       "status": "permission_or_network_error"
     },
     "retention": {
@@ -18,23 +18,23 @@
     "all_package_file_coverage": {
       "build_count": 128,
       "counts": {
-        "governor_summary": 54,
+        "governor_summary": 55,
         "preflight_report": 49,
         "quality_report": 54,
         "scene_feedback": 4,
         "scene_feedback_request": 3,
         "scene_review": 54,
-        "telemetry_summary": 54,
+        "telemetry_summary": 55,
         "youtube_stats": 34
       },
       "coverage": {
-        "governor_summary": 0.4219,
+        "governor_summary": 0.4297,
         "preflight_report": 0.3828,
         "quality_report": 0.4219,
         "scene_feedback": 0.0312,
         "scene_feedback_request": 0.0234,
         "scene_review": 0.4219,
-        "telemetry_summary": 0.4219,
+        "telemetry_summary": 0.4297,
         "youtube_stats": 0.2656
       },
       "human_feedback_count": 4,
@@ -46,7 +46,7 @@
       "the-edge-of-you-is-negotiable",
       "the-person-isnt-here"
     ],
-    "governor_summary_count": 54,
+    "governor_summary_count": 55,
     "human_feedback_count": 4,
     "human_feedback_coverage_of_reviewable": 0.0741,
     "inventory_boundary": "package_count includes experiments and abandoned builds; telemetry, feedback, and audience coverage use render-observed, reviewable, or verified-published denominators.",
@@ -167,8 +167,8 @@
       "your-emergency-contact",
       "your-inner-bodyguard"
     ],
-    "telemetry_count": 54,
-    "telemetry_coverage_of_render_observed": 0.9818,
+    "telemetry_count": 55,
+    "telemetry_coverage_of_render_observed": 1.0,
     "youtube_missing_stats_slugs": [
       "belief-is-gravity",
       "emotions-are-a-dashboard",
@@ -240,13 +240,14 @@
       "low_bitrate": 8
     },
     "render_statuses": {
-      "done": 54
+      "done": 54,
+      "failed": 1
     },
     "stage_signals": {
       "align": {
         "max_s": 1.006,
         "mean_s": 1.002,
-        "samples": 53
+        "samples": 54
       },
       "altsheet": {
         "max_s": 7.051,
@@ -260,8 +261,8 @@
       },
       "build_pass": {
         "max_s": 1605.143,
-        "mean_s": 780.55,
-        "samples": 54
+        "mean_s": 766.961,
+        "samples": 55
       },
       "credits": {
         "max_s": 1.061,
@@ -275,8 +276,8 @@
       },
       "footage": {
         "max_s": 284.517,
-        "mean_s": 137.603,
-        "samples": 48
+        "mean_s": 135.469,
+        "samples": 49
       },
       "hero": {
         "max_s": 60.691,
@@ -300,20 +301,20 @@
       },
       "transcribe": {
         "max_s": 44.044,
-        "mean_s": 17.6,
-        "samples": 53
+        "mean_s": 17.552,
+        "samples": 54
       },
       "tts": {
         "max_s": 215.175,
-        "mean_s": 63.719,
-        "samples": 53
+        "mean_s": 63.15,
+        "samples": 54
       }
     },
     "telemetry_recommendation_counts": {
       "latency": 6,
-      "recurring_incident": 92,
+      "recurring_incident": 96,
       "reliability": 2,
-      "tail_latency": 48
+      "tail_latency": 49
     }
   },
   "denominator_policy": "package_count includes experiments and abandoned builds; telemetry, feedback, and audience coverage use render-observed, reviewable, or verified-published denominators.",
@@ -837,11 +838,11 @@
           "banned_ids": 122,
           "used_ids": 1067
         },
-        "fallback_rate": 0.0588,
-        "low_supply_rate": 0.0882,
+        "fallback_rate": 0.0586,
+        "low_supply_rate": 0.088,
         "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.",
-        "reports_analyzed": 47,
-        "scenes_analyzed": 952,
+        "reports_analyzed": 48,
+        "scenes_analyzed": 955,
         "state": "no_current_starvation_signal"
       },
       "priority": "low",
@@ -849,7 +850,7 @@
       "title": "Permanent stock exclusion now has a measured supply signal"
     }
   ],
-  "generated_at": "2026-11-18T20:39:05+00:00",
+  "generated_at": "2026-11-18T21:28:09+00:00",
   "operational_memory": {
     "advisory_counts": {},
     "occurrence_count": 52,
@@ -899,7 +900,7 @@
     }
   },
   "render_provider_health": {
-    "generated_at": "2026-11-18T20:39:04.230536+00:00",
+    "generated_at": "2026-11-18T21:28:09.001595+00:00",
     "measurement_boundary": "Read-only authentication probe; TTS permission, available generation credits, and media quality are not established.",
     "provider": "ElevenLabs",
     "schema_version": 1,
@@ -910,37 +911,38 @@
   "stock_supply": {
     "anchor_coverage_buckets": {
       "high": 116,
-      "low": 21969,
-      "medium": 306
+      "low": 22055,
+      "medium": 311
     },
-    "candidate_count_samples": 851,
+    "candidate_count_samples": 854,
     "evidence_strength": "sufficient",
     "fallback_count": 56,
-    "fallback_rate": 0.0588,
-    "generated_at": "2026-11-18T20:39:03+00:00",
+    "fallback_rate": 0.0586,
+    "generated_at": "2026-11-18T21:28:08+00:00",
     "low_candidate_scenes": 37,
-    "low_supply_rate": 0.0882,
-    "mean_candidate_count_when_recorded": 26.311,
+    "low_supply_rate": 0.088,
+    "mean_candidate_count_when_recorded": 26.326,
     "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.",
     "permanent_exclusion_counts": {
       "banned_ids": 122,
       "used_ids": 1067
     },
     "recommended_action": "Keep permanent exclusion unchanged; continue monitoring candidate supply and fallback rate.",
-    "reports_analyzed": 47,
+    "reports_analyzed": 48,
     "result_counts": {
+      "blocked": 1,
       "literal_storyboard": 56,
-      "stock": 896
+      "stock": 898
     },
-    "scenes_analyzed": 952,
+    "scenes_analyzed": 955,
     "schema_version": 1,
     "state": "no_current_starvation_signal",
     "top_rejection_reasons": {
       "advisory": 21354,
       "anchor coverage 0.00 below 0.10": 154,
       "anchor coverage 0.00 below 0.18": 410,
-      "direct match": 189,
-      "zero narrative-anchor coverage": 284
+      "direct match": 203,
+      "zero narrative-anchor coverage": 361
     },
     "zero_candidate_fallbacks": 47
   },

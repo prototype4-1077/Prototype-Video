@@ -1,6 +1,6 @@
 # System Diagnostic
 
-Generated: 2026-11-18T20:39:05+00:00
+Generated: 2026-11-18T21:28:09+00:00
 
 Findings: 22 — priorities {"high": 4, "low": 2, "medium": 16}
 
@@ -135,7 +135,7 @@ Findings: 22 — priorities {"high": 4, "low": 2, "medium": 16}
 ### [LOW] Permanent stock exclusion now has a measured supply signal
 - Area: `asset_selection`
 - Code: `stock_supply:no_current_starvation_signal`
-- Evidence: {"exclusions": {"banned_ids": 122, "used_ids": 1067}, "fallback_rate": 0.0588, "low_supply_rate": 0.0882, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 47, "scenes_analyzed": 952, "state": "no_current_starvation_signal"}
+- Evidence: {"exclusions": {"banned_ids": 122, "used_ids": 1067}, "fallback_rate": 0.0586, "low_supply_rate": 0.088, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 48, "scenes_analyzed": 955, "state": "no_current_starvation_signal"}
 - Action: Keep permanent exclusion unchanged; continue monitoring candidate supply and fallback rate.
 
 ## Authority boundary
