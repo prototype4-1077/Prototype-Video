@@ -1,5 +1,6 @@
 """Small real-media smoke test; uses generated test patterns and a tone, never TTS."""
 from __future__ import annotations
+from decimal import Decimal
 import json
 from pathlib import Path
 import subprocess
@@ -41,7 +42,9 @@ class LandscapeRenderSmokeTests(unittest.TestCase):
             self.assertEqual((probe['width'], probe['height']), (1920,1080))
             self.assertEqual(probe['video_codec'], 'h264')
             self.assertEqual(probe['audio_codec'], 'aac')
-            self.assertAlmostEqual(probe['duration_s'],3,delta=.1)
+            # FFprobe reports decimal seconds; keep the 0.1 s boundary inclusive.
+            duration_error = abs(Decimal(str(probe['duration_s'])) - Decimal('3.0'))
+            self.assertLessEqual(duration_error, Decimal('0.1'))
 
 
 if __name__ == '__main__':
