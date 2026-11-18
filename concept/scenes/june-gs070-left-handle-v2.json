@@ -1,0 +1,50 @@
+{
+  "id": "june-left-handle-lift-v2",
+  "purpose": "A pre-gripped silent insert: weight, lift, and set-down only. Not acquisition, finger release or a change to the accepted scene.",
+  "frames": 84,
+  "fps": 30,
+  "crop_xyxy": [
+    872,
+    477,
+    1672,
+    927
+  ],
+  "travel_px": 78,
+  "decision": "Reject v1 backwards body grip per James. Only v2 left-handle artwork can enter this builder.",
+  "art": {
+    "contact": {
+      "file": "june-gs070-left-handle-contact-v2.png",
+      "sha256": "12dfb841b4087fc80c29f1735f2621933d6205d45c50e574cbdad58fe67a549b",
+      "size": [
+        1672,
+        941
+      ],
+      "parent": "june-golden-scene-gs070-resolution-plate-v1.png (c54f82ef387121267829ec0a85c8fbf56830af2fd18c400ef777cfbb9044d029)",
+      "generator": "exec-7e3e2a18-d247-47f2-838e-203d0075f424.png",
+      "prompt": "Use case: precise-object-edit. Image 1 is the original GS070 porch frame, the ONLY edit target. Draw ONE new stationary supported grip key on the SAME locked frame. June faces us. Use HIS anatomical LEFT arm, the sleeve on SCREEN-RIGHT, which currently ends at his relaxed hand beside the cup. IMPORTANT handedness: make an anatomically convincing LEFT hand using the existing handle on the RIGHT side of the cup as seen by the viewer. Stage his bent forearm naturally reaching BEHIND the mug; the wrist approaches the handle from behind, the knuckle mass sits to the RIGHT of the handle; the index and middle fingers hook through its opening from the far side and the thumb opposes them at the top of the loop, pointing toward screen-LEFT. Pinky is below, not beside the thumb. Let the mug occlude most of the palm. Fingers must NOT fan across the front of the cup; do not paint four nails reaching to the right from the mug's left. The hand only grasps the handle; cup stays planted. ONE visible hand and one forearm connected plausibly all the way to June's existing left shoulder; do not leave the old hand on the table. Shift the left elbow outward subtly if needed for a natural wrist, no extra joint. Freeze mug body, handle anchor, center chip, scale, rim, face, lighting, table, camera, crop and costume. Single landscape frame with no text or panels. Only local sleeve/hand/contact shadows should differ."
+    },
+    "raised": {
+      "file": "june-gs070-left-handle-raised-v2.png",
+      "sha256": "1afe18b9032e4dcda311dcc34318297cf231b8b8a44f76f80a139740a84c463d",
+      "size": [
+        1672,
+        941
+      ],
+      "parent": "contact",
+      "generator": "exec-c4e6c756-95dd-423f-9881-b487df1a1bcb.png",
+      "prompt": "Use case: precise-object-edit. Image 1 is a pixel-registration target and a CORRECT LEFT-HAND grip. Make the next drawing in the SAME shot: the fingers, thumb, intact handle, blue rim, front chip, upright mug wall and LEFT wrist are one rigid held cluster. Move that whole cluster vertically upward by about 110 px (less than half a cup height), no horizontal travel, keep scale. Reveal the cup's complete curved BASE and the wooden surface/quiet soft shadow below it. Keep the original thumb pointing screen-LEFT, fingers curled through and around the screen-RIGHT handle. Keep all the exact occlusion order, no change of grasp. His arm belongs to his LEFT shoulder at screen-right of his torso; bend subtly at the elbow, avoid lengthening it. Same facing, perspective, background, table edge and grain, costume, lighting and shot bounds. Do not reframe. No new gesture or drinking, no duplication. One single wide frame, no text or panels."
+    },
+    "clean": {
+      "file": "june-gs070-left-handle-clean-v2.png",
+      "sha256": "983e4f346dd4ff9e0de6a4ad6af0caf86d3054cd71990274db50bae893215662",
+      "size": [
+        1671,
+        941
+      ],
+      "parent": "raised",
+      "generator": "exec-0882c86a-e54e-44ff-a77a-59b4e28b944a.png",
+      "prompt": "Use case: precise-object-edit. Image 1 is a locked VFX plate. Prepare the empty SET behind a moving foreground cel: REMOVE the cream mug, handle, its shadow, the visible left hand and the extended denim sleeve to the right of the body. Reveal the original wood tabletop and porch railing/posts, blurred autumn road and trees and siding that those covered. June's left arm may be down behind his torso OUT OF VIEW, not resting on the table. No other hands, mugs, sleeves or objects should occupy the cleared region screen right of his torso. Preserve exact 16:9 camera, framing and table perspective and grain, every existing visible background element and their alignment, his face/head and torso on the left, lantern, chimes, color, golden lighting and focus. This is a registered clean background for compositing; not a new scene, no text, no new object at right."
+    }
+  },
+  "human_accepted": false
+}
