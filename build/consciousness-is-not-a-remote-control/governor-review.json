@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-18T20:43:40+00:00",
+  "generated_at": "2026-11-18T21:50:48+00:00",
   "quality_failure_codes": {},
   "quality_warning_codes": {
     "long_black_interval": 4,
@@ -9,7 +9,7 @@
     {
       "action": "Eliminate the root cause before increasing retry limits. Keep the fingerprint as the regression key.",
       "category": "recurring_incident",
-      "evidence": "6 occurrence(s) across 3 build(s)",
+      "evidence": "8 occurrence(s) across 3 build(s)",
       "fingerprint": "f4c7ac5403f2d8eb",
       "priority": "high",
       "stage": "footage"
@@ -41,14 +41,14 @@
     {
       "action": "Investigate the slow cohort by provider, scene type, and artifact size; optimize the tail rather than the median.",
       "category": "tail_latency",
-      "evidence": "p50=69.1s, p95=1049.7s",
+      "evidence": "p50=69.0s, p95=1047.6s",
       "priority": "medium",
       "stage": "build_pass"
     }
   ],
   "recurring_incidents": [
     {
-      "count": 6,
+      "count": 8,
       "failure_class": "unknown",
       "fingerprint": "f4c7ac5403f2d8eb",
       "kind": "failure",
@@ -99,9 +99,9 @@
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "6ea67b67481c110b",
+      "fingerprint": "e72c423c741d2195",
       "kind": "failure",
-      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=running elapsed=15s idle=0s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: s",
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=running elapsed=15s idle=7s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: s",
       "slugs": [
         "consciousness-is-not-a-remote-control"
       ],
@@ -110,9 +110,9 @@
     {
       "count": 1,
       "failure_class": "unknown",
-      "fingerprint": "0515c5a06efdac68",
+      "fingerprint": "051ecc1aa4b95243",
       "kind": "failure",
-      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; suppl",
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; supply a ",
       "slugs": [
         "consciousness-is-not-a-remote-control"
       ],
@@ -205,22 +205,44 @@
         "i-was-gone-eleven-minutes"
       ],
       "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "6ea67b67481c110b",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=running elapsed=15s idle=0s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: s",
+      "slugs": [
+        "consciousness-is-not-a-remote-control"
+      ],
+      "stage": "build_pass"
+    },
+    {
+      "count": 1,
+      "failure_class": "unknown",
+      "fingerprint": "0515c5a06efdac68",
+      "kind": "failure",
+      "normalized_error": "governor stage=footage state=start soft=510s hard=600s governor stage=footage state=failure duration=<n>.0s rc=<n> fingerprint=f4c7ac5403f2d8eb error: footage batch [<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>,<n>]: ^^^^^^^^^^^^^^ file \"<path> line <n>, in _render_storyboard raise runtimeerror( runtimeerror: scene <n>: no matching stock or enhanced still is available; suppl",
+      "slugs": [
+        "consciousness-is-not-a-remote-control"
+      ],
+      "stage": "build_pass"
     }
   ],
-  "runs_analyzed": 59,
+  "runs_analyzed": 60,
   "schema_version": 1,
   "stages": {
     "align": {
-      "attempts": 57,
+      "attempts": 58,
       "failure_rate": 0.0,
       "failures": 0,
       "p50_success_s": 1.002,
       "p95_success_s": 1.003,
-      "sample_count": 57,
-      "successes": 57,
+      "sample_count": 58,
+      "successes": 58,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 57.11
+      "total_duration_s": 58.112
     },
     "altsheet": {
       "attempts": 45,
@@ -247,16 +269,16 @@
       "total_duration_s": 61640.064
     },
     "build_pass": {
-      "attempts": 307,
-      "failure_rate": 0.0521,
-      "failures": 16,
-      "p50_success_s": 69.065,
-      "p95_success_s": 1049.656,
-      "sample_count": 291,
-      "successes": 291,
-      "timeout_rate": 0.0326,
+      "attempts": 311,
+      "failure_rate": 0.0579,
+      "failures": 18,
+      "p50_success_s": 69.031,
+      "p95_success_s": 1047.553,
+      "sample_count": 293,
+      "successes": 293,
+      "timeout_rate": 0.0322,
       "timeouts": 10,
-      "total_duration_s": 86880.355
+      "total_duration_s": 86967.412
     },
     "credits": {
       "attempts": 122,
@@ -283,16 +305,16 @@
       "total_duration_s": 2341.999
     },
     "footage": {
-      "attempts": 57,
-      "failure_rate": 0.1053,
-      "failures": 6,
+      "attempts": 59,
+      "failure_rate": 0.1356,
+      "failures": 8,
       "p50_success_s": 133.139,
       "p95_success_s": 236.781,
       "sample_count": 51,
       "successes": 51,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 7087.02
+      "total_duration_s": 7117.043
     },
     "hero": {
       "attempts": 230,
@@ -343,32 +365,32 @@
       "total_duration_s": 1636.938
     },
     "transcribe": {
-      "attempts": 57,
+      "attempts": 58,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 17.01,
-      "p95_success_s": 24.223,
-      "sample_count": 57,
-      "successes": 57,
+      "p50_success_s": 16.516,
+      "p95_success_s": 24.173,
+      "sample_count": 58,
+      "successes": 58,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 997.85
+      "total_duration_s": 1012.862
     },
     "tts": {
-      "attempts": 57,
+      "attempts": 58,
       "failure_rate": 0.0,
       "failures": 0,
-      "p50_success_s": 58.026,
-      "p95_success_s": 85.26,
-      "sample_count": 57,
-      "successes": 57,
+      "p50_success_s": 57.526,
+      "p95_success_s": 84.21,
+      "sample_count": 58,
+      "successes": 58,
       "timeout_rate": 0.0,
       "timeouts": 0,
-      "total_duration_s": 3511.969
+      "total_duration_s": 3548.989
     }
   },
   "statuses": {
     "done": 56,
-    "failed": 3
+    "failed": 4
   }
 }
