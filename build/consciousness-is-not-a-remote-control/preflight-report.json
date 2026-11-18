@@ -1,16 +1,6 @@
 {
   "applied_solution_ids": [],
-  "blockers": [
-    {
-      "code": "visual_symbol_plan",
-      "fingerprint": "5d20dc55cdcdc309",
-      "matched_solution_ids": [
-        "sol-visual-symbol-diversity-v1"
-      ],
-      "message": "generic human filler repeats for 2 consecutive scenes starting at scene 21",
-      "stage": "preflight"
-    }
-  ],
+  "blockers": [],
   "checks": {
     "animation_contract": {
       "errors": [],
@@ -58,15 +48,15 @@
     },
     "visual_symbols": {
       "family_counts": {
-        "architecture": 10,
+        "architecture": 12,
         "geometry": 1,
-        "human": 3,
-        "identity": 1,
+        "human": 2,
         "object_tool": 3,
-        "perception": 4,
+        "pathway": 1,
+        "perception": 3,
         "time_memory": 3
       },
-      "generic_human_ratio": 0.12,
+      "generic_human_ratio": 0.0,
       "human_presence_ratio": 0.44,
       "longest_family_run": {
         "length": 3,
@@ -74,11 +64,11 @@
         "value": "architecture"
       },
       "longest_generic_human_run": {
-        "length": 2,
-        "start": 21,
-        "value": "generic_human"
+        "length": 0,
+        "start": 0,
+        "value": null
       },
-      "passes": false,
+      "passes": true,
       "policy": {
         "max_family_run": 6,
         "max_generic_human_run": 1,
@@ -297,12 +287,12 @@
           "visual_function": "perspective_shift"
         },
         {
-          "effective_query": "Candid close-up of fresh tacos being assembled on a lunch plate, a hand squeezes a lime in warm practical light.",
-          "generic_human": true,
+          "effective_query": "A street-food cook cooks fresh tacos on a griddle, hands placing a filling into warm tortillas and folding them onto a plate; close-up in warm practical light.",
+          "generic_human": false,
           "human_present": true,
           "human_role": "unspecified",
           "index": 12,
-          "original_query": "Candid close-up of fresh tacos being assembled on a lunch plate, a hand squeezes a lime in warm practical light.",
+          "original_query": "A street-food cook cooks fresh tacos on a griddle, hands placing a filling into warm tortillas and folding them onto a plate; close-up in warm practical light.",
           "primary_symbol": "tacos assembled on a plate",
           "query_family": "human",
           "selected_family": null,
@@ -312,17 +302,17 @@
           "visual_function": "literal_anchor"
         },
         {
-          "effective_query": "slowly rotating globe reflected against moving city streets in clear daylight",
+          "effective_query": "In the corner of a bright meeting room, a seated man picks up a glass of water, adjusts his weight in the chair, and settles again; a small, ordinary movement played deadpan.",
           "generic_human": false,
-          "human_present": false,
-          "human_role": null,
+          "human_present": true,
+          "human_role": "unspecified",
           "index": 13,
-          "original_query": "At the corner of an ordinary meeting room, a seated adult man shifts in his chair, then settles, framed in readable daylight with understated comic timing.",
+          "original_query": "In the corner of a bright meeting room, a seated man picks up a glass of water, adjusts his weight in the chair, and settles again; a small, ordinary movement played deadpan.",
           "primary_symbol": "a seated man simply shifts in his chair",
-          "query_family": "perception",
+          "query_family": "architecture",
           "selected_family": null,
           "semantic_anchor": "a seated man simply shifts in his chair",
-          "symbol_family": "world_scale",
+          "symbol_family": "human",
           "text": "The gentleman in the corner may simply have gas. Not every vibration is a message from the universe.",
           "visual_function": "contrast"
         },
@@ -432,14 +422,14 @@
           "visual_function": "contrast"
         },
         {
-          "effective_query": "Top-down view of a physical tabletop marble run; a hand moves its track switch and the next marble takes the other channel, reaching a different end.",
-          "generic_human": true,
-          "human_present": true,
-          "human_role": "unspecified",
+          "effective_query": "Top-down close-up of a wooden tabletop marble run with two tracks. A small track gate pivots, and the next rolling marble takes the alternate route all the way to a different stop.",
+          "generic_human": false,
+          "human_present": false,
+          "human_role": null,
           "index": 21,
-          "original_query": "Top-down view of a physical tabletop marble run; a hand moves its track switch and the next marble takes the other channel, reaching a different end.",
+          "original_query": "Top-down close-up of a wooden tabletop marble run with two tracks. A small track gate pivots, and the next rolling marble takes the alternate route all the way to a different stop.",
           "primary_symbol": "a small change reroutes a moving marble",
-          "query_family": "human",
+          "query_family": "pathway",
           "selected_family": null,
           "semantic_anchor": "a small change reroutes a moving marble",
           "symbol_family": "pathway",
@@ -447,12 +437,12 @@
           "visual_function": "mechanism"
         },
         {
-          "effective_query": "Close view of a pair of hands taking hold of a workbench clamp and steadily tightening it around a board, tactile grain and natural daylight.",
-          "generic_human": true,
+          "effective_query": "Close-up in a daylight workshop: a woodworker repairs a loose wooden joint, hands placing and turning a steel clamp until the boards meet flush.",
+          "generic_human": false,
           "human_present": true,
           "human_role": "unspecified",
           "index": 22,
-          "original_query": "Close view of a pair of hands taking hold of a workbench clamp and steadily tightening it around a board, tactile grain and natural daylight.",
+          "original_query": "Close-up in a daylight workshop: a woodworker repairs a loose wooden joint, hands placing and turning a steel clamp until the boards meet flush.",
           "primary_symbol": "hands tighten a real workbench clamp",
           "query_family": "human",
           "selected_family": null,
@@ -477,35 +467,31 @@
           "visual_function": "literal_anchor"
         },
         {
-          "effective_query": "person removes a plain mask before a mirror in natural daylight realistic documentary",
+          "effective_query": "In warm living-room daylight, an adult dances in socks beside a spinning record player. Hold a low angle on the feet as the dancer rises into two relaxed steps on the hardwood floor.",
           "generic_human": false,
           "human_present": true,
           "human_role": "performer",
           "index": 24,
-          "original_query": "An adult's feet step up from a chair and start an unforced, small dance on the living-room floor beside a record player, warm window light and a quiet hold to end.",
+          "original_query": "In warm living-room daylight, an adult dances in socks beside a spinning record player. Hold a low angle on the feet as the dancer rises into two relaxed steps on the hardwood floor.",
           "primary_symbol": "feet rise and start dancing",
-          "query_family": "identity",
+          "query_family": "architecture",
           "selected_family": null,
           "semantic_anchor": "feet rise and start dancing",
-          "symbol_family": "identity",
+          "symbol_family": "human",
           "text": "But your state determines which frequencies can move you... and which version of you gets up to dance.",
           "visual_function": "transformation"
         }
       ],
-      "score": 97.6,
+      "score": 100.0,
       "symbol_family_count": 7,
-      "violations": [
-        "generic human filler repeats for 2 consecutive scenes starting at scene 21"
-      ],
+      "violations": [],
       "warnings": []
     }
   },
   "fix_safe": true,
-  "matched_solution_ids": [
-    "sol-visual-symbol-diversity-v1"
-  ],
+  "matched_solution_ids": [],
   "narration_fingerprint": "da9fa90c5455443d3ce8732ee6367b6d17ecc518a8e7a16ff9d40f6296b70e8d",
-  "passed": false,
+  "passed": true,
   "prevention_rule_version": 1,
   "scene_count": 25,
   "schema_version": 1,
