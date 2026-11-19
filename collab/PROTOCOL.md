@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-19e.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-19f.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 James resumed interactive work on October 29; the five-hour automation is
 still paused. James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -42,9 +42,10 @@ eliminates it from the edit. This has not been promoted. The subsequent
 pot pickup/return changes hands separately; use the decoded audit in
 that folder to identify which originals need replacement. A separate
 grounded right-hand lift and return now exists in
-`june_grounded_coffee_v1/`. Do not splice it between the legacy
-parked-pot positions: first use the same near parking and stage
-reach/release. No full-cut or human-approval change.
+`june_grounded_coffee_v1/`. The optional 38-second candidate now
+keeps one parked position and stages the reach and release, with
+audio/captions and the protected pour/ending exact. Review
+`june_coffee_continuity_v1/` at normal speed. No approval or promotion.
 
 ## Current roles and access
 
