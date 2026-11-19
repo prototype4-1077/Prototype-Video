@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-19T15:49:29.633277+00:00
+Generated: 2026-11-19T20:44:35.090661+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -44,14 +44,14 @@ James selects the concept and approves the script. Recommendations never start a
 
 ## Research signals awaiting review
 
-- [Comfy-Org/ComfyUI: v0.41.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.41.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.43.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.43.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.44.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.44.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.45.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0) — unverified reference; verify the primary source before use.
-- [A single inference process underlies the behavior and neural circuits of working memory](https://arxiv.org/abs/2611.22054) — unverified reference; verify the primary source before use.
+- [Comfy-Org/ComfyUI: v0.46.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [Auditors Struggle to Catch Sabotage In End-to-End Transcripts of AI Safety Research](https://arxiv.org/abs/2611.21832) — unverified reference; verify the primary source before use.
+- [A Dual-SOM Learner Model of Instructional Efficiency within Cognitive Load Theory](https://arxiv.org/abs/2611.23795) — unverified reference; verify the primary source before use.
+- [Does a label survive the loop? A screen of necessary physical conditions for a self-measuring system, with a pre-registered test on fly connectomes](https://arxiv.org/abs/2611.23320) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
