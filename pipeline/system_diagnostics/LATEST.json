@@ -10,7 +10,7 @@
       "status": "permission_or_network_error"
     },
     "retention": {
-      "generated_at": "2026-11-18T15:44:23.856209+00:00",
+      "generated_at": "2026-11-19T15:49:13.502528+00:00",
       "status": "authorization_failed"
     }
   },
@@ -231,7 +231,7 @@
   },
   "current_reports": {
     "governor_recommendation_counts": {
-      "recurring_incident": 109,
+      "recurring_incident": 110,
       "tail_latency": 55
     },
     "quality_failure_counts": {},
@@ -479,7 +479,7 @@
       "area": "visual_memory",
       "automatic_patch": false,
       "code": "visual:evidence_coverage:general",
-      "evidence": "Only 93 of 3367 scene records have a human decision (2.8%).",
+      "evidence": "Only 93 of 3392 scene records have a human decision (2.7%).",
       "priority": "high",
       "status": "open",
       "title": "Evidence Coverage"
@@ -743,7 +743,7 @@
       "area": "visual_memory",
       "automatic_patch": false,
       "code": "visual:asset_coverage:general",
-      "evidence": "Only 173 of 3367 records retain a reviewable asset (5.1%).",
+      "evidence": "Only 173 of 3392 records retain a reviewable asset (5.1%).",
       "priority": "medium",
       "status": "open",
       "title": "Asset Coverage"
@@ -839,10 +839,10 @@
           "used_ids": 1067
         },
         "fallback_rate": 0.0586,
-        "low_supply_rate": 0.088,
+        "low_supply_rate": 0.091,
         "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.",
         "reports_analyzed": 48,
-        "scenes_analyzed": 955,
+        "scenes_analyzed": 956,
         "state": "no_current_starvation_signal"
       },
       "priority": "low",
@@ -850,7 +850,7 @@
       "title": "Permanent stock exclusion now has a measured supply signal"
     }
   ],
-  "generated_at": "2026-11-18T21:28:09+00:00",
+  "generated_at": "2026-11-19T15:49:29+00:00",
   "operational_memory": {
     "advisory_counts": {},
     "occurrence_count": 52,
@@ -900,7 +900,7 @@
     }
   },
   "render_provider_health": {
-    "generated_at": "2026-11-18T21:28:09.001595+00:00",
+    "generated_at": "2026-11-19T15:49:28.621012+00:00",
     "measurement_boundary": "Read-only authentication probe; TTS permission, available generation credits, and media quality are not established.",
     "provider": "ElevenLabs",
     "schema_version": 1,
@@ -911,17 +911,17 @@
   "stock_supply": {
     "anchor_coverage_buckets": {
       "high": 116,
-      "low": 22055,
-      "medium": 311
+      "low": 22000,
+      "medium": 308
     },
-    "candidate_count_samples": 854,
+    "candidate_count_samples": 855,
     "evidence_strength": "sufficient",
     "fallback_count": 56,
     "fallback_rate": 0.0586,
-    "generated_at": "2026-11-18T21:28:08+00:00",
-    "low_candidate_scenes": 37,
-    "low_supply_rate": 0.088,
-    "mean_candidate_count_when_recorded": 26.326,
+    "generated_at": "2026-11-19T15:49:28+00:00",
+    "low_candidate_scenes": 40,
+    "low_supply_rate": 0.091,
+    "mean_candidate_count_when_recorded": 26.227,
     "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.",
     "permanent_exclusion_counts": {
       "banned_ids": 122,
@@ -932,17 +932,17 @@
     "result_counts": {
       "blocked": 1,
       "literal_storyboard": 56,
-      "stock": 898
+      "stock": 899
     },
-    "scenes_analyzed": 955,
+    "scenes_analyzed": 956,
     "schema_version": 1,
     "state": "no_current_starvation_signal",
     "top_rejection_reasons": {
-      "advisory": 21354,
+      "advisory": 21355,
       "anchor coverage 0.00 below 0.10": 154,
       "anchor coverage 0.00 below 0.18": 410,
-      "direct match": 203,
-      "zero narrative-anchor coverage": 361
+      "direct match": 191,
+      "zero narrative-anchor coverage": 314
     },
     "zero_candidate_fallbacks": 47
   },
@@ -957,10 +957,10 @@
     }
   },
   "visual_memory": {
-    "asset_coverage": 0.0514,
-    "records": 3367,
+    "asset_coverage": 0.051,
+    "records": 3392,
     "reviewed": 93,
-    "reviewed_coverage": 0.0276
+    "reviewed_coverage": 0.0274
   },
   "whisperx": null
 }

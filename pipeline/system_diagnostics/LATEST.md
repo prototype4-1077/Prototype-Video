@@ -1,6 +1,6 @@
 # System Diagnostic
 
-Generated: 2026-11-18T21:28:09+00:00
+Generated: 2026-11-19T15:49:29+00:00
 
 Findings: 22 — priorities {"high": 4, "low": 2, "medium": 16}
 
@@ -27,7 +27,7 @@ Findings: 22 — priorities {"high": 4, "low": 2, "medium": 16}
 ### [HIGH] Evidence Coverage
 - Area: `visual_memory`
 - Code: `visual:evidence_coverage:general`
-- Evidence: "Only 93 of 3367 scene records have a human decision (2.8%)."
+- Evidence: "Only 93 of 3392 scene records have a human decision (2.7%)."
 - Action: Do not convert automated risk frequency into house rules. Review the highest-risk asset-backed queue first.
 
 ### [MEDIUM] The evolution queue is flooded with taxonomy gaps
@@ -81,7 +81,7 @@ Findings: 22 — priorities {"high": 4, "low": 2, "medium": 16}
 ### [MEDIUM] Asset Coverage
 - Area: `visual_memory`
 - Code: `visual:asset_coverage:general`
-- Evidence: "Only 173 of 3367 records retain a reviewable asset (5.1%)."
+- Evidence: "Only 173 of 3392 records retain a reviewable asset (5.1%)."
 - Action: Persist representative frames or durable release references for completed scenes so historical feedback remains inspectable.
 
 ### [MEDIUM] Low Approval Cohort
@@ -135,7 +135,7 @@ Findings: 22 — priorities {"high": 4, "low": 2, "medium": 16}
 ### [LOW] Permanent stock exclusion now has a measured supply signal
 - Area: `asset_selection`
 - Code: `stock_supply:no_current_starvation_signal`
-- Evidence: {"exclusions": {"banned_ids": 122, "used_ids": 1067}, "fallback_rate": 0.0586, "low_supply_rate": 0.088, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 48, "scenes_analyzed": 955, "state": "no_current_starvation_signal"}
+- Evidence: {"exclusions": {"banned_ids": 122, "used_ids": 1067}, "fallback_rate": 0.0586, "low_supply_rate": 0.091, "measurement_boundary": "Candidate decisions reflect narrative-fidelity reranking after search. This report cannot reconstruct every raw API result or prove that exclusions caused a missing candidate.", "reports_analyzed": 48, "scenes_analyzed": 956, "state": "no_current_starvation_signal"}
 - Action: Keep permanent exclusion unchanged; continue monitoring candidate supply and fallback rate.
 
 ## Authority boundary
