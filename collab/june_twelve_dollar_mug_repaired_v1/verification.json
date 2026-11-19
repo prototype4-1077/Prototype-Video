@@ -1,0 +1,78 @@
+{
+  "audit": {
+    "aac_snr_db": 43.1102111052661,
+    "all_pts_exact": true,
+    "decoded_repaired_bgr_hash": "ef3de334cf0ab6938d236a98fbb02b91e40fc319a5afaa1426c3e85403670216",
+    "decoded_repaired_frames_exact": 303,
+    "mov_pcm_exact": true,
+    "mp4_mov_video_packet_hash_equal": true,
+    "same_view_join_mae": {
+      "789": 5.446972254372428,
+      "864": 3.590610853909465
+    },
+    "true_peak_dbtp": {
+      ".mov": -1.4,
+      ".mp4": -1.4
+    }
+  },
+  "cost": 0,
+  "human_acceptance": false,
+  "id": "june-twelve-dollar-mug-repaired-v1",
+  "legacy_sha256": "1d4535bf15bf3a3b952986b41460a4542a6b9fc5785636447ef3b7c9801e18c4",
+  "outputs_sha256": {
+    "captions.srt": "0100c2c967673cc4ded334f00050c37a0a3f231362590401aa9bb05b6081239e",
+    "mix.wav": "8c1ad3abe1c2efa3808b9de1febc7e70cda408d1760da080267aeabceb4417de",
+    "twelve-dollar-mug.mov": "9bdf3f118647f67f7b9a25afd85c7c99a7b18f972cda74f396e1a3411188f443",
+    "twelve-dollar-mug.mp4": "ea4a6e294e3be513be1ba33638f8277ba32e1309f83fcf05048a38cb363f737d"
+  },
+  "picture_clock_half_open": [
+    [
+      "legacy",
+      0,
+      789,
+      0,
+      789
+    ],
+    [
+      "repaired",
+      0,
+      75,
+      789,
+      864
+    ],
+    [
+      "legacy",
+      864,
+      912,
+      864,
+      912
+    ],
+    [
+      "repaired",
+      75,
+      303,
+      912,
+      1140
+    ]
+  ],
+  "production_release": false,
+  "recipe_sha256": "7e7fd579ad2b108824c3e6495a2b5058993ca0718f868fe567f0a98e2a5b0959",
+  "renderer_sha256": "f6aa51dd10f76517dd5fa74a45f3a15153d9a0c998d97e682a48988b3285f1f4",
+  "repaired_sha256": "58df922acbc0fc71fb29c881c43d177aa5d3740ae9e4ebf1a02cdccc706ce76e",
+  "sound": {
+    "closing_dialogue_in_isolated_reference_exact": true,
+    "dialogue_cues_preserved": 18,
+    "exact_approved_closing_pcm_sample_count": 364800,
+    "frames": 1140,
+    "fx_used": "same two recorded Phase42 Foley excerpts",
+    "legacy_effects_used": false,
+    "prefix_db_trim_from_reference": -1.0,
+    "pure_pour_output_samples_half_open": [
+      1262400,
+      1382400
+    ],
+    "sample_count": 1824000,
+    "silence_at_30ms_join_windows": true,
+    "source_recorded_pour_reused_once": true
+  }
+}

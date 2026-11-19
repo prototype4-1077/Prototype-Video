@@ -1,0 +1,118 @@
+{
+  "id": "june-twelve-dollar-mug-repaired-v1",
+  "review_only": true,
+  "source_frame_count": 1164,
+  "output_frame_count": 1140,
+  "fps": 30,
+  "sample_rate": 48000,
+  "legacy": {
+    "sha256": "1d4535bf15bf3a3b952986b41460a4542a6b9fc5785636447ef3b7c9801e18c4",
+    "description": "Phase25 original 38.8s rendered master. Picture only; existing local input, no cached/legacy sound used."
+  },
+  "repaired": {
+    "path": "collab/phase42_working_model_v1/june-working-prototype-v1.mov",
+    "sha256": "58df922acbc0fc71fb29c881c43d177aa5d3740ae9e4ebf1a02cdccc706ce76e"
+  },
+  "approved_pcm": {
+    "path": "collab/phase42_recorded_foley_v3/june-phase42-recorded-foley-v3.wav",
+    "sha256": "3c6965f8030d9c7360a418cb19dd6b193396a5c1a37b8084ca247622a259c14f"
+  },
+  "approved_voice_reference": {
+    "path": "collab/phase42_audio_source_isolation_v1/june-phase42-voice-only-v1.wav",
+    "sha256": "b9a2f402d9255397bf8cafec9170aca6e76c028b5cbd5ede0733d2ebc699f16a"
+  },
+  "speech": {
+    "path": "concept/audio/june_golden_scene_dialogue_norman_v1.wav",
+    "sha256": "2cb1fc40d7c03d726e6f7310dda957014ce2bc6c692df41b8ef5c26f0c6171ce"
+  },
+  "cue_contract": {
+    "path": "concept/style_frames/june_golden_scene_master_sound_v1.json",
+    "sha256": "4d1f8592fb89eab950546b5c94de77f9bb19dfdc5d9d9edf377e5a4c590d5afe"
+  },
+  "gain_receipt": {
+    "path": "collab/phase42_audio_source_isolation_v1/phase42-audio-source-isolation-report-v1.json",
+    "sha256": "2abfe387758726e4be5cb7960e6f487d0d49fa1e9b8a2864d941b5d643447f54"
+  },
+  "prefix_voice_trim_db": -1,
+  "picture": [
+    {
+      "source": "legacy",
+      "source_span": [
+        0,
+        789
+      ],
+      "output_span": [
+        0,
+        789
+      ],
+      "intent": "Keep all story setup and pre-pour context."
+    },
+    {
+      "source": "repaired",
+      "source_span": [
+        0,
+        75
+      ],
+      "output_span": [
+        789,
+        864
+      ],
+      "intent": "Same GS060 pose and source clock; exact repaired opening."
+    },
+    {
+      "source": "legacy",
+      "source_span": [
+        864,
+        912
+      ],
+      "output_span": [
+        864,
+        912
+      ],
+      "intent": "Restore 'and poured him coffee' and the pot returning."
+    },
+    {
+      "source": "repaired",
+      "source_span": [
+        75,
+        303
+      ],
+      "output_span": [
+        912,
+        1140
+      ],
+      "intent": "Cut to June after the phrase and prop settle, preserve repaired direct address and final close-up."
+    }
+  ],
+  "audio": {
+    "continuous_dry_voice_prefix_span": [
+      0,
+      912
+    ],
+    "reuse_approved_pour_source_span": [
+      0,
+      75
+    ],
+    "reuse_approved_pour_output_span": [
+      789,
+      864
+    ],
+    "exact_approved_closing_source_span": [
+      75,
+      303
+    ],
+    "exact_approved_closing_output_span": [
+      912,
+      1140
+    ],
+    "procedural_audio": false,
+    "fade_samples": 1440
+  },
+  "omitted_legacy_outro": {
+    "span": [
+      1140,
+      1164
+    ],
+    "reason": "Trailing nonverbal hold only; repaired closer already provides 62 quiet frames after final caption."
+  }
+}
