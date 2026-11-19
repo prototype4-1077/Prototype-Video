@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-19g.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-19h.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 James resumed interactive work on October 29; the five-hour automation is
 still paused. James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -50,6 +50,9 @@ An alternate full cut inserts a 20-frame visitor POV after June
 looks down; use `june_visitor_turn_v1/` to compare with the exact
 coffee candidate. Do not substitute it into the accepted picture
 or narration gates. No human verdict on the story edit yet.
+`Build June Review.cmd` builds both variants from tracked art and
+sound; the first clean dual run is undergoing verification. See
+the current pickup before starting another source job.
 
 ## Current roles and access
 
