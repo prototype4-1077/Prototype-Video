@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-19j.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-19k.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 James resumed interactive work on October 29; the five-hour automation is
 still paused. James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -54,8 +54,10 @@ or narration gates. No human verdict on the story edit yet.
 tracked-only snapshot. Read `june_current_review_clean_v1/` instead
 of rerunning unchanged proofs. A separate tabletop response to the
 coffee now has a 40-frame silent handoff in
-`june_coffee_thank_you_motion_v1/`. It is not integrated or
-accepted. Read the handedness warning before placing it in the edit.
+`june_coffee_thank_you_motion_v1/`. A separate 39.7s ending test in
+`june_coffee_payoff_v1/` shows the right hand approaching before
+integrating that response; neither 38s cut nor the protected source
+has changed. No taste verdict or promotion.
 
 ## Current roles and access
 
