@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-19c.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-19d.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 James resumed interactive work on October 29; the five-hour automation is
 still paused. James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -36,6 +36,11 @@ verified in `june_full_short_source_v1/`. A separate full-cut candidate
 stages June's reaction before his pencil hand lowers; review the original-vs-
 staged clip in `june_compassion_reaction_v1/`. Full viewing and artistic
 approval remain open. Do not use rejected assets or change accepted films.
+James again flagged the backwards hand. `june_pencil_continuity_v1/`
+shows the verified GS050 pencil hand swap and a tighter reaction that
+eliminates it from the edit. This has not been promoted. The subsequent
+pot pickup/return changes hands separately; use the decoded audit in
+that folder to stage a correctly grounded right-hand pot grip next.
 
 ## Current roles and access
 
