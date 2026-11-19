@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-19i.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-19j.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 James resumed interactive work on October 29; the five-hour automation is
 still paused. James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -53,8 +53,9 @@ or narration gates. No human verdict on the story edit yet.
 `Build June Review.cmd` verified both variants from an isolated
 tracked-only snapshot. Read `june_current_review_clean_v1/` instead
 of rerunning unchanged proofs. A separate tabletop response to the
-coffee is ready for animation in `june_coffee_thank_you_keys_v1/`;
-it is not integrated or accepted.
+coffee now has a 40-frame silent handoff in
+`june_coffee_thank_you_motion_v1/`. It is not integrated or
+accepted. Read the handedness warning before placing it in the edit.
 
 ## Current roles and access
 
