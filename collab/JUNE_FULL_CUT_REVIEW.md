@@ -30,3 +30,8 @@ touch the passed closing blink, mouth/hand adapters or accepted PCM.
 
 Final voice and whole-film human review remain open even if the build
 and technical checks pass. Nothing here grants production promotion.
+
+For the reaction specifically, `june_compassion_reaction_v1/` now
+contains the normal-speed A/B: the existing hard pose switch on the
+left, gaze-before-hand staging on the right. The full candidate is
+a separate file; the baseline described above is unchanged.
