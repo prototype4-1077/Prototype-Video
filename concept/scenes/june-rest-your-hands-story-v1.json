@@ -1,0 +1,75 @@
+{
+  "schema_version": 1,
+  "id": "june-rest-your-hands-story-v1",
+  "review_only": true,
+  "fps": 30,
+  "canvas": [
+    1280,
+    720
+  ],
+  "sample_rate": 48000,
+  "voice_gain_db": -2.0,
+  "sources": {
+    "dialogue": {
+      "path": "collab/june_rest_your_hands_v1/scene.mov",
+      "sha256": "a1253e7cf0e3af6b4ba0eb4720f55297668a688db240999f295787006fe7e5ba",
+      "frame_count": 207
+    },
+    "mug": {
+      "path": "collab/june_left_handle_exchange_v3/june-left-handle-exchange-v3.mp4",
+      "sha256": "4cb42ea479a05e63aa677d69314988cdf912a347dc6a53544ed911f59c7edf86",
+      "frame_count": 147
+    },
+    "voice": {
+      "path": "concept/audio/june_rest_your_hands_v1/dialogue.wav",
+      "sha256": "4563199f3fa926359148d02ed4e39dbca108db007897cc2fe34aa9f93b6e4010"
+    },
+    "cues": {
+      "path": "concept/audio/june_rest_your_hands_v1/rhubarb.json",
+      "sha256": "71df07d076bef48d7b49db1f9c63a49645724abcfbe6e3d71fb0707cf0114f05"
+    }
+  },
+  "shots": [
+    {
+      "source": "dialogue",
+      "span": [
+        0,
+        38
+      ],
+      "reason": "Begin with June's face through 'Some days'. Cut during the gap before the first phrase continues."
+    },
+    {
+      "source": "mug",
+      "span": [
+        35,
+        121
+      ],
+      "reason": "Already gripping on cut. Taking the weight, then literally letting it go plays against 'set the bucket down'."
+    },
+    {
+      "source": "dialogue",
+      "span": [
+        108,
+        207
+      ],
+      "reason": "Return to June in the quiet before 'Ain’t no shame', in sync; leave a full quiet tail."
+    }
+  ],
+  "voice_pause": {
+    "source_frame": 105,
+    "insert_frames": 16,
+    "certified_silent_cue_span_seconds": [
+      3.3,
+      3.7
+    ],
+    "fade_ms_each_side": 30
+  },
+  "contact": {
+    "source_frame": 98,
+    "output_frame": 101,
+    "id": "cup_contact",
+    "trimmed_samples": 6480,
+    "dominant_transient_offset_samples": 1515,
+    "mono_peak_dbfs": -26
+  }
+}

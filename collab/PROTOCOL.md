@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-18b.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-18c.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 James resumed interactive work on October 29; the five-hour automation is
 still paused. James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -25,9 +25,12 @@ James rejected the new **body-grip** drawing for reversed handedness. That
 does not revoke his pass of the earlier resting hand. The replacement is a
 left-hand **handle** lift and set-down in `june_left_handle_v2/`. It starts
 already gripped and is not human-accepted. The separate v3 exchange insert
-adds the approach and release, preserving the v2 lift pixels. Next: test a
-motivated cutaway within a coherent story beat. Do not use the rejected pose
-as a source or change the accepted films.
+adds the approach and release, preserving the v2 lift pixels. The 7.43-second
+`june_rest_your_hands_story_v1/` now uses that motion as a motivated cutaway
+with one recorded cup contact. This is not human-approved. Next: audit the
+older complete *Twelve-Dollar Mug* narrative for a repaired full cut, observing
+the noncontiguous Phase42 source clock. Do not use the rejected pose as a
+source or change the accepted films.
 
 ## Current roles and access
 
