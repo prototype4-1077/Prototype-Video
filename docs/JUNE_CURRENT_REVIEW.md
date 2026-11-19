@@ -47,3 +47,5 @@ and exact picture matching for the corrected action and protected frames.
 
 These are review cuts. Neither a passing build nor the availability of
 two variants is artistic approval, a release, or a promotion to main.
+The tracked-only build and post-render comparisons are recorded in
+`collab/june_current_review_clean_v1/`.

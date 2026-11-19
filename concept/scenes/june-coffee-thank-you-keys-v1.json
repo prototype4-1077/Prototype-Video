@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "id": "GS070A_THANK_YOU_WITHOUT_WORDS",
+  "state": "storyboard_keys_not_animated",
+  "purpose": "Show the visitor accepting June's coffee as a visible response to the earlier shaking hand.",
+  "canvas": [1672, 941],
+  "preview_clock": {"fps": 30, "frames": 40, "new_audio": false},
+  "art": {
+    "approach": {
+      "file": "concept/style_frames/june-gs070-coffee-exchange-approach-v1.png",
+      "sha256": "06a541e829b83acf46f75cf5c9cfb4b60e89142007fba67c372b0512ee99f759",
+      "role": "June making contact before the slide; clear right-facing handle; visitor hovering. Use receiving key for coffee from the first frame."
+    },
+    "receiving": {
+      "file": "concept/style_frames/june-gs070-coffee-exchange-accepted-v1.png",
+      "sha256": "6207b12a5ff48c02103a9a526142d0036ecd2b0092bc150c8a1ab8513328ac23",
+      "role": "Grounded coffee level and complete mug body; June released; visitor's fingers hook behind loop and thumb rests in front."
+    },
+    "table": {
+      "file": "concept/style_frames/june-gs070-coffee-exchange-clean-v1.png",
+      "sha256": "8c09fdf40f3c43204025fa38bffd02c734cf12223fba72b52910d3a48ad7d568",
+      "role": "Stationary porch/table art under both wrists and the cup's travel."
+    }
+  },
+  "blocking_zero_based": {
+    "settle_before_offer": [0, 4],
+    "slide_with_june_contact": [4, 17],
+    "visitor_reach": [13, 24],
+    "visitor_contact_frame": 23,
+    "june_releases": [23, 31],
+    "visitor_settled": [31, 40]
+  },
+  "motion_requirements": {
+    "slide_right_native_px": 112,
+    "cup_base_grounded": true,
+    "coffee_present_entire_shot": true,
+    "right_handle_does_not_flip": true,
+    "june_left_hand_from_image_left": true,
+    "visitor_right_hand_from_image_right": true,
+    "visitor_tremor_stops_at_contact": true,
+    "bridge_may_change_only_in_a_future_review_variant": true
+  },
+  "approved_frame_spans_preserved_in_existing_cut_zero_based": [[789, 864], [912, 1140]],
+  "replace_existing_cut": false,
+  "production_release": false
+}
