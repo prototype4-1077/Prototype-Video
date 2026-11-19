@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-19.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-19b.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 James resumed interactive work on October 29; the five-hour automation is
 still paused. James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -31,8 +31,9 @@ with one recorded cup contact. This is not human-approved. The complete
 38-second *Twelve-Dollar Mug* review is now in
 `june_twelve_dollar_mug_repaired_v1/`. It preserves all dialogue by retaining
 the pot-return bridge and both repaired picture sections, not by blindly
-appending 303 frames. Full viewing and clean-source prerequisite rebuild
-remain open. Do not use rejected assets or change the accepted films.
+appending 303 frames. A fresh tracked-source build of the same edit is
+verified in `june_full_short_source_v1/`. Full viewing and artistic
+approval remain open. Do not use rejected assets or change accepted films.
 
 ## Current roles and access
 

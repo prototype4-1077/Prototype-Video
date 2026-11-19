@@ -1,5 +1,6 @@
 """Check source inputs and immutable edit routing without expensive full renders."""
 from pathlib import Path
+import json
 import tempfile
 import unittest
 
@@ -34,6 +35,36 @@ class FullShortSourceTests(unittest.TestCase):
             bad.touch()
             with self.assertRaisesRegex(ValueError,"pinned historical review"):
                 source.compare_review(bad,bad)
+
+    def test_clean_archive_receipt_binds_to_actual_source_and_protected_media(self):
+        pkg=source.ROOT/"collab/june_full_short_source_v1"
+        receipt=json.loads((pkg/"clean-build-receipt.json").read_text(encoding="utf-8"))
+        report_path=pkg/"source-build-report.json"
+        self.assertEqual(source.cut.beat.digest(report_path),receipt["source_build_report_sha256"])
+        result=json.loads(report_path.read_text(encoding="utf-8"))
+        self.assertEqual(result["entrypoint_sha256"],source.cut.beat.digest(Path(source.__file__)))
+        edit,_,_=source.cut.load_plan()
+        self.assertEqual(receipt["rebuilt_protected_mov_sha256"],edit["repaired"]["sha256"])
+        self.assertEqual(receipt["baseline_pcm_sha256"],result["sha256"]["mix.wav"])
+        self.assertTrue(receipt["isolated_tracked_snapshot"])
+        self.assertFalse(receipt["render_cache_copied"])
+        self.assertFalse(receipt["human_acceptance"])
+        self.assertEqual(receipt["exit_code"],0)
+        self.assertEqual(result["repaired_render_source"],"fresh tracked-art invocation")
+        self.assertEqual(result["audit"]["decoded_repaired_frames_exact"],303)
+        self.assertGreater(result["comparison_after_render"]["minimum_psnr_db"],32)
+
+    def test_native_inventory_has_exact_unmodified_earlier_frame_clock(self):
+        pkg=source.ROOT/"collab/june_full_short_source_v1"
+        inventory=pkg/"native-early-frames.json"
+        report=json.loads((pkg/"source-build-report.json").read_text(encoding="utf-8"))
+        self.assertEqual(source.cut.beat.digest(inventory),report["sha256"][inventory.name])
+        frames=json.loads(inventory.read_text(encoding="utf-8"))["frames"]
+        self.assertEqual([r["frame"] for r in frames],[*range(789),*range(864,912)])
+        self.assertEqual(frames[225]["shot"],"GS030")
+        self.assertEqual(frames[225]["shot_frame_1based"],1)
+        self.assertEqual(frames[789]["shot"],"GS060")
+        self.assertEqual(frames[789]["shot_frame_1based"],187)
 
 
 if __name__=="__main__":

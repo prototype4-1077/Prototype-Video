@@ -1,0 +1,125 @@
+{
+  "audit": {
+    "aac_snr_db": 43.1102111052661,
+    "all_pts_exact": true,
+    "decoded_repaired_bgr_hash": "ef3de334cf0ab6938d236a98fbb02b91e40fc319a5afaa1426c3e85403670216",
+    "decoded_repaired_frames_exact": 303,
+    "mov_pcm_exact": true,
+    "mp4_mov_video_packet_hash_equal": true,
+    "same_view_join_mae": {
+      "789": 4.203577835648148,
+      "864": 1.608892907664609
+    },
+    "true_peak_dbtp": {
+      ".mov": -1.4,
+      ".mp4": -1.4
+    }
+  },
+  "comparison_after_render": {
+    "earlier_and_pot_return_frames_compared": 837,
+    "median_psnr_db": 38.44430365489754,
+    "minimum_psnr_db": 35.74182004419532,
+    "repaired_pixels_exact": 303,
+    "worst_frames_zero_based": [
+      [
+        911,
+        35.74182004419532
+      ],
+      [
+        909,
+        35.75861945973108
+      ],
+      [
+        908,
+        35.75938796846461
+      ],
+      [
+        910,
+        35.76266404593448
+      ],
+      [
+        310,
+        35.77602628966729
+      ],
+      [
+        315,
+        35.77639554710766
+      ],
+      [
+        305,
+        35.787539381982064
+      ],
+      [
+        307,
+        35.794696998586005
+      ]
+    ]
+  },
+  "completed": true,
+  "entrypoint_sha256": "7abc3758f91175cf825ac956f82e34373e8a664a144698de85b495b93cce6d19",
+  "legacy_frames_rendered_from_art": 837,
+  "legacy_rendered_master_read": false,
+  "policy": "review only, no human acceptance or production release",
+  "preflight": {
+    "cash_cost": 0,
+    "clock": [
+      1920,
+      1080,
+      30,
+      1140
+    ],
+    "external_render_cache_required": false,
+    "legacy_master_required": false,
+    "legacy_picture_contracts": [
+      {
+        "bytes": 7829,
+        "hash_domain": "canonical_json_utf8",
+        "path": "concept/style_frames/june_golden_scene_master_v1.json",
+        "raw_sha256": "8f43e886b5c135ae6a9d34dec464b2c1c4fb20f269d3328358a49edab227a080",
+        "sha256": "d09314e29aa1ca326f7652ce90a8c3db0ec7a1c43386b33cfb453a2b12215948"
+      },
+      {
+        "bytes": 7153,
+        "hash_domain": "canonical_json_utf8",
+        "path": "concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json",
+        "raw_sha256": "172f81e1e15e7afeb45e81aa90b497b9ef78631bf0d65124f21a4e3a8e7c5d9b",
+        "sha256": "3e9b1396a1d2c7a181027aacccbbb17c8ad313b6c127522a58ad3d345373c41f"
+      }
+    ],
+    "phase42_runtime": {
+      "ffmpeg": "ffmpeg version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+      "ffprobe": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers",
+      "numpy": "2.4.4",
+      "opencv": "5.0.0",
+      "pillow": "12.2.0",
+      "python": "3.11.3"
+    },
+    "pinned_approval_inputs_used_for_verification": true,
+    "plate_count": 7,
+    "stand_pose_count": 5
+  },
+  "repaired_render_source": "fresh tracked-art invocation",
+  "sha256": {
+    "captions.srt": "0100c2c967673cc4ded334f00050c37a0a3f231362590401aa9bb05b6081239e",
+    "mix.wav": "8c1ad3abe1c2efa3808b9de1febc7e70cda408d1760da080267aeabceb4417de",
+    "native-early-frames.json": "5e0a0061b9178085509dcc418f4e2bff03440d5f28bc1aea80c07c012c599866",
+    "twelve-dollar-mug.mov": "66b50b3fde537d931fed970713e48593ab32e0ecc3b339465fb7592f45e6eb97",
+    "twelve-dollar-mug.mp4": "35800acc8087fe665368c1d680c358bd2e5ba1f825bbaab19ba50f8f08ccbf1a"
+  },
+  "sound": {
+    "closing_dialogue_in_isolated_reference_exact": true,
+    "dialogue_cues_preserved": 18,
+    "exact_approved_closing_pcm_sample_count": 364800,
+    "frames": 1140,
+    "fx_used": "same two recorded Phase42 Foley excerpts",
+    "legacy_effects_used": false,
+    "prefix_db_trim_from_reference": -1.0,
+    "pure_pour_output_samples_half_open": [
+      1262400,
+      1382400
+    ],
+    "sample_count": 1824000,
+    "silence_at_30ms_join_windows": true,
+    "source_recorded_pour_reused_once": true
+  }
+}
