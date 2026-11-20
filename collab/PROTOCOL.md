@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-20a.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-20b.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 The five-hour resumption is active in this chat at James's request.
 James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -66,8 +66,11 @@ second wide, and full sound/captions. No human verdict; the later
 wide still does not see the pie. `june_opening_loan_v1/` now shows
 the visitor collecting the original loaned mug; only F129–224 change,
 with original audio/captions. Screen the 8.53s context A/B.
-The next story experiment is a visible reaction to the coffee,
-not reopening passed components or rebuilding unchanged cuts.
+`june_coffee_reaction_v1/` tests a 30f look from the visitor after
+the coffee, preserving the closer's picture and PCM. Screen both
+normal-speed endings separately, then the two full-film story edits.
+Neither new candidate is approved; don't reopen passed components
+or rebuild unchanged cuts.
 
 ## Current roles and access
 
