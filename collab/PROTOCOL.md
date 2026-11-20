@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-19l.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-19m.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 The five-hour resumption is active in this chat at James's request.
 James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -60,9 +60,11 @@ integrating that response; neither 38s cut nor the protected source
 has changed. No taste verdict or promotion.
 The visitor's missing mug-and-pie return has its own same-length
 integrated alternate in `june_visitor_return_v1/`. Review the 10.3s
-old-left/new-right comparison. The next decision is continuity into
-June's ledger scene, not reopening approved components or rebuilding
-unchanged review cuts. No human verdict.
+old-left/new-right comparison. `june_ledger_reverse_v1/` tests a
+tighter first reverse (56 frames only) with original pencil detail,
+second wide, and full sound/captions. No human verdict; the later
+wide still does not see the pie. Next new story beat to test is the
+opening loan, not reopening passed components or rebuilding unchanged cuts.
 
 ## Current roles and access
 
