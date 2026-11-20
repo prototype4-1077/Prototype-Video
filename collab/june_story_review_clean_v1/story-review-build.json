@@ -1,0 +1,145 @@
+{
+  "builder_sha256": "e7c7f3174b4aa929d0a45dc04d340d1bcc96a718b62cf84927510b4294343c33",
+  "completed": true,
+  "human_accepted": false,
+  "preflight": {
+    "cash_cost": 0,
+    "external_cache_required": false,
+    "prior_full_movie_required": false,
+    "protected_source_check": {
+      "cash_cost": 0,
+      "clock": [
+        1920,
+        1080,
+        30,
+        1140
+      ],
+      "external_render_cache_required": false,
+      "legacy_master_required": false,
+      "legacy_picture_contracts": [
+        {
+          "bytes": 7829,
+          "hash_domain": "canonical_json_utf8",
+          "path": "concept/style_frames/june_golden_scene_master_v1.json",
+          "raw_sha256": "8f43e886b5c135ae6a9d34dec464b2c1c4fb20f269d3328358a49edab227a080",
+          "sha256": "d09314e29aa1ca326f7652ce90a8c3db0ec7a1c43386b33cfb453a2b12215948"
+        },
+        {
+          "bytes": 7153,
+          "hash_domain": "canonical_json_utf8",
+          "path": "concept/style_frames/june_golden_scene_gs030_layered_stand_v1.json",
+          "raw_sha256": "172f81e1e15e7afeb45e81aa90b497b9ef78631bf0d65124f21a4e3a8e7c5d9b",
+          "sha256": "3e9b1396a1d2c7a181027aacccbbb17c8ad313b6c127522a58ad3d345373c41f"
+        }
+      ],
+      "phase42_runtime": {
+        "ffmpeg": "ffmpeg version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2000-2026 the FFmpeg developers",
+        "ffprobe": "ffprobe version 8.1.1-essentials_build-www.gyan.dev Copyright (c) 2007-2026 the FFmpeg developers",
+        "numpy": "2.4.4",
+        "opencv": "5.0.0",
+        "pillow": "12.2.0",
+        "python": "3.11.3"
+      },
+      "pinned_approval_inputs_used_for_verification": true,
+      "plate_count": 7,
+      "prior_full_movie_required": false,
+      "protected_picture_regenerates_from_source": true,
+      "source_edl_zero_based": [
+        0,
+        564,
+        678,
+        789,
+        864,
+        912,
+        1140
+      ],
+      "stand_pose_count": 5,
+      "variants": [
+        "visitor"
+      ]
+    },
+    "source_receipts": {
+      "arrival": "0de9c470a9b42bda57cb34d511c8d1459fa3a3507bc86def7754a8eb566d5f63",
+      "handoff": "4c4899a9867531525315089524df2523bc07ff915cfb0330f446a6b68d456289",
+      "loan": "bfcfbeb9b7458898e358f574990748469f274e83ba7ed0ea9d0ce6f55c4f521b",
+      "reaction": "3f9521da8b8283e09d85264b2e7caaabd37ce50bf6d281b91e442ac85faf8835"
+    },
+    "variants": {
+      "handoff": [
+        0,
+        129,
+        225,
+        396,
+        452,
+        564,
+        678,
+        789,
+        864,
+        912,
+        963,
+        1191
+      ],
+      "reaction": [
+        0,
+        129,
+        225,
+        396,
+        452,
+        564,
+        678,
+        789,
+        864,
+        912,
+        963,
+        993,
+        1221
+      ]
+    }
+  },
+  "prior_full_movie_used": false,
+  "production_release": false,
+  "shared_shots_built_once": true,
+  "source_frame_match": "all authored source clocks and protected renders; prior container SHA not required",
+  "variants": {
+    "handoff": {
+      "all_18_captions_verified": true,
+      "clock": [
+        1920,
+        1080,
+        30,
+        1191
+      ],
+      "duration_seconds": 39.7,
+      "movie": "handoff\\twelve-dollar-mug.mp4",
+      "movie_sha256": "5876c731314997c5bcdbf02e168c67f3ffae01727fda97e98fd072c9c5efd50d",
+      "pcm_master": "handoff\\twelve-dollar-mug.mov",
+      "pcm_master_sha256": "79bddcfdd46a6a7c4b8b0bbad2172f50821343bb5b624b214e448b51be9dc487",
+      "pcm_pairs_exact": 1905600,
+      "pcm_sha256": "85d9baecc08faefc0b2b09177d0da3ed449f21dd324c3a950081dc05907eef58",
+      "preview_aac_snr_db": 42.903427592284025,
+      "preview_true_peak_dbtp": -1.4,
+      "protected_frames_exact": 303,
+      "verified_source_packets_and_decoded_frames": 1191
+    },
+    "reaction": {
+      "all_18_captions_verified": true,
+      "clock": [
+        1920,
+        1080,
+        30,
+        1221
+      ],
+      "duration_seconds": 40.7,
+      "movie": "reaction\\twelve-dollar-mug.mp4",
+      "movie_sha256": "b12c743014fa40c2aae6b8f68cfc5d0d174867ddddb200b223298074013ec302",
+      "pcm_master": "reaction\\twelve-dollar-mug.mov",
+      "pcm_master_sha256": "cd19d54c08cc1bb3e6628cc747c0a249c32e05b10f373a112a4cc2128fe0c96d",
+      "pcm_pairs_exact": 1953600,
+      "pcm_sha256": "e891d839b46a08abf58d48856788c2fa89947262badae33b2b544639defc834d",
+      "preview_aac_snr_db": 42.80392520318629,
+      "preview_true_peak_dbtp": -1.4,
+      "protected_frames_exact": 303,
+      "verified_source_packets_and_decoded_frames": 1221
+    }
+  }
+}

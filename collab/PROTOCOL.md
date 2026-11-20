@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-20b.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-20c.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 The five-hour resumption is active in this chat at James's request.
 James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -69,8 +69,10 @@ with original audio/captions. Screen the 8.53s context A/B.
 `june_coffee_reaction_v1/` tests a 30f look from the visitor after
 the coffee, preserving the closer's picture and PCM. Screen both
 normal-speed endings separately, then the two full-film story edits.
-Neither new candidate is approved; don't reopen passed components
-or rebuild unchanged cuts.
+`Build June Story Review.cmd` builds both of those full story
+versions without needing predecessor movies; the isolated rebuild
+is in `june_story_review_clean_v1/`. Neither candidate is approved;
+don't reopen passed components or rebuild unchanged cuts.
 
 ## Current roles and access
 

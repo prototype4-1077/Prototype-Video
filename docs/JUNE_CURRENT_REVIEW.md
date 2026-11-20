@@ -1,5 +1,9 @@
 # Build the two current June review cuts
 
+For the separate 39.7/40.7-second story review with the visible loan,
+return, and coffee handoff, see [Build both story cuts](JUNE_STORY_REVIEW.md).
+This page and the older launcher still build the two 38-second edits.
+
 Double-click **Build June Review.cmd** in this checkout. It creates a fresh
 folder under `outputs/edit/`, builds the shared shots once, and exports
 both 38-second versions of *The Twelve-Dollar Mug*. Open the MP4 in the
