@@ -2,9 +2,9 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-19k.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
-James resumed interactive work on October 29; the five-hour automation is
-still paused. James provisionally passed both mouth and hand for prototype
+`GPT_NOTES_2026-11-19l.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+The five-hour resumption is active in this chat at James's request.
+James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
 the complete source-built working model. Later human feedback takes precedence over
 older recommendations and reviews.
@@ -58,6 +58,11 @@ coffee now has a 40-frame silent handoff in
 `june_coffee_payoff_v1/` shows the right hand approaching before
 integrating that response; neither 38s cut nor the protected source
 has changed. No taste verdict or promotion.
+The visitor's missing mug-and-pie return has its own same-length
+integrated alternate in `june_visitor_return_v1/`. Review the 10.3s
+old-left/new-right comparison. The next decision is continuity into
+June's ledger scene, not reopening approved components or rebuilding
+unchanged review cuts. No human verdict.
 
 ## Current roles and access
 
