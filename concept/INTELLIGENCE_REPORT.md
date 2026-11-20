@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-20T15:31:53.960123+00:00
+Generated: 2026-11-20T20:29:03.794207+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -49,9 +49,9 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.44.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.44.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.45.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.46.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.0) — unverified reference; verify the primary source before use.
+- [Cultural invariance in music-evoked emotions](https://arxiv.org/abs/2611.25189) — unverified reference; verify the primary source before use.
+- [Closing the Analyze-to-Design Gap: An Authorization-Bounded Agent for Self-Driving Laboratories](https://arxiv.org/abs/2611.25043) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [A Dual-SOM Learner Model of Instructional Efficiency within Cognitive Load Theory](https://arxiv.org/abs/2611.23795) — unverified reference; verify the primary source before use.
-- [Does a label survive the loop? A screen of necessary physical conditions for a self-measuring system, with a pre-registered test on fly connectomes](https://arxiv.org/abs/2611.23320) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
