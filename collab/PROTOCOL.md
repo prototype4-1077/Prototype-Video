@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-21a.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-21b.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 The five-hour resumption is active in this chat at James's request.
 James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
