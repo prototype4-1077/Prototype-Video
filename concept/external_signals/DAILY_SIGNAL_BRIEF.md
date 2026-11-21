@@ -1,6 +1,6 @@
 # External Signal Radar
 
-Generated: 2026-11-20T20:28:36+00:00
+Generated: 2026-11-21T19:23:51+00:00
 
 > External attention is a signal, never authority. Every item is unverified
 > until reviewed for evidence, autonomy, sequence, and channel fit.
@@ -9,14 +9,14 @@ Agent Reach health: **not_installed**
 
 ## Unclustered
 
-- **[An LLM-Agentic Framework for Intelligent Work Order Management in Industrial Maintenance](https://arxiv.org/abs/2611.25070)** — rss (score 0). arXiv:2611.25070v1 Announce Type: new Abstract: This paper presents an AI-driven framework, CodeReAct agent, designed to enhance industrial equipment maintenance through natural language (NL) interactions. The framework employs an advanced AI agentic approach to interpret human i
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.6.6](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.6-release)** — github_release (score 0). ### Release Notes PySceneDetect v0.6.6 introduces new output formats, which improve compatibility with popular video editors (e.g. DaVinci Resolve). ### Changelog - [feature] New `save-otio` command supports saving scenes in OTIO format [#497](https://github.com/Breakthrough/PySc
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.6.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.7-release)** — github_release (score 0). ### Release Notes Fixes issues with importing EDL files into DaVinci Resolve and other editors, update ffmpeg. ### Changelog - [bugfix] Fix `save-edl` end timestamp being too short by 1 frame [#516](https://github.com/Breakthrough/PySceneDetect/issues/516) - [general] Updates to 
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7-release)** — github_release (score 0). ## Release Notes PySceneDetect 0.7 is a **major breaking release** which overhauls how timestamps are handled. This allows PySceneDetect to properly process variable framerate (VFR) videos. A significant amount of technical debt has been addressed, including removal of deprecated
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7.1](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.1)** — github_release (score 0). ## Release Notes PySceneDetect 0.7.1 adds support for concatenating multiple videos, along with several stability and robustness fixes for the PyAV and OpenCV backends. ## CLI Changes - [feature] `split-video` has a new `--expand` flag: when scenes are detected within a time wind
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7.2](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.2)** — github_release (score 0). ## Release Notes PySceneDetect 0.7.2 ships improved defaults for the histogram and perceptual hash detectors, adds PyAV 19 support, and fixes several timing and output bugs. **Default output of `detect-hist` and `detect-hash` will change in this release due to improved default va
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7.3](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.3)** — github_release (score 0). PySceneDetect 0.7.3 adds scene-length based image export to `save-images`, a `close()` method and context manager support for `VideoStream`, and fixes several timing bugs: PyAV frame timing for videos without presentation timestamps, `save-edl` timecode drift at NTSC frame rates,
-- **[BuggyMLE: Scaling Machine Learning Engineering Difficulty with Bug Injection](https://arxiv.org/abs/2611.25088)** — rss (score 0). arXiv:2611.25088v1 Announce Type: new Abstract: Enabling AI systems to autonomously improve AI models requires agents capable of performing machine learning engineering (MLE). In practice, designing, training, and evaluating complex models demands modifying multi-file repositorie
+- **[Panniantong/Agent-Reach: v1.4.0 — 上游大迁移：更稳定、更简单、更可靠](https://github.com/Panniantong/Agent-Reach/releases/tag/v1.4.0)** — github_release (score 0). ## 核心变更：6 大上游迁移 本版本对多个渠道的上游工具进行了大规模迁移，解决了已弃用工具、不稳定方案和部署门槛高的问题。 ### 上游迁移 | 渠道 | 旧方案 | 新方案 | 效果 | |------|--------|--------|------| | **Twitter/X** | bird CLI（repo 已 404） | twitter-cli (2,137 ⭐) | 修复完全不可用的渠道 | | **Reddit** | Exa crawling（经常超时） | rdt-cli (304 ⭐) | 搜索+全文+评论全通，无需登录 | 
+- **[Panniantong/Agent-Reach: v1.4.1 — 修复源码安装失败(wheel 重复打包)](https://github.com/Panniantong/Agent-Reach/releases/tag/v1.4.1)** — github_release (score 0). ## 修复 **修复了源码安装失败的问题。** 近期从 GitHub 安装(`pip install .../archive/main.zip`、`pipx`、`uvx`)会因 wheel 重复打包直接构建失败: ``` ValueError: A second file is being added to the wheel archive at the same path: `agent_reach/guides/setup-exa.md` ``` 原因是 `pyproject.toml` 中 `packages = ["agent_reach"]`
 
 ## Render Intelligence
 
@@ -26,15 +26,6 @@ Agent Reach health: **not_installed**
 - **[Comfy-Org/ComfyUI: v0.45.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0)** — github_release (score 4). ## What's Changed * Bump comfyui-frontend-package to 1.58.5 by @comfy-pr-bot in https://github.com/Comfy-Org/ComfyUI/pull/17442 * Add better error for when pixel_space VAE wrongly selected. by @comfyanonymous in https://github.com/Comfy-Org/ComfyUI/pull/17518 * Make SeedVR2 VAE s
 - **[Comfy-Org/ComfyUI: v0.46.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.0)** — github_release (score 4). ## What's Changed * [Partner Nodes] feat(LTX): add AlphaGen, SDR to HDR, Reframe and Upscale nodes by @bigcat88 in https://github.com/Comfy-Org/ComfyUI/pull/17664 * [Partner Nodes] feat(MiniMax): add MiniMax H3 Image node by @bigcat88 in https://github.com/Comfy-Org/ComfyUI/pull/
 - **[Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1)** — github_release (score 2). Fix some crashing issues a few users experienced when running the MOSS image template workflow.
-
-## Emotion Prediction
-
-- **[Cultural invariance in music-evoked emotions](https://arxiv.org/abs/2611.25189)** — rss (score 3). arXiv:2611.25189v1 Announce Type: new Abstract: Worldwide, people produce and listen to music to induce, express, and regulate their own and others' emotions. To what extent culture influences the emotions evoked by music is, however, contested. The documented global variation in
-- **[CoMPASS: A Multi-Turn Benchmark for Measuring LLM Reinforcement of Parasocial Behavior](https://arxiv.org/abs/2611.25109)** — rss (score 1). arXiv:2611.25109v1 Announce Type: new Abstract: Users of conversational LLMs sometimes anthropomorphize these systems, form emotional attachments to them, and become dependent on them. This behavior, known as parasocial attachment, has been linked to multiple documented fatalitie
-
-## Self Identity
-
-- **[Closing the Analyze-to-Design Gap: An Authorization-Bounded Agent for Self-Driving Laboratories](https://arxiv.org/abs/2611.25043)** — rss (score 2). arXiv:2611.25043v1 Announce Type: new Abstract: Artificial intelligence (AI) agents are increasingly integrated into self-driving laboratories (SDLs) to plan experiments and interpret results. However, analytical reasoning alone does not make a laboratory autonomous: autonomy in 
 
 ## Editorial handoff
 
