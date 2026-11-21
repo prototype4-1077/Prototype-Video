@@ -2,7 +2,7 @@
 
 Two collaborators, one repository. At session start, read the newest James
 verdict, GPT pickup notes and Claude review in `collab/`. Current pickup:
-`GPT_NOTES_2026-11-20e.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
+`GPT_NOTES_2026-11-21a.md`; access setup is in `CLAUDE_HANDOFF_2026-10-28.md`.
 The five-hour resumption is active in this chat at James's request.
 James provisionally passed both mouth and hand for prototype
 progress in `JAMES_VERDICT_2026-10-29b.md`; stop their polish loop and build
@@ -78,8 +78,9 @@ reach for the pot; the liquid and narration clocks are exact.
 old binding survives the bake near the pot. Use the pencil-only
 proof for review. Neither full film was altered; don't revisit the
 slide without a clean tabletop and separately isolated props.
-No candidate is approved; don't reopen passed components or
-rebuild unchanged cuts.
+`june_porch_life_v1/` is a separate first-shot posture and breeze
+study. The timeline and both full cuts remain locked. No candidate
+is approved; don't reopen passed components or rebuild unchanged cuts.
 
 ## Current roles and access
 
