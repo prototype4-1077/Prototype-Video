@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-23T18:18:32.876999+00:00
+Generated: 2026-11-23T23:59:37.466853+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -49,9 +49,9 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.44.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.44.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.45.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.46.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.0) — unverified reference; verify the primary source before use.
+- [The Four-Step Action Loop with Feedback: A teachable perception-action framework for everyday self-regulation](https://arxiv.org/abs/2611.27795) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [Breakthrough/PySceneDetect: PySceneDetect v0.6.6](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.6-release) — unverified reference; verify the primary source before use.
-- [Breakthrough/PySceneDetect: PySceneDetect v0.6.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.7-release) — unverified reference; verify the primary source before use.
+- [Memorization and Generalization in Generative Models: A Perspective From Energy-based Modeling and Associative Memory](https://arxiv.org/abs/2611.26797) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
