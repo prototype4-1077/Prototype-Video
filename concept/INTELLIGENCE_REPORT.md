@@ -1,13 +1,13 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-22T20:24:01.573347+00:00
+Generated: 2026-11-23T18:18:32.876999+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
 
 ## What to make next
 No fresh, dated retention evidence is eligible. Use editorial judgment and frontier exploration; do not infer poor performance from missing data.
-- Editorial exploration: **The Continuity Editor** [established]. Hook: You experience one smooth world. It's assembled from a dozen streams that never actually met. This is a frontier rotation, not a predicted audience winner.
+- Editorial exploration: **When the Familiar Goes Alien** [established]. Hook: Say your own name thirty times. Watch it stop being yours. This is a frontier rotation, not a predicted audience winner.
 James selects the concept and approves the script. Recommendations never start a render or publish a video.
 
 ## Measurement inventory
