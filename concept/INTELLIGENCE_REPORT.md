@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-24T17:51:56.445002+00:00
+Generated: 2026-11-24T22:32:54.472826+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -49,9 +49,9 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.44.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.44.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.45.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.46.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.0) — unverified reference; verify the primary source before use.
-- [The Four-Step Action Loop with Feedback: A teachable perception-action framework for everyday self-regulation](https://arxiv.org/abs/2611.27795) — unverified reference; verify the primary source before use.
+- [Simulating Episodic Like Memory in Octopus: Breaking the Rules](https://arxiv.org/abs/2611.28409) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [Memorization and Generalization in Generative Models: A Perspective From Energy-based Modeling and Associative Memory](https://arxiv.org/abs/2611.26797) — unverified reference; verify the primary source before use.
+- [From local competition to bump attractors:how excitation width sets capacity, interference and updating in recurrent models of visual working memory](https://arxiv.org/abs/2611.28601) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
