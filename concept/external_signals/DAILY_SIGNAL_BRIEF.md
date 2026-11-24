@@ -1,6 +1,6 @@
 # External Signal Radar
 
-Generated: 2026-11-23T23:59:23+00:00
+Generated: 2026-11-24T22:32:35+00:00
 
 > External attention is a signal, never authority. Every item is unverified
 > until reviewed for evidence, autonomy, sequence, and channel fit.
@@ -9,8 +9,8 @@ Agent Reach health: **not_installed**
 
 ## Unclustered
 
-- **[Adding One More Agent: How AI Team Size and Formation Shape Productivity and Diversity in Human-AI Brainstorming Teams](https://arxiv.org/abs/2611.26663)** — rss (score 0). arXiv:2611.26663v1 Announce Type: new Abstract: Generative AI has improved individual productivity, but whether adding a plurality of AI partners helps or hurts remains open. We crossed AI partnership (one versus two) with behavioral formation (calibrated to average human behavio
-- **[Beyond Final Answers: Interpretable Tumor Immune Microenvironment Reasoning from H&E and mIF](https://arxiv.org/abs/2611.26794)** — rss (score 0). arXiv:2611.26794v1 Announce Type: new Abstract: Readouts of the tumor immune microenvironment (TIME), such as CD8+ T-cell density, intra-epithelial infiltration and the Ki67 index, combine tissue architecture from H&E with cell phenotypes from multiplex immunofluorescence (mIF). 
+- **[A generative framework for unified representations bridging electrophysiological and haemodynamic brain activity](https://arxiv.org/abs/2611.28507)** — rss (score 0). arXiv:2611.28507v1 Announce Type: new Abstract: Electrophysiological and haemodynamic recordings resolve brain activity at complementary temporal and spatial scales, yet paired acquisition remains difficult to scale. We propose a generative framework that aligns paired multimodal
+- **[AutoPILOT: A Visual Agent Harness for Real-Time Gameplay](https://arxiv.org/abs/2611.28202)** — rss (score 0). arXiv:2611.28202v1 Announce Type: new Abstract: Multimodal foundation models can play video games well when the game waits for them, but often fail when it keeps running. We find that much of this gap lies in the harness, which decides what the model sees, what it remembers, and 
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.6.6](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.6-release)** — github_release (score 0). ### Release Notes PySceneDetect v0.6.6 introduces new output formats, which improve compatibility with popular video editors (e.g. DaVinci Resolve). ### Changelog - [feature] New `save-otio` command supports saving scenes in OTIO format [#497](https://github.com/Breakthrough/PySc
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.6.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.7-release)** — github_release (score 0). ### Release Notes Fixes issues with importing EDL files into DaVinci Resolve and other editors, update ffmpeg. ### Changelog - [bugfix] Fix `save-edl` end timestamp being too short by 1 frame [#516](https://github.com/Breakthrough/PySceneDetect/issues/516) - [general] Updates to 
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7-release)** — github_release (score 0). ## Release Notes PySceneDetect 0.7 is a **major breaking release** which overhauls how timestamps are handled. This allows PySceneDetect to properly process variable framerate (VFR) videos. A significant amount of technical debt has been addressed, including removal of deprecated
@@ -27,27 +27,19 @@ Agent Reach health: **not_installed**
 - **[Comfy-Org/ComfyUI: v0.46.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.0)** — github_release (score 4). ## What's Changed * [Partner Nodes] feat(LTX): add AlphaGen, SDR to HDR, Reframe and Upscale nodes by @bigcat88 in https://github.com/Comfy-Org/ComfyUI/pull/17664 * [Partner Nodes] feat(MiniMax): add MiniMax H3 Image node by @bigcat88 in https://github.com/Comfy-Org/ComfyUI/pull/
 - **[Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1)** — github_release (score 2). Fix some crashing issues a few users experienced when running the MOSS image template workflow.
 
-## Belief Analysis
-
-- **[The Four-Step Action Loop with Feedback: A teachable perception-action framework for everyday self-regulation](https://arxiv.org/abs/2611.27795)** — rss (score 3). arXiv:2611.27795v1 Announce Type: new Abstract: Everyday stress is largely a learned pattern: a familiar cue, a fast reading of threat, an automatic reaction and a body that stays activated. Body-based practices such as mindfulness, interoceptive training, Somatic Experiencing an
-- **[Serial Dependence Emerges from Optimizing Vision for Noise Robustness](https://arxiv.org/abs/2611.26949)** — rss (score 2). arXiv:2611.26949v1 Announce Type: new Abstract: Human visual perception is dynamically shaped by the recent past, a phenomenon known as serial dependence. Mechanistic models show that a residual memory trace can generate this dependency, yet its functional purpose (why the visual
-
 ## Memory Time
 
-- **[Memorization and Generalization in Generative Models: A Perspective From Energy-based Modeling and Associative Memory](https://arxiv.org/abs/2611.26797)** — rss (score 2). arXiv:2611.26797v1 Announce Type: new Abstract: Generative models now write working code, produce realistic images, and hold long conversations, yet the mechanisms behind their intelligence still evade our understanding. This thesis explores that puzzle through Associative Memory
-- **[Serial Dependence Emerges from Optimizing Vision for Noise Robustness](https://arxiv.org/abs/2611.26949)** — rss (score 2). arXiv:2611.26949v1 Announce Type: new Abstract: Human visual perception is dynamically shaped by the recent past, a phenomenon known as serial dependence. Mechanistic models show that a residual memory trace can generate this dependency, yet its functional purpose (why the visual
-
-## Emotion Prediction
-
-- **[The Four-Step Action Loop with Feedback: A teachable perception-action framework for everyday self-regulation](https://arxiv.org/abs/2611.27795)** — rss (score 3). arXiv:2611.27795v1 Announce Type: new Abstract: Everyday stress is largely a learned pattern: a familiar cue, a fast reading of threat, an automatic reaction and a body that stays activated. Body-based practices such as mindfulness, interoceptive training, Somatic Experiencing an
-
-## Collective Questions
-
-- **[Coherence by Construction: Synthesizing CTI Knowledge Graphs and the Formal Limits of Coherence Validation](https://arxiv.org/abs/2611.26717)** — rss (score 1). arXiv:2611.26717v1 Announce Type: new Abstract: Synthesizing relational training data such as knowledge graphs with a large language model typically emits structured objects one at a time, which keeps each object valid but leaves the relationships between them ungrounded. We stud
+- **[Simulating Episodic Like Memory in Octopus: Breaking the Rules](https://arxiv.org/abs/2611.28409)** — rss (score 3). arXiv:2611.28409v1 Announce Type: new Abstract: Episodic memory, which involves the recollection of past events, has been observed in several species including the invertebrate cuttlefish. In a subsequent experiment, episodic memory was not observed in the closely related octopus
+- **[From local competition to bump attractors:how excitation width sets capacity, interference and updating in recurrent models of visual working memory](https://arxiv.org/abs/2611.28601)** — rss (score 2). arXiv:2611.28601v1 Announce Type: new Abstract: On-centre off-surround (OCOS) networks and bump attractors, the two main recurrent models of visual working memory, differ chiefly in how far recurrent excitation spreads. We place them in one family parameterised by excitation widt
 
 ## Self Identity
 
-- **[Self-organized fractional silencing of pyramidal neurons under global depolarization in a spatial neuron-glial microcircuit model](https://arxiv.org/abs/2611.27847)** — rss (score 1). arXiv:2611.27847v1 Announce Type: new Abstract: Pathological transitions in nervous tissue, including epileptiform discharges and cortical spreading depolarization, depend on the interplay between cellular and interstitial mechanisms. We develop a biophysically detailed two-dimen
+- **[Demystifying the Autoresearch Harness: How Context and Skills Shape Self-Evolving Agents](https://arxiv.org/abs/2611.28244)** — rss (score 1). arXiv:2611.28244v1 Announce Type: new Abstract: Autoresearch agents, which autonomously design, run, and refine experiments, are accelerating scientific progress, particularly in AI research. However, existing agents rely on harnesses that combine multiple mechanisms, making it d
+- **[FinEvo: Recursive Self-Improvement for Long-Horizon Financial Modeling](https://arxiv.org/abs/2611.28239)** — rss (score 1). arXiv:2611.28239v1 Announce Type: new Abstract: Advances in large language models (LLMs) have expanded their role in high-value productivity tasks, including financial analysis and modeling, while enabling models to play an increasingly active role in their own improvement. This 
+
+## Belief Analysis
+
+- **[History-bearing thalamocortical signals reconstruct and redirect later decisions in a circuit model](https://arxiv.org/abs/2611.28799)** — rss (score 1). arXiv:2611.28799v1 Announce Type: new Abstract: Experience can guide an ambiguous choice or bias a choice despite strong current evidence. We asked how a thalamocortical circuit carries historical content forward and regulates its influence across successive decisions. In publish
 
 ## Editorial handoff
 
