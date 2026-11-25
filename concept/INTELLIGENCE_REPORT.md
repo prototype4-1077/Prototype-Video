@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-25T17:18:24.123229+00:00
+Generated: 2026-11-25T21:47:30.668345+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -49,9 +49,9 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.44.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.44.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.45.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.46.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.0) — unverified reference; verify the primary source before use.
-- [Simulating Episodic Like Memory in Octopus: Breaking the Rules](https://arxiv.org/abs/2611.28409) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [From local competition to bump attractors:how excitation width sets capacity, interference and updating in recurrent models of visual working memory](https://arxiv.org/abs/2611.28601) — unverified reference; verify the primary source before use.
+- [What People Choose Not to Say: A Multimodal Benchmark for Fine-Grained Information Manipulation in Conversations](https://arxiv.org/abs/2611.31346) — unverified reference; verify the primary source before use.
+- [The Self-Assembling Brain: Emergent Routing and Its Open Challenges](https://arxiv.org/abs/2611.31629) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
