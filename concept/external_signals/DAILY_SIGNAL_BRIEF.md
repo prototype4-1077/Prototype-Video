@@ -1,6 +1,6 @@
 # External Signal Radar
 
-Generated: 2026-11-24T22:32:35+00:00
+Generated: 2026-11-25T21:47:14+00:00
 
 > External attention is a signal, never authority. Every item is unverified
 > until reviewed for evidence, autonomy, sequence, and channel fit.
@@ -9,14 +9,14 @@ Agent Reach health: **not_installed**
 
 ## Unclustered
 
-- **[A generative framework for unified representations bridging electrophysiological and haemodynamic brain activity](https://arxiv.org/abs/2611.28507)** — rss (score 0). arXiv:2611.28507v1 Announce Type: new Abstract: Electrophysiological and haemodynamic recordings resolve brain activity at complementary temporal and spatial scales, yet paired acquisition remains difficult to scale. We propose a generative framework that aligns paired multimodal
-- **[AutoPILOT: A Visual Agent Harness for Real-Time Gameplay](https://arxiv.org/abs/2611.28202)** — rss (score 0). arXiv:2611.28202v1 Announce Type: new Abstract: Multimodal foundation models can play video games well when the game waits for them, but often fail when it keeps running. We find that much of this gap lies in the harness, which decides what the model sees, what it remembers, and 
+- **[Accuracy of Noise Ceiling Estimators for Brain Scores](https://arxiv.org/abs/2611.32792)** — rss (score 0). arXiv:2611.32792v1 Announce Type: cross Abstract: The internal activations of modern machine learning models align surprisingly well with the activities recorded in real brains. In the last five years, the alignment between encoding models and brain activities, often called brain
+- **[Antares-Smaug: Adversarial Names, Tokens and Attack Rewrites: Sanitisers Miss Unseen Generalisations](https://arxiv.org/abs/2611.31347)** — rss (score 0). arXiv:2611.31347v1 Announce Type: new Abstract: Laya is an open decision model: given a text, a question and K named options with descriptions, it returns one probability per option in a single pass, and software may act on the answer unseen. We attack six Laya models with 81 pro
+- **[Beyond Static Charts: Benchmarking Interactive Chart-to-Code Generation for MLLMs](https://arxiv.org/abs/2611.31345)** — rss (score 0). arXiv:2611.31345v1 Announce Type: new Abstract: In recent years, multimodal large language models (MLLMs) have achieved significant progress in chart-to-code generation. However, existing benchmarks mainly focus on static charts, overlooking interactive charts that enable richer 
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.6.6](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.6-release)** — github_release (score 0). ### Release Notes PySceneDetect v0.6.6 introduces new output formats, which improve compatibility with popular video editors (e.g. DaVinci Resolve). ### Changelog - [feature] New `save-otio` command supports saving scenes in OTIO format [#497](https://github.com/Breakthrough/PySc
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.6.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.6.7-release)** — github_release (score 0). ### Release Notes Fixes issues with importing EDL files into DaVinci Resolve and other editors, update ffmpeg. ### Changelog - [bugfix] Fix `save-edl` end timestamp being too short by 1 frame [#516](https://github.com/Breakthrough/PySceneDetect/issues/516) - [general] Updates to 
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7-release)** — github_release (score 0). ## Release Notes PySceneDetect 0.7 is a **major breaking release** which overhauls how timestamps are handled. This allows PySceneDetect to properly process variable framerate (VFR) videos. A significant amount of technical debt has been addressed, including removal of deprecated
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7.1](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.1)** — github_release (score 0). ## Release Notes PySceneDetect 0.7.1 adds support for concatenating multiple videos, along with several stability and robustness fixes for the PyAV and OpenCV backends. ## CLI Changes - [feature] `split-video` has a new `--expand` flag: when scenes are detected within a time wind
 - **[Breakthrough/PySceneDetect: PySceneDetect v0.7.2](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.2)** — github_release (score 0). ## Release Notes PySceneDetect 0.7.2 ships improved defaults for the histogram and perceptual hash detectors, adds PyAV 19 support, and fixes several timing and output bugs. **Default output of `detect-hist` and `detect-hash` will change in this release due to improved default va
-- **[Breakthrough/PySceneDetect: PySceneDetect v0.7.3](https://github.com/Breakthrough/PySceneDetect/releases/tag/v0.7.3)** — github_release (score 0). PySceneDetect 0.7.3 adds scene-length based image export to `save-images`, a `close()` method and context manager support for `VideoStream`, and fixes several timing bugs: PyAV frame timing for videos without presentation timestamps, `save-edl` timecode drift at NTSC frame rates,
 
 ## Render Intelligence
 
@@ -27,19 +27,13 @@ Agent Reach health: **not_installed**
 - **[Comfy-Org/ComfyUI: v0.46.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.0)** — github_release (score 4). ## What's Changed * [Partner Nodes] feat(LTX): add AlphaGen, SDR to HDR, Reframe and Upscale nodes by @bigcat88 in https://github.com/Comfy-Org/ComfyUI/pull/17664 * [Partner Nodes] feat(MiniMax): add MiniMax H3 Image node by @bigcat88 in https://github.com/Comfy-Org/ComfyUI/pull/
 - **[Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1)** — github_release (score 2). Fix some crashing issues a few users experienced when running the MOSS image template workflow.
 
-## Memory Time
+## Emotion Prediction
 
-- **[Simulating Episodic Like Memory in Octopus: Breaking the Rules](https://arxiv.org/abs/2611.28409)** — rss (score 3). arXiv:2611.28409v1 Announce Type: new Abstract: Episodic memory, which involves the recollection of past events, has been observed in several species including the invertebrate cuttlefish. In a subsequent experiment, episodic memory was not observed in the closely related octopus
-- **[From local competition to bump attractors:how excitation width sets capacity, interference and updating in recurrent models of visual working memory](https://arxiv.org/abs/2611.28601)** — rss (score 2). arXiv:2611.28601v1 Announce Type: new Abstract: On-centre off-surround (OCOS) networks and bump attractors, the two main recurrent models of visual working memory, differ chiefly in how far recurrent excitation spreads. We place them in one family parameterised by excitation widt
+- **[What People Choose Not to Say: A Multimodal Benchmark for Fine-Grained Information Manipulation in Conversations](https://arxiv.org/abs/2611.31346)** — rss (score 2). arXiv:2611.31346v1 Announce Type: new Abstract: Recent advances in MLLMs have improved social understanding, enabling models to recognize emotions and distinguish truthful from deceptive behaviors. However, existing benchmarks largely focus on coarse-grained emotion recognition o
 
 ## Self Identity
 
-- **[Demystifying the Autoresearch Harness: How Context and Skills Shape Self-Evolving Agents](https://arxiv.org/abs/2611.28244)** — rss (score 1). arXiv:2611.28244v1 Announce Type: new Abstract: Autoresearch agents, which autonomously design, run, and refine experiments, are accelerating scientific progress, particularly in AI research. However, existing agents rely on harnesses that combine multiple mechanisms, making it d
-- **[FinEvo: Recursive Self-Improvement for Long-Horizon Financial Modeling](https://arxiv.org/abs/2611.28239)** — rss (score 1). arXiv:2611.28239v1 Announce Type: new Abstract: Advances in large language models (LLMs) have expanded their role in high-value productivity tasks, including financial analysis and modeling, while enabling models to play an increasingly active role in their own improvement. This 
-
-## Belief Analysis
-
-- **[History-bearing thalamocortical signals reconstruct and redirect later decisions in a circuit model](https://arxiv.org/abs/2611.28799)** — rss (score 1). arXiv:2611.28799v1 Announce Type: new Abstract: Experience can guide an ambiguous choice or bias a choice despite strong current evidence. We asked how a thalamocortical circuit carries historical content forward and regulates its influence across successive decisions. In publish
+- **[The Self-Assembling Brain: Emergent Routing and Its Open Challenges](https://arxiv.org/abs/2611.31629)** — rss (score 1). arXiv:2611.31629v1 Announce Type: cross Abstract: Biologically inspired alternatives to backpropagation, such as feedback alignment, relax the requirement for exact synaptic weight symmetry but still presuppose a fixed, pre-wired correspondence between forward and feedback pathwa
 
 ## Editorial handoff
 
