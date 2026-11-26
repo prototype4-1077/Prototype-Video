@@ -1,6 +1,6 @@
 # Concept Engine — Evidence-aware Intelligence
 
-Generated: 2026-11-26T16:58:53.765163+00:00
+Generated: 2026-11-26T21:40:30.273666+00:00
 
 Joined 23 videos; 0 eligible for current recommendations.
 Missing retention: 12; stale or undated retention: 11.
@@ -50,8 +50,8 @@ James selects the concept and approves the script. Recommendations never start a
 - [Comfy-Org/ComfyUI: v0.45.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.45.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.46.0](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.46.0) — unverified reference; verify the primary source before use.
 - [Comfy-Org/ComfyUI: v0.42.1](https://github.com/Comfy-Org/ComfyUI/releases/tag/v0.42.1) — unverified reference; verify the primary source before use.
-- [What People Choose Not to Say: A Multimodal Benchmark for Fine-Grained Information Manipulation in Conversations](https://arxiv.org/abs/2611.31346) — unverified reference; verify the primary source before use.
-- [The Self-Assembling Brain: Emergent Routing and Its Open Challenges](https://arxiv.org/abs/2611.31629) — unverified reference; verify the primary source before use.
+- [What, Who, and When: Structured Harm Assessment for Mental Health Safety via Short Reasoning](https://arxiv.org/abs/2611.33263) — unverified reference; verify the primary source before use.
+- [AutoformBench: A Lean Formalization Benchmark for Advanced Mathematics](https://arxiv.org/abs/2611.33165) — unverified reference; verify the primary source before use.
 
 ## Learning coverage
 
