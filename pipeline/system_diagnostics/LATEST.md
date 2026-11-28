@@ -1,6 +1,6 @@
 # System Diagnostic
 
-Generated: 2026-11-27T22:05:36+00:00
+Generated: 2026-11-28T15:36:57+00:00
 
 Findings: 22 — priorities {"high": 4, "low": 2, "medium": 16}
 
